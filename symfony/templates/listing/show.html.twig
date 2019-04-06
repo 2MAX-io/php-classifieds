@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Listing{% endblock %}
+
+{% block body %}
+    <h1>Listing</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ listing.id }}</td>
+            </tr>
+            <tr>
+                <th>Title</th>
+                <td>{{ listing.title }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ listing.description }}</td>
+            </tr>
+            <tr>
+                <th>Price</th>
+                <td>{{ listing.price }}</td>
+            </tr>
+            <tr>
+                <th>Phone</th>
+                <td>{{ listing.phone }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ listing.email }}</td>
+            </tr>
+            <tr>
+                <th>City</th>
+                <td>{{ listing.city }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('listing_index') }}">back to list</a>
+
+    <a href="{{ path('listing_edit', {'id': listing.id}) }}">edit</a>
+
+    {{ include('listing/_delete_form.html.twig') }}
+{% endblock %}

@@ -11,3 +11,9 @@ php symfony/bin/console doctrine:schema:update --force
 php symfony/bin/console doctrine:schema:update --force
 php symfony/bin/console list
 php symfony/bin/console doctrine:schema:update --force
+php symfony/bin/console make:crud Listing
+php symfony/bin/console make:crud
+php symfony/bin/console make:crud
+php symfony/bin/console make:crud --help
+php symfony/bin/console doctrine:schema:update --force
+php symfony/bin/console doctrine:schema:update --force

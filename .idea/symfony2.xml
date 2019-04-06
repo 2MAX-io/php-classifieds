@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Symfony2PluginSettings">
+    <option name="pathToTranslation" value="symfony/var/cache/dev/translations" />
+    <option name="directoryToWeb" value="" />
+    <option name="directoryToApp" value="symfony/config" />
+    <option name="pluginEnabled" value="true" />
+    <option name="profilerCsvPath" value="" />
+    <option name="twigNamespaces">
+      <list>
+        <twig_namespace custom="true" namespaceType="ADD_PATH" path="symfony/templates" />
+      </list>
+    </option>
+    <option name="containerFiles">
+      <list>
+        <container_file path="symfony/var/cache/dev/srcApp_KernelDevDebugContainer.xml" />
+      </list>
+    </option>
+  </component>
+</project>

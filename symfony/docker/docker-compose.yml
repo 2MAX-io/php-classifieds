@@ -4,10 +4,10 @@ services:
     container_name: classifieds_php
     build:
       context: './php/'
-      dockerfile: php/php/Dockerfile
+      dockerfile: Dockerfile
     ports: ['80:80', '443:443']
     volumes: [
-      './../:/var/www/html',
+      './../../:/var/www/html',
       './php/php.ini:/usr/local/etc/php/php.ini',
       './php/xdebug_out:/tmp/xdebug_out',
       './php/ssl/localhost.crt:/etc/ssl/certs/ssl-cert-snakeoil.pem',

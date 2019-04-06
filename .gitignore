@@ -7,3 +7,5 @@
 /symfony/var/
 /symfony/vendor/
 ###< symfony/framework-bundle ###
+
+/symfony/docker/mysql/data/

@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -50,6 +52,16 @@ class Listing
      * @ORM\Column(type="string", length=50, nullable=true)
      */
     private $city;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\ListingCustomFieldValue", mappedBy="listing")
+     */
+    private $listingCustomFieldValues;
+
+    public function __construct()
+    {
+        $this->listingCustomFieldValues = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -136,6 +148,37 @@ class Listing
     public function setCategory(?Category $category): self
     {
         $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ListingCustomFieldValue[]
+     */
+    public function getListingCustomFieldValues(): Collection
+    {
+        return $this->listingCustomFieldValues;
+    }
+
+    public function addListingCustomFieldValue(ListingCustomFieldValue $listingCustomFieldValue): self
+    {
+        if (!$this->listingCustomFieldValues->contains($listingCustomFieldValue)) {
+            $this->listingCustomFieldValues[] = $listingCustomFieldValue;
+            $listingCustomFieldValue->setListing($this);
+        }
+
+        return $this;
+    }
+
+    public function removeListingCustomFieldValue(ListingCustomFieldValue $listingCustomFieldValue): self
+    {
+        if ($this->listingCustomFieldValues->contains($listingCustomFieldValue)) {
+            $this->listingCustomFieldValues->removeElement($listingCustomFieldValue);
+            // set the owning side to null (unless already changed)
+            if ($listingCustomFieldValue->getListing() === $this) {
+                $listingCustomFieldValue->setListing(null);
+            }
+        }
 
         return $this;
     }

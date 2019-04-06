@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Listing;
 use App\Form\ListingType;
 use App\Repository\ListingRepository;
+use App\Service\Listing\CustomField\CustomFieldsForListingFormService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -51,12 +52,14 @@ class ListingController extends AbstractController
     /**
      * @Route("/{id}/edit", name="listing_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, Listing $listing): Response
+    public function edit(Request $request, Listing $listing, CustomFieldsForListingFormService $customFieldsForListingFormService): Response
     {
         $form = $this->createForm(ListingType::class, $listing);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $customFieldsForListingFormService->saveCustomFieldsToListing($listing, $request->request->get('form_custom_field'));
+
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('listing_index', [

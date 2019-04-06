@@ -17,6 +17,17 @@ class ListingCustomFieldValue
     private $id;
 
     /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Listing", inversedBy="listingCustomFieldValues")
+     */
+    private $listing;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\CustomField")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $customField;
+
+    /**
      * @ORM\Column(type="string", length=150)
      */
     private $value;
@@ -34,6 +45,30 @@ class ListingCustomFieldValue
     public function setValue(string $value): self
     {
         $this->value = $value;
+
+        return $this;
+    }
+
+    public function getListing(): ?Listing
+    {
+        return $this->listing;
+    }
+
+    public function setListing(?Listing $listing): self
+    {
+        $this->listing = $listing;
+
+        return $this;
+    }
+
+    public function getCustomField(): ?CustomField
+    {
+        return $this->customField;
+    }
+
+    public function setCustomField(?CustomField $customField): self
+    {
+        $this->customField = $customField;
 
         return $this;
     }

@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -45,6 +47,16 @@ class CustomField
      * @ORM\Column(type="string", length=25, nullable=true)
      */
     private $unit;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\CustomFieldOption", mappedBy="customField")
+     */
+    private $customFieldOptions;
+
+    public function __construct()
+    {
+        $this->customFieldOptions = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -119,6 +131,37 @@ class CustomField
     public function setUnit(string $unit): self
     {
         $this->unit = $unit;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|CustomFieldOption[]
+     */
+    public function getCustomFieldOptions(): Collection
+    {
+        return $this->customFieldOptions;
+    }
+
+    public function addCustomFieldOption(CustomFieldOption $customFieldOption): self
+    {
+        if (!$this->customFieldOptions->contains($customFieldOption)) {
+            $this->customFieldOptions[] = $customFieldOption;
+            $customFieldOption->setCustomField($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCustomFieldOption(CustomFieldOption $customFieldOption): self
+    {
+        if ($this->customFieldOptions->contains($customFieldOption)) {
+            $this->customFieldOptions->removeElement($customFieldOption);
+            // set the owning side to null (unless already changed)
+            if ($customFieldOption->getCustomField() === $this) {
+                $customFieldOption->setCustomField(null);
+            }
+        }
 
         return $this;
     }

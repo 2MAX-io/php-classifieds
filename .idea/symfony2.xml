@@ -8,7 +8,10 @@
     <option name="profilerCsvPath" value="" />
     <option name="twigNamespaces">
       <list>
+        <twig_namespace enabled="false" namespaceType="BUNDLE" path="templates" />
+        <twig_namespace enabled="false" namespaceType="ADD_PATH" path="templates" />
         <twig_namespace custom="true" namespaceType="ADD_PATH" path="symfony/templates" />
+        <twig_namespace custom="true" namespaceType="BUNDLE" path="symfony/templates" />
       </list>
     </option>
     <option name="containerFiles">

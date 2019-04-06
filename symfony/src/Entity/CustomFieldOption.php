@@ -17,6 +17,12 @@ class CustomFieldOption
     private $id;
 
     /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\CustomField", inversedBy="customFieldOptions")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $customField;
+
+    /**
      * @ORM\Column(type="string", length=100)
      */
     private $name;
@@ -51,6 +57,18 @@ class CustomFieldOption
     public function setValue(string $value): self
     {
         $this->value = $value;
+
+        return $this;
+    }
+
+    public function getCustomField(): ?CustomField
+    {
+        return $this->customField;
+    }
+
+    public function setCustomField(?CustomField $customField): self
+    {
+        $this->customField = $customField;
 
         return $this;
     }

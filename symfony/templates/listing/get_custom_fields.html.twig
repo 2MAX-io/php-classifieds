@@ -1,1 +1,13 @@
-custom fields
+{% for customField in customFieldList %}
+    {% if customField.type == 'select' %}
+        <div class="form-group">
+            <label class="{% if customField.required %}required{% endif %}" for="custom_field_{{ customField.id }}">{{ customField.name }}</label>
+            <select id="custom_field_{{ customField.id }}" name="form_custom_field[{{ customField.id }}]" class="form-control">
+                <option value=""></option>
+                {% for option in customField.customFieldOptions %}
+                    <option value="{{ option.value }}">{{ option.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    {% endif %}
+{% endfor %}

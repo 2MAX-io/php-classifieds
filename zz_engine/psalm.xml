@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<psalm
+    errorLevel="4"
+    allowPhpStormGenerics="true"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="https://getpsalm.org/schema/config"
+    xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
+>
+    <projectFiles>
+        <directory name="src"/>
+        <ignoreFiles>
+            <directory name="vendor"/>
+            <file name="config/bootstrap.php"/>
+        </ignoreFiles>
+    </projectFiles>
+
+    <issueHandlers>
+        <UndefinedFunction>
+            <errorLevel type="suppress">
+                <referencedFunction name="twig_test_empty" />
+            </errorLevel>
+            <errorLevel type="suppress">
+                <referencedFunction name="twig_escape_filter" />
+            </errorLevel>
+        </UndefinedFunction>
+    </issueHandlers>
+
+<plugins><pluginClass class="Psalm\SymfonyPsalmPlugin\Plugin"/><pluginClass class="Weirdan\DoctrinePsalmPlugin\Plugin"/></plugins></psalm>

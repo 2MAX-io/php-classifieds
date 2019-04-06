@@ -1,0 +1,265 @@
+{% extends 'admin/base.html.twig' %}
+
+{% import "admin/_macro/_admin_macro.html.twig" as adminMacro %}
+
+{% block title %}{{ 'trans.Search Engine' | trans }}{% endblock %}
+
+{% block body %}
+    <div class="container-fluid mt-2">
+        <div class="mb-2">
+            <form method="get" class="mt-2 mt-md-0" role="search">
+                <div class="row">
+                    <div class="col-md-4 mb-2">
+                        <label for="query">{{ 'trans.Search' | trans }}</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text"><i class="fas fa-search"></i></div>
+                            </div>
+                            <input
+                                    type="text"
+                                    name="query"
+                                    id="query"
+                                    value="{{ app.request.get('query') }}"
+                                    class="form-control"
+                                    placeholder="{{ 'trans.keyword' | trans }}* | Audi A? | {{ 'trans.keyword' | trans }}"
+                            />
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 mb-2 collapse js__hiddenFilter">
+                        <label for="user">{{ 'trans.User' | trans }}</label>
+                        <input
+                                type="text"
+                                name="user"
+                                id="user"
+                                placeholder="user*  |  user5@gmail.com  |  user?@gmail.com"
+                                class="form-control"
+                                value="{{ app.request.get('user') }}"
+                        >
+                    </div>
+
+                    <div class="col-md-4 mb-2 collapse js__hiddenFilter">
+                        <label for="category">{{ 'trans.Category' | trans }}</label>
+                        <select name="category" class="form-control" id="category">
+                            {%- for categoryId, categoryName in filterByCategorySelectList -%}
+                                <option {{ setOptionSelectedAttr('category', categoryId) }} value="{{ categoryId }}">
+                                    {{- categoryName -}}
+                                </option>
+                            {%- endfor -%}
+                        </select>
+                    </div>
+
+                    <div class="col-md-4 mb-2">
+                        <label for="publicDisplay">{{ 'trans.Displayed publicly?' | trans }}</label>
+                        <select name="publicDisplay" class="form-control" id="publicDisplay">
+                            <option value=""></option>
+                            <option {{ setOptionSelectedAttr('publicDisplay', 0) }} >{{ 'trans.No' | trans }}</option>
+                            <option {{ setOptionSelectedAttr('publicDisplay', 1) }} >{{ 'trans.Yes' | trans }}</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-4 mb-2 collapse js__hiddenFilter">
+                        <label for="featured">{{ 'trans.Featured listing?' | trans }}</label>
+                        <select name="featured" class="form-control" id="featured">
+                            <option value=""></option>
+                            <option {{ setOptionSelectedAttr('featured', 0) }} >{{ 'trans.No' | trans }}</option>
+                            <option {{ setOptionSelectedAttr('featured', 1) }} >{{ 'trans.Yes' | trans }}</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-4 mb-2 collapse js__hiddenFilter">
+                        <label for="adminActivated">{{ 'trans.Activated by Admin?' | trans }}</label>
+                        <select name="adminActivated" class="form-control" id="adminActivated">
+                            <option value=""></option>
+                            <option {{ setOptionSelectedAttr('adminActivated', 0) }} >{{ 'trans.Not activated' | trans }}</option>
+                            <option {{ setOptionSelectedAttr('adminActivated', 1) }} >{{ 'trans.Activated' | trans }}</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-4 mb-2 collapse js__hiddenFilter">
+                        <label for="adminRejected">{{ 'trans.Rejected by Admin?' | trans }}</label>
+                        <select name="adminRejected" class="form-control" id="adminRejected">
+                            <option value=""></option>
+                            <option {{ setOptionSelectedAttr('adminRejected', 0) }} >{{ 'trans.No' | trans }}</option>
+                            <option {{ setOptionSelectedAttr('adminRejected', 1) }} >{{ 'trans.Yes' | trans }}</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-4 mb-2 collapse js__hiddenFilter">
+                        <label for="adminRemoved">{{ 'trans.Removed by Admin?' | trans }}</label>
+                        <select name="adminRemoved" class="form-control" id="adminRemoved">
+                            <option value=""></option>
+                            <option {{ setOptionSelectedAttr('adminRemoved', 0) }} >{{ 'trans.No' | trans }}</option>
+                            <option {{ setOptionSelectedAttr('adminRemoved', 1) }} >{{ 'trans.Yes' | trans }}</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-4 mb-2 collapse js__hiddenFilter">
+                        <label for="userDeactivated">{{ 'trans.Deactivated by User?' | trans }}</label>
+                        <select name="userDeactivated" class="form-control" id="userDeactivated">
+                            <option value=""></option>
+                            <option {{ setOptionSelectedAttr('userDeactivated', 0) }} >{{ 'trans.No' | trans }}</option>
+                            <option {{ setOptionSelectedAttr('userDeactivated', 1) }} >{{ 'trans.Yes' | trans }}</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-4 mb-2 collapse js__hiddenFilter">
+                        <label for="userRemoved">{{ 'trans.Removed by User?' | trans }}</label>
+                        <select name="userRemoved" class="form-control" id="userRemoved">
+                            <option value=""></option>
+                            <option {{ setOptionSelectedAttr('userRemoved', 0) }} >{{ 'trans.No' | trans }}</option>
+                            <option {{ setOptionSelectedAttr('userRemoved', 1) }} >{{ 'trans.Yes' | trans }}</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-4 mb-2 pt-2">
+                        <button type="submit" class="btn btn-primary p-3 px-5">{{ 'trans.Search' | trans }}</button>
+                        <div class="d-inline-block btn btn-link js__removeOnClick" data-toggle="collapse" data-target=".js__hiddenFilter">
+                            {{- 'trans.show more filters' | trans -}}
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="mt-3">
+            <table class="table table-responsive-sm" id="listings">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th class="column-listing-title">{{ 'trans.Title' | trans }}</th>
+                        <th class="mw-8-rem">{{ 'trans.Status' | trans }}</th>
+                        <th class="mw-8-rem">{{ 'trans.Date added' | trans }}</th>
+                        <th>{{ 'trans.Actions' | trans }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {%- for listing in listings -%}
+                    <tr>
+                        <!-- img -->
+                        <td>
+                            <div>
+                                <a
+                                        title="{{ listing.title }}"
+                                        href="{{ path('app_listing_show', {id: listing.id, 'slug': listing.slug}) }}"
+                                >
+                                    <img
+                                            class="rounded list-small-img"
+                                            src="{{ asset(listing.mainImageInListSize | default('static/system/blank.png')) }}"
+                                            alt="{{ listing.title }}"
+                                    >
+                                </a>
+                            </div>
+                        </td>
+
+                        <!-- title -->
+                        <td>
+                            <div>
+                                <a
+                                        href="{{ path('app_listing_show', {"id": listing.id, 'slug': listing.slug}) }}"
+                                        class="text-break"
+                                >
+                                    {{- listing.title -}}
+                                </a>
+                            </div>
+
+                            <div>
+                                {%- if listing.featured -%}
+                                    <span class="badge badge-pill badge-warning">{{ 'trans.Featured' | trans }}</span>
+                                    {{- ' ' -}}
+                                {%- endif -%}
+                                <span class="mr-2 text-break">
+                                    {{- listing.category.parent.name -}}
+                                    {{ ' ⇾ ' }}
+                                    <a href="{{ path('app_category', {'categorySlug': listing.category.slug}) }}">
+                                        {{- listing.category.name -}}
+                                    </a>
+                                </span>
+                            </div>
+
+                            <div>
+                                <span>
+                                    <a href="{{ path('app_admin_listing_search', {'user': listing.user.email}) }}">
+                                        {{- 'trans.User listings' | trans -}}
+                                    </a>
+                                </span>
+                                <a
+                                        class="btn btn-secondary btn-sm"
+                                        data-toggle="collapse"
+                                        href="#collapse{{ listing.id }}"
+                                        role="button"
+                                        aria-expanded="true"
+                                        aria-controls="collapseOne"
+                                >
+                                    {{- 'trans.more information' | trans -}}
+                                </a>
+                            </div>
+                        </td>
+
+                        <!-- status -->
+                        <td>
+                            <span class="{{ getListingStatusClass(listing) }} listing-search-status text-break d-inline-block">
+                                {{- getListingStatus(listing) -}}
+                            </span>
+                        </td>
+
+                        <!-- date -->
+                        <td>
+                            <div>{{- listing.firstCreatedDate | date -}}</div>
+                            <div class="{{ listing.expirationDate | isExpired | displayTextWarning }}">
+                                {{- 'trans.Valid until' | trans -}}
+                                {{- ': ' -}}
+                                {{- listing.expirationDate | date -}}
+                            </div>
+                        </td>
+
+                        <!-- action -->
+                        <td>
+                            <a href="{{ path('app_admin_listing_edit', {'id': listing.id}) }}" class="btn btn-dark mb-1">
+                                {{- 'trans.Edit' | trans -}}
+                            </a>
+
+                            {%- if listingToActivateForAdmin(listing) -%}
+                                {{ include('admin/listing/_action/_admin_activate_form.html.twig') }}
+                            {%- endif -%}
+                            {{- ' ' -}}
+                            {%- if listingToRejectForAdmin(listing) -%}
+                                {{ include('admin/listing/_action/_admin_reject_form.html.twig') }}
+                            {%- endif -%}
+                        </td>
+                    </tr>
+
+                    <!-- more info row -->
+                    <tr class="collapse" id="collapse{{ listing.id }}" data-parent="#listings">
+                        <td colspan="99">
+                            <div class="row">
+                                {{- adminMacro.listingInfo(listing) -}}
+                            </div>
+                        </td>
+                    </tr>
+                {%- else -%}
+                    <tr>
+                        <td colspan="99">{{ 'trans.no records found' | trans }}</td>
+                    </tr>
+                {%- endfor -%}
+                </tbody>
+            </table>
+
+            {%- include 'base/_pagination.html.twig' -%}
+
+            {%- if listings is not empty -%}
+                <div>
+                    <a href="{{ path('app_admin_listing_execute_on_filtered', app.request.query.all) }}" class="btn btn-danger">
+                        {{- 'trans.Execute action on filtered listings' | trans -}}
+                    </a>
+                </div>
+            {%- endif -%}
+        </div>
+    </div>
+{% endblock %}
+
+{% block js %}
+    {{ encore_entry_link_tags('admin_listing_search') }}
+    {{ encore_entry_script_tags('admin_listing_search') }}
+{% endblock %}
+

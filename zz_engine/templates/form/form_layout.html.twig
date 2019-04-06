@@ -1,0 +1,46 @@
+{% use "bootstrap_4_layout.html.twig" %}
+
+{%- block form_start -%}
+    {{ parent() }}
+
+    {%- if not form.vars.valid -%}
+        <div class="alert alert-danger">
+            {{- 'trans.The form contains errors. Error messages are displayed next to the fields in the form below.' | trans -}}
+        </div>
+    {%- endif -%}
+
+    {% include 'form/_flash_above_form.html.twig' %}
+{%- endblock form_start -%}
+
+{% block form_label -%}
+    {{ parent() }}
+    {% if required and (label is not same as(false)) and (errors|length < 1) -%}
+        <span class="form-required-badge"><span class="text-danger">* </span>{{ 'trans.required' | trans }}</span>
+    {% endif %}
+{%- endblock form_label %}
+
+{% block checkbox_widget -%}
+    {%- set parent_label_class = parent_label_class|default(label_attr.class|default('checkbox-custom')) -%}
+    {{ parent() }}
+{%- endblock checkbox_widget %}
+
+{% block checkbox_radio_label -%}
+    {%- set parent_label_class = parent_label_class|default(label_attr.class|default('checkbox-custom')) -%}
+    {{ parent() }}
+{%- endblock checkbox_radio_label %}
+
+{% block form_row -%}
+    {%- if compound is defined and compound -%}
+        {%- set element = 'fieldset' -%}
+    {%- endif -%}
+    {%- set widget_attr = {} -%}
+    {%- if help is not empty -%}
+        {%- set widget_attr = {attr: {'aria-describedby': id ~"_help"}} -%}
+    {%- endif -%}
+    {%- set form_group_attr = form_group_attr | default({}) |merge({class: (form_group_attr.class|default('') ~ ' form-group')|trim}) -%}
+    <{{ element|default('div') }} {% with { attr: form_group_attr } %}{{ block('attributes') }}{% endwith %}>
+    {{- form_label(form) -}}
+    {{- form_widget(form, widget_attr) -}}
+    {{- form_help(form) -}}
+    </{{ element|default('div') }}>
+{%- endblock form_row %}

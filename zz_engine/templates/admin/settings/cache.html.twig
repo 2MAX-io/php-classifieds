@@ -1,0 +1,23 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}{{ 'trans.Settings' | trans }}{% endblock %}
+
+{% block body %}
+    <div class="container mt-3">
+        {% include 'admin/settings/_partial/_settings_menu.html.twig' %}
+
+        <h1>{{ 'trans.Cache' | trans }}</h1>
+
+        <form
+                method="post"
+                action="{{ path('app_admin_cache_clear') }}"
+                data-confirm-message="{{ 'trans.Clear cache' | trans }}?"
+                class="d-inline js__confirm"
+        >
+            <input type="hidden" name="_method" value="PATCH">
+            <input type="hidden" name="_token" value="{{ csrf_token('csrf_adminCacheClear') }}">
+            <button class="btn btn-warning mb-1">{{ 'trans.Clear cache' | trans }}</button>
+        </form>
+
+    </div>
+{% endblock %}

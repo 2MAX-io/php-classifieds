@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+    <channel>
+        <title>{{ settingsDto.rssTitle }}</title>
+        <description>{{ settingsDto.rssDescription }}</description>
+        <link>{{ url('app_index') }}</link>
+
+        {%- for listing in listingList ~%}
+            <item>
+                <title>{{ listing.title }}</title>
+                <description>{{ listing.description | slice(0, 200) }}</description>
+                <link>{{ url('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}</link>
+                <guid>{{ url('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}</guid>
+                <pubDate>{{ listing.firstCreatedDate|date(format='r', timezone='GMT') }}</pubDate>
+            </item>
+        {%- endfor ~%}
+    </channel>
+</rss>

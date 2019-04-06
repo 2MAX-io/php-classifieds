@@ -1,0 +1,207 @@
+<component name="ProjectCodeStyleConfiguration">
+  <code_scheme name="Project" version="173">
+    <option name="LINE_SEPARATOR" value="&#10;" />
+    <DB2CodeStyleSettings version="5">
+      <option name="USE_GENERAL_STYLE" value="false" />
+      <option name="SELECT_EL_WRAP" value="2" />
+      <option name="SELECT_EL_COMMA" value="1" />
+      <option name="SELECT_KEEP_N_ITEMS_IN_LINE" value="0" />
+      <option name="SELECT_USE_AS_WORD" value="2" />
+      <option name="FROM_EL_LINE" value="1" />
+      <option name="FROM_EL_WRAP" value="3" />
+      <option name="FROM_EL_COMMA" value="1" />
+      <option name="FROM_INDENT_JOIN" value="false" />
+      <option name="WHERE_EL_LINE" value="101" />
+      <option name="WHERE_EL_WRAP" value="2" />
+      <option name="WHERE_EL_BOUND" value="2" />
+    </DB2CodeStyleSettings>
+    <DerbyCodeStyleSettings version="5">
+      <option name="USE_GENERAL_STYLE" value="false" />
+      <option name="SELECT_EL_WRAP" value="2" />
+      <option name="SELECT_EL_COMMA" value="1" />
+      <option name="SELECT_KEEP_N_ITEMS_IN_LINE" value="0" />
+      <option name="SELECT_USE_AS_WORD" value="2" />
+      <option name="FROM_EL_LINE" value="1" />
+      <option name="FROM_EL_WRAP" value="3" />
+      <option name="FROM_EL_COMMA" value="1" />
+      <option name="FROM_INDENT_JOIN" value="false" />
+      <option name="WHERE_EL_LINE" value="101" />
+      <option name="WHERE_EL_WRAP" value="2" />
+      <option name="WHERE_EL_BOUND" value="2" />
+    </DerbyCodeStyleSettings>
+    <H2CodeStyleSettings version="5">
+      <option name="USE_GENERAL_STYLE" value="false" />
+      <option name="SELECT_EL_WRAP" value="2" />
+      <option name="SELECT_EL_COMMA" value="1" />
+      <option name="SELECT_KEEP_N_ITEMS_IN_LINE" value="0" />
+      <option name="SELECT_USE_AS_WORD" value="2" />
+      <option name="FROM_EL_LINE" value="1" />
+      <option name="FROM_EL_WRAP" value="3" />
+      <option name="FROM_EL_COMMA" value="1" />
+      <option name="FROM_INDENT_JOIN" value="false" />
+      <option name="WHERE_EL_LINE" value="101" />
+      <option name="WHERE_EL_WRAP" value="2" />
+      <option name="WHERE_EL_BOUND" value="2" />
+    </H2CodeStyleSettings>
+    <HSQLCodeStyleSettings version="5">
+      <option name="USE_GENERAL_STYLE" value="false" />
+      <option name="SELECT_EL_WRAP" value="2" />
+      <option name="SELECT_EL_COMMA" value="1" />
+      <option name="SELECT_KEEP_N_ITEMS_IN_LINE" value="0" />
+      <option name="SELECT_USE_AS_WORD" value="2" />
+      <option name="FROM_EL_LINE" value="1" />
+      <option name="FROM_EL_WRAP" value="3" />
+      <option name="FROM_EL_COMMA" value="1" />
+      <option name="FROM_INDENT_JOIN" value="false" />
+      <option name="WHERE_EL_LINE" value="101" />
+      <option name="WHERE_EL_WRAP" value="2" />
+      <option name="WHERE_EL_BOUND" value="2" />
+    </HSQLCodeStyleSettings>
+    <HTMLCodeStyleSettings>
+      <option name="HTML_ATTRIBUTE_WRAP" value="4" />
+      <option name="HTML_NEWLINE_BEFORE_FIRST_ATTRIBUTE" value="When multiline" />
+      <option name="HTML_NEWLINE_AFTER_LAST_ATTRIBUTE" value="When multiline" />
+    </HTMLCodeStyleSettings>
+    <MSSQLCodeStyleSettings version="5">
+      <option name="USE_GENERAL_STYLE" value="false" />
+      <option name="SELECT_EL_WRAP" value="2" />
+      <option name="SELECT_EL_COMMA" value="1" />
+      <option name="SELECT_KEEP_N_ITEMS_IN_LINE" value="0" />
+      <option name="SELECT_USE_AS_WORD" value="2" />
+      <option name="FROM_EL_LINE" value="1" />
+      <option name="FROM_EL_WRAP" value="3" />
+      <option name="FROM_EL_COMMA" value="1" />
+      <option name="FROM_INDENT_JOIN" value="false" />
+      <option name="WHERE_EL_LINE" value="101" />
+      <option name="WHERE_EL_WRAP" value="2" />
+      <option name="WHERE_EL_BOUND" value="2" />
+    </MSSQLCodeStyleSettings>
+    <MySQLCodeStyleSettings version="5">
+      <option name="USE_GENERAL_STYLE" value="false" />
+      <option name="KEYWORD_CASE" value="2" />
+      <option name="TYPE_CASE" value="2" />
+      <option name="CUSTOM_TYPE_CASE" value="2" />
+      <option name="QUERY_EL_COMMA" value="2" />
+      <option name="QUERY_IN_ONE_STRING" value="3" />
+      <option name="INSERT_EL_COMMA" value="1" />
+      <option name="SET_ALIGN_EQUAL_SIGN" value="false" />
+      <option name="SELECT_EL_LINE" value="101" />
+      <option name="SELECT_EL_WRAP" value="2" />
+      <option name="SELECT_EL_COMMA" value="1" />
+      <option name="SELECT_KEEP_N_ITEMS_IN_LINE" value="1" />
+      <option name="SELECT_USE_AS_WORD" value="1" />
+      <option name="SELECT_ALIGN_AS" value="false" />
+      <option name="FROM_EL_LINE" value="1" />
+      <option name="FROM_EL_WRAP" value="3" />
+      <option name="FROM_EL_COMMA" value="2" />
+      <option name="FROM_INDENT_JOIN" value="false" />
+      <option name="FROM_ONLY_JOIN_INDENT" value="2" />
+      <option name="WHERE_EL_LINE" value="101" />
+      <option name="WHERE_EL_WRAP" value="2" />
+      <option name="ORDER_EL_LINE" value="101" />
+      <option name="ORDER_EL_COMMA" value="2" />
+      <option name="IMP_COMMON_WRAP_EVERY_STATEMENT" value="true" />
+    </MySQLCodeStyleSettings>
+    <OracleCodeStyleSettings version="5">
+      <option name="USE_GENERAL_STYLE" value="false" />
+      <option name="SELECT_EL_WRAP" value="2" />
+      <option name="SELECT_EL_COMMA" value="1" />
+      <option name="SELECT_KEEP_N_ITEMS_IN_LINE" value="0" />
+      <option name="SELECT_USE_AS_WORD" value="2" />
+      <option name="FROM_EL_LINE" value="1" />
+      <option name="FROM_EL_WRAP" value="3" />
+      <option name="FROM_EL_COMMA" value="1" />
+      <option name="FROM_INDENT_JOIN" value="false" />
+      <option name="WHERE_EL_LINE" value="101" />
+      <option name="WHERE_EL_WRAP" value="2" />
+      <option name="WHERE_EL_BOUND" value="2" />
+    </OracleCodeStyleSettings>
+    <PHPCodeStyleSettings>
+      <option name="COMMA_AFTER_LAST_ARRAY_ELEMENT" value="true" />
+      <option name="LOWER_CASE_BOOLEAN_CONST" value="true" />
+      <option name="LOWER_CASE_NULL_CONST" value="true" />
+      <option name="ELSE_IF_STYLE" value="SEPARATE" />
+      <option name="KEEP_RPAREN_AND_LBRACE_ON_ONE_LINE" value="true" />
+      <option name="BLANK_LINES_AFTER_OPENING_TAG" value="1" />
+      <option name="FORCE_SHORT_DECLARATION_ARRAY_STYLE" value="true" />
+    </PHPCodeStyleSettings>
+    <PostgresCodeStyleSettings version="5">
+      <option name="USE_GENERAL_STYLE" value="false" />
+      <option name="SELECT_EL_WRAP" value="2" />
+      <option name="SELECT_EL_COMMA" value="1" />
+      <option name="SELECT_KEEP_N_ITEMS_IN_LINE" value="0" />
+      <option name="SELECT_USE_AS_WORD" value="2" />
+      <option name="FROM_EL_LINE" value="1" />
+      <option name="FROM_EL_WRAP" value="3" />
+      <option name="FROM_EL_COMMA" value="1" />
+      <option name="FROM_INDENT_JOIN" value="false" />
+      <option name="WHERE_EL_LINE" value="101" />
+      <option name="WHERE_EL_WRAP" value="2" />
+      <option name="WHERE_EL_BOUND" value="2" />
+    </PostgresCodeStyleSettings>
+    <SQLiteCodeStyleSettings version="5">
+      <option name="USE_GENERAL_STYLE" value="false" />
+      <option name="SELECT_EL_WRAP" value="2" />
+      <option name="SELECT_EL_COMMA" value="1" />
+      <option name="SELECT_KEEP_N_ITEMS_IN_LINE" value="0" />
+      <option name="SELECT_USE_AS_WORD" value="2" />
+      <option name="FROM_EL_LINE" value="1" />
+      <option name="FROM_EL_WRAP" value="3" />
+      <option name="FROM_EL_COMMA" value="1" />
+      <option name="FROM_INDENT_JOIN" value="false" />
+      <option name="WHERE_EL_LINE" value="101" />
+      <option name="WHERE_EL_WRAP" value="2" />
+      <option name="WHERE_EL_BOUND" value="2" />
+    </SQLiteCodeStyleSettings>
+    <SqlCodeStyleSettings version="5">
+      <option name="KEYWORD_CASE" value="2" />
+      <option name="TYPE_CASE" value="3" />
+      <option name="CUSTOM_TYPE_CASE" value="3" />
+      <option name="SELECT_EL_WRAP" value="2" />
+      <option name="SELECT_EL_COMMA" value="1" />
+      <option name="SELECT_KEEP_N_ITEMS_IN_LINE" value="1" />
+      <option name="SELECT_USE_AS_WORD" value="1" />
+      <option name="SELECT_ALIGN_AS" value="false" />
+      <option name="FROM_EL_LINE" value="1" />
+      <option name="FROM_EL_WRAP" value="2" />
+      <option name="FROM_EL_COMMA" value="1" />
+      <option name="FROM_INDENT_JOIN" value="false" />
+      <option name="FROM_ONLY_JOIN_INDENT" value="2" />
+      <option name="FROM_PLACE_ON" value="10" />
+      <option name="WHERE_EL_LINE" value="101" />
+      <option name="WHERE_EL_WRAP" value="2" />
+      <option name="ORDER_EL_LINE" value="101" />
+      <option name="ORDER_EL_WRAP" value="2" />
+      <option name="ORDER_EL_COMMA" value="1" />
+      <option name="IMP_COMMON_WRAP_EVERY_STATEMENT" value="true" />
+    </SqlCodeStyleSettings>
+    <SybaseCodeStyleSettings version="5">
+      <option name="USE_GENERAL_STYLE" value="false" />
+      <option name="SELECT_EL_WRAP" value="2" />
+      <option name="SELECT_EL_COMMA" value="1" />
+      <option name="SELECT_KEEP_N_ITEMS_IN_LINE" value="0" />
+      <option name="SELECT_USE_AS_WORD" value="2" />
+      <option name="FROM_EL_LINE" value="1" />
+      <option name="FROM_EL_WRAP" value="3" />
+      <option name="FROM_EL_COMMA" value="1" />
+      <option name="FROM_INDENT_JOIN" value="false" />
+      <option name="WHERE_EL_LINE" value="101" />
+      <option name="WHERE_EL_WRAP" value="2" />
+      <option name="WHERE_EL_BOUND" value="2" />
+    </SybaseCodeStyleSettings>
+    <editorconfig>
+      <option name="ENABLED" value="false" />
+    </editorconfig>
+    <codeStyleSettings language="HTML">
+      <option name="WRAP_ON_TYPING" value="0" />
+    </codeStyleSettings>
+    <codeStyleSettings language="PHP">
+      <option name="BLANK_LINES_AROUND_FIELD" value="1" />
+      <option name="SPACE_AFTER_TYPE_CAST" value="true" />
+      <option name="METHOD_PARAMETERS_WRAP" value="5" />
+      <option name="METHOD_PARAMETERS_LPAREN_ON_NEXT_LINE" value="true" />
+      <option name="METHOD_PARAMETERS_RPAREN_ON_NEXT_LINE" value="true" />
+      <option name="KEEP_SIMPLE_METHODS_IN_ONE_LINE" value="true" />
+    </codeStyleSettings>
+  </code_scheme>
+</component>

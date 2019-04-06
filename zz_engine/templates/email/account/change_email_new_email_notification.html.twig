@@ -1,0 +1,18 @@
+{% extends 'email/email_base.html.twig' %}
+
+{# @var user \App\Entity\User #}
+
+{% block content %}
+<p>
+    {{ 'trans.We received request to change your account\'s email address to' | trans }}:
+    <b>{{- newEmail -}}</b> {{ 'trans.(this mailbox)' | trans }}
+</p>
+
+<p>
+    {{ 'trans.From your previous email account' | trans }}: <b>{{ oldEmail }}</b>
+</p>
+
+<p>
+    {{- 'trans.This email is just verification that new email address is correct' | trans -}}
+</p>
+{% endblock content %}

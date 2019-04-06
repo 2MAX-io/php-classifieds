@@ -1,0 +1,46 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}{{ 'trans.Payments' | trans }}{% endblock %}
+
+{% block body %}
+    <h1>{{ 'trans.Payments' | trans }}</h1>
+
+    <table class="table table-responsive-sm">
+        <thead>
+            <tr>
+                <th class="mw-8-rem">{{ 'trans.Date' | trans }}</th>
+                <th>{{ 'trans.Amount' | trans }}</th>
+                <th>{{ 'trans.Payment gateway - status' | trans }}</th>
+                <th>{{ 'trans.Paid?' | trans }}</th>
+                <th>{{ 'trans.Canceled?' | trans }}</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for payment in payments %}
+            <tr>
+                <td>{{ payment.datetime ? payment.datetime | date(dateFormatYmdHis) : '' }}</td>
+                <td>{{ payment.amount | moneyPrecise }}</td>
+                <td>{{ payment.gatewayStatus }}</td>
+                <td>
+                    <span class="{{ payment.paid | boolGreenRedClass }}">{{ payment.paid | boolText | trans }}</span>
+                </td>
+                <td>
+                    <span class="{{ payment.canceled | boolGreenRedClass }}">{{ payment.canceled | boolText | trans }}</span>
+                </td>
+                <td>
+                    <a href="{{ path('app_admin_payment_show', {'id': payment.id}) }}" class="btn btn-secondary">
+                        {{- 'trans.details' | trans -}}
+                    </a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="99">{{ 'trans.no records found' | trans }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {% include 'base/_pagination.html.twig' %}
+{% endblock %}

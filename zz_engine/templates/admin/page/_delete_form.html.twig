@@ -1,0 +1,10 @@
+<form
+        method="post"
+        action="{{ path('app_admin_page_delete', {'id': page.id}) }}"
+        data-confirm-message="{{ 'trans.Delete' | trans }}: {{ page.title }}?"
+        class="d-inline js__confirm"
+>
+    <input type="hidden" name="_method" value="DELETE">
+    <input type="hidden" name="_token" value="{{ csrf_token('csrf_deletePage' ~ page.id) }}">
+    <button class="btn btn-danger">{{ 'trans.Delete' | trans }}</button>
+</form>

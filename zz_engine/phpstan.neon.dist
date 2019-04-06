@@ -1,0 +1,20 @@
+includes:
+    - %rootDir%/../phpstan-symfony/extension.neon
+    - %rootDir%/../phpstan-doctrine/extension.neon
+    - %rootDir%/../phpstan-doctrine/rules.neon
+
+parameters:
+    level: 7
+    symfony:
+        container_xml_path: var/cache/dev/srcApp_KernelDevDebugContainer.xml
+        console_application_loader: tests/console-application.php
+    ignoreErrors:
+            - '~^Function twig_[\w_]+ not found\.$~'
+            - '~with generic interface Doctrine\\Common\\Collections\\Collection does not specify its types: TKey, T$~'
+            - '~with generic class Doctrine\\Common\\Collections\\ArrayCollection does not specify its types: TKey, T$~'
+            - '~no value type specified in iterable type Doctrine\\DBAL\\Statement|PDOStatement$~'
+    excludePaths:
+    	- vendor/*
+    	- src/Service/System/HealthCheck/HealthChecker/Settings/Mock/*
+    	- src/Secondary/FileUpload/FileUploader.php
+    	- tests/bootstrap.php

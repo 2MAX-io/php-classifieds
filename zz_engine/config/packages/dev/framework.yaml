@@ -1,0 +1,5 @@
+parameters:
+    env(APP_DEV_IDE_CONFIG): ''
+
+framework:
+    ide: '%env(resolve:APP_DEV_IDE_CONFIG)%'

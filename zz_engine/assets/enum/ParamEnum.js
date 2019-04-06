@@ -1,0 +1,34 @@
+"use strict";
+
+var ParamEnum = {};
+ParamEnum.DATA_FOR_JS = "dataForJs";
+ParamEnum.CSRF_TOKEN = "csrfToken";
+ParamEnum.CSRF_HEADER = "x-csrf-token";
+ParamEnum.LANGUAGE_ISO = "languageIso";
+ParamEnum.COUNTRY_ISO = "countryIso";
+ParamEnum.BASE_URL = "baseUrl";
+ParamEnum.SUCCESS = "success";
+ParamEnum.ERROR = "error";
+ParamEnum.USERNAME = "username";
+ParamEnum.LISTING_ID = "listingId";
+ParamEnum.CATEGORY_ID = "categoryId";
+ParamEnum.LISTING_LIST = "listingList";
+ParamEnum.LISTING_FILES = "listingFiles";
+ParamEnum.CUSTOM_FIELD = "customField";
+ParamEnum.PACKAGE_LIST = "packageList";
+ParamEnum.SHOW_CONTACT_HTML = "showContactHtml";
+ParamEnum.SHOW_LISTING_PREVIEW_FOR_OWNER = "showListingPreviewForOwner";
+ParamEnum.PAYMENT_APP_TOKEN = "paymentAppToken";
+ParamEnum.POLICE_LOG_TEXT = "policeLogText";
+ParamEnum.MAP_LOCATION_COORDINATES = "mapLocationCoordinates";
+ParamEnum.MAP_DEFAULT_LATITUDE = "mapDefaultLatitude";
+ParamEnum.MAP_DEFAULT_LONGITUDE = "mapDefaultLongitude";
+ParamEnum.MAP_DEFAULT_ZOOM = "mapDefaultZoom";
+ParamEnum.LONGITUDE = "longitude";
+ParamEnum.LATITUDE = "latitude";
+ParamEnum.ZOOM = "zoom";
+ParamEnum.THOUSAND_SEPARATOR = "thousandSeparator";
+ParamEnum.NUMERAL_DECIMAL_MARK = "numeralDecimalMark";
+ParamEnum.OBSERVED = "observed";
+
+export { ParamEnum as default };

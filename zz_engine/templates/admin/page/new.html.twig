@@ -1,0 +1,13 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}{{ 'trans.Create new page' | trans }}{% endblock %}
+
+{% block body %}
+    <div class="container mt-3">
+        <h1>{{ 'trans.Create new page' | trans }}</h1>
+
+        <a href="{{ path('app_admin_page_list') }}">{{ 'trans.back to list' | trans }}</a>
+
+        {{ include('admin/page/_form.html.twig') }}
+    </div>
+{% endblock %}

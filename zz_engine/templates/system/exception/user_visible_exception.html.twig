@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="{{ _charset }}" />
+    <title>An Error Occurred: {{ userVisibleExceptionMessage }}</title>
+    <style>
+        body { background-color: #fff; color: #222; font: 16px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; margin: 0; }
+        .container { margin: 30px; max-width: 600px; }
+        h1 { color: #dc3545; font-size: 24px; }
+        h2 { font-size: 18px; }
+        .exception-trace {
+            width: 100%;
+            min-height: 10em;
+            overflow-wrap: break-word;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>
+        An Error Occurred: {{ userVisibleExceptionMessage }}
+    </h1>
+
+    <p>
+        Something is broken. Please let us know what you were doing when this error occurred.
+        We will fix it as soon as possible. Sorry for any inconvenience caused.
+    </p>
+
+    <p>
+        When contacting us please share information bellow, copy entire content, or take photo of this page, thank you
+    </p>
+
+    <p>
+        <button id="js__copyToClipboard">Copy to clipboard</button>
+    </p>
+
+    <textarea id="js_copyToClipboardText" class="exception-trace">
+        {{- exceptionReferenceMessage -}}
+    </textarea>
+
+    <script src="{{ asset('asset/page/exception-page.js') }}"></script>
+</div>
+</body>
+</html>

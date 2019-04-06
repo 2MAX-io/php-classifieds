@@ -1,0 +1,9 @@
+<form
+        method="post"
+        action="{{ path('app_admin_listing_redirect_next_waiting_activation') }}"
+        class="d-inline"
+>
+    <input type="hidden" name="_method" value="PATCH">
+    <input type="hidden" name="_token" value="{{ csrf_token('csrf_adminRedirectNextWaitingActivation') }}">
+    <button class="btn btn-outline-dark mb-1">{{ buttonText | default('trans.Go to next waiting') | trans }}</button>
+</form>

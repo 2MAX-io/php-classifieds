@@ -1,0 +1,4 @@
+2MAX.io Classified Ads
+Responsive Classified Ads with Custom Fields & Filters
+
+To use this PHP app it is required to poses License certificate and purchase code provided by https://php-classified-ads.2max.io/

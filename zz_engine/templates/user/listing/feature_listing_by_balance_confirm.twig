@@ -1,0 +1,116 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'trans.Feature listing' | trans }}{% endblock %}
+
+{% block body %}
+    <div class="container mt-2 mt-md-4">
+        <div class="row">
+            <div class="col-md-4 col-lg-3 mb-4 d-none d-md-block">
+                {% include 'user/_part/user_navigation_card.html.twig' %}
+            </div>
+
+            <div class="col-md-8 col-lg-9">
+                <h3 class="mb-3">
+                    {{ 'trans.Feature listing' | trans }}:
+                    <a href="{{ path('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}" class="text-break">
+                        {{- listing.title -}}
+                    </a>
+                </h3>
+
+                {% include 'form/_flash_above_form.html.twig' %}
+
+                {% if listing.featuredActive %}
+                    <div class="alert alert-secondary">
+                        {{ 'trans.Featured until' | trans }}:
+                        <strong>{{ listing.featuredUntilDate | date }}</strong>
+                    </div>
+                {% endif %}
+
+                {% if userBalance > 0 %}
+                    <div class="my-4">
+                        {{ 'trans.Current balance' | trans }}:
+                        <strong class="badge badge-success">
+                            {{- userBalance | moneyPrecise -}}
+                            {{- ' ' -}}
+                            {{- settings.currency -}}
+                        </strong>
+                        {{ 'trans.that you can use to feature listings' | trans }}
+                    </div>
+                {% endif %}
+
+                {% if listing.status in [constant('\App\\Entity\\Listing::STATUS_ACTIVE'), constant('\App\\Entity\\Listing::STATUS_ACTIVE_FEATURED')] %}
+                    <div class="modal-dialog mw-100">
+                        <div class="modal-content">
+                            <div class="modal-body">
+                                <h3>
+                                    {{- 'trans.Do you confirm payment of' | trans -}}
+                                    {{- ': ' -}}
+                                    {{- package.price | moneyPrecise -}}
+                                    {{- ' ' -}}
+                                    {{- settings.currency -}}
+                                    {{- ', ' -}}
+                                    {{- 'trans.for package' | trans -}}
+                                    {{- ': ' -}}
+                                    {{- package.name -}}
+                                    {{- ', ' -}}
+                                    {{- 'trans.using account balance' | trans -}}
+                                    {{- '?' -}}
+                                </h3>
+                            </div>
+                            <div class="modal-footer">
+                                <span class="btn btn-secondary float-left js__goBackOnClick">
+                                    {{- 'trans.Go to previous page' | trans -}}
+                                </span>
+
+                                <form
+                                        method="post"
+                                        action="{{ path('app_user_feature_listing_pay_by_balance_confirm', {'id': listing.id, 'package': package.id}) }}"
+                                        class="d-inline"
+                                >
+                                    <input type="hidden" name="_method" value="PATCH">
+                                    <input type="hidden" name="_token" value="{{ csrf_token('csrf_feature' ~ listing.id) }}">
+                                    <button class="btn btn-block btn-primary">
+                                        {{ 'trans.Confirm' | trans }}
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="alert alert-info mt-3">
+                        <div>
+                            {{ 'trans.Do you need invoice for your company?' | trans }}
+                            <a href="{{ path('app_user_invoice_details') }}" class="btn btn-secondary">
+                                {{- 'trans.Enter invoice details' | trans -}}
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="alert alert-info mt-3">
+                        <div>
+                            {{ 'trans.Do you feature many listings?' | trans }}
+                            {{ 'trans.Do you feature frequently?' | trans }}
+                        </div>
+
+                        <a href="{{ path('app_user_balance_top_up') }}" class="btn btn-primary">
+                            {{- 'trans.Top up account' | trans -}}
+                        </a>
+                        <span>{{ 'trans.to feature listings by single click' | trans }}</span>
+                    </div>
+                {% else %}
+                    <div class="alert alert-danger">
+                        {{ 'trans.You can not feature listing that is deactivated. Current listings status' | trans }}:
+                        <span class="{{ getListingStatusClass(listing) }}">{{ getListingStatus(listing) }}</span>
+                    </div>
+                {% endif %}
+
+                <a href="{{ path('app_user_balance_history') }}">{{ 'trans.History of listings featuring' | trans }}</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block js %}
+    {{ encore_entry_link_tags('feature_listing') }}
+    {{ encore_entry_script_tags('feature_listing') }}
+{% endblock %}

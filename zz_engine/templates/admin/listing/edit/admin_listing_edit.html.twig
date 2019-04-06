@@ -1,0 +1,87 @@
+{% extends 'admin/base.html.twig' %}
+
+{% import "admin/_macro/_admin_macro.html.twig" as adminMacro %}
+
+{% block title %}{{ 'trans.Edit listing' | trans }}{% endblock %}
+
+{% block body %}
+    <div class="container mt-3">
+        <h3>{{ 'trans.Edit listing' | trans }}:
+            <a
+                    target="_blank"
+                    href="{{ path('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}"
+                    class="text-break"
+            >
+                {{- listing.title -}}
+            </a>
+        </h3>
+
+        <a href="{{ path('app_admin_listing_edit_advanced', {'id': listing.id}) }}">
+            {{- 'trans.Edit listing advanced settings' | trans -}}
+        </a>
+
+        <div class="float-right">
+            <span class="{{ getListingStatusClass(listing) }}">{{ getListingStatus(listing) }}</span>
+
+            {%- if listingToActivateForAdmin(listing) -%}
+                {{ include('admin/listing/_action/_admin_activate_form.html.twig') }}
+            {%- endif -%}
+
+            {% if listingToRejectForAdmin(listing) %}
+                {{ include('admin/listing/_action/_admin_reject_form.html.twig') }}
+            {% endif %}
+        </div>
+
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+
+        {% if settings.mapEnabled %}
+            <div class="form-group">
+                <div>
+                    {{ 'trans.Location on the map' | trans }}:
+                    {% if listing.hasLocationOnMap %}
+                        {{ 'trans.Latitude' | trans }}: {{ listing.locationLatitude }}
+                        {{- ', ' -}}
+                        {{ 'trans.Longitude' | trans }}: {{ listing.locationLongitude }}
+                    {% else %}
+                        {{ 'trans.Not set' | trans }}
+                    {% endif %}
+                    <div class="btn btn-outline-secondary btn-sm js__addLocationToTheMapButton">
+                        {{- 'trans.Edit location to the map' | trans -}}
+                    </div>
+                </div>
+
+                <div class="listing-edit-location-map d-none-soft js__listingEditLocationMap"></div>
+            </div>
+        {% endif %}
+
+        <div class="row mb-2">
+            {{ adminMacro.listingInfo(listing) }}
+        </div>
+
+        <button class="btn btn-primary mb-4">{{ button_label | default('trans.Save' | trans) }}</button>
+        {{ form_end(form) }}
+
+        <div class="my-4">
+            {% for listingFile in listing.listingFiles %}
+                <div class="d-inline-block mr-4">
+                    <div class="mb-2">
+                        <img
+                                class="img-cover-center admin-image-delete"
+                                src="{{ asset(listingFile.pathInListSize) }}"
+                                alt="{{ listingFile.userOriginalFilename }}"
+                        >
+                    </div>
+                    <div class="text-center">
+                        {{ include('admin/listing/_action/_remove_file_form.html.twig') }}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block js %}
+    {{ encore_entry_link_tags('admin_listing_edit') }}
+    {{ encore_entry_script_tags('admin_listing_edit') }}
+{% endblock %}

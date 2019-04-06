@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'trans.Top up account' | trans }}{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-4 col-lg-3 mb-4 d-none d-md-block">
+                {% include 'user/_part/user_navigation_card.html.twig' %}
+            </div>
+
+            <div class="col-md-8 col-lg-9">
+                <div class="row mb-2">
+                    <div class="col-md-6">
+                        <h2 class="mb-3">
+                            {{- 'trans.Top up account' | trans -}}
+                        </h2>
+                    </div>
+                    <div class="col-md-6 text-md-right">
+                        <a href="{{ path('app_user_balance_history') }}" class="btn btn-secondary mb-1">
+                            {{- 'trans.History of balance changes' | trans -}}
+                        </a>
+                    </div>
+                </div>
+
+                {% include 'form/_flash_above_form.html.twig' %}
+
+                <div class="my-4">
+                    {{- 'trans.Current balance' | trans -}}
+                    {{- ': ' -}}
+                    <strong class="badge badge-success">
+                        {{- userBalance | moneyPrecise -}}
+                        {{- ' ' -}}
+                        {{- settings.currency -}}
+                    </strong>
+                    {{ 'trans.that you can use to feature listings' | trans }}
+                </div>
+
+                {{ form_start(form) }}
+                {{ form_widget(form) }}
+
+                <div class="alert alert-info">
+                    <p>
+                        {{ 'trans.After account top up, you will be able to feature listing by one click, using your account balance. Without need to make payment for every single listing separately' | trans }}
+                    </p>
+                    <p>
+                        {{ 'trans.Funds do not expire. However, they are not subject to withdrawal. And they do not pay interest of any kind.' | trans }}
+                    </p>
+                </div>
+
+                <button class="btn btn-primary">{{ 'trans.Top up account' | trans }}</button>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block js %}
+    {{ encore_entry_link_tags('balance_top_up') }}
+    {{ encore_entry_script_tags('balance_top_up') }}
+{% endblock %}

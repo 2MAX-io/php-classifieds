@@ -1,0 +1,243 @@
+{#- @var settings \App\Service\Setting\SettingsDto -#}
+{%- set settings = settings() -%}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>{{ settings.indexPageTitle }}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style type="text/css">
+        @media screen {
+            html {
+                background-color: #f5f5f5;
+            }
+            body {
+                background-color: #f5f5f5;
+            }
+            body,
+            td,
+            th,
+            pre.empty,
+            p {
+                font-family: Arial, Helvetica, sans-serif;
+                font-size: 16px;
+                line-height: 1.5;
+                color: #000000;
+            }
+            p {
+                max-width: 55em;
+            }
+            a {
+                color: #d50c2d;
+            }
+            a:link,
+            a:visited {
+                text-decoration: none;
+            }
+            a:hover {
+                text-decoration: underline;
+            }
+        }
+        @media only screen and (max-width: 650px) {
+            .logo {
+                text-align: center;
+                margin: 30px 0 20px 0 !important;
+                background-color: #f5f5f5;
+            }
+            table {
+                background-color: #ffffff;
+                padding: 0;
+            }
+        }
+        @media print {
+            html,
+            body {
+                font-family: sans-serif;
+                background: #ffffff;
+                border: 0;
+                margin: 0;
+                padding: 0;
+                border-radius: 0;
+            }
+            body,
+            td,
+            th,
+            pre.empty,
+            h1,
+            p {
+                font-size: 10pt;
+            }
+            body {
+                max-width: 210mm;
+            }
+            p {
+                max-width: 210mm;
+            }
+            .footer th {
+                font-size: 9pt;
+            }
+            .logo {
+                margin-bottom: 15mm;
+            }
+            table table td {
+                padding: 0;
+            }
+            a {
+                color: #000000;
+                text-decoration: none;
+            }
+            table table table {
+                border: 1pt solid #d7d7d7;
+            }
+        }
+    </style>
+</head>
+{% apply inline_css %}
+<style type="text/css">
+    body {
+        background-color: #f5f5f5;
+        margin: 0;
+        padding: 0;
+    }
+    .logo {
+        text-align: left;
+        padding: 30px 0 20px 0 !important;
+    }
+    .footer {
+        width: 100%;
+        margin-top: 2em;
+        font-size: 10px;
+        color: #bababa;
+        text-align: center;
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+    .footer td,
+    #footer th {
+        padding: 0 2px;
+        white-space: nowrap;
+        line-height: 1px;
+        height: 1px;
+    }
+    .footer a {
+        color: #bababa;
+        text-decoration: none;
+    }
+    h1 {
+        font-family: Arial, Helvetica, sans-serif;
+        text-transform: uppercase;
+        font-size: 21px;
+        font-weight: bold;
+        margin: 1em 0 1em 0;
+    }
+    pre {
+        background-color: #e2e2e2;
+        padding: 5px;
+        vertical-align: center;
+    }
+    a {
+        color: #d50c2d;
+    }
+    a:link,
+    a:visited {
+        text-decoration: none;
+    }
+    a:hover {
+        text-decoration: underline;
+    }
+    table table {
+        max-width: 600px;
+        padding: 0 0 0 0;
+    }
+    table table td {
+        padding: 10px 20px 0 20px;
+    }
+    table table table {
+        border: 1px solid #d7d7d7;
+        min-width: 60%;
+        max-width: 80%;
+        padding-bottom: 10px;
+        margin: 2em auto 2em auto;
+    }
+    table table table th,
+    table table table td {
+        padding: 2px 4px 2px 4px;
+    }
+    .btn-success {
+        display: inline-block;
+        font-weight: 400;
+        text-align: center;
+        vertical-align: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        padding: .9rem 1rem;
+        font-size: 1rem;
+        line-height: 1.5;
+        border-radius: .25rem;
+        transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+        color: #fff;
+        background-color: #28a745;
+        border: 1px solid #28a745;
+    }
+</style>
+<body>
+<table width="100%" height="100%" align="center" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+        <td width="100%" height="100%" bgcolor="#f5f5f5">
+            <table align="center" border="0" cellpadding="0" cellspacing="0" max-width="600">
+                <tr>
+                    <td class="logo">
+                        <a href="{{ url('app_index') }}">
+                            <img {{- ' ' -}}
+                                    src="{{ absolute_url(asset(settings.logoPath | default('static/system/logo_default.png'))) }}" {{- ' ' -}}
+                                    alt="{{ settings.indexPageTitle }}" {{- ' ' -}}
+                                    width="200" {{- ' ' -}}
+                            />
+                        </a>
+                    </td>
+                </tr>
+                <tr>
+                    <td bgcolor="#ffffff" style="padding-bottom: 20px;">
+                        {% block content %}{% endblock content %}
+                    </td>
+                </tr>
+                <tr>
+                    <td bgcolor="#f5f5f5" class="footer">
+                        <a href="{{ url('app_index') }}">
+                            {{- settings.indexPageTitle -}}
+                        </a>
+
+                        {%- if settings.linkTermsConditions ~%}
+                            {{- ' • ' -}}
+                            <a href="{{ url('app_page', {'slug': settings.linkTermsConditions}) }}">
+                                {{- 'trans.Terms and conditions' | trans -}}
+                            </a>
+                        {%- endif ~%}
+
+                        {%- if settings.linkPrivacyPolicy ~%}
+                            {{- ' • ' -}}
+                            <a href="{{ url('app_page', {'slug': settings.linkPrivacyPolicy}) }}">
+                                {{- 'trans.Privacy policy' | trans -}}
+                            </a>
+                        {%- endif ~%}
+
+                        {%- if settings.linkContact ~%}
+                            {{- ' • ' -}}
+                            <a href="{{ url('app_page', {'slug': settings.linkContact}) }}">
+                                {{- 'trans.Contact' | trans -}}
+                            </a>
+                        {%- endif ~%}
+
+                        {{- ' • ' -}}
+                        {{- settings.footerSiteCopyright | replace({"%year%": "now" | date('Y')}) -}}
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+</body>
+{% endapply %}
+</html>

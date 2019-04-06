@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'trans.Messages' | trans }}{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-4 col-lg-3 mb-4 d-none d-md-block">
+                {% include 'user/_part/user_navigation_card.html.twig' %}
+            </div>
+
+            <div class="col-md-8 col-lg-9">
+                <div class="alert alert-danger">
+                    {{- 'trans.Error, you are trying to send message to yourself' | trans -}}
+                </div>
+
+                <span class="btn btn-primary js__goBackOnClick">
+                    {{- 'trans.Go back' | trans -}}
+                </span>
+            </div>
+        </div>
+    </div>
+{% endblock %}

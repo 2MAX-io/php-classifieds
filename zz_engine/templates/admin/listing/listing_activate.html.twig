@@ -1,0 +1,163 @@
+{% extends 'admin/base.html.twig' %}
+
+{% import "admin/_macro/_admin_macro.html.twig" as adminMacro %}
+
+{% block title %}{{ 'trans.Activation' | trans }}{% endblock %}
+
+{% block body %}
+    <div class="container-fluid mt-2">
+        <table class="table table-responsive-sm" id="listings">
+            <thead>
+                <tr>
+                    <th class="column-select-checkbox d-none-soft js__listingSelectionHidden">
+                        <button class="js__selectAll btn btn-secondary">*</button>
+                    </th>
+                    <th>
+                        <button class="js__enableSelection btn btn-secondary btn-sm">
+                            {{- 'trans.Action on selected' | trans -}}
+                        </button>
+                    </th>
+                    <th class="column-listing-title">{{ 'trans.Title' | trans }}</th>
+                    <th class="column-listing-activate-last-edit">{{ 'trans.Last edit' | trans }}</th>
+                    <th>{{ 'trans.Actions' | trans }}</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for listing in listings %}
+                <tr>
+                    <td class="d-none-soft js__listingSelectionHidden">
+                        <label class="d-block">
+                            <input
+                                    type="checkbox"
+                                    id="checkbox_{{ listing.id }}"
+                                    value="{{ listing.id }}"
+                                    class="form-control js__selectListingCheckbox"
+                            />
+                        </label>
+                    </td>
+                    <td>
+                        <div>
+                            <a
+                                    title="{{ listing.title }}"
+                                    href="{{ path('app_listing_show', {id: listing.id, 'slug': listing.slug, 'showListingPreviewForOwner': 1}) }}"
+                            >
+                                <img
+                                        class="rounded list-small-img"
+                                        src="{{ asset(listing.mainImageInListSize | default('static/system/blank.png')) }}"
+                                        alt="{{ listing.title }}"
+                                >
+                            </a>
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            <a
+                                    href="{{ path('app_listing_show', {"id": listing.id, 'slug': listing.slug, 'showListingPreviewForOwner': 1}) }}"
+                                    class="text-break"
+                            >
+                                {{- listing.title -}}
+                            </a>
+                        </div>
+
+                        <div>
+                            {% if listing.featured %}
+                                <span class="badge badge-pill badge-warning">{{ 'trans.Featured' | trans }}</span>
+                            {% endif %}
+                            <span class="mr-2 text-break">
+                                {{- listing.category.parent.name -}}
+                                {{- ' ⇾ ' -}}
+                                <a href="{{ path('app_category', {'categorySlug': listing.category.slug}) }}">
+                                    {{- listing.category.name -}}
+                                </a>
+                            </span>
+                        </div>
+
+                        <div>
+                            <span>
+                                <a href="{{ path('app_admin_listing_search', {'user': listing.user.email}) }}">
+                                    {{- 'trans.User listings' | trans -}}
+                                </a>
+                            </span>
+                            <a
+                                    class="btn btn-secondary btn-sm"
+                                    data-toggle="collapse"
+                                    href="#collapse{{ listing.id }}"
+                                    role="button"
+                                    aria-expanded="true"
+                                    aria-controls="collapseOne"
+                            >
+                                {{- 'trans.more information' | trans -}}
+                            </a>
+                        </div>
+
+                        {% if listing.rejectionReason is not empty %}
+                            <div>
+                                <span class="text-warning-color">
+                                    {{- 'trans.Previous rejection' | trans -}}
+                                    {{- ': ' -}}
+                                    {{- listing.rejectionReason -}}
+                                </span>
+                            </div>
+                        {% endif %}
+                    </td>
+                    <td>{{ listing.lastEditDate | date }}</td>
+                    <td>
+                        <a href="{{ path('app_admin_listing_edit', {'id': listing.id}) }}" class="btn btn-dark mb-1">
+                            {{- 'trans.Edit' | trans -}}
+                        </a>
+
+                        {{ include('admin/listing/_action/_admin_activate_form.html.twig') }}
+                        {{ include('admin/listing/_action/_admin_reject_form.html.twig') }}
+                    </td>
+                </tr>
+                <tr class="collapse" id="collapse{{ listing.id }}" data-parent="#listings">
+                    <td colspan="99">
+                        <div class="row">
+                            {{ adminMacro.listingInfo(listing) }}
+                        </div>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="99">{{ 'trans.no records found' | trans }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="mb-2 d-none-soft js__listingSelectionHidden">
+            <form action="{{ path('app_admin_listing_activate_action_on_selected') }}" method="post" class="js__listingSelectionForm">
+                <button
+                        type="submit"
+                        class="btn btn-secondary js__activateSelectedActionButton"
+                        data-confirm-message="{{ 'trans.Activate selected?' | trans }}"
+                        value="{{ constant('\App\\Controller\\Admin\\AdminListingActivateController::ACTIVATE_ACTION') }}"
+                >
+                    {{- 'trans.Activate' | trans -}}
+                </button>
+
+                <button
+                        type="submit"
+                        class="btn btn-secondary js__activateSelectedActionButton"
+                        data-confirm-message="{{ 'trans.Reject selected?' | trans }}"
+                        value="{{ constant('\App\\Controller\\Admin\\AdminListingActivateController::REJECT_ACTION') }}"
+                >
+                    {{- 'trans.Reject' | trans -}}
+                </button>
+
+                <span>{{ 'trans.selected' | trans }}</span>
+
+                <input type="hidden" name="action" value="" class="js__actionToExecuteOnSelectedListings">
+                <input type="hidden" name="selected" value="" class="js__selectedListingsInput">
+                <input type="hidden" name="_token" value="{{ csrf_token('csrf_activateSelectedListings') }}">
+            </form>
+        </div>
+
+        {% include 'base/_pagination.html.twig' %}
+    </div>
+{% endblock %}
+
+{% block js %}
+    {{ encore_entry_link_tags('admin_listing_activate') }}
+    {{ encore_entry_script_tags('admin_listing_activate') }}
+{% endblock %}

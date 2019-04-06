@@ -1,0 +1,6 @@
+User-agent: *
+Disallow: /user
+Disallow: /admin
+Disallow: /private
+Disallow: /zzzz
+Disallow: /install

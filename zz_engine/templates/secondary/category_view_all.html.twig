@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'trans.All categories' | trans }}{% endblock %}
+
+{% block body %}
+    <div class="container mt-3 mt-sm-4">
+        <h2>{{ 'trans.All Categories' | trans }}</h2>
+    </div>
+
+    <div class="container mt-3">
+        <div class="row">
+            {% for category in categories %}
+                <div class="col-md-3">
+                    <div class="card mb-3">
+                        <h5 class="card-header">
+                            <a
+                                    href="{{ path('app_category', {'categorySlug': category.slug}) }}"
+                                    class="text-dark"
+                            >
+                                {{- category.name -}}
+                            </a>
+                        </h5>
+                        <div>
+                            {%- for categoryChild in category.children -%}
+                                <a
+                                        href="{{ path('app_category', {'categorySlug': categoryChild.slug}) }}"
+                                        class="category-link link-list-item"
+                                >
+                                    {{- categoryChild.name -}}
+                                </a>
+                            {%- endfor -%}
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <div class="alert alert-info w-100">
+                    {{ 'trans.No categories found, try again latter' | trans }}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,9 @@
+doctrine_migrations:
+    migrations_paths:
+        'App\Migrations': '%kernel.project_dir%/src/Migrations'
+    all_or_nothing: true
+    custom_template: '%kernel.project_dir%/config/packages/doctrine_migrations_template.txt'
+    storage:
+        table_storage:
+            version_column_length: 255
+            table_name: 'zzzz_doctrine_migration_versions'

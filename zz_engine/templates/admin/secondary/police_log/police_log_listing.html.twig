@@ -1,0 +1,42 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}{{ 'trans.Police log' | trans }}{% endblock %}
+{# @var settings \App\Service\Setting\SettingsDto #}
+{%- set settings = settings() -%}
+
+{% block body %}
+    <div class="container mt-3">
+        <h1>
+            {{- 'trans.Police log for listing' | trans -}}
+            {{- ': ' -}}
+            <a href="{{ path('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}" class="text-break">
+                {{- listing.title -}}
+            </a>
+        </h1>
+
+        <div>
+            <button type="button" class="js__policeLogCopyToClipboard btn btn-primary mb-4">
+                {{- 'trans.Copy to clipboard' | trans -}}
+            </button>
+            <div class="float-right">
+                {% if settings.messageSystemEnabled %}
+                    <a
+                            href="{{ path('app_admin_police_log_user_message', {'listing': listing.id}) }}"
+                            class="btn btn-info mb-1"
+                    >
+                        {{- 'trans.Police log for messages' | trans -}}
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+
+        <div>
+            <textarea disabled class="police-log-textarea">{{- policeLogText -}}</textarea>
+        </div>
+    </div>
+{% endblock %}
+
+{% block js %}
+    {{ encore_entry_link_tags('admin_police_log_listing') }}
+    {{ encore_entry_script_tags('admin_police_log_listing') }}
+{% endblock js %}

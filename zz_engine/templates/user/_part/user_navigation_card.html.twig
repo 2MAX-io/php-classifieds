@@ -1,0 +1,57 @@
+{# @var settings \App\Service\Setting\SettingsDto #}
+{%- set settings = settings() -%}
+
+<div class="card mb-2">
+    <div class="card-header">{{ 'trans.User Dashboard' | trans }}</div>
+
+    <div class="text-dark">
+        <a href="{{ path('app_user_listing_list') }}" class="link-list-item text-dark">
+            <i class="svg svg-list-ul mr-1"></i>
+            <span>{{ 'trans.Listings' | trans }}</span>
+        </a>
+        <a href="{{ path('app_user_listing_new') }}" class="link-list-item text-dark">
+            <i class="svg svg-plus-square mr-1"></i>
+            <span>{{ 'trans.Create Listing' | trans }}</span>
+        </a>
+        <a href="{{ path('app_user_observed_listings') }}" class="link-list-item text-dark">
+            <i class="svg svg-search mr-1"></i>
+            <span>{{ 'trans.Observed Listings' | trans }}</span>
+        </a>
+        {%- if settings.messageSystemEnabled ~%}
+            <a href="{{ path('app_user_message_list') }}" class="link-list-item text-dark">
+                <i class="svg svg-inbox mr-1"></i>
+                <span>{{ 'trans.Messages' | trans }}</span>
+            </a>
+        {%- endif ~%}
+        {%- if settings.paymentAllowed ~%}
+            <a href="{{ path('app_user_balance_top_up') }}" class="link-list-item text-dark">
+                <i class="svg svg-money-check-alt mr-1"></i>
+                <span>{{ 'trans.Top up account' | trans }}</span>
+            </a>
+        {%- endif ~%}
+        {%- if settings.paymentAllowed ~%}
+            <a href="{{ path('app_user_invoice_list') }}" class="link-list-item text-dark">
+                <i class="svg svg-envelope mr-1"></i>
+                <span>{{ 'trans.Invoices' | trans }}</span>
+            </a>
+        {%- endif ~%}
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">{{ 'trans.Other' | trans }}</div>
+
+    <div class="text-dark">
+        <a href="{{ path('app_user_settings') }}" class="link-list-item text-dark">
+            <i class="svg svg-cogs mr-1"></i>
+            <span>{{ 'trans.Settings' | trans }}</span>
+        </a>
+        <a
+                href="{{ path('app_logout_confirm') }}"
+                class="link-list-item text-dark"
+        >
+            <i class="svg svg-sign-out-alt mr-1"></i>
+            <span>{{ 'trans.Logout' | trans }}</span>
+        </a>
+    </div>
+</div>

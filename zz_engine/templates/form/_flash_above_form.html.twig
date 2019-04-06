@@ -1,0 +1,12 @@
+
+{% for message in app.flashes(constant('\App\\Service\\System\\FlashBag\\FlashService::SUCCESS_ABOVE_FORM')) %}
+    <div class="alert alert-success" role="alert">
+        {{- message -}}
+    </div>
+{% endfor %}
+
+{% for message in app.flashes(constant('\App\\Service\\System\\FlashBag\\FlashService::ERROR_ABOVE_FORM')) %}
+    <div class="alert alert-danger" role="alert">
+        {{- message -}}
+    </div>
+{% endfor %}

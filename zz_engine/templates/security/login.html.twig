@@ -1,0 +1,104 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'trans.Log in' | trans }}{% endblock %}
+
+{# @var settings \App\Service\Setting\SettingsDto #}
+{%- set settings = settings() -%}
+
+{% block body %}
+<div class="container mt-3 mt-md-4">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <div class="card">
+                <h4 class="card-header"><strong>{{ 'trans.Log in' | trans }}</strong></h4>
+
+                <div class="card-body">
+                    <form method="post" class="formUserLogin">
+                        {% if error %}
+                            <div class="alert alert-danger">
+                                {{ error.messageKey|trans(error.messageData, 'security') }}
+                            </div>
+                        {% endif %}
+
+                        {% include 'form/_flash_above_form.html.twig' %}
+
+                        <div class="form-group">
+                            {% include 'form/_flash_above_form.html.twig' %}
+
+                            <label for="inputEmail" class="sr-only">{{ 'trans.Email' | trans }}</label>
+                            <input {{- ' ' -}}
+                                    type="text" {{- ' ' -}}
+                                    value="{{ last_username }}" {{- ' ' -}}
+                                    name="email" {{- ' ' -}}
+                                    id="inputEmail" {{- ' ' -}}
+                                    class="form-control" {{- ' ' -}}
+                                    placeholder="{{ 'trans.Email or Login' | trans }}" {{- ' ' -}}
+                                    required {{- ' ' -}}
+                                    autofocus {{- ' ' -}}
+                                    tabindex="0" {{- ' ' -}}
+                                    autocomplete="username" {{- ' ' -}}
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <label for="inputPassword" class="sr-only">{{ 'trans.Password' | trans }}</label>
+                            <input
+                                    type="password" {{- ' ' -}}
+                                    name="password" {{- ' ' -}}
+                                    id="inputPassword" {{- ' ' -}}
+                                    class="form-control" {{- ' ' -}}
+                                    placeholder="{{ 'trans.Password' | trans }}" {{- ' ' -}}
+                                    required {{- ' ' -}}
+                                    tabindex="0" {{- ' ' -}}
+                                    autocomplete="current-password" {{- ' ' -}}
+                            >
+                        </div>
+
+                        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+                        <div class="form-group">
+                            <button class="btn btn-primary btn-block mb-2" type="submit">
+                                {{- 'trans.Sign in' | trans -}}
+                            </button>
+                            <a href="{{ path('app_remind_password') }}">{{ 'trans.Forgot password?' | trans }}</a>
+                        </div>
+                    </form>
+
+                    <hr>
+
+                    <div class="row">
+                        {% if settings.facebookSignInEnabled %}
+                            <div class="col-md-6 mb-2">
+                                <a
+                                        href="{{ path('app_login_oauth', {'provider': constant('\App\\Controller\\User\\Account\\LoginOauthController::FACEBOOK_PROVIDER')}) }}"
+                                        class="btn btn-secondary btn-block js__preventDoubleClick"
+                                        rel="nofollow"
+                                >
+                                    {{- 'trans.Facebook' | trans -}}
+                                </a>
+                            </div>
+                        {% endif %}
+
+                        {% if settings.googleSignInEnabled %}
+                            <div class="col-md-6 mb-2">
+                                <a
+                                        href="{{ path('app_login_oauth', {'provider': constant('\App\\Controller\\User\\Account\\LoginOauthController::GOOGLE_PROVIDER')}) }}"
+                                        class="btn btn-secondary btn-block js__preventDoubleClick"
+                                        rel="nofollow"
+                                >
+                                    {{- 'trans.Google' | trans -}}
+                                </a>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="card-footer text-muted">
+                    {{ 'trans.Need an account?' | trans }}
+                    <a href="{{ path('app_register') }}">{{ 'trans.Register' | trans }}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

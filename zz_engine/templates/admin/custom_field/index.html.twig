@@ -1,0 +1,73 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}{{ 'trans.Custom fields' | trans }}{% endblock %}
+
+{% block body %}
+<div class="mt-3">
+    <div class="row no-gutters mb-2">
+        <div class="col-md-6">
+            <h1>{{ 'trans.Custom fields' | trans }}</h1>
+        </div>
+        <div class="col-md-6 text-md-right">
+            <button class="btn btn-success mb-1 js__saveOrder">{{ 'trans.Save order' | trans }}</button>
+
+            <a href="{{ path('app_admin_custom_field_new') }}" class="btn btn-primary mb-1">
+                {{- 'trans.Add custom field' | trans -}}
+            </a>
+        </div>
+    </div>
+
+    <table class="table table-responsive-sm">
+        <thead>
+            <tr>
+                <th class="column-sort-handle"></th>
+                <th class="mw-8-rem">{{ 'trans.Name' | trans }}</th>
+                <th class="mw-8-rem">{{ 'trans.Type' | trans }}</th>
+                <th>{{ 'trans.Required?' | trans }}</th>
+                <th>{{ 'trans.Searchable?' | trans }}</th>
+                <th>{{ 'trans.Unit' | trans }}</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody class="sortable js__sortable">
+        {% for customField in customFieldList %}
+            <tr data-id="{{ customField.id }}">
+                <td><i class="fas fa-arrows-alt sortable-handle js__sortableHandle"></i></td>
+                <td>
+                    <div class="text-break">{{ customField.name }}</div>
+                    {% if customField.nameForAdmin %}
+                        <div class="text-muted text-break">{{ customField.nameForAdmin }}</div>
+                    {% endif %}
+                </td>
+                <td>{{ ('trans.customFieldType.'~customField.type) | trans }}</td>
+                <td>
+                    <span class="{{ customField.required | boolGreenRedClass }}">
+                        {{- customField.required | boolText | trans -}}
+                    </span>
+                </td>
+                <td>
+                    <span class="{{ customField.searchable | boolGreenRedClass }}">
+                        {{- customField.searchable | boolText | trans -}}
+                    </span>
+                </td>
+                <td class="text-break">{{ customField.unit }}</td>
+                <td>
+                    <a href="{{ path('app_admin_custom_field_edit', {'id': customField.id}) }}" class="btn btn-dark">
+                        {{- 'trans.Edit' | trans -}}
+                    </a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="99">{{ 'trans.no records found' | trans }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
+
+{% block js %}
+    {{ encore_entry_link_tags('admin_custom_field_list') }}
+    {{ encore_entry_script_tags('admin_custom_field_list') }}
+{% endblock %}

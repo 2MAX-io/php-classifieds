@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<ruleset name="Classified">
+<!--    <rule ref="../../vendor/slevomat/coding-standard/SlevomatCodingStandard/ruleset.xml">&lt;!&ndash; relative path to your ruleset.xml &ndash;&gt;-->
+<!--        &lt;!&ndash; sniffs to exclude &ndash;&gt;-->
+<!--    </rule>-->
+
+    <rule ref="../../vendor/slevomat/coding-standard/SlevomatCodingStandard/Sniffs/TypeHints/TypeHintDeclarationSniff.php">
+        <exclude name="SlevomatCodingStandard.TypeHints.TypeHintDeclaration.UselessDocComment"/>
+        <exclude name="SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingTraversableReturnTypeHintSpecification"/>
+        <exclude name="SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingTraversableParameterTypeHintSpecification"/>
+        <exclude name="SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingTraversablePropertyTypeHintSpecification"/>
+        <exclude name="SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingPropertyTypeHint"/>
+    </rule>
+
+    <rule ref="../../vendor/slevomat/coding-standard/SlevomatCodingStandard/Sniffs/TypeHints/ReturnTypeHintSpacingSniff.php" />
+    <rule ref="../../vendor/slevomat/coding-standard/SlevomatCodingStandard/Sniffs/Exceptions/DeadCatchSniff.php" />
+    <rule ref="../../vendor/stesie/phpcs-doctrine-annotation-rules/src/DoctrineAnnotationCodingStandard/ruleset.xml">
+        <exclude name="DoctrineAnnotationCodingStandard.Commenting.VarTag"/>
+    </rule>
+    <rule ref="Internal.NoCodeFound">
+        <severity>0</severity>
+    </rule>
+</ruleset>

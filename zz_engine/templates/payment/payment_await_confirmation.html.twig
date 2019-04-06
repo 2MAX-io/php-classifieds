@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'trans.Feature listing' | trans }}{% endblock %}
+
+{% block body %}
+    <div class="container mt-2 mt-md-4">
+        <div class="row">
+            <div class="col-md-4 col-lg-3 mb-4">
+                {% include 'user/_part/user_navigation_card.html.twig' %}
+            </div>
+
+            <div class="col-md-8 col-lg-9">
+                <h3 class="mb-3">
+                    {{- 'trans.Awaiting payment confirmation' | trans -}}
+                </h3>
+
+                <div>{{ 'trans.no need to refresh this page, it would refresh automatically' | trans }}</div>
+
+                <div>{{ 'trans.Last refresh time' | trans }}: <span id="js__lastRefreshTime"></span></div>
+
+                <div class="mt-2">
+                    <h2>
+                        {{ 'trans.Payment status' | trans -}}
+                        {{- ': ' -}}
+                        <span class="text-danger" id="js__paymentStatus">{{ 'trans.Waiting' | trans }}</span>
+                    </h2>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block js %}
+    {{ encore_entry_link_tags('payment_await_confirmation') }}
+    {{ encore_entry_script_tags('payment_await_confirmation') }}
+{% endblock %}
+

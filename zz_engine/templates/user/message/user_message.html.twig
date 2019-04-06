@@ -1,0 +1,129 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'trans.Messages' | trans }}{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-4 col-lg-3 mb-4 d-none d-md-block">
+            {% include 'user/_part/user_navigation_card.html.twig' %}
+        </div>
+
+        <div class="col-md-8 col-lg-9">
+            {% if threadList %}
+                <div class="row rounded-lg overflow-hidden border-gray">
+                    <!-- Threads box-->
+                    <div class="col-12 col-md-5 px-0">
+                        <div class="bg-white">
+                            <div class="bg-gray px-4 py-2 bg-light">
+                                <p class="h5 mb-0 py-1">{{ 'trans.Messages' | trans }}</p>
+                            </div>
+
+                            <div class="message-thread-list">
+                                <div class="list-group rounded-0">
+                                    {% for thread in threadList %}
+                                        {% set active = userMessageThread and thread.userMessageThreadId == userMessageThread.id %}
+                                        <a href="{{ path('app_user_message_list_thread', {'userMessageThread': thread.userMessageThreadId}) }}" class="list-group-item list-group-item-action rounded-0 {% if active %}active text-white{% else %}list-group-item-light{% endif %}">
+                                            <div class="media">
+                                                <div class="media-body">
+                                                    <div class="d-flex align-items-center justify-content-between mb-1">
+                                                        <h6 class="mb-0">
+                                                            {% if thread.replyToName(currentUser) %}
+                                                                {{ thread.replyToName(currentUser) }}
+                                                            {% else %}
+                                                                {{ 'trans.User' | trans }} #{{ thread.replyToUserId(currentUser) }}
+                                                            {% endif %}
+                                                            {% if thread.unreadCount ~%}
+                                                                <span class="badge badge-danger align-text-bottom">{{ thread.unreadCount }}</span>
+                                                            {% endif %}
+                                                        </h6>
+                                                        <small class="small font-weight-bold">{{ thread.datetime | date }}</small>
+                                                    </div>
+                                                    <p class="font-italic mb-0 text-small {% if not active %}text-muted{% endif %}">
+                                                        {{ 'trans.Listing' | trans }}: {{ thread.listingTitle }}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Messages Box-->
+                    <div class="col-12 col-md-7 px-0 bg-white">
+                        <div class="pl-md-1">
+                            {% if messageList %}
+                                <div class="px-4 py-2">
+                                    {% if listing %}
+                                        <span>{{ 'trans.Listing' | trans }}: </span>
+                                        <a href="{{ path('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}">
+                                            {{ listing.title }}
+                                        </a>
+                                    {% endif %}
+                                </div>
+                                <div class="px-4 pt-1 mb-2 bg-white message-list js__messageList">
+                                    <div class="js__messageListMessagesBox">
+                                        {% for message in messageList %}
+                                            {% if message.isUserSender(currentUser) %}
+                                                <!-- Receiver Message-->
+                                                <div class="media w-50 ml-auto mb-3">
+                                                    <div class="media-body">
+                                                        <div class="bg-primary rounded py-1 px-3 mb-1">
+                                                            <p class="text-small mb-0 text-white">{{ message.message | nl2br }}</p>
+                                                        </div>
+                                                        <div class="user-message-date text-muted">{{ message.datetime | date() }}</div>
+                                                    </div>
+                                                </div>
+                                            {% else %}
+                                                <!-- Sender Message-->
+                                                <div class="media w-50 mb-3">
+                                                    <div class="media-body">
+                                                        <div class="bg-gray rounded py-1 px-3 mb-1">
+                                                            <p class="text-small mb-0 text-black">{{ message.message | nl2br  }}</p>
+                                                        </div>
+                                                        <div class="user-message-date text-muted">{{ message.datetime | date() }}</div>
+                                                    </div>
+                                                </div>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                                <!-- Typing area -->
+                                <div>
+                                    {{ form_start(form) }}
+                                    <div class="input-group">
+                                        {{ form_widget(form.message) }}
+                                        <div class="input-group-append">
+                                            <button
+                                                    id="send-message-button"
+                                                    type="submit"
+                                                    class="btn btn-link"
+                                                    title="{{ 'trans.Send message' | trans }}"
+                                            >
+                                                {{- ' ' -}}<i class="svg svg-send-message"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    {{ form_end(form) }}
+                                </div>
+                            {% else %}
+                                <div class="alert alert-info m-2">{{ 'trans.Select thread to see messages' | trans }}</div>
+                            {% endif %}
+                            {# messageList end #}
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <div class="alert alert-info mt-1">{{ 'trans.There are no messages' | trans }}</div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block js %}
+    {{ encore_entry_link_tags('user_message') }}
+    {{ encore_entry_script_tags('user_message') }}
+{% endblock js %}
+

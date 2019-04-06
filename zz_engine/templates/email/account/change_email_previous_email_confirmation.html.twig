@@ -1,0 +1,38 @@
+{% extends 'email/email_base.html.twig' %}
+
+{# @var user \App\Entity\User #}
+
+{% block content %}
+<p>
+    {{- 'trans.Change of email address to' | trans -}}
+    {{- ': ' -}}
+</p>
+
+<pre>{{- newEmail -}}</pre>
+
+<p>
+    {{- 'trans.If you did not requested email change ignore this message, and do NOT click link bellow' | trans -}}
+</p>
+
+<p>
+    {{- 'trans.First, before confirming email change bellow. Check if you received change email notification on new email address. This is necessary to verify that you entered new address correctly.' | trans -}}
+</p>
+
+<p>
+    {{- 'trans.When you received change email information on new email address, please confirm it clicking link bellow' | trans -}}
+</p>
+
+<div>
+    <a href="{{ url('app_user_change_email_previous_email_confirmation', {'token': token}) }}" class="btn-success">
+        {{- 'trans.I confirm change of email address to' | trans -}}
+        {{- ': ' -}}
+        {{- newEmail -}}
+    </a>
+
+    <p>
+        {{- 'trans.If the link above does not work, try to copy the link below to your browser' | trans -}}:
+    </p>
+
+    <pre>{{- url('app_user_change_email_previous_email_confirmation', {'token': token}) -}}</pre>
+</div>
+{% endblock content %}

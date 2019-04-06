@@ -1,0 +1,97 @@
+{% if pager.haveToPaginate %}
+    {%- set currentRouteParams = (routeParams | default([])) | merge(app.request.query) -%}
+
+    {%- macro pagePath(page, context) -%}
+        {{- path(app.request.get('_route'), context.currentRouteParams | merge({'page': page})) -}}
+    {%- endmacro -%}
+
+    {%- macro perPagePath(perPage, context) -%}
+        {{- path(app.request.get('_route'), context.currentRouteParams | merge({'perPage': perPage, 'page': 1,})) -}}
+    {%- endmacro -%}
+    {{ '' }}
+    <ul class="pagination d-print-none">
+        <li class="page-item prev {% if not pager.hasPreviousPage %}disabled{%- endif ~%}">
+            {%- if pager.hasPreviousPage ~%}
+                <a {{- ' ' -}}
+                        class="page-link" {{- ' ' -}}
+                        href="{{ _self.pagePath(pager.previousPage, _context) }}" {{- ' ' -}}
+                        rel="prev" {{- ' ' -}}
+                >
+                    {{- '< ' -}}
+                    {{- 'trans.Previous' | trans -}}
+                </a>
+            {%- else ~%}
+                <span class="page-link">
+                    {{- '< ' -}}
+                    {{- 'trans.Previous' | trans -}}
+                </span>
+            {%- endif ~%}
+        </li>
+        {%- if pager.currentPage == 1 ~%}
+            <li class="page-item active"> {{- ' ' -}}
+                <span class="page-link">{{ pager.currentPage }} <span class="sr-only">(current)</span></span> {{- ' ' -}}
+            </li>
+        {%- else ~%}
+            <li class="page-item"><a class="page-link" href="{{ _self.pagePath(1, _context) }}">1</a></li>
+        {%- endif ~%}
+
+        {%- if pager.currentPage > 4 and pager.nbPages > 7 ~%}
+            <li class="page-item disabled"><span class="page-link">…</span></li>
+        {%- endif ~%}
+
+        {%- for page in (max(pager.currentPage-2+(min(pager.nbPages-(pager.currentPage+2), 0)), 2))..(min(pager.currentPage+2-(min(pager.currentPage-3, 0)), pager.nbPages)) ~%}
+            {%- if page == pager.currentPage ~%}
+                <li class="page-item active"> {{- ' ' -}}
+                    <span class="page-link">{{ pager.currentPage }} <span class="sr-only">(current)</span></span> {{- ' ' -}}
+                </li>
+            {%- else ~%}
+                <li class="page-item"> {{- ' ' -}}
+                    <a class="page-link" href="{{ _self.pagePath(page, _context) }}">
+                        {{- page -}}
+                    </a> {{- ' ' -}}
+                </li>
+            {%- endif -%}
+        {% endfor ~%}
+
+        {%- if pager.currentPage < pager.nbPages-3 and pager.nbPages > 7 ~%}
+            <li class="page-item disabled"><span class="page-link">…</span></li>
+        {%- endif ~%}
+
+        {%- if pager.currentPage < pager.nbPages-3 and pager.nbPages > 7 ~%}
+            <li class="page-item"> {{- ' ' -}}
+                <a class="page-link" href="{{ _self.pagePath(pager.nbPages, _context) }}">
+                    {{- pager.nbPages -}}
+                </a> {{- ' ' -}}
+            </li>
+        {%- endif ~%}
+
+        {%- if pager.hasNextPage ~%}
+        <li class="page-item next {% if not pager.hasNextPage %}disabled{%- endif ~%}">
+                <a {{- ' ' -}}
+                        class="page-link" {{- ' ' -}}
+                        href="{{ _self.pagePath(pager.nextPage, _context) }}" {{- ' ' -}}
+                        rel="next" {{- ' ' -}}
+                >
+                    {{- 'trans.Next' | trans -}}
+                    {{- ' >' -}}
+                </a>
+        </li>
+        {%- endif ~%}
+        <li class="d-none d-lg-block">
+            <select class="js__selectChangeUrl pagination-per-page-select form-control d-inline-block ml-2">
+                {%- set perPageOptions = [10,50,100,settings.itemsPerPage] -%}
+                {%- if app.request.get('perPage') is not empty -%}
+                    {%- set perPageOptions = perPageOptions | merge([app.request.get('perPage')]) -%}
+                {%- endif -%}
+                {%- for perPage in perPageOptions | unique | sort ~%}
+                    <option {{- ' ' -}}
+                            {%- if app.request.get('perPage') | default(settings.itemsPerPage) == perPage -%}selected{%- endif -%} {{- ' ' -}}
+                            value="{{ _self.perPagePath(perPage, _context) }}" {{- '' -}}
+                    >
+                        {{- perPage -}}{{- ' ' -}}{{- 'trans.per page' | trans -}}
+                    </option>
+                {%- endfor ~%}
+            </select>
+        </li>
+    </ul>
+{%- endif ~%}

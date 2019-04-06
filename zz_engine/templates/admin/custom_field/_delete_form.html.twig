@@ -1,0 +1,10 @@
+<form
+        method="post"
+        action="{{ path('app_admin_custom_field_delete', {'id': customField.id}) }}"
+        data-confirm-message="{{ 'trans.Delete custom field' | trans }}: {{ customField.name }}? {{ 'trans.It would delete values set for this custom field from users listings' | trans }}"
+        class="d-inline js__confirm"
+>
+    <input type="hidden" name="_method" value="DELETE">
+    <input type="hidden" name="_token" value="{{ csrf_token('csrf_deleteCustomField' ~ customField.id) }}">
+    <button class="btn btn-danger">{{ 'trans.Delete completely, from all categories' | trans }}</button>
+</form>

@@ -1,0 +1,46 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}{{ 'trans.Reject listing' | trans }}{% endblock %}
+
+{% block body %}
+    <div class="container mt-3">
+        <div class="row">
+            <div class="col-md-4 col-lg-3 mb-5"></div>
+            <div class="col-md-8 col-lg-9">
+                <div class="mb-3">
+                    <h2 class="mb-1">
+                        {{ 'trans.Reject listing' | trans }}:
+                        <a
+                                href="{{ path('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}"
+                                target="_blank"
+                                class="text-break"
+                        >
+                            {{- listing.title -}}
+                        </a>
+                    </h2>
+                    <span class="{{ getListingStatusClass(listing) }}">{{ getListingStatus(listing) }}</span>
+                </div>
+
+                {{ form_start(form) }}
+                {{ form_widget(form) }}
+
+                <button class="btn btn-primary">{{ button_label | default('trans.Reject' | trans) }}</button>
+
+                <div class="float-right">
+                    <div class="btn btn-dark js__closeWindowOnClick">{{ 'trans.Close this page' | trans }}</div>
+                </div>
+
+                {{ form_end(form) }}
+
+                <div class="float-right my-2">
+                    {{ include('admin/listing/_action/_admin_next_waiting_form.html.twig') }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block js %}
+    {{ encore_entry_link_tags('admin_listing_reject') }}
+    {{ encore_entry_script_tags('admin_listing_reject') }}
+{% endblock %}

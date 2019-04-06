@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Symfony2PluginSettings">
+    <option name="pathToTranslation" value="zz_engine/var/cache/dev/translations" />
+    <option name="directoryToWeb" value="/" />
+    <option name="directoryToApp" value="zz_engine/config" />
+    <option name="pluginEnabled" value="true" />
+    <option name="codeFoldingPhpRoute" value="false" />
+    <option name="codeFoldingPhpTemplate" value="false" />
+    <option name="codeFoldingTwigRoute" value="false" />
+    <option name="codeFoldingTwigTemplate" value="false" />
+    <option name="profilerCsvPath" value="" />
+    <option name="profilerHttpUrl" value="https://classifieds.localhost" />
+    <option name="lastServiceGeneratorLanguage" value="yaml" />
+    <option name="twigNamespaces">
+      <list>
+        <twig_namespace custom="true" namespaceType="ADD_PATH" path="zz_engine/templates" />
+        <twig_namespace custom="true" namespaceType="ADD_PATH" path="zz_engine/vendor/symfony/twig-bridge/Resources/views/Form" />
+      </list>
+    </option>
+    <option name="containerFiles">
+      <list>
+        <container_file path="zz_engine/var/cache/dev/srcApp_KernelDevDebugContainer.xml" />
+      </list>
+    </option>
+    <option name="routingFiles">
+      <list>
+        <routing_file path="zz_engine/var/cache/dev/UrlGenerator.php" />
+      </list>
+    </option>
+  </component>
+</project>

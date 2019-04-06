@@ -1,0 +1,107 @@
+# (cd zz_engine/docker && export WITH_XDEBUG=false && docker-compose up --build)
+# (cd zz_engine/docker && export WITH_XDEBUG=true && docker-compose up --build)
+version: "3.7"
+services:
+    php:
+        container_name: classifieds_php
+        build:
+            context: './php/'
+            dockerfile: Dockerfile
+            args:
+                - WITH_XDEBUG=${WITH_XDEBUG}
+        ports: ['80:80', '443:443', '8080:8080']
+        volumes:
+            - './../../:/var/www/html'
+            - './php/client_my.cnf:/var/www/.my.cnf'
+            - './php/php.ini:/usr/local/etc/php/php.ini'
+            - './php/xdebug_out:/tmp/xdebug_out'
+            - './php/ssl/localhost.crt:/etc/ssl/certs/ssl-cert-snakeoil.pem'
+            - './php/ssl/localhost.key:/etc/ssl/private/ssl-cert-snakeoil.key'
+            - './php/bash_history:/root/.bash_history'
+            - './php/bash_history:/var/www/.bash_history'
+        environment:
+            XDEBUG_CONFIG: client_host=192.168.205.1
+            PHP_IDE_CONFIG: serverName=classifieds.localhost
+            APP_DEBUG: 1
+            PROMPT_COMMAND: 'history -a'
+            APACHE_RUN_USER: '#1000'
+            APACHE_RUN_GROUP: '#33'
+            COMPOSER_HOME: '/var/www/html/zz_engine/var/system/zz_composer_cache'
+            WITH_XDEBUG: 'false'
+        stdin_open: true
+        tty: true
+        networks:
+            classifieds.localhost:
+                aliases:
+                    - "php"
+    mysql:
+        container_name: classifieds_mysql
+        command: mysqld --sql_mode="STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION"
+        build:
+            context: './mysql/'
+            dockerfile: Dockerfile
+        ports: ['3306:3306']
+        user: '1000'
+        volumes:
+            - './../../:/var/www/html/'
+            - './../../zz_engine/var/mysql:/sql'
+            - './mysql/data:/var/lib/mysql'
+            - './mysql/my.cnf:/etc/mysql/conf.d/my.cnf'
+            - './mysql/bash_history:/root/.bash_history'
+            - './mysql/bash_history:/var/www/.bash_history'
+            - './mysql/client_my.cnf:/var/www/.my.cnf'
+        environment:
+            - MYSQL_ALLOW_EMPTY_PASSWORD=true
+            - MYSQL_ROOT_PASSWORD=
+            - MYSQL_DATABASE=classifieds
+            - MYSQL_USER=classifieds
+            - MYSQL_PASSWORD=classifieds
+            - PROMPT_COMMAND=history -a
+        networks:
+            classifieds.localhost:
+                aliases:
+                    - "mysql"
+    mysql_test:
+        container_name: classifieds_mysql_test
+        command: mysqld --sql_mode="STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION"
+        build:
+            context: './mysql/'
+            dockerfile: Dockerfile
+        ports: ['3307:3306']
+        tmpfs:
+            - /var/lib/mysql/:rw,noexec,nosuid,size=300m
+            - /tmp/:rw,noexec,nosuid,size=100m
+        volumes:
+            - './../../:/var/www/html/'
+            - './../../zz_engine/var/mysql:/sql'
+            - './mysql_test/my.cnf:/etc/mysql/conf.d/my.cnf'
+            - './mysql_test/bash_history:/root/.bash_history'
+            - './mysql_test/bash_history:/var/www/.bash_history'
+        networks:
+            classifieds.localhost:
+                aliases:
+                    - "mysql_test"
+        environment:
+            - MYSQL_ALLOW_EMPTY_PASSWORD=true
+            - MYSQL_ROOT_PASSWORD=
+            - MYSQL_DATABASE=classifieds_test
+            - MYSQL_USER=classifieds_test
+            - MYSQL_PASSWORD=classifieds_test
+            - PROMPT_COMMAND=history -a
+    mailhog:
+        image: mailhog/mailhog
+        container_name: classifieds_mail
+        ports:
+            - 1025:1025 # smtp server
+            - 8025:8025 # web ui
+        networks:
+            classifieds.localhost:
+                aliases:
+                    - "mailhog"
+networks:
+    classifieds.localhost:
+        name: "classifieds.localhost"
+        ipam:
+            driver: default
+            config:
+                -   subnet: ${PROJECT_SUBNET}

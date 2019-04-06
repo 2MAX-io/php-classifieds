@@ -1,0 +1,19 @@
+.chmod-commands {
+    height: 7em;
+}
+
+.chown-commands {
+    height: 5em;
+}
+
+.h-10em {
+    height: 10em;
+}
+
+.license-textarea {
+    height: 15em;
+}
+
+.cron-textarea {
+    height: 7em;
+}

@@ -1,0 +1,26 @@
+{% macro listingButtons(listing) %}
+    {# @var settings \App\Service\Setting\SettingsDto #}
+    {% set settings = settings() %}
+
+    {# @var listing \App\Entity\Listing #}
+
+    {%- if not listing.adminRemoved -%}
+        {%- if listing.status in [constant('\App\\Entity\\Listing::STATUS_EXPIRED'), constant('\App\\Entity\\Listing::STATUS_ACTIVE'), constant('\App\\Entity\\Listing::STATUS_ACTIVE_FEATURED')] -%}
+            <a href="{{ path('app_user_extend_expiration', {'id': listing.id}) }}" class="btn btn-outline-success mb-1">
+                {{- 'trans.Extend' | trans -}}
+            </a>
+        {% endif %}
+
+        {%- if listing.status in [constant('\App\\Entity\\Listing::STATUS_DEACTIVATED'), constant('\App\\Entity\\Listing::STATUS_ACTIVE'), constant('\App\\Entity\\Listing::STATUS_ACTIVE_FEATURED')] -%}
+            {% if listing.userDeactivated %}
+                {{- include('user/listing/_action/_activate_form.html.twig') -}}
+            {% else %}
+                {{- include('user/listing/_action/_deactivate_form.html.twig') -}}
+            {% endif %}
+        {% endif %}
+    {% endif %}
+
+    {%- if listing.status in [constant('\App\\Entity\\Listing::STATUS_DEACTIVATED'), constant('\App\\Entity\\Listing::STATUS_ADMIN_REMOVED'), constant('\App\\Entity\\Listing::STATUS_REJECTED'), constant('\App\\Entity\\Listing::STATUS_PENDING')] -%}
+        {{ include('user/listing/_action/_remove_form.html.twig') }}
+    {%- endif -%}
+{% endmacro %}

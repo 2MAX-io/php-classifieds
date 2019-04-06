@@ -1,0 +1,161 @@
+{% extends 'base.html.twig' %}
+
+{% import "user/_macro/_user_macro.html.twig" as userMacro %}
+
+{# @var settings \App\Service\Setting\SettingsDto #}
+{% set settings = settings() %}
+
+{% block title %}{{ 'trans.My listings' | trans }}{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-4 col-lg-3 mb-4 d-none d-md-block">
+                {% include 'user/_part/user_navigation_card.html.twig' %}
+            </div>
+
+            <div class="col-md-8 col-lg-9 pl-md-0">
+                <nav class="nav nav-pills nav-justified mb-2 d-md-none">
+                    <form class="mt-2 mt-md-0 w-100-small" role="search">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text"><i class="svg svg-search"></i></div>
+                            </div>
+                            <input
+                                    type="text"
+                                    class="form-control"
+                                    placeholder="{{ 'trans.keyword' | trans }}"
+                                    name="query"
+                                    value="{{ app.request.get('query') }}"
+                            >
+                            <button type="submit" class="btn btn-primary ml-1">
+                                {{- 'trans.Search' | trans -}}
+                            </button>
+                        </div>
+                    </form>
+                </nav>
+
+                <table class="table table-responsive-md user-listings-table">
+                    <thead>
+                    <tr>
+                        <th class="column-user-listings-search" colspan="2">
+                            <form class="w-100-small d-none-soft d-md-block" role="search">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text"><i class="svg svg-search"></i></div>
+                                    </div>
+                                    <input
+                                            type="text"
+                                            class="form-control"
+                                            placeholder="{{ 'trans.keyword' | trans }}"
+                                            name="query"
+                                            value="{{ app.request.get('query') }}"
+                                    >
+                                    <button
+                                            type="submit"
+                                            class="btn btn-primary ml-1"
+                                    >
+                                        {{- 'trans.Search' | trans -}}
+                                    </button>
+                                </div>
+                            </form>
+                        </th>
+                        <th class="column-listing-status">{{ 'trans.Status' | trans }}</th>
+                        <th>
+                            <a
+                                    href="{{ path('app_user_listing_new') }}"
+                                    class="btn btn-dark btn-sm float-right"
+                                    title="{{ 'trans.Add listing' | trans }}"
+                            >
+                                <i class="svg svg-add"></i>
+                                {{- ' ' -}}
+                                <span>{{ 'trans.Add' | trans }}</span>
+                            </a>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for listing in listings %}
+                        <tr>
+                            <td>
+                                <div>
+                                    <a
+                                            title="{{ listing.title }}"
+                                            href="{{ path('app_listing_show', {id: listing.id, 'slug': listing.slug, 'showListingPreviewForOwner': 1}) }}"
+                                    >
+                                        <img
+                                                class="rounded list-small-img"
+                                                src="{{ asset(listing.mainImageInListSize | default('static/system/blank.png')) }}"
+                                                alt="{{ listing.title }}"
+                                        >
+                                    </a>
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    <a href="{{ path('app_listing_show', {"id": listing.id, 'slug': listing.slug, 'showListingPreviewForOwner': 1}) }}">
+                                        {{- listing.title -}}
+                                    </a>
+                                </div>
+                                <div>
+                                    <span class="mr-2" title="{{ listing.category.parent.name }}⇾{{- listing.category.name -}}">
+                                        {{- listing.category.name -}}
+                                    </span>
+                                    {% if listing.featured %}
+                                        <span class="badge badge-pill badge-warning">{{ 'trans.Featured' | trans }}</span>
+                                    {% endif %}
+                                </div>
+
+                                {% if settings.paymentAllowed and listing.status in [constant('\App\\Entity\\Listing::STATUS_ACTIVE'), constant('\App\\Entity\\Listing::STATUS_ACTIVE_FEATURED')] %}
+                                    <div>
+                                        <a
+                                                href="{{ path('app_user_feature_listing', {"id": listing.id}) }}"
+                                                class="user-listings-feature-this-link"
+                                        >
+                                            {{- 'trans.Feature this listing' | trans -}}
+                                        </a>
+                                    </div>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <div class="{{ getListingStatusClass(listing) }}">{{ getListingStatus(listing) }}</div>
+                                {%- if listing.status == constant('\App\\Entity\\Listing::STATUS_ACTIVE') -%}
+                                    <div>{{ 'trans.until' | trans }}: {{ listing.expirationDate | date(dateFormatShort) }}</div>
+                                {%- endif -%}
+                                {% if listing.status in [constant('\App\\Entity\\Listing::STATUS_REJECTED')] and listing.rejectionReason is empty and settings.linkRejectionReason is not empty %}
+                                    <a href="{{ path('app_page', {'slug': settings.linkRejectionReason}) }}" class="d-inline-block">
+                                        {{- 'trans.more information' | trans -}}
+                                    </a>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if not listing.adminRemoved %}
+                                    <a
+                                            href="{{ path('app_user_listing_edit', {'id': listing.id}) }}"
+                                            class="btn btn-dark mb-1"
+                                    >
+                                        {{- 'trans.Edit' | trans -}}
+                                    </a>
+                                {% endif %}
+
+                                {{ userMacro.listingButtons(listing) }}
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="8">{{ 'trans.no records found' | trans }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+
+                {% include 'base/_pagination.html.twig' %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block js %}
+    {{ encore_entry_link_tags('user_listing_list') }}
+    {{ encore_entry_script_tags('user_listing_list') }}
+{% endblock %}

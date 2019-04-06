@@ -1,0 +1,29 @@
+{% extends 'email/email_base.html.twig' %}
+{# @var newestUserMessage \App\Entity\UserMessage #}
+
+{% block content %}
+<div>
+    {{ 'trans.Message for listing' | trans }}:
+    <a href="{{ url('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}">{{ listing.title }}</a>
+</div>
+
+<div>---------</div>
+{% for userMessage in userMessageList %}
+    <div>
+        {{- userMessage.message -}}
+    </div>
+{% endfor %}
+<div>---------</div>
+
+<a href="{{ url('app_user_message_list_thread', {'userMessageThread': newestUserMessage.userMessageThread.id}) }}" class="btn-success">
+    {{- 'trans.Reply to this message' | trans -}}
+</a>
+
+<p>
+    {{ 'trans.If the link above does not work, try to copy the link below to your browser' | trans }}:
+</p>
+<pre>{{ url('app_user_message_list_thread', {'userMessageThread': newestUserMessage.userMessageThread.id}) }}</pre>
+<p>
+    <a href="{{ url('app_user_settings') }}">{{ 'trans.Change notification settings' | trans }}</a>
+</p>
+{% endblock content %}

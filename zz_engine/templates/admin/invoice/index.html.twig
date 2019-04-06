@@ -1,0 +1,39 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}{{ 'trans.Invoices' | trans }}{% endblock %}
+
+{% block body %}
+    <h1>{{ 'trans.Invoices' | trans }}</h1>
+
+    <table class="table table-responsive-sm">
+        <thead>
+            <tr>
+                <th class="mw-8-rem">{{ 'trans.Invoice number' | trans }}</th>
+                <th>{{ 'trans.Amount' | trans }}</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for invoice in invoices %}
+            <tr>
+                <td>
+                    <div>{{ invoice.invoiceNumber }}</div>
+                    <div>{{ invoice.invoiceDate | date }}</div>
+                </td>
+                <td>{{ invoice.totalMoneyFloat | moneyPrecise }}</td>
+                <td>
+                    <a href="{{ path('app_admin_invoice_show', {'id': invoice.id}) }}" class="btn btn-secondary">
+                        {{- 'trans.details' | trans -}}
+                    </a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="99">{{ 'trans.no records found' | trans }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {% include 'base/_pagination.html.twig' %}
+{% endblock %}

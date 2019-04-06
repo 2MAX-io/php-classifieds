@@ -1,0 +1,20 @@
+framework:
+    messenger:
+        failure_transport: failed
+
+        buses:
+            messenger.bus.default:
+                middleware:
+                    - doctrine_close_connection
+
+        transports:
+            # https://symfony.com/doc/current/messenger.html#transport-configuration
+            async: 'doctrine://default?queue_name=async&table_name=zzzz_messenger_messages'
+            one_at_time: 'doctrine://default?queue_name=one_at_time&table_name=zzzz_messenger_messages'
+            failed: 'doctrine://default?queue_name=failed&table_name=zzzz_messenger_messages'
+            sync: 'sync://'
+
+        routing:
+            'App\Service\System\Messenger\Base\AsyncMessageInterface': async
+            'App\Service\System\Messenger\Base\OneAtTimeMessageInterface': one_at_time
+            'Symfony\Component\Mailer\Messenger\SendEmailMessage': async

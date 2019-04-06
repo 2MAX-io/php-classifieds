@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'trans.Credits' | trans }}{% endblock %}
+
+{% block body %}
+    <div class="container mt-3 mt-md-4">
+        <div class="row">
+            <div class="col-md-8 mb-2">
+                <h2>{{ 'trans.Credits' | trans }}</h2>
+
+                <h4>{{ 'trans.Used images and pictures:' | trans }}</h4>
+
+                <div>
+                    <a href="https://www.freepik.com">www.freepik.com</a>
+                </div>
+                <div>
+                    <a href="https://www.pexels.com">www.pexels.com</a>
+                </div>
+                <div>
+                    <a href="https://pixabay.com">pixabay.com</a>
+                </div>
+                <div>
+                    <a href="https://www.flaticon.com">flaticon.com</a>
+                </div>
+                <div>
+                    <a href="https://fontawesome.com/icons">fontawesome.com</a>
+                </div>
+                <div>
+                    <a href="https://php-classified-ads.2max.io/">2MAX.io PHP Classified Ads</a>
+                </div>
+                <div>
+                    <a href="https://www.openstreetmap.org/copyright/">OpenStreetMap</a> contributors
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card bg-light mb-3">
+                    <h5 class="card-header">{{ 'trans.Related pages' | trans }}</h5>
+
+                    <div class="card-body">
+                        {%- for page in relatedPages ~%}
+                            <a href="{{ path('app_page', {'slug': page.slug}) }}" class="d-block pb-2 pb-lg-1">
+                                {{- page.title -}}
+                            </a>
+                        {%- endfor ~%}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock body %}

@@ -1,0 +1,168 @@
+{% extends 'base.html.twig' %}
+
+{# @var settings \App\Service\Setting\SettingsDto #}
+{% set settings = settings() %}
+
+{% block title %}
+    {%- if app.request.get('_route') == 'app_category' -%}
+        {{- listingListDto.category.name -}}
+    {%- endif -%}
+    {%- if app.request.get('_route') == 'app_last_added' -%}
+        {{- 'trans.Last added' | trans -}}
+    {%- endif -%}
+    {%- if app.request.get('_route') == 'app_listing_search' -%}
+        {{- 'trans.Search Engine' | trans -}}
+    {%- endif -%}
+    {%- if app.request.get('_route') == 'app_public_listings_of_user' -%}
+        {{- 'trans.Listings of user' | trans -}}
+    {%- endif -%}
+    {%- if app.request.get('_route') == 'app_map' -%}
+        {{- 'trans.Map' | trans -}}
+    {%- endif -%}
+{% endblock %}
+
+{% block body %}
+    <div class="container-fluid mt-md-3">
+        <div class="row">
+            <div class="col-12 col-md-3">
+                <div {{- ' ' -}}
+                        class="d-md-none btn btn-secondary btn-sm mb-2 show-filters-btn" {{- ' ' -}}
+                        data-toggle="collapse" {{- ' ' -}}
+                        data-target="#filters" {{- ' ' -}}
+                >
+                    {{- 'trans.Show filters' | trans -}}
+                </div>
+
+                <!-- filters -->
+                <div class="d-none-soft d-md-block collapse d-print-none listings-left-side" id="filters">
+                    <div class="mb-2">
+                        {%- if settings.masterSiteLinkShow ~%}
+                            <a href="{{ settings.masterSiteUrl }}">{{ settings.masterSiteAnchorText }}</a>
+                            {{- ' > ' -}}
+                        {%- endif ~%}
+                        <a href="{{ path('app_index') }}">{{ 'trans.Classifieds' | trans }}</a>
+
+                        {{- ' > ' -}}
+                        <a {{- ' ' -}}
+                                href="{{ path('app_map', mapLocationParams) }}" {{- ' ' -}}
+                                class="js__linkToMap" {{- ' ' -}}
+                        >
+                            {{- 'trans.Map' | trans -}}
+                        </a>
+
+                        {%- for category in categoryBreadcrumbs ~%}
+                            {{- ' > ' -}}
+                            <a {{- ' ' -}}
+                                href="{{ path('app_category', mapLocationParams | merge({'categorySlug': category.slug})) }}" {{- ' ' -}}
+                               class="js__linkToMap" {{- ' ' -}}
+                            >
+                                {{- category.name -}}
+                            </a>
+                        {%- endfor ~%}
+                        {%- if app.request.get('_route') == 'app_last_added' ~%}
+                            {{- ' > ' }} {{ 'trans.Last added' | trans }}
+                        {%- endif ~%}
+                        {%- if app.request.get('_route') == 'app_listing_search' ~%}
+                            {{- ' > ' }} {{ 'trans.Search Engine' | trans }}
+                        {%- endif ~%}
+                        {%- if app.request.get('_route') == 'app_public_listings_of_user' ~%}
+                            {{- ' > ' }} {{ 'trans.Listings of user' | trans }}
+                        {%- endif ~%}
+
+                        {%- if listingListDto.filterByUser ~%}
+                            {{- ' > ' -}}
+                            <a class="font-weight-bold" href="{{ path('app_public_listings_of_user', {'user': listingListDto.filterByUser.id}) }}">
+                                {{- listingListDto.filterByUser | displayUserName -}}
+                            </a>
+                        {%- endif ~%}
+                    </div>
+                    {#- select category -#}
+                    {%- if categoryList is not empty ~%}
+                        <div {{- ' ' -}}
+                                class="btn btn-dark w-100 mb-2" {{- ' ' -}}
+                                data-toggle="collapse" {{- ' ' -}}
+                                data-target=".show-category-select" {{- ' ' -}}
+                        >
+                            {{- 'trans.Select category' | trans -}}
+                        </div>
+                        <div class="card mb-3 show-category-select collapse">
+                            <div class="card-header">
+                                <strong>{{ 'trans.Category' | trans }}</strong>
+                            </div>
+                            <div>
+                                {%- for category in categoryList ~%}
+                                    <a {{- ' ' -}}
+                                            href="{{ path('app_category', queryParameters | merge({'categorySlug': category.slug})) }}" {{- ' ' -}}
+                                            class="link-list-item category-link js__linkToMap {% if listingListDto.category and category.slug == listingListDto.category.slug  %}active{% endif %}" {{- ' ' -}}
+                                    >
+                                        {{- category.name -}}
+                                    </a>
+                                {%- endfor ~%}
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {% include 'listing_list/listing_list_filters.html.twig' %}
+                </div>
+            </div>
+            <!-- filters end -->
+
+            <!-- right side -->
+            <div class="col-md-9">
+                {%- if category and category.hasChildren() ~%}
+                    <!-- subcategories -->
+                    <div class="mb-2 d-print-none">
+                        <span class="align-top d-inline-block pb-2 pb-lg-1">
+                            {{- 'trans.Subcategories' | trans -}}
+                            {{- ':&nbsp;' | raw -}}
+                        </span>
+                        {%- for category in categoryList ~%}
+                            <a {{- ' ' -}}
+                                    href="{{ path('app_category', queryParameters | merge({'categorySlug': category.slug})) }}" {{- ' ' -}}
+                                    class="{% if loop.index > 3 and loop.length > 4 %}collapse{% endif %} w-100-small py-lg-0 show-more-subcategories js__linkToMap" {{- ' ' -}}
+                            >
+                                {{- category.name -}}
+                            </a>
+                        {%- endfor -%}
+                        {% if categoryList | length > 4 ~%}
+                            <a {{- ' ' -}}
+                                    class="w-100-small py-lg-0 show-more-subcategories cursor-pointer js__removeOnClick" {{- ' ' -}}
+                                    data-toggle="collapse" {{- ' ' -}}
+                                    data-target=".show-more-subcategories" {{- ' ' -}}
+                            >
+                                {{- 'trans.show more' | trans -}}
+                            </a>
+                        {%- endif ~%}
+                    </div>
+                {%- endif %}
+
+                {%- if listingListDto.filterByUser ~%}
+                    <div class="mb-2">
+                        <h4>{{- 'trans.Listings of user' | trans }}: {{ listingListDto.filterByUser | displayUserName -}}</h4>
+                    </div>
+                {%- endif ~%}
+
+                <!-- map -->
+                {%- if not listingListDto.results ~%}
+                    <div class="alert alert-info w-100">
+                        {{- 'trans.No classifieds matching the criteria found on map' | trans -}}
+                    </div>
+                {%- endif ~%}
+                <div class="container-fluid px-0">
+                    <div class="map-with-listings js__mapWithListings"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock body %}
+
+{% block js %}
+    {{ encore_entry_link_tags('listing_list') }}
+    {{ encore_entry_script_tags('listing_list') }}
+
+    {%- if listingListDto.showOnMap ~%}
+        {{ encore_entry_link_tags('listing_list_map') }}
+        {{ encore_entry_script_tags('listing_list_map') }}
+    {%- endif ~%}
+{% endblock %}
+

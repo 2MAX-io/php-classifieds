@@ -1,0 +1,8 @@
+NelmioJsLoggerBundle:
+    resource: "@NelmioJsLoggerBundle/Resources/config/routing.xml"
+    prefix: /zzzz/nelmio-js-logger
+
+app_public_dir:
+    path: /
+    options:
+        expose: true

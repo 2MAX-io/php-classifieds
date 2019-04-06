@@ -1,0 +1,67 @@
+{% extends 'admin/base.html.twig' %}
+
+{% import "admin/_macro/_admin_macro.html.twig" as adminMacro %}
+
+{% block title %}{{ 'trans.Advanced listing edit' | trans }}{% endblock %}
+
+{% block body %}
+    <div class="container mt-3">
+        <div>
+            <h3>
+                {{- 'trans.Edit listing' | trans -}}
+                {{- ': ' -}}
+                <a
+                        target="_blank"
+                        href="{{ path('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}"
+                        class="text-break"
+                >
+                    {{- listing.title -}}
+                </a>
+            </h3>
+        </div>
+
+        <div>
+            <a href="{{ path('app_admin_listing_edit', {'id': listing.id}) }}">
+                {{- 'trans.Edit listing' | trans -}}
+            </a>
+
+            <div class="float-right">
+                <span class="{{ getListingStatusClass(listing) }}">{{ getListingStatus(listing) }}</span>
+
+                <a
+                        href="{{ path('app_admin_police_log_listing', {'id': listing.id}) }}"
+                        class="btn btn-info mb-1"
+                >
+                    {{- 'trans.Police log' | trans -}}
+                </a>
+
+                <a
+                        href="{{ path('app_admin_user_edit', {'id': listing.user.id}) }}"
+                        target="_blank"
+                        class="btn btn-dark mb-1"
+                >
+                    {{- 'trans.User' | trans -}}
+                </a>
+
+                {{ include('admin/listing/_action/_pull_up_form.html.twig') }}
+                {{ include('admin/listing/_action/_feature_for_week.html.twig') }}
+                {{ include('admin/listing/_action/_remove_form.html.twig') }}
+            </div>
+        </div>
+
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+
+        <button class="btn btn-primary">{{ button_label | default('trans.Save' | trans) }}</button>
+        {{ form_end(form) }}
+
+        <div class="row mt-4">
+            {{ adminMacro.listingInfo(listing) }}
+        </div>
+    </div>
+{% endblock %}
+
+{% block js %}
+    {{ encore_entry_link_tags('admin_listing_edit_advanced') }}
+    {{ encore_entry_script_tags('admin_listing_edit_advanced') }}
+{% endblock %}

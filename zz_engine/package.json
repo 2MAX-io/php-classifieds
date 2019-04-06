@@ -1,0 +1,43 @@
+{
+  "name": "symfony",
+  "version": "1.0.0",
+  "description": "",
+  "main": "webpack.config.js",
+  "dependencies": {},
+  "devDependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.13.0",
+    "@babel/plugin-proposal-object-rest-spread": "^7.13.8",
+    "@fancyapps/fancybox": "^3.5.7",
+    "@fortawesome/fontawesome-free": "^5.2.0",
+    "@symfony/webpack-encore": "^1.1.0",
+    "bootstrap": "^4.6.0",
+    "cleave.js": "^1.6.0",
+    "core-js": "3",
+    "detect-touch-device": "^1.1.6",
+    "element-closest-polyfill": "^1.0.4",
+    "exports-loader": "^2.0.0",
+    "jquery": "^3.5.1",
+    "leaflet": "^1.7.0",
+    "leaflet-defaulticon-compatibility": "^0.1.1",
+    "leaflet-fullscreen": "Leaflet/Leaflet.fullscreen",
+    "leaflet.locatecontrol": "^0.72.2",
+    "popper.js": "^1.16.1",
+    "prettier": "2.2.1",
+    "prunecluster": "^2.1.0",
+    "sortablejs": "^1.13.0",
+    "stacktrace-js": "^2.0.2",
+    "webpack-notifier": "^1.6.0",
+    "whatwg-fetch": "^3.6.2"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prettier": "npx prettier --write \"assets/**/*.js\"",
+    "prettier-check": "npx prettier --check \"assets/**/*.js\""
+  },
+  "browserslist": [
+    "> .05%",
+    "ie 11"
+  ],
+  "author": "2max.io",
+  "license": "SEE LICENSE IN LICENSE_LICENCJA_UnRsurDMXRqbXu3XeNPys.txt"
+}

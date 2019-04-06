@@ -1,0 +1,31 @@
+{% extends 'email/email_base.html.twig' %}
+
+{# @var user \App\Entity\User #}
+
+{% block content %}
+<p>
+    {{ 'trans.Confirm registration by clicking link bellow' | trans }}
+</p>
+<p>
+    {% set confirmRegisterUrl = url('app_register_confirm', {'token': token, 'username': user.username}) %}
+    <a href="{{ confirmRegisterUrl }}" class="btn-success">{{ 'trans.I confirm registration' | trans }}</a>
+</p>
+
+<div>
+    <strong>{{ 'trans.Login' | trans }}</strong>:
+</div>
+<pre>{{- user.username -}}</pre>
+
+<div>
+    <strong>{{ 'trans.Password' | trans }}</strong>:
+</div>
+<pre>{{- plainPassword -}}</pre>
+
+<div>
+    <p>
+        {{ 'trans.If the link above does not work, try to copy the link below to your browser' | trans }}:
+    </p>
+
+    <pre>{{ confirmRegisterUrl }}</pre>
+</div>
+{% endblock content %}

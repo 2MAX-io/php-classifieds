@@ -1,0 +1,100 @@
+# This file is the entry point to configure your own services.
+# Files in the packages/ subdirectory configure your dependencies.
+
+# Put parameters here that don't need to change on each machine where the app is deployed
+# https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
+parameters:
+    env(APP_LOCALE): 'en'
+    locale: '%env(resolve:APP_LOCALE)%'
+    env(APP_TIMEZONE): 'UTC'
+    timezone: '%env(resolve:APP_TIMEZONE)%'
+    env(APP_DATE_FORMAT): 'Y-m-d, H:i'
+    date_format: '%env(resolve:APP_DATE_FORMAT)%'
+    env(APP_DATE_FORMAT_SHORT): 'Y-m-d'
+    date_format_short: '%env(resolve:APP_DATE_FORMAT_SHORT)%'
+    env(APP_UPGRADE_DISABLED): false
+    upgrade_disabled: '%env(resolve:bool:APP_UPGRADE_DISABLED)%'
+    env(APP_UPGRADE_AVAILABLE_CHECK_DISABLED): false
+    upgrade_available_check_disabled: '%env(resolve:bool:APP_UPGRADE_AVAILABLE_CHECK_DISABLED)%'
+    env(APP_ASSET_VERSION): 1
+    asset_version: '%env(resolve:APP_ASSET_VERSION)%'
+    env(APP_FAVICON_DIR): null
+    favicon_dir: '%env(resolve:APP_FAVICON_DIR)%'
+    env(APP_ENVIRONMENT_CSS_CLASS): ''
+    env(APP_2MAX_URL_SECRET): 'secret-is9WCVzaXS2HUDjAzjWa4cFtFiNSSbLDYki6WmTiwh'
+    environment_css_class: '%env(resolve:APP_ENVIRONMENT_CSS_CLASS)%'
+    router.request_context.host: '%env(resolve:APP_HTTP_HOST)%'
+    router.request_context.scheme: '%env(resolve:APP_HTTP_SCHEME)%'
+    router.request_context.base_url: '%env(resolve:APP_HTTP_BASE_URL)%'
+
+services:
+    # default configuration for services in *this* file
+    _defaults:
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+
+    _instanceof:
+        Twig\Extension\ExtensionInterface:
+            tags: ['twig.extension']
+        App\Service\System\HealthCheck\Base\HealthCheckerInterface:
+            tags: ['app.health_checker']
+        App\Service\Payment\Base\PaymentGatewayInterface:
+            tags: ['app.payment_gateway_list']
+        App\Service\System\Cron\Action\Base\CronActionInterface:
+            tags: ['app.cron_action']
+        App\Form\Admin\Settings\Base\SettingTypeInterface:
+            tags: ['app.setting_type']
+
+    # makes classes in src/ available to be used as services
+    # this creates a service per class whose id is the fully-qualified class name
+    App\:
+        resource: '../src/**/*{Service,Repository,Command,Type,Extension,Validator}.php'
+        exclude:
+            - '../src/DependencyInjection/'
+            - '../src/Entity/'
+            - '../src/Kernel.php'
+            - '../src/Tests/'
+
+    # controllers are imported separately to make sure services can be injected
+    # as action arguments even if you don't extend any base controller class
+    App\Controller\:
+        resource: '../src/Controller'
+        tags: ['controller.service_arguments']
+
+    App\Twig\:
+        resource: '../src/Twig/**'
+
+    App\Security\LoginListener:
+        tags:
+            - { name: 'kernel.event_listener', event: 'security.interactive_login' }
+
+    App\EventListener\Exception\UserVisibleExceptionListener:
+        tags:
+            - { name: kernel.event_listener, event: kernel.exception }
+
+    App\Service\Setting\SettingsService:
+        public: true
+
+    App\Service\Setting\SettingsDto:
+        lazy: true
+        factory: ['@App\Service\Setting\SettingsService', 'getSettingsDto']
+
+    App\Service\System\HealthCheck\HealthCheckService:
+        arguments: [!tagged app.health_checker]
+
+    App\Service\Payment\PaymentGatewayService:
+        arguments: [!tagged app.payment_gateway_list]
+
+    App\Service\System\Cron\CronService:
+        arguments: [!tagged app.cron_action]
+
+    App\Service\System\HealthCheck\HealthChecker\Settings\SettingsRequiredHealthCheckerService:
+        arguments: [!tagged app.setting_type]
+
+    Symfony\Component\HttpKernel\CacheClearer\CacheClearerInterface: '@cache_clearer'
+
+    App\Service\System\Email\Transport\SelfSignedEmailTransportFactory:
+        tags: ['mailer.transport_factory']
+
+    libphonenumber\PhoneNumberUtil:
+        factory: ['@App\Service\System\Text\PhoneNumberService', 'factory']

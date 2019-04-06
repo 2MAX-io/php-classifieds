@@ -1,0 +1,10 @@
+<form
+        method="post"
+        action="{{ path('app_user_listing_remove', {'id': listing.id}) }}"
+        data-confirm-message="{{ 'trans.Remove' | trans }}: {{ listing.title }}?"
+        class="d-inline js__confirm"
+>
+    <input type="hidden" name="_method" value="DELETE">
+    <input type="hidden" name="_token" value="{{ csrf_token('csrf_remove' ~ listing.id) }}">
+    <button class="btn btn-danger mb-1">{{ 'trans.Remove' | trans }}</button>
+</form>

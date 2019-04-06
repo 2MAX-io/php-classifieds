@@ -1,0 +1,6 @@
+This favicon was generated using the following font:
+
+- Font Title: Staatliches
+- Font Author: Copyright 2018 The Staatliches Project Authors (https://github.com/googlefonts/staatliches)
+- Font Source: http://fonts.gstatic.com/s/staatliches/v5/HI_OiY8KO6hCsQSoAPmtMbectJG9O9PS.ttf
+- Font License: SIL Open Font License, 1.1 (http://scripts.sil.org/OFL)

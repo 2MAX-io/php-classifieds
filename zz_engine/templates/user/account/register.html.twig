@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{# @var settings \App\Service\Setting\SettingsDto #}
+
+{% block title %}{{ 'trans.Register account' | trans }}{% endblock %}
+
+{% block body %}
+    <div class="container mt-3 mt-md-4">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <div class="card">
+                    <h4 class="card-header"><strong>{{ 'trans.Register account' | trans }}</strong></h4>
+
+                    <div class="card-body">
+                        {{ form_start(form) }}
+                        {{ form_widget(form) }}
+
+                        {% if settings.linkTermsConditions %}
+                            <div class="mb-3">
+                                {{ 'trans.Registration means acceptance of the' | trans }}
+                                <a href="{{ path('app_page', {'slug': settings.linkTermsConditions}) }}">
+                                    {{- 'trans.termsCondtionsLink' | trans -}}
+                                </a>
+                            </div>
+                        {% endif %}
+
+                        <div class="form-group">
+                            <button class="btn btn-primary btn-block">{{ 'trans.Register' | trans }}</button>
+                        </div>
+                        {{ form_end(form) }}
+
+                        <div class="form-group">
+                            {{ 'trans.Already have an account?' | trans }}
+                            <a href="{{ path('app_login') }}">{{ 'trans.Sign in' | trans }}</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

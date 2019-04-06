@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="{{ app.request.locale|split('_')[0] }}">
+<head>
+    {# @var settings \App\Service\Setting\SettingsDto #}
+    {% set settings = settings() %}
+    <meta charset="utf-8">
+    <title>{% block title %}{{ 'trans.Admin' | trans }} - {{ 'trans.Classifieds' | trans }}{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="msapplication-TileColor" content="#edeef0">
+    <meta name="theme-color" content="#edeef0">
+    <meta name="robots" content="noindex">
+    {%- if favicon_dir ~%}
+        <link rel="apple-touch-icon" sizes="180x180" href="{{ asset(favicon_dir~'apple-touch-icon.png') }}">
+        <link rel="icon" type="image/png" sizes="32x32" href="{{ asset(favicon_dir~'favicon-32x32.png') }}">
+        <link rel="icon" type="image/png" sizes="16x16" href="{{ asset(favicon_dir~'favicon-16x16.png') }}">
+    {%- endif ~%}
+    {% block stylesheets %}
+        {{ encore_entry_link_tags('app_admin') }}
+    {% endblock %}
+</head>
+<body class="{{ environmentCssClass() }}">
+
+<div class="container-fluid d-lg-none">
+    <div class="container px-0">
+        <nav class="navbar navbar-expand-lg navbar-light">
+            <a class="navbar-brand" href="{{ path('app_admin_index') }}" title="{{ settings.indexPageTitle }}">
+                <img
+                        class="admin-logo-side-menu"
+                        src="{{ asset(settings.logoPath | default('static/system/logo_default.png')) }}"
+                        alt="{{ 'trans.Admin panel' | trans }}"
+                >
+            </a>
+
+            <button
+                    class="navbar-toggler"
+                    type="button"
+                    data-toggle="collapse"
+                    data-target="#js__adminSidebar"
+                    aria-expanded="false"
+            >
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </nav>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="row">
+        {% if app.user %}
+            <nav class="col-lg-3 col-xl-2 d-none-soft d-lg-block bg-light sidebar" id="js__adminSidebar">
+                <div class="sidebar-sticky">
+                    <div id="logo" class="logo-admin d-none d-lg-block mb-3 text-center">
+                        <a href="{{ path('app_admin_index') }}" title="{{ 'trans.Classifieds'|trans }}" class="d-block">
+                            <img src="{{ asset(settings.logoPath | default('static/system/logo_default.png')) }}" alt="{{ 'trans.Admin panel' | trans }}" class="admin-logo">
+                        </a>
+                    </div>
+
+                    <ul class="nav flex-column">
+                        <li class="nav-item my-3">
+                            <a class="btn btn-secondary w-100" href="{{ path('app_index') }}">
+                                {{- 'trans.Public classifieds' | trans -}}
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('app_admin_index') }}">
+                                <i class="svg svg-home"></i>
+                                {{ 'trans.Admin Dashboard' | trans }}
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('app_admin_listing_activate_list') }}">
+                                <i class="svg svg-check"></i>
+                                {{ 'trans.Activate' | trans }}
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('app_admin_listing_search') }}">
+                                <i class="svg svg-search"></i>
+                                {{ 'trans.Search listings' | trans }}
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('app_admin_listing_report_list') }}">
+                                <i class="svg fa fa-exclamation-circle"></i>
+                                {{ 'trans.Reported listings' | trans }}
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('app_admin_user_list') }}">
+                                <i class="svg svg-users"></i>
+                                {{ 'trans.Users' | trans }}
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('app_admin_administrator_list') }}">
+                                <i class="svg svg-crown"></i>
+                                {{ 'trans.Administrators' | trans }}
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('app_admin_page_list') }}">
+                                <i class="svg svg-file-empty"></i>
+                                {{ 'trans.Pages' | trans }}
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('app_admin_category') }}">
+                                <i class="svg svg-archive"></i>
+                                {{ 'trans.Categories' | trans }}
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('app_admin_custom_field_list') }}">
+                                <i class="svg svg-blocks"></i>
+                                {{ 'trans.Custom fields' | trans }}
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('app_admin_package_list') }}">
+                                <i class="svg svg-star"></i>
+                                {{ 'trans.Packages' | trans }}
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('app_admin_payment_list') }}">
+                                <i class="svg svg-dollar"></i>
+                                {{ 'trans.Payments' | trans }}
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('app_admin_invoice_list') }}">
+                                <i class="svg svg-invoice"></i>
+                                {{ 'trans.Invoices' | trans }}
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('app_admin_upgrade') }}">
+                                <i class="svg svg-button-up"></i>
+                                {{ 'trans.Upgrade' | trans }}
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('app_admin_settings') }}">
+                                <i class="svg svg-gear"></i>
+                                {{ 'trans.Settings' | trans }}
+                            </a>
+                        </li>
+                    </ul>
+
+                    <!-- external links -->
+                    <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                        <span>{{ 'trans.External links' | trans }}</span>
+                    </h6>
+                    <ul class="nav flex-column mb-2">
+                        {% if settings.masterSiteLinkShow %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ settings.masterSiteUrl }}">
+                                    <i class="svg svg-file"></i>
+                                    {{ settings.masterSiteAnchorText }}
+                                </a>
+                            </li>
+                        {% endif %}
+                    </ul>
+
+                    <div class="mt-5">
+                        <a href="{{ path('app_logout') }}" class="btn btn-dark w-100">
+                            {{- 'trans.Logout' | trans -}}
+                        </a>
+                    </div>
+                </div>
+            </nav>
+        {% endif %}
+
+        <main class="col-lg-9 col-xl-10 px-2">
+            {% block body %}{% endblock body %}
+
+            <!-- footer -->
+            <footer class="pt-2 mt-1 mt-md-2 mb-2 pt-md-4 border-top">
+                <small class="d-block mb-3 text-muted">
+                    {{- settings.footerSiteCopyright | replace({"%year%": "now" | date('Y')}) -}}
+                </small>
+            </footer>
+        </main>
+    </div>
+</div>
+{{ encore_entry_link_tags('app_admin_bottom') }}
+
+{% block javascripts %}
+    <input type="hidden" id="js__dataForJs" value="{{ dataForJs | default([]) | processDataForJs }}">
+    {{ encore_entry_script_tags('app_admin') }}
+    {{ encore_entry_script_tags('app_admin_bottom') }}
+{% endblock %}
+{% block js %}{% endblock %}
+</body>
+</html>

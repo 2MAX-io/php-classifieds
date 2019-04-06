@@ -1,0 +1,68 @@
+security:
+    encoders:
+        App\Entity\User:
+            algorithm: auto
+        App\Entity\System\Admin:
+            algorithm: auto # change install script when changing this
+        legacy_phpass:
+            id: 'App\Security\Encoder\PhpassPasswordEncoderService'
+
+    # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+    providers:
+        app_user_provider:
+            entity:
+                class: App\Entity\User
+                property: username
+        app_admin_provider:
+            entity:
+                class: App\Entity\System\Admin
+                property: email
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+        admin:
+            pattern: ^/admin/red5
+            provider: app_admin_provider
+            anonymous: true
+            guard:
+                authenticators:
+                    - App\Security\AdminLoginFormAuthenticatorService
+            user_checker: App\Security\AdministratorCheckerService
+            entry_point: App\Security\AdminLoginFormAuthenticatorService
+            form_login:
+                check_path: app_admin_login
+                login_path: app_admin_login
+                failure_path: app_admin_login
+                default_target_path: app_admin_index
+            logout:
+                path: app_logout
+        main:
+            anonymous: lazy
+            provider: app_user_provider
+            guard:
+                authenticators:
+                    - App\Security\LoginFormAuthenticatorService
+            user_checker: App\Security\UserCheckerService
+            logout:
+                path: app_logout
+            remember_me:
+                secret: '%kernel.secret%'
+                lifetime: 315360000 # 10 year in seconds
+                path: /
+                always_remember_me: true
+
+            entry_point: App\Security\AuthenticationEntryPointService
+
+            # activate different ways to authenticate
+            # https://symfony.com/doc/current/security.html#firewalls-authentication
+
+            # https://symfony.com/doc/current/security/impersonating_user.html
+            # switch_user: true
+
+    # Easy way to control access for large sections of your site
+    # Note: Only the *first* access control that matches will be used
+    access_control:
+        - { path: ^/admin/red5/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/admin/red5, roles: ROLE_ADMIN }
+        - { path: ^/user, roles: ROLE_USER }

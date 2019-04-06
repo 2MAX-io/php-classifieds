@@ -1,0 +1,62 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}{{ 'trans.Upgrade' | trans }}{% endblock %}
+
+{% block body %}
+    <div class="container mt-3">
+        <h1>{{ 'trans.Upgrade' | trans }}</h1>
+
+        {% if latestVersion is empty %}
+            <div class="alert alert-danger">
+                {{- 'trans.Failed to get information about new version. Try again later.' | trans -}}
+            </div>
+        {% else %}
+            {% if canUpgrade %}
+                <div class="alert alert-info">
+                    {{ 'trans.New version available, you can upgrade now' | trans }}
+                </div>
+            {% else %}
+                <div class="alert alert-success">
+                    {{ 'trans.You have the latest version of 2MAX.io Classified Ads. No action required.' | trans }}
+                </div>
+            {% endif %}
+        {% endif %}
+
+        <table class="table table-responsive-sm">
+            {% if latestVersion is not empty %}
+            <tr>
+                <td>{{ 'trans.Latest version' | trans }}</td>
+                <td>{{ latestVersion.version }}</td>
+                <td>{{ latestVersion.date }}</td>
+            </tr>
+            {% endif %}
+            <tr>
+                <td>{{ 'trans.Installed version' | trans }}</td>
+                <td>{{ installedVersion.version }}</td>
+                <td>{{ installedVersion.date }}</td>
+            </tr>
+        </table>
+
+        {% if canUpgrade %}
+            <div class="alert alert-warning">
+                {{ 'trans.It is recommended to create a backup before this operation' | trans }}
+            </div>
+            <div class="alert alert-warning">
+                {{ 'trans.Upgrade mechanism works under assumption it operates on unmodified version of 2MAX.io Classified Ads.' | trans }}
+                {{ 'trans.If you have made custom changes, running auto upgrade may break things.' | trans }}
+                {{ 'trans.If you have made custom changes. It is recommended to upgrade on copy of app first, outside of production. Test it and fix issues if they arise. And only then upgrade.' | trans }}
+                {{ 'trans.To disable auto upgrade check documentation:' | trans }}
+                {{ ' ' }}
+                <a href="https://php-classified-ads.2max.io/disable-auto-upgrades/">{{ 'trans.Disable auto upgrades' | trans }}</a>
+            </div>
+
+            {{ include('admin/secondary/upgrade/_execute_upgrade_form.html.twig') }}
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% block js %}
+    {{ encore_entry_link_tags('admin_upgrade') }}
+    {{ encore_entry_script_tags('admin_upgrade') }}
+{% endblock %}
+

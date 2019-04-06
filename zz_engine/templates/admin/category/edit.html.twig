@@ -1,0 +1,107 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}{{ 'trans.Edit Category' | trans }}{% endblock %}
+
+{% block body %}
+<div class="container mt-3">
+    <div class="row mb-2">
+        <div class="col-md-6">
+            <h1>{{ 'trans.Edit Category' | trans }}</h1>
+        </div>
+        <div class="col-md-6 text-md-right">
+            <a href="{{ path('app_admin_category') }}">{{ 'trans.back to list' | trans }}</a>
+
+            <a
+                    href="{{ path('app_admin_category_new', {'parentCategory': category.id}) }}"
+                    class="btn btn-success mb-1"
+            >{{ 'trans.Add subcategory' | trans }}</a>
+
+            {{ include('admin/category/_delete_form.html.twig') }}
+        </div>
+    </div>
+
+    {{ include('admin/category/_form.html.twig', {'button_label': 'trans.Update'}) }}
+
+    {% if category.picture is not empty %}
+        <div class="my-2">
+            <img src="{{ asset(category.picture) }}" alt="{{ category.picture }}">
+        </div>
+    {% endif %}
+</div>
+
+<div class="container mt-3">
+    <div class="row mb-2">
+        <div class="col-md-6">
+            <h1>{{ 'trans.Custom fields' | trans }}</h1>
+            <h5>{{ 'trans.to fill for listings in category' | trans }}</h5>
+        </div>
+        <div class="col-md-6 text-md-right">
+            <button class="btn btn-success mb-1 js__saveOrder">{{ 'trans.Save order' | trans }}</button>
+
+            <a href="{{ path('app_admin_category_add_custom_field', {'id': category.id}) }}" class="btn btn-primary mb-1">
+                {{- 'trans.Add custom field' | trans -}}
+            </a>
+        </div>
+    </div>
+
+    <table class="table table-responsive-sm">
+        <thead>
+            <tr>
+                <th class="column-sort-handle"></th>
+                <th class="mw-8-rem">{{ 'trans.Name' | trans }}</th>
+                <th class="mw-8-rem">{{ 'trans.Type' | trans }}</th>
+                <th>{{ 'trans.Required?' | trans }}</th>
+                <th>{{ 'trans.Searchable?' | trans }}</th>
+                <th>{{ 'trans.Unit' | trans }}</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody class="sortable js__sortable">
+        {% for customFieldForCategory in category.customFieldForCategoryList %}
+            {% set customField = customFieldForCategory.customField %}
+            <tr data-id="{{ customFieldForCategory.id }}">
+                <td><i class="fas fa-arrows-alt sortable-handle js__sortableHandle"></i></td>
+                <td class="text-break">
+                    <div>{{ customField.name }}</div>
+                    {% if customField.nameForAdmin %}
+                        <div class="text-muted">{{ customField.nameForAdmin }}</div>
+                    {% endif %}
+                </td>
+                <td>
+                    {{- ('trans.customFieldType.'~customField.type) | trans -}}
+                </td>
+                <td>
+                    <span class="{{ customField.required | boolGreenRedClass }}">
+                        {{- customField.required | boolText | trans -}}
+                    </span>
+                </td>
+                <td>
+                    <span class="{{ customField.searchable | boolGreenRedClass }}">
+                        {{- customField.searchable | boolText | trans -}}
+                    </span>
+                </td>
+                <td class="text-break">
+                    {{- customField.unit -}}
+                </td>
+                <td>
+                    <a href="{{ path('app_admin_custom_field_edit', {'id': customField.id}) }}" class="btn btn-dark mb-1">
+                        {{- 'trans.Edit' | trans -}}
+                    </a>
+
+                    {% include 'admin/category/_delete_custom_field_for_category_form.html.twig' %}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="99">{{ 'trans.no records found' | trans }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
+
+{% block js %}
+    {{ encore_entry_link_tags('admin_category_edit') }}
+    {{ encore_entry_script_tags('admin_category_edit') }}
+{% endblock %}

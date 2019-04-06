@@ -1,0 +1,138 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}{{ 'trans.Payment' | trans }} #{{ payment.id }}{% endblock %}
+
+{% block body %}
+    <h1>{{ 'trans.Payment' | trans }} #{{ payment.id }}</h1>
+
+    <table class="table table-responsive-sm">
+        <tbody>
+            <tr>
+                <th>{{ 'trans.Payment type' | trans }}</th>
+                <td>{{ ('trans.paymentType.'~payment.type) | trans }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'trans.Description' | trans }}</th>
+                <td class="text-break">{{ payment.description }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'trans.Amount' | trans }}</th>
+                <td>{{ payment.amount | moneyPrecise }} {{ payment.currency }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'trans.Gateway amount paid' | trans }}</th>
+                <td>
+                    {% if payment.gatewayAmountPaid is not null %}
+                        {{ payment.gatewayAmountPaid | moneyPrecise }} {{ payment.currency }}
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <th>{{ 'trans.Date' | trans }}</th>
+                <td>{{ payment.datetime ? payment.datetime | date(dateFormatYmdHis) : '' }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'trans.Payment gateway - status' | trans }}</th>
+                <td>{{ payment.gatewayStatus }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'trans.Payment gateway - mode' | trans }}</th>
+                <td>{{ payment.gatewayMode }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'trans.Paid?' | trans }}</th>
+                <td>
+                    <span class="{{ payment.paid | boolGreenRedClass }}">{{ payment.paid | boolText | trans }}</span>
+                </td>
+            </tr>
+            <tr>
+                <th>{{ 'trans.Delivered?' | trans }}</th>
+                <td>
+                    <span class="{{ payment.delivered | boolGreenRedClass }}">
+                        {{- payment.delivered | boolText | trans -}}
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <th>{{ 'trans.Canceled?' | trans }}</th>
+                <td>
+                    <span class="{{ payment.canceled | boolGreenRedClass }}">
+                        {{- payment.canceled | boolText | trans -}}
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <th>{{ 'trans.Payment gateway ID' | trans }}</th>
+                <td>
+                    {% set paymentTransactionIdShown = false %}
+                    {% if payment.gatewayName in [constant('\App\\Service\\Payment\\Enum\\PaymentGatewayEnum::PAYPAL')] %}
+                        {% set paymentTransactionIdShown = true %}
+                        <a href="https://www.paypal.com/activity/payment/{{ payment.gatewayPaymentId }}">
+                            {{- payment.gatewayPaymentId -}}
+                        </a>
+                    {% endif %}
+                    {% if payment.gatewayName == constant('\App\\Service\\Payment\\Enum\\PaymentGatewayEnum::PRZELEWY24') %}
+                        {% set paymentTransactionIdShown = true %}
+                        {% if payment.gatewayMode == constant('\App\\Service\\Payment\\Enum\\GatewayModeEnum::SANDBOX') %}
+                            <a href="https://sandbox.przelewy24.pl/panel/transakcja.php?id={{ payment.gatewayPaymentId }}">
+                                {{- payment.gatewayPaymentId -}}
+                            </a>
+                        {% else %}
+                            <a href="https://panel.przelewy24.pl/transakcja.php?id={{ payment.gatewayPaymentId }}">
+                                {{- payment.gatewayPaymentId -}}
+                            </a>
+                        {% endif %}
+                    {% endif %}
+
+                    {% if paymentTransactionIdShown == false %}
+                        {{ payment.gatewayPaymentId }}
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <th>GatewayPaymentId</th>
+                <td>{{ payment.gatewayPaymentId }}</td>
+            </tr>
+            {% if payment.paymentForPackage %}
+                <tr>
+                    <th>{{ 'trans.Package' | trans }}</th>
+                    <td>
+                        <div class="text-break">
+                            <a href="{{ path('app_admin_package_edit', {'id': payment.paymentForPackage.package.id}) }}">
+                                {{- payment.paymentForPackage.package.name -}}
+                            </a>
+                        </div>
+                        <div class="text-muted text-break">
+                            {{- payment.paymentForPackage.package.adminName -}}
+                        </div>
+                    </td>
+                </tr>
+            {% endif %}
+            <tr>
+                <th>{{ 'trans.User' | trans }}</th>
+                <td>
+                    <a href="{{ path('app_admin_user_edit', {'id': payment.user.id}) }}" class="text-break">
+                        {{- payment.user.username -}}
+                    </a>
+                </td>
+            </tr>
+            <tr>
+                <th>{{ 'trans.Listing' | trans }}</th>
+                <td>
+                    {% if payment.paymentForPackage %}
+                        <a
+                                href="{{ path('app_admin_listing_edit', {'id': payment.paymentForPackage.listing.id}) }}"
+                                class="text-break"
+                        >
+                            {{- payment.paymentForPackage.listing.title -}}
+                        </a>
+                    {% else %}
+                        {{- 'trans.none' | trans -}}
+                    {% endif %}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_admin_payment_list') }}" class="btn btn-secondary">{{ 'trans.back to list' | trans }}</a>
+{% endblock %}

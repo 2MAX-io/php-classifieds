@@ -1,0 +1,108 @@
+{{ form_start(form) }}
+
+{{ form_row(form.title) }}
+{{ form_row(form.description) }}
+
+{%- if form.category is defined -%}
+<!-- category -->
+<div class="form-group">
+    {{ form_label(form.category) }}
+    <div id="js__cascaderCategorySelect" class="cascader-main collapse">
+        <div class="row no-gutters">
+            {% for levelId, categoryLevelList in selectCategoryList %}
+                <div class="col-lg-4 cascader-level cascader-level-{{ levelId }}" data-cascader-level="{{ levelId }}">
+                    {% for categoryLevel in categoryLevelList %}
+                        <div
+                                class="cascader-branch-list cascader-branch-list-{{ categoryLevel.id }} collapse"
+                                data-cascader-leaf="{{ categoryLevel.id }}"
+                        >
+                            <h5 class="cascader-branch-list-header text-break">{{ categoryLevel.name }}</h5>
+                            <div class="cascader-branch-list-elements">
+                                {% for category in categoryLevel.children %}
+                                    <div
+                                            class="js__cascaderSelectCategory cascader-branch cascader-click cascader-leaf-{{ category.id }} text-break"
+                                            data-category-id="{{ category.id }}"
+                                    >
+                                        {{- category.name -}}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    {{ form_widget(form.category) }}
+    {{- form_help(form) -}}
+</div>
+{%- endif -%}
+
+{%- if form.validityTimeDays is defined -%}
+    {{ form_row(form.validityTimeDays) }}
+{%- endif -%}
+
+{{ form_row(form.phone) }}
+
+<div class="form-row align-items-center">
+    <div class="col-md-8">
+        {{ form_row(form.email) }}
+    </div>
+    <div class="col-md-4 col-checkbox-pull-down">
+        {{ form_row(form.emailShow) }}
+    </div>
+</div>
+
+<div class="form-row">
+    <div class="col-md-4">
+        {{ form_row(form.price) }}
+    </div>
+    <div class="col-md-4">
+        {{ form_row(form.priceFor) }}
+    </div>
+    <div class="col-md-4">
+        {{ form_row(form.priceNegotiable) }}
+    </div>
+</div>
+
+{{ form_row(form.location) }}
+{{ form_row(form.customFieldList) }}
+
+{% if settings.mapEnabled %}
+    <div class="form-group">
+        <label>{{ 'trans.Approximate location on the map' | trans }}</label>
+
+        <div class="listing-edit-location-map {% if not listing.hasLocationOnMap %}d-none-soft{% else %}js__listingEditMapEnabled{% endif %} js__listingEditLocationMap"></div>
+        {% if not listing.hasLocationOnMap %}
+            <div class="btn btn-outline-secondary js__addLocationToTheMapButton">
+                {{- 'trans.Add location to the map' | trans -}}
+            </div>
+        {% endif %}
+        <div class="alert alert-info mt-1">
+            {{- 'trans.map_approximate_location_info' | trans -}}
+        </div>
+
+        {{ form_row(form.locationLatitude) }}
+        {{ form_row(form.locationLongitude) }}
+    </div>
+{% endif %}
+
+<label>{{ 'trans.Pictures' | trans }}</label>
+<input
+    name="{{ constant('\App\\Service\\Listing\\Save\\ListingFileUploadService::UPLOADED_FILES_FIELD_NAME') }}"
+    id="js__listingFileUpload"
+    type="file"
+    multiple="multiple"
+>
+
+<div class="mb-2">
+    {{ form_label(form.package) }}
+    <div class="js__packageList">
+        {% include 'user/listing/form/packages_for_listing_category.html.twig' %}
+    </div>
+</div>
+
+{{ form_widget(form) }}
+
+<button class="btn btn-primary js__listingFormSaveButton">{{ button_label | default('trans.Save' | trans) }}</button>
+{{ form_end(form) }}

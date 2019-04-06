@@ -1,0 +1,10 @@
+{{ form_start(form) }}
+    {{ form_row(form.name) }}
+    {{ form_row(form.slug) }}
+    {{ form_row(form.parent) }}
+    {{ form_row(form.sort) }}
+    {{ form_row(form.advertisementZoneId) }}
+    {{ form_row(form.picture) }}
+    <button class="btn btn-primary mr-3">{{ button_label | default('trans.Save') | trans }}</button>
+    {{ form_widget(form.saveAndAdd) }}
+{{ form_end(form) }}

@@ -1,0 +1,63 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}{{ 'trans.Change user balance' | trans }}{% endblock %}
+
+{% block body %}
+    <div class="container mt-3">
+        <h3>
+            {{ 'trans.Change balance of user' | trans }}:
+            <a href="{{ path('app_admin_user_edit', {'id': user.id}) }}" class="text-break">{{ user.username }}</a>
+        </h3>
+
+        <div>
+            {{ 'trans.Current user balance' | trans }}:
+            <strong class="badge badge-success">{{ currentBalance | moneyPrecise }}</strong>
+        </div>
+
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+
+        <button class="btn btn-primary">{{ 'trans.Change balance' | trans }}</button>
+        {{ form_end(form) }}
+    </div>
+
+    <div class="container mt-2 mt-md-5">
+        <h3>
+            {{ 'trans.Balance history for user' | trans }}:
+            <a href="{{ path('app_admin_user_edit', {'id': user.id}) }}">{{ user.username }}</a>
+        </h3>
+
+        <table class="table table-responsive-sm">
+            <thead>
+            <tr>
+                <th>{{ 'trans.Date' | trans }}</th>
+                <th>{{ 'trans.Balance difference' | trans }}</th>
+                <th>{{ 'trans.Balance after change' | trans }}</th>
+                <th>{{ 'trans.Description' | trans }}</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for userBalanceChange in userBalanceHistoryList %}
+                <tr>
+                    <td>{{ userBalanceChange.datetime | date }}</td>
+                    <td>{{ plusPrefixForPositiveNumber(userBalanceChange.balanceChange) }}{{ userBalanceChange.balanceChange | moneyPrecise }}</td>
+                    <td>{{ userBalanceChange.balanceFinal | moneyPrecise }}</td>
+                    <td>{{ userBalanceChange.description }}</td>
+                    <td>
+                        {% if userBalanceChange.payment %}
+                            <a href="{{ path('app_admin_payment_show', {'id': userBalanceChange.payment.id}) }}" class="btn btn-secondary">
+                                {{- 'trans.Payment' | trans -}}
+                            </a>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="99">{{ 'trans.no records found' | trans }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

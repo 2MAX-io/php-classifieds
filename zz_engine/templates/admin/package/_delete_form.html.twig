@@ -1,0 +1,10 @@
+<form
+        method="post"
+        action="{{ path('app_admin_package_delete', {'id': package.id}) }}"
+        data-confirm-message="{{ 'trans.Delete package' | trans }}: {{ package.name }}, {{ package.adminName }}"
+        class="d-inline js__confirm"
+>
+<input type="hidden" name="_method" value="DELETE">
+    <input type="hidden" name="_token" value="{{ csrf_token('csrf_deletePackage' ~ package.id) }}">
+    <button class="btn btn-danger">{{ 'trans.Delete' | trans }}</button>
+</form>

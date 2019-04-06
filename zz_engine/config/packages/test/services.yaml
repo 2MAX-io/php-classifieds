@@ -1,0 +1,15 @@
+services:
+    _defaults:
+        public: true
+        autowire: true
+        autoconfigure: true
+
+    Doctrine\ORM\EntityManagerInterface: '@doctrine.orm.default_entity_manager'
+
+    App\Tests\TestController\:
+        resource: '../../../tests/TestController/'
+        tags: ['controller.service_arguments']
+
+    App\Service\Setting\SettingsDto:
+        lazy: true
+        factory: ['@App\Service\Setting\SettingsService', 'getSettingsDtoWithoutCache']

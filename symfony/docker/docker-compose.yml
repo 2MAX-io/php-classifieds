@@ -6,17 +6,19 @@ services:
       context: './php/'
       dockerfile: Dockerfile
     ports: ['80:80', '443:443']
-    volumes: [
-      './../../:/var/www/html',
-      './php/php.ini:/usr/local/etc/php/php.ini',
-      './php/xdebug_out:/tmp/xdebug_out',
-      './php/ssl/localhost.crt:/etc/ssl/certs/ssl-cert-snakeoil.pem',
-      './php/ssl/localhost.key:/etc/ssl/private/ssl-cert-snakeoil.key',
-    ]
+    volumes:
+      - './../../:/var/www/html'
+      - './php/php.ini:/usr/local/etc/php/php.ini'
+      - './php/xdebug_out:/tmp/xdebug_out'
+      - './php/ssl/localhost.crt:/etc/ssl/certs/ssl-cert-snakeoil.pem'
+      - './php/ssl/localhost.key:/etc/ssl/private/ssl-cert-snakeoil.key'
+      - './php/bash_history:/root/.bash_history'
+      - './php/bash_history:/www-data/.bash_history'
     environment:
       XDEBUG_CONFIG: remote_host=172.18.0.1
       PHP_IDE_CONFIG: serverName=classifieds.localhost
       APP_DEBUG: 1
+      PROMPT_COMMAND: 'history -a'
     stdin_open: true
     tty: true
   mysql:
@@ -34,3 +36,4 @@ services:
       - MYSQL_DATABASE=classifieds
       - MYSQL_USER=classifieds
       - MYSQL_PASSWORD=classifieds
+      - PROMPT_COMMAND='history -a'

@@ -29,7 +29,7 @@ services:
     volumes:
       - './mysql/data:/var/lib/mysql'
       - './mysql/sql:/sql'
-      - './mysql/bash_history:/root/.bash_history'
+#      - './mysql/bash_history:/root/.bash_history'
     environment:
       - MYSQL_ALLOW_EMPTY_PASSWORD=true
       - MYSQL_ROOT_PASSWORD=

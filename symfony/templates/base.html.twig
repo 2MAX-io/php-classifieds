@@ -1,15 +1,254 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}
-            <script src="{{ asset('asset/jquery.js') }}"></script>
-        {% endblock %}
-        {% block js %}{% endblock %}
-    </body>
+<!--[if IE 9]><html class="lt-ie10" lang="pl"> <![endif]-->
+<html lang="pl">
+<head>
+    <title>Classifieds</title>
+    <meta name="description" content="Classifieds is a nationwide Classifieds where users can search for the items to buy and sell near them and write reviews.">
+    <link rel="canonical" href="">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- favicon -->
+    <link rel="apple-touch-icon-precomposed" href="/assets/favicon/favicon-152.png">
+    <link rel="icon" type="image/png" href="/assets/favicon/favicon.png">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/assets/favicon/favicon-144.png">
+
+    <!-- css -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0-rc.2/css/select2.min.css">
+    <link rel="stylesheet" href="/templates/css/styles.css?5ca8aff0020c8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+
+    <!-- javascript -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0-rc.2/js/select2.min.js"></script>
+    <script src="//assets/js/head.js"></script>
+
+    <!-- CSRF -->
+    <script>
+        // add CSRF token in the headers of all requests
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-Token': 'b039a3c7a100e429e4115c7b06a18d2b',
+                'X-AJAX-Setup': 1
+            }
+        });
+    </script>
+
+    <!-- baseurl -->
+    <script>
+        var baseurl = '';
+    </script>
+
+    <!-- geolocation -->
+
+    <!-- Maps -->
+
+    <style type="text/css"> .body-content {margin:0px;}
+        .jumbotron {
+            background-image: url('/assets/imgs/jumbotron.jpg');
+            background-position: center top;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        .row-fluid h1, .row-fluid h2, h1, h3 {
+            color: #fff;
+            text-shadow: -1px 1px 3px rgba(0,0,0,0.2), -2px 2px 6px rgba(0,0,0,0.3);
+        }
+
+        .card-title {
+            text-shadow: -1px 1px 3px rgba(0,0,0,0.2), -2px 2px 6px rgba(0,0,0,0.3);
+        }
+
+        @media (min-width: 34em) {
+            .card-columns {
+                -webkit-column-count: 2;
+                -moz-column-count: 2;
+                column-count: 2;
+            }
+        }
+
+        @media (min-width: 62em) {
+            .card-columns {
+                -webkit-column-count: 3;
+                -moz-column-count: 3;
+                column-count: 3;
+            }
+        }
+
+        /* Make select2 styles look like Bootstrap */
+        .select2-container--default .select2-selection--single {
+            background-clip: padding-box;
+            background-color: #fff;
+            border-radius: .25rem;
+            border: 1px solid #ced4da;
+            color: #495057;
+            display: block;
+            font-size: 1.25rem;
+            height: calc(2.875rem + 2px);
+            line-height: 1.5;
+            padding: .375rem .75rem;
+            padding: .5rem 1rem;
+            transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+            width: 100%;
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__arrow {
+            height: calc(2.875rem + 2px);
+            position: absolute;
+            top: 1px;
+            right: 1px;
+            width: 20px;
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__rendered {
+            color: grey;
+            line-height: 28px;
+        }
+    </style>
+</head>
+<body class="tpl-home">
+<!-- Top Header -->
+<div class="container-fluid container-header">
+    <div class="container p-3">
+        <div class="row vmargin">
+            <div id="website_logo" class="col-lg-3 tpad sm-text-center">
+                <a href="https://x-php.pro/demo/classifiedsplus" title="https://x-php.pro/demo/classifiedsplus">
+                    <img src="https://x-php.pro/demo/classifiedsplus/assets/imgs/logo.png" alt="Classifieds Plus" width="240">
+                </a>
+            </div>
+
+            <div class="col-md-4">
+                <label class="sr-only" for="keyword">Keyword</label>
+                <div class="input-group mb-2 mr-2">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text"><i class="fas fa-search"></i></div>
+                    </div>
+                    <input type="text" class="form-control" id="q" name="q" placeholder="Keyword">
+                </div>
+            </div>
+
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-primary btn-block mb-2">Search</button>
+            </div>
+
+            <div id="header-controls" class="col-lg-3 text-right">
+                <ul class="list-inline">
+                    <li class="list-inline-item">
+                        <a href="https://x-php.pro/demo/classifiedsplus/user/sign-in">Sign in</a>
+                    </li>
+
+                    <li class="list-inline-item">
+                        <a href="{{ path('app_listing_new') }}" class="btn btn-primary">Get Listed Today <i class="fas fa-chevron-right"></i></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="main-navbar">
+            <ul class="navbar-nav justify-content-around w-100">
+                <li class="nav-item active">
+                    <a class="nav-link" href="">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/categories">Categories</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/coupons">{{ 'Last added' | trans }}</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#jaslo4u.pl">Jaslo4u.pl</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+{% block body %}{% endblock body %}
+
+<!-- footer -->
+<div class="container">
+    <footer class="pt-4 my-md-5 pt-md-5 border-top">
+        <div class="row">
+            <div class="col-12 col-md">
+                <small class="d-block mb-3 text-muted">© 2018-2019</small>
+            </div>
+            <div class="col-6 col-md">
+                <h5>Features</h5>
+                <ul class="list-unstyled text-small">
+                    <li><a class="text-muted" href="#">Extremely Fast</a></li>
+                    <li><a class="text-muted" href="#">Coupons</a></li>
+                    <li><a class="text-muted" href="#">Custom Fields</a></li>
+                    <li><a class="text-muted" href="#">SEO Optimized</a></li>
+                    <li><a class="text-muted" href="#">Member Profile</a></li>
+                    <li><a class="text-muted" href="#">Blog System</a></li>
+                    <li><a class="text-muted" href="#">Paypal/Stripe</a></li>
+                </ul>
+            </div>
+            <div class="col-6 col-md">
+                <h5>Credits</h5>
+                <ul class="list-unstyled text-small">
+                    <li><a class="text-muted" href="https://www.pexels.com/">Pexels</a></li>
+                    <li><a class="text-muted" href="https://www.freepik.com/">Freepik</a></li>
+                    <li><a class="text-muted" href="https://fontawesome.com/">Fontawesome 5</a></li>
+                    <li><a class="text-muted" href="https://getbootstrap.com/">Bootstrap 4</a></li>
+                    <li><a class="text-muted" href="https://www.tiny.cloud/">TinyMCE</a></li>
+                </ul>
+            </div>
+            <div class="col-6 col-md">
+                <h5>About</h5>
+                <ul class="list-unstyled text-small">
+                    <li><a class="text-muted" href="/contact">Contact</a></li>
+                    <li><a class="text-muted" href="http://x-php.pro/docs/classifiedsplus/">ClassifiedsPlus</a></li>
+                    <li><a class="text-muted" href="https://codecanyon.net/user/xphp">Codecanyon</a></li>
+                    <li><a class="text-muted" href="/post/privacy-policy">Privacy</a></li>
+                    <li><a class="text-muted" href="/post/tou">Terms</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+</div>
+
+<!-- css -->
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,400i,700,700i">
+
+{% block javascripts %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <script src="//templates/js/raty/jquery.raty.js"></script>
+    <script src="//assets/js/jquery-autocomplete/jquery.autocomplete.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/i18n/pl.js"></script>
+    <script src="{{ asset('asset/jquery.js') }}"></script>
+{% endblock %}
+{% block js %}{% endblock %}
+
+</body>
 </html>
+
+{#<!DOCTYPE html>#}
+{#<html>#}
+{#<head>#}
+{#    <meta charset="UTF-8">#}
+{#    <title>{% block title %}Welcome!{% endblock %}</title>#}
+{#    {% block stylesheets %}{% endblock %}#}
+{#</head>#}
+{#<body>#}
+{#{% block body %}{% endblock %}#}
+{#{% block javascripts %}#}
+{#    <script src="{{ asset('asset/jquery.js') }}"></script>#}
+{#{% endblock %}#}
+{#{% block js %}{% endblock %}#}
+{#</body>#}
+{#</html>#}

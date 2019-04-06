@@ -1,1 +1,174 @@
-asd
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    {#<!-- Jumbotron -->#}
+    {#<div class="jumbotron jumbotron-fluid">#}
+    {#    <div class="container">#}
+    {#        <h1 class="text-center mb-5">Buy and Sell Anything</h1>#}
+
+    {#        <h3 class="text-center">text</h3>#}
+
+    {#        <form action="/advanced-results" class="form-row justify-content-md-end" method="get">#}
+    {#            <div class="form-row container-fluid">#}
+    {#                <div class="col-md-5">#}
+    {#                    <div class="input-group mb-2 mr-md-2">#}
+    {#                        <input type="text" class="form-control form-control-lg" id="q" name="q" placeholder="Keyword">#}
+    {#                    </div>#}
+    {#                </div>#}
+
+    {#                <div class="col-md-2">#}
+    {#                    <button type="submit" class="btn btn-lg btn-primary btn-block mb-2">Search</button>#}
+    {#                </div>#}
+    {#            </div>#}
+    {#        </form>#}
+    {#    </div>#}
+    {#</div>#}
+
+    <br>
+
+    <!-- Categories -->
+    <div class="container mb-2">
+        <div class="d-flex flex-row">
+            <div class="flex-grow-1"><h2>Categories</h2></div>
+            <div><a href="/categories" class="btn btn-light">View All</a></div>
+        </div>
+    </div>
+
+    <div class="container mb-5">
+        <div class="row">
+            <div class="col-sm-6 col-lg-3 text-center mb-4">
+                <div class="card bg-light text-white">
+                    <img class="card-img" src="/assets/imgs/blank.png" alt="">
+                    <div class="card-img-overlay">
+                        <h5 class="card-title down">Vehicle</h5>
+                        <p class="card-text d-none"><a href="listings/vehicles" title="" class="btn btn-warning">View Category</a></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-lg-3 text-center mb-4">
+                <div class="card bg-light text-white">
+                    <img class="card-img" src="/assets/imgs/blank.png" alt="">
+                    <div class="card-img-overlay">
+                        <h5 class="card-title down">Real Estate</h5>
+                        <p class="card-text d-none"><a href="listings/real-estate" title="" class="btn btn-warning">View Category</a></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-lg-3 text-center mb-4">
+                <div class="card bg-light text-white">
+                    <img class="card-img" src="/assets/imgs/blank.png" alt="">
+                    <div class="card-img-overlay">
+                        <h5 class="card-title down">Computer</h5>
+                        <p class="card-text d-none"><a href="listings/computers" title="" class="btn btn-warning">View Category</a></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-lg-3 text-center mb-4">
+                <div class="card bg-light text-white">
+                    <img class="card-img" src="/assets/imgs/blank.png" alt="">
+                    <div class="card-img-overlay">
+                        <h5 class="card-title down">Electronics</h5>
+                        <p class="card-text d-none"><a href="listings/electronics" title="" class="btn btn-warning">View Category</a></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-lg-3 text-center mb-4">
+                <div class="card bg-light text-white">
+                    <img class="card-img" src="/assets/imgs/blank.png" alt="">
+                    <div class="card-img-overlay">
+                        <h5 class="card-title down">Event</h5>
+                        <p class="card-text d-none"><a href="listings/events" title="" class="btn btn-warning">View Category</a></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-lg-3 text-center mb-4">
+                <div class="card bg-light text-white">
+                    <img class="card-img" src="/assets/imgs/blank.png" alt="">
+                    <div class="card-img-overlay">
+                        <h5 class="card-title down">Jobs</h5>
+                        <p class="card-text d-none"><a href="listings/jobs" title="" class="btn btn-warning">View Category</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Featured Listings -->
+
+    <!-- Latest Listings -->
+    <div class="container mb-2">
+        <div class="d-flex flex-row">
+            <div class="flex-grow-1"><h2 class="">Latest Listings</h2></div>
+        </div>
+    </div>
+
+    <div class="container mb-5">
+        <div class="card-columns">
+            <div class="card card-featured mb-4">
+                <div class="row p-2">
+                    <div class="col-sm-6 text-center">
+                        <a href="/listing////str_0">
+                            <img class="img-thumbnail" alt="" src="/assets/imgs/blank.png">
+                        </a>
+                    </div>
+
+                    <div class="col-sm-6 d-flex flex-column">
+                        <h4 class="pt-3 pt-sm-0"><a href="/listing////str_0"></a></h4>
+                        <p>...</p>
+                        <a href="/listing////str_0" class="btn btn-sm btn-dark btn-block mt-auto">View Listing</a>
+                    </div>
+                </div>
+            </div>
+            <div class="card card-featured mb-4">
+                <div class="row p-2">
+                    <div class="col-sm-6 text-center">
+                        <a href="/listing/podkarpackie/jaso-1/cars/citroen-2005">
+                            <img class="img-thumbnail" alt="" src="/assets/imgs/blank.png">
+                        </a>
+                    </div>
+
+                    <div class="col-sm-6 d-flex flex-column">
+                        <h4 class="pt-3 pt-sm-0"><a href="/listing/podkarpackie/jaso-1/cars/citroen-2005">citroen 2005</a></h4>
+                        <p>...</p>
+                        <a href="/listing/podkarpackie/jaso-1/cars/citroen-2005" class="btn btn-sm btn-dark btn-block mt-auto">View Listing</a>
+                    </div>
+                </div>
+            </div>
+            <div class="card card-featured mb-4">
+                <div class="row p-2">
+                    <div class="col-sm-6 text-center">
+                        <a href="/listing/podkarpackie/jaso-1/cars/fghd-fghdfgdf">
+                            <img class="img-thumbnail" alt="" src="/assets/imgs/blank.png">
+                        </a>
+                    </div>
+
+                    <div class="col-sm-6 d-flex flex-column">
+                        <h4 class="pt-3 pt-sm-0"><a href="/listing/podkarpackie/jaso-1/cars/fghd-fghdfgdf">fghd fghdfgdf</a></h4>
+                        <p>gfhfdghfd gh...</p>
+                        <a href="/listing/podkarpackie/jaso-1/cars/fghd-fghdfgdf" class="btn btn-sm btn-dark btn-block mt-auto">View Listing</a>
+                    </div>
+                </div>
+            </div>
+            <div class="card card-featured mb-4">
+                <div class="row p-2">
+                    <div class="col-sm-6 text-center">
+                        <a href="/listing/podkarpackie/jaso-1/cars/gfh-dfghdfghfhg">
+                            <img class="img-thumbnail" alt="" src="/pictures/listing-full/1/19.04.03.09.38-1554309523.1814-40863315.jpg">
+                        </a>
+                    </div>
+
+                    <div class="col-sm-6 d-flex flex-column">
+                        <h4 class="pt-3 pt-sm-0"><a href="/listing/podkarpackie/jaso-1/cars/gfh-dfghdfghfhg">gfh dfghdfghfhg</a></h4>
+                        <p>fdgsdfg sdfgdsfg sdfgdsfg...</p>
+                        <a href="/listing/podkarpackie/jaso-1/cars/gfh-dfghdfghfhg" class="btn btn-sm btn-dark btn-block mt-auto">View Listing</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Near Listings -->
+
+    <!-- Featured Cities -->
+{% endblock body %}

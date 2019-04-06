@@ -26,7 +26,7 @@ class ListingController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="listing_new", methods={"GET","POST"})
+     * @Route("/new", name="app_listing_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
     {
@@ -45,16 +45,6 @@ class ListingController extends AbstractController
         return $this->render('listing/new.html.twig', [
             'listing' => $listing,
             'form' => $form->createView(),
-        ]);
-    }
-
-    /**
-     * @Route("/{id}", name="listing_show", methods={"GET"}, requirements={"id"="\d+"})
-     */
-    public function show(Listing $listing): Response
-    {
-        return $this->render('listing/show.html.twig', [
-            'listing' => $listing,
         ]);
     }
 

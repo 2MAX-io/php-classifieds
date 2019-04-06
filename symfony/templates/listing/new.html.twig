@@ -3,21 +3,27 @@
 {% block title %}New Listing{% endblock %}
 
 {% block body %}
-    <h1>Create new Listing</h1>
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-4 col-lg-3 mb-5">
+            {% include 'user_navigation_card.html.twig' %}
+        </div>
 
-    {{ include('listing/_form.html.twig') }}
+        <div class="col-md-8 col-lg-9">
+            <h2 class="mb-5">Create Listing</h2>
 
-    <div>
-        <div class="custom-fields-from-ajax"></div>
+            {{ include('listing/_form.html.twig') }}
+
+            <a href="{{ path('listing_index') }}">back to list</a>
+        </div>
     </div>
-
-    <a href="{{ path('listing_index') }}">back to list</a>
+</div>
 {% endblock %}
 
  {% block js %}
-    <script type="text/javascript">
-        $.get('{{ path('app_listing_get_custom_fields') }}', function(data) {
-            $('.custom-fields-from-ajax').html(data);
-        });
-    </script>
+     <script type="text/javascript">
+         $.get('{{ path('app_listing_get_custom_fields') }}', function (data) {
+             $('.custom-fields-from-ajax').html(data);
+         });
+     </script>
  {% endblock %}

@@ -27,6 +27,11 @@ class Listing
     private $description;
 
     /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="listings")
+     */
+    private $category;
+
+    /**
      * @ORM\Column(type="decimal", precision=10, scale=2)
      */
     private $price;
@@ -119,6 +124,18 @@ class Listing
     public function setCity(?string $city): self
     {
         $this->city = $city;
+
+        return $this;
+    }
+
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Category $category): self
+    {
+        $this->category = $category;
 
         return $this;
     }

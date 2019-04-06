@@ -1,3 +1,4 @@
 cd symfony/
 php bin/console make:entity
 php bin/console list
+php bin/console generate:controller

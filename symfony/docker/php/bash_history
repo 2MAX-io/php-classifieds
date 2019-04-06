@@ -2,3 +2,12 @@ cd symfony/
 php bin/console make:entity
 php bin/console list
 php bin/console generate:controller
+php bin/console make:entity
+php bin/console make:entity
+php symfony/bin/console make:entity
+php symfony/bin/console list
+php symfony/bin/console make:entity
+php symfony/bin/console doctrine:schema:update --force
+php symfony/bin/console doctrine:schema:update --force
+php symfony/bin/console list
+php symfony/bin/console doctrine:schema:update --force

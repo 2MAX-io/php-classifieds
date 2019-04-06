@@ -23,9 +23,113 @@
 {% endblock %}
 
  {% block js %}
+
+
+
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.1/css/fileinput.min.css" media="all"
+           rel="stylesheet" type="text/css"/>
+     <!-- if using RTL (Right-To-Left) orientation, load the RTL CSS file after fileinput.css by uncommenting below -->
+     <!-- link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.1/css/fileinput-rtl.min.css" media="all" rel="stylesheet" type="text/css" /-->
+     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+     <!-- piexif.min.js is needed for auto orienting image files OR when restoring exif data in resized images and when you
+         wish to resize images before upload. This must be loaded before fileinput.min.js -->
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.1/js/plugins/piexif.min.js"
+             type="text/javascript"></script>
+     <!-- sortable.min.js is only needed if you wish to sort / rearrange files in initial preview.
+         This must be loaded before fileinput.min.js -->
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.1/js/plugins/sortable.min.js"
+             type="text/javascript"></script>
+     <!-- purify.min.js is only needed if you wish to purify HTML content in your preview for
+         HTML files. This must be loaded before fileinput.min.js -->
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.1/js/plugins/purify.min.js"
+             type="text/javascript"></script>
+     <!-- popper.min.js below is needed if you use bootstrap 4.x. You can also use the bootstrap js
+        3.3.x versions without popper.min.js. -->
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+     <!-- bootstrap.min.js below is needed if you wish to zoom and preview file content in a detail modal
+         dialog. bootstrap 4.x is supported. You can also use the bootstrap js 3.3.x versions. -->
+     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" type="text/javascript"></script>
+     <!-- the main fileinput plugin file -->
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.1/js/fileinput.js"></script>
+     <!-- optionally if you need a theme like font awesome theme you can include it as mentioned below -->
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.1/themes/fa/theme.js"></script>
+     <!-- optionally if you need translation for your language then include  locale file as mentioned below -->
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.1/js/locales/pl.js"></script>
+
      <script type="text/javascript">
          $.get('{{ path('app_listing_get_custom_fields') }}', function (data) {
              $('.custom-fields-from-ajax').html(data);
          });
+
+         // $("#input-fas").fileinput({
+         //     uploadUrl: "/file-upload-batch/2",
+         //     "initialPreview": [], "initialPreviewConfig": [], "initialPreviewAsData": true,
+         //     "fileActionSettings": {"showUpload": false, "showDrag": true}
+         // });
+
+
+         jQuery('#input-fas').fileinput('destroy');
+
+         $("#input-fas").fileinput({
+             theme: "fa",
+             uploadUrl: "{{ path('app_upload_image') }}",
+             overwriteInitial: false,
+             "uploadAsync": true,
+             initialPreviewAsData: true,
+             initialPreview: [
+                 // "https://picsum.photos/1920/1080?image=101",
+                 // "https://picsum.photos/1920/1080?image=102",
+                 // "https://picsum.photos/1920/1080?image=103"
+             ],
+             initialPreviewConfig: [
+                 // {caption: "picture-1.jpg", size: 329892, width: "120px", url: "/site/file-delete", key: 101},
+                 // {caption: "picture-2.jpg", size: 872378, width: "120px", url: "/site/file-delete", key: 102},
+                 // {caption: "picture-3.jpg", size: 632762, width: "120px", url: "/site/file-delete", key: 103}
+             ],
+             "fileActionSettings": {"showUpload": false, "showDrag": true},
+             "dropZoneEnabled": false,
+             "browseOnZoneClick": true,
+             // "showUpload": false,
+             "showRemove": false,
+             "showClose": false,
+
+
+         });
+
+         var a = {
+             "initialPreview": [],
+             "initialPreviewConfig": [],
+             "initialPreviewAsData": true,
+             "language": "en",
+             "uploadUrl": "\/",
+             "uploadExtraData": {"image_form_key": "c8ad49cf", "action": "create", "adId": null},
+             "uploadAsync": true,
+             "maxFileSize": null,
+             "msgSizeTooLarge": "File \u0022{name}\u0022 ({size} KB) exceeds maximum allowed upload size of {maxSize} KB. Please retry your upload!",
+             "allowedFileExtensions": ["png", "jpg", "jpeg"],
+             "showUpload": false,
+             "showRemove": false,
+             "showClose": false,
+             "browseOnZoneClick": true,
+             "dropZoneEnabled": false,
+             "browseLabel": "Browse ...",
+             "browseClass": "btn btn-as",
+             "removeClass": "btn btn-as reverse",
+             "uploadClass": "btn btn-as reverse",
+             "msgPlaceholder": "Select files...",
+             "captionClass": {"height": "100px"},
+             "layoutTemplates": {
+                 "fileIcon": "",
+                 "footer": "\u003Cdiv class=\u0022file-thumbnail-footer\u0022\u003E{progress} {actions}\u003C\/div\u003E"
+             },
+             "fileActionSettings": {"showUpload": false, "showDrag": true},
+             "overwriteInitial": false,
+             "resizeImage": false,
+             "autoOrientImage": true,
+             "purifyHtml": true
+         };
+
      </script>
+
  {% endblock %}

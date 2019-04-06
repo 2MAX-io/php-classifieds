@@ -1,0 +1,321 @@
+/*--------------------------------------------------------------
+TABLE OF CONTENTS:
+----------------------------------------------------------------
+1.0 Typography
+2.0 Colors
+3.0 Header
+4.0 Navbar
+5.0 Sidebar
+6.0 Footer
+7.0 Contents
+8.0 Pagination
+9.0 Forms
+10.0 Buttons
+11.0 Tables
+12.0 Modals
+13.0 Global Classes
+--------------------------------------------------------------*/
+
+/*--------------------------------------------------------------
+1.0 Typography
+--------------------------------------------------------------*/
+body,
+button,
+input,
+select,
+textarea {
+	color: #333;
+	font-family: 'Lato', sans-serif;
+}
+
+a,a.h1,a.h2,a.h3,a.h4,a.h5,a.h6 {
+	color: #0073bb;
+	text-decoration: none;
+}
+
+a:hover, a:focus {
+	color: #0073bb;
+	text-decoration: none;
+}
+.breadcrumb a {
+	text-decoration: none;
+}
+.breadcrumb a:hover, .breadcrumb a:focus,.breadcrumb > .active {
+	text-decoration: none;
+}
+
+/*--------------------------------------------------------------
+2.0 Colors
+--------------------------------------------------------------*/
+
+/*--------------------------------------------------------------
+3.0 Header
+--------------------------------------------------------------*/
+.container-header {
+	background-color: #edeef0;
+}
+
+/*--------------------------------------------------------------
+4.0 Navbar
+--------------------------------------------------------------*/
+
+/*--------------------------------------------------------------
+5.0 Sidebar
+--------------------------------------------------------------*/
+
+/*--------------------------------------------------------------
+6.0 Footer
+--------------------------------------------------------------*/
+
+/*--------------------------------------------------------------
+7.0 Contents
+--------------------------------------------------------------*/
+.nav-tabs {
+        border-bottom: 1px solid #eee;
+}
+
+.card-featured {
+	background-color: #f8f9fa;
+}
+
+.card-img {
+    width: 100%;
+    height: 168px;
+    object-fit: cover;
+}
+
+.tpl-listing .tab-content {
+	background-color: #edeef0;
+	border: 1px solid #eee;
+	border-top: 0;
+}
+
+.tpl-listing .nav-link.active {
+	background-color: #edeef0;
+	border: 1px solid #eee;
+}
+
+#listing-map-wrapper, #map-wrapper {
+	width: 100%;
+	height: 240px;
+	border: 1px solid #eee;
+}
+
+#map-wrapper {
+	height: 360px;
+}
+
+.sidebar-map {
+	width: 100%;
+	height: 372px;
+	border: 1px solid #ddd;
+}
+
+.featured {
+	background-color: #
+}
+
+.show-cats {
+	margin-left: 0;
+	padding-left: 0;
+	list-style-type: none;
+	-webkit-column-count: 2;
+	-moz-column-count: 2;
+	column-count: 2;
+	-webkit-column-gap: 20px;
+	column-gap: 20px;
+	-moz-column-gap: 20px;
+}
+
+.show-cats ul {
+	list-style-type: none;
+}
+
+/*--------------------------------------------------------------
+8.0 Pagination
+--------------------------------------------------------------*/
+
+/*--------------------------------------------------------------
+9.0 Forms
+--------------------------------------------------------------*/
+
+/* Make select2 styles look like Bootstrap */
+.select2-container--default .select2-selection--single {
+	background-clip: padding-box;
+	background-color: #fff;
+	border-radius: .25rem;
+	border: 1px solid #ced4da;
+	color: #495057;
+	display: block;
+	font-size: 1rem;
+	height: calc(2.25rem + 2px);
+	line-height: 1.5;
+	padding: .375rem .75rem;
+	transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+	width: 100%;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+	height: calc(2.25rem + 2px);
+	position: absolute;
+	top: 1px;
+	right: 1px;
+	width: 20px;
+}
+
+/* Header */
+#header-controls .select2 {
+	position: relative;
+	-ms-flex: 1 1 auto;
+	flex: 1 1 auto;
+	width: 1%;
+	margin-bottom: 0;
+}
+
+#header-controls  .select2-container--default .select2-selection--single .select2-selection__rendered {
+	text-align: left;
+	color: #6C7592;
+	line-height: 1.5;
+}
+
+#header-controls  .select2-container--default .select2-selection--single {
+	background-color: #fff;
+	border: 1px solid #aaa;
+}
+
+#header-controls .select2-container--default .select2-selection--single {
+	background-clip: padding-box;
+	background-color: #fff;
+	border-radius: .25rem;
+	border-bottom-left-radius: 0;
+	border-top-left-radius: 0;
+	border: 1px solid #ced4da;
+	color: #495057;
+	display: block;
+	font-size: 1rem;
+	height: calc(2.25rem + 2px);
+	line-height: 1.5;
+	padding: .375rem .75rem;
+	transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+	width: 100%;
+}
+
+#header-controls .select2-selection .select2-selection--single {
+	border-top-left-radius: 0;
+	border-bottom-left-radius: 0;
+}
+
+/*--------------------------------------------------------------
+10.0 Buttons
+--------------------------------------------------------------*/
+.delete_pic, .delete_existing_pic {
+	cursor: pointer;
+}
+
+.social-btn {
+	background-color: #ddd;
+	border-radius: 100%;
+	color: #fff;
+	display: inline-block;
+	font-size: 18px;
+	height: 36px;
+	padding: 4px 0;
+	text-align: center;
+	width: 36px;
+}
+
+.social-btn.facebook {
+	background: #3b5998;
+}
+
+.social-btn.twitter {
+	background: #55acee;
+}
+
+.btn-link {
+	color: #0073bb;
+}
+
+/*--------------------------------------------------------------
+11.0 Tables
+--------------------------------------------------------------*/
+
+/*--------------------------------------------------------------
+12.0 Modals
+--------------------------------------------------------------*/
+
+/*--------------------------------------------------------------
+13.0 Global Classes
+--------------------------------------------------------------*/
+img {
+	height: auto;
+	max-width: 100%;
+}
+
+.animated {
+    -webkit-animation-duration: 0.1s;
+    animation-duration: 0.1s;
+}
+
+@media (min-width: 1200px) {
+	.container {
+			max-width: 1170px;
+	}
+}
+
+.zebra>div:nth-child(odd), .white-box {
+	background-color: #fff;
+	border: 1px solid #eee;
+	border-radius: 4px;
+}
+
+/* edit in place buttons */
+.editable {
+	display: inline;
+
+}
+
+.dummy {
+	padding-top: 100%;
+}
+
+.container-img {
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: 50% 50%;
+}
+
+#profile-pic-wrapper {
+	width: 150px;
+}
+
+.date-sm {
+	font-size: 75%;
+}
+
+svg.icon {
+
+    width: 18px;
+    height: 18px;
+
+}
+
+.page-item {
+	margin-bottom: 5px;
+}
+
+.fb_iframe_widget {
+    display: inline-block;
+    position: relative;
+    vertical-align: middle;
+    top: -2px;
+}
+
+#twitter-widget-0 {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.card-header {
+	background-color: #edeef0;
+}

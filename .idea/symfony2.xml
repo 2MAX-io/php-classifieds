@@ -2,7 +2,7 @@
 <project version="4">
   <component name="Symfony2PluginSettings">
     <option name="pathToTranslation" value="symfony/var/cache/dev/translations" />
-    <option name="directoryToWeb" value="" />
+    <option name="directoryToWeb" value="/" />
     <option name="directoryToApp" value="symfony/config" />
     <option name="pluginEnabled" value="true" />
     <option name="profilerCsvPath" value="" />

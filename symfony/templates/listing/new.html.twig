@@ -7,5 +7,17 @@
 
     {{ include('listing/_form.html.twig') }}
 
+    <div>
+        <div class="custom-fields-from-ajax"></div>
+    </div>
+
     <a href="{{ path('listing_index') }}">back to list</a>
 {% endblock %}
+
+ {% block js %}
+    <script type="text/javascript">
+        $.get('{{ path('app_listing_get_custom_fields') }}', function(data) {
+            $('.custom-fields-from-ajax').html(data);
+        });
+    </script>
+ {% endblock %}

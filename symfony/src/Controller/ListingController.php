@@ -49,7 +49,7 @@ class ListingController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="listing_show", methods={"GET"})
+     * @Route("/{id}", name="listing_show", methods={"GET"}, requirements={"id"="\d+"})
      */
     public function show(Listing $listing): Response
     {

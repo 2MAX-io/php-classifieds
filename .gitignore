@@ -4,6 +4,6 @@
 /.env.local.php
 /.env.*.local
 /public/bundles/
-/var/
-/vendor/
+/symfony/var/
+/symfony/vendor/
 ###< symfony/framework-bundle ###

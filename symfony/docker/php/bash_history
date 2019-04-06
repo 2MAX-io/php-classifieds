@@ -17,3 +17,10 @@ php symfony/bin/console make:crud
 php symfony/bin/console make:crud --help
 php symfony/bin/console doctrine:schema:update --force
 php symfony/bin/console doctrine:schema:update --force
+php symfony/bin/console make:crud
+php symfony/bin/console make:entity
+php symfony/bin/console make:entity
+php symfony/bin/console make:entity
+php symfony/bin/console make:entity
+php symfony/bin/console make:entity
+php symfony/bin/console make:entity

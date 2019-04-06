@@ -1,0 +1,3 @@
+https://github.com/FiloSottile/mkcert
+
+mkcert -cert-file localhost.crt -key-file localhost.key  "*.localhost" localhost 127.0.0.1 ::1 classifieds.localhost www.classifieds.localhost

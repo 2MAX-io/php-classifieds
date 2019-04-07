@@ -24,7 +24,7 @@
                         <strong>Refine Search</strong>
                     </div>
                     <div class="card-body">
-                        <form method="get" id="" action="https://x-php.pro/demo/classifiedsplus/advanced-results">
+                        <form method="get" id="" action="">
                             <!-- cat_id -->
                             <input type="hidden" name="cats[]" value="129">
 
@@ -36,8 +36,17 @@
 
                                         {% for customFieldOption in customField.customFieldOptions %}
                                             <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" id="val_00" class="custom-control-input" name="field_7[]" value="Audi">
-                                                <label class="custom-control-label" for="val_00">{{ customFieldOption.name }}</label>
+                                                <input
+                                                    name="form_custom_field[{{ customField.id }}][]"
+                                                    value="{{ customFieldOption.value }}"
+                                                    {% if customFieldOption.value in app.request.get('form_custom_field')[customField.id] | default([]) %}
+                                                        {{- 'checked' -}}
+                                                    {% endif %}
+                                                    type="checkbox"
+                                                    id="option_{{ customFieldOption.id }}"
+                                                    class="custom-control-input"
+                                                >
+                                                <label class="custom-control-label" for="option_{{ customFieldOption.id }}">{{ customFieldOption.name }}</label>
                                             </div>
                                         {% endfor %}
                                     </div>
@@ -47,11 +56,20 @@
                                     <label>{{ customField.name }}</label>
                                     <div class="form-row mb-3">
                                         <div class="col-6">
-                                            <input type="text" id="min_price" class="form-control form-control-sm" name="min_price">
+                                            <input
+                                                name="form_custom_field[{{ customField.id }}][min]"
+                                                value="{{ app.request.get('form_custom_field')[customField.id]['min'] | default }}"
+                                                type="text"
+                                                class="form-control form-control-sm">
                                         </div>
 
                                         <div class="col-6">
-                                            <input type="text" id="max_price" class="form-control form-control-sm" name="max_price">
+                                            <input
+                                                name="form_custom_field[{{ customField.id }}][max]"
+                                                value="{{ app.request.get('form_custom_field')[customField.id]['max'] | default }}"
+                                                type="text"
+                                                class="form-control form-control-sm"
+                                            >
                                         </div>
                                     </div>
                                 {% endif %}

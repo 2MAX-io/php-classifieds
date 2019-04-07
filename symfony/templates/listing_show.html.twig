@@ -1,0 +1,165 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container mt-3">
+        <a href="//www.jaslo4u.pl">Jaslo4u.pl</a>
+        > <a href="{{ path('app_index') }}">{{ 'trans.Classifieds' | trans }}</a>
+        > <a href="https://x-php.pro/demo/classifiedsplus/listings/california">California</a>
+        > <a href="https://x-php.pro/demo/classifiedsplus/listings/california/los-angeles-104/">Los Angeles</a>
+        > <a href="https://x-php.pro/demo/classifiedsplus/listings/california/los-angeles-104/vehicles">Vehicle</a>
+        > <a href="https://x-php.pro/demo/classifiedsplus/listings/california/los-angeles-104/cars">Car</a>
+        > <a href="https://x-php.pro/demo/classifiedsplus/listings/california/los-angeles-104/auto-accessories">Auto
+            Accessories</a>
+    </div>
+
+    <div class="container mt-3">
+        <div class="row">
+            <div class="col-md-9">
+                <div class="row mb-3">
+                    <div class="col-sm-10">
+                        <h1>{{ listing.title }}</h1>
+                    </div>
+                </div>
+
+                <!-- Tabs nav -->
+                <ul class="nav nav-tabs flex-column flex-sm-row" id="myTab" role="tablist">
+                    <li class="nav-item flex-sm-fill text-sm-center mr-1">
+                        <a href="#overview" class="nav-link active" aria-controls="overview" role="tab" data-toggle="tab" aria-selected="true">Ad Details</a>
+                    </li>
+
+                    <li class="nav-item flex-sm-fill text-sm-center mr-1">
+                        <a href="#photos" class="nav-link" aria-controls="photos" role="tab" data-toggle="tab">Photos (1)</a>
+                    </li>
+
+
+                    <li class="nav-item flex-sm-fill text-sm-center mr-1">
+                        <a href="#reviews" class="nav-link" aria-controls="reviews" role="tab" data-toggle="tab">Reviews (0)</a>
+                    </li>
+                </ul>
+
+                <!-- Tabs contents -->
+                <div class="tab-content p-3 rounded-bottom">
+                    <!-- tab overview -->
+                    <div class="tab-pane fade show active" role="tabpanel" id="overview">
+                        <div class="zebra">
+                            <!-- description -->
+                            <div class="block">
+                                <div class="description white-box px-3 mb-2 py-2">
+                                    <p>We are liquidating 2015-2016 stock of LED headlight and fog light conversion kits! We have 4 different models to choose from in this deal. We need the space for 2017 models so these have to go!
+                                    </p><p>All kits are brand new and ready for you to enjoy! A purchase of 2 or more kits and you get free LED license plate bulbs! Make sure you ask our rep for them.
+                                    </p><p>We have LIMITED QUANTITIES in each kit so act fast and get your heavily discounted LED kits now. Even more discounts offered for multiple sets purchased!
+                                    </p><p>$25 LED-COM - The same exact kit that is being sold online for $88 dollars and comes with a fancy metal case. Get yours here without the fancy case but save $50. Color shields included!
+                                    </p><p>Sizes available: 9004, 9005, 9006, 9007, H3, H4, H7, H10, H13, 880
+                                    </p><p>$30 LED-Premium - True high power 360 design with a chip on all 4 sides. 72w LED kit!
+                                    </p><p>Sizes available: 9004, 9005, 9006, 9007, H3, H4, H7
+                                    </p><p>$35 LED-3CC - CANbus enabled 2 sided, COB chip design! Color shields included!
+                                    </p><p>Sizes available: 9004, 9007, H3, H4, H10, 880, 5202
+                                    </p><p>$35 LED-3CR - CANbus enabled 2 sided, CREE Chip design! Color shields included!
+                                    </p><p>Sizes available: 9005, H4, H7, H10, H13</p>								</div>
+                            </div>
+                        </div>
+                        <!-- end div class zebra -->
+                    </div>
+                    <!-- end tab overview -->
+
+                    <!-- Tab photos -->
+                    <div id="photos" class="tab-pane fade clearfix" role="tabpanel">
+                        <div class="listing-thumb float-left img-thumbnail mr-2 mb-2" style="width: 120px">
+                            <a href="https://x-php.pro/demo/classifiedsplus/pictures/listing-full/1/18.11.01.04.51-1541073078.0009-76528921.jpg" data-toggle="lightbox" data-gallery="multiimages" data-title="Liquidation! Wholesale Pricing for LED Headlight / Fog Conversion Kits picture">
+                                <div class="dummy container-img rounded" style="background-image:url('https://x-php.pro/demo/classifiedsplus/pictures/listing-thumb/1/18.11.01.04.51-1541073078.0009-76528921.jpg');"></div>
+                            </a>
+                        </div>
+                    </div>
+                    <!-- End tab photos -->
+
+                    <!-- Tab coupons -->
+                    <!-- end tab coupons -->
+
+                    <!-- Tab reviews -->
+                    <div id="reviews" class="tab-pane" role="tabpanel">
+
+                        <h2>Write a review</h2>
+
+                        <p>To write a review, you must login first.</p>
+                    </div>
+                    <!-- end tab reviews -->
+                </div>
+                <!-- end tabs contents -->
+            </div>
+
+            <!-- Sidebar -->
+            <div class="col-md-3">
+
+                {% if listing.price is not empty %}
+                    <div>
+                        <div class="my-1">
+                            <h3 class="btn btn-dark price btn-lg">{{ 'trans.Price' | trans }}: {{ listing.price }}</h3>
+                        </div>
+                    </div>
+                {% endif %}
+
+                {# Informations #}
+                <div class="card mb-3" style="width: 100%;">
+                    <div class="card-header">
+                        <h5>{{ 'trans.Informations' | trans }}</h5>
+                    </div>
+
+                    <div class="card-body">
+                        {% if listing.phone is not empty %}
+                        <div class="mb-2 py-2">
+                            <div class="row">
+                                <div class="col-sm-6">{{ 'trans.Email' | trans }}</div>
+
+                                <div class="col-sm-6">
+                                    <a href="mailto:{{ listing.phone }}">{{ listing.phone }}</a>
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
+                        {% if listing.email is not empty %}
+                        <div class="mb-2 py-2">
+                            <div class="row">
+                                <div class="col-sm-6">{{ 'trans.Phone' | trans }}</div>
+
+                                <div class="col-sm-6">
+                                    <a href="tel:{{ listing.email }}">{{ listing.email }}</a>
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
+
+                        {% for listingCustomFieldValue in listing.listingCustomFieldValues %}
+                            <div class="mb-2 py-2">
+                                <div class="row">
+                                    <div class="col-sm-6">{{ listingCustomFieldValue.customField.name }}</div>
+
+                                    <div class="col-sm-6">
+                                        {{ listingCustomFieldValue.value }}
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!-- Share listing -->
+                <div class="card mb-3" style="width: 100%;">
+                    <div class="card-header">
+                        <h5>Share This Listing</h5>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="fb-share-button"
+                             data-href="https://x-php.pro/demo/classifiedsplus/listing/california/los-angeles-104/auto-accessories/liquidation-wholesale-pricing-for-led-he"
+                             data-layout="button"
+                             data-size="small"
+                             data-mobile-iframe="true"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fx-php.pro%2Fdemo%2Fclassifiedsplus%2Flisting%2Fcalifornia%2Flos-angeles-104%2Fauto-accessories%2Fliquidation-wholesale-pricing-for-led-he&src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a>
+                        </div>
+
+                        <a class="twitter-share-button" href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fx-php.pro%2Fdemo%2Fclassifiedsplus%2Flisting%2Fcalifornia%2Flos-angeles-104%2Fauto-accessories%2Fliquidation-wholesale-pricing-for-led-he&text=Liquidation%21+Wholesale+Pricing+for+LED+Headlight+%2F+Fog+Conversion+Kits">Tweet</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock body %}

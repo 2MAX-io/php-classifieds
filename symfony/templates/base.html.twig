@@ -115,7 +115,7 @@
     <div class="container p-3">
         <div class="row vmargin">
             <div id="website_logo" class="col-lg-3 tpad sm-text-center">
-                <a href="https://x-php.pro/demo/classifiedsplus" title="https://x-php.pro/demo/classifiedsplus">
+                <a href="{{ path('app_index') }}" title="https://x-php.pro/demo/classifiedsplus">
                     <img src="https://x-php.pro/demo/classifiedsplus/assets/imgs/logo.png" alt="Classifieds Plus" width="240">
                 </a>
             </div>
@@ -159,7 +159,7 @@
         <div class="collapse navbar-collapse" id="main-navbar">
             <ul class="navbar-nav justify-content-around w-100">
                 <li class="nav-item active">
-                    <a class="nav-link" href="">Home</a>
+                    <a class="nav-link" href="{{ path('app_index') }}">{{ 'trans.Home' | trans }}</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/categories">Categories</a>

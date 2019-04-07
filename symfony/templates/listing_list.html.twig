@@ -1,0 +1,210 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="container mt-3 mb-3">
+        <a href="https://x-php.pro/demo/classifiedsplus">Home</a> &gt; <a href="https://x-php.pro/demo/classifiedsplus/listings/vehicles">Vehicles</a> &gt; Cars
+    </div>
+
+    <div class="container mt-5">
+        <div class="row">
+            <!-- Sidebar & Advanced Filters -->
+            <div class="col-md-3">
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <strong>Category</strong>
+                    </div>
+                    <div class="card-body">
+                        <a href="https://x-php.pro/demo/classifiedsplus/listings/auto-accessories" title="" class="mb-1">Auto Accessories</a><br>
+                    </div>
+                </div>
+
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <strong>Refine Search</strong>
+                    </div>
+                    <div class="card-body">
+                        <form method="get" id="" action="https://x-php.pro/demo/classifiedsplus/advanced-results">
+                            <!-- cat_id -->
+                            <input type="hidden" name="cats[]" value="129">
+
+                            <!-- custom fields for current cat -->
+                            <div class="mb-3" id="li-field-7">
+                                <p><strong>Brand</strong></p>
+
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" id="val_00" class="custom-control-input" name="field_7[]" value="Audi">
+                                    <label class="custom-control-label" for="val_00">Audi</label>
+                                </div>
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" id="val_01" class="custom-control-input" name="field_7[]" value="BMW">
+                                    <label class="custom-control-label" for="val_01">BMW</label>
+                                </div>
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" id="val_02" class="custom-control-input" name="field_7[]" value="Chevrolet">
+                                    <label class="custom-control-label" for="val_02">Chevrolet</label>
+                                </div>
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" id="val_03" class="custom-control-input" name="field_7[]" value="Dodge">
+                                    <label class="custom-control-label" for="val_03">Dodge</label>
+                                </div>
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" id="val_04" class="custom-control-input" name="field_7[]" value="Ford">
+                                    <label class="custom-control-label" for="val_04">Ford</label>
+                                </div>
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" id="val_05" class="custom-control-input" name="field_7[]" value="Honda">
+                                    <label class="custom-control-label" for="val_05">Honda</label>
+                                </div>
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" id="val_06" class="custom-control-input" name="field_7[]" value="Hyundai">
+                                    <label class="custom-control-label" for="val_06">Hyundai</label>
+                                </div>
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" id="val_07" class="custom-control-input" name="field_7[]" value="Jeep">
+                                    <label class="custom-control-label" for="val_07">Jeep</label>
+                                </div>
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" id="val_08" class="custom-control-input" name="field_7[]" value="Kia">
+                                    <label class="custom-control-label" for="val_08">Kia</label>
+                                </div>
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" id="val_09" class="custom-control-input" name="field_7[]" value="Mazda">
+                                    <label class="custom-control-label" for="val_09">Mazda</label>
+                                </div>
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" id="val_010" class="custom-control-input" name="field_7[]" value="Mercedes">
+                                    <label class="custom-control-label" for="val_010">Mercedes</label>
+                                </div>
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" id="val_011" class="custom-control-input" name="field_7[]" value="Nissan">
+                                    <label class="custom-control-label" for="val_011">Nissan</label>
+                                </div>
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" id="val_012" class="custom-control-input" name="field_7[]" value="Subaru">
+                                    <label class="custom-control-label" for="val_012">Subaru</label>
+                                </div>
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" id="val_013" class="custom-control-input" name="field_7[]" value="Tesla">
+                                    <label class="custom-control-label" for="val_013">Tesla</label>
+                                </div>
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" id="val_014" class="custom-control-input" name="field_7[]" value="Toyota">
+                                    <label class="custom-control-label" for="val_014">Toyota</label>
+                                </div>
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" id="val_015" class="custom-control-input" name="field_7[]" value="Other">
+                                    <label class="custom-control-label" for="val_015">Other</label>
+                                </div>
+                            </div>
+                            <div class="mb-3" id="li-field-9">
+                                <p><strong>Model Year</strong></p>
+
+                                <input type="text" class="form-control" name="field_9">
+                            </div>
+                            <div class="mb-3" id="li-field-12">
+                                <p><strong>Transmission</strong></p>
+
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" id="val_20" class="custom-control-input" name="field_12[]" value="Manual">
+                                    <label class="custom-control-label" for="val_20">Manual</label>
+                                </div>
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" id="val_21" class="custom-control-input" name="field_12[]" value="Automatic">
+                                    <label class="custom-control-label" for="val_21">Automatic</label>
+                                </div>
+                            </div>
+
+                            <!-- price -->
+                            <label>Price</label>
+                            <div class="form-row mb-3">
+                                <div class="col-6">
+                                    <input type="text" id="min_price" class="form-control form-control-sm" name="min_price">
+                                </div>
+
+                                <div class="col-6">
+                                    <input type="text" id="max_price" class="form-control form-control-sm" name="max_price">
+                                </div>
+                            </div>
+
+                            <!-- submit -->
+                            <button class="btn btn-primary btn-sm">Submit
+
+                            </button></form></div>
+                </div>
+            </div>
+
+            <!-- Listings Col -->
+            <div class="col-md-9 item-list">
+                <!-- sort and display -->
+                <ul class="nav justify-content-end mb-1">
+                    <li class="nav-item">
+                        <div class="dropdown">
+                            <button class="btn btn-sm btn-light dropdown-toggle mr-1" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Sort						</button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" href="?sort=price-asc">Price Asc</a>
+                                <a class="dropdown-item" href="?sort=price-desc">Price Desc</a>
+                                <a class="dropdown-item" href="?sort=date-asc">Date Asc</a>
+                                <a class="dropdown-item" href="?sort=date-desc">Date Desc</a>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <button id="grid-view" class="btn btn-sm btn-light mr-1"><i class="fas fa-th"></i></button>
+                    </li>
+                    <li class="nav-item">
+                        <button id="list-view" class="btn btn-sm btn-light"><i class="fas fa-th-list"></i></button>
+                    </li>
+                </ul>
+
+                <!-- the listings -->
+                <div id="cards-wrapper" class="">
+                    {% for listing in listingList %}
+                        <div class="card mb-3 regular">
+                            <div class="container-fluid">
+                                <div class="row" data-listing-id="340">
+                                    <div class="card-thumb col-12 col-md-3 py-3">
+                                        <a title="Liquidation! Wholesale Pricing for LED Headlight / Fog Conversion Kits" href="https://x-php.pro/demo/classifiedsplus/listing/california/los-angeles-104/auto-accessories/liquidation-wholesale-pricing-for-led-he">
+                                            <img class="rounded" alt="Liquidation! Wholesale Pricing for LED Headlight / Fog Conversion Kits" src="{{ asset('assets/imgs/blank.png') }}">
+                                        </a>
+                                    </div>
+
+                                    <div class="card-text col-12 col-md-9 py-3">
+                                        <h5 class="pt-3 pt-sm-0">
+                                            <strong>
+                                                <a href="https://x-php.pro/demo/classifiedsplus/listing/california/los-angeles-104/auto-accessories/liquidation-wholesale-pricing-for-led-he">
+                                                    {{ listing.title }}
+                                                </a>
+                                            </strong>
+                                        </h5>
+
+                                        <div class="address">
+                                            <i class="fas fa-map-marker-alt text-danger"></i>
+
+                                            2641 W Woodland Dr, Anaheim<br>											Los Angeles,											 CA 																					</div>
+
+                                        <div class="tel">
+                                            <a href="tel:714 952-2527" class="text-dark"><small><i class="fas fa-phone"></i> 714 952-2527</small></a>
+                                        </div>
+
+                                        <div class="mt-1"><span class="btn btn-dark btn-sm price">{{ 'trans:Price:' | trans }} {{ listing.price }}</span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+
+                <!-- pagination -->
+                <nav class="clearfix">
+                    <ul class="pagination flex-wrap">
+                        <li class="page-item active"><span class="page-link">Page 1</span></li>
+                        <li class="page-item"><a href="https://x-php.pro/demo/classifiedsplus/listings/cars/page/2" class="page-link">2</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+{% endblock body %}

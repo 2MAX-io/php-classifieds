@@ -76,7 +76,7 @@
                             {% endfor %}
 
                             <!-- price -->
-                            <label>Price</label>
+                            <label>{{ 'trans.Price' | trans }}</label>
                             <div class="form-row mb-3">
                                 <div class="col-6">
                                     <input type="text" id="min_price" class="form-control form-control-sm" name="min_price">
@@ -125,8 +125,8 @@
                             <div class="container-fluid">
                                 <div class="row" data-listing-id="340">
                                     <div class="card-thumb col-12 col-md-3 py-3">
-                                        <a title="Liquidation! Wholesale Pricing for LED Headlight / Fog Conversion Kits" href="https://x-php.pro/demo/classifiedsplus/listing/california/los-angeles-104/auto-accessories/liquidation-wholesale-pricing-for-led-he">
-                                            <img class="rounded" alt="Liquidation! Wholesale Pricing for LED Headlight / Fog Conversion Kits" src="{{ asset('assets/imgs/blank.png') }}">
+                                        <a title="{{ listing.title }}" href="{{ path('app_listing_show', {id: listing.id}) }}">
+                                            <img class="rounded" alt="{{ listing.title }}" src="{{ asset('assets/imgs/blank.png') }}">
                                         </a>
                                     </div>
 
@@ -139,16 +139,18 @@
                                             </strong>
                                         </h5>
 
-                                        <div class="address">
-                                            <i class="fas fa-map-marker-alt text-danger"></i>
+                                        {% if listing.city is not empty %}
+                                            <div class="address">
+                                                <i class="fas fa-map-marker-alt text-danger"></i>
+                                                {{ listing.city }}
+                                            </div>
+                                        {% endif %}
 
-                                            2641 W Woodland Dr, Anaheim<br>											Los Angeles,											 CA 																					</div>
+{#                                        <div class="tel">#}
+{#                                            <a href="tel:714 952-2527" class="text-dark"><small><i class="fas fa-phone"></i> 714 952-2527</small></a>#}
+{#                                        </div>#}
 
-                                        <div class="tel">
-                                            <a href="tel:714 952-2527" class="text-dark"><small><i class="fas fa-phone"></i> 714 952-2527</small></a>
-                                        </div>
-
-                                        <div class="mt-1"><span class="btn btn-dark btn-sm price">{{ 'trans:Price:' | trans }} {{ listing.price }}</span></div>
+                                        <div class="mt-1"><span class="btn btn-dark btn-sm price">{{ 'trans.Price' | trans }}: {{ listing.price }}</span></div>
                                     </div>
                                 </div>
                             </div>

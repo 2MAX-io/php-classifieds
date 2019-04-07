@@ -11,6 +11,9 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class CustomField
 {
+    public const TYPE_SELECT = 'select';
+    public const TYPE_INTEGER_RANGE = 'integer_range';
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -53,9 +56,15 @@ class CustomField
      */
     private $customFieldOptions;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Category", inversedBy="customFields")
+     */
+    private $categories;
+
     public function __construct()
     {
         $this->customFieldOptions = new ArrayCollection();
+        $this->categories = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -161,6 +170,32 @@ class CustomField
             if ($customFieldOption->getCustomField() === $this) {
                 $customFieldOption->setCustomField(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Category[]
+     */
+    public function getCategories(): Collection
+    {
+        return $this->categories;
+    }
+
+    public function addCategory(Category $category): self
+    {
+        if (!$this->categories->contains($category)) {
+            $this->categories[] = $category;
+        }
+
+        return $this;
+    }
+
+    public function removeCategory(Category $category): self
+    {
+        if ($this->categories->contains($category)) {
+            $this->categories->removeElement($category);
         }
 
         return $this;

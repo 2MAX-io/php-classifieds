@@ -28,92 +28,34 @@
                             <!-- cat_id -->
                             <input type="hidden" name="cats[]" value="129">
 
-                            <!-- custom fields for current cat -->
-                            <div class="mb-3" id="li-field-7">
-                                <p><strong>Brand</strong></p>
+                            {# @var customField \App\Entity\CustomField #}
+                            {% for customField in customFieldList %}
+                                {% if customField.type == constant('\App\\Entity\\CustomField::TYPE_SELECT') %}
+                                    <div class="mb-3" id="li-field-7">
+                                        <p><strong>{{ customField.name }}</strong></p>
 
-                                <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" id="val_00" class="custom-control-input" name="field_7[]" value="Audi">
-                                    <label class="custom-control-label" for="val_00">Audi</label>
-                                </div>
-                                <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" id="val_01" class="custom-control-input" name="field_7[]" value="BMW">
-                                    <label class="custom-control-label" for="val_01">BMW</label>
-                                </div>
-                                <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" id="val_02" class="custom-control-input" name="field_7[]" value="Chevrolet">
-                                    <label class="custom-control-label" for="val_02">Chevrolet</label>
-                                </div>
-                                <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" id="val_03" class="custom-control-input" name="field_7[]" value="Dodge">
-                                    <label class="custom-control-label" for="val_03">Dodge</label>
-                                </div>
-                                <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" id="val_04" class="custom-control-input" name="field_7[]" value="Ford">
-                                    <label class="custom-control-label" for="val_04">Ford</label>
-                                </div>
-                                <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" id="val_05" class="custom-control-input" name="field_7[]" value="Honda">
-                                    <label class="custom-control-label" for="val_05">Honda</label>
-                                </div>
-                                <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" id="val_06" class="custom-control-input" name="field_7[]" value="Hyundai">
-                                    <label class="custom-control-label" for="val_06">Hyundai</label>
-                                </div>
-                                <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" id="val_07" class="custom-control-input" name="field_7[]" value="Jeep">
-                                    <label class="custom-control-label" for="val_07">Jeep</label>
-                                </div>
-                                <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" id="val_08" class="custom-control-input" name="field_7[]" value="Kia">
-                                    <label class="custom-control-label" for="val_08">Kia</label>
-                                </div>
-                                <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" id="val_09" class="custom-control-input" name="field_7[]" value="Mazda">
-                                    <label class="custom-control-label" for="val_09">Mazda</label>
-                                </div>
-                                <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" id="val_010" class="custom-control-input" name="field_7[]" value="Mercedes">
-                                    <label class="custom-control-label" for="val_010">Mercedes</label>
-                                </div>
-                                <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" id="val_011" class="custom-control-input" name="field_7[]" value="Nissan">
-                                    <label class="custom-control-label" for="val_011">Nissan</label>
-                                </div>
-                                <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" id="val_012" class="custom-control-input" name="field_7[]" value="Subaru">
-                                    <label class="custom-control-label" for="val_012">Subaru</label>
-                                </div>
-                                <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" id="val_013" class="custom-control-input" name="field_7[]" value="Tesla">
-                                    <label class="custom-control-label" for="val_013">Tesla</label>
-                                </div>
-                                <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" id="val_014" class="custom-control-input" name="field_7[]" value="Toyota">
-                                    <label class="custom-control-label" for="val_014">Toyota</label>
-                                </div>
-                                <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" id="val_015" class="custom-control-input" name="field_7[]" value="Other">
-                                    <label class="custom-control-label" for="val_015">Other</label>
-                                </div>
-                            </div>
-                            <div class="mb-3" id="li-field-9">
-                                <p><strong>Model Year</strong></p>
+                                        {% for customFieldOption in customField.customFieldOptions %}
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" id="val_00" class="custom-control-input" name="field_7[]" value="Audi">
+                                                <label class="custom-control-label" for="val_00">{{ customFieldOption.name }}</label>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
 
-                                <input type="text" class="form-control" name="field_9">
-                            </div>
-                            <div class="mb-3" id="li-field-12">
-                                <p><strong>Transmission</strong></p>
+                                {% if customField.type == constant('\App\\Entity\\CustomField::TYPE_INTEGER_RANGE') %}
+                                    <label>{{ customField.name }}</label>
+                                    <div class="form-row mb-3">
+                                        <div class="col-6">
+                                            <input type="text" id="min_price" class="form-control form-control-sm" name="min_price">
+                                        </div>
 
-                                <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" id="val_20" class="custom-control-input" name="field_12[]" value="Manual">
-                                    <label class="custom-control-label" for="val_20">Manual</label>
-                                </div>
-                                <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" id="val_21" class="custom-control-input" name="field_12[]" value="Automatic">
-                                    <label class="custom-control-label" for="val_21">Automatic</label>
-                                </div>
-                            </div>
+                                        <div class="col-6">
+                                            <input type="text" id="max_price" class="form-control form-control-sm" name="max_price">
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
 
                             <!-- price -->
                             <label>Price</label>

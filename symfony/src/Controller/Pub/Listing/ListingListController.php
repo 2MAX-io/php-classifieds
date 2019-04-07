@@ -20,6 +20,7 @@ class ListingListController extends AbstractController
             'listing_list.html.twig',
             [
                 'listingList' => $listingListService->getListings(),
+                'customFieldList' => $listingListService->getCustomFields(),
             ]
         );
     }

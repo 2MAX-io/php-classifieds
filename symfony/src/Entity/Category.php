@@ -33,9 +33,15 @@ class Category
      */
     private $listings;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\CustomField", mappedBy="categories")
+     */
+    private $customFields;
+
     public function __construct()
     {
         $this->listings = new ArrayCollection();
+        $this->customFields = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -93,6 +99,34 @@ class Category
             if ($listing->getCategory() === $this) {
                 $listing->setCategory(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|CustomField[]
+     */
+    public function getCustomFields(): Collection
+    {
+        return $this->customFields;
+    }
+
+    public function addCustomField(CustomField $customField): self
+    {
+        if (!$this->customFields->contains($customField)) {
+            $this->customFields[] = $customField;
+            $customField->addCategory($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCustomField(CustomField $customField): self
+    {
+        if ($this->customFields->contains($customField)) {
+            $this->customFields->removeElement($customField);
+            $customField->removeCategory($this);
         }
 
         return $this;

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Service\Listing\ListingList;
 
+use App\Entity\Category;
 use App\Entity\CustomField;
 use App\Entity\Listing;
 use Doctrine\ORM\EntityManagerInterface;
@@ -23,7 +24,7 @@ class ListingListService
     /**
      * @return Listing[]
      */
-    public function getListings(): array
+    public function getListings(Category $category = null): array
     {
         $qb = $this->em->getRepository(Listing::class)->createQueryBuilder('listing');
         $qb->leftJoin('listing.listingCustomFieldValues', 'listingCustomFieldValue');
@@ -65,6 +66,11 @@ class ListingListService
             $qb->setParameter(':uniqueCustomFieldsCount', count(array_unique($usedCustomFieldIdList)));
 
             $qb->groupBy('listing.id');
+        }
+
+        if ($category) {
+            $qb->andWhere($qb->expr()->eq('listing.category', ':category'));
+            $qb->setParameter(':category', $category);
         }
 
         return $qb->getQuery()->getResult();

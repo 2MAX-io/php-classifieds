@@ -2,41 +2,10 @@ cd symfony/
 php bin/console make:entity
 php bin/console list
 php bin/console generate:controller
-php bin/console make:entity
-php bin/console make:entity
 php symfony/bin/console make:entity
-php symfony/bin/console list
-php symfony/bin/console make:entity
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console doctrine:schema:update --force
 php symfony/bin/console list
 php symfony/bin/console doctrine:schema:update --force
 php symfony/bin/console make:crud Listing
 php symfony/bin/console make:crud
-php symfony/bin/console make:crud
 php symfony/bin/console make:crud --help
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console make:crud
-php symfony/bin/console make:entity
-php symfony/bin/console make:entity
-php symfony/bin/console make:entity
-php symfony/bin/console make:entity
-php symfony/bin/console make:entity
-php symfony/bin/console make:entity
-php symfony/bin/console make:entity --help
-php symfony/bin/console make:entity --regenerate
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console make:entity --regenerate
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console make:entity --regenerate
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console make:entity --regenerate
-php symfony/bin/console make:entity --regenerate
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console doctrine:schema:update --force
+php symfony/bin/console make:entity --regenerate "App\Entity"

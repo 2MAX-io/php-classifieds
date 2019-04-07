@@ -40,11 +40,13 @@
             {% for category in categoryList %}
             <div class="col-sm-6 col-lg-3 text-center mb-4">
                 <div class="card bg-light text-white">
-                    <img class="card-img" src="/assets/imgs/blank.png" alt="">
-                    <div class="card-img-overlay">
-                        <h5 class="card-title down">{{ category.name }}</h5>
-                        <p class="card-text d-none"><a href="listings/vehicles" title="" class="btn btn-warning">View Category</a></p>
-                    </div>
+                    <a href="{{ path('app_listing_list') }}" title="{{ category.name }}" class="text-white">
+                        <img class="card-img" src="/assets/imgs/blank.png" alt="">
+                        <div class="card-img-overlay">
+                            <h5 class="card-title down">{{ category.name }}</h5>
+                            <p class="card-text d-none">View Category</p>
+                        </div>
+                    </a>
                 </div>
             </div>
             {% endfor %}

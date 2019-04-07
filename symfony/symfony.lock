@@ -123,6 +123,9 @@
             "config/packages/sensio_framework_extra.yaml"
         ]
     },
+    "stefano/stefano-tree": {
+        "version": "4.0.2"
+    },
     "symfony/apache-pack": {
         "version": "1.0",
         "recipe": {

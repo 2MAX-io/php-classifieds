@@ -26,6 +26,46 @@ class ListingListService
     public function getListings(): array
     {
         $qb = $this->em->getRepository(Listing::class)->createQueryBuilder('listing');
+        $qb->leftJoin('listing.listingCustomFieldValues', 'listingCustomFieldValue');
+        $qb->leftJoin('listingCustomFieldValue.customField', 'customField');
+
+        if (!empty($_GET['form_custom_field'])) {
+            $sqlParamId = 0;
+            $usedCustomFieldIdList = [];
+            foreach ($_GET['form_custom_field'] as $customFieldId => $customFieldFormValueArray) {
+                $sqlParamId++;
+                if (isset($customFieldFormValueArray['range'])) {
+                    $qb->orWhere($qb->expr()->andX(
+                        $qb->expr()->eq('listingCustomFieldValue.customField', ':customFieldId_' . ((int) $sqlParamId)),
+                        $qb->expr()->gte('listingCustomFieldValue.value', ':customFieldValueMin_' . ((int) $sqlParamId)),
+                        $qb->expr()->lte('listingCustomFieldValue.value', ':customFieldValueMax_' . ((int) $sqlParamId))
+                    ));
+                    $qb->setParameter(':customFieldId_' . ((int) $sqlParamId), $customFieldId);
+                    $qb->setParameter(':customFieldValueMin_' . ((int) $sqlParamId), $customFieldFormValueArray['range']['min']);
+                    $qb->setParameter(':customFieldValueMax_' . ((int) $sqlParamId), $customFieldFormValueArray['range']['max']);
+
+                    $usedCustomFieldIdList[] = $customFieldId;
+                }
+
+                if (isset($customFieldFormValueArray['values'])) {
+                    foreach ($customFieldFormValueArray as $valueItem) {
+                        $qb->orWhere($qb->expr()->andX(
+                            $qb->expr()->eq('listingCustomFieldValue.customField', ':customFieldId_' . ((int) $sqlParamId)),
+                            $qb->expr()->eq('listingCustomFieldValue.value', ':customFieldValue_' . ((int) $sqlParamId))
+                        ));
+                        $qb->setParameter(':customFieldId_' . ((int) $sqlParamId), $customFieldId);
+                        $qb->setParameter(':customFieldValue_' . ((int) $sqlParamId), $valueItem);
+
+                        $usedCustomFieldIdList[] = $customFieldId;
+                    }
+                }
+            }
+
+            $qb->andHaving($qb->expr()->eq($qb->expr()->countDistinct('listingCustomFieldValue.id'), ':uniqueCustomFieldsCount'));
+            $qb->setParameter(':uniqueCustomFieldsCount', count(array_unique($usedCustomFieldIdList)));
+
+            $qb->groupBy('listing.id');
+        }
 
         return $qb->getQuery()->getResult();
     }

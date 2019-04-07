@@ -37,9 +37,9 @@
                                         {% for customFieldOption in customField.customFieldOptions %}
                                             <div class="custom-control custom-checkbox">
                                                 <input
-                                                    name="form_custom_field[{{ customField.id }}][]"
+                                                    name="form_custom_field[{{ customField.id }}][values][]"
                                                     value="{{ customFieldOption.value }}"
-                                                    {% if customFieldOption.value in app.request.get('form_custom_field')[customField.id] | default([]) %}
+                                                    {% if customFieldOption.value in app.request.get('form_custom_field')[customField.id]['values'] | default([]) %}
                                                         {{- 'checked' -}}
                                                     {% endif %}
                                                     type="checkbox"
@@ -57,16 +57,16 @@
                                     <div class="form-row mb-3">
                                         <div class="col-6">
                                             <input
-                                                name="form_custom_field[{{ customField.id }}][min]"
-                                                value="{{ app.request.get('form_custom_field')[customField.id]['min'] | default }}"
+                                                name="form_custom_field[{{ customField.id }}][range][min]"
+                                                value="{{ app.request.get('form_custom_field')[customField.id]['range']['min'] | default }}"
                                                 type="text"
                                                 class="form-control form-control-sm">
                                         </div>
 
                                         <div class="col-6">
                                             <input
-                                                name="form_custom_field[{{ customField.id }}][max]"
-                                                value="{{ app.request.get('form_custom_field')[customField.id]['max'] | default }}"
+                                                name="form_custom_field[{{ customField.id }}][range][max]"
+                                                value="{{ app.request.get('form_custom_field')[customField.id]['range']['max'] | default }}"
                                                 type="text"
                                                 class="form-control form-control-sm"
                                             >

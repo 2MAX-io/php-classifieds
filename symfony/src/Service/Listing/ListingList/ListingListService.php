@@ -89,7 +89,7 @@ class ListingListService
 
         $adapter = new DoctrineORMAdapter($qb);
         $pager = new Pagerfanta($adapter);
-        $pager->setMaxPerPage(1);
+        $pager->setMaxPerPage(20);
         $pager->setCurrentPage($page);
 
         $qb->setMaxResults($pager->getMaxPerPage());

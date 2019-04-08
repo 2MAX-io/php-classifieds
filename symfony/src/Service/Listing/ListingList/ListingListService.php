@@ -8,6 +8,7 @@ use App\Entity\Category;
 use App\Entity\CustomField;
 use App\Entity\Listing;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Query\Expr\Join;
 
 class ListingListService
 {
@@ -29,6 +30,7 @@ class ListingListService
         $qb = $this->em->getRepository(Listing::class)->createQueryBuilder('listing');
         $qb->leftJoin('listing.listingCustomFieldValues', 'listingCustomFieldValue');
         $qb->leftJoin('listingCustomFieldValue.customField', 'customField');
+        $qb->leftJoin('listing.category', 'category');
 
         if (!empty($_GET['form_custom_field'])) {
             $sqlParamId = 0;
@@ -69,8 +71,20 @@ class ListingListService
         }
 
         if ($category) {
-            $qb->andWhere($qb->expr()->eq('listing.category', ':category'));
-            $qb->setParameter(':category', $category);
+            $qb->leftJoin(
+                Category::class,
+                'requestedCategory',
+                Join::WITH,
+                $qb->expr()->andX($qb->expr()->eq('requestedCategory.id', ':requestedCategory'))
+            );
+            $qb->setParameter(':requestedCategory', $category);
+
+            $qb->andWhere(
+                $qb->expr()->andX(
+                    $qb->expr()->gte('category.lft', 'requestedCategory.lft'),
+                    $qb->expr()->lte('category.rgt', 'requestedCategory.rgt')
+                )
+            );
         }
 
         return $qb->getQuery()->getResult();
@@ -86,6 +100,4 @@ class ListingListService
 
         return $qb->getQuery()->getResult();
     }
-
-
 }

@@ -30,6 +30,7 @@ class ListingListService
         $qb->leftJoin('listing.listingCustomFieldValues', 'listingCustomFieldValue');
         $qb->leftJoin('listingCustomFieldValue.customField', 'customField');
         $qb->leftJoin('listing.category', 'category');
+        $qb->leftJoin('listing.listingFiles', 'listingFile');
 
         if (!empty($_GET['form_custom_field'])) {
             $sqlParamId = 0;

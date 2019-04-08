@@ -1,4 +1,7 @@
 {
+    "ausi/slug-generator": {
+        "version": "v1.1.0"
+    },
     "doctrine/annotations": {
         "version": "1.0",
         "recipe": {
@@ -354,6 +357,12 @@
     },
     "twig/twig": {
         "version": "v2.7.4"
+    },
+    "webmozart/assert": {
+        "version": "1.4.0"
+    },
+    "webmozart/path-util": {
+        "version": "2.3.0"
     },
     "zendframework/zend-code": {
         "version": "3.3.1"

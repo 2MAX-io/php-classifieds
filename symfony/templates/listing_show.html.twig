@@ -26,9 +26,8 @@
                     </li>
 
                     <li class="nav-item flex-sm-fill text-sm-center mr-1">
-                        <a href="#photos" class="nav-link" aria-controls="photos" role="tab" data-toggle="tab">Photos (1)</a>
+                        <a href="#photos" class="nav-link" aria-controls="photos" role="tab" data-toggle="tab">Photos ({{ listing.listingFiles.count }})</a>
                     </li>
-
 
                     <li class="nav-item flex-sm-fill text-sm-center mr-1">
                         <a href="#reviews" class="nav-link" aria-controls="reviews" role="tab" data-toggle="tab">Reviews (0)</a>
@@ -54,9 +53,12 @@
                     <!-- Tab photos -->
                     <div id="photos" class="tab-pane fade clearfix" role="tabpanel">
                         <div class="listing-thumb float-left img-thumbnail mr-2 mb-2" style="width: 120px">
-                            <a href="https://x-php.pro/demo/classifiedsplus/pictures/listing-full/1/18.11.01.04.51-1541073078.0009-76528921.jpg" data-toggle="lightbox" data-gallery="multiimages" data-title="Liquidation! Wholesale Pricing for LED Headlight / Fog Conversion Kits picture">
-                                <div class="dummy container-img rounded" style="background-image:url('https://x-php.pro/demo/classifiedsplus/pictures/listing-thumb/1/18.11.01.04.51-1541073078.0009-76528921.jpg');"></div>
-                            </a>
+
+                            {% for listingFile in listing.listingFiles %}
+                                <a href="{{ asset(listingFile.file) }}" data-toggle="lightbox" data-gallery="multiimages" data-title="{{ listing.title }}">
+                                    <div class="dummy container-img rounded" style="background-image:url('{{ asset(listingFile.file) }}');"></div>
+                                </a>
+                            {% endfor %}
                         </div>
                     </div>
                     <!-- End tab photos -->

@@ -6,6 +6,7 @@ use App\Entity\Category;
 use App\Entity\Listing;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -28,7 +29,15 @@ class ListingType extends AbstractType
             ->add('price')
             ->add('phone')
             ->add('email')
-            ->add('city');
+            ->add('city')
+            ->add('file', FileType::class, [
+                'mapped' => false,
+                'required' => false,
+                'constraints' => [
+//                    new Assert\File(['mimeTypes']) // todo: mime validation
+                ]
+            ])
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver)

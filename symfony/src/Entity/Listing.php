@@ -58,9 +58,15 @@ class Listing
      */
     private $listingCustomFieldValues;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\ListingFile", mappedBy="listing")
+     */
+    private $listingFiles;
+
     public function __construct()
     {
         $this->listingCustomFieldValues = new ArrayCollection();
+        $this->listingFiles = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -177,6 +183,37 @@ class Listing
             // set the owning side to null (unless already changed)
             if ($listingCustomFieldValue->getListing() === $this) {
                 $listingCustomFieldValue->setListing(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ListingFile[]
+     */
+    public function getListingFiles(): Collection
+    {
+        return $this->listingFiles;
+    }
+
+    public function addListingFile(ListingFile $listingFile): self
+    {
+        if (!$this->listingFiles->contains($listingFile)) {
+            $this->listingFiles[] = $listingFile;
+            $listingFile->setListing($this);
+        }
+
+        return $this;
+    }
+
+    public function removeListingFile(ListingFile $listingFile): self
+    {
+        if ($this->listingFiles->contains($listingFile)) {
+            $this->listingFiles->removeElement($listingFile);
+            // set the owning side to null (unless already changed)
+            if ($listingFile->getListing() === $this) {
+                $listingFile->setListing(null);
             }
         }
 

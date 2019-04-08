@@ -9,3 +9,4 @@
 ###< symfony/framework-bundle ###
 
 /symfony/docker/mysql/data/
+/asset/user/listing/

@@ -40,7 +40,7 @@ class ListingFileUploadService
             $destinationFilename
         );
         $listingFile = new ListingFile();
-        $listingFile->setFile(Path::makeRelative($movedFile->getRealPath(), FilePath::getProjectDir()));
+        $listingFile->setPath(Path::makeRelative($movedFile->getRealPath(), FilePath::getProjectDir()));
         $listingFile->setListing($listing);
         $this->em->persist($listingFile);
 

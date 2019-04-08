@@ -55,8 +55,8 @@
                         <div class="listing-thumb float-left img-thumbnail mr-2 mb-2" style="width: 120px">
 
                             {% for listingFile in listing.listingFiles %}
-                                <a href="{{ asset(listingFile.file) }}" data-toggle="lightbox" data-gallery="multiimages" data-title="{{ listing.title }}">
-                                    <div class="dummy container-img rounded" style="background-image:url('{{ asset(listingFile.file) }}');"></div>
+                                <a href="{{ asset(listingFile.path) }}" data-toggle="lightbox" data-gallery="multiimages" data-title="{{ listing.title }}">
+                                    <div class="dummy container-img rounded" style="background-image:url('{{ asset(listingFile.path) }}');"></div>
                                 </a>
                             {% endfor %}
                         </div>

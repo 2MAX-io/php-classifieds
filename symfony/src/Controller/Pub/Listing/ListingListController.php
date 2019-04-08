@@ -33,6 +33,7 @@ class ListingListController extends AbstractController
                 'listingList' => $listingListService->getListings($category),
                 'customFieldList' => $listingListService->getCustomFields(),
                 'categoryList' => $categoryListService->getLevelOfSubcategoriesToDisplayForCategory($categoryId),
+                'categoryBreadcrumbs' => $categoryListService->getBreadcrumbs($category),
             ]
         );
     }

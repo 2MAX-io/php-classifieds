@@ -3,7 +3,15 @@
 {% block body %}
 
     <div class="container mt-3 mb-3">
-        <a href="https://x-php.pro/demo/classifiedsplus">Home</a> &gt; <a href="https://x-php.pro/demo/classifiedsplus/listings/vehicles">Vehicles</a> &gt; Cars
+        <a href="{{ path('app_index') }}">{{ 'trans.Home page' | trans }}</a>
+
+        {% for category in categoryBreadcrumbs %}
+            {% if loop.last %}
+                &gt; {{ category.name }}
+            {% else %}
+                &gt; <a href="{{ path('app_category', {"categoryId": category.id}) }}">{{ category.name }}</a>
+            {% endif %}
+        {% endfor %}
     </div>
 
     <div class="container mt-5">

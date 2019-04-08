@@ -58,6 +58,11 @@ class Category
      */
     private $customFields;
 
+    /**
+     * @ORM\Column(type="string", length=100)
+     */
+    private $picture;
+
     public function __construct()
     {
         $this->listings = new ArrayCollection();
@@ -196,6 +201,18 @@ class Category
     public function setParent(?self $parent): self
     {
         $this->parent = $parent;
+
+        return $this;
+    }
+
+    public function getPicture(): ?string
+    {
+        return $this->picture;
+    }
+
+    public function setPicture(string $picture): self
+    {
+        $this->picture = $picture;
 
         return $this;
     }

@@ -8,3 +8,5 @@ php symfony/bin/console doctrine:schema:update --force
 php symfony/bin/console make:crud Listing
 php symfony/bin/console make:crud
 php symfony/bin/console make:entity --regenerate "App\Entity"
+php symfony/bin/console make:entity --regenerate "App\Entity"
+php symfony/bin/console doctrine:schema:update --force

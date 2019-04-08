@@ -40,6 +40,21 @@
                 <div class="tab-content p-3 rounded-bottom">
                     <!-- tab overview -->
                     <div class="tab-pane fade show active" role="tabpanel" id="overview">
+
+                        <div class="row">
+                            {% for listingCustomFieldValue in listing.listingCustomFieldValues %}
+                                <div class="mb-2 py-2 col-md-4">
+                                    <div class="row">
+                                        <div class="col-sm-6"><strong>{{ listingCustomFieldValue.customField.name }}</strong></div>
+
+                                        <div class="col-sm-6">
+                                            {{ listingCustomFieldValue.value }}
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+
                         <div class="zebra">
                             <!-- description -->
                             <div class="block">
@@ -48,6 +63,7 @@
                                 </div>
                             </div>
                         </div>
+
                         <!-- end div class zebra -->
                     </div>
                     <!-- end tab overview -->
@@ -108,10 +124,10 @@
                         {% if listing.phone is not empty %}
                         <div class="mb-2 py-2">
                             <div class="row">
-                                <div class="col-sm-6">{{ 'trans.Email' | trans }}</div>
+                                <div class="col-sm-6">{{ 'trans.Phone' | trans }}</div>
 
                                 <div class="col-sm-6">
-                                    <a href="mailto:{{ listing.phone }}">{{ listing.phone }}</a>
+                                    <a href="tel:{{ listing.phone }}">{{ listing.phone }}</a>
                                 </div>
                             </div>
                         </div>
@@ -119,26 +135,14 @@
                         {% if listing.email is not empty %}
                         <div class="mb-2 py-2">
                             <div class="row">
-                                <div class="col-sm-6">{{ 'trans.Phone' | trans }}</div>
+                                <div class="col-sm-6">{{ 'trans.Email' | trans }}</div>
 
                                 <div class="col-sm-6">
-                                    <a href="tel:{{ listing.email }}">{{ listing.email }}</a>
+                                    <a target="_blank" href="mailto:{{ listing.email }}">{{ listing.email }}</a>
                                 </div>
                             </div>
                         </div>
                         {% endif %}
-
-                        {% for listingCustomFieldValue in listing.listingCustomFieldValues %}
-                            <div class="mb-2 py-2">
-                                <div class="row">
-                                    <div class="col-sm-6">{{ listingCustomFieldValue.customField.name }}</div>
-
-                                    <div class="col-sm-6">
-                                        {{ listingCustomFieldValue.value }}
-                                    </div>
-                                </div>
-                            </div>
-                        {% endfor %}
                     </div>
                 </div>
 

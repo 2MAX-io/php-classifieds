@@ -37,14 +37,21 @@ class ListingListService
             foreach ($_GET['form_custom_field'] as $customFieldId => $customFieldFormValueArray) {
                 $sqlParamId++;
                 if (isset($customFieldFormValueArray['range'])) {
-                    $qb->orWhere($qb->expr()->andX(
-                        $qb->expr()->eq('listingCustomFieldValue.customField', ':customFieldId_' . ((int) $sqlParamId)),
-                        $qb->expr()->gte('listingCustomFieldValue.value', ':customFieldValueMin_' . ((int) $sqlParamId)),
-                        $qb->expr()->lte('listingCustomFieldValue.value', ':customFieldValueMax_' . ((int) $sqlParamId))
-                    ));
+                    $rangeCondition = $qb->expr()->andX();
+                    $rangeCondition->add($qb->expr()->eq('listingCustomFieldValue.customField', ':customFieldId_' . ((int) $sqlParamId)));
                     $qb->setParameter(':customFieldId_' . ((int) $sqlParamId), $customFieldId);
-                    $qb->setParameter(':customFieldValueMin_' . ((int) $sqlParamId), $customFieldFormValueArray['range']['min']);
-                    $qb->setParameter(':customFieldValueMax_' . ((int) $sqlParamId), $customFieldFormValueArray['range']['max']);
+
+                    if (!empty($customFieldFormValueArray['range']['min'])) {
+                        $rangeCondition->add($qb->expr()->gte('listingCustomFieldValue.value', ':customFieldValueMin_' . ((int) $sqlParamId)));
+                        $qb->setParameter(':customFieldValueMin_' . ((int) $sqlParamId), $customFieldFormValueArray['range']['min']);
+                    }
+
+                    if (!empty($customFieldFormValueArray['range']['max'])) {
+                        $rangeCondition->add($qb->expr()->lte('listingCustomFieldValue.value', ':customFieldValueMax_' . ((int) $sqlParamId)));
+                        $qb->setParameter(':customFieldValueMax_' . ((int) $sqlParamId), $customFieldFormValueArray['range']['max']);
+                    }
+
+                    $qb->orWhere($rangeCondition);
 
                     $usedCustomFieldIdList[] = $customFieldId;
                 }

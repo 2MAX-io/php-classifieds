@@ -19,6 +19,8 @@
                     </div>
                 </div>
 
+                <img class="rounded" alt="{{ listing.title }}" src="{{ asset(listing.listingFiles.first.path | default('assets/imgs/blank.png')) }}">
+
                 <!-- Tabs nav -->
                 <ul class="nav nav-tabs flex-column flex-sm-row" id="myTab" role="tablist">
                     <li class="nav-item flex-sm-fill text-sm-center mr-1">
@@ -75,6 +77,13 @@
                     </div>
                     <!-- end tab reviews -->
                 </div>
+
+                {% for listingFile in listing.listingFiles %}
+                    <a href="{{ asset(listingFile.path) }}" data-toggle="lightbox" data-gallery="multiimages" data-title="{{ listing.title }}">
+                        <div class="dummy container-img rounded" style="background-image:url('{{ asset(listingFile.path) }}');"></div>
+                    </a>
+                {% endfor %}
+
                 <!-- end tabs contents -->
             </div>
 

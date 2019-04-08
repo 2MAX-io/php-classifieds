@@ -39,8 +39,6 @@ class ListingListService
                 $sqlParamId++;
                 if (isset($customFieldFormValueArray['range'])) {
                     $rangeCondition = $qb->expr()->andX();
-                    $rangeCondition->add($qb->expr()->eq('listingCustomFieldValue.customField', ':customFieldId_' . ((int) $sqlParamId)));
-                    $qb->setParameter(':customFieldId_' . ((int) $sqlParamId), $customFieldId);
 
                     if (!empty($customFieldFormValueArray['range']['min'])) {
                         $rangeCondition->add($qb->expr()->gte('listingCustomFieldValue.value', ':customFieldValueMin_' . ((int) $sqlParamId)));
@@ -52,9 +50,14 @@ class ListingListService
                         $qb->setParameter(':customFieldValueMax_' . ((int) $sqlParamId), $customFieldFormValueArray['range']['max']);
                     }
 
-                    $qb->orWhere($rangeCondition);
+                    if ($rangeCondition->count() > 0) {
+                        $qb->orWhere($rangeCondition);
 
-                    $usedCustomFieldIdList[] = $customFieldId;
+                        $rangeCondition->add($qb->expr()->eq('listingCustomFieldValue.customField', ':customFieldId_' . ((int) $sqlParamId)));
+                        $qb->setParameter(':customFieldId_' . ((int) $sqlParamId), $customFieldId);
+
+                        $usedCustomFieldIdList[] = $customFieldId;
+                    }
                 }
 
                 if (isset($customFieldFormValueArray['values'])) {
@@ -71,8 +74,11 @@ class ListingListService
                 }
             }
 
-            $qb->andHaving($qb->expr()->eq($qb->expr()->countDistinct('listingCustomFieldValue.id'), ':uniqueCustomFieldsCount'));
-            $qb->setParameter(':uniqueCustomFieldsCount', count(array_unique($usedCustomFieldIdList)));
+            $customFieldsCount = count(array_unique($usedCustomFieldIdList));
+            if ($customFieldsCount > 0) {
+                $qb->andHaving($qb->expr()->eq($qb->expr()->countDistinct('listingCustomFieldValue.id'), ':uniqueCustomFieldsCount'));
+                $qb->setParameter(':uniqueCustomFieldsCount', $customFieldsCount);
+            }
 
             $qb->groupBy('listing.id');
         }

@@ -61,7 +61,8 @@ class ListingListService
                 }
 
                 if (isset($customFieldFormValueArray['values'])) {
-                    foreach ($customFieldFormValueArray as $valueItem) {
+                    foreach ($customFieldFormValueArray['values'] as $valueItem) {
+                        $sqlParamId++;
                         $qb->orWhere($qb->expr()->andX(
                             $qb->expr()->eq('listingCustomFieldValue.customField', ':customFieldId_' . ((int) $sqlParamId)),
                             $qb->expr()->eq('listingCustomFieldValue.value', ':customFieldValue_' . ((int) $sqlParamId))

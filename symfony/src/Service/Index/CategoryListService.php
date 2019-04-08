@@ -25,6 +25,7 @@ class CategoryListService
     public function getCategoryList()
     {
         $qb = $this->em->getRepository(Category::class)->createQueryBuilder('category');
+        $qb->andWhere($qb->expr()->eq('category.lvl', 1));
 
         return $qb->getQuery()->getResult();
     }

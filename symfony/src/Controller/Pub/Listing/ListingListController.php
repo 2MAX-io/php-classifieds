@@ -8,6 +8,7 @@ use App\Entity\Category;
 use App\Service\Category\CategoryListService;
 use App\Service\Listing\ListingList\ListingListService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -15,10 +16,11 @@ class ListingListController extends AbstractController
 {
     /**
      * @Route("/listing/list", name="app_listing_list")
-     * @Route("/category/{categoryId}", name="app_category")
+     * @Route("/c-{categoryId}", name="app_category")
      */
-    public function index(ListingListService $listingListService, CategoryListService $categoryListService, int $categoryId = null): Response
+    public function index(Request $request, ListingListService $listingListService, CategoryListService $categoryListService, int $categoryId = null): Response
     {
+        $page = (int) $request->get('page', 1);
         $category = null;
         if ($categoryId) {
             $category = $this->getDoctrine()->getRepository(Category::class)->find($categoryId);
@@ -30,7 +32,7 @@ class ListingListController extends AbstractController
         return $this->render(
             'listing_list.html.twig',
             [
-                'listingList' => $listingListService->getListings($category),
+                'listingList' => $listingListService->getListings($page, $category)->getResults(),
                 'customFieldList' => $listingListService->getCustomFields(),
                 'categoryList' => $categoryListService->getLevelOfSubcategoriesToDisplayForCategory($categoryId),
                 'categoryBreadcrumbs' => $categoryListService->getBreadcrumbs($category),

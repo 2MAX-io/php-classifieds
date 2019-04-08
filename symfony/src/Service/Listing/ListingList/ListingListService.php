@@ -9,6 +9,8 @@ use App\Entity\CustomField;
 use App\Entity\Listing;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr\Join;
+use Pagerfanta\Adapter\DoctrineORMAdapter;
+use Pagerfanta\Pagerfanta;
 
 class ListingListService
 {
@@ -22,10 +24,7 @@ class ListingListService
         $this->em = $em;
     }
 
-    /**
-     * @return Listing[]
-     */
-    public function getListings(Category $category = null): array
+    public function getListings(int $page = 1, Category $category = null): ListingListDto
     {
         $qb = $this->em->getRepository(Listing::class)->createQueryBuilder('listing');
         $qb->leftJoin('listing.listingCustomFieldValues', 'listingCustomFieldValue');
@@ -87,7 +86,16 @@ class ListingListService
             );
         }
 
-        return $qb->getQuery()->getResult();
+
+        $adapter = new DoctrineORMAdapter($qb);
+        $pager = new Pagerfanta($adapter);
+        $pager->setMaxPerPage(1);
+        $pager->setCurrentPage($page);
+
+        $qb->setMaxResults($pager->getMaxPerPage());
+        $qb->setFirstResult($pager->getCurrentPageOffsetStart());
+
+        return new ListingListDto($pager->getCurrentPageResults(), $pager);
     }
 
     /**

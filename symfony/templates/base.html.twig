@@ -115,8 +115,8 @@
     <div class="container p-3">
         <div class="row vmargin">
             <div id="website_logo" class="col-lg-3 tpad sm-text-center">
-                <a href="{{ path('app_index') }}" title="https://x-php.pro/demo/classifiedsplus">
-                    <img src="https://x-php.pro/demo/classifiedsplus/assets/imgs/logo.png" alt="Classifieds Plus" width="240">
+                <a href="{{ path('app_index') }}" title={{ 'trans.Classifieds'|trans }}>
+                    <img src="{{ asset('assets/imgs/logo.png') }}" alt="Classifieds Plus" width="240">
                 </a>
             </div>
 
@@ -126,12 +126,12 @@
                     <div class="input-group-prepend">
                         <div class="input-group-text"><i class="fas fa-search"></i></div>
                     </div>
-                    <input type="text" class="form-control" id="q" name="q" placeholder="Keyword">
+                    <input type="text" class="form-control" id="q" name="q" placeholder="{{ 'trans.keyword'|trans }}">
                 </div>
             </div>
 
             <div class="col-md-2">
-                <button type="submit" class="btn btn-primary btn-block mb-2">Search</button>
+                <button type="submit" class="btn btn-primary btn-block mb-2">{{ 'trans.Search' | trans }}</button>
             </div>
 
             <div id="header-controls" class="col-lg-3 text-right">
@@ -145,7 +145,7 @@
                     </li>
 
                     <li class="list-inline-item">
-                        <a href="{{ path('app_listing_new') }}" class="btn btn-primary">Get Listed Today <i class="fas fa-chevron-right"></i></a>
+                        <a href="{{ path('app_listing_new') }}" class="btn btn-primary">{{ 'trans.Get Listed Today' | trans }} <i class="fas fa-chevron-right"></i></a>
                     </li>
                 </ul>
             </div>
@@ -166,7 +166,7 @@
                     <a class="nav-link" href="{{ path('app_index') }}">{{ 'trans.Home page' | trans }}</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/categories">Categories</a>
+                    <a class="nav-link" href="/categories">{{ 'trans.Categories' | trans }}</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/coupons">{{ 'trans.Last added' | trans }}</a>

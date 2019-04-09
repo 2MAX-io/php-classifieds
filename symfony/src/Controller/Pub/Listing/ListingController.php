@@ -5,6 +5,7 @@ namespace App\Controller\Pub\Listing;
 use App\Entity\Listing;
 use App\Form\ListingType;
 use App\Security\CurrentUserService;
+use App\Security\LoginUserProgrammaticallyService;
 use App\Service\Listing\CustomField\CustomFieldsForListingFormService;
 use App\Service\Listing\Save\ListingFileUploadService;
 use App\Service\User\Create\UserCreateService;
@@ -34,7 +35,8 @@ class ListingController extends AbstractController
         Request $request,
         ListingFileUploadService $listingFileUploadService,
         CurrentUserService $currentUserService,
-        UserCreateService $userCreateService
+        UserCreateService $userCreateService,
+        LoginUserProgrammaticallyService $loginUserProgrammaticallyService
     ): Response {
         $listing = new Listing();
         $form = $this->createForm(ListingType::class, $listing);
@@ -48,7 +50,10 @@ class ListingController extends AbstractController
             if ($currentUserService->getUser()) {
                 $listing->setUser($currentUserService->getUser());
             } else {
-                $listing->setUser($userCreateService->registerUser($listing->getEmail()));
+                $user = $userCreateService->registerUser($listing->getEmail());
+                $listing->setUser($user);
+                $loginUserProgrammaticallyService->loginUser($user);
+                $user->setPlainPassword(null);
             }
 
             $entityManager = $this->getDoctrine()->getManager();

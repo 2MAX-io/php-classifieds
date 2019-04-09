@@ -37,6 +37,11 @@ class User implements UserInterface, RoleInterface
     private $password;
 
     /**
+     * @var string
+     */
+    private $plainPassword;
+
+    /**
      * @ORM\OneToMany(targetEntity="App\Entity\Listing", mappedBy="user")
      */
     private $listings;
@@ -121,7 +126,7 @@ class User implements UserInterface, RoleInterface
     public function eraseCredentials()
     {
         // If you store any temporary, sensitive data on the user, clear it here
-        // $this->plainPassword = null;
+         $this->plainPassword = null;
     }
 
     /**
@@ -153,5 +158,15 @@ class User implements UserInterface, RoleInterface
         }
 
         return $this;
+    }
+
+    public function getPlainPassword(): string
+    {
+        return $this->plainPassword;
+    }
+
+    public function setPlainPassword(string $plainPassword): void
+    {
+        $this->plainPassword = $plainPassword;
     }
 }

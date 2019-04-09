@@ -10,3 +10,4 @@
 
 /symfony/docker/mysql/data/
 /asset/user/listing/
+/symfony/src/Controller/TestController.php

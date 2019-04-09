@@ -22,9 +22,12 @@ class ListingHelperService
     /**
      * @return Listing[]
      */
-    public function getLatestListingList(): array
+    public function getLatestListingList(int $count): array
     {
         $qb = $this->em->getRepository(Listing::class)->createQueryBuilder('listing');
+        $qb->orderBy('listing.firstCreatedDate', 'DESC');
+
+        $qb->setMaxResults($count);
 
         return $qb->getQuery()->getResult();
     }

@@ -29,6 +29,8 @@
                             <td>
                                 <a href="{{ path('listing_edit', {'id': listing.id}) }}" class="btn btn-default">{{ 'trans.Edit' | trans }}</a>
 
+                                <a href="{{ path('app_user_validity_extend', {'id': listing.id}) }}">{{ 'trans.Extend' | trans }}</a>
+
                                 {% if listing.userDeactivated %}
                                     {{ include('listing/_activate_form.html.twig') }}
                                 {% else %}

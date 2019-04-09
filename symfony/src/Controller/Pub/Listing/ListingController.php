@@ -7,6 +7,7 @@ use App\Form\ListingType;
 use App\Security\CurrentUserService;
 use App\Service\Listing\CustomField\CustomFieldsForListingFormService;
 use App\Service\Listing\Save\ListingFileUploadService;
+use App\Service\User\Create\UserCreateService;
 use App\Service\User\Listing\UserListingListService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -32,7 +33,8 @@ class ListingController extends AbstractController
     public function new(
         Request $request,
         ListingFileUploadService $listingFileUploadService,
-        CurrentUserService $currentUserService
+        CurrentUserService $currentUserService,
+        UserCreateService $userCreateService
     ): Response {
         $listing = new Listing();
         $form = $this->createForm(ListingType::class, $listing);
@@ -41,6 +43,12 @@ class ListingController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             if ($form->get('file')->getData()) {
                 $listingFileUploadService->addBannerFileFromUpload($listing, $form->get('file')->getData());
+            }
+
+            if ($currentUserService->getUser()) {
+                $listing->setUser($currentUserService->getUser());
+            } else {
+                $listing->setUser($userCreateService->registerUser($listing->getEmail()));
             }
 
             $entityManager = $this->getDoctrine()->getManager();

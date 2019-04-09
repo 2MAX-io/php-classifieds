@@ -90,6 +90,9 @@
     "doctrine/reflection": {
         "version": "v1.0.0"
     },
+    "hackzilla/password-generator": {
+        "version": "1.4.0"
+    },
     "jdorn/sql-formatter": {
         "version": "v1.2.17"
     },

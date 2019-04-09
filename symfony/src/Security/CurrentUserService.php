@@ -19,7 +19,7 @@ class CurrentUserService
         $this->security = $security;
     }
 
-    public function getUser(): User
+    public function getUser(): ?User
     {
         $user = $this->security->getUser();
 

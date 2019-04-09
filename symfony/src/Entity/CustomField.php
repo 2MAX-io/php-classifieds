@@ -57,6 +57,11 @@ class CustomField
     private $customFieldOptions;
 
     /**
+     * @ORM\OneToMany(targetEntity="App\Entity\ListingCustomFieldValue", mappedBy="customField")
+     */
+    private $listingCustomFieldValues;
+
+    /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Category", inversedBy="customFields")
      */
     private $categories;
@@ -65,6 +70,7 @@ class CustomField
     {
         $this->customFieldOptions = new ArrayCollection();
         $this->categories = new ArrayCollection();
+        $this->listingCustomFieldValues = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -196,6 +202,47 @@ class CustomField
     {
         if ($this->categories->contains($category)) {
             $this->categories->removeElement($category);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ListingCustomFieldValue[]
+     */
+    public function getListingCustomFieldValues(): Collection
+    {
+        return $this->listingCustomFieldValues;
+    }
+
+    /**
+     * @return Collection|ListingCustomFieldValue[]
+     */
+    public function getListingCustomFieldValuesArray(): array
+    {
+        return $this->getListingCustomFieldValues()->map(function (ListingCustomFieldValue $value) {
+            return $value->getValue();
+        })->toArray();
+    }
+
+    public function addListingCustomFieldValue(ListingCustomFieldValue $listingCustomFieldValue): self
+    {
+        if (!$this->listingCustomFieldValues->contains($listingCustomFieldValue)) {
+            $this->listingCustomFieldValues[] = $listingCustomFieldValue;
+            $listingCustomFieldValue->setCustomField($this);
+        }
+
+        return $this;
+    }
+
+    public function removeListingCustomFieldValue(ListingCustomFieldValue $listingCustomFieldValue): self
+    {
+        if ($this->listingCustomFieldValues->contains($listingCustomFieldValue)) {
+            $this->listingCustomFieldValues->removeElement($listingCustomFieldValue);
+            // set the owning side to null (unless already changed)
+            if ($listingCustomFieldValue->getCustomField() === $this) {
+                $listingCustomFieldValue->setCustomField(null);
+            }
         }
 
         return $this;

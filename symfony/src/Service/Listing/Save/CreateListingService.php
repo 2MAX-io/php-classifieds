@@ -24,9 +24,10 @@ class CreateListingService
 
     public function setFormDependent(Listing $listing, FormInterface $form): void
     {
-        $validityTimeDays = (int) $form->get('validityTimeDays')->getData();
-
-        $listing->setValidUntilDate(Carbon::now()->add(CarbonInterval::days($validityTimeDays)));
+        if ($form->has('validityTimeDays')) {
+            $validityTimeDays = (int) $form->get('validityTimeDays')->getData();
+            $listing->setValidUntilDate(Carbon::now()->add(CarbonInterval::days($validityTimeDays)));
+        }
 
         $listing->loadSearchText();
     }

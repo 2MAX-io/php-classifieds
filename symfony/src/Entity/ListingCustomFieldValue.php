@@ -22,7 +22,7 @@ class ListingCustomFieldValue
     private $listing;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\CustomField")
+     * @ORM\ManyToOne(targetEntity="App\Entity\CustomField", inversedBy="listingCustomFieldValues")
      * @ORM\JoinColumn(nullable=false)
      */
     private $customField;

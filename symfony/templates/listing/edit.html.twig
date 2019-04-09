@@ -58,7 +58,7 @@
      <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.1/js/locales/pl.js"></script>
 
      <script type="text/javascript">
-         $.get('{{ path('app_listing_get_custom_fields') }}', function (data) {
+         $.get('{{ path('app_listing_get_custom_fields', {"listingId": listing.id}) }}', function (data) {
              $('.custom-fields-from-ajax').html(data);
          });
 

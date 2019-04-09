@@ -89,6 +89,7 @@ class ListingController extends AbstractController
         }
 
         $form = $this->createForm(ListingType::class, $listing);
+        $form->remove('validityTimeDays');
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -100,7 +101,7 @@ class ListingController extends AbstractController
             $createListingService->setFormDependent($listing, $form);
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('app_listing_index', [
+            return $this->redirectToRoute('listing_edit', [
                 'id' => $listing->getId(),
             ]);
         }

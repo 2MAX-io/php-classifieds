@@ -1,13 +1,34 @@
 {% for customField in customFieldList %}
-    {% if customField.type == 'select' %}
+    {% if customField.type == constant('\App\\Entity\\CustomField::TYPE_SELECT') %}
+        {# @var customField \App\Entity\CustomField #}
+
         <div class="form-group">
             <label class="{% if customField.required %}required{% endif %}" for="custom_field_{{ customField.id }}">{{ customField.name }}</label>
             <select id="custom_field_{{ customField.id }}" name="form_custom_field[{{ customField.id }}]" class="form-control">
                 <option value=""></option>
                 {% for option in customField.customFieldOptions %}
-                    <option value="{{ option.value }}">{{ option.name }}</option>
+
+                    {# @var customField \App\Entity\CustomField #}
+                    <option
+                            value="{{ option.value }}"
+                            {% if option.value in customField.getListingCustomFieldValuesArray %}selected{% endif %}>
+                        {{- option.name -}}
+                    </option>
                 {% endfor %}
             </select>
+        </div>
+    {% endif %}
+
+    {% if customField.type == constant('\App\\Entity\\CustomField::TYPE_INTEGER_RANGE') %}
+        <div class="form-group">
+            <label class="{% if customField.required %}required{% endif %}" for="custom_field_{{ customField.id }}">{{ customField.name }}</label>
+
+            <input type="number"
+                   name="form_custom_field[{{ customField.id }}]"
+                   value="{{ customField.listingCustomFieldValues.first.value }}"
+                   id="custom_field_{{ customField.id }}"
+                   class="form-control"
+            >
         </div>
     {% endif %}
 {% endfor %}

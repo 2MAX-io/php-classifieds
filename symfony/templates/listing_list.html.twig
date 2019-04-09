@@ -18,16 +18,18 @@
         <div class="row">
             <!-- Sidebar & Advanced Filters -->
             <div class="col-md-3">
-                <div class="card mb-3">
-                    <div class="card-header">
-                        <strong>Category</strong>
+                {% if categoryList is not empty %}
+                    <div class="card mb-3">
+                        <div class="card-header">
+                            <strong>Category</strong>
+                        </div>
+                        <div class="card-body">
+                            {% for category in categoryList %}
+                                <a href="{{ path('app_category', {"categoryId": category.id}) }}" title="" class="mb-1">{{ category.name }}</a><br>
+                            {% endfor %}
+                        </div>
                     </div>
-                    <div class="card-body">
-                        {% for category in categoryList %}
-                            <a href="{{ path('app_category', {"categoryId": category.id}) }}" title="" class="mb-1">{{ category.name }}</a><br>
-                        {% endfor %}
-                    </div>
-                </div>
+                {% endif %}
 
                 <div class="card mb-3">
                     <div class="card-header">
@@ -36,7 +38,7 @@
                     <div class="card-body">
                         <form method="get" id="" action="">
                             <!-- cat_id -->
-                            <input type="hidden" name="cats[]" value="129">
+                            <input type="hidden" name="query" value="{{ app.request.get('query') | default }}">
 
                             {# @var customField \App\Entity\CustomField #}
                             {% for customField in customFieldList %}

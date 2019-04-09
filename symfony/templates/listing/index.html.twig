@@ -24,7 +24,14 @@
                     <tbody>
                     {% for listing in listings %}
                         <tr>
-                            <td><a href="{{ path('app_listing_show', {"id": listing.id}) }}">{{ listing.title }}</a></td>
+                            <td>
+                                <div>
+                                    <a href="{{ path('app_listing_show', {"id": listing.id}) }}">{{ listing.title }}</a>
+                                </div>
+                                <div>
+                                    <a href="{{ path('app_user_highlight_listing', {"id": listing.id}) }}">{{ 'trans.Highlight this listing' | trans }}</a>
+                                </div>
+                            </td>
                             <td>{{ listing.price }}</td>
                             <td>
                                 <a href="{{ path('listing_edit', {'id': listing.id}) }}" class="btn btn-default">{{ 'trans.Edit' | trans }}</a>

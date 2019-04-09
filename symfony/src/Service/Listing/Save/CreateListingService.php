@@ -27,5 +27,7 @@ class CreateListingService
         $validityTimeDays = (int) $form->get('validityTimeDays')->getData();
 
         $listing->setValidUntilDate(Carbon::now()->add(CarbonInterval::days($validityTimeDays)));
+
+        $listing->loadSearchText();
     }
 }

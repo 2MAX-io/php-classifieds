@@ -23,8 +23,12 @@ class CategoryListService
     /**
      * @return Category[]
      */
-    public function getLevelOfSubcategoriesToDisplayForCategory(int $categoryId): array
+    public function getLevelOfSubcategoriesToDisplayForCategory(?int $categoryId = null): array
     {
+        if ($categoryId === null) {
+            return [];
+        }
+
         $qb = $this->em->getRepository(Category::class)->createQueryBuilder('category');
         $qb->join(Category::class, 'requestedCategory', Join::WITH, $qb->expr()->eq('requestedCategory.id', ':requestedCategory'));
         $qb->setParameter(':requestedCategory', $categoryId);
@@ -45,8 +49,12 @@ class CategoryListService
     /**
      * @return Category[]
      */
-    public function getBreadcrumbs(Category $category): array
+    public function getBreadcrumbs(?Category $category = null): array
     {
+        if ($category === null) {
+            return [];
+        }
+
         $qb = $this->em->getRepository(Category::class)->createQueryBuilder('category0');
         $qb->leftJoin('category0.parent', 'category1');
         $qb->leftJoin('category1.parent', 'category2');

@@ -5,9 +5,11 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\Index;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ListingRepository")
+ * @ORM\Table(indexes={@Index(columns={"search_text"}, flags={"fulltext"})})
  */
 class Listing
 {
@@ -117,6 +119,11 @@ class Listing
      * @ORM\Column(type="datetimetz", nullable=false)
      */
     private $lastReactivationDate;
+
+    /**
+     * @ORM\Column(type="text")
+     */
+    private $searchText;
 
     public function __construct()
     {
@@ -405,5 +412,41 @@ class Listing
         $this->lastReactivationDate = $lastReactivationDate;
 
         return $this;
+    }
+
+    public function getSearchText(): ?string
+    {
+        return $this->searchText;
+    }
+
+    public function setSearchText(string $searchText): self
+    {
+        $this->searchText = $searchText;
+
+        return $this;
+    }
+
+    public function loadSearchText(): void
+    {
+        $searchText = '';
+
+        $searchText .= $this->getTitle();
+        $searchText .= ' ';
+
+        $searchText .= $this->getDescription();
+        $searchText .= ' ';
+
+        $searchText .= $this->getCity();
+        $searchText .= ' ';
+
+        $searchText .= $this->getCategory()->getName();
+        $searchText .= ' ';
+
+        foreach ($this->getListingCustomFieldValues() as $listingCustomFieldValue) {
+            $searchText .= $listingCustomFieldValue->getValue();
+            $searchText .= ' ';
+        }
+
+        $this->setSearchText($searchText);
     }
 }

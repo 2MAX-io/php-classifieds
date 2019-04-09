@@ -126,7 +126,10 @@
                     <div class="input-group-prepend">
                         <div class="input-group-text"><i class="fas fa-search"></i></div>
                     </div>
-                    <input type="text" class="form-control" id="q" name="q" placeholder="{{ 'trans.keyword'|trans }}">
+
+                    <form method="get" action="{{ path('app_listing_list') }}">
+                        <input type="text" class="form-control" name="query" placeholder="{{ 'trans.keyword'|trans }}" value="{{ app.request.get('query') | default }}">
+                    </form>
                 </div>
             </div>
 

@@ -111,6 +111,11 @@ class ListingListService
             $qb->setParameter(':maxPrice', $_GET['max_price']);
         }
 
+        if (!empty($_GET['query'])) {
+            $qb->andWhere('MATCH (listing.searchText) AGAINST (:query BOOLEAN) > 0');
+            $qb->setParameter(':query', rtrim($_GET['query'], '*') .'*');
+        }
+
         $adapter = new DoctrineORMAdapter($qb);
         $pager = new Pagerfanta($adapter);
         $pager->setMaxPerPage(10);

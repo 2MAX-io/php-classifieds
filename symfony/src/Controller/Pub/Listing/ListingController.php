@@ -81,7 +81,8 @@ class ListingController extends AbstractController
         Listing $listing,
         CustomFieldsForListingFormService $customFieldsForListingFormService,
         ListingFileUploadService $listingFileUploadService,
-        CurrentUserService $currentUserService
+        CurrentUserService $currentUserService,
+        CreateListingService $createListingService
     ): Response {
         if ($currentUserService->getUser() !== $listing->getUser()) {
             throw new UnauthorizedHttpException('user of listing do not match current user');
@@ -96,6 +97,7 @@ class ListingController extends AbstractController
             }
             $customFieldsForListingFormService->saveCustomFieldsToListing($listing, $request->request->get('form_custom_field'));
 
+            $createListingService->setFormDependent($listing, $form);
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('app_listing_index', [

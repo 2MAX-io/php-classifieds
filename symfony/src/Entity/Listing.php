@@ -88,6 +88,11 @@ class Listing
     /**
      * @ORM\Column(type="boolean")
      */
+    private $adminRemoved = false;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
     private $userRemoved = false;
 
     /**
@@ -448,5 +453,17 @@ class Listing
         }
 
         $this->setSearchText($searchText);
+    }
+
+    public function getAdminRemoved(): ?bool
+    {
+        return $this->adminRemoved;
+    }
+
+    public function setAdminRemoved(bool $adminRemoved): self
+    {
+        $this->adminRemoved = $adminRemoved;
+
+        return $this;
     }
 }

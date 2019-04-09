@@ -17,10 +17,11 @@ class ListingPublicDisplayService
         $qb->andWhere('listing.adminConfirmed = 1');
         $qb->andWhere('listing.userRemoved = 0');
         $qb->andWhere('listing.userDeactivated = 0');
+        $qb->andWhere('listing.adminRemoved = 0');
     }
 
     public function canPublicDisplay(Listing $listing): bool
     {
-        return true;
+        return $listing->getAdminRemoved() === false;
     }
 }

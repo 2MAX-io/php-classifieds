@@ -13,7 +13,7 @@ class HighlightListingController extends AbstractController
     /**
      * @Route("/user/highlight/{id}", name="app_user_highlight_listing")
      */
-    public function validityExtend(): Response
+    public function highlight(): Response
     {
         return $this->render('user/listing/highlight_extend.html.twig', [
         ]);

@@ -106,7 +106,7 @@ class ListingController extends AbstractController
     }
 
     /**
-     * @Route("/user/listing/{id}", name="listing_delete", methods={"DELETE"})
+     * @Route("/user/listing/{id}", name="app_listing_delete", methods={"DELETE"})
      */
     public function delete(Request $request, Listing $listing, CurrentUserService $currentUserService): Response
     {
@@ -116,7 +116,7 @@ class ListingController extends AbstractController
 
         if ($this->isCsrfTokenValid('delete'.$listing->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($listing);
+            $listing->setUserRemoved(true);
             $entityManager->flush();
         }
 

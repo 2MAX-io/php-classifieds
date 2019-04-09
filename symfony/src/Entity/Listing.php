@@ -68,6 +68,11 @@ class Listing
      */
     private $listingFiles;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $userRemoved;
+
     public function __construct()
     {
         $this->listingCustomFieldValues = new ArrayCollection();
@@ -233,6 +238,18 @@ class Listing
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getUserRemoved(): ?bool
+    {
+        return $this->userRemoved;
+    }
+
+    public function setUserRemoved(bool $userRemoved): self
+    {
+        $this->userRemoved = $userRemoved;
 
         return $this;
     }

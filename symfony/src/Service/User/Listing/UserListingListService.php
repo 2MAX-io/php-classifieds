@@ -34,6 +34,8 @@ class UserListingListService
         $qb->andWhere($qb->expr()->eq('listing.user', ':user'));
         $qb->setParameter(':user', $this->currentUserService->getUser());
 
+        $qb->orderBy('listing.id', 'DESC');
+
         return $qb->getQuery()->getResult();
     }
 }

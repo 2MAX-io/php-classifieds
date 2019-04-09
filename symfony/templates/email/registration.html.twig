@@ -1,1 +1,24 @@
-{{ plainPassword }}
+<p>
+    {{ 'trans.You have registered account' | trans }}
+</p>
+
+{# @var user \App\Entity\User #}
+
+<p>
+    <strong>{{ 'trans.Login' | trans }}</strong>: {{ user.email }}
+</p>
+
+<p>
+    <strong>{{ 'trans.Password' | trans }}</strong>: <pre>{{ user.plainPassword }}</pre>
+</p>
+
+
+<p>
+    {{ 'trans.Please confirm your email address by clicking link bellow' | trans }}
+</p>
+
+<p>
+    <a href="{{ absolute_url('app_register_confirm') }}">{{ 'trans.I confirm registration' | trans }}</a>
+
+    <pre>{{ absolute_url('app_register_confirm') }}</pre>
+</p>

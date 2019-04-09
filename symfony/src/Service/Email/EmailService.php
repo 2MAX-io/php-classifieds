@@ -39,7 +39,7 @@ class EmailService
             ->setBody(
                 $this->twig->render(
                     'email/registration.html.twig',
-                    ['plainPassword' => $user->getPlainPassword()]
+                    ['user' => $user]
                 ),
                 'text/html'
             )

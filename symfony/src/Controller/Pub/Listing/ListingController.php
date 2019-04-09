@@ -7,6 +7,7 @@ use App\Form\ListingType;
 use App\Security\CurrentUserService;
 use App\Security\LoginUserProgrammaticallyService;
 use App\Service\Listing\CustomField\CustomFieldsForListingFormService;
+use App\Service\Listing\Save\CreateListingService;
 use App\Service\Listing\Save\ListingFileUploadService;
 use App\Service\User\Create\UserCreateService;
 use App\Service\User\Listing\UserListingListService;
@@ -36,9 +37,10 @@ class ListingController extends AbstractController
         ListingFileUploadService $listingFileUploadService,
         CurrentUserService $currentUserService,
         UserCreateService $userCreateService,
-        LoginUserProgrammaticallyService $loginUserProgrammaticallyService
+        LoginUserProgrammaticallyService $loginUserProgrammaticallyService,
+        CreateListingService $createListingService
     ): Response {
-        $listing = new Listing();
+        $listing = $createListingService->create();
         $form = $this->createForm(ListingType::class, $listing);
         $form->handleRequest($request);
 

@@ -69,9 +69,14 @@ class Listing
     private $listingFiles;
 
     /**
+     * @ORM\Column(type="datetimetz", nullable=false)
+     */
+    private $firstCreatedDate;
+
+    /**
      * @ORM\Column(type="boolean")
      */
-    private $userRemoved;
+    private $userRemoved = false;
 
     public function __construct()
     {
@@ -250,6 +255,18 @@ class Listing
     public function setUserRemoved(bool $userRemoved): self
     {
         $this->userRemoved = $userRemoved;
+
+        return $this;
+    }
+
+    public function getFirstCreatedDate(): ?\DateTimeInterface
+    {
+        return $this->firstCreatedDate;
+    }
+
+    public function setFirstCreatedDate(\DateTimeInterface $firstCreatedDate): self
+    {
+        $this->firstCreatedDate = $firstCreatedDate;
 
         return $this;
     }

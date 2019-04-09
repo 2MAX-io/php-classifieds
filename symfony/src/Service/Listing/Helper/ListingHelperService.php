@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Service\Listing\Helper;
 
 use App\Entity\Listing;
+use App\Service\Listing\ListingPublicDisplayService;
 use Doctrine\ORM\EntityManagerInterface;
 
 class ListingHelperService
@@ -14,9 +15,15 @@ class ListingHelperService
      */
     private $em;
 
-    public function __construct(EntityManagerInterface $em)
+    /**
+     * @var ListingPublicDisplayService
+     */
+    private $listingPublicDisplayService;
+
+    public function __construct(EntityManagerInterface $em, ListingPublicDisplayService $listingPublicDisplayService)
     {
         $this->em = $em;
+        $this->listingPublicDisplayService = $listingPublicDisplayService;
     }
 
     /**
@@ -26,6 +33,8 @@ class ListingHelperService
     {
         $qb = $this->em->getRepository(Listing::class)->createQueryBuilder('listing');
         $qb->orderBy('listing.firstCreatedDate', 'DESC');
+
+        $this->listingPublicDisplayService->applyPublicDisplayConditions($qb);
 
         $qb->setMaxResults($count);
 

@@ -7,6 +7,7 @@ namespace App\Service\Listing\ListingList;
 use App\Entity\Category;
 use App\Entity\CustomField;
 use App\Entity\Listing;
+use App\Service\Listing\ListingPublicDisplayService;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr\Join;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
@@ -19,9 +20,15 @@ class ListingListService
      */
     private $em;
 
-    public function __construct(EntityManagerInterface $em)
+    /**
+     * @var ListingPublicDisplayService
+     */
+    private $listingPublicDisplayService;
+
+    public function __construct(EntityManagerInterface $em, ListingPublicDisplayService $listingPublicDisplayService)
     {
         $this->em = $em;
+        $this->listingPublicDisplayService = $listingPublicDisplayService;
     }
 
     public function getListings(int $page = 1, Category $category = null): ListingListDto
@@ -116,13 +123,12 @@ class ListingListService
             $qb->setParameter(':query', rtrim($_GET['query'], '*') .'*');
         }
 
+        $this->listingPublicDisplayService->applyPublicDisplayConditions($qb);
+
         $adapter = new DoctrineORMAdapter($qb);
         $pager = new Pagerfanta($adapter);
         $pager->setMaxPerPage(10);
         $pager->setCurrentPage($page);
-
-        $qb->setMaxResults($pager->getMaxPerPage());
-        $qb->setFirstResult($pager->getCurrentPageOffsetStart());
 
         return new ListingListDto($pager->getCurrentPageResults(), $pager);
     }

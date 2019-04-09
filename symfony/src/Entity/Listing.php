@@ -24,14 +24,19 @@ class Listing
     private $title;
 
     /**
-     * @ORM\Column(type="string", length=5000)
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="listings")
      */
-    private $description;
+    private $user;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="listings")
      */
     private $category;
+
+    /**
+     * @ORM\Column(type="string", length=5000)
+     */
+    private $description;
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=2)
@@ -216,6 +221,18 @@ class Listing
                 $listingFile->setListing(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }

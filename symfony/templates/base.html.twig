@@ -137,7 +137,11 @@
             <div id="header-controls" class="col-lg-3 text-right">
                 <ul class="list-inline">
                     <li class="list-inline-item">
-                        <a href="https://x-php.pro/demo/classifiedsplus/user/sign-in">Sign in</a>
+                        {% if app.user %}
+                            <a href="{{ path('app_logout') }}">{{ 'trans.Logout' | trans }}</a>
+                        {% else %}
+                            <a href="{{ path('app_login') }}">{{ 'trans.Sign in' | trans }}</a>
+                        {% endif %}
                     </li>
 
                     <li class="list-inline-item">

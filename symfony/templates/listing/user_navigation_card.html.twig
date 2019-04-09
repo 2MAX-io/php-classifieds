@@ -3,15 +3,15 @@
 
     <ul class="list-group list-group-flush text-dark">
         <li class="list-group-item">
-            <a href="//classifiedsplus.localhost/user/my-listings" class="text-dark ">
+            <a href="{{ path('app_listing_index') }}" class="text-dark ">
                 <i class="fas fa-list-ul"></i>
-                <span class="menu-txt">Listings</span>
+                <span class="menu-txt">{{ 'trans.Listings' | trans }}</span>
             </a>
         </li>
         <li class="list-group-item">
-            <a href="//classifiedsplus.localhost/user/select-plan" class="text-dark">
+            <a href="{{ path('app_listing_new') }}" class="text-dark">
                 <i class="far fa-plus-square"></i>
-                <span class="menu-txt">Create Listing</span>
+                <span class="menu-txt">{{ 'trans.Create Listing' | trans }}</span>
             </a>
         </li>
         <li class="list-group-item">

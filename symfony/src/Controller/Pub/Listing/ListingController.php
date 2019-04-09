@@ -4,34 +4,36 @@ namespace App\Controller\Pub\Listing;
 
 use App\Entity\Listing;
 use App\Form\ListingType;
-use App\Repository\ListingRepository;
+use App\Security\CurrentUserService;
 use App\Service\Listing\CustomField\CustomFieldsForListingFormService;
 use App\Service\Listing\Save\ListingFileUploadService;
+use App\Service\User\Listing\UserListingListService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/listing")
- */
 class ListingController extends AbstractController
 {
     /**
-     * @Route("/", name="listing_index", methods={"GET"})
+     * @Route("/user/listing/", name="app_listing_index", methods={"GET"})
      */
-    public function index(ListingRepository $listingRepository): Response
+    public function index(UserListingListService $userListingListService): Response
     {
         return $this->render('listing/index.html.twig', [
-            'listings' => $listingRepository->findAll(),
+            'listings' => $userListingListService->getList(),
         ]);
     }
 
     /**
      * @Route("/new", name="app_listing_new", methods={"GET","POST"})
      */
-    public function new(Request $request, ListingFileUploadService $listingFileUploadService): Response
-    {
+    public function new(
+        Request $request,
+        ListingFileUploadService $listingFileUploadService,
+        CurrentUserService $currentUserService
+    ): Response {
         $listing = new Listing();
         $form = $this->createForm(ListingType::class, $listing);
         $form->handleRequest($request);
@@ -45,7 +47,7 @@ class ListingController extends AbstractController
             $entityManager->persist($listing);
             $entityManager->flush();
 
-            return $this->redirectToRoute('listing_index');
+            return $this->redirectToRoute('app_listing_index');
         }
 
         return $this->render('listing/new.html.twig', [
@@ -55,14 +57,19 @@ class ListingController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="listing_edit", methods={"GET","POST"})
+     * @Route("/user/listing/{id}/edit", name="listing_edit", methods={"GET","POST"})
      */
     public function edit(
         Request $request,
         Listing $listing,
         CustomFieldsForListingFormService $customFieldsForListingFormService,
-        ListingFileUploadService $listingFileUploadService
+        ListingFileUploadService $listingFileUploadService,
+        CurrentUserService $currentUserService
     ): Response {
+        if ($currentUserService->getUser() !== $listing->getUser()) {
+            throw new UnauthorizedHttpException('user of listing do not match current user');
+        }
+
         $form = $this->createForm(ListingType::class, $listing);
         $form->handleRequest($request);
 
@@ -74,7 +81,7 @@ class ListingController extends AbstractController
 
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('listing_index', [
+            return $this->redirectToRoute('app_listing_index', [
                 'id' => $listing->getId(),
             ]);
         }
@@ -86,16 +93,20 @@ class ListingController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="listing_delete", methods={"DELETE"})
+     * @Route("/user/listing/{id}", name="listing_delete", methods={"DELETE"})
      */
-    public function delete(Request $request, Listing $listing): Response
+    public function delete(Request $request, Listing $listing, CurrentUserService $currentUserService): Response
     {
+        if ($currentUserService->getUser() !== $listing->getUser()) {
+            throw new UnauthorizedHttpException('user of listing do not match current user');
+        }
+
         if ($this->isCsrfTokenValid('delete'.$listing->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($listing);
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('listing_index');
+        return $this->redirectToRoute('app_listing_index');
     }
 }

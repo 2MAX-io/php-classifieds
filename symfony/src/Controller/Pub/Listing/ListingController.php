@@ -58,6 +58,8 @@ class ListingController extends AbstractController
                 $user->setPlainPassword(null);
             }
 
+            $createListingService->setFormDependent($listing, $form);
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($listing);
             $entityManager->flush();

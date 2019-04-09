@@ -74,6 +74,11 @@ class Listing
     private $firstCreatedDate;
 
     /**
+     * @ORM\Column(type="datetimetz", nullable=false)
+     */
+    private $validUntilDate;
+
+    /**
      * @ORM\Column(type="boolean")
      */
     private $adminConfirmed = false;
@@ -94,9 +99,24 @@ class Listing
     private $premium = false;
 
     /**
-     * @ORM\Column(type="datetimetz")
+     * @ORM\Column(type="smallint")
      */
-    private $premiumUntil;
+    private $premiumWeight = 0;
+
+    /**
+     * @ORM\Column(type="datetimetz", nullable=true)
+     */
+    private $premiumUntilDate;
+
+    /**
+     * @ORM\Column(type="datetimetz", nullable=false)
+     */
+    private $lastEditDate;
+
+    /**
+     * @ORM\Column(type="datetimetz", nullable=false)
+     */
+    private $lastReactivationDate;
 
     public function __construct()
     {
@@ -327,14 +347,62 @@ class Listing
         return $this;
     }
 
-    public function getPremiumUntil(): ?\DateTimeInterface
+    public function getPremiumUntilDate(): ?\DateTimeInterface
     {
-        return $this->premiumUntil;
+        return $this->premiumUntilDate;
     }
 
-    public function setPremiumUntil(\DateTimeInterface $premiumUntil): self
+    public function setPremiumUntilDate(\DateTimeInterface $premiumUntilDate): self
     {
-        $this->premiumUntil = $premiumUntil;
+        $this->premiumUntilDate = $premiumUntilDate;
+
+        return $this;
+    }
+
+    public function getValidUntilDate(): ?\DateTimeInterface
+    {
+        return $this->validUntilDate;
+    }
+
+    public function setValidUntilDate(\DateTimeInterface $validUntilDate): self
+    {
+        $this->validUntilDate = $validUntilDate;
+
+        return $this;
+    }
+
+    public function getPremiumWeight(): ?int
+    {
+        return $this->premiumWeight;
+    }
+
+    public function setPremiumWeight(int $premiumWeight): self
+    {
+        $this->premiumWeight = $premiumWeight;
+
+        return $this;
+    }
+
+    public function getLastEditDate(): ?\DateTimeInterface
+    {
+        return $this->lastEditDate;
+    }
+
+    public function setLastEditDate(\DateTimeInterface $lastEditDate): self
+    {
+        $this->lastEditDate = $lastEditDate;
+
+        return $this;
+    }
+
+    public function getLastReactivationDate(): ?\DateTimeInterface
+    {
+        return $this->lastReactivationDate;
+    }
+
+    public function setLastReactivationDate(\DateTimeInterface $lastReactivationDate): self
+    {
+        $this->lastReactivationDate = $lastReactivationDate;
 
         return $this;
     }

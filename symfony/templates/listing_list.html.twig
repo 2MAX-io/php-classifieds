@@ -89,11 +89,11 @@
                             <label>{{ 'trans.Price' | trans }}</label>
                             <div class="form-row mb-3">
                                 <div class="col-6">
-                                    <input type="text" id="min_price" class="form-control form-control-sm" name="min_price">
+                                    <input type="text" id="min_price" class="form-control form-control-sm" name="min_price" value="{{ app.request.get('min_price') | default }}">
                                 </div>
 
                                 <div class="col-6">
-                                    <input type="text" id="max_price" class="form-control form-control-sm" name="max_price">
+                                    <input type="text" id="max_price" class="form-control form-control-sm" name="max_price" value="{{ app.request.get('max_price') | default }}">
                                 </div>
                             </div>
 

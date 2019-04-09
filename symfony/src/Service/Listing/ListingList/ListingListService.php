@@ -101,10 +101,19 @@ class ListingListService
             );
         }
 
+        if (!empty($_GET['min_price'])) {
+            $qb->andWhere($qb->expr()->gte('listing.price', ':minPrice'));
+            $qb->setParameter(':minPrice', $_GET['min_price']);
+        }
+
+        if (!empty($_GET['max_price'])) {
+            $qb->andWhere($qb->expr()->lte('listing.price', ':maxPrice'));
+            $qb->setParameter(':maxPrice', $_GET['max_price']);
+        }
 
         $adapter = new DoctrineORMAdapter($qb);
         $pager = new Pagerfanta($adapter);
-        $pager->setMaxPerPage(20);
+        $pager->setMaxPerPage(10);
         $pager->setCurrentPage($page);
 
         $qb->setMaxResults($pager->getMaxPerPage());

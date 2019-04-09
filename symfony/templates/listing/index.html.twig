@@ -29,6 +29,12 @@
                             <td>
                                 <a href="{{ path('listing_edit', {'id': listing.id}) }}" class="btn btn-default">{{ 'trans.Edit' | trans }}</a>
 
+                                {% if listing.userDeactivated %}
+                                    {{ include('listing/_activate_form.html.twig') }}
+                                {% else %}
+                                    {{ include('listing/_deactivate_form.html.twig') }}
+                                {% endif %}
+
                                 {{ include('listing/_delete_form.html.twig') }}
                             </td>
                         </tr>

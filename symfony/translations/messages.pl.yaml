@@ -25,3 +25,5 @@ trans:
   Delete: 'Usuń'
   Actions: 'Akcje'
   Title: 'Tytuł'
+  Deactivate: 'Dezaktywuj'
+  Activate: 'Aktywuj'

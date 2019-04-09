@@ -124,4 +124,40 @@ class ListingController extends AbstractController
 
         return $this->redirectToRoute('app_listing_index');
     }
+
+    /**
+     * @Route("/user/listing/deactivate/{id}", name="app_listing_deactivate", methods={"PATCH"})
+     */
+    public function deactivate(Request $request, Listing $listing, CurrentUserService $currentUserService): Response
+    {
+        if ($currentUserService->getUser() !== $listing->getUser()) {
+            throw new UnauthorizedHttpException('user of listing do not match current user');
+        }
+
+        if ($this->isCsrfTokenValid('deactivate'.$listing->getId(), $request->request->get('_token'))) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $listing->setUserDeactivated(true);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('app_listing_index');
+    }
+
+    /**
+     * @Route("/user/listing/activate/{id}", name="app_listing_activate", methods={"PATCH"})
+     */
+    public function activate(Request $request, Listing $listing, CurrentUserService $currentUserService): Response
+    {
+        if ($currentUserService->getUser() !== $listing->getUser()) {
+            throw new UnauthorizedHttpException('user of listing do not match current user');
+        }
+
+        if ($this->isCsrfTokenValid('activate'.$listing->getId(), $request->request->get('_token'))) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $listing->setUserDeactivated(false);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('app_listing_index');
+    }
 }

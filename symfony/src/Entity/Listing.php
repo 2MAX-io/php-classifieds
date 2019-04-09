@@ -76,7 +76,27 @@ class Listing
     /**
      * @ORM\Column(type="boolean")
      */
+    private $adminConfirmed = false;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
     private $userRemoved = false;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $userDeactivated = false;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $premium = false;
+
+    /**
+     * @ORM\Column(type="datetimetz")
+     */
+    private $premiumUntil;
 
     public function __construct()
     {
@@ -267,6 +287,54 @@ class Listing
     public function setFirstCreatedDate(\DateTimeInterface $firstCreatedDate): self
     {
         $this->firstCreatedDate = $firstCreatedDate;
+
+        return $this;
+    }
+
+    public function getAdminConfirmed(): ?bool
+    {
+        return $this->adminConfirmed;
+    }
+
+    public function setAdminConfirmed(bool $adminConfirmed): self
+    {
+        $this->adminConfirmed = $adminConfirmed;
+
+        return $this;
+    }
+
+    public function getUserDeactivated(): ?bool
+    {
+        return $this->userDeactivated;
+    }
+
+    public function setUserDeactivated(bool $userDeactivated): self
+    {
+        $this->userDeactivated = $userDeactivated;
+
+        return $this;
+    }
+
+    public function getPremium(): ?bool
+    {
+        return $this->premium;
+    }
+
+    public function setPremium(bool $premium): self
+    {
+        $this->premium = $premium;
+
+        return $this;
+    }
+
+    public function getPremiumUntil(): ?\DateTimeInterface
+    {
+        return $this->premiumUntil;
+    }
+
+    public function setPremiumUntil(\DateTimeInterface $premiumUntil): self
+    {
+        $this->premiumUntil = $premiumUntil;
 
         return $this;
     }

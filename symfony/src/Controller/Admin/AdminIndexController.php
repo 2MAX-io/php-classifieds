@@ -14,7 +14,7 @@ class AdminIndexController extends AbstractController
      * @Route("/admin/red5/index", name="app_admin_index")
      * @Route("/admin/red5/")
      */
-    public function validityExtend(): Response
+    public function adminIndex(): Response
     {
         return $this->render('admin/index.html.twig', [
         ]);

@@ -20,9 +20,11 @@
                 onSort: function(list, listEl, parentEl, newInputEl, inputEl) {}
             },
             onRemove: function(item, listEl, parentEl, newInputEl, inputEl) {
-                $.post('{{ path('app_listing_file_delete') }}', {
-                    listingFileId: item.data.listingFileId
-                });
+                if ('listingFileId' in item.data) {
+                    $.post('{{ path('app_listing_file_delete') }}', {
+                        listingFileId: item.data.listingFileId
+                    });
+                }
 
                 return true;
             },

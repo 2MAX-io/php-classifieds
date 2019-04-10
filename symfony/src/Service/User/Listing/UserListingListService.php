@@ -34,7 +34,9 @@ class UserListingListService
         $qb->andWhere($qb->expr()->eq('listing.user', ':user'));
         $qb->setParameter(':user', $this->currentUserService->getUser());
 
-        $qb->orderBy('listing.id', 'DESC');
+        $qb->andWhere($qb->expr()->eq('listing.userRemoved', 0));
+
+        $qb->orderBy('listing.lastEditDate', 'DESC');
 
         return $qb->getQuery()->getResult();
     }

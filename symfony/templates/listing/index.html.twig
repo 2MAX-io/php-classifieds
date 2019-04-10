@@ -28,15 +28,24 @@
                                 <div>
                                     <a href="{{ path('app_listing_show', {"id": listing.id}) }}">{{ listing.title }}</a>
                                 </div>
-                                <div>
-                                    <a href="{{ path('app_user_highlight_listing', {"id": listing.id}) }}">{{ 'trans.Highlight this listing' | trans }}</a>
-                                </div>
+                                {% if listing.adminConfirmed %}
+                                    <div>
+                                        <a href="{{ path('app_user_highlight_listing', {"id": listing.id}) }}">{{ 'trans.Highlight this listing' | trans }}</a>
+                                    </div>
+                                {% endif %}
+                                {% if not listing.adminConfirmed %}
+                                    <div>
+                                        {{ 'trans.Waiting for activation' | trans }}
+                                    </div>
+                                {% endif %}
                             </td>
                             <td>{{ listing.price }}</td>
                             <td>
                                 <a href="{{ path('listing_edit', {'id': listing.id}) }}" class="btn btn-default">{{ 'trans.Edit' | trans }}</a>
 
-                                <a href="{{ path('app_user_validity_extend', {'id': listing.id}) }}">{{ 'trans.Extend' | trans }}</a>
+                                {% if listing.adminConfirmed %}
+                                    <a href="{{ path('app_user_validity_extend', {'id': listing.id}) }}">{{ 'trans.Extend' | trans }}</a>
+                                {% endif %}
 
                                 {% if listing.userDeactivated %}
                                     {{ include('listing/_activate_form.html.twig') }}

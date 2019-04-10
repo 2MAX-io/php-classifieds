@@ -4,52 +4,45 @@
 
 {% block body %}
     <div class="container mt-5">
-        <div class="row">
-            <div class="col-md-12 col-lg-12">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>{{ 'trans.Title' | trans }}</th>
+                <th>Price</th>
+                <th>{{ 'trans.Actions' | trans }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for listing in listings %}
+                <tr>
+                    <td>
+                        <div>
+                            <a href="{{ path('app_listing_show', {"id": listing.id}) }}">{{ listing.title }}</a>
+                        </div>
+                        {% if listing.adminConfirmed %}
+                            <div>
+                                <a href="{{ path('app_user_highlight_listing', {"id": listing.id}) }}">{{ 'trans.Highlight this listing' | trans }}</a>
+                            </div>
+                        {% endif %}
+                        {% if not listing.adminConfirmed %}
+                            <div>
+                                {{ 'trans.Waiting for activation' | trans }}
+                            </div>
+                        {% endif %}
+                    </td>
+                    <td>{{ listing.price }}</td>
+                    <td>
+                        <a href="{{ path('listing_edit', {'id': listing.id}) }}" class="btn btn-default">{{ 'trans.Edit' | trans }}</a>
 
-                <a href="{{ path('app_listing_new') }}">{{ 'trans.Create new listing' | trans }}</a>
-
-                <table class="table">
-                    <thead>
-                    <tr>
-                        <th>{{ 'trans.Title' | trans }}</th>
-                        <th>Price</th>
-                        <th>{{ 'trans.Actions' | trans }}</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for listing in listings %}
-                        <tr>
-                            <td>
-                                <div>
-                                    <a href="{{ path('app_listing_show', {"id": listing.id}) }}">{{ listing.title }}</a>
-                                </div>
-                                {% if listing.adminConfirmed %}
-                                    <div>
-                                        <a href="{{ path('app_user_highlight_listing', {"id": listing.id}) }}">{{ 'trans.Highlight this listing' | trans }}</a>
-                                    </div>
-                                {% endif %}
-                                {% if not listing.adminConfirmed %}
-                                    <div>
-                                        {{ 'trans.Waiting for activation' | trans }}
-                                    </div>
-                                {% endif %}
-                            </td>
-                            <td>{{ listing.price }}</td>
-                            <td>
-                                <a href="{{ path('listing_edit', {'id': listing.id}) }}" class="btn btn-default">{{ 'trans.Edit' | trans }}</a>
-
-                                {{ include('admin/listing/_confirm_form.html.twig') }}
-                            </td>
-                        </tr>
-                    {% else %}
-                        <tr>
-                            <td colspan="8">no records found</td>
-                        </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-        </div>
+                        {{ include('admin/listing/_confirm_form.html.twig') }}
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="8">no records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
     </div>
 {% endblock %}

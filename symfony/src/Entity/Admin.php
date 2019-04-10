@@ -2,13 +2,14 @@
 
 namespace App\Entity;
 
+use App\Service\User\RoleInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\AdminRepository")
  */
-class Admin implements UserInterface
+class Admin implements UserInterface, RoleInterface
 {
     /**
      * @ORM\Id()

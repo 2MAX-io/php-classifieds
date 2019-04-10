@@ -1,15 +1,165 @@
+{#<!DOCTYPE html>#}
+{#<html>#}
+{#<head>#}
+{#    <meta charset="UTF-8">#}
+{#    <title>{% block title %}Welcome!{% endblock %}</title>#}
+{#    {% block stylesheets %}{% endblock %}#}
+{#</head>#}
+{#<body>#}
+{#{% block body %}{% endblock %}#}
+{#{% block javascripts %}#}
+{#    <script src="{{ asset('asset/jquery.js') }}"></script>#}
+{#{% endblock %}#}
+{#{% block js %}{% endblock %}#}
+{#</body>#}
+{#</html>#}
+
+
 <!DOCTYPE html>
-<html>
+<!--[if IE 9]><html class="lt-ie10" lang="pl"> <![endif]-->
+<html lang="pl">
 <head>
-    <meta charset="UTF-8">
-    <title>{% block title %}Welcome!{% endblock %}</title>
-    {% block stylesheets %}{% endblock %}
+    <title>{% block title %}Classifieds{% endblock %}</title>
+    <meta name="description" content="Classifieds is a nationwide Classifieds where users can search for the items to buy and sell near them and write reviews.">
+    <link rel="canonical" href="">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- favicon -->
+    <link rel="apple-touch-icon-precomposed" href="/assets/favicon/favicon-152.png">
+    <link rel="icon" type="image/png" href="/assets/favicon/favicon.png">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/assets/favicon/favicon-144.png">
+
+    <!-- css -->
+    <link rel="stylesheet" href="{{ asset('asset/bootstrap.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0-rc.2/css/select2.min.css">
+    <link rel="stylesheet" href="/templates/css/styles.css?5ca8aff0020c8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+
+    <!-- javascript -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0-rc.2/js/select2.min.js"></script>
+    <script src="/assets/js/head.js"></script>
+
 </head>
-<body>
-{% block body %}{% endblock %}
+<body class="tpl-listing">
+<!-- Top Header -->
+<div class="container-fluid container-header">
+    <div class="container p-3">
+        <div class="row vmargin">
+            <div id="website_logo" class="col-lg-3 tpad sm-text-center">
+                <a href="{{ path('app_index') }}" title={{ 'trans.Classifieds'|trans }}>
+                    <img src="{{ asset('assets/imgs/logo.png') }}" alt="Classifieds Plus" width="240">
+                </a>
+            </div>
+
+            <div class="col-md-4">
+                <label class="sr-only" for="keyword">Keyword</label>
+                <div class="input-group mb-2 mr-2">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text"><i class="fas fa-search"></i></div>
+                    </div>
+
+                    <form method="get" action="{{ path('app_listing_list') }}">
+                        <input type="text" class="form-control" name="query" placeholder="{{ 'trans.keyword'|trans }}" value="{{ app.request.get('query') | default }}">
+                    </form>
+                </div>
+            </div>
+
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-primary btn-block mb-2">{{ 'trans.Search' | trans }}</button>
+            </div>
+
+            <div id="header-controls" class="col-lg-3 text-right">
+                <ul class="list-inline">
+                    <li class="list-inline-item">
+                        {% if app.user %}
+                            <a href="{{ path('app_logout') }}">{{ 'trans.Logout' | trans }}</a>
+                        {% else %}
+                            <a href="{{ path('app_login') }}">{{ 'trans.Sign in' | trans }}</a>
+                        {% endif %}
+                    </li>
+
+                    <li class="list-inline-item">
+                        <a href="{{ path('app_listing_new') }}" class="btn btn-primary">{{ 'trans.Get Listed Today' | trans }} <i class="fas fa-chevron-right"></i></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="main-navbar">
+            <ul class="navbar-nav justify-content-around w-100">
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{ path('app_index') }}">{{ 'trans.Home page' | trans }}</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('app_category_view_all') }}">{{ 'trans.Categories' | trans }}</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('app_last_added') }}">{{ 'trans.Last added' | trans }}</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="//www.jaslo4u.pl">Jaslo4u.pl</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+{% block body %}{% endblock body %}
+
+<!-- footer -->
+<div class="container">
+    <footer class="pt-4 my-md-5 pt-md-5 border-top">
+        <div class="row">
+            <div class="col-12 col-md">
+                <small class="d-block mb-3 text-muted">© 2006-{{ "now" | date('Y') }}</small>
+            </div>
+            <div class="col-6 col-md">
+                <h5>Features</h5>
+                <ul class="list-unstyled text-small">
+                    <li><a class="text-muted" href="#">Extremely Fast</a></li>
+                </ul>
+            </div>
+            <div class="col-6 col-md">
+                <h5>Credits</h5>
+                <ul class="list-unstyled text-small">
+                    <li><a class="text-muted" href="https://www.pexels.com/">Pexels</a></li>
+                </ul>
+            </div>
+            <div class="col-6 col-md">
+                <h5>About</h5>
+                <ul class="list-unstyled text-small">
+                    <li><a class="text-muted" href="/contact">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+</div>
+
+<!-- css -->
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,400i,700,700i">
+
 {% block javascripts %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <script src="/templates/js/raty/jquery.raty.js"></script>
+    <script src="/assets/js/jquery-autocomplete/jquery.autocomplete.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/i18n/pl.js"></script>
     <script src="{{ asset('asset/jquery.js') }}"></script>
 {% endblock %}
 {% block js %}{% endblock %}
+
 </body>
 </html>

@@ -9,40 +9,26 @@
         <div class="col-md-6 offset-md-3">
             <div class="card">
                 <div class="card-header">
-                    <h4><strong>Sign in</strong></h4>
+                    <h4><strong>{{ 'trans.Sign in' | trans }}</strong></h4>
                 </div>
 
                 <div class="card-body">
-{#                    <form method="post" action="https://x-php.pro/demo/classifiedsplus/user/sign-in">#}
-{#                        <input type="hidden" id="referrer" name="referrer" value="https://x-php.pro/demo/classifiedsplus">#}
-
-
-
-
-{#                        <div class="form-group">#}
-{#                            <input id="email" class="form-control" name="email" type="text" tabindex="1" placeholder="Email">#}
-{#                        </div>#}
-
-{#                        <div class="form-group">#}
-{#                            <input id="password" class="form-control" name="password" type="password" placeholder="Password">#}
-{#                        </div>#}
-
-{#                        <div class="form-group">#}
-{#                            <button id="submit" class="btn btn-primary btn-block" name="submit">Sign in</button>#}
-{#                            <a href="https://x-php.pro/demo/classifiedsplus/user/forgot-password">Forgot password?</a>#}
-{#                        </div>#}
-{#                    </form>#}
-
                     <form method="post">
                         {% if error %}
                             <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
                         {% endif %}
 
-                        <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-                        <label for="inputEmail" class="sr-only">Email</label>
-                        <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" placeholder="Email" required autofocus>
-                        <label for="inputPassword" class="sr-only">Password</label>
-                        <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
+                        <h1 class="h3 mb-3 font-weight-normal">{{ 'trans.Please sign in' | trans }}</h1>
+
+                        <div class="form-group">
+                            <label for="inputEmail" class="sr-only">Email</label>
+                            <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" placeholder="{{ 'trans.Email' | trans }}" required autofocus tabindex="1">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="inputPassword" class="sr-only">Password</label>
+                            <input type="password" name="password" id="inputPassword" class="form-control" placeholder="{{ 'trans.Password' | trans }}" required>
+                        </div>
 
                         <input type="hidden" name="_csrf_token"
                                value="{{ csrf_token('authenticate') }}"
@@ -59,26 +45,28 @@
                             </div>
                         #}
 
-                        <button class="btn btn-lg btn-primary" type="submit">
-                            Sign in
-                        </button>
+                        <div class="form-group">
+                            <button class="btn btn-primary btn-block" type="submit">
+                                {{ 'trans.Sign in' | trans }}
+                            </button>
+                        </div>
                     </form>
 
                     <hr>
 
-                    <div class="row">
-                        <div class="col-md-6 mb-3 mb-md-0">
-                            <a href="https://x-php.pro/demo/classifiedsplus/user/sign-in?provider=facebook" class="btn btn-secondary btn-block"><i class="fab fa-facebook-f"></i> Facebook</a>
-                        </div>
+{#                    <div class="row">#}
+{#                        <div class="col-md-6 mb-3 mb-md-0">#}
+{#                            <a href="https://x-php.pro/demo/classifiedsplus/user/sign-in?provider=facebook" class="btn btn-secondary btn-block"><i class="fab fa-facebook-f"></i> Facebook</a>#}
+{#                        </div>#}
 
-                        <div class="col-md-6">
-                            <a href="https://x-php.pro/demo/classifiedsplus/user/sign-in?provider=twitter" class="btn btn-secondary btn-block"><i class="fab fa-twitter"></i> Twitter</a>
-                        </div>
-                    </div>
+{#                        <div class="col-md-6">#}
+{#                            <a href="https://x-php.pro/demo/classifiedsplus/user/sign-in?provider=twitter" class="btn btn-secondary btn-block"><i class="fab fa-twitter"></i> Twitter</a>#}
+{#                        </div>#}
+{#                    </div>#}
                 </div>
 
                 <div class="card-footer text-muted">
-                    Need an account? <a href="https://x-php.pro/demo/classifiedsplus/user/register">Register</a>
+                    {{ 'trans.Need an account?' | trans }} <a href="{{ path('app_listing_new') }}">{{ 'trans.Register' | trans }}</a>
                 </div>
             </div>
         </div>

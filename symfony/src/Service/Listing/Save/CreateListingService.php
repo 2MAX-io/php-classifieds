@@ -7,6 +7,7 @@ namespace App\Service\Listing\Save;
 use App\Entity\Listing;
 use App\Service\Listing\ValidityExtend\ValidUntilSetService;
 use DateTime;
+use Symfony\Component\Asset\Packages;
 use Symfony\Component\Form\FormInterface;
 
 class CreateListingService
@@ -16,9 +17,15 @@ class CreateListingService
      */
     private $validUntilSetService;
 
-    public function __construct(ValidUntilSetService $validUntilSetService)
+    /**
+     * @var Packages
+     */
+    private $packages;
+
+    public function __construct(ValidUntilSetService $validUntilSetService, Packages $packages)
     {
         $this->validUntilSetService = $validUntilSetService;
+        $this->packages = $packages;
     }
 
     public function create(): Listing
@@ -38,5 +45,20 @@ class CreateListingService
         }
 
         $listing->loadSearchText();
+    }
+
+    public function getListingFilesForJavascript(Listing $listing): array
+    {
+        $returnFiles = [];
+        foreach ($listing->getListingFiles() as $listingFile) {
+            $returnFiles[] = [
+                "name" => basename($listingFile->getPath()),
+                "type" => mime_content_type($listingFile->getPath()),
+                "size" => filesize($listingFile->getPath()),
+                "file" => $this->packages->getUrl($listingFile->getPath()),
+            ];
+        }
+
+        return $returnFiles;
     }
 }

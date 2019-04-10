@@ -112,6 +112,7 @@ class ListingController extends AbstractController
         return $this->render('listing/edit.html.twig', [
             'listing' => $listing,
             'form' => $form->createView(),
+            'listingFilesForJavascript' => $createListingService->getListingFilesForJavascript($listing),
         ]);
     }
 

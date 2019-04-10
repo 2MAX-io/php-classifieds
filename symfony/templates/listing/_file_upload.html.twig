@@ -20,7 +20,8 @@
                 onSort: function(list, listEl, parentEl, newInputEl, inputEl) {
                     // onSort callback
                 }
-            }
+            },
+            files: {{ listingFilesForJavascript | default([]) | json_encode | raw }}
         });
 
     });

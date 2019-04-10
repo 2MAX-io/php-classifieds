@@ -27,6 +27,13 @@ class ListingFileUploadService
         $this->em = $em;
     }
 
+    public function addMultipleFilesFromUpload(Listing $listing, array $uploadedFileList): void
+    {
+        foreach ($uploadedFileList as $uploadedFile) {
+            $this->addFileFromUpload($listing, $uploadedFile);
+        }
+    }
+
     public function addFileFromUpload(Listing $listing, UploadedFile $uploadedFile): void
     {
         $destinationFilepath = $this->getDestinationFilepath($listing);
@@ -42,6 +49,7 @@ class ListingFileUploadService
         $listingFile = new ListingFile();
         $listingFile->setPath(Path::makeRelative($movedFile->getRealPath(), FilePath::getProjectDir()));
         $listingFile->setListing($listing);
+        $listingFile->setSort(1);
         $this->em->persist($listingFile);
 
         $listing->addListingFile($listingFile);

@@ -45,6 +45,7 @@ class ListingType extends AbstractType
             ->add('file', FileType::class, [
                 'mapped' => false,
                 'required' => false,
+                'multiple' => true,
                 'constraints' => [
 //                    new Assert\File(['mimeTypes']) // todo: mime validation
                 ]

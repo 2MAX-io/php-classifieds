@@ -47,7 +47,7 @@ class ListingController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             if ($form->get('file')->getData()) {
-                $listingFileUploadService->addFileFromUpload($listing, $form->get('file')->getData());
+                $listingFileUploadService->addMultipleFilesFromUpload($listing, $form->get('file')->getData());
             }
 
             $customFieldsForListingFormService->saveCustomFieldsToListing($listing, $request->request->get('form_custom_field'));
@@ -97,7 +97,7 @@ class ListingController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             if ($form->get('file')->getData()) {
-                $listingFileUploadService->addFileFromUpload($listing, $form->get('file')->getData());
+                $listingFileUploadService->addMultipleFilesFromUpload($listing, $form->get('file')->getData());
             }
             $customFieldsForListingFormService->saveCustomFieldsToListing($listing, $request->request->get('form_custom_field'));
 

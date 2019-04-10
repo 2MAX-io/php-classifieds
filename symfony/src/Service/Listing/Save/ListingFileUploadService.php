@@ -27,7 +27,7 @@ class ListingFileUploadService
         $this->em = $em;
     }
 
-    public function addBannerFileFromUpload(Listing $listing, UploadedFile $uploadedFile): void
+    public function addFileFromUpload(Listing $listing, UploadedFile $uploadedFile): void
     {
         $destinationFilepath = $this->getDestinationFilepath($listing);
         $destinationFilename = $this->getDestinationFilename(

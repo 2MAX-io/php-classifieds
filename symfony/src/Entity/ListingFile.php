@@ -22,6 +22,11 @@ class ListingFile
     private $listing;
 
     /**
+     * @ORM\Column(type="smallint")
+     */
+    private $sort;
+
+    /**
      * @ORM\Column(type="string", length=255)
      */
     private $path;
@@ -51,6 +56,18 @@ class ListingFile
     public function setListing(?Listing $listing): self
     {
         $this->listing = $listing;
+
+        return $this;
+    }
+
+    public function getSort(): ?int
+    {
+        return $this->sort;
+    }
+
+    public function setSort(int $sort): self
+    {
+        $this->sort = $sort;
 
         return $this;
     }

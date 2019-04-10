@@ -49,3 +49,5 @@ chown -R 1000:www-data symfony/config/
 php symfony/bin/console help
 php symfony/bin/console list
 php symfony/bin/console security:encode-password
+php symfony/bin/console make:entity --regenerate "App\Entity"
+php symfony/bin/console doctrine:schema:update --force

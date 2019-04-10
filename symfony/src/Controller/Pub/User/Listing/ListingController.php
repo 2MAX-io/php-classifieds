@@ -50,6 +50,9 @@ class ListingController extends AbstractController
                 $listingFileUploadService->addMultipleFilesFromUpload($listing, $form->get('file')->getData());
             }
 
+            if ($request->request->get('fileuploader-list-file')) {
+                $listingFileUploadService->updateSort($listing, \json_decode($request->request->get('fileuploader-list-file'), true));
+            }
             $customFieldsForListingFormService->saveCustomFieldsToListing($listing, $request->request->get('form_custom_field'));
 
             if ($currentUserService->getUser()) {
@@ -67,7 +70,7 @@ class ListingController extends AbstractController
             $entityManager->persist($listing);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_listing_index');
+            return $this->redirectToRoute('listing_edit', ['id' => $listing->getId()]);
         }
 
         return $this->render('listing/new.html.twig', [
@@ -98,6 +101,10 @@ class ListingController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             if ($form->get('file')->getData()) {
                 $listingFileUploadService->addMultipleFilesFromUpload($listing, $form->get('file')->getData());
+            }
+
+            if ($request->request->get('fileuploader-list-file')) {
+                $listingFileUploadService->updateSort($listing, \json_decode($request->request->get('fileuploader-list-file'), true));
             }
             $customFieldsForListingFormService->saveCustomFieldsToListing($listing, $request->request->get('form_custom_field'));
 

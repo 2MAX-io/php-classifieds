@@ -23,10 +23,6 @@ class ValidUntilSetService
 
     public function setValidUntil(Listing $listing, int $validityTimeDays)
     {
-        if (!$listing->getAdminConfirmed()) {
-            return;
-        }
-
         $validityTimeDays = min($validityTimeDays, $this->getMaxValidityTimeDays());
 
         $listing->setValidUntilDate(Carbon::now()->add(CarbonInterval::days($validityTimeDays)));

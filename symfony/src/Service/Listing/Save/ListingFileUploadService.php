@@ -30,29 +30,42 @@ class ListingFileUploadService
     public function addMultipleFilesFromUpload(Listing $listing, array $uploadedFileList): void
     {
         foreach ($uploadedFileList as $uploadedFile) {
-            $this->addFileFromUpload($listing, $uploadedFile);
+            $destinationFilepath = $this->getDestinationFilepath($listing);
+            $destinationFilename = $this->getDestinationFilename(
+                $uploadedFile->getClientOriginalName(),
+                $uploadedFile->getClientOriginalExtension()
+            );
+            $movedFile = $this->uploadBannerFile(
+                $uploadedFile,
+                $destinationFilepath,
+                $destinationFilename
+            );
+            $listingFile = new ListingFile();
+            $listingFile->setPath(Path::makeRelative($movedFile->getRealPath(), FilePath::getProjectDir()));
+            $listingFile->setListing($listing);
+            $listingFile->setSort(99999);
+            $this->em->persist($listingFile);
+
+            $listing->addListingFile($listingFile);
         }
     }
 
-    public function addFileFromUpload(Listing $listing, UploadedFile $uploadedFile): void
+    public function updateSort(Listing $listing, array $fileUploaderList): void
     {
-        $destinationFilepath = $this->getDestinationFilepath($listing);
-        $destinationFilename = $this->getDestinationFilename(
-            $uploadedFile->getClientOriginalName(),
-            $uploadedFile->getClientOriginalExtension()
-        );
-        $movedFile = $this->uploadBannerFile(
-            $uploadedFile,
-            $destinationFilepath,
-            $destinationFilename
-        );
-        $listingFile = new ListingFile();
-        $listingFile->setPath(Path::makeRelative($movedFile->getRealPath(), FilePath::getProjectDir()));
-        $listingFile->setListing($listing);
-        $listingFile->setSort(1);
-        $this->em->persist($listingFile);
+        $filenameIndex = [];
+        foreach ($fileUploaderList as $fileUploaderListElement) {
+            $fileName = basename($fileUploaderListElement['file']);
+            $filenameIndex[$fileName] = $fileUploaderListElement['index'];
+        }
 
-        $listing->addListingFile($listingFile);
+        foreach ($listing->getListingFiles() as $listingFile) {
+            $sort = 99999;
+            if (isset($filenameIndex[basename($listingFile->getPath())])) {
+                $sort = $filenameIndex[basename($listingFile->getPath())];
+            }
+            $listingFile->setSort((int) $sort);
+            $this->em->persist($listingFile);
+        }
     }
 
     public function uploadBannerFile(UploadedFile $uploadedFile, string $destinationFilepath, string $destinationFilename): File

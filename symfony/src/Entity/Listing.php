@@ -128,7 +128,7 @@ class Listing
     private $lastReactivationDate;
 
     /**
-     * @ORM\Column(type="datetimetz", nullable=false)
+     * @ORM\Column(type="datetimetz", nullable=true)
      */
     private $adminLastConfirmationDate;
 
@@ -273,7 +273,7 @@ class Listing
      */
     public function getListingFiles(): Collection
     {
-        return $this->listingFiles->matching(Criteria::create()->where(Criteria::expr()->eq("userDeleted", false)));
+        return $this->listingFiles->matching(Criteria::create()->orderBy(['sort' => 'asc'])->where(Criteria::expr()->eq("userDeleted", false)));
     }
 
     public function addListingFile(ListingFile $listingFile): self

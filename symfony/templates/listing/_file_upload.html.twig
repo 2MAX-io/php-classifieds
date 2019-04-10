@@ -17,9 +17,7 @@
                 selectorExclude: null,
                 placeholder: null,
                 scrollContainer: window,
-                onSort: function(list, listEl, parentEl, newInputEl, inputEl) {
-                    // onSort callback
-                }
+                onSort: function(list, listEl, parentEl, newInputEl, inputEl) {}
             },
             onRemove: function(item, listEl, parentEl, newInputEl, inputEl) {
                 $.post('{{ path('app_listing_file_delete') }}', {

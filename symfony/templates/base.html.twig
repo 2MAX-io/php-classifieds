@@ -193,21 +193,25 @@
                 <small class="d-block mb-3 text-muted">© 2006-{{ "now" | date('Y') }}</small>
             </div>
             <div class="col-6 col-md">
-                <h5>Features</h5>
+                <h5>{{ 'trans.Quick links' | trans }}</h5>
                 <ul class="list-unstyled text-small">
-                    <li><a class="text-muted" href="#">Extremely Fast</a></li>
+                    <li><a class="text-muted" href="{{ path('app_index') }}">{{ 'trans.Home page' | trans }}</a></li>
+                    <li><a class="text-muted" href="{{ path('app_listing_new') }}">{{ 'trans.Add listing' | trans }}</a></li>
+                    <li><a class="text-muted" href="{{ path('app_last_added') }}">{{ 'trans.Last added' | trans }}</a></li>
                 </ul>
             </div>
             <div class="col-6 col-md">
-                <h5>Credits</h5>
+                <h5>{{ 'trans.Advertisement' | trans }}</h5>
                 <ul class="list-unstyled text-small">
-                    <li><a class="text-muted" href="https://www.pexels.com/">Pexels</a></li>
+                    <li><a class="text-muted" href="#">{{ 'trans.Advertisement' | trans }}</a></li>
                 </ul>
             </div>
             <div class="col-6 col-md">
-                <h5>About</h5>
+                <h5>{{ 'trans.About' | trans }}</h5>
                 <ul class="list-unstyled text-small">
-                    <li><a class="text-muted" href="/contact">Contact</a></li>
+                    <li><a class="text-muted" href="#contact">{{ 'trans.Contact' | trans }}</a></li>
+                    <li><a class="text-muted" href="#terms-and-conditions">{{ 'trans.Terms and conditions' | trans }}</a></li>
+                    <li><a class="text-muted" href="#report-abuse">{{ 'trans.Report abuse' | trans }}</a></li>
                 </ul>
             </div>
         </div>

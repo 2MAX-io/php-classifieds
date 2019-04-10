@@ -24,16 +24,14 @@
                 <!-- Tabs nav -->
                 <ul class="nav nav-tabs flex-column flex-sm-row" id="myTab" role="tablist">
                     <li class="nav-item flex-sm-fill text-sm-center mr-1">
-                        <a href="#overview" class="nav-link active" aria-controls="overview" role="tab" data-toggle="tab" aria-selected="true">Ad Details</a>
+                        <a href="#overview" class="nav-link active" aria-controls="overview" role="tab" data-toggle="tab" aria-selected="true">{{ 'trans.Ad Details' | trans }}</a>
                     </li>
 
-                    <li class="nav-item flex-sm-fill text-sm-center mr-1">
-                        <a href="#photos" class="nav-link" aria-controls="photos" role="tab" data-toggle="tab">Photos ({{ listing.listingFiles.count }})</a>
-                    </li>
-
-                    <li class="nav-item flex-sm-fill text-sm-center mr-1">
-                        <a href="#reviews" class="nav-link" aria-controls="reviews" role="tab" data-toggle="tab">Reviews (0)</a>
-                    </li>
+                    {% if listing.listingFiles.count > 0 %}
+                        <li class="nav-item flex-sm-fill text-sm-center mr-1">
+                            <a href="#photos" class="nav-link" aria-controls="photos" role="tab" data-toggle="tab">{{ 'trans.Photos' | trans }} ({{ listing.listingFiles.count }})</a>
+                        </li>
+                    {% endif %}
                 </ul>
 
                 <!-- Tabs contents -->
@@ -79,18 +77,6 @@
                         </div>
                     </div>
                     <!-- End tab photos -->
-
-                    <!-- Tab coupons -->
-                    <!-- end tab coupons -->
-
-                    <!-- Tab reviews -->
-                    <div id="reviews" class="tab-pane" role="tabpanel">
-
-                        <h2>Write a review</h2>
-
-                        <p>To write a review, you must login first.</p>
-                    </div>
-                    <!-- end tab reviews -->
                 </div>
 
                 {% for listingFile in listing.listingFiles %}
@@ -148,7 +134,7 @@
                 <!-- Share listing -->
                 <div class="card mb-3" style="width: 100%;">
                     <div class="card-header">
-                        <h5>Share This Listing</h5>
+                        <h5>{{ 'trans.Share This Listing' | trans }}</h5>
                     </div>
 
                     <div class="card-body">

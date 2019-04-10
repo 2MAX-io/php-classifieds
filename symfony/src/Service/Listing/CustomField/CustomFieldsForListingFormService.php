@@ -33,23 +33,22 @@ class CustomFieldsForListingFormService
      */
     public function getFields(?int $categoryId, ?int $listingId): array
     {
-        $qb = $this->em->getRepository(CustomField::class)->createQueryBuilder('custom_field');
-        $qb->leftJoin('custom_field.customFieldOptions', 'custom_field_options');
+        $qb = $this->em->getRepository(CustomField::class)->createQueryBuilder('customField');
+        $qb->leftJoin('customField.customFieldOptions', 'customField_options');
 
         if ($categoryId) {
         }
 
-        if ($listingId) {
-            $qb->leftJoin(
-                'custom_field.listingCustomFieldValues',
-                'listingCustomFieldValues',
-                Join::WITH,
-                $qb->expr()->eq('listingCustomFieldValues.listing', ':listingId')
-            );
-            $qb->setParameter(':listingId', $listingId);
-        }
+        $qb->addSelect('listingCustomFieldValues');
+        $qb->leftJoin(
+            'customField.listingCustomFieldValues',
+            'listingCustomFieldValues',
+            Join::WITH,
+            $qb->expr()->eq('listingCustomFieldValues.listing', ':listingId')
+        );
+        $qb->setParameter(':listingId', $listingId);
 
-        $qb->orderBy('custom_field.sortOrder');
+        $qb->orderBy('customField.sortOrder');
 
         return $qb->getQuery()->getResult();
     }

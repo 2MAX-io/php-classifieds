@@ -46,6 +46,11 @@ class User implements UserInterface, RoleInterface
      */
     private $listings;
 
+    /**
+     * @ORM\Column(type="datetimetz", nullable=false)
+     */
+    private $firstCreatedDate;
+
     public function __construct()
     {
         $this->listings = new ArrayCollection();
@@ -123,7 +128,7 @@ class User implements UserInterface, RoleInterface
     /**
      * @see UserInterface
      */
-    public function eraseCredentials()
+    public function eraseCredentials(): void
     {
         // If you store any temporary, sensitive data on the user, clear it here
          $this->plainPassword = null;
@@ -165,8 +170,20 @@ class User implements UserInterface, RoleInterface
         return $this->plainPassword;
     }
 
-    public function setPlainPassword(string $plainPassword): void
+    public function setPlainPassword(?string $plainPassword): void
     {
         $this->plainPassword = $plainPassword;
+    }
+
+    public function getFirstCreatedDate(): ?\DateTimeInterface
+    {
+        return $this->firstCreatedDate;
+    }
+
+    public function setFirstCreatedDate(\DateTimeInterface $firstCreatedDate): self
+    {
+        $this->firstCreatedDate = $firstCreatedDate;
+
+        return $this;
     }
 }

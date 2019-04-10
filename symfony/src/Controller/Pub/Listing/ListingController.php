@@ -38,7 +38,8 @@ class ListingController extends AbstractController
         CurrentUserService $currentUserService,
         UserCreateService $userCreateService,
         LoginUserProgrammaticallyService $loginUserProgrammaticallyService,
-        CreateListingService $createListingService
+        CreateListingService $createListingService,
+        CustomFieldsForListingFormService $customFieldsForListingFormService
     ): Response {
         $listing = $createListingService->create();
         $form = $this->createForm(ListingType::class, $listing);
@@ -49,13 +50,15 @@ class ListingController extends AbstractController
                 $listingFileUploadService->addBannerFileFromUpload($listing, $form->get('file')->getData());
             }
 
+            $customFieldsForListingFormService->saveCustomFieldsToListing($listing, $request->request->get('form_custom_field'));
+
             if ($currentUserService->getUser()) {
                 $listing->setUser($currentUserService->getUser());
             } else {
                 $user = $userCreateService->registerUser($listing->getEmail());
                 $listing->setUser($user);
                 $loginUserProgrammaticallyService->loginUser($user);
-                $user->setPlainPassword(null);
+                $user->eraseCredentials();
             }
 
             $createListingService->setFormDependent($listing, $form);

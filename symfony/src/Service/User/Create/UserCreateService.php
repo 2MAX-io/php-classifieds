@@ -47,6 +47,7 @@ class UserCreateService
         $user = new User();
         $user->setEmail($email);
         $user->setRoles([User::ROLE_USER]);
+        $user->setFirstCreatedDate(new \DateTime());
         $plainPassword = $this->passwordGenerateService->generatePassword();
         $user->setPassword(
             $this->passwordEncoder->encodePassword($user, $plainPassword)

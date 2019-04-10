@@ -6,6 +6,7 @@ namespace App\Service\Email;
 
 use App\Entity\User;
 use App\System\EnvironmentService;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Environment as Twig;
 
 class EmailService
@@ -24,16 +25,22 @@ class EmailService
      */
     private $environmentService;
 
-    public function __construct(\Swift_Mailer $mailer, Twig $twig, EnvironmentService $environmentService)
+    /**
+     * @var TranslatorInterface
+     */
+    private $trans;
+
+    public function __construct(\Swift_Mailer $mailer, Twig $twig, EnvironmentService $environmentService, TranslatorInterface $trans)
     {
         $this->mailer = $mailer;
         $this->twig = $twig;
         $this->environmentService = $environmentService;
+        $this->trans = $trans;
     }
 
     public function sendRegisterEmail(User $user): void
     {
-        $message = (new \Swift_Message('Hello Email'))
+        $message = (new \Swift_Message($this->trans->trans('trans.You have registered account')))
             ->setFrom($this->environmentService->getMailerFromEmailAddress())
             ->setTo($user->getEmail())
             ->setBody(

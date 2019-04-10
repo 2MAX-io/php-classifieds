@@ -34,6 +34,7 @@ class ListingListService
     public function getListings(int $page = 1, Category $category = null): ListingListDto
     {
         $qb = $this->em->getRepository(Listing::class)->createQueryBuilder('listing');
+        $qb->addSelect('listingFile');
         $qb->leftJoin('listing.listingCustomFieldValues', 'listingCustomFieldValue');
         $qb->leftJoin('listingCustomFieldValue.customField', 'customField');
         $qb->leftJoin('listing.category', 'category');
@@ -138,8 +139,9 @@ class ListingListService
      */
     public function getCustomFields(): array
     {
-        $qb = $this->em->getRepository(CustomField::class)->createQueryBuilder('custom_field');
-        $qb->leftJoin('custom_field.customFieldOptions', 'custom_field_options');
+        $qb = $this->em->getRepository(CustomField::class)->createQueryBuilder('customField');
+        $qb->addSelect('customFieldOption');
+        $qb->leftJoin('customField.customFieldOptions', 'customFieldOption');
 
         return $qb->getQuery()->getResult();
     }

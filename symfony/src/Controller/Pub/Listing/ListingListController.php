@@ -47,6 +47,10 @@ class ListingListController extends AbstractController
                 'customFieldList' => $listingListService->getCustomFields(),
                 'categoryList' => $categoryListService->getLevelOfSubcategoriesToDisplayForCategory($categoryId),
                 'categoryBreadcrumbs' => $categoryListService->getBreadcrumbs($category),
+                'queryParameters' => [
+                    'query' => $request->query->get('query'),
+                    'form_custom_field' => $request->query->get('form_custom_field'),
+                ],
             ]
         );
     }

@@ -21,11 +21,11 @@
                 {% if categoryList is not empty %}
                     <div class="card mb-3">
                         <div class="card-header">
-                            <strong>Category</strong>
+                            <strong>{{ 'trans.Category' | trans }}</strong>
                         </div>
                         <div class="card-body">
                             {% for category in categoryList %}
-                                <a href="{{ path('app_category', {"categoryId": category.id}) }}" title="" class="mb-1">{{ category.name }}</a><br>
+                                <a href="{{ path('app_category', {"categoryId": category.id} | merge(queryParameters)) }}" title="" class="mb-1">{{ category.name }}</a><br>
                             {% endfor %}
                         </div>
                     </div>
@@ -33,12 +33,21 @@
 
                 <div class="card mb-3">
                     <div class="card-header">
-                        <strong>Refine Search</strong>
+                        <strong>{{ 'trans.Refine Search' | trans }}</strong>
                     </div>
                     <div class="card-body">
                         <form method="get" id="" action="">
-                            <!-- cat_id -->
-                            <input type="hidden" name="query" value="{{ app.request.get('query') | default }}">
+                            <div class="mb-3" id="li-field-7">
+                                <div class="input-group mb-2 mr-2">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text"><i class="fas fa-search"></i></div>
+                                    </div>
+
+                                    <form method="get" action="{{ path('app_listing_list') }}">
+                                        <input type="text" class="form-control" name="query" placeholder="{{ 'trans.keyword'|trans }}" value="{{ app.request.get('query') | default }}">
+                                    </form>
+                                </div>
+                            </div>
 
                             {# @var customField \App\Entity\CustomField #}
                             {% for customField in customFieldList %}

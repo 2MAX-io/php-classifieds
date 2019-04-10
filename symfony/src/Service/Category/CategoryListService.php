@@ -25,23 +25,26 @@ class CategoryListService
      */
     public function getLevelOfSubcategoriesToDisplayForCategory(?int $categoryId = null): array
     {
+        $qb = $this->em->getRepository(Category::class)->createQueryBuilder('category');
+
         if ($categoryId === null) {
-            return [];
+            $qb->andWhere($qb->expr()->eq('category.lvl', 1));
         }
 
-        $qb = $this->em->getRepository(Category::class)->createQueryBuilder('category');
-        $qb->join(Category::class, 'requestedCategory', Join::WITH, $qb->expr()->eq('requestedCategory.id', ':requestedCategory'));
-        $qb->setParameter(':requestedCategory', $categoryId);
+        if ($categoryId !== null) {
+            $qb->join(Category::class, 'requestedCategory', Join::WITH, $qb->expr()->eq('requestedCategory.id', ':requestedCategory'));
+            $qb->setParameter(':requestedCategory', $categoryId);
 
-        $qb->andWhere(
-            $qb->expr()->orX(
-                $qb->expr()->eq('category.parent', 'requestedCategory.id'),
-                $qb->expr()->andX(
-                    $qb->expr()->eq('requestedCategory.rgt - requestedCategory.lft', '1'),
-                    $qb->expr()->eq('category.parent', 'requestedCategory.parent')
+            $qb->andWhere(
+                $qb->expr()->orX(
+                    $qb->expr()->eq('category.parent', 'requestedCategory.id'),
+                    $qb->expr()->andX(
+                        $qb->expr()->eq('requestedCategory.rgt - requestedCategory.lft', '1'),
+                        $qb->expr()->eq('category.parent', 'requestedCategory.parent')
+                    )
                 )
-            )
-        );
+            );
+        }
 
         return $qb->getQuery()->getResult();
     }

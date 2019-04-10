@@ -30,8 +30,8 @@
     <!-- Categories -->
     <div class="container mb-2">
         <div class="d-flex flex-row">
-            <div class="flex-grow-1"><h2>Categories</h2></div>
-            <div><a href="/categories" class="btn btn-light">View All</a></div>
+            <div class="flex-grow-1"><h2>{{ 'trans.Categories' | trans }}</h2></div>
+            <div><a href="{{ path('app_category_view_all') }}" class="btn btn-light">{{ 'trans.View all' | trans }}</a></div>
         </div>
     </div>
 
@@ -58,7 +58,7 @@
     <!-- Latest Listings -->
     <div class="container mb-2">
         <div class="d-flex flex-row">
-            <div class="flex-grow-1"><h2 class="">Latest Listings</h2></div>
+            <div class="flex-grow-1"><h2 class="">{{ 'trans.Latest Listings' | trans }}</h2></div>
         </div>
     </div>
 
@@ -68,7 +68,7 @@
                 <div class="card card-featured mb-4">
                     <div class="row p-2">
                         <div class="col-sm-6 text-center">
-                            <a href="{{ path('app_listing_show', {'id': listing.id}) }}">
+                            <a href="{{ path('app_listing_show', {'id': listing.id}) }}" title="{{ listing.title }}">
                                 <img class="img-thumbnail" alt="{{ listing.title }}" src="{{ asset(listing.listingFiles.first.path | default('assets/imgs/blank.png')) }}">
                             </a>
                         </div>
@@ -76,7 +76,9 @@
                         <div class="col-sm-6 d-flex flex-column">
                             <h4 class="pt-3 pt-sm-0"><a href="{{ path('app_listing_show', {'id': listing.id}) }}">{{ listing.title }}</a></h4>
                             <p>...</p>
-                            <a href="{{ path('app_listing_show', {'id': listing.id}) }}" class="btn btn-sm btn-dark btn-block mt-auto">{{ 'trans.View Listing' | trans }}</a>
+                            <a href="{{ path('app_listing_show', {'id': listing.id}) }}" title="{{ listing.title }}" class="btn btn-sm btn-dark btn-block mt-auto">
+                                {{ 'trans.View Listing' | trans }}
+                            </a>
                         </div>
                     </div>
                 </div>

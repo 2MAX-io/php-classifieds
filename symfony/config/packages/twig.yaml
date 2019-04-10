@@ -3,3 +3,5 @@ twig:
     debug: '%kernel.debug%'
     strict_variables: '%kernel.debug%'
     form_themes: ['form/form_layout.html.twig']
+    date:
+        format: d.m.Y, H:i

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\Pub\Listing;
+namespace App\Controller\Pub\User\Listing;
 
 use App\Entity\Listing;
 use App\Form\ListingType;

@@ -59,3 +59,8 @@ trans:
   Report abuse: 'Zgłoś naruszenie'
   Advertisement: 'Reklama'
   Change Password: 'Zmień hasło'
+  Listing currently valid until: 'Ogłoszenie jest obecnie ważne do'
+  Counting from today, extend by: 'Licząc od dziś, przedłuż o'
+  Extend listing: 'Przedłuż ogłoszenie'
+  Listing is currently deactivated, extending will activate it and therefore show it to the public on page: 'Ogłoszenie jest obecnie dezaktywowane, przedłużenie aktywuje je i pokaże publicznie na stronie'
+  Listing awaits activation, you can extend listing duration, but listing would only appear to the public after acceptation: 'Ogłoszenie oczekuje na aktywację, możesz je przedłużyć, jednak ogłoszenie ukaże się dopiero po akceptacji'

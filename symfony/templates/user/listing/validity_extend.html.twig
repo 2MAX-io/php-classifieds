@@ -10,7 +10,29 @@
             </div>
 
             <div class="col-md-8 col-lg-9">
-                <h1>{{ 'trans.Extend' | trans }}</h1>
+                <h3>{{ 'trans.Extend listing' | trans }}: {{ listing.title }}</h3>
+
+                {% if listing.userDeactivated %}
+                    <div>
+                        {{ 'trans.Listing is currently deactivated, extending will activate it and therefore show it to the public on page' | trans }}
+                    </div>
+                {% endif %}
+
+                {% if not listing.adminConfirmed %}
+                    <div>
+                        {{ 'trans.Listing awaits activation, you can extend listing duration, but listing would only appear to the public after acceptation' | trans }}
+                    </div>
+                {% endif %}
+
+                <div>
+                    {{ 'trans.Listing currently valid until' | trans }}: {{ listing.validUntilDate | date }}
+                </div>
+
+                {{ form_start(form) }}
+                {{ form_widget(form) }}
+
+                <button class="btn">{{ button_label|default('Save') }}</button>
+                {{ form_end(form) }}
             </div>
         </div>
     </div>

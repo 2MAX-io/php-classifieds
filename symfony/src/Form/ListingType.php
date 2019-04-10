@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Category;
 use App\Entity\Listing;
 use App\Form\Type\FileSimpleType;
+use App\Service\Listing\ValidityExtend\ValidUntilSetService;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -19,6 +20,16 @@ use Symfony\Component\Validator\Constraints;
 
 class ListingType extends AbstractType
 {
+    /**
+     * @var ValidUntilSetService
+     */
+    private $validUntilSetService;
+
+    public function __construct(ValidUntilSetService $validUntilSetService)
+    {
+        $this->validUntilSetService = $validUntilSetService;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -48,10 +59,10 @@ class ListingType extends AbstractType
             ])
             ->add('validityTimeDays', ChoiceType::class, [
                 'mapped' => false,
-                'choices' => $this->getValidityTimeDaysChoices(),
+                'choices' => $this->validUntilSetService->getValidityTimeDaysChoices(),
                 'constraints' => [
                     new Constraints\Choice([
-                        'choices' => $this->getValidityTimeDaysChoices()
+                        'choices' => $this->validUntilSetService->getValidityTimeDaysChoices()
                     ]),
                 ],
                 'label' => 'trans.Validity time',
@@ -78,16 +89,6 @@ class ListingType extends AbstractType
                 'block_name' => 'simple',
             ])
         ;
-    }
-
-    private function getValidityTimeDaysChoices(): array
-    {
-        return [
-            'trans.1 week' => 9,
-            'trans.2 weeks' => 14,
-            'trans.3 weeks' => 21,
-            'trans.31 days' => 31,
-        ];
     }
 
     public function configureOptions(OptionsResolver $resolver)

@@ -21,6 +21,13 @@
                     // onSort callback
                 }
             },
+            onRemove: function(item, listEl, parentEl, newInputEl, inputEl) {
+                $.post('{{ path('app_listing_file_delete') }}', {
+                    listingFileId: item.data.listingFileId
+                });
+
+                return true;
+            },
             files: {{ listingFilesForJavascript | default([]) | json_encode | raw }}
         });
 

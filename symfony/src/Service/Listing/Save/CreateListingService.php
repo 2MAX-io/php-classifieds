@@ -52,10 +52,13 @@ class CreateListingService
         $returnFiles = [];
         foreach ($listing->getListingFiles() as $listingFile) {
             $returnFiles[] = [
-                "name" => basename($listingFile->getPath()),
-                "type" => mime_content_type($listingFile->getPath()),
-                "size" => filesize($listingFile->getPath()),
-                "file" => $this->packages->getUrl($listingFile->getPath()),
+                'name' => basename($listingFile->getPath()),
+                'type' => mime_content_type($listingFile->getPath()),
+                'size' => filesize($listingFile->getPath()),
+                'file' => $this->packages->getUrl($listingFile->getPath()),
+                'data' => [
+                    'listingFileId' => $listingFile->getId(),
+                ],
             ];
         }
 

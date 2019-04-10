@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\Index;
 
@@ -67,6 +68,7 @@ class Listing
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\ListingFile", mappedBy="listing")
+     * @ORM\OrderBy({"sort" = "ASC"})
      */
     private $listingFiles;
 
@@ -271,7 +273,7 @@ class Listing
      */
     public function getListingFiles(): Collection
     {
-        return $this->listingFiles;
+        return $this->listingFiles->matching(Criteria::create()->where(Criteria::expr()->eq("userDeleted", false)));
     }
 
     public function addListingFile(ListingFile $listingFile): self

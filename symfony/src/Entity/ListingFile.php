@@ -31,6 +31,11 @@ class ListingFile
      */
     private $path;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $userDeleted = false;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -68,6 +73,18 @@ class ListingFile
     public function setSort(int $sort): self
     {
         $this->sort = $sort;
+
+        return $this;
+    }
+
+    public function getUserDeleted(): ?bool
+    {
+        return $this->userDeleted;
+    }
+
+    public function setUserDeleted(bool $userDeleted): self
+    {
+        $this->userDeleted = $userDeleted;
 
         return $this;
     }

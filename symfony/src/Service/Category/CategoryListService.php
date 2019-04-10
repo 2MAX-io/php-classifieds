@@ -56,6 +56,16 @@ class CategoryListService
         }
 
         $qb = $this->em->getRepository(Category::class)->createQueryBuilder('category0');
+        $qb->addSelect('category1');
+        $qb->addSelect('category2');
+        $qb->addSelect('category3');
+        $qb->addSelect('category4');
+        $qb->addSelect('category5');
+        $qb->addSelect('category6');
+        $qb->addSelect('category7');
+        $qb->addSelect('category8');
+        $qb->addSelect('category9');
+
         $qb->leftJoin('category0.parent', 'category1');
         $qb->leftJoin('category1.parent', 'category2');
         $qb->leftJoin('category2.parent', 'category3');

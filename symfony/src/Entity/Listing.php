@@ -126,6 +126,16 @@ class Listing
     private $lastReactivationDate;
 
     /**
+     * @ORM\Column(type="datetimetz", nullable=false)
+     */
+    private $adminLastConfirmationDate;
+
+    /**
+     * @ORM\Column(type="string", length=1000, nullable=true)
+     */
+    private $rejectionReason;
+
+    /**
      * @ORM\Column(type="text")
      */
     private $searchText;
@@ -463,6 +473,30 @@ class Listing
     public function setAdminRemoved(bool $adminRemoved): self
     {
         $this->adminRemoved = $adminRemoved;
+
+        return $this;
+    }
+
+    public function getAdminLastConfirmationDate(): ?\DateTimeInterface
+    {
+        return $this->adminLastConfirmationDate;
+    }
+
+    public function setAdminLastConfirmationDate(\DateTimeInterface $adminLastConfirmationDate): self
+    {
+        $this->adminLastConfirmationDate = $adminLastConfirmationDate;
+
+        return $this;
+    }
+
+    public function getRejectionReason(): ?string
+    {
+        return $this->rejectionReason;
+    }
+
+    public function setRejectionReason(?string $rejectionReason): self
+    {
+        $this->rejectionReason = $rejectionReason;
 
         return $this;
     }

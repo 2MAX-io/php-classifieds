@@ -31,6 +31,7 @@ class ListingConfirmController extends AbstractController
         if ($this->isCsrfTokenValid('adminConfirm'.$listing->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $listing->setAdminConfirmed(true);
+            $listing->setAdminLastConfirmationDate(new \DateTime());
             $entityManager->flush();
         }
 

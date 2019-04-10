@@ -32,6 +32,8 @@ class ListingHelperService
     public function getLatestListingList(int $count): array
     {
         $qb = $this->em->getRepository(Listing::class)->createQueryBuilder('listing');
+        $qb->addSelect('listingFile');
+        $qb->leftJoin('listing.listingFiles', 'listingFile');
         $qb->orderBy('listing.firstCreatedDate', 'DESC');
 
         $this->listingPublicDisplayService->applyPublicDisplayConditions($qb);

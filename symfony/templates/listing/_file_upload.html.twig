@@ -1,0 +1,32 @@
+<link rel="stylesheet" href="{{ asset('asset/lib/fileuploader/font/font-fileuploader.css') }}">
+<link rel="stylesheet" href="{{ asset('asset/lib/fileuploader/jquery.fileuploader.min.css') }}">
+<script src="{{ asset('asset/lib/fileuploader/jquery.fileuploader.min.js') }}"></script>
+
+<script type="text/javascript">
+    $.get('{{ path('app_listing_get_custom_fields', {"listingId": listing.id}) }}', function (data) {
+        $('.custom-fields-from-ajax').html(data);
+    });
+
+    $(document).ready(function() {
+
+        $('#listing_file').fileuploader({
+            addMore: true,
+            thumbnails: {
+                onItemShow: function(item) {
+                    // add sorter button to the item html
+                    item.html.find('.fileuploader-action-remove').before('<a class="fileuploader-action fileuploader-action-sort" title="Sort"><i></i></a>');
+                }
+            },
+            sorter: {
+                selectorExclude: null,
+                placeholder: null,
+                scrollContainer: window,
+                onSort: function(list, listEl, parentEl, newInputEl, inputEl) {
+                    // onSort callback
+                }
+            }
+        });
+
+    });
+
+</script>

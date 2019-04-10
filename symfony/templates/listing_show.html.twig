@@ -45,10 +45,9 @@
                             {% for listingCustomFieldValue in listing.listingCustomFieldValues %}
                                 <div class="mb-2 py-2 col-md-4">
                                     <div class="row">
-                                        <div class="col-sm-6"><strong>{{ listingCustomFieldValue.customField.name }}</strong></div>
-
-                                        <div class="col-sm-6">
-                                            {{ listingCustomFieldValue.value }}
+                                        <div class="col-sm-12">
+                                            <strong>{{ listingCustomFieldValue.customField.name }}:&nbsp;</strong>
+                                            <span>{{ listingCustomFieldValue.value }}</span>
                                         </div>
                                     </div>
                                 </div>

@@ -4,17 +4,36 @@ declare(strict_types=1);
 
 namespace App\Controller\Admin\Listing;
 
+use App\Entity\Listing;
+use App\Service\Admin\Listing\ListingConfirmListService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class ListingConfirmController extends AbstractController
 {
     /**
-     * @Route("/admin/red5/listing-confirm", name="app_admin_listing_confirm")
+     * @Route("/admin/red5/listing-confirm", name="app_admin_listing_confirm_list")
      */
-    public function listingConfirm(): Response
+    public function listingConfirmList(ListingConfirmListService $listingConfirmListService): Response
     {
-        return $this->render('admin/listing/listing_confirm.html.twig', []);
+        return $this->render('admin/listing/listing_confirm.html.twig', [
+            'listings' => $listingConfirmListService->getToConfirmListingList()
+        ]);
+    }
+
+    /**
+     * @Route("/admin/red5/listing-confirm/confirm/{id}", name="app_admin_listing_confirm", methods={"PATCH"})
+     */
+    public function confirm(Request $request, Listing $listing): Response
+    {
+        if ($this->isCsrfTokenValid('adminConfirm'.$listing->getId(), $request->request->get('_token'))) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $listing->setAdminConfirmed(true);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('app_admin_listing_confirm_list');
     }
 }

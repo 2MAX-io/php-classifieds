@@ -3,10 +3,6 @@
 <script src="{{ asset('asset/lib/fileuploader/jquery.fileuploader.min.js') }}"></script>
 
 <script type="text/javascript">
-    $.get('{{ path('app_listing_get_custom_fields', {"listingId": listing.id}) }}', function (data) {
-        $('.custom-fields-from-ajax').html(data);
-    });
-
     $(document).ready(function() {
 
         $('#listing_file').fileuploader({

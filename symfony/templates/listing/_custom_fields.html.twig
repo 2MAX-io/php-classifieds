@@ -1,0 +1,5 @@
+<script type="text/javascript">
+    $.get('{{ path('app_listing_get_custom_fields', {"listingId": listing.id}) }}', function (data) {
+        $(data).insertAfter('.formCustomFieldsHidden');
+    });
+</script>

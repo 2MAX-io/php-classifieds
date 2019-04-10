@@ -1,0 +1,8 @@
+{% use "bootstrap_4_layout.html.twig" %}
+
+{% block file_simple_widget -%}
+    <{{ element|default('div') }} class="file-simple">
+    {%- set type = type|default('file') -%}
+    {{- block('form_widget_simple') -}}
+    </{{ element|default('div') }}>
+{% endblock %}

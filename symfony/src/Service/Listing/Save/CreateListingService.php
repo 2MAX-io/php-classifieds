@@ -44,6 +44,8 @@ class CreateListingService
             $this->validUntilSetService->setValidUntil($listing, (int) $form->get('validityTimeDays')->getData());
         }
 
+        $listing->setAdminConfirmed(false);
+
         $listing->loadSearchText();
     }
 

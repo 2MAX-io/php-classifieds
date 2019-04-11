@@ -156,7 +156,7 @@ class ListingController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('app_listing_index');
+        return $this->redirect($request->headers->get('referer'));
     }
 
     /**
@@ -174,6 +174,6 @@ class ListingController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('app_listing_index');
+        return $this->redirect($request->headers->get('referer'));
     }
 }

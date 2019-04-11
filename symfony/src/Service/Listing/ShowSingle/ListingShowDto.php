@@ -18,7 +18,7 @@ class ListingShowDto
      */
     private $viewsCount;
 
-    public static function fromDoctrineResult(array $result): ?ListingShowDto
+    public static function fromDoctrineResult(?array $result): ?ListingShowDto
     {
         if (empty($result)) {
             return null;

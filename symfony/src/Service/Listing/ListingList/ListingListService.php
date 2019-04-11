@@ -124,6 +124,11 @@ class ListingListService
             $qb->setParameter(':query', rtrim($_GET['query'], '*') .'*');
         }
 
+        if (!empty($_GET['user'])) {
+            $qb->andWhere($qb->expr()->eq('listing.user', ':user'));
+            $qb->setParameter(':user', $_GET['user']);
+        }
+
         $this->listingPublicDisplayService->applyPublicDisplayConditions($qb);
 
         $qb->addOrderBy('listing.lastReactivationDate', 'DESC');

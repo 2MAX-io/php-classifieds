@@ -19,6 +19,7 @@ class ListingListController extends AbstractController
     /**
      * @Route("/listing/list", name="app_listing_list")
      * @Route("/last-added", name="app_last_added")
+     * @Route("/user-listings", name="app_user_listings")
      * @Route("/c-{categoryId}", name="app_category")
      */
     public function index(Request $request, RouterInterface $router, ListingListService $listingListService, CategoryListService $categoryListService, int $categoryId = null): Response
@@ -50,6 +51,7 @@ class ListingListController extends AbstractController
                 'categoryBreadcrumbs' => $categoryListService->getBreadcrumbs($category),
                 'queryParameters' => [
                     'query' => $request->query->get('query'),
+                    'user' => $request->query->get('user'),
                     'form_custom_field' => $request->query->get('form_custom_field'),
                 ],
             ]

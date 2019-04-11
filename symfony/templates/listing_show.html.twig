@@ -133,6 +133,12 @@
                             </div>
                         </div>
                         {% endif %}
+
+                        <div>
+                            <a href="{{ path('app_user_listings', {"user": listing.user.id}) }}">
+                                {{ 'trans.User other listings' | trans }}
+                            </a>
+                        </div>
                     </div>
                 </div>
 

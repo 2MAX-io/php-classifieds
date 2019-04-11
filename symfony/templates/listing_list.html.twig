@@ -43,11 +43,25 @@
                                         <div class="input-group-text"><i class="fas fa-search"></i></div>
                                     </div>
 
-                                    <form method="get" action="{{ path('app_listing_list') }}">
-                                        <input type="text" class="form-control" name="query" placeholder="{{ 'trans.keyword'|trans }}" value="{{ app.request.get('query') | default }}">
-                                    </form>
+                                    <input type="text" class="form-control" name="query" placeholder="{{ 'trans.keyword'|trans }}" value="{{ app.request.get('query') | default }}">
                                 </div>
                             </div>
+
+                            {% if app.request.get('user') is not empty %}
+                                <div class="mb-3" id="li-field-7">
+                                        <div class="custom-control custom-checkbox">
+                                            <input
+                                                    name="user"
+                                                    value="{{ app.request.get('user') }}"
+                                                    checked
+                                                    type="checkbox"
+                                                    id="option_user"
+                                                    class="custom-control-input"
+                                            >
+                                            <label class="custom-control-label" for="option_user">{{ 'trans.User Listings' | trans }}</label>
+                                        </div>
+                                </div>
+                            {% endif %}
 
                             {# @var customField \App\Entity\CustomField #}
                             {% for customField in customFieldList %}
@@ -108,10 +122,9 @@
                                 </div>
                             </div>
 
-                            <!-- submit -->
-                            <button class="btn btn-primary btn-sm">Submit
-
-                            </button></form></div>
+                            <button class="btn btn-primary btn-sm">{{ 'trans.Filter' | trans }}</button>
+                        </form>
+                    </div>
                 </div>
             </div>
 

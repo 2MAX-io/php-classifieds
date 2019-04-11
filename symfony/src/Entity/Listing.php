@@ -68,7 +68,6 @@ class Listing
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\ListingFile", mappedBy="listing")
-     * @ORM\OrderBy({"sort" = "ASC"})
      */
     private $listingFiles;
 

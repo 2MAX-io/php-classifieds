@@ -54,7 +54,7 @@
     </div>
 
     <!-- Recommended Listings -->
-    {% if highlightedListings is not empty %}
+    {% if recommendedListings is not empty %}
         <div class="container mb-2">
             <div class="d-flex flex-row">
                 <div class="flex-grow-1"><h2 class="">{{ 'trans.Recommended Listings' | trans }}</h2></div>
@@ -63,7 +63,7 @@
 
         <div class="container mb-5">
             <div class="card-columns">
-                {% for listing in highlightedListings %}
+                {% for listing in recommendedListings %}
                     <div class="card card-featured mb-4">
                         <div class="row p-2">
                             <div class="col-sm-6 text-center">

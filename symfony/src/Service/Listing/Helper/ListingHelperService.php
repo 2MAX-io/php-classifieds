@@ -46,7 +46,7 @@ class ListingHelperService
     /**
      * @return Listing[]
      */
-    public function getHighlightedListings(int $count): array
+    public function getRecommendedListings(int $count): array
     {
         $qb = $this->em->getRepository(Listing::class)->createQueryBuilder('listing');
         $qb->addSelect('listingFile');

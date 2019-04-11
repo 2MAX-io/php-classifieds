@@ -16,10 +16,18 @@ class ListingShowController extends AbstractController
      */
     public function show(int $id, ListingShowSingleService $listingShowSingleService): Response
     {
+        $listingShowDto = $listingShowSingleService->getSingle($id);
+        if (!$listingShowDto) {
+            throw $this->createNotFoundException();
+        }
+
+        $listingShowSingleService->saveView($listingShowDto->getListing());
+
         return $this->render(
             'listing_show.html.twig',
             [
-                'listing' => $listingShowSingleService->getSingle($id),
+                'listingShowDto' => $listingShowDto,
+                'listing' => $listingShowDto->getListing(),
             ]
         );
     }

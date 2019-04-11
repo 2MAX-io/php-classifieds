@@ -41,10 +41,15 @@
                             </td>
                             <td>{{ listing.price }}</td>
                             <td>
-                                <a href="{{ path('listing_edit', {'id': listing.id}) }}" class="btn btn-default">{{ 'trans.Edit' | trans }}</a>
+                                <a href="{{ path('listing_edit', {'id': listing.id}) }}" class="btn btn-dark">{{ 'trans.Edit' | trans }}</a>
 
                                 {% if listing.adminConfirmed %}
-                                    <a href="{{ path('app_user_validity_extend', {'id': listing.id}) }}">{{ 'trans.Extend' | trans }}</a>
+                                    <a
+                                        href="{{ path('app_user_validity_extend', {'id': listing.id}) }}"
+                                        class="btn btn-outline-success"
+                                    >
+                                        {{ 'trans.Extend' | trans }}
+                                    </a>
                                 {% endif %}
 
                                 {% if listing.userDeactivated %}

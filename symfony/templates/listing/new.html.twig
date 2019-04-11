@@ -14,7 +14,9 @@
 
             {{ include('listing/_form.html.twig') }}
 
-            <a href="{{ path('app_listing_index') }}">back to list</a>
+            <div class="float-md-right">
+                <a href="{{ path('app_listing_index') }}">{{ 'trans.back to list' | trans }}</a>
+            </div>
         </div>
     </div>
 </div>

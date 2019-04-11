@@ -3,5 +3,24 @@
 {% block title %}Listing index{% endblock %}
 
 {% block body %}
-    category view all
+    <div class="container mt-5">
+        <h2 class="">{{ 'trans.All Categories' | trans }}</h2>
+    </div>
+
+    {% for category in categories %}
+        <div class="container mt-5">
+            <div class="card mb-3">
+                <h5 class="card-header"><a href="{{ path('app_category', {'categoryId': category.id}) }}" class="text-dark">{{ category.name }}</a></h5>
+                <div class="card-body">
+                    <div class="row">
+                        {% for categoryChild in category.children %}
+                            <div class="col-sm-12 col-md-6 col-lg-3">
+                                <a href="{{ path('app_category', {'categoryId': categoryChild.id}) }}">{{ categoryChild.name }}</a>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
 {% endblock %}

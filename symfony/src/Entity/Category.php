@@ -44,9 +44,14 @@ class Category
     private $lvl;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Category")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="children")
      */
     private $parent;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Category", mappedBy="parent")
+     */
+    private $children;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Listing", mappedBy="category")
@@ -67,6 +72,7 @@ class Category
     {
         $this->listings = new ArrayCollection();
         $this->customFields = new ArrayCollection();
+        $this->children = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -213,6 +219,37 @@ class Category
     public function setPicture(string $picture): self
     {
         $this->picture = $picture;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Category[]
+     */
+    public function getChildren(): Collection
+    {
+        return $this->children;
+    }
+
+    public function addChildren(Category $children): self
+    {
+        if (!$this->children->contains($children)) {
+            $this->children[] = $children;
+            $children->setParent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeChildren(Category $children): self
+    {
+        if ($this->children->contains($children)) {
+            $this->children->removeElement($children);
+            // set the owning side to null (unless already changed)
+            if ($children->getParent() === $this) {
+                $children->setParent(null);
+            }
+        }
 
         return $this;
     }

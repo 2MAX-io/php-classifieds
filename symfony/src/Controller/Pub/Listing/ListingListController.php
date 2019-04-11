@@ -18,6 +18,7 @@ class ListingListController extends AbstractController
 {
     /**
      * @Route("/listing/list", name="app_listing_list")
+     * @Route("/last-added", name="app_last_added")
      * @Route("/c-{categoryId}", name="app_category")
      */
     public function index(Request $request, RouterInterface $router, ListingListService $listingListService, CategoryListService $categoryListService, int $categoryId = null): Response

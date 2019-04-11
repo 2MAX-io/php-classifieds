@@ -126,6 +126,8 @@ class ListingListService
 
         $this->listingPublicDisplayService->applyPublicDisplayConditions($qb);
 
+        $qb->addOrderBy('listing.lastReactivationDate', 'DESC');
+
         $adapter = new DoctrineORMAdapter($qb);
         $pager = new Pagerfanta($adapter);
         $pager->setMaxPerPage(10);

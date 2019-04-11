@@ -11,7 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class LastAddedController extends AbstractController
 {
     /**
-     * @Route("/last-added", name="app_last_added")
+     * remove if not used, not used from 2019-04-11
      */
     public function index(): Response
     {

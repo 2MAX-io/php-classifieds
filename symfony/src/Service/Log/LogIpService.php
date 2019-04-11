@@ -6,6 +6,7 @@ namespace App\Service\Log;
 
 use App\Entity\Listing;
 use App\Entity\Log;
+use App\Security\CurrentUserService;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -16,9 +17,15 @@ class LogIpService
      */
     private $em;
 
-    public function __construct(EntityManagerInterface $em)
+    /**
+     * @var CurrentUserService
+     */
+    private $currentUserService;
+
+    public function __construct(EntityManagerInterface $em, CurrentUserService $currentUserService)
     {
         $this->em = $em;
+        $this->currentUserService = $currentUserService;
     }
 
     public function saveLog(Listing $listing)
@@ -28,6 +35,13 @@ class LogIpService
         $log->setDestinationIp($_SERVER['SERVER_ADDR']);
         $log->setDatetime(\DateTime::createFromFormat('U', (string) $_SERVER['REQUEST_TIME']));
         $log->setListingId($listing->getId());
+
+        $userEmail = '';
+        $user = $this->currentUserService->getUser();
+        if ($user) {
+            $log->setUserId($user->getId());
+            $userEmail = $user->getEmail();
+        }
 
         $requestTimeString = DateTime::createFromFormat('U.u', (string) $_SERVER['REQUEST_TIME_FLOAT'])->format('Y-m-d H:i:s.u P');
         $currentServerTime = DateTime::createFromFormat('U.u', (string) microtime(true))->format('Y-m-d H:i:s.u P');
@@ -39,6 +53,15 @@ Connection:
 Request time: {$requestTimeString}
 Unix request time float: {$_SERVER['REQUEST_TIME_FLOAT']}
 Current server time: {$currentServerTime}
+
+Listing details:
+    Title: {$listing->getTitle()}
+    Description: {$listing->getDescription()}
+    Phone: {$listing->getPhone()}
+    Price: {$listing->getPrice()}
+    City: {$listing->getCity()}
+    Email used in listing: {$listing->getEmail()}
+    Registered user email: {$userEmail}
 
 
 END;

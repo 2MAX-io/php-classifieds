@@ -28,6 +28,12 @@ class ListingCustomFieldValue
     private $customField;
 
     /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\CustomFieldOption")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $customFieldOption;
+
+    /**
      * @ORM\Column(type="string", length=150)
      */
     private $value;
@@ -69,6 +75,18 @@ class ListingCustomFieldValue
     public function setCustomField(?CustomField $customField): self
     {
         $this->customField = $customField;
+
+        return $this;
+    }
+
+    public function getCustomFieldOption(): ?CustomFieldOption
+    {
+        return $this->customFieldOption;
+    }
+
+    public function setCustomFieldOption(?CustomFieldOption $customFieldOption): self
+    {
+        $this->customFieldOption = $customFieldOption;
 
         return $this;
     }

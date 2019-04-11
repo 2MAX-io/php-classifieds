@@ -62,6 +62,8 @@ class Listing
     private $city;
 
     /**
+     * @var ListingCustomFieldValue[]
+     *
      * @ORM\OneToMany(targetEntity="App\Entity\ListingCustomFieldValue", mappedBy="listing")
      */
     private $listingCustomFieldValues;

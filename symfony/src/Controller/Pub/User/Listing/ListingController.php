@@ -68,10 +68,11 @@ class ListingController extends AbstractController
 
             $createListingService->setFormDependent($listing, $form);
 
-            $logIpService->saveLog($listing);
-
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($listing);
+            $entityManager->flush();
+
+            $logIpService->saveLog($listing);
             $entityManager->flush();
 
             return $this->redirectToRoute('listing_edit', ['id' => $listing->getId()]);

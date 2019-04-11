@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Service\Listing\CustomField;
 
 use App\Entity\CustomField;
+use App\Entity\CustomFieldOption;
 use App\Entity\Listing;
 use App\Entity\ListingCustomFieldValue;
 use App\Security\CurrentUserService;
@@ -60,8 +61,16 @@ class CustomFieldsForListingFormService
         }
 
         foreach ($customFieldValueList as $customFieldId => $customFieldValue) {
+            $option = null;
+            if (strpos($customFieldValue, '__form_custom_field_option_id_') === 0) {
+                $optionId = (int) (str_replace('__form_custom_field_option_id_', '', $customFieldValue));
+                $option = $this->em->getRepository(CustomFieldOption::class)->find((int) $optionId);
+                $customFieldValue = $option->getValue();
+            }
+
             $listingCustomFieldValue = new ListingCustomFieldValue();
             $listingCustomFieldValue->setValue($customFieldValue);
+            $listingCustomFieldValue->setCustomFieldOption($option);
             $listingCustomFieldValue->setCustomField($this->em->getReference(CustomField::class, $customFieldId));
             $this->em->persist($listingCustomFieldValue);
             $listing->addListingCustomFieldValue($listingCustomFieldValue);

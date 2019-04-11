@@ -44,11 +44,16 @@
 
                         <div class="row">
                             {% for listingCustomFieldValue in listing.listingCustomFieldValues %}
+                                {# @var listingCustomFieldValue \App\Entity\ListingCustomFieldValue #}
                                 <div class="mb-2 py-2 col-md-4">
                                     <div class="row">
                                         <div class="col-sm-12">
                                             <strong>{{ listingCustomFieldValue.customField.name }}:&nbsp;</strong>
-                                            <span>{{ listingCustomFieldValue.value }}</span>
+                                            {% if listingCustomFieldValue.customFieldOption is empty %}
+                                                <span>{{ listingCustomFieldValue.value }}</span>
+                                            {% else %}
+                                                <span>{{ listingCustomFieldValue.customFieldOption.name }}</span>
+                                            {% endif %}
                                         </div>
                                     </div>
                                 </div>

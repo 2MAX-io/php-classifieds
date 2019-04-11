@@ -29,12 +29,31 @@ class ListingHelperService
     /**
      * @return Listing[]
      */
-    public function getLatestListingList(int $count): array
+    public function getLatestListings(int $count): array
     {
         $qb = $this->em->getRepository(Listing::class)->createQueryBuilder('listing');
         $qb->addSelect('listingFile');
         $qb->leftJoin('listing.listingFiles', 'listingFile');
         $qb->orderBy('listing.firstCreatedDate', 'DESC');
+
+        $this->listingPublicDisplayService->applyPublicDisplayConditions($qb);
+
+        $qb->setMaxResults($count);
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * @return Listing[]
+     */
+    public function getHighlightedListings(int $count): array
+    {
+        $qb = $this->em->getRepository(Listing::class)->createQueryBuilder('listing');
+        $qb->addSelect('listingFile');
+        $qb->leftJoin('listing.listingFiles', 'listingFile');
+        $qb->andWhere($qb->expr()->eq('listing.premium', 1));
+
+        $qb->orderBy('listing.lastReactivationDate', 'DESC');
 
         $this->listingPublicDisplayService->applyPublicDisplayConditions($qb);
 

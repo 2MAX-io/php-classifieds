@@ -19,7 +19,8 @@ class IndexController extends AbstractController
     {
         return $this->render('index.html.twig', [
             'categoryList' => $categoryListService->getCategoryList(),
-            'latestListingList' => $listingHelperService->getLatestListingList(6),
+            'latestListings' => $listingHelperService->getLatestListings(6),
+            'highlightedListings' => $listingHelperService->getHighlightedListings(6),
         ]);
     }
 }

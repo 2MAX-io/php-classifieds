@@ -39,8 +39,8 @@ class ListingListController extends AbstractController
         return $this->render(
             'listing_list.html.twig',
             [
-                'pagination' => $view->render($listingListDto->getPager(), function ($page) use ($router, $categoryId) {
-                    return $router->generate('app_category', array_merge(
+                'pagination' => $view->render($listingListDto->getPager(), function ($page) use ($router, $categoryId, $request) {
+                    return $router->generate($request->get('_route'), array_merge(
                         $_GET,
                         ['categoryId' => $categoryId, 'page' => $page]
                     ));

@@ -165,5 +165,18 @@
 {% endblock body %}
 
 {% block js %}
+    <link rel="stylesheet" href="{{ asset('templates/js/lightbox-master/dist/ekko-lightbox.css') }}">
+    <script src="{{ asset('templates/js/lightbox-master/dist/ekko-lightbox.min.js') }}"></script>
+
+    <script>
+        $(document).ready(function(){
+            // lightbox
+            $(document).delegate('*[data-toggle="lightbox"]', 'click', function(event) {
+                event.preventDefault();
+                $(this).ekkoLightbox();
+            });
+        });
+    </script>
+
 {% endblock %}
 

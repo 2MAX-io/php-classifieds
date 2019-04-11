@@ -22,7 +22,7 @@
     <link rel="stylesheet" href="{{ asset('asset/style.css') }}">
 
     <!-- javascript -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="{{ asset('asset/jquery.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0-rc.2/js/select2.min.js"></script>
     <script src="/assets/js/head.js"></script>
 
@@ -36,72 +36,6 @@
             }
         });
     </script>
-
-    <!-- Maps -->
-
-{#    <style type="text/css"> .body-content {margin:0px;}#}
-{#        .jumbotron {#}
-{#            background-image: url('/assets/imgs/jumbotron.jpg');#}
-{#            background-position: center top;#}
-{#            background-repeat: no-repeat;#}
-{#            background-size: cover;#}
-{#        }#}
-
-{#        .row-fluid h1, .row-fluid h2, h1, h3 {#}
-{#            color: #fff;#}
-{#            text-shadow: -1px 1px 3px rgba(0,0,0,0.2), -2px 2px 6px rgba(0,0,0,0.3);#}
-{#        }#}
-
-{#        .card-title {#}
-{#            text-shadow: -1px 1px 3px rgba(0,0,0,0.2), -2px 2px 6px rgba(0,0,0,0.3);#}
-{#        }#}
-
-{#        @media (min-width: 34em) {#}
-{#            .card-columns {#}
-{#                -webkit-column-count: 2;#}
-{#                -moz-column-count: 2;#}
-{#                column-count: 2;#}
-{#            }#}
-{#        }#}
-
-{#        @media (min-width: 62em) {#}
-{#            .card-columns {#}
-{#                -webkit-column-count: 3;#}
-{#                -moz-column-count: 3;#}
-{#                column-count: 3;#}
-{#            }#}
-{#        }#}
-
-{#        /* Make select2 styles look like Bootstrap */#}
-{#        .select2-container--default .select2-selection--single {#}
-{#            background-clip: padding-box;#}
-{#            background-color: #fff;#}
-{#            border-radius: .25rem;#}
-{#            border: 1px solid #ced4da;#}
-{#            color: #495057;#}
-{#            display: block;#}
-{#            font-size: 1.25rem;#}
-{#            height: calc(2.875rem + 2px);#}
-{#            line-height: 1.5;#}
-{#            padding: .375rem .75rem;#}
-{#            padding: .5rem 1rem;#}
-{#            transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;#}
-{#            width: 100%;#}
-{#        }#}
-
-{#        .select2-container--default .select2-selection--single .select2-selection__arrow {#}
-{#            height: calc(2.875rem + 2px);#}
-{#            position: absolute;#}
-{#            top: 1px;#}
-{#            right: 1px;#}
-{#            width: 20px;#}
-{#        }#}
-
-{#        .select2-container--default .select2-selection--single .select2-selection__rendered {#}
-{#            color: grey;#}
-{#            line-height: 28px;#}
-{#        }#}
-{#    </style>#}
 </head>
 <body class="tpl-listing">
 <!-- Top Header -->
@@ -216,12 +150,10 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,400i,700,700i">
 
 {% block javascripts %}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+{#    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>#}
     <script src="{{ asset('asset/bootstrap.bundle.js') }}"></script>
-    <script src="/templates/js/raty/jquery.raty.js"></script>
     <script src="/assets/js/jquery-autocomplete/jquery.autocomplete.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/i18n/pl.js"></script>
-    <script src="{{ asset('asset/jquery.js') }}"></script>
 {% endblock %}
 {% block js %}{% endblock %}
 

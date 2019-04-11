@@ -58,12 +58,13 @@ class ListingHelperService
         $qbCount->select($qbCount->expr()->count('listing.id'));
         $count = (int) $qbCount->getQuery()->getSingleScalarResult();
 
-        $qb->setFirstResult(random_int(0, max($count-$maxResultsCount, 0)));
+        $qb->setFirstResult(random_int(0, max($count-($maxResultsCount*5), 0)));
         $qb->setMaxResults($maxResultsCount);
 
-        $result = $qb->getQuery()->getResult();
-        shuffle($result);
+        $results = $qb->getQuery()->getResult();
+        shuffle($results);
+        array_slice($results, 0, $maxResultsCount);
 
-        return $result;
+        return $results;
     }
 }

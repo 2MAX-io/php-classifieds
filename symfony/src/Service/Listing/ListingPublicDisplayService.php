@@ -11,8 +11,8 @@ class ListingPublicDisplayService
 {
     public function applyPublicDisplayConditions(QueryBuilder $qb)
     {
-        $qb->andWhere($qb->expr()->gte('listing.validUntilDate', ':validUntil'));
-        $qb->setParameter(':validUntil', date('Y-m-d H:i:59'));
+        $qb->andWhere($qb->expr()->gte('listing.validUntilDate', ':todayDayStart'));
+        $qb->setParameter(':todayDayStart', date('Y-m-d 00:00:00'));
 
         $qb->andWhere('listing.adminConfirmed = 1');
         $qb->andWhere('listing.userRemoved = 0');

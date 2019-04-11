@@ -3,7 +3,8 @@
 {% block body %}
 
     <div class="container mt-3 mb-3">
-        <a href="{{ path('app_index') }}">{{ 'trans.Home page' | trans }}</a>
+        <a href="//www.jaslo4u.pl">Jaslo4u.pl</a>
+        > <a href="{{ path('app_index') }}">{{ 'trans.Classifieds' | trans }}</a>
 
         {% for category in categoryBreadcrumbs %}
             {% if loop.last %}

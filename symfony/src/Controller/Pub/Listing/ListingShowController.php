@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller\Pub\Listing;
 
+use App\Service\Category\CategoryListService;
 use App\Service\Listing\ShowSingle\ListingShowSingleService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,7 +15,7 @@ class ListingShowController extends AbstractController
     /**
      * @Route("/listing/show/{id}", name="app_listing_show")
      */
-    public function show(int $id, ListingShowSingleService $listingShowSingleService): Response
+    public function show(int $id, ListingShowSingleService $listingShowSingleService, CategoryListService $categoryListService): Response
     {
         $listingShowDto = $listingShowSingleService->getSingle($id);
         if (!$listingShowDto) {
@@ -28,6 +29,7 @@ class ListingShowController extends AbstractController
             [
                 'listingShowDto' => $listingShowDto,
                 'listing' => $listingShowDto->getListing(),
+                'categoryBreadcrumbs' => $categoryListService->getBreadcrumbs($listingShowDto->getListing()->getCategory()),
             ]
         );
     }

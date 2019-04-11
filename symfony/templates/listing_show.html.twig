@@ -86,7 +86,7 @@
 
                 {% for listingFile in listing.listingFiles %}
                     <a href="{{ asset(listingFile.path) }}" data-toggle="lightbox" data-gallery="multiimages" data-title="{{ listing.title }}">
-                        <div class="dummy container-img rounded" style="background-image:url('{{ asset(listingFile.path) }}');"></div>
+                        <img src="{{ asset(listingFile.path) }}" alt="{{ listing.title }}" />
                     </a>
                 {% endfor %}
 

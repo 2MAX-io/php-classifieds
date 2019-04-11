@@ -24,7 +24,7 @@
   "license": "MIT",
   "scripts": {
     "build": "NODE_ENV=production webpack --config webpack.config.js -p",
-    "start": "NODE_ENV=development webpack-serve --open --no-clipboard --content ./ --config webpack.config.js --hot --colors --inline"
+    "start": "NODE_ENV=development webpack-serve --open --no-clipboard --content  --config webpack.config.js --hot --colors --inline"
   },
   "devDependencies": {
     "autoprefixer": "^6.4.0",

@@ -2,29 +2,20 @@
 <!--[if IE 9]><html class="lt-ie10" lang="pl"> <![endif]-->
 <html lang="pl">
 <head>
-    <title>{% block title %}Classifieds{% endblock %}</title>
-    <meta name="description" content="Classifieds is a nationwide Classifieds where users can search for the items to buy and sell near them and write reviews.">
-    <link rel="canonical" href="">
     <meta charset="utf-8">
+    <title>{% block title %}Classifieds{% endblock %}</title>
+    <meta name="description" content="Description">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- favicon -->
-    <link rel="apple-touch-icon-precomposed" href="/assets/favicon/favicon-152.png">
-    <link rel="icon" type="image/png" href="/assets/favicon/favicon.png">
     <meta name="msapplication-TileColor" content="#ffffff">
-    <meta name="msapplication-TileImage" content="/assets/favicon/favicon-144.png">
 
-    <!-- css -->
-    <link rel="stylesheet" href="{{ asset('asset/bootstrap.css') }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0-rc.2/css/select2.min.css">
-    <link rel="stylesheet" href="/templates/css/styles.css?5ca8aff0020c8">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
-    <link rel="stylesheet" href="{{ asset('asset/style.css') }}">
+    {% block stylesheets %}
+        <link rel="stylesheet" href="{{ asset('asset/bootstrap.css') }}">
+        <link rel="stylesheet" href="{{ asset('asset/style.css') }}">
+    {% endblock %}
+    {% block css %}{% endblock %}
 
-    <!-- javascript -->
     <script src="{{ asset('asset/jquery.js') }}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0-rc.2/js/select2.min.js"></script>
-    <script src="/assets/js/head.js"></script>
 
     <!-- CSRF -->
     <script>
@@ -44,7 +35,7 @@
         <div class="row vmargin">
             <div id="website_logo" class="col-lg-3 tpad sm-text-center">
                 <a href="{{ path('app_index') }}" title={{ 'trans.Classifieds'|trans }}>
-                    <img src="{{ asset('assets/imgs/logo.png') }}" alt="Classifieds Plus" width="240">
+                    <img src="{{ asset('asset/img/logo.png') }}" alt="Classifieds Plus" width="240">
                 </a>
             </div>
 
@@ -150,28 +141,9 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,400i,700,700i">
 
 {% block javascripts %}
-{#    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>#}
     <script src="{{ asset('asset/bootstrap.bundle.js') }}"></script>
-    <script src="/assets/js/jquery-autocomplete/jquery.autocomplete.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/i18n/pl.js"></script>
 {% endblock %}
 {% block js %}{% endblock %}
 
 </body>
 </html>
-
-{#<!DOCTYPE html>#}
-{#<html>#}
-{#<head>#}
-{#    <meta charset="UTF-8">#}
-{#    <title>{% block title %}Welcome!{% endblock %}</title>#}
-{#    {% block stylesheets %}{% endblock %}#}
-{#</head>#}
-{#<body>#}
-{#{% block body %}{% endblock %}#}
-{#{% block javascripts %}#}
-{#    <script src="{{ asset('asset/jquery.js') }}"></script>#}
-{#{% endblock %}#}
-{#{% block js %}{% endblock %}#}
-{#</body>#}
-{#</html>#}

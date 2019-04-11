@@ -41,7 +41,7 @@
             <div class="col-sm-6 col-lg-3 text-center mb-4">
                 <div class="card bg-light text-white">
                     <a href="{{ path('app_category', {"categoryId": category.id}) }}" title="{{ category.name }}" class="text-white">
-                        <img class="card-img" src="{{ asset(category.picture | default('assets/imgs/blank.png')) }}" alt="">
+                        <img class="card-img" src="{{ asset(category.picture | default('asset/img/blank.png')) }}" alt="">
                         <div class="card-img-overlay">
                             <h5 class="card-title down">{{ category.name }}</h5>
                             <p class="card-text d-none">View Category</p>
@@ -68,7 +68,7 @@
                         <div class="row p-2">
                             <div class="col-sm-6 text-center">
                                 <a href="{{ path('app_listing_show', {'id': listing.id}) }}" title="{{ listing.title }}">
-                                    <img class="img-thumbnail" alt="{{ listing.title }}" src="{{ asset(listing.listingFiles.first.path | default('assets/imgs/blank.png')) }}">
+                                    <img class="img-thumbnail" alt="{{ listing.title }}" src="{{ asset(listing.listingFiles.first.path | default('asset/img/blank.png')) }}">
                                 </a>
                             </div>
 
@@ -100,7 +100,7 @@
                         <div class="row p-2">
                             <div class="col-sm-6 text-center">
                                 <a href="{{ path('app_listing_show', {'id': listing.id}) }}" title="{{ listing.title }}">
-                                    <img class="img-thumbnail" alt="{{ listing.title }}" src="{{ asset(listing.listingFiles.first.path | default('assets/imgs/blank.png')) }}">
+                                    <img class="img-thumbnail" alt="{{ listing.title }}" src="{{ asset(listing.listingFiles.first.path | default('asset/img/blank.png')) }}">
                                 </a>
                             </div>
 

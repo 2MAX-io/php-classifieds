@@ -22,7 +22,7 @@
                     </div>
                 </div>
 
-                <img class="rounded" alt="{{ listing.title }}" src="{{ asset(listing.listingFiles.first.path | default('assets/imgs/blank.png')) }}">
+                <img class="rounded" alt="{{ listing.title }}" src="{{ asset(listing.listingFiles.first.path | default('asset/img/blank.png')) }}">
 
                 <!-- Tabs nav -->
                 <ul class="nav nav-tabs flex-column flex-sm-row" id="myTab" role="tablist">
@@ -168,8 +168,8 @@
 {% endblock body %}
 
 {% block js %}
-    <link rel="stylesheet" href="{{ asset('templates/js/lightbox-master/dist/ekko-lightbox.css') }}">
-    <script src="{{ asset('templates/js/lightbox-master/dist/ekko-lightbox.min.js') }}"></script>
+    <link rel="stylesheet" href="{{ asset('asset/lib/lightbox-master/dist/ekko-lightbox.css') }}">
+    <script src="{{ asset('asset/lib/lightbox-master/dist/ekko-lightbox.min.js') }}"></script>
 
     <script>
         $(document).ready(function(){

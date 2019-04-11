@@ -28,3 +28,7 @@ services:
     # please note that last definitions always *replace* previous ones
     App\Service\:
         resource: '../src/Service/*'
+
+    App\Security\LoginListener:
+        tags:
+            - { name: 'kernel.event_listener', event: 'security.interactive_login' }

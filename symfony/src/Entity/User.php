@@ -51,6 +51,11 @@ class User implements UserInterface, RoleInterface
      */
     private $firstCreatedDate;
 
+    /**
+     * @ORM\Column(type="datetimetz", nullable=true)
+     */
+    private $lastLogin;
+
     public function __construct()
     {
         $this->listings = new ArrayCollection();
@@ -183,6 +188,18 @@ class User implements UserInterface, RoleInterface
     public function setFirstCreatedDate(\DateTimeInterface $firstCreatedDate): self
     {
         $this->firstCreatedDate = $firstCreatedDate;
+
+        return $this;
+    }
+
+    public function getLastLogin(): ?\DateTimeInterface
+    {
+        return $this->lastLogin;
+    }
+
+    public function setLastLogin(?\DateTimeInterface $lastLogin): self
+    {
+        $this->lastLogin = $lastLogin;
 
         return $this;
     }

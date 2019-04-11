@@ -46,19 +46,24 @@ class ListingHelperService
     /**
      * @return Listing[]
      */
-    public function getRecommendedListings(int $count): array
+    public function getRecommendedListings(int $maxResultsCount): array
     {
         $qb = $this->em->getRepository(Listing::class)->createQueryBuilder('listing');
         $qb->addSelect('listingFile');
         $qb->leftJoin('listing.listingFiles', 'listingFile');
         $qb->andWhere($qb->expr()->eq('listing.premium', 1));
-
-        $qb->orderBy('listing.lastReactivationDate', 'DESC');
-
         $this->listingPublicDisplayService->applyPublicDisplayConditions($qb);
 
-        $qb->setMaxResults($count);
+        $qbCount = clone $qb;
+        $qbCount->select($qbCount->expr()->count('listing.id'));
+        $count = (int) $qbCount->getQuery()->getSingleScalarResult();
 
-        return $qb->getQuery()->getResult();
+        $qb->setFirstResult(random_int(0, max($count-$maxResultsCount, 0)));
+        $qb->setMaxResults($maxResultsCount);
+
+        $result = $qb->getQuery()->getResult();
+        shuffle($result);
+
+        return $result;
     }
 }

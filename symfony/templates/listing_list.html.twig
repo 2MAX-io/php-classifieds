@@ -1,5 +1,7 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}{{ pageTitle }}{% endblock %}
+
 {% block body %}
 
     <div class="container mt-3 mb-3">
@@ -13,6 +15,10 @@
                 &gt; <a href="{{ path('app_category', {"categoryId": category.id}) }}">{{ category.name }}</a>
             {% endif %}
         {% endfor %}
+
+        {% if breadcrumbLast is not empty %}
+            &gt; {{ breadcrumbLast }}
+        {% endif %}
     </div>
 
     <div class="container mt-5">

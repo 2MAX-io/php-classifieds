@@ -13,17 +13,33 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\RouterInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ListingListController extends AbstractController
 {
     /**
+     * @var TranslatorInterface
+     */
+    private $trans;
+
+    public function __construct(TranslatorInterface $trans)
+    {
+        $this->trans = $trans;
+    }
+
+    /**
      * @Route("/listing/list", name="app_listing_list")
      * @Route("/last-added", name="app_last_added")
-     * @Route("/user-listings", name="app_user_listings")
+     * @Route("/listings-of-user", name="app_user_listings")
      * @Route("/c-{categoryId}", name="app_category")
      */
-    public function index(Request $request, RouterInterface $router, ListingListService $listingListService, CategoryListService $categoryListService, int $categoryId = null): Response
-    {
+    public function index(
+        Request $request,
+        RouterInterface $router,
+        ListingListService $listingListService,
+        CategoryListService $categoryListService,
+        int $categoryId = null
+    ): Response {
         $view = new TwitterBootstrap4View();
         $page = (int) $request->get('page', 1);
         $category = null;
@@ -55,7 +71,25 @@ class ListingListController extends AbstractController
                     'user' => $request->query->get('user'),
                     'form_custom_field' => $request->query->get('form_custom_field'),
                 ],
+                'pageTitle' => $this->getPageTitleForRoute($request->get('_route')),
+                'breadcrumbLast' => $this->getPageTitleForRoute($request->get('_route')),
             ]
         );
+    }
+
+    private function getPageTitleForRoute(string $route): string
+    {
+        $pageTitle = $this->trans->trans('trans.Listings');
+        $map = [
+            'app_listing_list' => $this->trans->trans('trans.Search Engine'),
+            'app_last_added' => $this->trans->trans('trans.Last added'),
+            'app_user_listings' => $this->trans->trans('trans.Listings of user'),
+        ];
+
+        if (isset($map[$route])) {
+            $pageTitle = $map[$route];
+        }
+
+        return $pageTitle;
     }
 }

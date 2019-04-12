@@ -9,7 +9,7 @@ use App\Security\LoginUserProgrammaticallyService;
 use App\Service\Listing\CustomField\CustomFieldsForListingFormService;
 use App\Service\Listing\Save\CreateListingService;
 use App\Service\Listing\Save\ListingFileUploadService;
-use App\Service\Log\LogIpService;
+use App\Service\Log\PoliceLogIpService;
 use App\Service\User\Create\UserCreateService;
 use App\Service\User\Listing\UserListingListService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -41,7 +41,7 @@ class ListingController extends AbstractController
         LoginUserProgrammaticallyService $loginUserProgrammaticallyService,
         CreateListingService $createListingService,
         CustomFieldsForListingFormService $customFieldsForListingFormService,
-        LogIpService $logIpService
+        PoliceLogIpService $logIpService
     ): Response {
         $listing = $createListingService->create();
         $form = $this->createForm(ListingType::class, $listing);
@@ -94,7 +94,7 @@ class ListingController extends AbstractController
         ListingFileUploadService $listingFileUploadService,
         CurrentUserService $currentUserService,
         CreateListingService $createListingService,
-        LogIpService $logIpService
+        PoliceLogIpService $logIpService
     ): Response {
         if ($currentUserService->getUser() !== $listing->getUser()) {
             throw new UnauthorizedHttpException('user of listing do not match current user');

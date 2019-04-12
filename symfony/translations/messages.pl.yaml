@@ -81,3 +81,5 @@ trans:
   Listing has been rejected, reason: 'Ogłoszenie zostało odrzucone, powód'
   Admin: 'Admin'
   Police log: 'Log dla Policji'
+  Copy to clipboard: 'Skopiuj do schowka'
+  Police log for listing: 'Log dla Policji dla ogłoszenia'

@@ -10,7 +10,7 @@ use App\Security\CurrentUserService;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 
-class LogIpService
+class PoliceLogIpService
 {
     /**
      * @var EntityManagerInterface
@@ -26,6 +26,33 @@ class LogIpService
     {
         $this->em = $em;
         $this->currentUserService = $currentUserService;
+    }
+
+    public function prepareOutput(Listing $listing): string
+    {
+        $qb = $this->em->getRepository(Log::class)->createQueryBuilder('log');
+        $qb->andWhere($qb->expr()->orX(
+            $qb->expr()->eq('log.listingId', ':listingId'),
+            $qb->expr()->andX(
+                $qb->expr()->eq('log.userId', ':userId'),
+                $qb->expr()->isNull('log.listingId')
+            )
+        ));
+        $qb->setParameter(':listingId', $listing->getId());
+        $qb->setParameter(':userId', $listing->getUser()->getId());
+
+        $qb->addOrderBy('log.datetime', 'ASC');
+
+        /** @var Log[] $logList */
+        $logList = $qb->getQuery()->getResult();
+
+        $output = '';
+        foreach ($logList as $logListElement) {
+            $output .= $logListElement->getText();
+            $output .= str_repeat("\r\n", 1) . str_repeat('=', 100) . str_repeat("\r\n", 3);
+        }
+
+        return $output;
     }
 
     public function saveLog(Listing $listing)
@@ -52,7 +79,7 @@ Connection:
 
 Request time: {$requestTimeString}
 Unix request time float: {$_SERVER['REQUEST_TIME_FLOAT']}
-Current server time: {$currentServerTime}
+Server time when saving this log: {$currentServerTime}
 
 Listing details:
     Title: {$listing->getTitle()}

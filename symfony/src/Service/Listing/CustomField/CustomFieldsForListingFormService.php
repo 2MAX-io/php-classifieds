@@ -36,9 +36,10 @@ class CustomFieldsForListingFormService
     {
         $qb = $this->em->getRepository(CustomField::class)->createQueryBuilder('customField');
         $qb->leftJoin('customField.customFieldOptions', 'customField_options');
+        $qb->leftJoin('customField.categories', 'category');
 
-        if ($categoryId) {
-        }
+        $qb->andWhere($qb->expr()->eq('category.id', ':category'));
+        $qb->setParameter(':category', $categoryId);
 
         $qb->addSelect('listingCustomFieldValues');
         $qb->leftJoin(

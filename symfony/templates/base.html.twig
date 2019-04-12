@@ -14,17 +14,6 @@
         <link rel="stylesheet" href="{{ asset('asset/style.css') }}">
     {% endblock %}
     {% block css %}{% endblock %}
-
-    <!-- CSRF -->
-    <script>
-        // add CSRF token in the headers of all requests
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-Token': 'b039a3c7a100e429e4115c7b06a18d2b',
-                'X-AJAX-Setup': 1
-            }
-        });
-    </script>
 </head>
 <body class="tpl-listing">
 <!-- Top Header -->
@@ -141,6 +130,16 @@
 {% block javascripts %}
     <script src="{{ asset('asset/jquery.js') }}"></script>
     <script src="{{ asset('asset/bootstrap.bundle.js') }}"></script>
+
+    <!-- CSRF -->
+    <script type="text/javascript">
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-Token': 'b039a3c7a100e429e4115c7b06a18d2b',
+                'X-AJAX-Setup': 1
+            }
+        });
+    </script>
 {% endblock %}
 {% block js %}{% endblock %}
 

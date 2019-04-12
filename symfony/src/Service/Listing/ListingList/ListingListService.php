@@ -144,11 +144,15 @@ class ListingListService
     /**
      * @return CustomField[]
      */
-    public function getCustomFields(): array
+    public function getCustomFields(?Category $category): array
     {
         $qb = $this->em->getRepository(CustomField::class)->createQueryBuilder('customField');
         $qb->addSelect('customFieldOption');
         $qb->leftJoin('customField.customFieldOptions', 'customFieldOption');
+        $qb->leftJoin('customField.categories', 'category');
+
+        $qb->andWhere($qb->expr()->eq('category.id', ':category'));
+        $qb->setParameter(':category', $category);
 
         return $qb->getQuery()->getResult();
     }

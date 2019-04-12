@@ -43,9 +43,13 @@ class ListingType extends AbstractType
                 'category',
                 EntityType::class,
                 [
-                    'choice_label' => 'name', 'class' => Category::class,
+                    'choice_label' => 'name',
+                    'class' => Category::class,
                     'placeholder' => 'trans.Select category',
-                    'label' => 'trans.Category'
+                    'label' => 'trans.Category',
+                    'attr' => [
+                        'class' => 'formCategory',
+                    ],
                 ]
             )
             ->add('price', IntegerType::class, [

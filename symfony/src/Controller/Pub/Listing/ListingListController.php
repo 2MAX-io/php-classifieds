@@ -46,7 +46,7 @@ class ListingListController extends AbstractController
                     ));
                 }, ['proximity' => 3]),
                 'listingList' => $listingListDto->getResults(),
-                'customFieldList' => $listingListService->getCustomFields(),
+                'customFieldList' => $listingListService->getCustomFields($category),
                 'categoryList' => $categoryListService->getLevelOfSubcategoriesToDisplayForCategory($categoryId),
                 'categoryBreadcrumbs' => $categoryListService->getBreadcrumbs($category),
                 'queryParameters' => [

@@ -1,5 +1,17 @@
 <script type="text/javascript">
-    $.get('{{ path('app_listing_get_custom_fields', {"listingId": listing.id}) }}', function (data) {
-        $(data).insertAfter('.formCustomFieldsHidden');
+    $(document).ready(function() {
+        var loadCustomFields = function() {
+            var categoryId = parseInt($('.formCategory').val());
+            $.get('{{ path('app_listing_get_custom_fields', {"listingId": listing.id}) }}&categoryId=' + categoryId, function (data) {
+                $('.formCustomFieldsLoaded').remove();
+                $(data).insertAfter('.formCustomFieldsHidden');
+            });
+        };
+
+        loadCustomFields();
+
+        $('.formCategory').on('change', function () {
+            loadCustomFields();
+        });
     });
 </script>

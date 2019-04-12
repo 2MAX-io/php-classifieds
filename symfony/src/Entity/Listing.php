@@ -449,30 +449,6 @@ class Listing
         return $this;
     }
 
-    public function loadSearchText(): void
-    {
-        $searchText = '';
-
-        $searchText .= $this->getTitle();
-        $searchText .= ' ';
-
-        $searchText .= $this->getDescription();
-        $searchText .= ' ';
-
-        $searchText .= $this->getCity();
-        $searchText .= ' ';
-
-        $searchText .= $this->getCategory()->getName();
-        $searchText .= ' ';
-
-        foreach ($this->getListingCustomFieldValues() as $listingCustomFieldValue) {
-            $searchText .= $listingCustomFieldValue->getValue();
-            $searchText .= ' ';
-        }
-
-        $this->setSearchText($searchText);
-    }
-
     public function getAdminRemoved(): ?bool
     {
         return $this->adminRemoved;

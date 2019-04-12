@@ -46,7 +46,7 @@ class CreateListingService
 
         $listing->setAdminConfirmed(false);
 
-        $listing->loadSearchText();
+        $this->saveSearchText($listing);
     }
 
     public function getListingFilesForJavascript(Listing $listing): array
@@ -65,5 +65,42 @@ class CreateListingService
         }
 
         return $returnFiles;
+    }
+
+    private function saveSearchText(Listing $listing)
+    {
+        $searchText = ' ';
+
+        $searchText .= $listing->getTitle();
+        $searchText .= ' ';
+
+        $searchText .= $listing->getDescription();
+        $searchText .= ' ';
+
+        $searchText .= $listing->getCity();
+        $searchText .= ' ';
+
+        $searchText .= $listing->getPrice();
+        $searchText .= ' ';
+
+        $category = $listing->getCategory();
+        while ($category && $category->getLvl() > 0) {
+            $searchText .= $category->getName();
+            $searchText .= ' ';
+
+            $category = $category->getParent();
+        }
+
+        foreach ($listing->getListingCustomFieldValues() as $listingCustomFieldValue) {
+            $searchText .= $listingCustomFieldValue->getValue();
+            $searchText .= ' ';
+
+            if ($listingCustomFieldValue->getCustomFieldOption()) {
+                $searchText .= $listingCustomFieldValue->getCustomFieldOption()->getName();
+                $searchText .= ' ';
+            }
+        }
+
+        $listing->setSearchText($searchText);
     }
 }

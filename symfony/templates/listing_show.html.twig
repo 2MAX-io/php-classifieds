@@ -22,7 +22,9 @@
                     </div>
                 </div>
 
-                <img class="rounded" alt="{{ listing.title }}" src="{{ asset(listing.listingFiles.first.path | default('asset/img/blank.png')) }}">
+                {% if listing.listingFiles is not empty %}
+                    <img class="rounded" alt="{{ listing.title }}" src="{{ asset(listing.listingFiles.first.path | default('asset/img/blank.png')) }}">
+                {% endif %}
 
                 <!-- Tabs nav -->
                 <ul class="nav nav-tabs flex-column flex-sm-row" id="myTab" role="tablist">

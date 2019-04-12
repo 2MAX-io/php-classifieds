@@ -10,7 +10,10 @@ use Doctrine\ORM\Mapping\Index;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ListingRepository")
- * @ORM\Table(indexes={@Index(columns={"search_text"}, flags={"fulltext"})})
+ * @ORM\Table(indexes={
+ *     @Index(columns={"search_text"}, flags={"fulltext"}),
+ *     @Index(columns={"search_text", "email", "phone", "rejection_reason"}, flags={"fulltext"})
+ * })
  */
 class Listing
 {

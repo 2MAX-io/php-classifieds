@@ -163,7 +163,7 @@
                 <!-- the listings -->
                 <div id="cards-wrapper" class="">
                     {% for listing in listingList %}
-                        <div class="card mb-3 regular">
+                        <div class="card mb-3 regular {% if listing.premium %}listing-recommended{% endif %}">
                             <div class="container-fluid">
                                 <div class="row" data-listing-id="340">
                                     <div class="card-thumb col-12 col-md-3 py-3">
@@ -173,6 +173,12 @@
                                     </div>
 
                                     <div class="card-text col-12 col-md-9 py-3">
+                                        {% if listing.premium %}
+                                            <div class="pt-3 pt-sm-0 float-right">
+                                                <span class="badge badge-pill badge-warning">{{ 'trans.Recommended' | trans }}</span>
+                                            </div>
+                                        {% endif %}
+
                                         <h5 class="pt-3 pt-sm-0">
                                             <strong>
                                                 <a href="{{ path('app_listing_show', {id: listing.id}) }}">
@@ -192,7 +198,9 @@
 {#                                            <a href="tel:714 952-2527" class="text-dark"><small><i class="fas fa-phone"></i> 714 952-2527</small></a>#}
 {#                                        </div>#}
 
-                                        <div class="mt-1"><span class="btn btn-dark btn-sm price">{{ 'trans.Price' | trans }}: {{ listing.price }}</span></div>
+                                        {% if listing.price is not empty %}
+                                            <div class="mt-1"><span class="btn btn-dark btn-sm price">{{ 'trans.Price' | trans }}: {{ listing.price }}</span></div>
+                                        {% endif %}
                                     </div>
                                 </div>
                             </div>

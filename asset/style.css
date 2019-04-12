@@ -324,3 +324,12 @@ svg.icon {
 .file-simple .fileuploader {
     margin: 0;
 }
+
+.listing-recommended {
+    background-image:
+        linear-gradient(
+                to left,
+                #fffef2,
+                white 40%
+        );
+}

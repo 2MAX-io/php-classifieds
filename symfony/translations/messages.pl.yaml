@@ -74,3 +74,8 @@ trans:
   Recommended Listings: 'Polecane ogłoszenia'
   All Categories: 'Wszystkie kategorie'
   Reject: 'Odrzuć'
+  Reject reason (optional): 'Powód odrzucenia (opcjonalny)'
+  Reject listing: 'Odrzuć ogłoszenie'
+  Status: 'Status'
+  Listing has been rejected: 'Ogłoszenie zostało odrzucone'
+  Listing has been rejected, reason: 'Ogłoszenie zostało odrzucone, powód'

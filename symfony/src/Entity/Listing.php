@@ -91,6 +91,11 @@ class Listing
     /**
      * @ORM\Column(type="boolean")
      */
+    private $adminRejected = false;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
     private $adminRemoved = false;
 
     /**
@@ -500,6 +505,18 @@ class Listing
     public function setRejectionReason(?string $rejectionReason): self
     {
         $this->rejectionReason = $rejectionReason;
+
+        return $this;
+    }
+
+    public function getAdminRejected(): ?bool
+    {
+        return $this->adminRejected;
+    }
+
+    public function setAdminRejected(bool $adminRejected): self
+    {
+        $this->adminRejected = $adminRejected;
 
         return $this;
     }

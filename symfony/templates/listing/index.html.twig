@@ -17,7 +17,7 @@
                     <thead>
                     <tr>
                         <th>{{ 'trans.Title' | trans }}</th>
-                        <th>{{ 'trans.Price' | trans }}</th>
+                        <th>{{ 'trans.Status' | trans }}</th>
                         <th>{{ 'trans.Actions' | trans }}</th>
                     </tr>
                     </thead>
@@ -33,13 +33,26 @@
                                         <a href="{{ path('app_user_highlight_listing', {"id": listing.id}) }}">{{ 'trans.Feature this listing' | trans }}</a>
                                     </div>
                                 {% endif %}
-                                {% if not listing.adminConfirmed %}
+                                {% if not listing.adminConfirmed and not listing.adminRejected %}
                                     <div>
                                         {{ 'trans.Waiting for activation' | trans }}
                                     </div>
                                 {% endif %}
+                                {% if listing.adminRejected %}
+                                    {% if listing.rejectionReason is empty %}
+                                        <div>
+                                            {{ 'trans.Listing has been rejected' | trans }}
+                                        </div>
+                                    {% else %}
+                                        <div>
+                                            {{ 'trans.Listing has been rejected, reason' | trans }}: {{ listing.rejectionReason }}
+                                        </div>
+                                    {% endif %}
+                                {% endif %}
                             </td>
-                            <td>{{ listing.price }}</td>
+                            <td>
+
+                            </td>
                             <td>
                                 <a href="{{ path('listing_edit', {'id': listing.id}) }}" class="btn btn-dark">{{ 'trans.Edit' | trans }}</a>
 

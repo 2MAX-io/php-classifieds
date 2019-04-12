@@ -46,6 +46,8 @@
 
                             <a href="{{ path('app_admin_listing_reject', {'id': listing.id}) }}" target="_blank" class="btn btn-warning">{{ 'trans.Reject' | trans }}</a>
 
+                            <a href="{{ path('app_admin_police_log', {'id': listing.id}) }}" target="_blank" class="btn btn-warning">{{ 'trans.Police log' | trans }}</a>
+
                             {{ include('admin/listing/_delete_form.html.twig') }}
                         </td>
                     </tr>

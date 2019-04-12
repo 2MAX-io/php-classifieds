@@ -15,8 +15,6 @@
     {% endblock %}
     {% block css %}{% endblock %}
 
-    <script src="{{ asset('asset/jquery.js') }}"></script>
-
     <!-- CSRF -->
     <script>
         // add CSRF token in the headers of all requests
@@ -141,6 +139,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,400i,700,700i">
 
 {% block javascripts %}
+    <script src="{{ asset('asset/jquery.js') }}"></script>
     <script src="{{ asset('asset/bootstrap.bundle.js') }}"></script>
 {% endblock %}
 {% block js %}{% endblock %}

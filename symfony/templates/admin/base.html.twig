@@ -1,47 +1,18 @@
-{#<!DOCTYPE html>#}
-{#<html>#}
-{#<head>#}
-{#    <meta charset="UTF-8">#}
-{#    <title>{% block title %}Welcome!{% endblock %}</title>#}
-{#    {% block stylesheets %}{% endblock %}#}
-{#</head>#}
-{#<body>#}
-{#{% block body %}{% endblock %}#}
-{#{% block javascripts %}#}
-{#    <script src="{{ asset('asset/jquery.js') }}"></script>#}
-{#{% endblock %}#}
-{#{% block js %}{% endblock %}#}
-{#</body>#}
-{#</html>#}
-
-
 <!DOCTYPE html>
 <!--[if IE 9]><html class="lt-ie10" lang="pl"> <![endif]-->
 <html lang="pl">
 <head>
-    <title>{% block title %}Classifieds{% endblock %}</title>
-    <meta name="description" content="Classifieds is a nationwide Classifieds where users can search for the items to buy and sell near them and write reviews.">
-    <link rel="canonical" href="">
     <meta charset="utf-8">
+    <title>{% block title %}{{ 'trans.Admin' | trans }} - {{ 'trans.Classifieds' | trans }}{% endblock %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- favicon -->
-    <link rel="apple-touch-icon-precomposed" href="/assets/favicon/favicon-152.png">
-    <link rel="icon" type="image/png" href="/assets/favicon/favicon.png">
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="msapplication-TileImage" content="/assets/favicon/favicon-144.png">
 
-    <!-- css -->
-    <link rel="stylesheet" href="{{ asset('asset/bootstrap.css') }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0-rc.2/css/select2.min.css">
-    <link rel="stylesheet" href="/templates/css/styles.css?5ca8aff0020c8">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
-
-    <!-- javascript -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0-rc.2/js/select2.min.js"></script>
-    <script src="/assets/js/head.js"></script>
-
+    {% block stylesheets %}
+        <link rel="stylesheet" href="{{ asset('asset/bootstrap.css') }}">
+        <link rel="stylesheet" href="{{ asset('asset/style.css') }}">
+    {% endblock %}
 </head>
 <body class="tpl-listing">
 <!-- Top Header -->
@@ -106,6 +77,9 @@
                     <a class="nav-link" href="{{ path('app_admin_listing_confirm_list') }}">{{ 'trans.Activate' | trans }}</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="{{ path('app_admin_listing_search') }}">{{ 'trans.Search' | trans }}</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="{{ path('app_last_added') }}">{{ 'trans.Last added' | trans }}</a>
                 </li>
                 <li class="nav-item">
@@ -134,7 +108,7 @@
             <div class="col-6 col-md">
                 <h5>Credits</h5>
                 <ul class="list-unstyled text-small">
-                    <li><a class="text-muted" href="https://www.pexels.com/">Pexels</a></li>
+                    <li><a class="text-muted" href="#">Pexels</a></li>
                 </ul>
             </div>
             <div class="col-6 col-md">
@@ -152,11 +126,6 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,400i,700,700i">
 
 {% block javascripts %}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
-    <script src="/templates/js/raty/jquery.raty.js"></script>
-    <script src="/assets/js/jquery-autocomplete/jquery.autocomplete.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/i18n/pl.js"></script>
     <script src="{{ asset('asset/jquery.js') }}"></script>
 {% endblock %}
 {% block js %}{% endblock %}

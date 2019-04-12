@@ -158,13 +158,13 @@
 
                     <div class="card-body">
                         <div class="fb-share-button"
-                             data-href="https://x-php.pro/demo/classifiedsplus/listing/california/los-angeles-104/auto-accessories/liquidation-wholesale-pricing-for-led-he"
+                             data-href="{{ absolute_url('app_listing_show', {'id': listing.id}) }}"
                              data-layout="button"
                              data-size="small"
-                             data-mobile-iframe="true"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fx-php.pro%2Fdemo%2Fclassifiedsplus%2Flisting%2Fcalifornia%2Flos-angeles-104%2Fauto-accessories%2Fliquidation-wholesale-pricing-for-led-he&src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a>
+                             data-mobile-iframe="true"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{ absolute_url('app_listing_show', {'id': listing.id}) }}&src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a>
                         </div>
 
-                        <a class="twitter-share-button" href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fx-php.pro%2Fdemo%2Fclassifiedsplus%2Flisting%2Fcalifornia%2Flos-angeles-104%2Fauto-accessories%2Fliquidation-wholesale-pricing-for-led-he&text=Liquidation%21+Wholesale+Pricing+for+LED+Headlight+%2F+Fog+Conversion+Kits">Tweet</a>
+                        <a class="twitter-share-button" href="https://twitter.com/intent/tweet?url={{ absolute_url('app_listing_show', {'id': listing.id}) }}&text={{ listing.title }}">Tweet</a>
                     </div>
                 </div>
             </div>

@@ -79,3 +79,4 @@ trans:
   Status: 'Status'
   Listing has been rejected: 'Ogłoszenie zostało odrzucone'
   Listing has been rejected, reason: 'Ogłoszenie zostało odrzucone, powód'
+  Admin: 'Admin'

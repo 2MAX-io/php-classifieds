@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class ListingConfirmController extends AbstractController
 {
     /**
-     * @Route("/admin/red5/listing-confirm", name="app_admin_listing_confirm_list")
+     * @Route("/admin/red5/listing/confirm", name="app_admin_listing_confirm_list")
      */
     public function listingConfirmList(ListingConfirmListService $listingConfirmListService): Response
     {

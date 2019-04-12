@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class ListingRejectController extends AbstractController
 {
     /**
-     * @Route("/admin/red5/listing-reject/{id}", name="app_admin_listing_reject")
+     * @Route("/admin/red5/listing/reject/{id}", name="app_admin_listing_reject")
      */
     public function reject(Request $request, Listing $listing): Response
     {

@@ -2,36 +2,13 @@
 
 {% block body %}
 
-    {#<!-- Jumbotron -->#}
-    {#<div class="jumbotron jumbotron-fluid">#}
-    {#    <div class="container">#}
-    {#        <h1 class="text-center mb-5">Buy and Sell Anything</h1>#}
-
-    {#        <h3 class="text-center">text</h3>#}
-
-    {#        <form action="/advanced-results" class="form-row justify-content-md-end" method="get">#}
-    {#            <div class="form-row container-fluid">#}
-    {#                <div class="col-md-5">#}
-    {#                    <div class="input-group mb-2 mr-md-2">#}
-    {#                        <input type="text" class="form-control form-control-lg" id="q" name="q" placeholder="Keyword">#}
-    {#                    </div>#}
-    {#                </div>#}
-
-    {#                <div class="col-md-2">#}
-    {#                    <button type="submit" class="btn btn-lg btn-primary btn-block mb-2">Search</button>#}
-    {#                </div>#}
-    {#            </div>#}
-    {#        </form>#}
-    {#    </div>#}
-    {#</div>#}
-
     <br>
 
     <!-- Categories -->
     <div class="container mb-2">
         <div class="d-flex flex-row">
             <div class="flex-grow-1"><h2>{{ 'trans.Categories' | trans }}</h2></div>
-            <div><a href="{{ path('app_category_view_all') }}" class="btn btn-light">{{ 'trans.View all' | trans }}</a></div>
+            <div class="d-none d-sm-block"><a href="{{ path('app_category_view_all') }}" class="btn btn-light">{{ 'trans.View all' | trans }}</a></div>
         </div>
     </div>
 

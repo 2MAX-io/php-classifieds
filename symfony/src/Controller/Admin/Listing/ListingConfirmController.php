@@ -37,4 +37,18 @@ class ListingConfirmController extends AbstractController
 
         return $this->redirectToRoute('app_admin_listing_confirm_list');
     }
+
+    /**
+     * @Route("/admin/red5/listing-confirm/delete/{id}", name="app_admin_listing_delete", methods={"DELETE"})
+     */
+    public function delete(Request $request, Listing $listing): Response
+    {
+        if ($this->isCsrfTokenValid('adminDelete'.$listing->getId(), $request->request->get('_token'))) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $listing->setAdminRemoved(true);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('app_admin_listing_confirm_list');
+    }
 }

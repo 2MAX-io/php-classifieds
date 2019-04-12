@@ -1,5 +1,5 @@
 <form method="post" action="{{ path('app_admin_listing_confirm', {'id': listing.id}) }}" onsubmit="return confirm('Are you sure you want to activate {{ listing.title }}?');" class="d-inline">
     <input type="hidden" name="_method" value="PATCH">
     <input type="hidden" name="_token" value="{{ csrf_token('adminConfirm' ~ listing.id) }}">
-    <button class="btn btn-warning btn-mini">{{ 'trans.Activate' | trans }}</button>
+    <button class="btn btn-success btn-mini">{{ 'trans.Activate' | trans }}</button>
 </form>

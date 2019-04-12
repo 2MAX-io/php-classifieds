@@ -1,0 +1,5 @@
+<form method="post" action="{{ path('app_admin_listing_confirm', {'id': listing.id}) }}" onsubmit="return confirm('Are you sure you want to delete {{ listing.title }}?');" class="d-inline">
+    <input type="hidden" name="_method" value="DELETE">
+    <input type="hidden" name="_token" value="{{ csrf_token('adminDelete' ~ listing.id) }}">
+    <button class="btn btn-danger btn-mini">{{ 'trans.Delete' | trans }}</button>
+</form>

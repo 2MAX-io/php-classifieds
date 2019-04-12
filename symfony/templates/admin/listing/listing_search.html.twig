@@ -4,6 +4,58 @@
 
 {% block body %}
     <div class="container mt-5">
-        listing search
+
+        <form method="get">
+            <input name="query" value="{{ app.request.get('query') }}" type="text" placeholder="{{ 'trans.keyword' | trans }}" />
+
+            <button type="submit">{{ 'trans.Search' | trans }}</button>
+        </form>
+
+        <div class="container mt-5">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>{{ 'trans.Title' | trans }}</th>
+                    <th>{{ 'trans.Price' | trans }}</th>
+                    <th>{{ 'trans.Actions' | trans }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for listing in listings %}
+                    <tr>
+                        <td>
+                            <div>
+                                <a href="{{ path('app_listing_show', {"id": listing.id}) }}">{{ listing.title }}</a>
+                            </div>
+                            {% if listing.adminConfirmed %}
+                                <div>
+                                    <a href="{{ path('app_user_highlight_listing', {"id": listing.id}) }}">{{ 'trans.Feature this listing' | trans }}</a>
+                                </div>
+                            {% endif %}
+                            {% if not listing.adminConfirmed %}
+                                <div>
+                                    {{ 'trans.Waiting for activation' | trans }}
+                                </div>
+                            {% endif %}
+                        </td>
+                        <td>{{ listing.price }}</td>
+                        <td>
+                            <a href="{{ path('listing_edit', {'id': listing.id}) }}" class="btn btn-dark">{{ 'trans.Edit' | trans }}</a>
+
+                            {{ include('admin/listing/_confirm_form.html.twig') }}
+
+                            <a href="{{ path('app_admin_listing_reject', {'id': listing.id}) }}" target="_blank" class="btn btn-warning">{{ 'trans.Reject' | trans }}</a>
+
+                            {{ include('admin/listing/_delete_form.html.twig') }}
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="8">no records found</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
 {% endblock %}

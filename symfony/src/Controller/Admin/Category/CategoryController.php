@@ -12,12 +12,12 @@ use Symfony\Component\Routing\Annotation\Route;
 class CategoryController extends AbstractController
 {
     /**
-     * @Route("/admin/category", name="app_admin_category")
+     * @Route("/admin/red5/category", name="app_admin_category")
      */
     public function index(TreeService $treeService): Response
     {
         $treeService->rebuild();
 
-        return new Response('');
+        return new Response('done');
     }
 }

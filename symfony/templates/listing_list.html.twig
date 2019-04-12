@@ -193,7 +193,9 @@
                     {% endfor %}
                 </div>
 
-                {{ pagination | raw }}
+                {% if pager.getNbPages > 1 %}
+                    {{ pagination | raw }}
+                {% endif %}
             </div>
         </div>
     </div>

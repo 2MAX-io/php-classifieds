@@ -2,8 +2,8 @@
 
 {{ form_row(form.title) }}
 {{ form_row(form.description) }}
-{{ form_row(form.category) }}
 
+{{ form_label(form.category) }}
 <div id="cascader-category-select" class="cascader collapse">
     <div class="row">
         {% for levelId, level in formCategorySelectList %}
@@ -19,6 +19,7 @@
         {% endfor %}
     </div>
 </div>
+{{ form_widget(form.category) }}
 
 {{ form_widget(form) }}
 

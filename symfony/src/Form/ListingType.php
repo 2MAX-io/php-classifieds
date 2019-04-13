@@ -64,7 +64,7 @@ class ListingType extends AbstractType
                             $path
                         );
 
-                        return join(' -> ', $path);
+                        return join(' ⇾ ', $path);
                     },
                     'query_builder' => function (CategoryRepository $categoryRepository) {
                         $qb = $categoryRepository->createQueryBuilder('category');

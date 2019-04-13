@@ -21,6 +21,13 @@ class User implements UserInterface, RoleInterface
     private $id;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(type="string", length=180, unique=true)
+     */
+    protected $username;
+
+    /**
      * @ORM\Column(type="string", length=180, unique=true)
      */
     private $email;
@@ -29,6 +36,13 @@ class User implements UserInterface, RoleInterface
      * @ORM\Column(type="json")
      */
     private $roles = [];
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(type="boolean")
+     */
+    protected $enabled;
 
     /**
      * @var string The hashed password
@@ -42,11 +56,6 @@ class User implements UserInterface, RoleInterface
     private $plainPassword;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Listing", mappedBy="user")
-     */
-    private $listings;
-
-    /**
      * @ORM\Column(type="datetimetz", nullable=false)
      */
     private $firstCreatedDate;
@@ -55,6 +64,27 @@ class User implements UserInterface, RoleInterface
      * @ORM\Column(type="datetimetz", nullable=true)
      */
     private $lastLogin;
+
+    /**
+     * Random string sent to the user email address in order to verify it.
+     *
+     * @var string|null
+     *
+     * @ORM\Column(type="string", length=180, unique=true, nullable=true)
+     */
+    protected $confirmationToken;
+
+    /**
+     * @var \DateTime|null
+     *
+     * @ORM\Column(type="datetimetz", nullable=true)
+     */
+    protected $passwordRequestedAt;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Listing", mappedBy="user")
+     */
+    private $listings;
 
     public function __construct()
     {
@@ -200,6 +230,49 @@ class User implements UserInterface, RoleInterface
     public function setLastLogin(?\DateTimeInterface $lastLogin): self
     {
         $this->lastLogin = $lastLogin;
+
+        return $this;
+    }
+
+    public function setUsername(string $username): self
+    {
+        $this->username = $username;
+
+        return $this;
+    }
+
+    public function getEnabled(): ?bool
+    {
+        return $this->enabled;
+    }
+
+    public function setEnabled(bool $enabled): self
+    {
+        $this->enabled = $enabled;
+
+        return $this;
+    }
+
+    public function getConfirmationToken(): ?string
+    {
+        return $this->confirmationToken;
+    }
+
+    public function setConfirmationToken(?string $confirmationToken): self
+    {
+        $this->confirmationToken = $confirmationToken;
+
+        return $this;
+    }
+
+    public function getPasswordRequestedAt(): ?\DateTimeInterface
+    {
+        return $this->passwordRequestedAt;
+    }
+
+    public function setPasswordRequestedAt(?\DateTimeInterface $passwordRequestedAt): self
+    {
+        $this->passwordRequestedAt = $passwordRequestedAt;
 
         return $this;
     }

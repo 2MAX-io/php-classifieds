@@ -1,19 +1,6 @@
 {{ form_start(form) }}
     {{ form_widget(form) }}
 
-{#{% for level in formCategorySelectList %}#}
-{#    {% for levelId, categoryLevel in level %}#}
-{#        <div>#}
-{#            <div><strong>{{ categoryLevel.name }}</strong></div>#}
-{#        </div>#}
-{#        {% for category in categoryLevel.children %}#}
-{#            <div>#}
-{#                <div>{{ category.name }}</div>#}
-{#            </div>#}
-{#        {% endfor %}#}
-{#    {% endfor %}#}
-{#{% endfor %}#}
-
 <div id="cascader-category-select" class="cascader collapse">
     <div class="row">
         {% for levelId, level in formCategorySelectList %}

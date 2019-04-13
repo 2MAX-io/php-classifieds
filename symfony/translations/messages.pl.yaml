@@ -92,3 +92,7 @@ trans:
   Next: 'Następna'
   Recommended: 'Polecane'
   Change Email: 'Zmień Email'
+  Current password: 'Obecne hasło'
+  New password: 'Nowe hasło'
+  Repeat new password: 'Powtórz nowe hasło'
+  Change password: 'Zmień hasło'

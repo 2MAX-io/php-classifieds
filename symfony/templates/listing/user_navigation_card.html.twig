@@ -14,29 +14,34 @@
                 <span class="menu-txt">{{ 'trans.Create Listing' | trans }}</span>
             </a>
         </li>
+{#        <li class="list-group-item">#}
+{#            <a href="//classifiedsplus.localhost/user/my-profile" class="text-dark ">#}
+{#                <i class="fas fa-user"></i>#}
+{#                <span class="menu-txt">Profile</span>#}
+{#            </a>#}
+{#        </li>#}
+{#        <li class="list-group-item">#}
+{#            <a href="//classifiedsplus.localhost/user/my-coupons" class="text-dark ">#}
+{#                <i class="fas fa-tags"></i>#}
+{#                <span class="menu-txt">Coupons</span>#}
+{#            </a>#}
+{#        </li>#}
+{#        <li class="list-group-item">#}
+{#            <a href="//classifiedsplus.localhost/user/my-reviews" class="text-dark ">#}
+{#                <i class="fas fa-comments"></i>#}
+{#                <span class="menu-txt">Reviews</span>#}
+{#            </a>#}
+{#        </li>#}
         <li class="list-group-item">
-            <a href="//classifiedsplus.localhost/user/my-profile" class="text-dark ">
-                <i class="fas fa-user"></i>
-                <span class="menu-txt">Profile</span>
-            </a>
-        </li>
-        <li class="list-group-item">
-            <a href="//classifiedsplus.localhost/user/my-coupons" class="text-dark ">
-                <i class="fas fa-tags"></i>
-                <span class="menu-txt">Coupons</span>
-            </a>
-        </li>
-        <li class="list-group-item">
-            <a href="//classifiedsplus.localhost/user/my-reviews" class="text-dark ">
-                <i class="fas fa-comments"></i>
-                <span class="menu-txt">Reviews</span>
-            </a>
-        </li>
-
-        <li class="list-group-item">
-            <a href="//classifiedsplus.localhost/user/edit-pass" class="text-dark ">
+            <a href="{{ path('app_user_change_password') }}" class="text-dark ">
                 <i class="fas fa-lock"></i>
                 <span class="menu-txt">{{ 'trans.Change Password' | trans }}</span>
+            </a>
+        </li>
+        <li class="list-group-item">
+            <a href="{{ path('app_user_change_email') }}" class="text-dark ">
+                <i class="fas fa-envelope"></i>
+                <span class="menu-txt">{{ 'trans.Change Email' | trans }}</span>
             </a>
         </li>
     </ul>

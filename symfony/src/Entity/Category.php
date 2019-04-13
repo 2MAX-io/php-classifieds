@@ -224,6 +224,24 @@ class Category
     }
 
     /**
+     * make sure hydrator do not have make additional queries when using this
+     *
+     * @return Category[]
+     */
+    public function getPath(): array
+    {
+        $path = [];
+
+        $category = $this;
+        while ($category->getParent()) {
+            $path[] = $category;
+            $category = $category->getParent();
+        }
+
+        return array_reverse($path);
+    }
+
+    /**
      * @return Collection|Category[]
      */
     public function getChildren(): Collection

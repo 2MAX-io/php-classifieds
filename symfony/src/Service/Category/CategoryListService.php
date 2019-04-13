@@ -102,6 +102,8 @@ class CategoryListService
     public function foo(): array
     {
         $qb = $this->em->getRepository(Category::class)->createQueryBuilder('category');
+        $qb->addSelect('categoryChildren');
+        $qb->leftJoin('category.children', 'categoryChildren');
         $qb->andWhere($qb->expr()->neq('category.rgt - category.lft', '1'));
         /** @var Category[] $categoryList */
         $categoryList = $qb->getQuery()->getResult();

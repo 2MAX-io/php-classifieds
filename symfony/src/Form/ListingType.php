@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Category;
 use App\Entity\Listing;
 use App\Form\Type\FileSimpleType;
+use App\Repository\CategoryRepository;
 use App\Service\Listing\ValidityExtend\ValidUntilSetService;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -43,13 +44,36 @@ class ListingType extends AbstractType
                 'category',
                 EntityType::class,
                 [
-                    'choice_label' => 'name',
                     'class' => Category::class,
                     'placeholder' => 'trans.Select category',
                     'label' => 'trans.Category',
                     'attr' => [
                         'class' => 'formCategory',
                     ],
+                    'choice_label' => function (Category $category, $key, $value) {
+                        $path = $category->getPath();
+
+                        $path = array_map(
+                            function (Category $category) {
+                                if ($category->getLvl() < 1) {
+                                    return false;
+                                }
+
+                                return $category->getName();
+                            },
+                            $path
+                        );
+
+                        return join(' -> ', $path);
+                    },
+                    'query_builder' => function (CategoryRepository $categoryRepository) {
+                        $qb = $categoryRepository->createQueryBuilder('category');
+
+                        $qb->andWhere('category.lvl > 1');
+                        $qb->addOrderBy('category.lft', 'DESC');
+
+                        return $qb;
+                    }
                 ]
             )
             ->add('price', IntegerType::class, [

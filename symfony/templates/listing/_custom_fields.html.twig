@@ -1,7 +1,7 @@
 <script type="text/javascript">
     $(document).ready(function() {
         let loadCustomFields = function() {
-            let listingId = {{ listing.id | default('null') }};
+            let listingId = null | {{ listing.id | default('null') }};
             let categoryId = parseInt($('.formCategory').val());
             $.get(Routing.generate('app_listing_get_custom_fields', {listingId: listingId, categoryId: categoryId}), function (data) {
                 $('.formCustomFieldsLoaded').remove();

@@ -99,7 +99,7 @@ class CategoryListService
     /**
      * @return Category[]
      */
-    public function foo(): array
+    public function getFormCategorySelectList(): array
     {
         $qb = $this->em->getRepository(Category::class)->createQueryBuilder('category');
         $qb->addSelect('categoryChildren');

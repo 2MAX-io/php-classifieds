@@ -59,13 +59,14 @@ class ListingController extends AbstractController
             }
             $customFieldsForListingFormService->saveCustomFieldsToListing($listing, $request->request->get('form_custom_field'));
 
+            $newUser = null;
             if ($currentUserService->getUser()) {
                 $listing->setUser($currentUserService->getUser());
             } else {
-                $user = $userCreateService->registerUser($listing->getEmail());
-                $listing->setUser($user);
-                $loginUserProgrammaticallyService->loginUser($user);
-                $user->eraseCredentials();
+                if (!$userCreateService->hasUser($listing->getEmail())) {
+                    $newUser = $userCreateService->registerUser($listing->getEmail());
+                    $listing->setUser($newUser);
+                }
             }
 
             $createListingService->setFormDependent($listing, $form);
@@ -77,12 +78,21 @@ class ListingController extends AbstractController
             $logIpService->saveLog($listing);
             $entityManager->flush();
 
+            if (!$currentUserService->getUser() && $newUser) {
+                /**
+                 * IMPORTANT !!!
+                 * this would trigger interactive login that executes flush, so must be last
+                 */
+                $loginUserProgrammaticallyService->loginUser($newUser);
+                $newUser->eraseCredentials();
+            }
+
             return $this->redirectToRoute('listing_edit', ['id' => $listing->getId()]);
         }
 
         return $this->render('listing/new.html.twig', [
             'listing' => $listing,
-            'formCategorySelectList' => $categoryListService->foo(),
+            'formCategorySelectList' => $categoryListService->getFormCategorySelectList(),
             'form' => $form->createView(),
         ]);
     }
@@ -97,7 +107,8 @@ class ListingController extends AbstractController
         ListingFileUploadService $listingFileUploadService,
         CurrentUserService $currentUserService,
         CreateListingService $createListingService,
-        PoliceLogIpService $logIpService
+        PoliceLogIpService $logIpService,
+        CategoryListService $categoryListService
     ): Response {
         if ($currentUserService->getUser() !== $listing->getUser()) {
             throw new UnauthorizedHttpException('user of listing do not match current user');
@@ -130,6 +141,7 @@ class ListingController extends AbstractController
             'listing' => $listing,
             'form' => $form->createView(),
             'listingFilesForJavascript' => $createListingService->getListingFilesForJavascript($listing),
+            'formCategorySelectList' => $categoryListService->getFormCategorySelectList(),
         ]);
     }
 

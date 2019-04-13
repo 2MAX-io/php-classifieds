@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class RegisterController extends AbstractController
 {
     /**
-     * @Route("/register/confirm", name="app_register_confirm")
+     * @Route("/register/confirm/{token}", name="app_register_confirm")
      */
     public function registerConfirm(Request $request): Response
     {

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Service\User\Create;
 
 use App\Entity\User;
+use App\Helper\Random;
 use App\Service\Email\EmailService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -46,8 +47,11 @@ class UserCreateService
     {
         $user = new User();
         $user->setEmail($email);
+        $user->setUsername($email);
         $user->setRoles([User::ROLE_USER]);
         $user->setFirstCreatedDate(new \DateTime());
+        $user->setConfirmationToken(Random::string(40));
+        $user->setEnabled(false);
         $plainPassword = $this->passwordGenerateService->generatePassword();
         $user->setPassword(
             $this->passwordEncoder->encodePassword($user, $plainPassword)
@@ -60,5 +64,11 @@ class UserCreateService
         $this->emailService->sendRegisterEmail($user);
 
         return $user;
+    }
+
+    public function hasUser(string $email): bool
+    {
+        $user = $this->em->getRepository(User::class)->findOneBy(['email' => $email]);
+        return $user instanceof User;
     }
 }

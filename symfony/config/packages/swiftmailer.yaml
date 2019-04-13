@@ -1,5 +1,6 @@
 parameters:
     mailer_from_email_address: '%env(MAILER_FROM_EMAIL_ADDRESS)%'
+    mailer_reply_to_address: '%env(MAILER_REPLY_TO_ADDRESS)%'
 
 swiftmailer:
     url: '%env(MAILER_URL)%'

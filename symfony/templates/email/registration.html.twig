@@ -18,7 +18,7 @@
 </p>
 
 <p>
-    <a href="{{ absolute_url('app_register_confirm') }}">{{ 'trans.I confirm registration' | trans }}</a>
+    <a href="{{ url('app_register_confirm', {'token': user.confirmationToken}) }}">{{ 'trans.I confirm registration' | trans }}</a>
 
-    <pre>{{ absolute_url('app_register_confirm') }}</pre>
+    <pre>{{ url('app_register_confirm', {'token': user.confirmationToken}) }}</pre>
 </p>

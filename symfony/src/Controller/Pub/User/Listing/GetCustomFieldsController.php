@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Controller\Pub\Listing;
+namespace App\Controller\Pub\User\Listing;
 
 use App\Service\Listing\CustomField\CustomFieldsForListingFormService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class GetCustomFieldsController extends AbstractController
 {
     /**
-     * @Route("/listing/get-custom-fields", name="app_listing_get_custom_fields")
+     * @Route("/listing/get-custom-fields", options={"expose"=true}, name="app_listing_get_custom_fields")
      */
     public function getCustomFields(Request $request, CustomFieldsForListingFormService $customFieldsForListingFormService): Response
     {

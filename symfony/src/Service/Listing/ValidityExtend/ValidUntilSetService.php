@@ -34,7 +34,7 @@ class ValidUntilSetService
             'trans.1 week' => 9,
             'trans.2 weeks' => 14,
             'trans.3 weeks' => 21,
-            'trans.31 days' => 31,
+            'trans.1 month' => 31,
         ];
     }
 

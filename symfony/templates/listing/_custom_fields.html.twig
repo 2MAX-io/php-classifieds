@@ -1,8 +1,9 @@
 <script type="text/javascript">
     $(document).ready(function() {
-        var loadCustomFields = function() {
-            var categoryId = parseInt($('.formCategory').val());
-            $.get('{{ path('app_listing_get_custom_fields', {"listingId": listing.id}) }}&categoryId=' + categoryId, function (data) {
+        let loadCustomFields = function() {
+            let listingId = {{ listing.id | default('null') }};
+            let categoryId = parseInt($('.formCategory').val());
+            $.get(Routing.generate('app_listing_get_custom_fields', {listingId: listingId, categoryId: categoryId}), function (data) {
                 $('.formCustomFieldsLoaded').remove();
                 $(data).insertAfter('.formCustomFieldsHidden');
             });

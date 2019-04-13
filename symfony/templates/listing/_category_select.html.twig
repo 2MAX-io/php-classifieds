@@ -1,0 +1,41 @@
+<script type="text/javascript">
+    let cascader = {};
+    cascader.currentLevel = 0;
+
+    let $mainElement = $('#cascader-category-select');
+    $mainElement.show();
+
+    cascader.select = function (selectionId, clicked) {
+        let $clicked = $(clicked);
+        let $branchList = $mainElement.find('.cascader-branch-list-' + selectionId);
+        let hasChildren = $branchList.length > 0;
+
+        let newLevel = null;
+        if (hasChildren) {
+            newLevel = $branchList.parents('.cascader-level').data('cascader-level');
+            $branchList.parents('.cascader-level').find('.cascader-branch-list').hide();
+            $branchList.show();
+        } else {
+            newLevel = $clicked.parents('.cascader-level').data('cascader-level');
+            cascader.onLeafSelection(selectionId);
+        }
+
+        if (newLevel < cascader.currentLevel) {
+            cascader.hideLowerLevels();
+        }
+
+        cascader.currentLevel = newLevel;
+    };
+
+    cascader.hideLowerLevels = function() {
+        let level = cascader.currentLevel;
+        while (level <= cascader.currentLevel) {
+            $mainElement.find('.cascader-level[data-cascader-level="'+level+'"] .cascader-branch-list').hide();
+            level += 1;
+        }
+    };
+
+    cascader.onLeafSelection = function(leafId) {
+        console.log('selected id: ' + leafId);
+    };
+</script>

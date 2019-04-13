@@ -6,6 +6,7 @@ use App\Entity\Listing;
 use App\Form\ListingType;
 use App\Security\CurrentUserService;
 use App\Security\LoginUserProgrammaticallyService;
+use App\Service\Category\CategoryListService;
 use App\Service\Listing\CustomField\CustomFieldsForListingFormService;
 use App\Service\Listing\Save\CreateListingService;
 use App\Service\Listing\Save\ListingFileUploadService;
@@ -41,7 +42,8 @@ class ListingController extends AbstractController
         LoginUserProgrammaticallyService $loginUserProgrammaticallyService,
         CreateListingService $createListingService,
         CustomFieldsForListingFormService $customFieldsForListingFormService,
-        PoliceLogIpService $logIpService
+        PoliceLogIpService $logIpService,
+        CategoryListService $categoryListService
     ): Response {
         $listing = $createListingService->create();
         $form = $this->createForm(ListingType::class, $listing);
@@ -80,6 +82,7 @@ class ListingController extends AbstractController
 
         return $this->render('listing/new.html.twig', [
             'listing' => $listing,
+            'formCategorySelectList' => $categoryListService->foo(),
             'form' => $form->createView(),
         ]);
     }

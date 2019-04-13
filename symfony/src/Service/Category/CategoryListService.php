@@ -95,4 +95,15 @@ class CategoryListService
 
         return array_reverse($result);
     }
+
+    /**
+     * @return Category[]
+     */
+    public function foo(): array
+    {
+        $qb = $this->em->getRepository(Category::class)->createQueryBuilder('category');
+        $qb->andWhere('category.lvl = 1');
+
+        return $qb->getQuery()->getResult();
+    }
 }

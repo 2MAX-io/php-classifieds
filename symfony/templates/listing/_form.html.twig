@@ -1,39 +1,32 @@
 {{ form_start(form) }}
     {{ form_widget(form) }}
 
-{% for category in formCategorySelectList %}
-    <div>
-        <div>{{ category.name }}</div>
-    </div>
-{% endfor %}
-
-<br>
-<br>
-<br>
-<br>
+{#{% for level in formCategorySelectList %}#}
+{#    {% for levelId, categoryLevel in level %}#}
+{#        <div>#}
+{#            <div><strong>{{ categoryLevel.name }}</strong></div>#}
+{#        </div>#}
+{#        {% for category in categoryLevel.children %}#}
+{#            <div>#}
+{#                <div>{{ category.name }}</div>#}
+{#            </div>#}
+{#        {% endfor %}#}
+{#    {% endfor %}#}
+{#{% endfor %}#}
 
 <div id="cascader-category-select" class="cascader collapse">
     <div class="row">
-        <div class="col-md-4 cascader-level" data-cascader-level="0">
-            <div class="cascader-branch" onclick="cascader.select(1, this)">Motoryzacja</div>
-            <div class="cascader-branch" onclick="cascader.select(2, this)">Praca</div>
-        </div>
-        <div class="col-md-4 cascader-level" data-cascader-level="1">
-            <div class="cascader-branch-list cascader-branch-list-1 collapse">
-                <div onclick="cascader.select(999, this)">Samochody</div>
-                <div onclick="cascader.select(999, this)">Części</div>
+        {% for levelId, level in formCategorySelectList %}
+            <div class="col-md-4 cascader-level" data-cascader-level="{{ levelId }}">
+                {% for categoryLevel in level %}
+                    <div class="cascader-branch-list cascader-branch-list-{{ categoryLevel.id }} collapse">
+                        {% for category in categoryLevel.children %}
+                            <div onclick="cascader.select({{ category.id }}, this)">{{ category.name }}</div>
+                        {% endfor %}
+                    </div>
+                {% endfor %}
             </div>
-            <div class="cascader-branch-list cascader-branch-list-2 collapse">
-                <div onclick="cascader.select(999, this)">Dam pracę (etat)</div>
-                <div onclick="cascader.select(44, this)">MLM</div>
-            </div>
-        </div>
-        <div class="col-md-4 cascader-level" data-cascader-level="2">
-            <div class="cascader-branch-list cascader-branch-list-44 collapse">
-                <div onclick="cascader.select(999, this)">Kosmetyki</div>
-                <div onclick="cascader.select(999, this)">Jedzenie</div>
-            </div>
-        </div>
+        {% endfor %}
     </div>
 </div>
 

@@ -102,8 +102,15 @@ class CategoryListService
     public function foo(): array
     {
         $qb = $this->em->getRepository(Category::class)->createQueryBuilder('category');
-        $qb->andWhere('category.lvl = 1');
+        $qb->andWhere($qb->expr()->neq('category.rgt - category.lft', '1'));
+        /** @var Category[] $categoryList */
+        $categoryList = $qb->getQuery()->getResult();
 
-        return $qb->getQuery()->getResult();
+        $result = [];
+        foreach ($categoryList as $category) {
+            $result[$category->getLvl()][] = $category;
+        }
+
+        return $result;
     }
 }

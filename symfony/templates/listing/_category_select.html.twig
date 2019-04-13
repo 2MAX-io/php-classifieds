@@ -4,6 +4,7 @@
 
     let $mainElement = $('#cascader-category-select');
     $mainElement.show();
+    $mainElement.find('.cascader-branch-list').first().show();
 
     cascader.select = function (selectionId, clicked) {
         let $clicked = $(clicked);
@@ -36,6 +37,6 @@
     };
 
     cascader.onLeafSelection = function(leafId) {
-        console.log('selected id: ' + leafId);
+        $('.formCategory').val(leafId);
     };
 </script>

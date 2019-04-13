@@ -27,4 +27,9 @@ class EnvironmentService
     {
         return $this->parameterBag->get('mailer_reply_to_address');
     }
+
+    public function getMailerFromName(): string
+    {
+        return $this->parameterBag->get('mailer_from_name');
+    }
 }

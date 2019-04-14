@@ -6,6 +6,8 @@ namespace App\Controller\Pub\User;
 
 use App\Form\User\ChangePasswordType;
 use App\Security\CurrentUserService;
+use App\Service\FlashBag\FlashInterface;
+use App\Service\FlashBag\FlashService;
 use App\Service\User\Create\ChangePasswordService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,7 +22,8 @@ class UserChangePasswordController extends AbstractController
     public function changePassword(
         Request $request,
         ChangePasswordService $changePasswordService,
-        CurrentUserService $currentUserService
+        CurrentUserService $currentUserService,
+        FlashService $flashService
     ): Response {
         $form = $this->createForm(ChangePasswordType::class, []);
         $form->handleRequest($request);
@@ -32,7 +35,12 @@ class UserChangePasswordController extends AbstractController
 
             $this->getDoctrine()->getManager()->flush();
 
-            $this->redirectToRoute('app_user_change_password');
+            $flashService->addFlash(
+                FlashInterface::SUCCESS_ABOVE_FORM,
+                'trans.Password has been successfully changed'
+            );
+
+            return $this->redirectToRoute('app_user_change_password');
         }
 
         return $this->render('user/change_password.html.twig', [

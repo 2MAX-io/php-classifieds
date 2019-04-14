@@ -6,6 +6,8 @@ namespace App\Controller\Pub\User;
 
 use App\Form\User\ChangeEmailType;
 use App\Security\CurrentUserService;
+use App\Service\FlashBag\FlashInterface;
+use App\Service\FlashBag\FlashService;
 use App\Service\User\Create\ChangeEmailService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,7 +22,8 @@ class UserChangeEmailController extends AbstractController
     public function changeEmail(
         Request $request,
         CurrentUserService $currentUserService,
-        ChangeEmailService $changeEmailService
+        ChangeEmailService $changeEmailService,
+        FlashService $flashService
     ): Response {
         $form = $this->createForm(ChangeEmailType::class, []);
         $form->handleRequest($request);
@@ -32,7 +35,12 @@ class UserChangeEmailController extends AbstractController
 
             $this->getDoctrine()->getManager()->flush();
 
-            $this->redirectToRoute('app_user_change_email');
+            $flashService->addFlash(
+                FlashInterface::SUCCESS_ABOVE_FORM,
+                'trans.Email password has been successfully changed'
+            );
+
+            return $this->redirectToRoute('app_user_change_email');
         }
 
         return $this->render('user/change_email.html.twig', [

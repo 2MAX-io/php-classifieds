@@ -6,3 +6,13 @@
     {{- block('form_widget_simple') -}}
     </{{ element|default('div') }}>
 {% endblock %}
+
+{%- block form_start -%}
+    {{ parent() }}
+
+    {% for message in app.flashes('success_above_form') %}
+        <div class="alert alert-success" role="alert">
+            {{ message }}
+        </div>
+    {% endfor %}
+{%- endblock form_start -%}

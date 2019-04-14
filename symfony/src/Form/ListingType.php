@@ -38,7 +38,10 @@ class ListingType extends AbstractType
                 'label' => 'trans.Title'
             ])
             ->add('description', TextareaType::class, [
-                'label' => 'trans.Description'
+                'label' => 'trans.Description',
+                'attr' => [
+                    'class' => 'form-listing-description-textarea'
+                ]
             ])
             ->add(
                 'category',

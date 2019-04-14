@@ -333,3 +333,7 @@ svg.icon {
                 white 40%
         );
 }
+
+.form-listing-description-textarea {
+    min-height: 17rem;
+}

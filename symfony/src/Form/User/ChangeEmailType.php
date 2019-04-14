@@ -38,7 +38,9 @@ class ChangeEmailType extends AbstractType
                 'type' => EmailType::class,
                 'constraints' => [
                     new NotBlank(),
-                    new Email(),
+                    new Email([
+                        'mode' => Email::VALIDATION_MODE_STRICT
+                    ]),
                 ],
             ]
         );

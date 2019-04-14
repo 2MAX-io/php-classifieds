@@ -377,3 +377,9 @@ svg.icon {
     background-color: #343a40;
     color: white;
 }
+
+.card-title {
+    margin-bottom: 0.75rem;
+    font-size: 1.7rem;
+    text-shadow: 1px 1px 1px #000, 0px 0px 3px #000000;
+}

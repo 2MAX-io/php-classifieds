@@ -65,4 +65,66 @@ class EmailService
         $this->mailer->send($message);
         $this->mailer->getTransport();
     }
+
+    public function sendEmailChangeConfirmationToPreviousEmail(User $user, string $newEmail): void
+    {
+        $message = (new \Swift_Message($this->trans->trans('trans.Change email confirmation')))
+            ->setReplyTo($this->environmentService->getMailerReplyToAddress())
+            ->setFrom($this->environmentService->getMailerFromEmailAddress(), $this->environmentService->getMailerFromName())
+            ->setTo($user->getEmail())
+            ->setBody(
+                $this->twig->render(
+                    'email/change_email_previous_email_confirmation.html.twig',
+                    [
+                        'user' => $user,
+                        'newEmail' => $newEmail,
+                    ]
+                ),
+                'text/html'
+            )
+            /*
+             * If you also want to include a plaintext version of the message
+            ->addPart(
+                $this->renderView(
+                    'emails/registration.txt.twig',
+                    ['name' => $name]
+                ),
+                'text/plain'
+            )
+            */
+        ;
+        $this->mailer->send($message);
+        $this->mailer->getTransport();
+    }
+
+    public function sendEmailChangeNotificationToNewEmail(User $user, string $newEmail): void
+    {
+        $message = (new \Swift_Message($this->trans->trans('trans.Change email confirmation')))
+            ->setReplyTo($this->environmentService->getMailerReplyToAddress())
+            ->setFrom($this->environmentService->getMailerFromEmailAddress(), $this->environmentService->getMailerFromName())
+            ->setTo($newEmail)
+            ->setBody(
+                $this->twig->render(
+                    'email/change_email_new_email_notification.html.twig',
+                    [
+                        'user' => $user,
+                        'newEmail' => $newEmail,
+                    ]
+                ),
+                'text/html'
+            )
+            /*
+             * If you also want to include a plaintext version of the message
+            ->addPart(
+                $this->renderView(
+                    'emails/registration.txt.twig',
+                    ['name' => $name]
+                ),
+                'text/plain'
+            )
+            */
+        ;
+        $this->mailer->send($message);
+        $this->mailer->getTransport();
+    }
 }

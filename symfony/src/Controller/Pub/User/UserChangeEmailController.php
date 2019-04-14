@@ -28,7 +28,7 @@ class UserChangeEmailController extends AbstractController
         $form = $this->createForm(ChangeEmailType::class, []);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $changeEmailService->changeEmail(
+            $changeEmailService->sendConfirmation(
                 $currentUserService->getUser(),
                 $form->get(ChangeEmailType::FORM_NEW_EMAIL)->getData()
             );
@@ -37,7 +37,7 @@ class UserChangeEmailController extends AbstractController
 
             $flashService->addFlash(
                 FlashInterface::SUCCESS_ABOVE_FORM,
-                'trans.Email password has been successfully changed'
+                'trans.We send email change confirmation to both new and previous email, please click confirmation link in email to finish email change.'
             );
 
             return $this->redirectToRoute('app_user_change_email');
@@ -45,6 +45,35 @@ class UserChangeEmailController extends AbstractController
 
         return $this->render('user/change_email.html.twig', [
             'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/user/account/changeEmail/confirmation/previous/{token}", name="app_user_change_email_previous_email_confirmation")
+     */
+    public function changeEmailPreviousConfirmation(
+        string $token,
+        Request $request,
+        CurrentUserService $currentUserService,
+        ChangeEmailService $changeEmailService,
+        FlashService $flashService
+    ): Response {
+        if ($token === $currentUserService->getUser()->getConfirmationToken()) {
+            $changeEmailService->changeEmail(
+                $currentUserService->getUser(),
+                $request->query->get('newEmail')
+            );
+        }
+
+        $flashService->addFlash(
+            FlashInterface::SUCCESS_ABOVE_FORM,
+            'trans.Email change has been successful'
+        );
+
+        $this->getDoctrine()->getManager()->flush();
+
+        return $this->render('user/change_email.html.twig', [
+            'form' => $this->createForm(ChangeEmailType::class, [])->createView(),
         ]);
     }
 }

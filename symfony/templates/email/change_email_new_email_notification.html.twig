@@ -1,0 +1,13 @@
+<p>
+    {{ 'trans.You requested change of email address to this one' | trans }}
+</p>
+
+{# @var user \App\Entity\User #}
+
+<p>
+    {{ 'trans.We received request to change your email adddres to this one' | trans }}
+</p>
+
+<p>
+    {{ 'trans.From your old email:' | trans }}: {{ user.email }}
+</p>

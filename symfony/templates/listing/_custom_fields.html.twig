@@ -1,24 +1,39 @@
 <script type="text/javascript">
     let customFields = {};
     customFields.loadedCategory = null;
-
-    let loadCustomFields = function() {
+    customFields.values = [];
+    customFields.loadFromBackend = function() {
         let listingId = null | {{ listing.id | default('null') }};
         let categoryId = parseInt($('.formCategory').val());
         customFields.loadedCategory = categoryId;
         $.get(Routing.generate('app_listing_get_custom_fields', {listingId: listingId, categoryId: categoryId}), function (data) {
             $('.formCustomFieldsLoaded').remove();
             $(data).insertAfter('.formCustomFieldsHidden');
+
+            $('.formCustomFieldsLoaded').find('[name^="form_custom_field"]').each(function(){
+                let $input = $(this);
+                $input.val(customFields.values[$input.attr('name')]);
+            });
         });
     };
 
-    loadCustomFields();
+    customFields.loadFromBackend();
 
     $('.formCategory').on('change', function () {
         if (customFields.loadedCategory === parseInt($('.formCategory').val())){
             return;
         }
 
-        loadCustomFields();
+        $('.formCustomFieldsLoaded').find('[name^="form_custom_field"]').each(function(){
+            let $input = $(this);
+
+            if ($input.val().trim() === ''){
+                return;
+            }
+
+            customFields.values[$input.attr('name')] = $input.val();
+        });
+
+        customFields.loadFromBackend();
     });
 </script>

@@ -49,7 +49,7 @@ class ListingType extends AbstractType
                 [
                     'class' => Category::class,
                     'placeholder' => 'trans.Select category',
-                    'label' => 'trans.Category',
+                    'label' => 'trans.Select category',
                     'attr' => [
                         'class' => 'formCategory',
                     ],

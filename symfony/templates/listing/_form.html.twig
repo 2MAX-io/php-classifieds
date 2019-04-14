@@ -11,7 +11,7 @@
                 <div class="col-lg-4 cascader-level cascader-level-{{ levelId }}" data-cascader-level="{{ levelId }}">
                     {% for categoryLevel in level %}
                         <div class="cascader-branch-list cascader-branch-list-{{ categoryLevel.id }} collapse">
-                            <h4 class="cascader-branch-list-header">{{ categoryLevel.name }}</h4>
+                            <h5 class="cascader-branch-list-header">{{ categoryLevel.name }}</h5>
                             <div class="cascader-branch-list-elements">
                                 {% for category in categoryLevel.children %}
                                     <div onclick="cascader.select({{ category.id }}, this)" class="cascader-branch cascader-click">{{ category.name }}</div>

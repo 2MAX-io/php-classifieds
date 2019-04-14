@@ -62,6 +62,10 @@ class CustomFieldsForListingFormService
         }
 
         foreach ($customFieldValueList as $customFieldId => $customFieldValue) {
+            if (empty(trim($customFieldValue))) {
+                continue;
+            }
+
             $option = null;
             if (strpos($customFieldValue, '__form_custom_field_option_id_') === 0) {
                 $optionId = (int) (str_replace('__form_custom_field_option_id_', '', $customFieldValue));

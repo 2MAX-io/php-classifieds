@@ -23,7 +23,7 @@
 </p>
 
 <p>
-    <a href="{{ url('app_user_change_email_previous_email_confirmation', {'token': user.confirmationToken, 'newEmail' : newEmail}) }}">{{ 'trans.I confirm change email to' | trans }}: {{ newEmail }}</a>
+    <a href="{{ url('app_user_change_email_previous_email_confirmation', {'token': user.confirmationToken}) }}">{{ 'trans.I confirm change email to' | trans }}: {{ newEmail }}</a>
 
-    <pre>{{ url('app_user_change_email_previous_email_confirmation', {'token': user.confirmationToken, 'newEmail' : newEmail}) }}</pre>
+    <pre>{{ url('app_user_change_email_previous_email_confirmation', {'token': user.confirmationToken}) }}</pre>
 </p>

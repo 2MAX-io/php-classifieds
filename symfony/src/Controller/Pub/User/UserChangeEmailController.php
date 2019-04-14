@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace App\Controller\Pub\User;
 
+use App\Entity\Token;
 use App\Form\User\ChangeEmailType;
 use App\Security\CurrentUserService;
 use App\Service\FlashBag\FlashService;
+use App\Service\System\Token\TokenService;
 use App\Service\User\Create\ChangeEmailService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -52,16 +54,28 @@ class UserChangeEmailController extends AbstractController
      */
     public function changeEmailPreviousConfirmation(
         string $token,
-        Request $request,
         CurrentUserService $currentUserService,
         ChangeEmailService $changeEmailService,
+        TokenService $tokenService,
         FlashService $flashService
     ): Response {
-        $newEmail = $request->query->get('newEmail');
-        if ($token === $currentUserService->getUser()->getConfirmationToken()) {
+        $tokenEntity = $tokenService->getToken($token, Token::EMAIL_CHANGE_TYPE);
+
+        if ($tokenEntity === null) {
+            $flashService->addFlash(
+                FlashService::ERROR_ABOVE_FORM,
+                'trans.Confirmation link is invalid or expired'
+            );
+
+            return $this->redirectToRoute('app_user_change_email');
+        }
+
+        $newEmail = $tokenEntity->getValueMain();
+
+        if ($tokenEntity->getToken() === $currentUserService->getUser()->getConfirmationToken()) {
             $changeEmailService->changeEmail(
                 $currentUserService->getUser(),
-                $newEmail
+                $tokenEntity->getValueMain()
             );
 
             $this->getDoctrine()->getManager()->flush();
@@ -84,8 +98,6 @@ class UserChangeEmailController extends AbstractController
             }
         }
 
-        return $this->render('user/change_email.html.twig', [
-            'form' => $this->createForm(ChangeEmailType::class, [])->createView(),
-        ]);
+        return $this->redirectToRoute('app_user_change_email');
     }
 }

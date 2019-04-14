@@ -127,4 +127,34 @@ class EmailService
         $this->mailer->send($message);
         $this->mailer->getTransport();
     }
+
+    public function changePasswordConfirmation(User $user): void
+    {
+        $message = (new \Swift_Message($this->trans->trans('trans.Change password confirmation')))
+            ->setReplyTo($this->environmentService->getMailerReplyToAddress())
+            ->setFrom($this->environmentService->getMailerFromEmailAddress(), $this->environmentService->getMailerFromName())
+            ->setTo($user->getEmail())
+            ->setBody(
+                $this->twig->render(
+                    'email/change_password_confirmation.html.twig',
+                    [
+                        'user' => $user,
+                    ]
+                ),
+                'text/html'
+            )
+            /*
+             * If you also want to include a plaintext version of the message
+            ->addPart(
+                $this->renderView(
+                    'emails/registration.txt.twig',
+                    ['name' => $name]
+                ),
+                'text/plain'
+            )
+            */
+        ;
+        $this->mailer->send($message);
+        $this->mailer->getTransport();
+    }
 }

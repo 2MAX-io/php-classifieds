@@ -10,7 +10,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Token
 {
-    public const EMAIL_CHANGE_TYPE = 'EMAIL_CHANGE_TYPE';
+    public const USER_EMAIL_CHANGE_TYPE = 'USER_EMAIL_CHANGE_TYPE';
+    public const USER_PASSWORD_CHANGE_TYPE = 'USER_PASSWORD_CHANGE_TYPE';
 
     /**
      * @ORM\Id()

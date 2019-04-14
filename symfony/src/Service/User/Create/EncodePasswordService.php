@@ -32,7 +32,7 @@ class EncodePasswordService
         $user->setPassword($this->getEncodedPassword($user, $plaintextPassword));
     }
 
-    private function getEncodedPassword(
+    public function getEncodedPassword(
         User $user,
         string $plaintextPassword
     ): string {

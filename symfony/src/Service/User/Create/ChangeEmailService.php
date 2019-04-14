@@ -37,7 +37,7 @@ class ChangeEmailService
 
     public function sendConfirmation(User $user, string $newEmail)
     {
-        $token = $this->tokenService->createToken($newEmail, Token::EMAIL_CHANGE_TYPE, Carbon::now()->add('day', 7));
+        $token = $this->tokenService->createToken($newEmail, Token::USER_EMAIL_CHANGE_TYPE, Carbon::now()->add('day', 7));
         $user->setConfirmationToken($token);
         $this->emailService->sendEmailChangeConfirmationToPreviousEmail($user, $newEmail);
         $this->emailService->sendEmailChangeNotificationToNewEmail($user, $newEmail);

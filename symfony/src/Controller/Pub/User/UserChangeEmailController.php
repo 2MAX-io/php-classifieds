@@ -59,7 +59,7 @@ class UserChangeEmailController extends AbstractController
         TokenService $tokenService,
         FlashService $flashService
     ): Response {
-        $tokenEntity = $tokenService->getToken($token, Token::EMAIL_CHANGE_TYPE);
+        $tokenEntity = $tokenService->getToken($token, Token::USER_EMAIL_CHANGE_TYPE);
 
         if ($tokenEntity === null) {
             $flashService->addFlash(

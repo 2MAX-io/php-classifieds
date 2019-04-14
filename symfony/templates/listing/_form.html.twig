@@ -8,7 +8,7 @@
     <div id="cascader-category-select" class="cascader-main collapse">
         <div class="row no-gutters">
             {% for levelId, level in formCategorySelectList %}
-                <div class="col-lg-4 cascader-level" data-cascader-level="{{ levelId }}">
+                <div class="col-lg-4 cascader-level cascader-level-{{ levelId }}" data-cascader-level="{{ levelId }}">
                     {% for categoryLevel in level %}
                         <div class="cascader-branch-list cascader-branch-list-{{ categoryLevel.id }} collapse">
                             <h4 class="cascader-branch-list-header">{{ categoryLevel.name }}</h4>

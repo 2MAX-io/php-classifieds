@@ -36,16 +36,16 @@
 
     cascader.hideLowerLevels = function() {
         let level = cascader.currentLevel;
-        while ($mainElement.find('.cascader-level[data-cascader-level="'+level+'"]').length) {
-            $mainElement.find('.cascader-level[data-cascader-level="'+level+'"] .cascader-branch-list').hide();
+        while ($mainElement.find('.cascader-level.cascader-level-'+level).length) {
+            $mainElement.find('.cascader-level.cascader-level-"'+level+' .cascader-branch-list').hide();
             level += 1;
         }
     };
 
     cascader.removeSelection = function() {
         let level = cascader.clickedLevel;
-        while ($mainElement.find('.cascader-level[data-cascader-level="'+level+'"]').length) {
-            $mainElement.find('.cascader-level[data-cascader-level="'+level+'"] .cascader-selected').removeClass('cascader-selected');
+        while ($mainElement.find('.cascader-level.cascader-level-'+level).length) {
+            $mainElement.find('.cascader-level.cascader-level-'+level+' .cascader-selected').removeClass('cascader-selected');
             level += 1;
         }
     };

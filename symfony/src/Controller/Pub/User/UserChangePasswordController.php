@@ -6,7 +6,6 @@ namespace App\Controller\Pub\User;
 
 use App\Form\User\ChangePasswordType;
 use App\Security\CurrentUserService;
-use App\Service\FlashBag\FlashInterface;
 use App\Service\FlashBag\FlashService;
 use App\Service\User\Create\ChangePasswordService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -36,7 +35,7 @@ class UserChangePasswordController extends AbstractController
             $this->getDoctrine()->getManager()->flush();
 
             $flashService->addFlash(
-                FlashInterface::SUCCESS_ABOVE_FORM,
+                FlashService::SUCCESS_ABOVE_FORM,
                 'trans.Password has been successfully changed'
             );
 

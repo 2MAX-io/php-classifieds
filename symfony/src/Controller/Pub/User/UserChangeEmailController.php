@@ -6,7 +6,6 @@ namespace App\Controller\Pub\User;
 
 use App\Form\User\ChangeEmailType;
 use App\Security\CurrentUserService;
-use App\Service\FlashBag\FlashInterface;
 use App\Service\FlashBag\FlashService;
 use App\Service\User\Create\ChangeEmailService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -36,7 +35,7 @@ class UserChangeEmailController extends AbstractController
             $this->getDoctrine()->getManager()->flush();
 
             $flashService->addFlash(
-                FlashInterface::SUCCESS_ABOVE_FORM,
+                FlashService::SUCCESS_ABOVE_FORM,
                 'trans.We send email change confirmation to both new and previous email, please click confirmation link in email to finish email change.'
             );
 
@@ -58,19 +57,32 @@ class UserChangeEmailController extends AbstractController
         ChangeEmailService $changeEmailService,
         FlashService $flashService
     ): Response {
+        $newEmail = $request->query->get('newEmail');
         if ($token === $currentUserService->getUser()->getConfirmationToken()) {
             $changeEmailService->changeEmail(
                 $currentUserService->getUser(),
-                $request->query->get('newEmail')
+                $newEmail
             );
+
+            $this->getDoctrine()->getManager()->flush();
+
+            $flashService->addFlash(
+                FlashService::SUCCESS_ABOVE_FORM,
+                'trans.Email change has been successful'
+            );
+        } else {
+            if ($newEmail === $currentUserService->getUser()->getEmail()) {
+                $flashService->addFlash(
+                    FlashService::SUCCESS_ABOVE_FORM,
+                    'trans.Email change has been successful'
+                );
+            } else {
+                $flashService->addFlash(
+                    FlashService::ERROR_ABOVE_FORM,
+                    'trans.Email change failed, please check if confirmation link is correct'
+                );
+            }
         }
-
-        $flashService->addFlash(
-            FlashInterface::SUCCESS_ABOVE_FORM,
-            'trans.Email change has been successful'
-        );
-
-        $this->getDoctrine()->getManager()->flush();
 
         return $this->render('user/change_email.html.twig', [
             'form' => $this->createForm(ChangeEmailType::class, [])->createView(),

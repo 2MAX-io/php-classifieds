@@ -337,3 +337,27 @@ svg.icon {
 .form-listing-description-textarea {
     min-height: 17rem;
 }
+
+.cascader-main {
+    /*border: 1px solid black;*/
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.cascader-level {
+    border-right: 1px solid black;
+}
+
+.cascader-branch.cascader-click {
+    cursor: pointer;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+.cascader-branch.cascader-click:hover {
+    background-color: #e1e1e1;
+}
+
+.cascader-branch.cascader-click.cascader-selected {
+    background-color: red;
+}

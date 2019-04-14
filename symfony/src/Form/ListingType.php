@@ -79,15 +79,6 @@ class ListingType extends AbstractType
                     }
                 ]
             )
-            ->add('price', IntegerType::class, [
-                'label' => 'trans.Price'
-            ])
-            ->add('phone', TextType::class, [
-                'label' => 'trans.Phone'
-            ])
-            ->add('email', EmailType::class, [
-                'label' => 'trans.Email'
-            ])
             ->add('validityTimeDays', ChoiceType::class, [
                 'mapped' => false,
                 'choices' => $this->validUntilSetService->getValidityTimeDaysChoices(),
@@ -98,6 +89,15 @@ class ListingType extends AbstractType
                 ],
                 'label' => 'trans.Validity time',
                 'data' => 9,
+            ])
+            ->add('phone', TextType::class, [
+                'label' => 'trans.Phone'
+            ])
+            ->add('email', EmailType::class, [
+                'label' => 'trans.Email'
+            ])
+            ->add('price', IntegerType::class, [
+                'label' => 'trans.Price'
             ])
             ->add('city', TextType::class, [
                 'label' => 'trans.City'

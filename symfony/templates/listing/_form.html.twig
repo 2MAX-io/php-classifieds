@@ -3,23 +3,26 @@
 {{ form_row(form.title) }}
 {{ form_row(form.description) }}
 
-{{ form_label(form.category) }}
-<div id="cascader-category-select" class="cascader collapse">
-    <div class="row">
-        {% for levelId, level in formCategorySelectList %}
-            <div class="col-md-4 cascader-level" data-cascader-level="{{ levelId }}">
-                {% for categoryLevel in level %}
-                    <div class="cascader-branch-list cascader-branch-list-{{ categoryLevel.id }} collapse">
-                        {% for category in categoryLevel.children %}
-                            <div onclick="cascader.select({{ category.id }}, this)">{{ category.name }}</div>
-                        {% endfor %}
-                    </div>
-                {% endfor %}
-            </div>
-        {% endfor %}
+<div class="form-group">
+    {{ form_label(form.category) }}
+    <div id="cascader-category-select" class="cascader-main collapse">
+        <div class="row">
+            {% for levelId, level in formCategorySelectList %}
+                <div class="col-md-4 cascader-level" data-cascader-level="{{ levelId }}">
+                    {% for categoryLevel in level %}
+                        <div class="cascader-branch-list cascader-branch-list-{{ categoryLevel.id }} collapse">
+                            <h4>{{ categoryLevel.name }}</h4>
+                            {% for category in categoryLevel.children %}
+                                <div onclick="cascader.select({{ category.id }}, this)" class="cascader-branch cascader-click">{{ category.name }}</div>
+                            {% endfor %}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        </div>
     </div>
+    {{ form_widget(form.category) }}
 </div>
-{{ form_widget(form.category) }}
 
 {{ form_widget(form) }}
 

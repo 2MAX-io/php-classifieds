@@ -1,6 +1,7 @@
 <script type="text/javascript">
     let cascader = {};
     cascader.currentLevel = 0;
+    cascader.clickedLevel = 0;
 
     let $mainElement = $('#cascader-category-select');
     $mainElement.show();
@@ -10,6 +11,8 @@
         let $clicked = $(clicked);
         let $branchList = $mainElement.find('.cascader-branch-list-' + selectionId);
         let hasChildren = $branchList.length > 0;
+
+        cascader.clickedLevel = $clicked.parents('.cascader-level').data('cascader-level');
 
         let newLevel = null;
         if (hasChildren) {
@@ -26,12 +29,23 @@
         }
 
         cascader.currentLevel = newLevel;
+        cascader.removeSelection();
+        $clicked.addClass('cascader-selected');
+
     };
 
     cascader.hideLowerLevels = function() {
         let level = cascader.currentLevel;
-        while (level <= cascader.currentLevel) {
+        while ($mainElement.find('.cascader-level[data-cascader-level="'+level+'"]').length) {
             $mainElement.find('.cascader-level[data-cascader-level="'+level+'"] .cascader-branch-list').hide();
+            level += 1;
+        }
+    };
+
+    cascader.removeSelection = function() {
+        let level = cascader.clickedLevel;
+        while ($mainElement.find('.cascader-level[data-cascader-level="'+level+'"]').length) {
+            $mainElement.find('.cascader-level[data-cascader-level="'+level+'"] .cascader-selected').removeClass('cascader-selected');
             level += 1;
         }
     };

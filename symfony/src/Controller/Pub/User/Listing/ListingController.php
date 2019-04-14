@@ -2,6 +2,7 @@
 
 namespace App\Controller\Pub\User\Listing;
 
+use App\Controller\Pub\User\Base\AbstractUserController;
 use App\Entity\Listing;
 use App\Form\ListingType;
 use App\Security\CurrentUserService;
@@ -13,13 +14,11 @@ use App\Service\Listing\Save\ListingFileUploadService;
 use App\Service\Log\PoliceLogIpService;
 use App\Service\User\Create\UserCreateService;
 use App\Service\User\Listing\UserListingListService;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
-class ListingController extends AbstractController
+class ListingController extends AbstractUserController
 {
     /**
      * @Route("/user/listing/", name="app_listing_index", methods={"GET"})
@@ -110,9 +109,7 @@ class ListingController extends AbstractController
         PoliceLogIpService $logIpService,
         CategoryListService $categoryListService
     ): Response {
-        if ($currentUserService->getUser() !== $listing->getUser()) {
-            throw new UnauthorizedHttpException('user of listing do not match current user');
-        }
+        $this->dennyUnlessCurrentUserListing($listing);
 
         $form = $this->createForm(ListingType::class, $listing);
         $form->remove('validityTimeDays');
@@ -150,9 +147,7 @@ class ListingController extends AbstractController
      */
     public function delete(Request $request, Listing $listing, CurrentUserService $currentUserService): Response
     {
-        if ($currentUserService->getUser() !== $listing->getUser()) {
-            throw new UnauthorizedHttpException('user of listing do not match current user');
-        }
+        $this->dennyUnlessCurrentUserListing($listing);
 
         if ($this->isCsrfTokenValid('delete'.$listing->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
@@ -168,9 +163,7 @@ class ListingController extends AbstractController
      */
     public function deactivate(Request $request, Listing $listing, CurrentUserService $currentUserService): Response
     {
-        if ($currentUserService->getUser() !== $listing->getUser()) {
-            throw new UnauthorizedHttpException('user of listing do not match current user');
-        }
+        $this->dennyUnlessCurrentUserListing($listing);
 
         if ($this->isCsrfTokenValid('deactivate'.$listing->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
@@ -186,9 +179,7 @@ class ListingController extends AbstractController
      */
     public function activate(Request $request, Listing $listing, CurrentUserService $currentUserService): Response
     {
-        if ($currentUserService->getUser() !== $listing->getUser()) {
-            throw new UnauthorizedHttpException('user of listing do not match current user');
-        }
+        $this->dennyUnlessCurrentUserListing($listing);
 
         if ($this->isCsrfTokenValid('activate'.$listing->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();

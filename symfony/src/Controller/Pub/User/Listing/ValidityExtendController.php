@@ -4,21 +4,23 @@ declare(strict_types=1);
 
 namespace App\Controller\Pub\User\Listing;
 
+use App\Controller\Pub\User\Base\AbstractUserController;
 use App\Entity\Listing;
 use App\Form\ValidityExtendType;
 use App\Service\Listing\ValidityExtend\ValidUntilSetService;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class ValidityExtendController extends AbstractController
+class ValidityExtendController extends AbstractUserController
 {
     /**
      * @Route("/user/validity-extend/{id}", name="app_user_validity_extend")
      */
     public function validityExtend(Request $request, Listing $listing, ValidUntilSetService $validUntilSetService): Response
     {
+        $this->dennyUnlessCurrentUserListing($listing);
+
         $form = $this->createForm(ValidityExtendType::class, []);
 
         $form->handleRequest($request);

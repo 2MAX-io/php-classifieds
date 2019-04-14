@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace App\Controller\Pub\User\Listing;
 
+use App\Controller\Pub\User\Base\AbstractUserController;
+use App\Entity\Listing;
 use App\Service\Listing\CustomField\CustomFieldsForListingFormService;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class GetCustomFieldsController extends AbstractController
+class GetCustomFieldsController extends AbstractUserController
 {
     /**
      * @Route("/listing/get-custom-fields", options={"expose"=true}, name="app_listing_get_custom_fields")
@@ -18,6 +19,11 @@ class GetCustomFieldsController extends AbstractController
     public function getCustomFields(Request $request, CustomFieldsForListingFormService $customFieldsForListingFormService): Response
     {
         $listingId = $request->query->get('listingId', null);
+        if ($listingId) {
+            $listing = $this->getDoctrine()->getRepository(Listing::class)->find($listingId);
+            $this->dennyUnlessCurrentUserListing($listing);
+        }
+
         $categoryId = $request->query->get('categoryId', null);
 
         return $this->render('listing/get_custom_fields.html.twig', [

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Controller\Pub\User;
+namespace App\Controller\Pub\User\Account;
 
 use App\Service\User\Create\RegisterConfirmService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -18,7 +18,7 @@ class RegisterController extends AbstractController
     {
         $registerConfirmService->confirmRegistration($token);
 
-        return $this->render('user/register/confirm/register_confirm.html.twig', [
+        return $this->render('user/account/register_confirm.html.twig', [
         ]);
     }
 }

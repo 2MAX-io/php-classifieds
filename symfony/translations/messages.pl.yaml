@@ -102,3 +102,5 @@ trans:
   Change email: 'Zmień email'
   Change email confirmation: 'Potwierdzenie zmiany email'
   Change password confirmation: 'Potwierdzenie zmiany hasła'
+  Remind password: 'Przypomnij hasło'
+  Forgot password?: 'Nie pamiętasz hasła?'

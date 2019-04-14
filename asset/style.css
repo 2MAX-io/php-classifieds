@@ -344,14 +344,21 @@ svg.icon {
     margin-bottom: 1rem;
 }
 
-.cascader-level {
-    border-right: 1px solid black;
+.cascader-branch-list {
+    border-right: 1px solid #343a40;
 }
 
 .cascader-branch.cascader-click {
     cursor: pointer;
-    padding-top: 1rem;
-    padding-bottom: 1rem;
+    padding-top: 0.3rem;
+    padding-bottom: 0.4rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+.cascader-branch-list-header {
+    padding-left: 0rem;
+    padding-right: 1rem;
 }
 
 .cascader-branch.cascader-click:hover {
@@ -359,5 +366,6 @@ svg.icon {
 }
 
 .cascader-branch.cascader-click.cascader-selected {
-    background-color: red;
+    background-color: #343a40;
+    color: white;
 }

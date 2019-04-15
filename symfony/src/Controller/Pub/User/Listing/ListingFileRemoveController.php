@@ -8,12 +8,12 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class ListingFileDeleteController extends AbstractUserController
+class ListingFileRemoveController extends AbstractUserController
 {
     /**
-     * @Route("/user/listing/file/delete", name="app_listing_file_delete", methods={"POST"})
+     * @Route("/user/listing/file/delete", name="app_listing_file_remove", methods={"POST"})
      */
-    public function index(Request $request): Response
+    public function remove(Request $request): Response
     {
         $fileId = $request->request->get('listingFileId');
         $listingFile = $this->getDoctrine()->getRepository(ListingFile::class)->find($fileId);

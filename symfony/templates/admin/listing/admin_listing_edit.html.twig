@@ -13,5 +13,16 @@
 
         <button class="btn btn-primary">{{ button_label|default('trans.Save' | trans) }}</button>
         {{ form_end(form) }}
+
+        <div class="card-deck">
+            {% for listingFile in listing.listingFiles %}
+                <div class="card-body" style="max-width: 10rem;">
+                    <div><img class="container-img" src="{{ asset(listingFile.path) }}" alt="" style="max-height: 100px;"></div>
+                    <div>
+                        {{ include('admin/listing/_delete_file_form.html.twig') }}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
     </div>
 {% endblock %}

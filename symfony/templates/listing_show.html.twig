@@ -26,7 +26,11 @@
                     <div class="owl-carousel">
                         {% for listingFile in listing.listingFiles %}
                             <a href="{{ asset(listingFile.path) }}" data-toggle="lightbox" data-gallery="multiimages" data-title="{{ listing.title }}">
-                                <img src="{{ asset(listingFile.path) }}" class="mx-auto d-block" alt="{{ listing.title }}" style="max-height: 300px; width: auto; text-align: center;" />
+                                <img
+                                        src="{{ asset(listingFile.path) }}"
+                                        class="mx-auto listing-show-top-image"
+                                        alt="{{ listing.title }}"
+                                />
                             </a>
                         {% endfor %}
                     </div>

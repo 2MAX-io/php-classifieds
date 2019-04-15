@@ -36,11 +36,13 @@ class ListingShowSingleService
         $viewsCountQuery = "($viewsCountQuery) AS viewsCount";
 
         $qb = $this->em->getRepository(Listing::class)->createQueryBuilder('listing');
-        $qb->addSelect('listingCustomFieldValue');
         $qb->addSelect('customField');
+        $qb->addSelect('listingCustomFieldValue');
+        $qb->addSelect('customFieldOption');
         $qb->addSelect('listingFile');
         $qb->addSelect($viewsCountQuery);
         $qb->leftJoin('listing.listingCustomFieldValues', 'listingCustomFieldValue');
+        $qb->leftJoin('listingCustomFieldValue.customFieldOption', 'customFieldOption');
         $qb->leftJoin('listingCustomFieldValue.customField', 'customField');
         $qb->leftJoin('listing.listingFiles', 'listingFile');
         $qb->andWhere($qb->expr()->eq('listing.id', ':listingId'));
@@ -52,7 +54,7 @@ class ListingShowSingleService
     public function saveView(Listing $listing): void
     {
         $query = $this->em->getConnection()->prepare('
-            INSERT LOW_PRIORITY INTO listing_view 
+            INSERT INTO listing_view 
             SET listing_id=:listingId,
                 view_count=1,
                 datetime=:datetime

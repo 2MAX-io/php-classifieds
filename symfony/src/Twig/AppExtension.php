@@ -13,6 +13,7 @@ class AppExtension extends AbstractExtension
     {
         return [
             new TwigFunction('isAdmin', [AppRuntime::class, 'isAdmin']),
+            new TwigFunction('isCurrentUserListing', [AppRuntime::class, 'isCurrentUserListing']),
         ];
     }
 }

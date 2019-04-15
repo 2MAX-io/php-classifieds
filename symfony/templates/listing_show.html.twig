@@ -118,6 +118,9 @@
 
             <!-- Sidebar -->
             <div class="col-md-4">
+                {% if isCurrentUserListing(listing) %}
+                    <a href="{{ path('listing_edit', {'id': listing.id}) }}" class="btn btn-primary">{{ 'trans.Edit listing' | trans }}</a>
+                {% endif %}
 
                 {% if listing.price is not empty %}
                     <div>

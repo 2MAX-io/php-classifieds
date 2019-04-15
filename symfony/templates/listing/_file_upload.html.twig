@@ -21,7 +21,7 @@
         },
         onRemove: function(item, listEl, parentEl, newInputEl, inputEl) {
             if ('listingFileId' in item.data) {
-                $.post('{{ path('app_listing_file_delete') }}', {
+                $.post('{{ path('app_listing_file_remove') }}', {
                     listingFileId: item.data.listingFileId
                 });
             }

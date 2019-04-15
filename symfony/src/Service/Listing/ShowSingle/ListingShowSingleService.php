@@ -46,8 +46,6 @@ class ListingShowSingleService
         $qb->andWhere($qb->expr()->eq('listing.id', ':listingId'));
         $qb->setParameter(':listingId', $listingId);
 
-        $this->listingPublicDisplayService->applyPublicDisplayConditions($qb);
-
         return ListingShowDto::fromDoctrineResult($qb->getQuery()->getOneOrNullResult());
     }
 

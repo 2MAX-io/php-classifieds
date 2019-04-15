@@ -109,6 +109,7 @@ class EmailService
                     [
                         'user' => $user,
                         'newEmail' => $newEmail,
+                        'oldEmail' => $user->getEmail(),
                     ]
                 ),
                 'text/html'

@@ -1,13 +1,17 @@
 <p>
-    {{ 'trans.You requested change of email address to this one' | trans }}
+    {{ 'trans.Email change notification' | trans }}
 </p>
 
 {# @var user \App\Entity\User #}
 
 <p>
-    {{ 'trans.We received request to change your email adddres to this one' | trans }}
+    {{ 'trans.We received request to change your acount\'s email addrest to' | trans }}: <b>{{ newEmail }}</b> {{ 'trans.(this mailbox)' | trans }}
 </p>
 
 <p>
-    {{ 'trans.From your old email:' | trans }}: {{ user.email }}
+    {{ 'trans.From your previous email account' | trans }}: <b>{{ oldEmail }}</b>
+</p>
+
+<p>
+    {{ 'trans.This email is just verification that new email address is correct' | trans }}
 </p>

@@ -31,6 +31,8 @@ class ListingSearchService
             $qb->setParameter(':query', rtrim($_GET['query'], '*') .'*');
         }
 
+        $qb->orderBy('listing.id', 'DESC');
+
         return $qb->getQuery()->getResult();
     }
 }

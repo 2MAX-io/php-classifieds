@@ -23,8 +23,7 @@ class ListingShowController extends AbstractController
         CategoryListService $categoryListService,
         CurrentUserService $currentUserService,
         ListingPublicDisplayService $listingPublicDisplayService
-    ): Response
-    {
+    ): Response {
         $listingShowDto = $listingShowSingleService->getSingle($id);
         if (!$listingShowDto) {
             throw $this->createNotFoundException();

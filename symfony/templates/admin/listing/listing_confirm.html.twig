@@ -32,7 +32,7 @@
                     </td>
                     <td>{{ listing.price }}</td>
                     <td>
-                        <a href="{{ path('listing_edit', {'id': listing.id}) }}" class="btn btn-dark">{{ 'trans.Edit' | trans }}</a>
+                        <a href="{{ path('app_listing_edit', {'id': listing.id}) }}" class="btn btn-dark">{{ 'trans.Edit' | trans }}</a>
 
                         {{ include('admin/listing/_confirm_form.html.twig') }}
 

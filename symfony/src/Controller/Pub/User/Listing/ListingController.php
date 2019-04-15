@@ -86,7 +86,7 @@ class ListingController extends AbstractUserController
                 $newUser->eraseCredentials();
             }
 
-            return $this->redirectToRoute('listing_edit', ['id' => $listing->getId()]);
+            return $this->redirectToRoute('app_listing_edit', ['id' => $listing->getId()]);
         }
 
         return $this->render('listing/new.html.twig', [
@@ -97,7 +97,7 @@ class ListingController extends AbstractUserController
     }
 
     /**
-     * @Route("/user/listing/{id}/edit", name="listing_edit", methods={"GET","POST"})
+     * @Route("/user/listing/{id}/edit", name="app_listing_edit", methods={"GET","POST"})
      */
     public function edit(
         Request $request,
@@ -129,7 +129,7 @@ class ListingController extends AbstractUserController
             $logIpService->saveLog($listing);
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('listing_edit', [
+            return $this->redirectToRoute('app_listing_edit', [
                 'id' => $listing->getId(),
             ]);
         }

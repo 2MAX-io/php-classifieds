@@ -2,6 +2,7 @@
     let customFields = {};
     customFields.loadedCategory = null;
     customFields.values = [];
+
     customFields.loadFromBackend = function() {
         let listingId = null | {{ listing.id | default('null') }};
         let categoryId = parseInt($('.formCategory').val());
@@ -12,7 +13,10 @@
 
             $('.formCustomFieldsLoaded').find('[name^="form_custom_field"]').each(function(){
                 let $input = $(this);
-                $input.val(customFields.values[$input.attr('name')]);
+
+                if (customFields.values[$input.attr('name')] && customFields.values[$input.attr('name')].trim() !== '')  {
+                    $input.val(customFields.values[$input.attr('name')]);
+                }
             });
         });
     };

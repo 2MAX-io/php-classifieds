@@ -7,7 +7,6 @@ namespace App\Controller\Pub\User\Base;
 use App\Entity\Admin;
 use App\Entity\Listing;
 use App\Entity\User;
-use Psr\Container\ContainerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 

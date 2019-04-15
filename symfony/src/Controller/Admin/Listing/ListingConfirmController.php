@@ -39,7 +39,7 @@ class ListingConfirmController extends AbstractAdminController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('app_admin_listing_confirm_list');
+        return $this->redirect($request->headers->get('referer'));;
     }
 
     /**
@@ -55,6 +55,6 @@ class ListingConfirmController extends AbstractAdminController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('app_admin_listing_confirm_list');
+        return $this->redirect($request->headers->get('referer'));;
     }
 }

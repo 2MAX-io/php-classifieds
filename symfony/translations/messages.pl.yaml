@@ -10,7 +10,7 @@ trans:
   Sign in: 'Zaloguj'
   Listings: 'Lista ogłoszeń'
   Create new listing: 'Dodaj nowe ogłoszenie'
-  Edit Listing: 'Edytuj ogłoszenie'
+  Edit listing: 'Edytuj ogłoszenie'
   Create Listing: 'Dodaj ogłoszenie'
   I confirm registration: 'Potwierdzam rejestracje'
   Login: 'Login'
@@ -106,3 +106,7 @@ trans:
   Forgot password?: 'Nie pamiętasz hasła?'
   To remind password, please click confirmation link that you would receive on your email address: 'Aby przypomnieć hasło, prosimy o kilknięcie w link który otrzymasz na Twój adres email'
   Remind password confirmation: 'Potwierdzenie przypomnienia hasła'
+  Edit as admin: 'Edycja jako admin'
+  Edit listing advanced settings: 'Edytuj zaawansowane opcje ogłoszenia'
+  Yes: Tak
+  No: Nie

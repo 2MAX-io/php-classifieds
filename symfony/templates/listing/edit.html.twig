@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Listing{% endblock %}
+{% block title %}Edit listing{% endblock %}
 
 {% block body %}
     <div class="container mt-5">
@@ -12,7 +12,7 @@
             <div class="col-md-8 col-lg-9">
                 <a href="{{ path('app_listing_show', {'id': listing.id}) }}">{{ 'trans.Preview listing' | trans }}</a>
 
-                <h2 class="mb-5">{{ 'trans.Edit Listing' | trans }}</h2>
+                <h2 class="mb-5">{{ 'trans.Edit listing' | trans }}</h2>
 
                 {{ include('listing/_form.html.twig', {'button_label': 'trans.Update' | trans}) }}
 

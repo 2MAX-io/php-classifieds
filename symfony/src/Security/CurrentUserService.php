@@ -41,4 +41,9 @@ class CurrentUserService
 
         return null;
     }
+
+    public function isAdmin(): bool
+    {
+        return $this->getAdmin() instanceof Admin;
+    }
 }

@@ -18,37 +18,37 @@ class AdminListingRestrictedType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('premium', BoolType::class, [
-//            'label' => 'trans.Title'
+            'label' => 'trans.Featured listing?'
         ]);
         $builder->add('premiumUntilDate', DateTimeType::class, [
-//            'label' => 'trans.Title'
+            'label' => 'trans.Featured until'
         ]);
         $builder->add('premiumWeight', IntegerType::class, [
-//            'label' => 'trans.Title'
+            'label' => 'trans.Featured weight'
         ]);
         $builder->add('lastReactivationDate', DateTimeType::class, [
-//            'label' => 'trans.Title'
+            'label' => 'trans.Date of last raising'
         ]);
         $builder->add('validUntilDate', DateTimeType::class, [
-//            'label' => 'trans.Title'
+            'label' => 'trans.Valid until'
         ]);
         $builder->add('adminConfirmed', BoolType::class, [
-//            'label' => 'trans.Title'
+            'label' => 'trans.Confirmed by Admin?'
         ]);
         $builder->add('adminRejected', BoolType::class, [
-//            'label' => 'trans.Title'
+            'label' => 'trans.Rejected by Admin?'
         ]);
         $builder->add('rejectionReason', TextType::class, [
-//            'label' => 'trans.Title'
-        ]);
-        $builder->add('userRemoved', BoolType::class, [
-//            'label' => 'trans.Title'
-        ]);
-        $builder->add('userDeactivated', BoolType::class, [
-//            'label' => 'trans.Title'
+            'label' => 'trans.Reject reason (optional)'
         ]);
         $builder->add('adminRemoved', BoolType::class, [
-//            'label' => 'trans.Title'
+            'label' => 'trans.Is listing removed by Admin?'
+        ]);
+        $builder->add('userRemoved', BoolType::class, [
+            'label' => 'trans.Is listing removed by user?'
+        ]);
+        $builder->add('userDeactivated', BoolType::class, [
+            'label' => 'trans.Is listing deactivated by user?'
         ]);
     }
 

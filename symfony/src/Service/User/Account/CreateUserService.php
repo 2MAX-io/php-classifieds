@@ -10,7 +10,7 @@ use App\Service\Email\EmailService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
-class UserCreateService
+class CreateUserService
 {
     /**
      * @var EntityManagerInterface

@@ -12,7 +12,7 @@ use App\Service\Listing\CustomField\CustomFieldsForListingFormService;
 use App\Service\Listing\Save\CreateListingService;
 use App\Service\Listing\Save\ListingFileUploadService;
 use App\Service\Log\PoliceLogIpService;
-use App\Service\User\Account\UserCreateService;
+use App\Service\User\Account\CreateUserService;
 use App\Service\User\Listing\UserListingListService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -37,7 +37,7 @@ class ListingController extends AbstractUserController
         Request $request,
         ListingFileUploadService $listingFileUploadService,
         CurrentUserService $currentUserService,
-        UserCreateService $userCreateService,
+        CreateUserService $userCreateService,
         LoginUserProgrammaticallyService $loginUserProgrammaticallyService,
         CreateListingService $createListingService,
         CustomFieldsForListingFormService $customFieldsForListingFormService,

@@ -15,7 +15,7 @@
 
     <div class="container mt-3">
         <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-7">
                 <div class="row mb-3">
                     <div class="col-sm-10">
                         <h1>{{ listing.title }}</h1>
@@ -38,12 +38,12 @@
 
                 <!-- Tabs nav -->
                 <ul class="nav nav-tabs flex-column flex-sm-row" id="myTab" role="tablist">
-                    <li class="nav-item flex-sm-fill text-sm-center mr-1">
+                    <li class="nav-item flex-sm-fill text-sm-center">
                         <a href="#overview" class="nav-link active" aria-controls="overview" role="tab" data-toggle="tab" aria-selected="true">{{ 'trans.Ad Details' | trans }}</a>
                     </li>
 
                     {% if listing.listingFiles.count > 0 %}
-                        <li class="nav-item flex-sm-fill text-sm-center mr-1">
+                        <li class="nav-item flex-sm-fill text-sm-center">
                             <a href="#photos" class="nav-link" aria-controls="photos" role="tab" data-toggle="tab">{{ 'trans.Photos' | trans }} ({{ listing.listingFiles.count }})</a>
                         </li>
                     {% endif %}
@@ -117,7 +117,7 @@
             </div>
 
             <!-- Sidebar -->
-            <div class="col-md-4">
+            <div class="col-md-5">
                 {% if isCurrentUserListing(listing) %}
                     <a href="{{ path('app_listing_edit', {'id': listing.id}) }}" class="btn btn-primary">{{ 'trans.Edit listing' | trans }}</a>
                 {% endif %}
@@ -148,6 +148,7 @@
                             </div>
                         </div>
                         {% endif %}
+
                         {% if listing.email is not empty %}
                         <div class="mb-2 py-2">
                             <div class="row">
@@ -160,11 +161,42 @@
                         </div>
                         {% endif %}
 
-                        <div>
-                            <a href="{{ path('app_user_listings', {"user": listing.user.id}) }}">
-                                {{ 'trans.User other listings' | trans }}
-                            </a>
+                        {% if listing.city is not empty %}
+                            <div class="mb-2 py-2">
+                                <div class="row">
+                                    <div class="col-sm-4">{{ 'trans.City' | trans }}</div>
+
+                                    <div class="col-sm-8">
+                                        {{ listing.city }}
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+
+                        <div class="mb-2 py-2">
+                            <div class="row">
+                                <div class="col-sm-4">{{ 'trans.Date added' | trans }}</div>
+
+                                <div class="col-sm-8">
+                                    {{ listing.lastReactivationDate | date }}
+                                </div>
+                            </div>
                         </div>
+
+                        <div class="mb-2 py-2">
+                            <div class="row">
+                                <div class="col-sm-4">{{ 'trans.Expiration date' | trans }}</div>
+
+                                <div class="col-sm-8">
+                                    {{ listing.validUntilDate | date }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <a href="{{ path('app_user_listings', {"user": listing.user.id}) }}" class="btn btn-sm btn-dark btn-block mt-auto">
+                            {{ 'trans.User listings' | trans }}
+                        </a>
                     </div>
                 </div>
 

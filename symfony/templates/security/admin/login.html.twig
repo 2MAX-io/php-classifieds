@@ -18,6 +18,8 @@
                                 <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
                             {% endif %}
 
+                            {% include 'form/_flash_above_form.html.twig' %}
+
                             <h1 class="h3 mb-3 font-weight-normal">{{ 'trans.Please sign in' | trans }}</h1>
 
                             <div class="form-group">

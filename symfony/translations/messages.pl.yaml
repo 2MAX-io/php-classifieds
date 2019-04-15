@@ -141,3 +141,5 @@ trans:
   Account credentials: 'Dane konta'
   Please confirm registration by clicking link bellow: 'messages'
   I confirm password reset: 'Potwierdzam reset hasła'
+  To finish registration, click confirmation link that you will receive in your email: 'By zakończyć rejestrację, kliknij link potwierdzający który otrzymasz na email'
+  Enter your email address: 'Podaj adres email'

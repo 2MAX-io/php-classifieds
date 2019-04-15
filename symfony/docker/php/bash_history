@@ -94,3 +94,5 @@ find . ! -name ".git" | xargs -I {} echo {}
 find . -not -path "*/symfony/docker/mysql*" -type f -exec echo {} \;
 find . -not -path "*/symfony/docker/mysql*" -type f -exec echo {} \; | grep mysql
 php symfony/bin/console doctrine:schema:update --force
+php symfony/bin/console doctrine:schema:update --force
+php symfony/bin/console doctrine:schema:update --force

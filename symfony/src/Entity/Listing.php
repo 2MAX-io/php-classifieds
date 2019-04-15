@@ -31,6 +31,7 @@ class Listing
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="listings")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $user;
 

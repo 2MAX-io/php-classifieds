@@ -378,7 +378,7 @@ svg.icon {
     color: white;
 }
 
-.card-title {
+.categories .card-title {
     margin-bottom: 0.75rem;
     font-size: 1.7rem;
     text-shadow: 1px 1px 1px #000, 0px 0px 3px #000000;
@@ -432,4 +432,8 @@ svg.icon {
     color: white;
     text-shadow: 1px 1px 1px #000, 0px 0px 3px #000000;
     outline: none;
+}
+
+.card-featured .card-img-top {
+    max-height: 202px;
 }

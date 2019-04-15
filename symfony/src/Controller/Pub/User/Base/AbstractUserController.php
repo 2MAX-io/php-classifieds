@@ -23,4 +23,12 @@ abstract class AbstractUserController extends AbstractController
             throw new UnauthorizedHttpException('user of listing do not match current user');
         }
     }
+
+    public function dennyUnlessUser(): void
+    {
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+        if (!$user instanceof User) {
+            $this->denyAccessUnlessGranted(Admin::ROLE_USER, $user);
+        }
+    }
 }

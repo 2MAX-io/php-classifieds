@@ -6,13 +6,11 @@ use App\Controller\Pub\User\Base\AbstractUserController;
 use App\Entity\Listing;
 use App\Form\ListingType;
 use App\Security\CurrentUserService;
-use App\Security\LoginUserProgrammaticallyService;
 use App\Service\Category\CategoryListService;
 use App\Service\Listing\CustomField\CustomFieldsForListingFormService;
 use App\Service\Listing\Save\CreateListingService;
 use App\Service\Listing\Save\ListingFileUploadService;
 use App\Service\Log\PoliceLogIpService;
-use App\Service\User\Account\CreateUserService;
 use App\Service\User\Listing\UserListingListService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -31,19 +29,19 @@ class ListingController extends AbstractUserController
     }
 
     /**
-     * @Route("/new", name="app_listing_new", methods={"GET","POST"})
+     * @Route("/user/new", name="app_listing_new", methods={"GET","POST"})
      */
     public function new(
         Request $request,
         ListingFileUploadService $listingFileUploadService,
         CurrentUserService $currentUserService,
-        CreateUserService $userCreateService,
-        LoginUserProgrammaticallyService $loginUserProgrammaticallyService,
         CreateListingService $createListingService,
         CustomFieldsForListingFormService $customFieldsForListingFormService,
         PoliceLogIpService $logIpService,
         CategoryListService $categoryListService
     ): Response {
+        $this->dennyUnlessUser();
+
         $listing = $createListingService->create();
         $form = $this->createForm(ListingType::class, $listing);
         $form->handleRequest($request);
@@ -58,16 +56,7 @@ class ListingController extends AbstractUserController
             }
             $customFieldsForListingFormService->saveCustomFieldsToListing($listing, $request->request->get('form_custom_field'));
 
-            $newUser = null;
-            if ($currentUserService->getUser()) {
-                $listing->setUser($currentUserService->getUser());
-            } else {
-                if (!$userCreateService->hasUser($listing->getEmail())) {
-                    $newUser = $userCreateService->registerUser($listing->getEmail());
-                    $listing->setUser($newUser);
-                }
-            }
-
+            $listing->setUser($currentUserService->getUser());
             $createListingService->setFormDependent($listing, $form);
 
             $entityManager = $this->getDoctrine()->getManager();
@@ -76,15 +65,6 @@ class ListingController extends AbstractUserController
 
             $logIpService->saveLog($listing);
             $entityManager->flush();
-
-            if (!$currentUserService->getUser() && $newUser) {
-                /**
-                 * IMPORTANT !!!
-                 * this would trigger interactive login that executes flush, so must be last
-                 */
-                $loginUserProgrammaticallyService->loginUser($newUser);
-                $newUser->eraseCredentials();
-            }
 
             return $this->redirectToRoute('app_listing_edit', ['id' => $listing->getId()]);
         }
@@ -104,7 +84,6 @@ class ListingController extends AbstractUserController
         Listing $listing,
         CustomFieldsForListingFormService $customFieldsForListingFormService,
         ListingFileUploadService $listingFileUploadService,
-        CurrentUserService $currentUserService,
         CreateListingService $createListingService,
         PoliceLogIpService $logIpService,
         CategoryListService $categoryListService

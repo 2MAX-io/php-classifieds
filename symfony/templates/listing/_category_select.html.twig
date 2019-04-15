@@ -3,10 +3,6 @@
     cascader.currentLevel = 0;
     cascader.clickedLevel = 0;
 
-    let $mainElement = $('#cascader-category-select');
-    $mainElement.show();
-    $mainElement.find('.cascader-branch-list').first().show();
-
     cascader.select = function (selectionId, clicked) {
         let $clicked = $(clicked);
         let $branchList = $mainElement.find('.cascader-branch-list-' + selectionId);
@@ -50,7 +46,32 @@
         }
     };
 
+    cascader.setValue = function (leafId) {
+        let $leaf = $mainElement.find('.cascader-leaf-' + leafId);
+        let parenLeafId = 0;
+        let $parentLeaf = null;
+        do {
+            let $branchList = $leaf.parents('.cascader-branch-list');
+
+            $leaf.addClass('cascader-selected');
+            $branchList.show();
+
+            parenLeafId = $branchList.data('cascader-leaf');
+            $parentLeaf = $mainElement.find('.cascader-leaf-' + parenLeafId);
+            $leaf = $parentLeaf;
+        } while ($parentLeaf.length);
+    };
+
+    cascader.selectValueFromForm = function() {
+        cascader.setValue($('.formCategory').val());
+    };
+
     cascader.onLeafSelection = function(leafId) {
         $('.formCategory').val(leafId);
     };
+
+    let $mainElement = $('#cascader-category-select');
+    $mainElement.show();
+    $mainElement.find('.cascader-branch-list').first().show();
+    cascader.selectValueFromForm();
 </script>

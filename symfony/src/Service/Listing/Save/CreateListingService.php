@@ -67,7 +67,7 @@ class CreateListingService
         return $returnFiles;
     }
 
-    private function saveSearchText(Listing $listing)
+    public function saveSearchText(Listing $listing)
     {
         $searchText = ' ';
 

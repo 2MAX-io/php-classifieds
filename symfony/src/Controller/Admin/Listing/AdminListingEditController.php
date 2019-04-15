@@ -9,6 +9,7 @@ use App\Entity\Listing;
 use App\Form\Admin\AdminListingRestrictedType;
 use App\Form\Admin\AdminListingType;
 use App\Service\Listing\CustomField\CustomFieldsForListingFormService;
+use App\Service\Listing\Save\CreateListingService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -18,8 +19,12 @@ class AdminListingEditController extends AbstractAdminController
     /**
      * @Route("/admin/red5/listing/edit/{id}", name="app_admin_listing_edit")
      */
-    public function adminListingEdit(Request $request, Listing $listing, CustomFieldsForListingFormService $customFieldsForListingFormService): Response
-    {
+    public function adminListingEdit(
+        Request $request,
+        Listing $listing,
+        CustomFieldsForListingFormService $customFieldsForListingFormService,
+        CreateListingService $createListingService
+    ): Response {
         $this->denyUnlessAdmin();
 
         $form = $this->createForm(AdminListingType::class, $listing);
@@ -27,6 +32,7 @@ class AdminListingEditController extends AbstractAdminController
         if ($form->isSubmitted() && $form->isValid()) {
 
             $customFieldsForListingFormService->saveCustomFieldsToListing($listing, $request->request->get('form_custom_field'));
+            $createListingService->saveSearchText($listing);
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('app_admin_listing_edit', [

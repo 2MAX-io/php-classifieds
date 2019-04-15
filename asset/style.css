@@ -391,3 +391,45 @@ svg.icon {
 .owl-carousel .owl-item img.listing-show-top-image {
     width: auto;
 }
+.owl-prev {
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    top: 40%;
+    margin-left: 0;
+    display: block !important;
+    border:0px solid black;
+    cursor: pointer;
+    outline: none;
+}
+
+.owl-next {
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    top: 40%;
+    right: 0;
+    display: block !important;
+    border:0px solid black;
+    cursor: pointer;
+}
+
+
+@media (min-width: 992px) {
+    .owl-prev, .owl-next {
+        height: 100%;
+        top: 0;
+    }
+
+}
+
+.owl-prev:focus, .owl-next:focus {
+    outline:0;
+}
+
+.owl-prev i, .owl-next i {
+    transform : scale(2);
+    color: white;
+    text-shadow: 1px 1px 1px #000, 0px 0px 3px #000000;
+    outline: none;
+}

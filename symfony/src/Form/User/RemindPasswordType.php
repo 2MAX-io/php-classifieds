@@ -10,11 +10,11 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 class RemindPasswordType extends AbstractType
 {
-    public const FORM_NEW_EMAIL = 'newEmail';
+    public const EMAIL_FIELD = 'email';
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('email', EmailType::class, [
+        $builder->add(static::EMAIL_FIELD, EmailType::class, [
             'label' => 'trans.Enter your email address',
             'constraints' => [
                 new NotBlank(),

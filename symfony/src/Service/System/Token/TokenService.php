@@ -33,7 +33,7 @@ class TokenService
 
         $token = new Token();
         $token->setType($tokenType);
-        $token->setToken($tokenString);
+        $token->setTokenString($tokenString);
         $token->setValueMain($tokenValue);
         $token->setCreatedDate(new \DateTime());
         $token->setValidUntilDate($validUntil);
@@ -41,6 +41,19 @@ class TokenService
         $this->em->persist($token);
 
         return $tokenString;
+    }
+
+    public function getTokenBuilder(string $tokenType, ?\DateTimeInterface $validUntil = null): TokenDto
+    {
+        $token = new Token();
+        $token->setType($tokenType);
+        $token->setTokenString(Random::string(40));
+        $token->setCreatedDate(new \DateTime());
+        $token->setValidUntilDate($validUntil);
+
+        $tokenDto = new TokenDto($token);
+
+        return $tokenDto;
     }
 
     public function getToken(string $tokenString, string $tokenType): ?Token

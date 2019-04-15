@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Service\User\Create;
+namespace App\Service\User\Account;
 
 use Hackzilla\PasswordGenerator\Generator\ComputerPasswordGenerator;
 use Hackzilla\PasswordGenerator\RandomGenerator\Php7RandomGenerator;

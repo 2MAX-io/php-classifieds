@@ -9,7 +9,7 @@ use App\Form\User\ChangeEmailType;
 use App\Security\CurrentUserService;
 use App\Service\FlashBag\FlashService;
 use App\Service\System\Token\TokenService;
-use App\Service\User\Create\ChangeEmailService;
+use App\Service\User\Account\ChangeEmailService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -72,7 +72,7 @@ class ChangeEmailController extends AbstractController
 
         $newEmail = $tokenEntity->getValueMain();
 
-        if ($tokenEntity->getToken() === $currentUserService->getUser()->getConfirmationToken()) {
+        if ($tokenEntity->getTokenString() === $currentUserService->getUser()->getConfirmationToken()) {
             $changeEmailService->changeEmail(
                 $currentUserService->getUser(),
                 $tokenEntity->getValueMain()

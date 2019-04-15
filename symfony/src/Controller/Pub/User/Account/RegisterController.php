@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller\Pub\User\Account;
 
-use App\Service\User\Create\RegisterConfirmService;
+use App\Service\User\Account\RegisterConfirmService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;

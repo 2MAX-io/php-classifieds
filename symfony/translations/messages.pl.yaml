@@ -104,3 +104,5 @@ trans:
   Change password confirmation: 'Potwierdzenie zmiany hasła'
   Remind password: 'Przypomnij hasło'
   Forgot password?: 'Nie pamiętasz hasła?'
+  To remind password, please click confirmation link that you would receive on your email address: 'Aby przypomnieć hasło, prosimy o kilknięcie w link który otrzymasz na Twój adres email'
+  Remind password confirmation: 'Potwierdzenie przypomnienia hasła'

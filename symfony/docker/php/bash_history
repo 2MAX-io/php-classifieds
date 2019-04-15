@@ -81,3 +81,16 @@ php symfony/bin/console doctrine:schema:update --force
 php symfony/bin/console make:entity
 php symfony/bin/console doctrine:schema:update --force
 php symfony/bin/console doctrine:schema:update --force
+php symfony/bin/console make:entity --regenerate "App\Entity"
+php symfony/bin/console make:entity --regenerate "App\Entity"
+php symfony/bin/console make:entity --regenerate "App\Entity"
+php symfony/bin/console make:entity --regenerate "App\Entity"
+chown -R 1000:www-data *.php *.js
+chown -R 1000:www-data ./*.php ./*.js
+chown -R 1000:www-data *.php
+chown -R 1000:www-data symfony/src/Entity/TokenField.php
+find . ! -name "content" | xargs -I {} echo {}
+find . ! -name ".git" | xargs -I {} echo {}
+find . -not -path "*/symfony/docker/mysql*" -type f -exec echo {} \;
+find . -not -path "*/symfony/docker/mysql*" -type f -exec echo {} \; | grep mysql
+php symfony/bin/console doctrine:schema:update --force

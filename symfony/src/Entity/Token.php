@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -12,6 +14,7 @@ class Token
 {
     public const USER_EMAIL_CHANGE_TYPE = 'USER_EMAIL_CHANGE_TYPE';
     public const USER_PASSWORD_CHANGE_TYPE = 'USER_PASSWORD_CHANGE_TYPE';
+    public const USER_PASSWORD_REMIND = 'USER_PASSWORD_REMIND';
 
     /**
      * @ORM\Id()
@@ -45,17 +48,27 @@ class Token
      */
     private $validUntilDate;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\TokenField", mappedBy="token", indexBy="name", cascade={"all"})
+     */
+    private $fields;
+
+    public function __construct()
+    {
+        $this->fields = new ArrayCollection();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getToken(): ?string
+    public function getTokenString(): ?string
     {
         return $this->token;
     }
 
-    public function setToken(string $token): self
+    public function setTokenString(string $token): self
     {
         $this->token = $token;
 
@@ -108,5 +121,48 @@ class Token
         $this->validUntilDate = $validUntilDate;
 
         return $this;
+    }
+
+    /**
+     * @return Collection|TokenField[]
+     */
+    public function getFields(): Collection
+    {
+        return $this->fields;
+    }
+
+    public function addField(TokenField $field): self
+    {
+        if (!$this->fields->contains($field)) {
+            $this->fields[] = $field;
+            $field->setToken($this);
+        }
+
+        return $this;
+    }
+
+    public function removeField(TokenField $field): self
+    {
+        if ($this->fields->contains($field)) {
+            $this->fields->removeElement($field);
+            // set the owning side to null (unless already changed)
+            if ($field->getToken() === $this) {
+                $field->setToken(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getFieldByName(string $fieldName): ?string
+    {
+        /** @var TokenField $field */
+        $field = $this->getFields()->get($fieldName);
+
+        if ($field === null) {
+            return null;
+        }
+
+        return $field->getValue();
     }
 }

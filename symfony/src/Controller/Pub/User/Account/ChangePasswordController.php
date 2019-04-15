@@ -9,7 +9,7 @@ use App\Form\User\ChangePasswordType;
 use App\Security\CurrentUserService;
 use App\Service\FlashBag\FlashService;
 use App\Service\System\Token\TokenService;
-use App\Service\User\Create\ChangePasswordService;
+use App\Service\User\Account\ChangePasswordService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -72,7 +72,7 @@ class ChangePasswordController extends AbstractController
 
         $newHashedPassword = $tokenEntity->getValueMain();
 
-        if ($tokenEntity->getToken() === $currentUserService->getUser()->getConfirmationToken()) {
+        if ($tokenEntity->getTokenString() === $currentUserService->getUser()->getConfirmationToken()) {
             $changePasswordService->setHashedPassword(
                 $currentUserService->getUser(),
                 $newHashedPassword

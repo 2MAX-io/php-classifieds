@@ -2,16 +2,17 @@
 
 declare(strict_types=1);
 
-namespace App\Service\User\Create;
+namespace App\Service\User\Account;
 
 use App\Entity\Token;
+use App\Entity\TokenField;
 use App\Entity\User;
 use App\Service\Email\EmailService;
 use App\Service\System\Token\TokenService;
 use Carbon\Carbon;
 use Doctrine\ORM\EntityManagerInterface;
 
-class ChangePasswordService
+class RemindPasswordService
 {
     /**
      * @var EntityManagerInterface
@@ -27,40 +28,46 @@ class ChangePasswordService
      * @var TokenService
      */
     private $tokenService;
+
     /**
      * @var EmailService
      */
     private $emailService;
+    /**
+     * @var PasswordGenerateService
+     */
+    private $passwordGenerateService;
 
     public function __construct(
         EntityManagerInterface $em,
         EncodePasswordService $encodePasswordService,
         TokenService $tokenService,
+        PasswordGenerateService $passwordGenerateService,
         EmailService $emailService
     ) {
         $this->em = $em;
         $this->encodePasswordService = $encodePasswordService;
         $this->tokenService = $tokenService;
         $this->emailService = $emailService;
+        $this->passwordGenerateService = $passwordGenerateService;
     }
 
-    public function sendConfirmation(User $user, string $newPassword)
+    public function sendRemindConfirmation(string $email)
     {
+        $user = $this->em->getRepository(User::class)->findOneBy(['email' => $email]);
+
+        $newPassword = $this->passwordGenerateService->generatePassword();
         $user->setPlainPassword($newPassword);
         $hashedPassword = $this->encodePasswordService->getEncodedPassword($user, $newPassword);
-        unset($newPassword);
 
-        $token = $this->tokenService->createToken($hashedPassword, Token::USER_PASSWORD_CHANGE_TYPE, Carbon::now()->add('day', 7));
-        $user->setConfirmationToken($token);
-        $this->emailService->changePasswordConfirmation($user);
-    }
+        $tokenDto = $this->tokenService->getTokenBuilder(Token::USER_PASSWORD_REMIND, Carbon::now()->add('day', 7));
+        $tokenDto->addField(TokenField::USER_ID_FIELD, (string) $user->getId());
+        $tokenDto->addField(TokenField::REMINDED_HASHED_PASSWORD, (string) $hashedPassword);
 
-    public function changePassword(User $user, string $newPassword)
-    {
-        $user->setPlainPassword($newPassword);
-        $this->encodePasswordService->setEncodedPassword($user, $newPassword);
+        $this->em->persist($tokenDto->getToken());
 
-        $this->em->persist($user);
+        $user->setConfirmationToken($tokenDto->getToken()->getTokenString());
+        $this->emailService->remindPasswordConfirmation($user);
     }
 
     public function setHashedPassword(User $user, string $newPasswordHash)

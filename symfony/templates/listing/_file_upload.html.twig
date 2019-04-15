@@ -5,6 +5,8 @@
 <script type="text/javascript">
     $('#listing_file').fileuploader({
         addMore: true,
+        fileMaxSize: 1.95,
+        extensions: ['jpg', 'jpeg', 'png', 'gif'],
         thumbnails: {
             onItemShow: function(item) {
                 // add sorter button to the item html

@@ -15,7 +15,7 @@
 
     <div class="container mt-3">
         <div class="row">
-            <div class="col-md-9">
+            <div class="col-md-8">
                 <div class="row mb-3">
                     <div class="col-sm-10">
                         <h1>{{ listing.title }}</h1>
@@ -23,7 +23,13 @@
                 </div>
 
                 {% if listing.listingFiles is not empty %}
-                    <img class="rounded" alt="{{ listing.title }}" src="{{ asset(listing.listingFiles.first.path | default('asset/img/blank.png')) }}">
+                    <div class="owl-carousel">
+                        {% for listingFile in listing.listingFiles %}
+                            <a href="{{ asset(listingFile.path) }}" data-toggle="lightbox" data-gallery="multiimages" data-title="{{ listing.title }}">
+                                <img src="{{ asset(listingFile.path) }}" class="mx-auto d-block" alt="{{ listing.title }}" style="max-height: 300px; width: auto; text-align: center;" />
+                            </a>
+                        {% endfor %}
+                    </div>
                 {% endif %}
 
                 <!-- Tabs nav -->
@@ -65,10 +71,10 @@
                         <div class="zebra">
                             <!-- description -->
                             <div class="block">
-                                <div class="description px-3 mb-2 py-2">
+                                <div class="description px-3 mb-3 mt-2">
                                     {{ listing.description | nl2br }}
                                 </div>
-                                <div class="description px-3 mb-2 py-2 clearfix">
+                                <div class="px-3 py-1 clearfix">
                                     <div class="float-md-right">
                                         {{ 'trans.Views' | trans }}: {{ listingShowDto.viewsCount }}
                                     </div>
@@ -82,29 +88,32 @@
 
                     <!-- Tab photos -->
                     <div id="photos" class="tab-pane fade clearfix" role="tabpanel">
-                        <div class="listing-thumb float-left img-thumbnail mr-2 mb-2" style="width: 120px">
-
-                            {% for listingFile in listing.listingFiles %}
+                        {% for listingFile in listing.listingFiles %}
+                            <div class="listing-thumb float-left img-thumbnail mr-2 mb-2" style="width: 120px">
                                 <a href="{{ asset(listingFile.path) }}" data-toggle="lightbox" data-gallery="multiimages" data-title="{{ listing.title }}">
                                     <div class="dummy container-img rounded" style="background-image:url('{{ asset(listingFile.path) }}');"></div>
                                 </a>
-                            {% endfor %}
-                        </div>
+                            </div>
+                        {% endfor %}
                     </div>
                     <!-- End tab photos -->
                 </div>
 
-                {% for listingFile in listing.listingFiles %}
-                    <a href="{{ asset(listingFile.path) }}" data-toggle="lightbox" data-gallery="multiimages" data-title="{{ listing.title }}">
-                        <img src="{{ asset(listingFile.path) }}" alt="{{ listing.title }}" />
-                    </a>
-                {% endfor %}
+                {% if listing.listingFiles is not empty %}
+                    <div class="my-2">
+                        {% for listingFile in listing.listingFiles %}
+                            <a href="{{ asset(listingFile.path) }}" data-toggle="lightbox" data-gallery="multiimages" data-title="{{ listing.title }}">
+                                <img src="{{ asset(listingFile.path) }}" alt="{{ listing.title }}" />
+                            </a>
+                        {% endfor %}
+                    </div>
+                {% endif %}
 
                 <!-- end tabs contents -->
             </div>
 
             <!-- Sidebar -->
-            <div class="col-md-3">
+            <div class="col-md-4">
 
                 {% if listing.price is not empty %}
                     <div>
@@ -124,9 +133,9 @@
                         {% if listing.phone is not empty %}
                         <div class="mb-2 py-2">
                             <div class="row">
-                                <div class="col-sm-6">{{ 'trans.Phone' | trans }}</div>
+                                <div class="col-sm-4">{{ 'trans.Phone' | trans }}</div>
 
-                                <div class="col-sm-6">
+                                <div class="col-sm-8">
                                     <a href="tel:{{ listing.phone }}">{{ listing.phone }}</a>
                                 </div>
                             </div>
@@ -135,9 +144,9 @@
                         {% if listing.email is not empty %}
                         <div class="mb-2 py-2">
                             <div class="row">
-                                <div class="col-sm-6">{{ 'trans.Email' | trans }}</div>
+                                <div class="col-sm-4">{{ 'trans.Email' | trans }}</div>
 
-                                <div class="col-sm-6">
+                                <div class="col-sm-8">
                                     <a target="_blank" href="mailto:{{ listing.email }}">{{ listing.email }}</a>
                                 </div>
                             </div>
@@ -176,15 +185,22 @@
 
 {% block js %}
     <link rel="stylesheet" href="{{ asset('asset/lib/lightbox-master/dist/ekko-lightbox.css') }}">
+    <link rel="stylesheet" href="{{ asset('asset/lib/owl-carusel/assets/owl.carousel.css') }}">
     <script src="{{ asset('asset/lib/lightbox-master/dist/ekko-lightbox.min.js') }}"></script>
+    <script src="{{ asset('asset/lib/owl-carusel/owl.carousel.js') }}"></script>
 
-    <script>
+    <script type="text/javascript">
         $(document).ready(function(){
             // lightbox
             $(document).delegate('*[data-toggle="lightbox"]', 'click', function(event) {
                 event.preventDefault();
                 $(this).ekkoLightbox();
             });
+        });
+
+        $('.owl-carousel').owlCarousel({
+            items: 1,
+            center: true
         });
     </script>
 

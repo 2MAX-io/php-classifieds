@@ -5,10 +5,10 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\LogRepository")
- * @ORM\Table(name="zzzz_log")
+ * @ORM\Entity(repositoryClass="App\Repository\ListingLogRepository")
+ * @ORM\Table(name="zzzz_listing_log")
  */
-class Log
+class ListingLog
 {
     /**
      * @ORM\Id()

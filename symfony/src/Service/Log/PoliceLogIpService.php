@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Service\Log;
 
 use App\Entity\Listing;
-use App\Entity\Log;
+use App\Entity\ListingLog;
 use App\Security\CurrentUserService;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
@@ -30,7 +30,7 @@ class PoliceLogIpService
 
     public function prepareOutput(Listing $listing): string
     {
-        $qb = $this->em->getRepository(Log::class)->createQueryBuilder('log');
+        $qb = $this->em->getRepository(ListingLog::class)->createQueryBuilder('log');
         $qb->andWhere($qb->expr()->orX(
             $qb->expr()->eq('log.listingId', ':listingId'),
             $qb->expr()->andX(
@@ -43,7 +43,7 @@ class PoliceLogIpService
 
         $qb->addOrderBy('log.datetime', 'ASC');
 
-        /** @var Log[] $logList */
+        /** @var ListingLog[] $logList */
         $logList = $qb->getQuery()->getResult();
 
         $output = '';
@@ -57,7 +57,7 @@ class PoliceLogIpService
 
     public function saveLog(Listing $listing)
     {
-        $log = new Log();
+        $log = new ListingLog();
         $log->setSourceIp($_SERVER['REMOTE_ADDR']);
         $log->setDestinationIp($_SERVER['SERVER_ADDR']);
         $log->setDatetime(\DateTime::createFromFormat('U', (string) $_SERVER['REQUEST_TIME']));

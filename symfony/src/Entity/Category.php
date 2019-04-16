@@ -29,6 +29,16 @@ class Category
     private $slug;
 
     /**
+     * @ORM\Column(type="integer", nullable=false)
+     */
+    private $sort;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="children")
+     */
+    private $parent;
+
+    /**
      * @ORM\Column(name="lft", type="integer")
      */
     private $lft;
@@ -44,12 +54,8 @@ class Category
     private $lvl;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="children")
-     */
-    private $parent;
-
-    /**
      * @ORM\OneToMany(targetEntity="App\Entity\Category", mappedBy="parent")
+     * @ORM\OrderBy({"sort" = "ASC"})
      */
     private $children;
 
@@ -291,6 +297,18 @@ class Category
                 $child->setParent(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getSort(): ?int
+    {
+        return $this->sort;
+    }
+
+    public function setSort(int $sort): self
+    {
+        $this->sort = $sort;
 
         return $this;
     }

@@ -28,6 +28,7 @@ class CategoryViewAllService
         $qb->addSelect('categoryChild');
         $qb->leftJoin('category.children', 'categoryChild');
         $qb->andWhere($qb->expr()->eq('category.lvl', 1));
+        $qb->orderBy('category.sort', 'ASC');
 
         return $qb->getQuery()->getResult();
     }

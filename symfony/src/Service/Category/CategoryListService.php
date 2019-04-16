@@ -46,6 +46,8 @@ class CategoryListService
             );
         }
 
+        $qb->orderBy('category.sort', 'ASC');
+
         return $qb->getQuery()->getResult();
     }
 

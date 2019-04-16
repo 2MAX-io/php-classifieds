@@ -26,6 +26,7 @@ class CategoryListService
     {
         $qb = $this->em->getRepository(Category::class)->createQueryBuilder('category');
         $qb->andWhere($qb->expr()->eq('category.lvl', 1));
+        $qb->orderBy('category.sort', 'ASC');
 
         return $qb->getQuery()->getResult();
     }

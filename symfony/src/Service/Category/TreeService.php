@@ -28,7 +28,6 @@ class TreeService
             'levelColumnName' => 'lvl',
         ], $this->em->getConnection());
 
-
         $tree->rebuild($this->getRootNode()->getId());
     }
 

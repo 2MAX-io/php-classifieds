@@ -12,7 +12,7 @@ class AppExtension extends AbstractExtension
     public function getFunctions()
     {
         return [
-            new TwigFunction('isAdmin', [AppRuntime::class, 'isAdmin']),
+            new TwigFunction('lowSecurityCheckIsAdminInPublic', [AppRuntime::class, 'lowSecurityCheckIsAdminInPublic']),
             new TwigFunction('isCurrentUserListing', [AppRuntime::class, 'isCurrentUserListing']),
         ];
     }

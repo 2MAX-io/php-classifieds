@@ -122,6 +122,10 @@
                     <a href="{{ path('app_listing_edit', {'id': listing.id}) }}" class="btn btn-primary">{{ 'trans.Edit listing' | trans }}</a>
                 {% endif %}
 
+                {% if lowSecurityCheckIsAdminInPublic() %}
+                    <a href="{{ path('app_admin_listing_edit', {'id': listing.id}) }}" class="btn btn-outline-danger">{{ 'trans.Edit listing as Admin' | trans }}</a>
+                {% endif %}
+
                 {% if listing.price is not empty %}
                     <div>
                         <div class="my-1">

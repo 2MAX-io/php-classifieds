@@ -6,6 +6,7 @@ namespace App\Security;
 
 use App\Entity\Admin;
 use App\Entity\User;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Security\Core\Security;
 
 class CurrentUserService
@@ -15,9 +16,15 @@ class CurrentUserService
      */
     private $security;
 
-    public function __construct(Security $security)
+    /**
+     * @var SessionInterface
+     */
+    private $session;
+
+    public function __construct(Security $security, SessionInterface $session)
     {
         $this->security = $security;
+        $this->session = $session;
     }
 
     public function getUser(): ?User
@@ -45,5 +52,17 @@ class CurrentUserService
     public function isAdmin(): bool
     {
         return $this->getAdmin() instanceof Admin;
+    }
+
+    /**
+     * WARNING! do not use to authorize anything important
+     *
+     * only use to display links to admin panel, or show hidden listings, nothing more than that
+     *
+     * @return bool
+     */
+    public function lowSecurityCheckIsAdminInPublic(): bool
+    {
+        return $this->session->get('_security_admin', false) !== false;
     }
 }

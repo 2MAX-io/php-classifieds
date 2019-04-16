@@ -29,10 +29,9 @@ class ListingShowController extends AbstractController
             throw $this->createNotFoundException();
         }
 
-        if ($listingShowDto->getListing()->getUser() !== $currentUserService->getUser()) {
-            if (!$listingPublicDisplayService->canPublicDisplay($listingShowDto->getListing())) {
-                throw $this->createNotFoundException();
-            }
+        $forceDisplay = $listingShowDto->getListing()->getUser() === $currentUserService->getUser() || $currentUserService->lowSecurityCheckIsAdminInPublic();
+        if (!$forceDisplay && !$listingPublicDisplayService->canPublicDisplay($listingShowDto->getListing())) {
+            throw $this->createNotFoundException();
         }
 
         $listingShowSingleService->saveView($listingShowDto->getListing());

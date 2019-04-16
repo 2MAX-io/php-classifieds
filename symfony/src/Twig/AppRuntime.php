@@ -20,9 +20,9 @@ class AppRuntime implements RuntimeExtensionInterface
         $this->currentUserService = $currentUserService;
     }
 
-    public function isAdmin(): bool
+    public function lowSecurityCheckIsAdminInPublic(): bool
     {
-        return $this->currentUserService->isAdmin();
+        return $this->currentUserService->lowSecurityCheckIsAdminInPublic();
     }
 
     public function isCurrentUserListing(Listing $listing): bool

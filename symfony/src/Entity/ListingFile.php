@@ -34,7 +34,7 @@ class ListingFile
     /**
      * @ORM\Column(type="boolean")
      */
-    private $userDeleted = false;
+    private $userRemoved = false;
 
     public function getId(): ?int
     {
@@ -77,14 +77,14 @@ class ListingFile
         return $this;
     }
 
-    public function getUserDeleted(): ?bool
+    public function getUserRemoved(): ?bool
     {
-        return $this->userDeleted;
+        return $this->userRemoved;
     }
 
-    public function setUserDeleted(bool $userDeleted): self
+    public function setUserRemoved(bool $userRemoved): self
     {
-        $this->userDeleted = $userDeleted;
+        $this->userRemoved = $userRemoved;
 
         return $this;
     }

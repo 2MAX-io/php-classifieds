@@ -11,7 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class ListingFileRemoveController extends AbstractUserController
 {
     /**
-     * @Route("/user/listing/file/delete", name="app_listing_file_remove", methods={"POST"})
+     * @Route("/user/listing/file/remove", name="app_listing_file_remove", methods={"POST"})
      */
     public function remove(Request $request): Response
     {
@@ -19,7 +19,7 @@ class ListingFileRemoveController extends AbstractUserController
         $listingFile = $this->getDoctrine()->getRepository(ListingFile::class)->find($fileId);
         $this->dennyUnlessCurrentUserListing($listingFile->getListing());
 
-        $listingFile->setUserDeleted(true);
+        $listingFile->setUserRemoved(true);
 
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($listingFile);

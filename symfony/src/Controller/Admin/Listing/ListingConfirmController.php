@@ -43,13 +43,13 @@ class ListingConfirmController extends AbstractAdminController
     }
 
     /**
-     * @Route("/admin/red5/listing-confirm/delete/{id}", name="app_admin_listing_delete", methods={"DELETE"})
+     * @Route("/admin/red5/listing-confirm/remove/{id}", name="app_admin_listing_remove", methods={"DELETE"})
      */
-    public function delete(Request $request, Listing $listing): Response
+    public function remove(Request $request, Listing $listing): Response
     {
         $this->denyUnlessAdmin();
 
-        if ($this->isCsrfTokenValid('adminDelete'.$listing->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('adminRemove'.$listing->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $listing->setAdminRemoved(true);
             $entityManager->flush();

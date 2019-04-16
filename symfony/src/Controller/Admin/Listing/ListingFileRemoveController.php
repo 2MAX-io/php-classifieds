@@ -21,7 +21,7 @@ class ListingFileRemoveController extends AbstractAdminController
 
         if ($this->isCsrfTokenValid('adminRemoveFile'.$listingFile->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
-            $listingFile->setUserDeleted(true);
+            $listingFile->setUserRemoved(true);
             $entityManager->flush();
         }
 

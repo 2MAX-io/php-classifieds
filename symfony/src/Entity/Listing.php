@@ -17,6 +17,14 @@ use Doctrine\ORM\Mapping\Index;
  */
 class Listing
 {
+    public const STATUS_ACTIVE = 'STATUS_ACTIVE';
+    public const STATUS_EXPIRED = 'STATUS_EXPIRED';
+    public const STATUS_PENDING = 'STATUS_PENDING';
+    public const STATUS_REJECTED = 'STATUS_REJECTED';
+    public const STATUS_DEACTIVATED = 'STATUS_DEACTIVATED';
+    public const STATUS_USER_REMOVED = 'STATUS_USER_REMOVED';
+    public const STATUS_ADMIN_REMOVED = 'STATUS_ADMIN_REMOVED';
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()

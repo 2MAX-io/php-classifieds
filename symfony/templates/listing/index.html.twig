@@ -10,13 +10,11 @@
             </div>
 
             <div class="col-md-8 col-lg-9">
-
-                <a href="{{ path('app_listing_new') }}">{{ 'trans.Create new listing' | trans }}</a>
-
                 <table class="table">
                     <thead>
                     <tr>
                         <th>{{ 'trans.Title' | trans }}</th>
+                        <th>{{ 'trans.Valid until' | trans }}</th>
                         <th>{{ 'trans.Status' | trans }}</th>
                         <th>{{ 'trans.Actions' | trans }}</th>
                     </tr>
@@ -51,7 +49,10 @@
                                 {% endif %}
                             </td>
                             <td>
-
+                                {{ listing.validUntilDate | date('d.m.Y') }}
+                            </td>
+                            <td>
+                                {{ listing.validUntilDate | date('d.m.Y') }}
                             </td>
                             <td>
                                 <a href="{{ path('app_listing_edit', {'id': listing.id}) }}" class="btn btn-dark">{{ 'trans.Edit' | trans }}</a>
@@ -81,6 +82,10 @@
                     {% endfor %}
                     </tbody>
                 </table>
+
+                <div class="float-right">
+                    <a href="{{ path('app_listing_new') }}" class="btn btn-primary">{{ 'trans.Create new listing' | trans }}</a>
+                </div>
             </div>
         </div>
     </div>

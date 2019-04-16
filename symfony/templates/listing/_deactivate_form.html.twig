@@ -1,4 +1,4 @@
-<form method="post" action="{{ path('app_listing_deactivate', {'id': listing.id}) }}" onsubmit="return confirm('Are you sure you want to deactivate this item?');" class="d-inline">
+<form method="post" action="{{ path('app_listing_deactivate', {'id': listing.id}) }}" onsubmit="return confirm('{{ 'trans.Are you sure you want to deactivate: %listing%?' | trans({'%listing%': listing.title}) }}');" class="d-inline">
     <input type="hidden" name="_method" value="PATCH">
     <input type="hidden" name="_token" value="{{ csrf_token('deactivate' ~ listing.id) }}">
     <button class="btn btn-warning btn-mini">{{ 'trans.Deactivate' | trans }}</button>

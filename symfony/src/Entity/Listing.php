@@ -133,9 +133,11 @@ class Listing
     private $lastEditDate;
 
     /**
+     * used to sort listings
+     *
      * @ORM\Column(type="datetimetz", nullable=false)
      */
-    private $lastReactivationDate;
+    private $orderByDate;
 
     /**
      * @ORM\Column(type="datetimetz", nullable=true)
@@ -429,14 +431,14 @@ class Listing
         return $this;
     }
 
-    public function getLastReactivationDate(): ?\DateTimeInterface
+    public function getOrderByDate(): ?\DateTimeInterface
     {
-        return $this->lastReactivationDate;
+        return $this->orderByDate;
     }
 
-    public function setLastReactivationDate(\DateTimeInterface $lastReactivationDate): self
+    public function setOrderByDate(\DateTimeInterface $orderByDate): self
     {
-        $this->lastReactivationDate = $lastReactivationDate;
+        $this->orderByDate = $orderByDate;
 
         return $this;
     }

@@ -26,7 +26,7 @@ class AdminListingRestrictedType extends AbstractType
         $builder->add('featuredWeight', IntegerType::class, [
             'label' => 'trans.Featured weight'
         ]);
-        $builder->add('lastReactivationDate', DateTimeType::class, [
+        $builder->add('orderByDate', DateTimeType::class, [
             'label' => 'trans.Date of last raising'
         ]);
         $builder->add('validUntilDate', DateTimeType::class, [

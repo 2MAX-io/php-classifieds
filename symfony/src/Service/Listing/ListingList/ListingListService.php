@@ -133,7 +133,7 @@ class ListingListService
 
         $qb->addOrderBy('listing.featured', 'DESC');
         $qb->addOrderBy('listing.featuredWeight', 'DESC');
-        $qb->addOrderBy('listing.lastReactivationDate', 'DESC');
+        $qb->addOrderBy('listing.orderByDate', 'DESC');
 
         $adapter = new DoctrineORMAdapter($qb);
         $pager = new Pagerfanta($adapter);

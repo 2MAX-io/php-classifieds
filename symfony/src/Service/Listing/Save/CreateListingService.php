@@ -33,7 +33,7 @@ class CreateListingService
         $listing = new Listing();
         $listing->setFirstCreatedDate(new DateTime());
         $listing->setLastEditDate(new DateTime());
-        $listing->setLastReactivationDate(new DateTime());
+        $listing->setOrderByDate(new DateTime());
 
         return $listing;
     }

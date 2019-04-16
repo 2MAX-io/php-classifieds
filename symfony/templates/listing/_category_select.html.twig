@@ -1,11 +1,12 @@
 <script type="text/javascript">
     let cascader = {};
+    cascader.$mainElement = $('#cascader-category-select');
     cascader.currentLevel = 0;
     cascader.clickedLevel = 0;
 
     cascader.select = function (selectionId, clicked) {
         let $clicked = $(clicked);
-        let $branchList = $mainElement.find('.cascader-branch-list-' + selectionId);
+        let $branchList = cascader.$mainElement.find('.cascader-branch-list-' + selectionId);
         let hasChildren = $branchList.length > 0;
 
         cascader.clickedLevel = $clicked.parents('.cascader-level').data('cascader-level');
@@ -32,22 +33,24 @@
 
     cascader.hideLowerLevels = function() {
         let level = cascader.currentLevel;
-        while ($mainElement.find('.cascader-level.cascader-level-'+level).length) {
-            $mainElement.find('.cascader-level.cascader-level-"'+level+' .cascader-branch-list').hide();
+        while (cascader.$mainElement.find('.cascader-level.cascader-level-'+level).length) {
+            cascader.$mainElement.find('.cascader-level.cascader-level-"'+level+' .cascader-branch-list').hide();
             level += 1;
         }
     };
 
     cascader.removeSelection = function() {
         let level = cascader.clickedLevel;
-        while ($mainElement.find('.cascader-level.cascader-level-'+level).length) {
-            $mainElement.find('.cascader-level.cascader-level-'+level+' .cascader-selected').removeClass('cascader-selected');
+        while (cascader.$mainElement.find('.cascader-level.cascader-level-'+level).length) {
+            cascader.$mainElement.find('.cascader-level.cascader-level-'+level+' .cascader-selected').removeClass('cascader-selected');
             level += 1;
         }
     };
 
     cascader.setValue = function (leafId) {
-        let $leaf = $mainElement.find('.cascader-leaf-' + leafId);
+        cascader.$mainElement.find('.cascader-selected').removeClass('cascader-selected');
+        cascader.$mainElement.find('.cascader-branch-list').hide();
+        let $leaf = cascader.$mainElement.find('.cascader-leaf-' + leafId);
         let parenLeafId = 0;
         let $parentLeaf = null;
         do {
@@ -57,7 +60,7 @@
             $branchList.show();
 
             parenLeafId = $branchList.data('cascader-leaf');
-            $parentLeaf = $mainElement.find('.cascader-leaf-' + parenLeafId);
+            $parentLeaf = cascader.$mainElement.find('.cascader-leaf-' + parenLeafId);
             $leaf = $parentLeaf;
         } while ($parentLeaf.length);
     };
@@ -68,10 +71,17 @@
 
     cascader.onLeafSelection = function(leafId) {
         $('.formCategory').val(leafId);
+        $('.formCategory').trigger('change', leafId)
     };
 
-    let $mainElement = $('#cascader-category-select');
-    $mainElement.show();
-    $mainElement.find('.cascader-branch-list').first().show();
+    cascader.onFormChangeUpdateCascader = function() {
+        $('.formCategory').on('change', function() {
+            cascader.setValue(this.value);
+        });
+    };
+
+    cascader.$mainElement.show();
+    cascader.$mainElement.find('.cascader-branch-list').first().show();
     cascader.selectValueFromForm();
+    cascader.onFormChangeUpdateCascader();
 </script>

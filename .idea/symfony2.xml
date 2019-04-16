@@ -6,6 +6,7 @@
     <option name="directoryToApp" value="symfony/config" />
     <option name="pluginEnabled" value="true" />
     <option name="profilerCsvPath" value="" />
+    <option name="profilerHttpUrl" value="https://classifieds.localhost" />
     <option name="twigNamespaces">
       <list>
         <twig_namespace enabled="false" namespaceType="BUNDLE" path="templates" />

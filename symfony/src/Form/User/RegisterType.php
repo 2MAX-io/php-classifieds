@@ -2,6 +2,8 @@
 
 namespace App\Form\User;
 
+use App\Entity\User;
+use App\Validator\Constraints\UniqueValue;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -21,6 +23,7 @@ class RegisterType extends AbstractType
                 new Email([
                     'mode' => Email::VALIDATION_MODE_STRICT
                 ]),
+                new UniqueValue(['fields' => 'email', 'entityClass' => User::class]),
             ],
         ]);
     }

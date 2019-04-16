@@ -17,13 +17,13 @@ class AdminListingRestrictedType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('premium', BoolType::class, [
+        $builder->add('featured', BoolType::class, [
             'label' => 'trans.Featured listing?'
         ]);
-        $builder->add('premiumUntilDate', DateTimeType::class, [
+        $builder->add('featuredUntilDate', DateTimeType::class, [
             'label' => 'trans.Featured until'
         ]);
-        $builder->add('premiumWeight', IntegerType::class, [
+        $builder->add('featuredWeight', IntegerType::class, [
             'label' => 'trans.Featured weight'
         ]);
         $builder->add('lastReactivationDate', DateTimeType::class, [

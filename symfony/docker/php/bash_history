@@ -96,3 +96,4 @@ find . -not -path "*/symfony/docker/mysql*" -type f -exec echo {} \; | grep mysq
 php symfony/bin/console doctrine:schema:update --force
 php symfony/bin/console doctrine:schema:update --force
 php symfony/bin/console doctrine:schema:update --force
+php symfony/bin/console doctrine:schema:update --force

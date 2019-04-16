@@ -20,14 +20,14 @@ class CronService
 
     public function run(): void
     {
-        $this->updatePremium();
+        $this->updateFeatured();
     }
 
-    private function updatePremium(): void
+    private function updateFeatured(): void
     {
         /** @var \PDO $pdo */
         $pdo = $this->em->getConnection();
-        $query = $pdo->prepare(/** @lang MySQL */ 'UPDATE listing SET premium=0 WHERE premium_until_date <= :now OR premium_until_date IS NULL');
+        $query = $pdo->prepare(/** @lang MySQL */ 'UPDATE listing SET featured=0 WHERE featured_until_date <= :now OR featured_until_date IS NULL');
         $query->bindValue(':now', date('Y-m-d 00:00:00'));
         $query->execute();
     }

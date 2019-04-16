@@ -115,17 +115,17 @@ class Listing
     /**
      * @ORM\Column(type="boolean")
      */
-    private $premium = false;
+    private $featured = false;
 
     /**
      * @ORM\Column(type="smallint")
      */
-    private $premiumWeight = 0;
+    private $featuredWeight = 0;
 
     /**
      * @ORM\Column(type="datetimetz", nullable=true)
      */
-    private $premiumUntilDate;
+    private $featuredUntilDate;
 
     /**
      * @ORM\Column(type="datetimetz", nullable=false)
@@ -369,26 +369,26 @@ class Listing
         return $this;
     }
 
-    public function getPremium(): ?bool
+    public function getFeatured(): ?bool
     {
-        return $this->premium;
+        return $this->featured;
     }
 
-    public function setPremium(bool $premium): self
+    public function setFeatured(bool $featured): self
     {
-        $this->premium = $premium;
+        $this->featured = $featured;
 
         return $this;
     }
 
-    public function getPremiumUntilDate(): ?\DateTimeInterface
+    public function getFeaturedUntilDate(): ?\DateTimeInterface
     {
-        return $this->premiumUntilDate;
+        return $this->featuredUntilDate;
     }
 
-    public function setPremiumUntilDate(\DateTimeInterface $premiumUntilDate): self
+    public function setFeaturedUntilDate(\DateTimeInterface $featuredUntilDate): self
     {
-        $this->premiumUntilDate = $premiumUntilDate;
+        $this->featuredUntilDate = $featuredUntilDate;
 
         return $this;
     }
@@ -405,14 +405,14 @@ class Listing
         return $this;
     }
 
-    public function getPremiumWeight(): ?int
+    public function getFeaturedWeight(): ?int
     {
-        return $this->premiumWeight;
+        return $this->featuredWeight;
     }
 
-    public function setPremiumWeight(int $premiumWeight): self
+    public function setFeaturedWeight(int $featuredWeight): self
     {
-        $this->premiumWeight = $premiumWeight;
+        $this->featuredWeight = $featuredWeight;
 
         return $this;
     }

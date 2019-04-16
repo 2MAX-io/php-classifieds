@@ -131,8 +131,8 @@ class ListingListService
 
         $this->listingPublicDisplayService->applyPublicDisplayConditions($qb);
 
-        $qb->addOrderBy('listing.premium', 'DESC');
-        $qb->addOrderBy('listing.premiumWeight', 'DESC');
+        $qb->addOrderBy('listing.featured', 'DESC');
+        $qb->addOrderBy('listing.featuredWeight', 'DESC');
         $qb->addOrderBy('listing.lastReactivationDate', 'DESC');
 
         $adapter = new DoctrineORMAdapter($qb);

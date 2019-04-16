@@ -51,7 +51,7 @@ class ListingHelperService
         $qb = $this->em->getRepository(Listing::class)->createQueryBuilder('listing');
         $qb->addSelect('listingFile');
         $qb->leftJoin('listing.listingFiles', 'listingFile');
-        $qb->andWhere($qb->expr()->eq('listing.premium', 1));
+        $qb->andWhere($qb->expr()->eq('listing.featured', 1));
         $this->listingPublicDisplayService->applyPublicDisplayConditions($qb);
 
         $qbCount = clone $qb;

@@ -10,7 +10,7 @@
             </div>
 
             <div class="col-md-8 col-lg-9">
-                <h3>{{ 'trans.Extend listing' | trans }}: {{ listing.title }}</h3>
+                <h3>{{ 'trans.Extend listing' | trans }}: <a href="{{ path('app_listing_show', {'id': listing.id}) }}" target="_blank">{{ listing.title }}</a></h3>
 
                 {% if listing.userDeactivated %}
                     <div>
@@ -31,7 +31,7 @@
                 {{ form_start(form) }}
                 {{ form_widget(form) }}
 
-                <button class="btn btn-primary">{{ button_label|default('trans.Save' | trans) }}</button>
+                <button class="btn btn-primary">{{ 'trans.Extend validity' | trans }}</button>
                 {{ form_end(form) }}
             </div>
         </div>

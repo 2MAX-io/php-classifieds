@@ -1,2 +1,3 @@
 'Value could not be found.': 'Nie znaleziono tej wartości'
 trans.User with this email address was not found: 'Nie zaneziono użytkownika z takim adresem email'
+'This email is already used by another user.': 'Ten email jest już wykorzystywany przez innego użytkownika'

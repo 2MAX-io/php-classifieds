@@ -10,6 +10,11 @@
             </div>
 
             <div class="col-md-8 col-lg-9">
+                <form method="get">
+                    <input name="query" value="{{ app.request.get('query') }}" type="text" placeholder="{{ 'trans.keyword' | trans }}" />
+                    <button type="submit">{{ 'trans.Search' | trans }}</button>
+                </form>
+
                 <table class="table">
                     <thead>
                     <tr>

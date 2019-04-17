@@ -38,6 +38,11 @@ class UserListingListService
 
         $qb->andWhere($qb->expr()->eq('listing.userRemoved', 0));
 
+        if (!empty($_GET['query'])) {
+            $qb->andWhere('MATCH (listing.searchText) AGAINST (:query BOOLEAN) > 0');
+            $qb->setParameter(':query', rtrim($_GET['query'], '*') .'*');
+        }
+
         $qb->orderBy('listing.lastEditDate', 'DESC');
 
         $adapter = new DoctrineORMAdapter($qb);

@@ -6,8 +6,8 @@ namespace App\Controller\Admin\Listing;
 
 use App\Controller\Admin\Base\AbstractAdminController;
 use App\Entity\Listing;
-use App\Form\Admin\AdminListingRestrictedType;
-use App\Form\Admin\AdminListingType;
+use App\Form\Admin\AdminListingAdvancedEditType;
+use App\Form\Admin\AdminListingEditType;
 use App\Service\Listing\CustomField\CustomFieldsForListingFormService;
 use App\Service\Listing\Save\CreateListingService;
 use Symfony\Component\HttpFoundation\Request;
@@ -27,7 +27,7 @@ class AdminListingEditController extends AbstractAdminController
     ): Response {
         $this->denyUnlessAdmin();
 
-        $form = $this->createForm(AdminListingType::class, $listing);
+        $form = $this->createForm(AdminListingEditType::class, $listing);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
 
@@ -53,7 +53,7 @@ class AdminListingEditController extends AbstractAdminController
     {
         $this->denyUnlessAdmin();
 
-        $form = $this->createForm(AdminListingRestrictedType::class, $listing);
+        $form = $this->createForm(AdminListingAdvancedEditType::class, $listing);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
 

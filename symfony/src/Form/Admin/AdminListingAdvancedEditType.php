@@ -13,7 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class AdminListingRestrictedType extends AbstractType
+class AdminListingAdvancedEditType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -39,6 +39,7 @@ class AdminListingRestrictedType extends AbstractType
             'label' => 'trans.Rejected by Admin?'
         ]);
         $builder->add('rejectionReason', TextType::class, [
+            'required' => false,
             'label' => 'trans.Reject reason (optional)'
         ]);
         $builder->add('adminRemoved', BoolType::class, [

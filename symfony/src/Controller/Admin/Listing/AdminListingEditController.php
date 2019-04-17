@@ -69,4 +69,53 @@ class AdminListingEditController extends AbstractAdminController
             'listing' => $listing,
         ]);
     }
+
+    /**
+     * @Route("/admin/red5/listing-confirm/confirm/{id}", name="app_admin_listing_confirm", methods={"PATCH"})
+     */
+    public function confirm(Request $request, Listing $listing): Response
+    {
+        $this->denyUnlessAdmin();
+
+        if ($this->isCsrfTokenValid('adminConfirm'.$listing->getId(), $request->request->get('_token'))) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $listing->setAdminConfirmed(true);
+            $listing->setAdminLastConfirmationDate(new \DateTime());
+            $entityManager->flush();
+        }
+
+        return $this->redirect($request->headers->get('referer'));;
+    }
+
+    /**
+     * @Route("/admin/red5/listing-confirm/remove/{id}", name="app_admin_listing_remove", methods={"DELETE"})
+     */
+    public function remove(Request $request, Listing $listing): Response
+    {
+        $this->denyUnlessAdmin();
+
+        if ($this->isCsrfTokenValid('adminRemove'.$listing->getId(), $request->request->get('_token'))) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $listing->setAdminRemoved(true);
+            $entityManager->flush();
+        }
+
+        return $this->redirect($request->headers->get('referer'));;
+    }
+
+    /**
+     * @Route("/admin/red5/listing-confirm/raise/{id}", name="app_admin_listing_raise", methods={"PATCH"})
+     */
+    public function raise(Request $request, Listing $listing): Response
+    {
+        $this->denyUnlessAdmin();
+
+        if ($this->isCsrfTokenValid('adminRaise'.$listing->getId(), $request->request->get('_token'))) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $listing->setOrderByDate(new \DateTime());
+            $entityManager->flush();
+        }
+
+        return $this->redirect($request->headers->get('referer'));;
+    }
 }

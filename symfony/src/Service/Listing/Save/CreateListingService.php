@@ -118,8 +118,21 @@ class CreateListingService
                 ->setDelimiter('-')
         );
 
-        $slug = $generator->generate($listing->getTitle() . ' ' . $listing->getCategory()->getName());
-        $slug = mb_substr($slug, 0, 99);
+        $slugSourceText = '';
+        $slugSourceText .= $listing->getTitle();
+        $slugSourceText .= ' ';
+        $slugSourceText .= $listing->getCategory()->getName();
+        $slugSourceText .= ' ';
+        $slugSourceText .= $listing->getCategory()->getParent()->getName();
+        $slugSourceText .= ' ';
+
+        foreach ($listing->getListingCustomFieldValues() as $listingCustomFieldValue) {
+            $slugSourceText .= $listingCustomFieldValue->getValue();
+            $slugSourceText .= ' ';
+        }
+
+        $slug = $generator->generate(trim($slugSourceText));
+        $slug = mb_substr($slug, 0, 60);
         $listing->setSlug($slug);
     }
 }

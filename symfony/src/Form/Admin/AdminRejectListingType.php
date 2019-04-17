@@ -13,7 +13,8 @@ class AdminRejectListingType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('rejectionReason', TextareaType::class, [
-            'label' => 'trans.Reject reason (optional)'
+            'label' => 'trans.Reject reason (optional)',
+            'required' => false,
         ]);
     }
 

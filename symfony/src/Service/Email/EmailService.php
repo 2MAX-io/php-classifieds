@@ -40,7 +40,7 @@ class EmailService
 
     public function sendRegisterEmail(User $user): void
     {
-        $message = (new \Swift_Message($this->trans->trans('trans.You have registered account')))
+        $message = (new \Swift_Message($this->trans->trans('trans.Confirm account registration')))
             ->setReplyTo($this->environmentService->getMailerReplyToAddress())
             ->setFrom($this->environmentService->getMailerFromEmailAddress(), $this->environmentService->getMailerFromName())
             ->setTo($user->getEmail())

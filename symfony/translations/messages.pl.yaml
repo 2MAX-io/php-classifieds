@@ -160,3 +160,6 @@ trans:
   listing.status.STATUS_EXPIRED: 'Wygasłe'
   listing.status.STATUS_USER_REMOVED: 'Usunięte'
   listing.status.STATUS_DEACTIVATED: 'Dezaktywowane'
+  Confirm registration by clicking link bellow: 'Potwierdź rejestrację klikając link poniżej'
+  Confirm account registration: 'Potwierdź rejestracje konta'
+  If the link above does not work, try to copy the link below to your browser: 'Jeżeli link powyżej nie działa, spróbuj skopiować do przeglądarki link poniżej'

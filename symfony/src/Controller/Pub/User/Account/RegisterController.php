@@ -53,8 +53,5 @@ class RegisterController extends AbstractController
         );
 
         return $this->redirectToRoute('app_listing_new');
-
-//        return $this->render('user/account/register_confirm.html.twig', [
-//        ]);
     }
 }

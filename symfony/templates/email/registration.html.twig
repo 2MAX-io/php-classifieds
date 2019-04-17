@@ -8,21 +8,27 @@
     <strong>{{ 'trans.Account credentials' | trans }}</strong>:
 </p>
 
+<div>
+    <strong>{{ 'trans.Login' | trans }}</strong>:
+</div>
+<pre>{{- user.email -}}</pre>
+
+<div>
+    <strong>{{ 'trans.Password' | trans }}</strong>:
+</div>
+<pre>{{- user.plainPassword -}}</pre>
+
+
 <p>
-    <strong>{{ 'trans.Login' | trans }}</strong>: {{ user.email }}
+    {{ 'trans.Confirm registration by clicking link bellow' | trans }}
 </p>
 
-<p>
-    <strong>{{ 'trans.Password' | trans }}</strong>: <pre>{{- user.plainPassword -}}</pre>
-</p>
-
-
-<p>
-    {{ 'trans.Please confirm your email address by clicking link bellow' | trans }}
-</p>
-
-<p>
+<div>
     <a href="{{ url('app_register_confirm', {'token': user.confirmationToken}) }}">{{ 'trans.I confirm registration' | trans }}</a>
 
+    <p>
+        {{ 'trans.If the link above does not work, try to copy the link below to your browser' | trans }}:
+    </p>
+
     <pre>{{ url('app_register_confirm', {'token': user.confirmationToken}) }}</pre>
-</p>
+</div>

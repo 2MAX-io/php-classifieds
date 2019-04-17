@@ -523,20 +523,20 @@ class Listing
             return static::STATUS_REJECTED;
         }
 
-        if (false === $this->getAdminConfirmed()) {
-            return static::STATUS_PENDING;
-        }
-
-        if ($this->getValidUntilDate() <= new DateTime()) {
-            return static::STATUS_EXPIRED;
-        }
-
         if ($this->getUserRemoved()) {
             return static::STATUS_USER_REMOVED;
         }
 
         if ($this->getUserDeactivated()) {
             return static::STATUS_DEACTIVATED;
+        }
+
+        if (false === $this->getAdminConfirmed()) {
+            return static::STATUS_PENDING;
+        }
+
+        if ($this->getValidUntilDate() <= new DateTime()) {
+            return static::STATUS_EXPIRED;
         }
 
         if ($this->getFeatured() && $this->getFeaturedUntilDate() <= new DateTime()) {

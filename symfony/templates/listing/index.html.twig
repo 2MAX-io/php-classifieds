@@ -31,11 +31,6 @@
                                         <a href="{{ path('app_user_highlight_listing', {"id": listing.id}) }}">{{ 'trans.Feature this listing' | trans }}</a>
                                     </div>
                                 {% endif %}
-                                {% if not listing.adminConfirmed and not listing.adminRejected %}
-                                    <div>
-                                        {{ 'trans.Waiting for activation' | trans }}
-                                    </div>
-                                {% endif %}
                                 {% if listing.adminRejected %}
                                     {% if listing.rejectionReason is empty %}
                                         <div>

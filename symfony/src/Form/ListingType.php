@@ -35,7 +35,12 @@ class ListingType extends AbstractType
     {
         $builder
             ->add('title', TextType::class, [
-                'label' => 'trans.Title'
+                'label' => 'trans.Title',
+                'empty_data' => '',
+                'constraints' => [
+                    new Constraints\NotBlank(),
+                    new Constraints\Length(['min' => 5]),
+                ],
             ])
             ->add('description', TextareaType::class, [
                 'label' => 'trans.Description',
@@ -43,10 +48,16 @@ class ListingType extends AbstractType
                     'class' => 'form-listing-description-textarea'
                 ],
                 'constraints' => [
+                    new Constraints\NotBlank(),
                     new Constraints\Length(['min' => 20, 'max' => 5000]),
                 ],
+                'empty_data' => '',
             ])
-            ->add('category', CategoryType::class)
+            ->add('category', CategoryType::class, [
+                'constraints' => [
+                    new Constraints\NotBlank(),
+                ],
+            ])
             ->add('validityTimeDays', ChoiceType::class, [
                 'mapped' => false,
                 'choices' => $this->validUntilSetService->getValidityTimeDaysChoices(),
@@ -56,7 +67,7 @@ class ListingType extends AbstractType
                     ]),
                 ],
                 'label' => 'trans.Validity time',
-                'data' => 9,
+                'empty_data' => 9,
             ])
             ->add('phone', TextType::class, [
                 'label' => 'trans.Phone',

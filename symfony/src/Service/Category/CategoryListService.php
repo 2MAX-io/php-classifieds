@@ -23,17 +23,17 @@ class CategoryListService
     /**
      * @return Category[]
      */
-    public function getLevelOfSubcategoriesToDisplayForCategory(?int $categoryId = null): array
+    public function getLevelOfSubcategoriesToDisplayForCategory(?Category $category = null): array
     {
         $qb = $this->em->getRepository(Category::class)->createQueryBuilder('category');
 
-        if ($categoryId === null) {
+        if ($category === null) {
             $qb->andWhere($qb->expr()->eq('category.lvl', 1));
         }
 
-        if ($categoryId !== null) {
+        if ($category !== null) {
             $qb->join(Category::class, 'requestedCategory', Join::WITH, $qb->expr()->eq('requestedCategory.id', ':requestedCategory'));
-            $qb->setParameter(':requestedCategory', $categoryId);
+            $qb->setParameter(':requestedCategory', $category->getId());
 
             $qb->andWhere(
                 $qb->expr()->orX(

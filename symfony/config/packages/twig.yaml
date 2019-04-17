@@ -1,7 +1,11 @@
+parameters:
+    twig_date_format: d.m.Y, H:i
+    twig_date_format_short: d.m.Y
+
 twig:
     default_path: '%kernel.project_dir%/templates'
     debug: '%kernel.debug%'
     strict_variables: '%kernel.debug%'
     form_themes: ['form/form_layout.html.twig']
     date:
-        format: d.m.Y, H:i
+        format: '%twig_date_format%'

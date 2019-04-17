@@ -147,3 +147,13 @@ trans:
   'Are you sure you want to deactivate: %listing%?': 'Jesteś pewny że chcesz dezaktywować: %listing%?'
   'Are you sure you want to activate: %listing%?': 'Jesteś pewny że chcesz aktywować: %listing%'
   'Are you sure you want to delete %listing%?': 'Jesteś pewny że chcesz usunąć: %listing%?'
+
+  listing.status.STATUS_PENDING: Oczekuje na aktywacje
+  listing.status.STATUS_ACTIVE: 'Aktywne do: %activeUntilDate%'
+  listing.status.STATUS_ACTIVE_FEATURED: 'Wyróżnione do: %featuredUntilDate%'
+  listing.status.STATUS_REJECTED.withReason: 'Odrzucone: %rejectionReason%'
+  listing.status.STATUS_REJECTED: 'Odrzucone'
+  listing.status.STATUS_ADMIN_REMOVED: 'Usunięte przez Administratora'
+  listing.status.STATUS_EXPIRED: 'Wygasłe'
+  listing.status.STATUS_USER_REMOVED: 'Usunięte'
+  listing.status.STATUS_DEACTIVATED: 'Dezaktywowane'

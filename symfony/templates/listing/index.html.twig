@@ -52,7 +52,7 @@
                                 {{ listing.validUntilDate | date('d.m.Y') }}
                             </td>
                             <td>
-                                {{ listing.validUntilDate | date('d.m.Y') }}
+                                {{ getListingStatus(listing) }}
                             </td>
                             <td>
                                 <a href="{{ path('app_listing_edit', {'id': listing.id}) }}" class="btn btn-dark">{{ 'trans.Edit' | trans }}</a>

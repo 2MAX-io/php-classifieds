@@ -32,4 +32,14 @@ class EnvironmentService
     {
         return $this->parameterBag->get('mailer_from_name');
     }
+
+    public function getTwigDateFormat(): string
+    {
+        return $this->parameterBag->get('twig_date_format');
+    }
+
+    public function getTwigDateFormatShort(): string
+    {
+        return $this->parameterBag->get('twig_date_format_short');
+    }
 }

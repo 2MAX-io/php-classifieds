@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\Criteria;
@@ -18,6 +19,7 @@ use Doctrine\ORM\Mapping\Index;
 class Listing
 {
     public const STATUS_ACTIVE = 'STATUS_ACTIVE';
+    public const STATUS_ACTIVE_FEATURED = 'STATUS_ACTIVE_FEATURED';
     public const STATUS_EXPIRED = 'STATUS_EXPIRED';
     public const STATUS_PENDING = 'STATUS_PENDING';
     public const STATUS_REJECTED = 'STATUS_REJECTED';
@@ -509,5 +511,38 @@ class Listing
         $this->adminRejected = $adminRejected;
 
         return $this;
+    }
+
+    public function getStatus(): string
+    {
+        if ($this->getAdminRemoved()) {
+            return static::STATUS_ADMIN_REMOVED;
+        }
+
+        if ($this->getAdminRejected()) {
+            return static::STATUS_REJECTED;
+        }
+
+        if (false === $this->getAdminConfirmed()) {
+            return static::STATUS_PENDING;
+        }
+
+        if ($this->getValidUntilDate() <= new DateTime()) {
+            return static::STATUS_EXPIRED;
+        }
+
+        if ($this->getUserRemoved()) {
+            return static::STATUS_USER_REMOVED;
+        }
+
+        if ($this->getUserDeactivated()) {
+            return static::STATUS_DEACTIVATED;
+        }
+
+        if ($this->getFeatured() && $this->getFeaturedUntilDate() <= new DateTime()) {
+            return self::STATUS_ACTIVE_FEATURED;
+        }
+
+        return self::STATUS_ACTIVE;
     }
 }

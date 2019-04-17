@@ -7,7 +7,7 @@
         > <a href="{{ path('app_index') }}">{{ 'trans.Classifieds' | trans }}</a>
 
         {% for category in categoryBreadcrumbs %}
-            &gt; <a href="{{ path('app_category', {"categoryId": category.id}) }}">{{ category.name }}</a>
+            &gt; <a href="{{ path('app_category', {'categorySlug': category.slug}) }}">{{ category.name }}</a>
         {% endfor %}
 
         > {{ listing.title }}

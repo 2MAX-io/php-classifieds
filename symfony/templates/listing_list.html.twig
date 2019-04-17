@@ -12,7 +12,7 @@
             {% if loop.last %}
                 &gt; {{ category.name }}
             {% else %}
-                &gt; <a href="{{ path('app_category', {"categoryId": category.id}) }}">{{ category.name }}</a>
+                &gt; <a href="{{ path('app_category', {'categorySlug': category.slug}) }}">{{ category.name }}</a>
             {% endif %}
         {% endfor %}
 
@@ -32,7 +32,7 @@
                         </div>
                         <div class="card-body">
                             {% for category in categoryList %}
-                                <a href="{{ path('app_category', {"categoryId": category.id} | merge(queryParameters)) }}" title="" class="mb-1">{{ category.name }}</a><br>
+                                <a href="{{ path('app_category', {'categorySlug': category.slug} | merge(queryParameters)) }}" title="" class="mb-1">{{ category.name }}</a><br>
                             {% endfor %}
                         </div>
                     </div>

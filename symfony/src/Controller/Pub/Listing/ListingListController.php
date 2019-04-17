@@ -31,20 +31,20 @@ class ListingListController extends AbstractController
      * @Route("/listing/list", name="app_listing_list")
      * @Route("/last-added", name="app_last_added")
      * @Route("/listings-of-user", name="app_user_listings")
-     * @Route("/c-{categoryId}", name="app_category")
+     * @Route("/c/{categorySlug}", name="app_category")
      */
     public function index(
         Request $request,
         RouterInterface $router,
         ListingListService $listingListService,
         CategoryListService $categoryListService,
-        int $categoryId = null
+        string $categorySlug = null
     ): Response {
         $view = new TwitterBootstrap4View();
         $page = (int) $request->get('page', 1);
         $category = null;
-        if ($categoryId) {
-            $category = $this->getDoctrine()->getRepository(Category::class)->find($categoryId);
+        if ($categorySlug) {
+            $category = $this->getDoctrine()->getRepository(Category::class)->findOneBy(['slug' => $categorySlug]);
             if ($category === null) {
                 throw $this->createNotFoundException();
             }
@@ -55,10 +55,10 @@ class ListingListController extends AbstractController
         return $this->render(
             'listing_list.html.twig',
             [
-                'pagination' => $view->render($listingListDto->getPager(), function (int $page) use ($router, $categoryId, $request) {
+                'pagination' => $view->render($listingListDto->getPager(), function (int $page) use ($router, $categorySlug, $request) {
                     return $router->generate($request->get('_route'), array_merge(
                         $_GET,
-                        ['categoryId' => $categoryId, 'page' => (int) $page]
+                        ['categorySlug' => $categorySlug, 'page' => (int) $page]
                     ));
                 },
                     [
@@ -70,7 +70,7 @@ class ListingListController extends AbstractController
                 'listingList' => $listingListDto->getResults(),
                 'pager' => $listingListDto->getPager(),
                 'customFieldList' => $listingListService->getCustomFields($category),
-                'categoryList' => $categoryListService->getLevelOfSubcategoriesToDisplayForCategory($categoryId),
+                'categoryList' => $categoryListService->getLevelOfSubcategoriesToDisplayForCategory($category->getId()),
                 'categoryBreadcrumbs' => $categoryListService->getBreadcrumbs($category),
                 'queryParameters' => [
                     'query' => $request->query->get('query'),

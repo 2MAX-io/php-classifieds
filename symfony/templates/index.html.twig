@@ -17,7 +17,7 @@
             {% for category in categoryList %}
             <div class="col-sm-6 col-lg-3 text-center mb-4">
                 <div class="card bg-light text-white">
-                    <a href="{{ path('app_category', {"categoryId": category.id}) }}" title="{{ category.name }}" class="text-white">
+                    <a href="{{ path('app_category', {'categorySlug': category.slug}) }}" title="{{ category.name }}" class="text-white">
                         <img class="card-img" src="{{ asset(category.picture | default('asset/img/blank.png')) }}" alt="">
                         <div class="card-img-overlay">
                             <h5 class="card-title down">{{ category.name }}</h5>

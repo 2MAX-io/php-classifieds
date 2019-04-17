@@ -163,3 +163,8 @@ trans:
   Confirm registration by clicking link bellow: 'Potwierdź rejestrację klikając link poniżej'
   Confirm account registration: 'Potwierdź rejestracje konta'
   If the link above does not work, try to copy the link below to your browser: 'Jeżeli link powyżej nie działa, spróbuj skopiować do przeglądarki link poniżej'
+  'If you did not requested password reset, ignore this email, and do NOT click link bellow': 'Jeżeli nie zleciłeś resetu hasła, zignoruj ten email i NIE klikaj w link poniżej'
+  If you have requested password reset, please click link bellow to confirm: 'Jeżeli zleciłeś reset hasła, kliknij link poniżej by to potwierdzić'
+  When you confirm password reset, your password would be set to: 'Gdy potwierdzisz reset hasła, Twoje hasło zostanie ustawione na'
+  Password reset has been successful: 'Reset hasła został zakończony sukcesem'
+  Password reset failed, please check if confirmation link is correct: 'Reset hasła zakończony niepowodzeniem, proszę sprawdzić czy link potwierdzający jest poprawny'

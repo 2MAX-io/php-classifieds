@@ -78,7 +78,7 @@ class RemindPasswordController extends AbstractController
 
             $flashService->addFlash(
                 FlashService::SUCCESS_ABOVE_FORM,
-                'trans.Password remind has been successful'
+                'trans.Password reset has been successful'
             );
 
             return $this->redirectToRoute('app_login');
@@ -86,14 +86,14 @@ class RemindPasswordController extends AbstractController
             if ($newHashedPassword === $user->getPassword()) {
                 $flashService->addFlash(
                     FlashService::SUCCESS_ABOVE_FORM,
-                    'trans.Password remind has been successful'
+                    'trans.Password reset has been successful'
                 );
 
                 return $this->redirectToRoute('app_login');
             } else {
                 $flashService->addFlash(
                     FlashService::ERROR_ABOVE_FORM,
-                    'trans.Password remind failed, please check if confirmation link is correct'
+                    'trans.Password reset failed, please check if confirmation link is correct'
                 );
             }
         }

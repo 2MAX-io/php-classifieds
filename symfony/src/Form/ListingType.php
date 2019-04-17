@@ -17,6 +17,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class ListingType extends AbstractType
 {
@@ -102,6 +103,23 @@ class ListingType extends AbstractType
         $resolver->setDefaults(
             [
                 'data_class' => Listing::class,
+                'constraints' => [
+                    new Constraints\Callback(['callback' => function (Listing $listing, ExecutionContextInterface $context) {
+                        if (empty($listing->getPhone()) && (empty($listing->getEmail()) || !$listing->getEmailShow())) {
+                            $context->buildViolation('Enter email or phone, both can not be empty')
+                                ->atPath('phone')
+                                ->addViolation();
+
+                            $context->buildViolation('Enter email or phone, both can not be empty')
+                                ->atPath('email')
+                                ->addViolation();
+
+                            $context->buildViolation('Enter email or phone, both can not be empty')
+                                ->atPath('emailShow')
+                                ->addViolation();
+                        }
+                    }])
+                ],
             ]
         );
     }

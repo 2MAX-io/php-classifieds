@@ -105,11 +105,6 @@ class Listing
     /**
      * @ORM\Column(type="boolean")
      */
-    private $adminRejected = false;
-
-    /**
-     * @ORM\Column(type="boolean")
-     */
     private $adminRemoved = false;
 
     /**
@@ -153,6 +148,11 @@ class Listing
      * @ORM\Column(type="datetimetz", nullable=true)
      */
     private $adminLastConfirmationDate;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $adminRejected = false;
 
     /**
      * @ORM\Column(type="string", length=1000, nullable=true)
@@ -527,6 +527,10 @@ class Listing
             return static::STATUS_USER_REMOVED;
         }
 
+        if ($this->getValidUntilDate() <= new DateTime()) {
+            return static::STATUS_EXPIRED;
+        }
+
         if ($this->getUserDeactivated()) {
             return static::STATUS_DEACTIVATED;
         }
@@ -535,11 +539,7 @@ class Listing
             return static::STATUS_PENDING;
         }
 
-        if ($this->getValidUntilDate() <= new DateTime()) {
-            return static::STATUS_EXPIRED;
-        }
-
-        if ($this->getFeatured() && $this->getFeaturedUntilDate() <= new DateTime()) {
+        if ($this->getFeatured() && $this->getFeaturedUntilDate() >= new DateTime()) {
             return self::STATUS_ACTIVE_FEATURED;
         }
 

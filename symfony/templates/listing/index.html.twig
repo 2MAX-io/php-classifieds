@@ -50,21 +50,26 @@
                                 {{ getListingStatus(listing) }}
                             </td>
                             <td>
-                                <a href="{{ path('app_listing_edit', {'id': listing.id}) }}" class="btn btn-dark">{{ 'trans.Edit' | trans }}</a>
+                                {% if not listing.adminRemoved %}
+                                    <a href="{{ path('app_listing_edit', {'id': listing.id}) }}" class="btn btn-dark">{{ 'trans.Edit' | trans }}</a>
 
-                                {% if listing.adminConfirmed %}
-                                    <a
-                                        href="{{ path('app_user_validity_extend', {'id': listing.id}) }}"
-                                        class="btn btn-outline-success"
-                                    >
-                                        {{ 'trans.Extend' | trans }}
-                                    </a>
-                                {% endif %}
+                                    {% if listing.adminConfirmed and not listing.adminRejected and (not listing.userDeactivated or listing.status == constant('\App\\Entity\\Listing::STATUS_EXPIRED')) %}
+                                        <a
+                                            href="{{ path('app_user_validity_extend', {'id': listing.id}) }}"
+                                            class="btn btn-outline-success"
+                                        >
+                                            {{ 'trans.Extend' | trans }}
+                                        </a>
+                                    {% endif %}
 
-                                {% if listing.userDeactivated %}
-                                    {{ include('listing/_activate_form.html.twig') }}
-                                {% else %}
-                                    {{ include('listing/_deactivate_form.html.twig') }}
+                                    {% if not listing.adminRejected and not listing.status == constant('\App\\Entity\\Listing::STATUS_EXPIRED') %}
+                                        {% if listing.userDeactivated %}
+                                            {{ include('listing/_activate_form.html.twig') }}
+                                        {% else %}
+                                            {{ include('listing/_deactivate_form.html.twig') }}
+                                        {% endif %}
+                                    {% endif %}
+
                                 {% endif %}
 
                                 {{ include('listing/_delete_form.html.twig') }}

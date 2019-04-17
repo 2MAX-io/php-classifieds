@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Listing index{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <div class="card">
+                    <div class="card-header">
+                        <h4><strong>{{ 'trans.Create an Account' | trans }}</strong></h4>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="card-body">
+                            {{ form_start(form) }}
+                            {{ form_widget(form) }}
+
+                            <div class="form-group">
+                                <button class="btn btn-primary btn-block">{{ 'trans.Register' | trans }}</button>
+                            </div>
+                            {{ form_end(form) }}
+
+                            <div class="form-group">
+                                {{ 'trans.Already have an account?' | trans }} <a href="{{ path('app_login') }}">{{ 'trans.Sign in' | trans }}</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

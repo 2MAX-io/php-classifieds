@@ -35,7 +35,7 @@ class RegisterController extends AbstractController
             return $this->redirectToRoute('app_login');
         }
 
-        return $this->render('user/account/change_password.html.twig', [
+        return $this->render('user/account/register.html.twig', [
             'form' => $form->createView(),
         ]);
     }

@@ -13,7 +13,7 @@
                 <a href="{{ path('app_listing_show', {'id': listing.id}) }}">{{ 'trans.Preview listing' | trans }}</a>
 
                 <div class="float-md-right">
-                    <a href="{{ path('app_listing_index') }}">{{ 'trans.back to list' | trans }}</a>
+                    <a href="{{ path('app_user_listing_index') }}">{{ 'trans.back to list' | trans }}</a>
 
                     {% if listing.adminConfirmed %}
                         <a href="{{ path('app_user_highlight_listing', {"id": listing.id}) }}" class="btn btn-dark">{{ 'trans.Feature this listing' | trans }}</a>

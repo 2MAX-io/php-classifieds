@@ -83,6 +83,10 @@
                     </tbody>
                 </table>
 
+                {% if pager.getNbPages > 1 %}
+                    {{ pagination | raw }}
+                {% endif %}
+
                 <div class="float-right">
                     <a href="{{ path('app_listing_new') }}" class="btn btn-primary">{{ 'trans.Create new listing' | trans }}</a>
                 </div>

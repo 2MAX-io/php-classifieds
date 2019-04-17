@@ -7,6 +7,8 @@ namespace App\Service\User\Listing;
 use App\Entity\Listing;
 use App\Security\CurrentUserService;
 use Doctrine\ORM\EntityManagerInterface;
+use Pagerfanta\Adapter\DoctrineORMAdapter;
+use Pagerfanta\Pagerfanta;
 
 class UserListingListService
 {
@@ -28,7 +30,7 @@ class UserListingListService
     /**
      * @return Listing[]
      */
-    public function getList(): array
+    public function getList(int $page = 1): UserListingListDto
     {
         $qb = $this->em->getRepository(Listing::class)->createQueryBuilder('listing');
         $qb->andWhere($qb->expr()->eq('listing.user', ':user'));
@@ -38,6 +40,13 @@ class UserListingListService
 
         $qb->orderBy('listing.lastEditDate', 'DESC');
 
-        return $qb->getQuery()->getResult();
+        $adapter = new DoctrineORMAdapter($qb);
+        $pager = new Pagerfanta($adapter);
+        $pager->setMaxPerPage(10);
+        $pager->setCurrentPage($page);
+
+        $userListingListDto = new UserListingListDto($pager->getCurrentPageResults(), $pager);
+
+        return $userListingListDto;
     }
 }

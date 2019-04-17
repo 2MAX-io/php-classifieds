@@ -9,16 +9,19 @@ use App\Service\Category\CategoryListService;
 use App\Service\Listing\ListingPublicDisplayService;
 use App\Service\Listing\ShowSingle\ListingShowSingleService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class ListingShowController extends AbstractController
 {
     /**
-     * @Route("/listing/show/{id}", name="app_listing_show")
+     * @Route("/l/{slug}/{id}", name="app_listing_show", defaults={"slug": "show"})
      */
     public function show(
+        Request $request,
         int $id,
+        string $slug,
         ListingShowSingleService $listingShowSingleService,
         CategoryListService $categoryListService,
         CurrentUserService $currentUserService,
@@ -32,6 +35,13 @@ class ListingShowController extends AbstractController
         $forceDisplay = $listingShowDto->getListing()->getUser() === $currentUserService->getUser() || $currentUserService->lowSecurityCheckIsAdminInPublic();
         if (!$forceDisplay && !$listingPublicDisplayService->canPublicDisplay($listingShowDto->getListing())) {
             throw $this->createNotFoundException();
+        }
+
+        if ($slug !== $listingShowDto->getListing()->getSlug() && $slug !== 'listing') {
+            return $this->redirectToRoute($request->get('_route'), [
+                'id' => (int) $id,
+                'slug' => $listingShowDto->getListing()->getSlug(),
+            ]);
         }
 
         $listingShowSingleService->saveView($listingShowDto->getListing());

@@ -214,13 +214,13 @@
 
                     <div class="card-body">
                         <div class="fb-share-button"
-                             data-href="{{ absolute_url('app_listing_show', {'id': listing.id}) }}"
+                             data-href="{{ absolute_url('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}"
                              data-layout="button"
                              data-size="small"
-                             data-mobile-iframe="true"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{ absolute_url('app_listing_show', {'id': listing.id}) }}&src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a>
+                             data-mobile-iframe="true"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{ absolute_url('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}&src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a>
                         </div>
 
-                        <a class="twitter-share-button" href="https://twitter.com/intent/tweet?url={{ absolute_url('app_listing_show', {'id': listing.id}) }}&text={{ listing.title }}">Tweet</a>
+                        <a class="twitter-share-button" href="https://twitter.com/intent/tweet?url={{ absolute_url('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}&text={{ listing.title }}">Tweet</a>
                     </div>
                 </div>
             </div>

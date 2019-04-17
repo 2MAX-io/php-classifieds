@@ -29,7 +29,7 @@
                         <tr>
                             <td>
                                 <div>
-                                    <a href="{{ path('app_listing_show', {"id": listing.id}) }}">{{ listing.title }}</a>
+                                    <a href="{{ path('app_listing_show', {"id": listing.id, 'slug': listing.slug}) }}">{{ listing.title }}</a>
                                 </div>
                                 {% if listing.adminConfirmed %}
                                     <div>

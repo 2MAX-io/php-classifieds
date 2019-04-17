@@ -167,7 +167,7 @@
                             <div class="container-fluid">
                                 <div class="row" data-listing-id="340">
                                     <div class="card-thumb col-12 col-md-3 py-3">
-                                        <a title="{{ listing.title }}" href="{{ path('app_listing_show', {id: listing.id}) }}">
+                                        <a title="{{ listing.title }}" href="{{ path('app_listing_show', {id: listing.id, 'slug': listing.slug}) }}">
                                             <img class="rounded" alt="{{ listing.title }}" src="{{ asset(listing.listingFiles.first.path | default('asset/img/blank.png')) }}">
                                         </a>
                                     </div>
@@ -181,7 +181,7 @@
 
                                         <h5 class="pt-3 pt-sm-0">
                                             <strong>
-                                                <a href="{{ path('app_listing_show', {id: listing.id}) }}">
+                                                <a href="{{ path('app_listing_show', {id: listing.id, 'slug': listing.slug}) }}">
                                                     {{ listing.title }}
                                                 </a>
                                             </strong>

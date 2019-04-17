@@ -33,6 +33,7 @@ class AdminListingEditController extends AbstractAdminController
 
             $customFieldsForListingFormService->saveCustomFieldsToListing($listing, $request->request->get('form_custom_field'));
             $createListingService->saveSearchText($listing);
+            $createListingService->updateSlug($listing);
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('app_admin_listing_edit', [

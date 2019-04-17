@@ -11,7 +11,7 @@
             <div class="col-md-8 col-lg-9">
                 <h2 class="mb-5">
                     {{ 'trans.Reject listing' | trans }}:
-                    <a href="{{ path('app_listing_show', {'id': listing.id}) }}" target="_blank">{{ listing.title }}</a>
+                    <a href="{{ path('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}" target="_blank">{{ listing.title }}</a>
                 </h2>
 
                 {{ form_start(form) }}

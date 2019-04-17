@@ -160,6 +160,11 @@ class Listing
     private $rejectionReason;
 
     /**
+     * @ORM\Column(type="string", length=100, nullable=false, unique=false)
+     */
+    private $slug;
+
+    /**
      * @ORM\Column(type="text")
      */
     private $searchText;
@@ -544,5 +549,17 @@ class Listing
         }
 
         return self::STATUS_ACTIVE;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
+
+        return $this;
     }
 }

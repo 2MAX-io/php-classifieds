@@ -6,6 +6,8 @@ namespace App\Service\Listing\Save;
 
 use App\Entity\Listing;
 use App\Service\Listing\ValidityExtend\ValidUntilSetService;
+use Ausi\SlugGenerator\SlugGenerator;
+use Ausi\SlugGenerator\SlugOptions;
 use DateTime;
 use Symfony\Component\Asset\Packages;
 use Symfony\Component\Form\FormInterface;
@@ -45,7 +47,7 @@ class CreateListingService
         }
 
         $listing->setAdminConfirmed(false);
-
+        $this->updateSlug($listing);
         $this->saveSearchText($listing);
     }
 
@@ -101,6 +103,22 @@ class CreateListingService
             }
         }
 
+        $searchText .= $listing->getSlug();
+        $searchText .= ' ';
+
         $listing->setSearchText($searchText);
+    }
+
+    public function updateSlug(Listing $listing): void
+    {
+        $generator = new SlugGenerator(
+            (new SlugOptions)
+                ->setValidChars('a-z0-9')
+                ->setDelimiter('-')
+        );
+
+        $slug = $generator->generate($listing->getTitle() . ' ' . $listing->getCategory()->getName());
+        $slug = mb_substr($slug, 0, 99);
+        $listing->setSlug($slug);
     }
 }

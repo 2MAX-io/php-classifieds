@@ -10,7 +10,7 @@
             </div>
 
             <div class="col-md-8 col-lg-9">
-                <a href="{{ path('app_listing_show', {'id': listing.id}) }}">{{ 'trans.Preview listing' | trans }}</a>
+                <a href="{{ path('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}">{{ 'trans.Preview listing' | trans }}</a>
 
                 <div class="float-md-right">
                     <a href="{{ path('app_user_listing_index') }}">{{ 'trans.back to list' | trans }}</a>

@@ -43,16 +43,16 @@
                 {% for listing in recommendedListings %}
                     <div class="card card-featured mb-4">
 
-                        <a href="{{ path('app_listing_show', {'id': listing.id}) }}">
+                        <a href="{{ path('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}">
                             <img class="card-img-top" alt="" src="{{ asset(listing.listingFiles.first.path | default('asset/img/blank.png')) }}">
                         </a>
 
                         <div class="card-body">
-                            <h5 class="card-title"><a href={{ path('app_listing_show', {'id': listing.id}) }}>{{ listing.title }}</a></h5>
+                            <h5 class="card-title"><a href={{ path('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}>{{ listing.title }}</a></h5>
                         </div>
 
                         <div class="card-footer">
-                            <a href="{{ path('app_listing_show', {'id': listing.id}) }}" class="btn btn-sm btn-dark btn-block mt-auto">
+                            <a href="{{ path('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}" class="btn btn-sm btn-dark btn-block mt-auto">
                                 {{ 'trans.View Listing' | trans }}
                             </a>
                         </div>
@@ -74,16 +74,16 @@
                 {% for listing in latestListings %}
                     <div class="card card-featured mb-4">
 
-                        <a href="{{ path('app_listing_show', {'id': listing.id}) }}">
+                        <a href="{{ path('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}">
                             <img class="card-img-top" alt="" src="{{ asset(listing.listingFiles.first.path | default('asset/img/blank.png')) }}">
                         </a>
 
                         <div class="card-body">
-                            <h5 class="card-title"><a href={{ path('app_listing_show', {'id': listing.id}) }}>{{ listing.title }}</a></h5>
+                            <h5 class="card-title"><a href={{ path('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}>{{ listing.title }}</a></h5>
                         </div>
 
                         <div class="card-footer">
-                            <a href="{{ path('app_listing_show', {'id': listing.id}) }}" class="btn btn-sm btn-dark btn-block mt-auto">
+                            <a href="{{ path('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}" class="btn btn-sm btn-dark btn-block mt-auto">
                                 {{ 'trans.View Listing' | trans }}
                             </a>
                         </div>

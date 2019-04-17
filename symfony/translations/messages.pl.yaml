@@ -147,6 +147,7 @@ trans:
   'Are you sure you want to deactivate: %listing%?': 'Jesteś pewny że chcesz dezaktywować: %listing%?'
   'Are you sure you want to activate: %listing%?': 'Jesteś pewny że chcesz aktywować: %listing%'
   'Are you sure you want to delete %listing%?': 'Jesteś pewny że chcesz usunąć: %listing%?'
+  Last edit: 'Ostatnia edycja'
 
   listing.status.STATUS_PENDING: Oczekuje na aktywacje
   listing.status.STATUS_ACTIVE: 'Aktywne do: %activeUntilDate%'

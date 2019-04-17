@@ -73,6 +73,9 @@ class ListingController extends AbstractUserController
         $this->dennyUnlessUser();
 
         $listing = $createListingService->create();
+        if ($currentUserService->getUser()) {
+            $listing->setEmail($currentUserService->getUser()->getEmail());
+        }
         $form = $this->createForm(ListingType::class, $listing);
         $form->handleRequest($request);
 

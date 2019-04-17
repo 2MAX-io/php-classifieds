@@ -34,6 +34,23 @@
     {{ form_widget(form.category) }}
 </div>
 
+{{ form_row(form.category) }}
+
+{% if form.validityTimeDays is defined %}
+    {{ form_row(form.validityTimeDays) }}
+{% endif %}
+
+{{ form_row(form.phone) }}
+
+<div class="form-row align-items-center">
+    <div class="col-md-8">
+        {{ form_row(form.email) }}
+    </div>
+    <div class="col-md-4 col-checkbox-pull-down">
+        {{ form_row(form.emailShow) }}
+    </div>
+</div>
+
 {{ form_widget(form) }}
 
 <button class="btn btn-primary">{{ button_label|default('trans.Save' | trans) }}</button>

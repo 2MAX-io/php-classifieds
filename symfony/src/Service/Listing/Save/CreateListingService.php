@@ -36,6 +36,7 @@ class CreateListingService
         $listing->setFirstCreatedDate(new DateTime());
         $listing->setLastEditDate(new DateTime());
         $listing->setOrderByDate(new DateTime());
+        $listing->setEmailShow(true);
 
         return $listing;
     }

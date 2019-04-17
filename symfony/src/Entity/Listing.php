@@ -56,7 +56,7 @@ class Listing
     private $description;
 
     /**
-     * @ORM\Column(type="decimal", precision=10, scale=2)
+     * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
      */
     private $price;
 
@@ -69,6 +69,11 @@ class Listing
      * @ORM\Column(type="string", length=100, nullable=true)
      */
     private $email;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=false)
+     */
+    private $emailShow;
 
     /**
      * @ORM\Column(type="string", length=50, nullable=true)
@@ -559,6 +564,18 @@ class Listing
     public function setSlug(string $slug): self
     {
         $this->slug = $slug;
+
+        return $this;
+    }
+
+    public function getEmailShow(): ?bool
+    {
+        return $this->emailShow;
+    }
+
+    public function setEmailShow(bool $emailShow): self
+    {
+        $this->emailShow = $emailShow;
 
         return $this;
     }

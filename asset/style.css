@@ -437,3 +437,13 @@ svg.icon {
     text-shadow: 1px 1px 1px #000, 0px 0px 3px #000000;
     outline: none;
 }
+
+@media (min-width: 768px) {
+    .col-checkbox-pull-down {
+        margin-top: 2.0rem;
+    }
+}
+
+.listing-description {
+    overflow-wrap: break-word;
+}

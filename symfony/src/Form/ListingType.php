@@ -7,6 +7,7 @@ use App\Form\Type\CategoryType;
 use App\Form\Type\FileSimpleType;
 use App\Service\Listing\ValidityExtend\ValidUntilSetService;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -39,7 +40,10 @@ class ListingType extends AbstractType
                 'label' => 'trans.Description',
                 'attr' => [
                     'class' => 'form-listing-description-textarea'
-                ]
+                ],
+                'constraints' => [
+                    new Constraints\Length(['min' => 20, 'max' => 5000]),
+                ],
             ])
             ->add('category', CategoryType::class)
             ->add('validityTimeDays', ChoiceType::class, [
@@ -54,16 +58,24 @@ class ListingType extends AbstractType
                 'data' => 9,
             ])
             ->add('phone', TextType::class, [
-                'label' => 'trans.Phone'
+                'label' => 'trans.Phone',
+                'required' => false,
             ])
             ->add('email', EmailType::class, [
-                'label' => 'trans.Email'
+                'label' => 'trans.Email',
+                'required' => false,
+            ])
+            ->add('emailShow', CheckboxType::class, [
+                'label' => 'trans.Show email?',
+                'required' => false,
             ])
             ->add('price', IntegerType::class, [
-                'label' => 'trans.Price'
+                'label' => 'trans.Price',
+                'required' => false,
             ])
             ->add('city', TextType::class, [
-                'label' => 'trans.City'
+                'label' => 'trans.City',
+                'required' => false,
             ])
             ->add('customFields', HiddenType::class, [
                 'mapped' => false,

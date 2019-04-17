@@ -150,7 +150,7 @@ trans:
   Create an Account: 'Utwórz konto'
   Already have an account?: 'Masz już konto?'
 
-  listing.status.STATUS_PENDING: Oczekuje na aktywacje
+  listing.status.STATUS_PENDING: 'Oczekuje na aktywacje'
   listing.status.STATUS_ACTIVE: 'Aktywne do: %activeUntilDate%'
   listing.status.STATUS_ACTIVE_FEATURED: 'Wyróżnione do: %featuredUntilDate%'
   listing.status.STATUS_REJECTED.withReason: 'Odrzucone: %rejectionReason%'

@@ -38,7 +38,7 @@ class ChangeEmailController extends AbstractController
 
             $flashService->addFlash(
                 FlashService::SUCCESS_ABOVE_FORM,
-                'trans.We send email change confirmation to both new and previous email, please click confirmation link in email to finish email change.'
+                'trans.To finalize email change, open your email account and click confirmation link'
             );
 
             return $this->redirectToRoute('app_user_change_email');
@@ -82,13 +82,13 @@ class ChangeEmailController extends AbstractController
 
             $flashService->addFlash(
                 FlashService::SUCCESS_ABOVE_FORM,
-                'trans.Email change has been successful'
+                'trans.Email address change has been successful'
             );
         } else {
             if ($newEmail === $currentUserService->getUser()->getEmail()) {
                 $flashService->addFlash(
                     FlashService::SUCCESS_ABOVE_FORM,
-                    'trans.Email change has been successful'
+                    'trans.Email address change has been successful'
                 );
             } else {
                 $flashService->addFlash(

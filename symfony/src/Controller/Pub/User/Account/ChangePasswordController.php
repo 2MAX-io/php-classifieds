@@ -38,7 +38,7 @@ class ChangePasswordController extends AbstractController
 
             $flashService->addFlash(
                 FlashService::SUCCESS_ABOVE_FORM,
-                'trans.To finalize password change please open your email account and click password change confirmation link'
+                'trans.To finalize password change, open your email account and click confirmation link'
             );
 
             return $this->redirectToRoute('app_user_change_password');

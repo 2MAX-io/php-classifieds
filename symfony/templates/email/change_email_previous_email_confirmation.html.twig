@@ -1,6 +1,6 @@
-<p>
-    {{ 'trans.Email account change confirmation' | trans }}
-</p>
+<h1>
+    {{ 'trans.Email address change confirmation' | trans }}
+</h1>
 
 {# @var user \App\Entity\User #}
 
@@ -14,7 +14,7 @@
 
 
 <p>
-    {{ 'trans.First, before confirming email change bellow. Please check if you received change email notification on new email address. This is neccessary to verify that you entered new address correctly. If you confirm change, without verification, you would lock yourself out of this account' | trans }}
+    {{ 'trans.First, before confirming email change bellow. Check if you received change email notification on new email address. This is neccessary to verify that you entered new address correctly.' | trans }}
 </p>
 
 
@@ -22,8 +22,14 @@
     {{ 'trans.When you reveived change email information on new email address, please confirm it clicking link bellow' | trans }}
 </p>
 
-<p>
-    <a href="{{ url('app_user_change_email_previous_email_confirmation', {'token': user.confirmationToken}) }}">{{ 'trans.I confirm change email to' | trans }}: {{ newEmail }}</a>
+<div>
+    <a href="{{ url('app_user_change_email_previous_email_confirmation', {'token': user.confirmationToken}) }}">
+        {{ 'trans.I confirm change of email addres to' | trans }}: {{ newEmail }}
+    </a>
+
+    <p>
+        {{ 'trans.If the link above does not work, try to copy the link below to your browser' | trans }}:
+    </p>
 
     <pre>{{ url('app_user_change_email_previous_email_confirmation', {'token': user.confirmationToken}) }}</pre>
-</p>
+</div>

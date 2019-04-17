@@ -68,7 +68,7 @@ class EmailService
 
     public function sendEmailChangeConfirmationToPreviousEmail(User $user, string $newEmail): void
     {
-        $message = (new \Swift_Message($this->trans->trans('trans.Change email confirmation')))
+        $message = (new \Swift_Message($this->trans->trans('trans.Confirmation of email address change')))
             ->setReplyTo($this->environmentService->getMailerReplyToAddress())
             ->setFrom($this->environmentService->getMailerFromEmailAddress(), $this->environmentService->getMailerFromName())
             ->setTo($user->getEmail())
@@ -99,7 +99,7 @@ class EmailService
 
     public function sendEmailChangeNotificationToNewEmail(User $user, string $newEmail): void
     {
-        $message = (new \Swift_Message($this->trans->trans('trans.Change email confirmation')))
+        $message = (new \Swift_Message($this->trans->trans('trans.Confirmation of email address change')))
             ->setReplyTo($this->environmentService->getMailerReplyToAddress())
             ->setFrom($this->environmentService->getMailerFromEmailAddress(), $this->environmentService->getMailerFromName())
             ->setTo($newEmail)

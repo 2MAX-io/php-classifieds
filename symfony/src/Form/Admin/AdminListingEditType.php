@@ -14,26 +14,44 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class AdminListingEditType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('title', TextType::class, [
-            'label' => 'trans.Title'
+            'label' => 'trans.Title',
+            'required' => true,
+            'empty_data' => '',
+            'constraints' => [
+                new NotBlank(),
+                new Length(['min' => 1]),
+            ],
         ]);
         $builder->add('description', TextareaType::class, [
             'label' => 'trans.Description',
             'attr' => [
                 'class' => 'form-listing-description-textarea'
-            ]
+            ],
+            'required' => true,
+            'empty_data' => '',
+            'constraints' => [
+                new NotBlank(),
+                new Length(['min' => 1]),
+            ],
         ]);
-        $builder->add('category', CategoryType::class);
+        $builder->add('category', CategoryType::class, [
+            'constraints' => [
+                new NotBlank(),
+            ],
+        ]);
         $builder->add('phone', TextType::class, [
-            'label' => 'trans.Phone'
+            'label' => 'trans.Phone',
         ]);
         $builder->add('email', EmailType::class, [
-            'label' => 'trans.Email'
+            'label' => 'trans.Email',
         ]);
         $builder->add('price', IntegerType::class, [
             'label' => 'trans.Price'
@@ -54,6 +72,7 @@ class AdminListingEditType extends AbstractType
         $resolver->setDefaults(
             [
                 'data_class' => Listing::class,
+                'required' => false,
             ]
         );
     }

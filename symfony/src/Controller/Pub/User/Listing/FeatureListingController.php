@@ -9,16 +9,16 @@ use App\Entity\Listing;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class HighlightListingController extends AbstractUserController
+class FeatureListingController extends AbstractUserController
 {
     /**
-     * @Route("/user/highlight/{id}", name="app_user_highlight_listing")
+     * @Route("/user/feature/{id}", name="app_user_feature_listing")
      */
-    public function highlight(Listing $listing): Response
+    public function feature(Listing $listing): Response
     {
         $this->dennyUnlessCurrentUserListing($listing);
 
-        return $this->render('user/listing/highlight_extend.html.twig', [
+        return $this->render('user/listing/featured_extend.html.twig', [
         ]);
     }
 }

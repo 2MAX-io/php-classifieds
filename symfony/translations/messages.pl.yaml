@@ -1,4 +1,14 @@
 trans:
+  listing.status.STATUS_PENDING: 'Oczekuje na aktywacje'
+  listing.status.STATUS_ACTIVE: 'Aktywne do: %activeUntilDate%'
+  listing.status.STATUS_ACTIVE_FEATURED: 'Wyróżnione do: %featuredUntilDate%'
+  listing.status.STATUS_REJECTED.withReason: 'Odrzucone: %rejectionReason%'
+  listing.status.STATUS_REJECTED: 'Odrzucone'
+  listing.status.STATUS_ADMIN_REMOVED: 'Usunięte przez Administratora'
+  listing.status.STATUS_EXPIRED: 'Wygasłe'
+  listing.status.STATUS_USER_REMOVED: 'Usunięte'
+  listing.status.STATUS_DEACTIVATED: 'Dezaktywowane'
+
   Home page: Strona główna
   Informations: Informacje
   Last added: Ostatnio dodane
@@ -147,18 +157,7 @@ trans:
   'Are you sure you want to activate: %listing%?': 'Jesteś pewny że chcesz aktywować: %listing%'
   'Are you sure you want to delete %listing%?': 'Jesteś pewny że chcesz usunąć: %listing%?'
   Last edit: 'Ostatnia edycja'
-  Create an Account: 'Utwórz konto'
   Already have an account?: 'Masz już konto?'
-
-  listing.status.STATUS_PENDING: 'Oczekuje na aktywacje'
-  listing.status.STATUS_ACTIVE: 'Aktywne do: %activeUntilDate%'
-  listing.status.STATUS_ACTIVE_FEATURED: 'Wyróżnione do: %featuredUntilDate%'
-  listing.status.STATUS_REJECTED.withReason: 'Odrzucone: %rejectionReason%'
-  listing.status.STATUS_REJECTED: 'Odrzucone'
-  listing.status.STATUS_ADMIN_REMOVED: 'Usunięte przez Administratora'
-  listing.status.STATUS_EXPIRED: 'Wygasłe'
-  listing.status.STATUS_USER_REMOVED: 'Usunięte'
-  listing.status.STATUS_DEACTIVATED: 'Dezaktywowane'
   Confirm registration by clicking link bellow: 'Potwierdź rejestrację klikając link poniżej'
   Confirm account registration: 'Potwierdź rejestracje konta'
   If the link above does not work, try to copy the link below to your browser: 'Jeżeli link powyżej nie działa, spróbuj skopiować do przeglądarki link poniżej'
@@ -178,3 +177,10 @@ trans:
   I confirm change of email addres to: 'Potwierdzam zmianę adresu email na'
   Email address change has been successful: 'Zmiana adresu email zakończona sukcesem'
   Extend validity: 'Przedłuż ważność'
+  Register account: 'Rejestracja konta'
+  New Listing: 'Dodaj ogłoszenie'
+  My listings: 'Moje ogłoszenia'
+  Extend featured: 'Przedłuż wyróżnienie'
+  All categories: 'Wszystkie kategorie'
+  Log in!: 'Zaloguj się!'
+  Advanced listing edit: 'Zaawansowana edycja ogłoszenia'

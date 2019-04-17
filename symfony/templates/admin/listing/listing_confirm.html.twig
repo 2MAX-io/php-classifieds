@@ -21,7 +21,7 @@
                         </div>
                         {% if listing.adminConfirmed %}
                             <div>
-                                <a href="{{ path('app_user_highlight_listing', {"id": listing.id}) }}">{{ 'trans.Feature this listing' | trans }}</a>
+                                <a href="{{ path('app_user_feature_listing', {"id": listing.id}) }}">{{ 'trans.Feature this listing' | trans }}</a>
                             </div>
                         {% endif %}
                         {% if not listing.adminConfirmed %}

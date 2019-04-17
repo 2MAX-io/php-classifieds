@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Listing index{% endblock %}
+{% block title %}{{ 'trans.My listings' | trans }}{% endblock %}
 
 {% block body %}
     <div class="container mt-5">
@@ -33,7 +33,7 @@
                                 </div>
                                 {% if listing.adminConfirmed %}
                                     <div>
-                                        <a href="{{ path('app_user_highlight_listing', {"id": listing.id}) }}">{{ 'trans.Feature this listing' | trans }}</a>
+                                        <a href="{{ path('app_user_feature_listing', {"id": listing.id}) }}">{{ 'trans.Feature this listing' | trans }}</a>
                                     </div>
                                 {% endif %}
                                 {% if listing.adminRejected %}

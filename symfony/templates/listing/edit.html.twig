@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit listing{% endblock %}
+{% block title %}{{ 'trans.Edit listing' | trans }}{% endblock %}
 
 {% block body %}
     <div class="container mt-5">
@@ -16,7 +16,7 @@
                     <a href="{{ path('app_user_listing_index') }}">{{ 'trans.back to list' | trans }}</a>
 
                     {% if listing.adminConfirmed %}
-                        <a href="{{ path('app_user_highlight_listing', {"id": listing.id}) }}" class="btn btn-dark">{{ 'trans.Feature this listing' | trans }}</a>
+                        <a href="{{ path('app_user_feature_listing', {"id": listing.id}) }}" class="btn btn-dark">{{ 'trans.Feature this listing' | trans }}</a>
                     {% endif %}
 
                     {% if listing.adminConfirmed %}

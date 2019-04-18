@@ -28,6 +28,7 @@ class ValidityExtendType extends AbstractType
                 'mapped' => false,
                 'choices' => $this->validUntilSetService->getValidityTimeDaysChoices(),
                 'constraints' => [
+                    new Constraints\NotBlank(),
                     new Constraints\Choice([
                         'choices' => $this->validUntilSetService->getValidityTimeDaysChoices()
                     ]),

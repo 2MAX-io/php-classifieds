@@ -27,6 +27,8 @@ class ListingRejectController extends AbstractAdminController
             $listing->setAdminRejected(true);
 
             $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute($request->get('_route'), ['id' => $listing->getId()]);
         }
         return $this->render('admin/listing/listing_reject.html.twig', [
             'listing' => $listing,

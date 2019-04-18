@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Webmozart\PathUtil\Path;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ListingFileRepository")
@@ -44,6 +45,11 @@ class ListingFile
     public function getPath(): ?string
     {
         return $this->path;
+    }
+
+    public function getPathForList(): ?string
+    {
+        return Path::getDirectory($this->getPath()) . '/resized_list_' . basename($this->getPath());
     }
 
     public function setPath(string $path): self

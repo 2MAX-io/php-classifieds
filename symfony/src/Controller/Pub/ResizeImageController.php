@@ -20,6 +20,8 @@ class ResizeImageController
      */
     public function index(Request $request, string $path, string $type, string $file): Response
     {
+        ini_set('memory_limit','256M'); // todo: check better
+
 //        return new Response('image resize '. $path . '/' . $file);
 
         if (!in_array(Path::getExtension($file, true), ['jpg', 'png', 'gif', 'jpeg'])) {
@@ -52,6 +54,6 @@ class ResizeImageController
             return ['w' => 180, 'h' => 180];
         }
 
-        return ['w' => 300, 'h' => 400];
+        throw new NotFoundException();
     }
 }

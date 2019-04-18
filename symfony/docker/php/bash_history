@@ -115,3 +115,5 @@ chown -R 1000:www-data symfony/src/Entity/*.php
 php symfony/bin/console doctrine:schema:update --force
 chmod -R 775 static/
 chown -R 1000:www-data static/
+ls /var/www/html/static/user/listing/zzzz/2019/
+chown -R 1000:www-data static/

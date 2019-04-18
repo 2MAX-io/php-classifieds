@@ -29,4 +29,33 @@ class AppRuntime implements RuntimeExtensionInterface
     {
         return $this->currentUserService->getUser() === $listing->getUser();
     }
+
+    public function boolText($value): string
+    {
+        if ($value === true) {
+            return 'trans.Yes';
+        }
+
+        if ($value === false) {
+            return 'trans.No';
+        }
+
+        if ($value === '0' || $value === '' || $value === 'false' || $value === 'null') {
+            return 'trans.No';
+        }
+
+        if (empty(trim($value))) {
+            return 'trans.No';
+        }
+
+        if ($value === '1' || $value === 1 || $value === 'true') {
+            return 'trans.Yes';
+        }
+
+        if ($value) {
+            return 'trans.Yes';
+        }
+
+        return 'trans.No';
+    }
 }

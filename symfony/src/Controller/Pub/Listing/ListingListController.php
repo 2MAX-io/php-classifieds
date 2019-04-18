@@ -50,6 +50,10 @@ class ListingListController extends AbstractController
             }
         }
 
+        if (!ctype_digit($request->query->get('user', false))) {
+            throw $this->createNotFoundException();
+        }
+
         $listingListDto = $listingListService->getListings($page, $category);
 
         return $this->render(

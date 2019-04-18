@@ -447,3 +447,7 @@ svg.icon {
 .listing-description {
     overflow-wrap: break-word;
 }
+
+.collapsing {
+    transition-duration: 0s;
+}

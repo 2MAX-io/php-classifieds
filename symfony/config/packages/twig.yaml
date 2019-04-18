@@ -1,6 +1,6 @@
 parameters:
-    twig_date_format: d.m.Y, H:i
-    twig_date_format_short: d.m.Y
+    twig_date_format: Y-m-d, H:i
+    twig_date_format_short: Y-m-d
 
 twig:
     default_path: '%kernel.project_dir%/templates'

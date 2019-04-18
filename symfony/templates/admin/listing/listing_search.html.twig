@@ -11,45 +11,74 @@
         </form>
 
         <div class="container mt-5">
-            <table class="table">
-                <thead>
-                <tr>
-                    <th>{{ 'trans.Title' | trans }}</th>
-                    <th>{{ 'trans.Status' | trans }}</th>
-                    <th>{{ 'trans.Actions' | trans }}</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for listing in listings %}
+            <div class="table-responsive">
+                <table class="table" id="listings">
+                    <thead>
                     <tr>
-                        <td>
-                            <div>
-                                <a href="{{ path('app_listing_show', {"id": listing.id, 'slug': listing.slug}) }}">{{ listing.title }}</a>
-                            </div>
-                            {% if listing.featured %}
+                        <th>{{ 'trans.Title' | trans }}</th>
+                        <th>{{ 'trans.Status' | trans }}</th>
+                        <th>{{ 'trans.Actions' | trans }}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for listing in listings %}
+                        <tr>
+                            <td>
                                 <div>
-                                    <span class="badge badge-pill badge-warning">{{ 'trans.Featured' | trans }}</span>
+                                    <a href="{{ path('app_listing_show', {"id": listing.id, 'slug': listing.slug}) }}">{{ listing.title }}</a>
                                 </div>
-                            {% endif %}
-                        </td>
-                        <td>{{ getListingStatus(listing) }}</td>
-                        <td>
-                            <a href="{{ path('app_admin_listing_edit', {'id': listing.id}) }}" class="btn btn-dark">{{ 'trans.Edit' | trans }}</a>
+                                <div>
+                                    {% if listing.featured %}
+                                        <span class="badge badge-pill badge-warning">{{ 'trans.Featured' | trans }}</span>
+                                    {% endif %}
+                                    <span class="mr-2">{{ listing.category.parent.name }} ⇾ <a href="{{ path('app_category', {'categorySlug': listing.category.slug}) }}">{{ listing.category.name }}</a></span>
+                                    <span><a href="{{ path('app_user_listings', {'user': listing.user.id}) }}">{{ 'trans.User Listings' | trans }}</a></span>
+                                </div>
+                            </td>
+                            <td>{{ getListingStatus(listing) }}</td>
+                            <td>
+                                <a class="btn btn-primary" data-toggle="collapse" href="#collapse{{ listing.id }}" role="button" aria-expanded="true" aria-controls="collapseOne">
+                                    {{ 'trans.info' | trans }}
+                                </a>
+                                <a href="{{ path('app_admin_listing_edit', {'id': listing.id}) }}" class="btn btn-dark">{{ 'trans.Edit' | trans }}</a>
 
-                            {% if not listing.adminConfirmed %}
-                                {{ include('admin/listing/_confirm_form.html.twig') }}
-                            {% endif %}
+                                {% if not listing.adminConfirmed %}
+                                    {{ include('admin/listing/_confirm_form.html.twig') }}
+                                {% endif %}
 
-                            <a href="{{ path('app_admin_listing_reject', {'id': listing.id}) }}" target="_blank" class="btn btn-warning">{{ 'trans.Reject' | trans }}</a>
-                        </td>
-                    </tr>
-                {% else %}
-                    <tr>
-                        <td colspan="8">{{ 'trans.no records found' | trans }}</td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
+                                <a href="{{ path('app_admin_listing_reject', {'id': listing.id}) }}" target="_blank" class="btn btn-warning">{{ 'trans.Reject' | trans }}</a>
+                            </td>
+                        </tr>
+                        <tr class="collapse" id="collapse{{ listing.id }}" data-parent="#listings">
+                            <td colspan="99">
+                                <div class="row">
+                                    <div class="col-md-4">{{ 'trans.Admin last confirmation' | trans }}: {{ listing.adminLastConfirmationDate | date }}</div>
+                                    <div class="col-md-4">{{ 'trans.Featured until' | trans }}:
+                                        {% if listing.featured and listing.featuredUntilDate %}
+                                            {{ listing.featuredUntilDate | date }}
+                                        {% else %}
+                                            {{ 'trans.No' | trans }}
+                                        {% endif %}
+                                    </div>
+                                    <div class="col-md-4">{{ 'trans.Last edit' | trans }}: {{ listing.lastEditDate | date }}</div>
+                                    <div class="col-md-4">{{ 'trans.Creation date' | trans }}: {{ listing.firstCreatedDate | date }}</div>
+                                    <div class="col-md-4">{{ 'trans.Last raising' | trans }}: {{ listing.orderByDate | date }}</div>
+                                    <div class="col-md-4">{{ 'trans.Valid until' | trans }}: {{ listing.validUntilDate | date }}</div>
+                                    <div class="col-md-4">{{ 'trans.Confirmed by Admin?' | trans }}: {{ listing.adminConfirmed | boolText | trans }}</div>
+                                    <div class="col-md-4">{{ 'trans.Removed by Admin?' | trans }}: {{ listing.adminRemoved | boolText | trans }}</div>
+                                    <div class="col-md-4">{{ 'trans.Removed by User?' | trans }}: {{ listing.userRemoved | boolText | trans }}</div>
+                                    <div class="col-md-4">{{ 'trans.Deactivated by User?' | trans }}: {{ listing.userDeactivated | boolText | trans }}</div>
+                                </div>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="99">{{ 'trans.no records found' | trans }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
 
             {% if pager.getNbPages > 1 %}
                 {{ pagination | raw }}

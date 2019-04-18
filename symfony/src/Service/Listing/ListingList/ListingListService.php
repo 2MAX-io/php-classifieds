@@ -126,7 +126,7 @@ class ListingListService
 
         if (!empty($_GET['user'])) {
             $qb->andWhere($qb->expr()->eq('listing.user', ':user'));
-            $qb->setParameter(':user', $_GET['user']);
+            $qb->setParameter(':user', (int) $_GET['user']);
         }
 
         $this->listingPublicDisplayService->applyPublicDisplayConditions($qb);

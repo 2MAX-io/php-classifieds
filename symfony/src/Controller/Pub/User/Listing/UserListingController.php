@@ -19,7 +19,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class ListingController extends AbstractUserController
+class UserListingController extends AbstractUserController
 {
     /**
      * @var TranslatorInterface
@@ -59,7 +59,7 @@ class ListingController extends AbstractUserController
     }
 
     /**
-     * @Route("/user/new", name="app_listing_new", methods={"GET","POST"})
+     * @Route("/user/listing/new", name="app_listing_new", methods={"GET","POST"})
      */
     public function new(
         Request $request,

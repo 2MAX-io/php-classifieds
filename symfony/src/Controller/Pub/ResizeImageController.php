@@ -6,10 +6,10 @@ namespace App\Controller\Pub;
 
 use App\Helper\FilePath;
 use App\System\Glide\AppServerFactory;
-use Intervention\Image\Exception\NotFoundException;
 use League\Glide\Responses\SymfonyResponseFactory;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Webmozart\PathUtil\Path;
 
@@ -20,12 +20,14 @@ class ResizeImageController
      */
     public function index(Request $request, string $path, string $type, string $file): Response
     {
-        ini_set('memory_limit','256M'); // todo: check better
-
-//        return new Response('image resize '. $path . '/' . $file);
+        ini_set('memory_limit','256M'); // todo: check if can reduce it
 
         if (!in_array(Path::getExtension($file, true), ['jpg', 'png', 'gif', 'jpeg'])) {
-            throw new NotFoundException();
+            throw new NotFoundHttpException();
+        }
+
+        if (!in_array(Path::getExtension($request->getRequestUri(), true), ['jpg', 'png', 'gif', 'jpeg'])) {
+            throw new NotFoundHttpException();
         }
 
         $server = AppServerFactory::create([
@@ -38,7 +40,11 @@ class ResizeImageController
         $targetPath = Path::canonicalize(FilePath::getProjectDir() . $request->getRequestUri());
 
         if (!in_array(Path::getExtension($targetPath, true), ['jpg', 'png', 'gif', 'jpeg'])) {
-            throw new NotFoundException();
+            throw new NotFoundHttpException();
+        }
+
+        if (Path::getLongestCommonBasePath([FilePath::getStaticPath(), $targetPath]) !== FilePath::getStaticPath()) {
+            throw new NotFoundHttpException();
         }
 
         $cachedPath = $server->makeImage($path . '/' . $file, $this->getParams($type));
@@ -58,6 +64,6 @@ class ResizeImageController
             return ['w' => 1920, 'h' => 1080];
         }
 
-        throw new NotFoundException();
+        throw new NotFoundHttpException();
     }
 }

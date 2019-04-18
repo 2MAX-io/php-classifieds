@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace App\Helper;
 
+use Webmozart\PathUtil\Path;
+
 class FilePath
 {
     public static function getPath(string $relativePath): string
     {
-        return $relativePath; // todo: #12 add path validation, make path absolute
+        return Path::canonicalize($relativePath); // todo: #12 add path validation, make path absolute
     }
 
     public static function getListingFilePath(): string

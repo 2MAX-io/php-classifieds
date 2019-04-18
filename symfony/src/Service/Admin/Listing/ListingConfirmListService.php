@@ -29,6 +29,7 @@ class ListingConfirmListService
         $qb = $this->em->getRepository(Listing::class)->createQueryBuilder('listing');
 
         $qb->andWhere($qb->expr()->eq('listing.adminConfirmed', 0));
+        $qb->addOrderBy('listing.featured', 'DESC');
         $qb->addOrderBy('listing.lastEditDate', 'ASC');
         $qb->addOrderBy('listing.firstCreatedDate', 'ASC');
 

@@ -64,4 +64,22 @@ class TwigListingRuntime implements RuntimeExtensionInterface
 
         return $this->translator->trans("trans.listing.status.$status");
     }
+
+    public function getListingStatusClass(Listing $listing): string
+    {
+        $map = [
+            Listing::STATUS_ACTIVE => 'listing-status-active',
+            Listing::STATUS_ACTIVE_FEATURED => 'listing-status-active-featured',
+            Listing::STATUS_PENDING => 'listing-status-pending',
+            Listing::STATUS_REJECTED => 'listing-status-rejected',
+            Listing::STATUS_DEACTIVATED => 'listing-status-deactivated',
+            Listing::STATUS_EXPIRED => 'listing-status-expired',
+            Listing::STATUS_USER_REMOVED => 'listing-status-user-removed',
+            Listing::STATUS_ADMIN_REMOVED => 'listing-status-admin-removed',
+        ];
+
+        $status = $listing->getStatus();
+
+        return $map[$status] ?? 'listing-status-not-found';
+    }
 }

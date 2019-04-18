@@ -453,5 +453,22 @@ svg.icon {
 }
 
 .list-small-img {
-    max-height: 100px;
+    max-height: 6rem;
+    min-width: 4rem;
+}
+
+.listing-status-pending {
+    color: #c69500;
+}
+
+.listing-status-expired, .listing-status-deactivated, .listing-status-user-removed {
+    color: #9e9e9e;
+}
+
+.listing-status-active, .listing-status-active-featured {
+    color: #4CAF50;
+}
+
+.listing-status-rejected, .listing-status-admin-removed {
+    color: #f44336;
 }

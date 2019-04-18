@@ -39,13 +39,23 @@
                                 <div>
                                     <a href="{{ path('app_listing_show', {"id": listing.id, 'slug': listing.slug}) }}">{{ listing.title }}</a>
                                 </div>
+                                <div>
+                                    <span class="mr-2">
+                                        {{ listing.category.parent.name }}
+                                        ⇾
+                                        <a href="{{ path('app_category', {'categorySlug': listing.category.slug}) }}">
+                                            {{- listing.category.name -}}
+                                        </a>
+                                    </span>
+                                    {% if listing.featured %}
+                                        <span class="badge badge-pill badge-warning">{{ 'trans.Featured' | trans }}</span>
+                                    {% endif %}
+                                </div>
+
                                 {% if listing.adminConfirmed and not listing.featured %}
                                     <div>
                                         <a href="{{ path('app_user_feature_listing', {"id": listing.id}) }}">{{ 'trans.Feature this listing' | trans }}</a>
                                     </div>
-                                {% endif %}
-                                {% if listing.featured %}
-                                    <span class="badge badge-pill badge-warning">{{ 'trans.Featured' | trans }}</span>
                                 {% endif %}
                                 {% if listing.adminRejected %}
                                     {% if listing.rejectionReason is empty %}
@@ -63,7 +73,7 @@
                                 {{ listing.lastEditDate | date('d.m.Y') }}
                             </td>
                             <td>
-                                {{ getListingStatus(listing) }}
+                                <span class="{{ getListingStatusClass(listing) }}">{{ getListingStatus(listing) }}</span>
                             </td>
                             <td>
                                 {% if not listing.adminRemoved %}
@@ -78,7 +88,7 @@
                                         </a>
                                     {% endif %}
 
-                                    {% if not listing.adminRejected and not listing.status == constant('\App\\Entity\\Listing::STATUS_EXPIRED') %}
+                                    {% if not listing.adminRejected and listing.status != constant('\App\\Entity\\Listing::STATUS_EXPIRED') %}
                                         {% if listing.userDeactivated %}
                                             {{ include('listing/_activate_form.html.twig') }}
                                         {% else %}

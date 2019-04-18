@@ -55,7 +55,9 @@
                                     </span>
                                 </div>
                             </td>
-                            <td>{{ getListingStatus(listing) }}</td>
+                            <td>
+                                <span class="{{ getListingStatusClass(listing) }}">{{ getListingStatus(listing) }}</span>
+                            </td>
                             <td>
                                 <a
                                         class="btn btn-primary"

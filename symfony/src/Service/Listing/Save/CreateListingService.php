@@ -131,8 +131,8 @@ class CreateListingService
             $slugSourceText .= ' ';
         }
 
+        $slugSourceText = mb_substr($slugSourceText, 0, 60);
         $slug = $generator->generate(trim($slugSourceText));
-        $slug = mb_substr($slug, 0, 60);
         $listing->setSlug($slug);
     }
 }

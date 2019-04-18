@@ -16,6 +16,7 @@ class AppExtension extends AbstractExtension
             new TwigFunction('lowSecurityCheckIsAdminInPublic', [AppRuntime::class, 'lowSecurityCheckIsAdminInPublic']),
             new TwigFunction('isCurrentUserListing', [AppRuntime::class, 'isCurrentUserListing']),
             new TwigFunction('getListingStatus', [TwigListingRuntime::class, 'getListingStatus']),
+            new TwigFunction('getListingStatusClass', [TwigListingRuntime::class, 'getListingStatusClass']),
         ];
     }
 

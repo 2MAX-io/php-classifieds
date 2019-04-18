@@ -6,7 +6,10 @@ namespace App\Security;
 
 use App\Entity\Admin;
 use App\Entity\User;
+use App\Service\User\RoleInterface;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Security;
 
 class CurrentUserService
@@ -21,10 +24,16 @@ class CurrentUserService
      */
     private $session;
 
-    public function __construct(Security $security, SessionInterface $session)
+    /**
+     * @var EntityManagerInterface
+     */
+    private $em;
+
+    public function __construct(Security $security, SessionInterface $session, EntityManagerInterface $em)
     {
         $this->security = $security;
         $this->session = $session;
+        $this->em = $em;
     }
 
     public function getUser(): ?User
@@ -63,6 +72,27 @@ class CurrentUserService
      */
     public function lowSecurityCheckIsAdminInPublic(): bool
     {
-        return $this->session->get('_security_admin', false) !== false;
+        $adminSerialized = $this->session->get('_security_admin', false);
+
+        if (false === $adminSerialized) {
+            return false;
+        }
+
+        /** @var TokenInterface $adminToken */
+        $adminToken = unserialize($adminSerialized);
+
+        $admin = $adminToken->getUser();
+        $admin = $this->em->merge($admin);
+        $this->em->refresh($admin);
+
+        if (!$admin instanceof Admin) {
+            return false;
+        }
+
+        if (!in_array(RoleInterface::ROLE_ADMIN, $admin->getRoles(), true)) {
+            return false;
+        }
+
+        return true;
     }
 }

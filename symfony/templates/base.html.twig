@@ -83,6 +83,11 @@
                 <li class="nav-item">
                     <a class="nav-link" href="//www.jaslo4u.pl">Jaslo4u.pl</a>
                 </li>
+                {% if lowSecurityCheckIsAdminInPublic() %}
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-outline-danger" href="{{ path('app_admin_index') }}">{{ 'trans.Admin panel' | trans }}</a>
+                    </li>
+                {% endif %}
             </ul>
         </div>
     </div>

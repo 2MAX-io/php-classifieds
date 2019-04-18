@@ -28,6 +28,34 @@
 
             return true;
         },
-        files: {{ listingFilesForJavascript | default([]) | json_encode | raw }}
+        files: {{ listingFilesForJavascript | default([]) | json_encode | raw }},
+        captions: {
+            button: function(options) { return '{{ 'trans.Browse' | trans }} ' + (options.limit == 1 ? '{{ 'trans.file' | trans }}' : '{{ 'trans.files' | trans }}'); },
+            feedback: function(options) { return '{{ 'trans.Chose' | trans }} ' + (options.limit == 1 ? '{{ 'trans.file' | trans }}' : '{{ 'trans.files' | trans }}') + ' {{ 'trans.to upload' | trans }}'; },
+            feedback2: function(options) { return options.length + ' ' + (options.length > 1 ? ' files were' : ' file was') + ' chosen'; },
+            confirm: 'Confirm',
+            cancel: 'Cancel',
+            name: 'Name',
+            type: 'Type',
+            size: 'Size',
+            dimensions: 'Dimensions',
+            duration: 'Duration',
+            crop: 'Crop',
+            rotate: 'Rotate',
+            sort: 'Sort',
+            download: 'Download',
+            remove: 'Remove',
+            drop: 'Drop the files here to Upload',
+            paste: '<div class="fileuploader-pending-loader"></div> Pasting a file, click here to cancel.',
+            removeConfirmation: 'Are you sure you want to remove this file?',
+            errors: {
+                filesLimit: 'Only ${limit} files are allowed to be uploaded.',
+                filesType: 'Only ${extensions} files are allowed to be uploaded.',
+                fileSize: '${name} is too large! Please choose a file up to ${fileMaxSize}MB.',
+                filesSizeAll: 'Files that you chose are too large! Please upload files up to ${maxSize} MB.',
+                fileName: 'File with the name ${name} is already selected.',
+                folderUpload: 'You are not allowed to upload folders.'
+            }
+        }
     });
 </script>

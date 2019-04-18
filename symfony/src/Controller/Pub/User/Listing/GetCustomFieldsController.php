@@ -6,6 +6,7 @@ namespace App\Controller\Pub\User\Listing;
 
 use App\Controller\Pub\User\Base\AbstractUserController;
 use App\Entity\Listing;
+use App\Security\CurrentUserService;
 use App\Service\Listing\CustomField\CustomFieldsForListingFormService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,12 +17,15 @@ class GetCustomFieldsController extends AbstractUserController
     /**
      * @Route("/listing/get-custom-fields", options={"expose"=true}, name="app_listing_get_custom_fields")
      */
-    public function getCustomFields(Request $request, CustomFieldsForListingFormService $customFieldsForListingFormService): Response
+    public function getCustomFields(Request $request, CustomFieldsForListingFormService $customFieldsForListingFormService, CurrentUserService $currentUserService): Response
     {
         $listingId = $request->query->get('listingId', null);
         if ($listingId) {
             $listing = $this->getDoctrine()->getRepository(Listing::class)->find($listingId);
-//            $this->dennyUnlessCurrentUserListing($listing); // todo: security - make it accessible to admin
+
+            if (!$currentUserService->lowSecurityCheckIsAdminInPublic()) {
+                $this->dennyUnlessCurrentUserListing($listing);
+            }
         }
 
         $categoryId = $request->query->get('categoryId', null);

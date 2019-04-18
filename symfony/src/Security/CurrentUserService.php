@@ -55,9 +55,9 @@ class CurrentUserService
     }
 
     /**
-     * WARNING! do not use to authorize anything important
+     * WARNING! do not use to authorize anything important, like authorizing admin actions
      *
-     * only use to display links to admin panel, or show hidden listings, nothing more than that
+     * only use to display links to admin panel, or show not activated listings, nothing more than that
      *
      * @return bool
      */

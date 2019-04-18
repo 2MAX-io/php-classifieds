@@ -25,28 +25,56 @@
                         <tr>
                             <td>
                                 <div>
-                                    <a href="{{ path('app_listing_show', {"id": listing.id, 'slug': listing.slug}) }}">{{ listing.title }}</a>
+                                    <a href="{{ path('app_listing_show', {"id": listing.id, 'slug': listing.slug}) }}">
+                                        {{- listing.title -}}
+                                    </a>
                                 </div>
                                 <div>
                                     {% if listing.featured %}
                                         <span class="badge badge-pill badge-warning">{{ 'trans.Featured' | trans }}</span>
                                     {% endif %}
-                                    <span class="mr-2">{{ listing.category.parent.name }} ⇾ <a href="{{ path('app_category', {'categorySlug': listing.category.slug}) }}">{{ listing.category.name }}</a></span>
-                                    <span><a href="{{ path('app_user_listings', {'user': listing.user.id}) }}">{{ 'trans.User Listings' | trans }}</a></span>
+                                    <span class="mr-2">
+                                        {{ listing.category.parent.name }}
+                                        ⇾
+                                        <a href="{{ path('app_category', {'categorySlug': listing.category.slug}) }}">
+                                            {{- listing.category.name -}}
+                                        </a>
+                                    </span>
+                                    <span>
+                                        <a href="{{ path('app_user_listings', {'user': listing.user.id}) }}">
+                                            {{- 'trans.User Listings' | trans -}}
+                                        </a>
+                                    </span>
                                 </div>
                             </td>
                             <td>{{ getListingStatus(listing) }}</td>
                             <td>
-                                <a class="btn btn-primary" data-toggle="collapse" href="#collapse{{ listing.id }}" role="button" aria-expanded="true" aria-controls="collapseOne">
-                                    {{ 'trans.info' | trans }}
+                                <a
+                                        class="btn btn-primary"
+                                        data-toggle="collapse"
+                                        href="#collapse{{ listing.id }}"
+                                        role="button"
+                                        aria-expanded="true"
+                                        aria-controls="collapseOne"
+                                >
+                                    {{- 'trans.info' | trans -}}
                                 </a>
-                                <a href="{{ path('app_admin_listing_edit', {'id': listing.id}) }}" class="btn btn-dark">{{ 'trans.Edit' | trans }}</a>
+
+                                <a href="{{ path('app_admin_listing_edit', {'id': listing.id}) }}" class="btn btn-dark">
+                                    {{- 'trans.Edit' | trans -}}
+                                </a>
 
                                 {% if not listing.adminConfirmed %}
                                     {{ include('admin/listing/_confirm_form.html.twig') }}
                                 {% endif %}
 
-                                <a href="{{ path('app_admin_listing_reject', {'id': listing.id}) }}" target="_blank" class="btn btn-warning">{{ 'trans.Reject' | trans }}</a>
+                                <a
+                                        href="{{ path('app_admin_listing_reject', {'id': listing.id}) }}"
+                                        target="_blank"
+                                        class="btn btn-warning"
+                                >
+                                    {{ 'trans.Reject' | trans }}
+                                </a>
                             </td>
                         </tr>
                         <tr class="collapse" id="collapse{{ listing.id }}" data-parent="#listings">

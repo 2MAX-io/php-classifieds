@@ -22,13 +22,38 @@ class ResizeImageController
     {
         ini_set('memory_limit','256M'); // todo: check if can reduce it
 
-        if (!in_array(Path::getExtension($file, true), ['jpg', 'png', 'gif', 'jpeg'])) {
+        if (!in_array(Path::getExtension($file, true), ['jpg', 'png', 'gif', 'jpeg'], true)) {
             throw new NotFoundHttpException();
         }
 
-        if (!in_array(Path::getExtension($request->getRequestUri(), true), ['jpg', 'png', 'gif', 'jpeg'])) {
+        if (!in_array(Path::getExtension($request->getRequestUri(), true), ['jpg', 'png', 'gif', 'jpeg'], true)) {
             throw new NotFoundHttpException();
         }
+
+        $sourcePath = $path . '/' . $file;
+        $targetPath = Path::canonicalize(FilePath::getProjectDir() . $request->getRequestUri());
+
+        if (!in_array(Path::getExtension($targetPath, true), ['jpg', 'png', 'gif', 'jpeg'], true)) {
+            throw new NotFoundHttpException();
+        }
+
+        if (Path::getLongestCommonBasePath([FilePath::getStaticPath(), $targetPath]) !== FilePath::getStaticPath()) {
+            // path not inside expected directory
+            throw new NotFoundHttpException();
+        }
+
+        if (!in_array(Path::getExtension($sourcePath, true), ['jpg', 'png', 'gif', 'jpeg'], true)) {
+            throw new NotFoundHttpException();
+        }
+
+        if (Path::getLongestCommonBasePath([FilePath::getStaticPath(), FilePath::getStaticPath().'/'.$sourcePath]) !== FilePath::getStaticPath()) {
+            // path not inside expected directory
+            throw new NotFoundHttpException();
+        }
+
+        /**
+         * Everything must be already valid and safe after this point
+         */
 
         $server = AppServerFactory::create([
             'source' => FilePath::getStaticPath(),
@@ -36,20 +61,9 @@ class ResizeImageController
             'cache_path_prefix' => 'cache',
             'response' => new SymfonyResponseFactory($request)
         ]);
+        $cachedPath = $server->makeImage($sourcePath, $this->getParams($type));
 
-        $targetPath = Path::canonicalize(FilePath::getProjectDir() . $request->getRequestUri());
-
-        if (!in_array(Path::getExtension($targetPath, true), ['jpg', 'png', 'gif', 'jpeg'])) {
-            throw new NotFoundHttpException();
-        }
-
-        if (Path::getLongestCommonBasePath([FilePath::getStaticPath(), $targetPath]) !== FilePath::getStaticPath()) {
-            throw new NotFoundHttpException();
-        }
-
-        $cachedPath = $server->makeImage($path . '/' . $file, $this->getParams($type));
-
-        rename(Path::canonicalize(FilePath::getStaticPath() . '/' . $cachedPath), $targetPath);
+        rename(FilePath::getStaticPath() . '/' . $cachedPath, $targetPath);
 
         return $server->getResponseFactory()->create($server->getCache(), Path::makeRelative($targetPath, FilePath::getStaticPath()));
     }

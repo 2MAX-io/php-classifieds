@@ -113,3 +113,5 @@ chown -R 1000:www-data symfony/src/Entity/*.php
 php symfony/bin/console make:entity --regenerate "App\Entity"
 chown -R 1000:www-data symfony/src/Entity/*.php
 php symfony/bin/console doctrine:schema:update --force
+chmod -R 775 static/
+chown -R 1000:www-data static/

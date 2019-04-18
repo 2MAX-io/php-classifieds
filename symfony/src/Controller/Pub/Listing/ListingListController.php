@@ -50,7 +50,7 @@ class ListingListController extends AbstractController
             }
         }
 
-        if (!ctype_digit($request->query->get('user', false))) {
+        if ($request->query->has('user') && !ctype_digit($request->query->get('user', false))) {
             throw $this->createNotFoundException();
         }
 

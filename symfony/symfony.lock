@@ -108,11 +108,26 @@
             "config/routes/fos_js_routing.yaml"
         ]
     },
+    "guzzlehttp/psr7": {
+        "version": "1.5.2"
+    },
     "hackzilla/password-generator": {
         "version": "1.4.0"
     },
+    "intervention/image": {
+        "version": "2.4.2"
+    },
     "jdorn/sql-formatter": {
         "version": "v1.2.17"
+    },
+    "league/flysystem": {
+        "version": "1.0.51"
+    },
+    "league/glide": {
+        "version": "1.5.0"
+    },
+    "league/glide-symfony": {
+        "version": "1.0.3"
     },
     "nesbot/carbon": {
         "version": "2.16.3"
@@ -135,11 +150,17 @@
     "psr/container": {
         "version": "1.0.0"
     },
+    "psr/http-message": {
+        "version": "1.0.1"
+    },
     "psr/log": {
         "version": "1.1.0"
     },
     "psr/simple-cache": {
         "version": "1.0.1"
+    },
+    "ralouphie/getallheaders": {
+        "version": "2.0.5"
     },
     "sensio/framework-extra-bundle": {
         "version": "5.2",

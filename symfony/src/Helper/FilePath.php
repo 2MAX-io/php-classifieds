@@ -16,6 +16,16 @@ class FilePath
         return self::getPath(__DIR__ . '/../../../static/user/listing');
     }
 
+    public static function getStaticPath(): string
+    {
+        return self::getPath(__DIR__ . '/../../../static/');
+    }
+
+    public static function getStaticCachePath(): string
+    {
+        return self::getPath(__DIR__ . '/../../../static/cache');
+    }
+
     public static function getProjectDir(): string
     {
         return self::getPath(__DIR__ . '/../../../');

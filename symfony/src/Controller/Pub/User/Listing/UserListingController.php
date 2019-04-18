@@ -11,12 +11,11 @@ use App\Service\Listing\CustomField\CustomFieldsForListingFormService;
 use App\Service\Listing\Save\CreateListingService;
 use App\Service\Listing\Save\ListingFileUploadService;
 use App\Service\Log\PoliceLogIpService;
+use App\Service\System\Pagination\PaginationService;
 use App\Service\User\Listing\UserListingListService;
-use Pagerfanta\View\TwitterBootstrap4View;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Routing\RouterInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class UserListingController extends AbstractUserController
@@ -34,26 +33,13 @@ class UserListingController extends AbstractUserController
     /**
      * @Route("/user/listing/", name="app_user_listing_index", methods={"GET"})
      */
-    public function index(Request $request, RouterInterface $router, UserListingListService $userListingListService): Response
+    public function index(Request $request, UserListingListService $userListingListService, PaginationService $paginationService): Response
     {
-        $view = new TwitterBootstrap4View();
-        $page = (int) $request->get('page', 1);
-        $userListingListDto = $userListingListService->getList($page);
+        $userListingListDto = $userListingListService->getList((int) $request->get('page', 1));
 
         return $this->render('listing/index.html.twig', [
             'listings' => $userListingListDto->getResults(),
-            'pagination' => $view->render($userListingListDto->getPager(), function (int $page) use ($router, $request) {
-                return $router->generate($request->get('_route'), array_merge(
-                    $_GET,
-                    ['page' => (int) $page]
-                ));
-            },
-                [
-                    'proximity' => 5,
-                    'prev_message' => '&larr; ' . $this->trans->trans('trans.Previous'),
-                    'next_message' => $this->trans->trans('trans.Next') . ' &rarr;',
-                ]
-            ),
+            'pagination' => $paginationService->getPaginationHtml($userListingListDto->getPager()),
             'pager' => $userListingListDto->getPager(),
         ]);
     }

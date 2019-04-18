@@ -6,8 +6,10 @@ namespace App\Service\Admin\Listing;
 
 use App\Entity\Listing;
 use Doctrine\ORM\EntityManagerInterface;
+use Pagerfanta\Adapter\DoctrineORMAdapter;
+use Pagerfanta\Pagerfanta;
 
-class ListingSearchService
+class AdminListingSearchService
 {
     /**
      * @var EntityManagerInterface
@@ -22,7 +24,7 @@ class ListingSearchService
     /**
      * @return Listing[]
      */
-    public function getListings(): array
+    public function getList(int $page): AdminListingListDto
     {
         $qb = $this->em->getRepository(Listing::class)->createQueryBuilder('listing');
 
@@ -33,6 +35,13 @@ class ListingSearchService
 
         $qb->orderBy('listing.id', 'DESC');
 
-        return $qb->getQuery()->getResult();
+        $adapter = new DoctrineORMAdapter($qb);
+        $pager = new Pagerfanta($adapter);
+        $pager->setMaxPerPage(10);
+        $pager->setCurrentPage($page);
+
+        $adminListingListDto = new AdminListingListDto($pager->getCurrentPageResults(), $pager);
+
+        return $adminListingListDto;
     }
 }

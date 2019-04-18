@@ -50,6 +50,10 @@
                 {% endfor %}
                 </tbody>
             </table>
+
+            {% if pager.getNbPages > 1 %}
+                {{ pagination | raw }}
+            {% endif %}
         </div>
     </div>
 {% endblock %}

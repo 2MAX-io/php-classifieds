@@ -6,6 +6,8 @@ namespace App\Service\Admin\Listing;
 
 use App\Entity\Listing;
 use Doctrine\ORM\EntityManagerInterface;
+use Pagerfanta\Adapter\DoctrineORMAdapter;
+use Pagerfanta\Pagerfanta;
 
 class ListingConfirmListService
 {
@@ -22,7 +24,7 @@ class ListingConfirmListService
     /**
      * @return Listing[]
      */
-    public function getToConfirmListingList(): array
+    public function getToConfirmListingList(int $page): AdminListingListDto
     {
         $qb = $this->em->getRepository(Listing::class)->createQueryBuilder('listing');
 
@@ -30,6 +32,13 @@ class ListingConfirmListService
         $qb->addOrderBy('listing.lastEditDate', 'ASC');
         $qb->addOrderBy('listing.firstCreatedDate', 'ASC');
 
-        return $qb->getQuery()->getResult();
+        $adapter = new DoctrineORMAdapter($qb);
+        $pager = new Pagerfanta($adapter);
+        $pager->setMaxPerPage(10);
+        $pager->setCurrentPage($page);
+
+        $adminListingListDto = new AdminListingListDto($pager->getCurrentPageResults(), $pager);
+
+        return $adminListingListDto;
     }
 }

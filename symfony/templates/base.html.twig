@@ -27,16 +27,16 @@
             </div>
 
             <div class="col-md-4">
-                <label class="sr-only" for="keyword">Keyword</label>
-                <div class="input-group mb-2 mr-2">
-                    <div class="input-group-prepend">
-                        <div class="input-group-text"><i class="fas fa-search"></i></div>
-                    </div>
+                <form method="get" action="{{ path('app_listing_list') }}">
+                    <label class="sr-only" for="keyword">{{ 'trans.keyword'|trans }}</label>
+                    <div class="input-group mb-2 mr-2">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text"><i class="fas fa-search"></i></div>
+                        </div>
 
-                    <form method="get" action="{{ path('app_listing_list') }}">
                         <input type="text" class="form-control" name="query" placeholder="{{ 'trans.keyword'|trans }}" value="{{ app.request.get('query') | default }}">
-                    </form>
-                </div>
+                    </div>
+                </form>
             </div>
 
             <div class="col-md-2">

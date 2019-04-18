@@ -18,6 +18,7 @@
                 <table class="table">
                     <thead>
                     <tr>
+                        <th></th>
                         <th>{{ 'trans.Title' | trans }}</th>
                         <th>{{ 'trans.Last edit' | trans }}</th>
                         <th>{{ 'trans.Status' | trans }}</th>
@@ -27,6 +28,13 @@
                     <tbody>
                     {% for listing in listings %}
                         <tr>
+                            <td>
+                                <div class="card-thumb">
+                                    <a title="{{ listing.title }}" href="{{ path('app_listing_show', {id: listing.id, 'slug': listing.slug}) }}">
+                                        <img class="rounded list-small-img" alt="{{ listing.title }}" src="{{ asset(listing.listingFiles.first.pathListSize | default('asset/img/blank.png')) }}">
+                                    </a>
+                                </div>
+                            </td>
                             <td>
                                 <div>
                                     <a href="{{ path('app_listing_show', {"id": listing.id, 'slug': listing.slug}) }}">{{ listing.title }}</a>

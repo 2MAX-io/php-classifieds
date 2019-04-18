@@ -451,3 +451,7 @@ svg.icon {
 .collapsing {
     transition-duration: 0s;
 }
+
+.list-small-img {
+    max-height: 100px;
+}

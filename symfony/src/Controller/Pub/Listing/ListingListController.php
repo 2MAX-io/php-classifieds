@@ -57,7 +57,7 @@ class ListingListController extends AbstractController
             [
                 'pagination' => $view->render($listingListDto->getPager(), function (int $page) use ($router, $categorySlug, $request) {
                     return $router->generate($request->get('_route'), array_merge(
-                        $_GET,
+                        $request->query->all(),
                         ['categorySlug' => $categorySlug, 'page' => (int) $page]
                     ));
                 },

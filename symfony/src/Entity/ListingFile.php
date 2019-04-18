@@ -19,16 +19,17 @@ class ListingFile
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Listing", inversedBy="listingFiles")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $listing;
 
     /**
-     * @ORM\Column(type="smallint")
+     * @ORM\Column(type="smallint", nullable=false)
      */
-    private $sort;
+    private $sort = 999;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=false)
      */
     private $path;
 
@@ -42,14 +43,24 @@ class ListingFile
         return $this->id;
     }
 
-    public function getPath(): ?string
+    public function getPath(): string
     {
         return $this->path;
     }
 
-    public function getPathForList(): ?string
+    public function getPathListSize(): ?string
     {
-        return Path::getDirectory($this->getPath()) . '/resized_list_' . basename($this->getPath());
+        return $this->getSizeForType('list');
+    }
+
+    public function getPathNormalSize(): ?string
+    {
+        return $this->getSizeForType('normal');
+    }
+
+    public function getSizeForType(string $type): string
+    {
+        return Path::getDirectory($this->getPath()) . '/size_' . basename($type) . '_' . basename($this->getPath());
     }
 
     public function setPath(string $path): self

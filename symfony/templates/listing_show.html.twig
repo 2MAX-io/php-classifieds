@@ -27,9 +27,9 @@
                 {% if listing.listingFiles is not empty %}
                     <div class="owl-carousel">
                         {% for listingFile in listing.listingFiles %}
-                            <a href="{{ asset(listingFile.path) }}" data-toggle="lightbox" data-gallery="multiimages" data-title="{{ listing.title }}">
+                            <a href="{{ asset(listingFile.pathNormalSize) }}" data-toggle="lightbox" data-gallery="multiimages" data-title="{{ listing.title }}">
                                 <img
-                                        src="{{ asset(listingFile.path) }}"
+                                        src="{{ asset(listingFile.pathNormalSize) }}"
                                         class="mx-auto listing-show-top-image"
                                         alt="{{ listing.title }}"
                                 />
@@ -96,8 +96,8 @@
                     <div id="photos" class="tab-pane fade clearfix" role="tabpanel">
                         {% for listingFile in listing.listingFiles %}
                             <div class="listing-thumb float-left img-thumbnail mr-2 mb-2" style="width: 120px">
-                                <a href="{{ asset(listingFile.path) }}" data-toggle="lightbox" data-gallery="multiimages" data-title="{{ listing.title }}">
-                                    <div class="dummy container-img rounded" style="background-image:url('{{ asset(listingFile.path) }}');"></div>
+                                <a href="{{ asset(listingFile.pathNormalSize) }}" data-toggle="lightbox" data-gallery="multiimages" data-title="{{ listing.title }}">
+                                    <div class="dummy container-img rounded" style="background-image:url('{{ asset(listingFile.pathNormalSize) }}');"></div>
                                 </a>
                             </div>
                         {% endfor %}
@@ -108,8 +108,8 @@
                 {% if listing.listingFiles is not empty %}
                     <div class="my-2">
                         {% for listingFile in listing.listingFiles %}
-                            <a href="{{ asset(listingFile.path) }}" data-toggle="lightbox" data-gallery="multiimages" data-title="{{ listing.title }}">
-                                <img src="{{ asset(listingFile.path) }}" alt="{{ listing.title }}" />
+                            <a href="{{ asset(listingFile.pathNormalSize) }}" data-toggle="lightbox" data-gallery="multiimages" data-title="{{ listing.title }}">
+                                <img src="{{ asset(listingFile.pathNormalSize) }}" alt="{{ listing.title }}" />
                             </a>
                         {% endfor %}
                     </div>

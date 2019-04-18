@@ -45,7 +45,7 @@
                         <div class="card card-featured mb-4">
 
                             <a href="{{ path('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}">
-                                <img class="card-img-top" alt="" src="{{ asset(listing.listingFiles.first.path | default('asset/img/blank.png')) }}">
+                                <img class="card-img-top" alt="" src="{{ asset(listing.listingFiles.first.pathListSize | default('asset/img/blank.png')) }}">
                             </a>
 
                             <div class="card-body">
@@ -78,7 +78,7 @@
                         <div class="card card-featured">
 
                             <a href="{{ path('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}">
-                                <img class="card-img-top" alt="" src="{{ asset(listing.listingFiles.first.path | default('asset/img/blank.png')) }}">
+                                <img class="card-img-top" alt="" src="{{ asset(listing.listingFiles.first.getPathForList | default('asset/img/blank.png')) }}">
                             </a>
 
                             <div class="card-body">

@@ -16,7 +16,7 @@ use Webmozart\PathUtil\Path;
 class ResizeImageController
 {
     /**
-     * @Route("/static/{path}/resized_{type}_{file}", name="app_resize_image", requirements={"path"=".+"})
+     * @Route("/static/{path}/size_{type}_{file}", name="app_resize_image", requirements={"path"=".+"})
      */
     public function index(Request $request, string $path, string $type, string $file): Response
     {
@@ -52,6 +52,10 @@ class ResizeImageController
     {
         if ('list' === $type) {
             return ['w' => 180, 'h' => 180];
+        }
+
+        if ('normal' === $type) {
+            return ['w' => 1920, 'h' => 1080];
         }
 
         throw new NotFoundException();

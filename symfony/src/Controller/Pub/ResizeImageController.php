@@ -33,6 +33,24 @@ class ResizeImageController
         $sourcePath = $path . '/' . $file;
         $targetPath = Path::canonicalize(FilePath::getProjectDir() . $request->getRequestUri());
 
+        return $this->getResponse($request, $type, $sourcePath, $targetPath);
+    }
+
+    private function getParams(string $type): array
+    {
+        if ('list' === $type) {
+            return ['w' => 180, 'h' => 180];
+        }
+
+        if ('normal' === $type) {
+            return ['w' => 1920, 'h' => 1080];
+        }
+
+        throw new NotFoundHttpException();
+    }
+
+    private function getResponse(Request $request, string $type, string $sourcePath, string $targetPath): Response
+    {
         if (!in_array(Path::getExtension($targetPath, true), ['jpg', 'png', 'gif', 'jpeg'], true)) {
             throw new NotFoundHttpException();
         }
@@ -52,32 +70,25 @@ class ResizeImageController
         }
 
         /**
+         * -------------------------------------------------------------------------------------------------------------
          * Everything must be already valid and safe after this point
+         * -------------------------------------------------------------------------------------------------------------
          */
-
-        $server = AppServerFactory::create([
-            'source' => FilePath::getStaticPath(),
-            'cache' => FilePath::getStaticPath(),
-            'cache_path_prefix' => 'cache',
-            'response' => new SymfonyResponseFactory($request)
-        ]);
+        $server = AppServerFactory::create(
+            [
+                'source' => FilePath::getStaticPath(),
+                'cache' => FilePath::getStaticPath(),
+                'cache_path_prefix' => 'cache',
+                'response' => new SymfonyResponseFactory($request)
+            ]
+        );
         $cachedPath = $server->makeImage($sourcePath, $this->getParams($type));
 
         rename(FilePath::getStaticPath() . '/' . $cachedPath, $targetPath);
 
-        return $server->getResponseFactory()->create($server->getCache(), Path::makeRelative($targetPath, FilePath::getStaticPath()));
-    }
-
-    private function getParams(string $type): array
-    {
-        if ('list' === $type) {
-            return ['w' => 180, 'h' => 180];
-        }
-
-        if ('normal' === $type) {
-            return ['w' => 1920, 'h' => 1080];
-        }
-
-        throw new NotFoundHttpException();
+        return $server->getResponseFactory()->create(
+            $server->getCache(),
+            Path::makeRelative($targetPath, FilePath::getStaticPath())
+        );
     }
 }

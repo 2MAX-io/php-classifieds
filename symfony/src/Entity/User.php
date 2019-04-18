@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Security\Base\EnablableInterface;
 use App\Service\User\RoleInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -14,7 +15,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * @UniqueEntity(fields={"email"})
  * @UniqueEntity(fields={"username"})
  */
-class User implements UserInterface, RoleInterface
+class User implements UserInterface, RoleInterface, EnablableInterface
 {
     /**
      * @ORM\Id()
@@ -43,7 +44,7 @@ class User implements UserInterface, RoleInterface
     /**
      * @var bool
      *
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", nullable=false)
      */
     protected $enabled;
 
@@ -244,7 +245,7 @@ class User implements UserInterface, RoleInterface
         return $this;
     }
 
-    public function getEnabled(): ?bool
+    public function getEnabled(): bool
     {
         return $this->enabled;
     }

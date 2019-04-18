@@ -41,6 +41,7 @@ security:
             guard:
                 authenticators:
                     - App\Security\LoginFormAuthenticator
+            user_checker: App\Security\UserChecker
             logout:
               path:   app_logout
 

@@ -39,10 +39,13 @@
                                 <div>
                                     <a href="{{ path('app_listing_show', {"id": listing.id, 'slug': listing.slug}) }}">{{ listing.title }}</a>
                                 </div>
-                                {% if listing.adminConfirmed %}
+                                {% if listing.adminConfirmed and not listing.featured %}
                                     <div>
                                         <a href="{{ path('app_user_feature_listing', {"id": listing.id}) }}">{{ 'trans.Feature this listing' | trans }}</a>
                                     </div>
+                                {% endif %}
+                                {% if listing.featured %}
+                                    <span class="badge badge-pill badge-warning">{{ 'trans.Featured' | trans }}</span>
                                 {% endif %}
                                 {% if listing.adminRejected %}
                                     {% if listing.rejectionReason is empty %}

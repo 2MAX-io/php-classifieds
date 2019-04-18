@@ -13,7 +13,7 @@ class FilePath
 
     public static function getListingFilePath(): string
     {
-        return self::getPath(__DIR__ . '/../../../asset/user/listing');
+        return self::getPath(__DIR__ . '/../../../static/user/listing');
     }
 
     public static function getProjectDir(): string

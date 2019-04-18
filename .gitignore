@@ -9,5 +9,5 @@
 ###< symfony/framework-bundle ###
 
 /symfony/docker/mysql/data/
-/asset/user/listing/
+/static/user/listing/
 /symfony/src/Controller/TestController.php

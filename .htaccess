@@ -17,8 +17,16 @@ DirectoryIndex index.php
     Options -MultiViews
 </IfModule>
 
+# protects hidden files
+<FilesMatch "^\.(.*)$">
+    RewriteRule "^(.*)$" - [R=404,L]
+</FilesMatch>
+
 <IfModule mod_rewrite.c>
     RewriteEngine On
+
+    RedirectMatch 404 /\.git
+    RewriteRule Readme.md - [R=404,L]
 
     # Determine the RewriteBase automatically and set it as environment variable.
     # If you are using Apache aliases to do mass virtual hosting or installed the

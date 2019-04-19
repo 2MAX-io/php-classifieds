@@ -43,6 +43,9 @@ class ListingFileUploadService
             $listingFile = new ListingFile();
             $listingFile->setPath(Path::makeRelative($movedFile->getRealPath(), FilePath::getProjectDir()));
             $listingFile->setListing($listing);
+            $listingFile->setFilename(basename($listingFile->getPath()));
+            $listingFile->setMimeType(mime_content_type($listingFile->getPath()));
+            $listingFile->setSizeBytes(filesize($listingFile->getPath()));
             $listingFile->setSort(99999);
             $this->em->persist($listingFile);
 
@@ -80,7 +83,7 @@ class ListingFileUploadService
 
     private function throwExceptionIfUnsafeExtension(UploadedFile $uploadedFile): void
     {
-        $fileExtension = $uploadedFile->getClientOriginalExtension();
+        $fileExtension = strtolower($uploadedFile->getClientOriginalExtension());
         if (!Arr::inArray(
             $fileExtension,
             [
@@ -89,7 +92,8 @@ class ListingFileUploadService
                 'png',
                 'gif',
                 'swf',
-            ]
+            ],
+            true
         )) {
             throw new \UnexpectedValueException(
                 "file extension $fileExtension is not allowed"
@@ -107,7 +111,8 @@ class ListingFileUploadService
                 'bat',
                 'sh',
                 'cgi',
-            ]
+            ],
+            true
         )) {
             throw new \UnexpectedValueException(
                 "file extension $fileExtension is not allowed"
@@ -117,7 +122,9 @@ class ListingFileUploadService
 
     private function getDestinationFilepath(Listing $listing): string
     {
-        return FilePath::getListingFilePath() . '/' . $this->getSlug('zzzz') . '/' . date('Y');
+        $userDivider = floor($listing->getUser()->getId() / 10000) + 1;
+
+        return FilePath::getListingFilePath() . '/' . $userDivider . '/' . 'user_' . $listing->getUser()->getId() . '/' . 'listing_' . $listing->getId();
     }
 
     private function getDestinationFilename(string $originalName, string $originalExtension)

@@ -34,6 +34,21 @@ class ListingFile
     private $path;
 
     /**
+     * @ORM\Column(type="string", length=255, nullable=false)
+     */
+    private $filename;
+
+    /**
+     * @ORM\Column(type="string", length=100, nullable=false)
+     */
+    private $mimeType;
+
+    /**
+     * @ORM\Column(type="integer", nullable=false)
+     */
+    private $sizeBytes;
+
+    /**
      * @ORM\Column(type="boolean")
      */
     private $userRemoved = false;
@@ -102,6 +117,42 @@ class ListingFile
     public function setUserRemoved(bool $userRemoved): self
     {
         $this->userRemoved = $userRemoved;
+
+        return $this;
+    }
+
+    public function getFilename(): ?string
+    {
+        return $this->filename;
+    }
+
+    public function setFilename(string $filename): self
+    {
+        $this->filename = $filename;
+
+        return $this;
+    }
+
+    public function getMimeType(): ?string
+    {
+        return $this->mimeType;
+    }
+
+    public function setMimeType(string $mimeType): self
+    {
+        $this->mimeType = $mimeType;
+
+        return $this;
+    }
+
+    public function getSizeBytes(): ?int
+    {
+        return $this->sizeBytes;
+    }
+
+    public function setSizeBytes(int $sizeBytes): self
+    {
+        $this->sizeBytes = $sizeBytes;
 
         return $this;
     }

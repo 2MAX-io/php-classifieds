@@ -66,13 +66,6 @@ class UserListingController extends AbstractUserController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            if ($form->get('file')->getData()) {
-                $listingFileUploadService->addMultipleFilesFromUpload($listing, $form->get('file')->getData());
-            }
-
-            if ($request->request->get('fileuploader-list-file')) {
-                $listingFileUploadService->updateSort($listing, \json_decode($request->request->get('fileuploader-list-file'), true));
-            }
             $customFieldsForListingFormService->saveCustomFieldsToListing($listing, $request->request->get('form_custom_field'));
 
             $listing->setUser($currentUserService->getUser());
@@ -81,6 +74,14 @@ class UserListingController extends AbstractUserController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($listing);
             $entityManager->flush();
+
+            if ($form->get('file')->getData()) {
+                $listingFileUploadService->addMultipleFilesFromUpload($listing, $form->get('file')->getData());
+            }
+
+            if ($request->request->get('fileuploader-list-file')) {
+                $listingFileUploadService->updateSort($listing, \json_decode($request->request->get('fileuploader-list-file'), true));
+            }
 
             $logIpService->saveLog($listing);
             $entityManager->flush();

@@ -12,3 +12,4 @@
 /static/user/listing/
 /symfony/src/Controller/TestController.php
 /static/cache/
+/symfony/docker/mysql/sql/

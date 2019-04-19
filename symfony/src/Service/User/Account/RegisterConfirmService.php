@@ -19,24 +19,19 @@ class RegisterConfirmService
         $this->em = $em;
     }
 
-    public function confirmRegistration(string $token): void
+    public function confirmRegistration(User $user): void
+    {
+        $user->setEnabled(true);
+
+        $this->em->persist($user);
+    }
+
+    public function getUserByToken(string $token): ?User
     {
         $qb = $this->em->getRepository(User::class)->createQueryBuilder('user');
         $qb->andWhere($qb->expr()->eq('user.confirmationToken', ':confirmationToken'));
         $qb->setParameter(':confirmationToken', $token);
 
-        /** @var User $user */
-        $user = $qb->getQuery()->getOneOrNullResult();
-
-        if ($user !== null) {
-            if ($user->getEnabled()) {
-
-            } else {
-                $user->setEnabled(true);
-                $this->em->flush();
-            }
-        } else {
-
-        }
+        return $qb->getQuery()->getOneOrNullResult();
     }
 }

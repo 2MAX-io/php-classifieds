@@ -17,53 +17,81 @@
 </head>
 <body>
 <!-- Top Header -->
-<div class="container-fluid container-header">
-    <div class="container p-3">
-        <div class="row vmargin">
-            <div id="website_logo" class="col-lg-3 tpad sm-text-center">
-                <a href="{{ path('app_index') }}" title={{ 'trans.Classifieds'|trans }}>
-                    <img src="{{ asset('asset/img/logo.png') }}" alt="Classifieds Plus" width="240">
-                </a>
-            </div>
+<div class="container-fluid container-header ">
+    <div class="container container-remove-padding">
+        <nav class="navbar navbar-expand-lg navbar-light">
+            <a class="navbar-brand" href="{{ path('app_index') }}"  title={{ 'trans.Classifieds'|trans }}>
+                <img src="{{ asset('asset/img/logo.png') }}" alt="{{ 'trans.Classifieds' | trans }}" width="240">
+            </a>
 
-            <div class="col-md-4">
-                <form method="get" action="{{ path('app_listing_list') }}">
-                    <label class="sr-only" for="keyword">{{ 'trans.keyword'|trans }}</label>
-                    <div class="input-group mb-2 mr-2">
-                        <div class="input-group-prepend">
-                            <div class="input-group-text"><i class="fas fa-search"></i></div>
-                        </div>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-                        <input type="text" class="form-control" name="query" placeholder="{{ 'trans.keyword'|trans }}" value="{{ app.request.get('query') | default }}">
-                    </div>
-                </form>
-            </div>
-
-            <div class="col-md-2">
-                <button type="submit" class="btn btn-primary btn-block mb-2">{{ 'trans.Search' | trans }}</button>
-            </div>
-
-            <div id="header-controls" class="col-lg-3 text-right">
-                <ul class="list-inline">
-                    <li class="list-inline-item">
-                        {% if app.user %}
-                            <a href="{{ path('app_logout') }}">{{ 'trans.Logout' | trans }}</a>
-                        {% else %}
-                            <a href="{{ path('app_login') }}">{{ 'trans.Sign in' | trans }}</a>
-                        {% endif %}
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav justify-content-around d-sm-none">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{{ path('app_index') }}">{{ 'trans.Home page' | trans }}</a>
                     </li>
-
-                    <li class="list-inline-item">
-                        <a href="{{ path('app_listing_new') }}" class="btn btn-primary">{{ 'trans.Get Listed Today' | trans }} <i class="fas fa-chevron-right"></i></a>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_category_view_all') }}">{{ 'trans.Categories' | trans }}</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_last_added') }}">{{ 'trans.Last added' | trans }}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="//www.jaslo4u.pl">Jaslo4u.pl</a>
+                    </li>
+                    {% if lowSecurityCheckIsAdminInPublic() %}
+                        <li class="nav-item">
+                            <a class="nav-link btn btn-outline-danger" href="{{ path('app_admin_index') }}">{{ 'trans.Admin panel' | trans }}</a>
+                        </li>
+                    {% endif %}
                 </ul>
+
+                <div class="col-md-8 container-remove-padding">
+                    <form class="form-inline my-2 my-lg-0" method="get" action="{{ path('app_listing_list') }}">
+                        <div class="col-md-8 container-remove-padding">
+                            <label class="sr-only" for="keyword">{{ 'trans.keyword'|trans }}</label>
+                            <div class="input-group mb-2 mr-md-2">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text"><i class="fas fa-search"></i></div>
+                                </div>
+
+                                <input type="text" class="form-control" name="query" placeholder="{{ 'trans.keyword'|trans }}" value="{{ app.request.get('query') | default }}">
+                            </div>
+                        </div>
+                        <div class="col-md-4 container-remove-padding">
+                            <button type="submit" class="btn btn-primary btn-block mb-2">{{ 'trans.Search' | trans }}</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="col-md-4 container-remove-padding">
+                    <div class="text-right mt-md-2">
+                        <ul class="list-inline">
+                            <li class="list-inline-item">
+                                {% if app.user %}
+                                    <a href="{{ path('app_logout') }}">{{ 'trans.Logout' | trans }}</a>
+                                {% else %}
+                                    <a href="{{ path('app_login') }}">{{ 'trans.Sign in' | trans }}</a>
+                                {% endif %}
+                            </li>
+
+                            <li class="list-inline-item">
+                                <a href="{{ path('app_listing_new') }}" class="btn btn-primary">{{ 'trans.Get Listed Today' | trans }} <i class="fas fa-chevron-right"></i></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
             </div>
-        </div>
+        </nav>
     </div>
 </div>
 
+
 <!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark d-none d-md-block">
     <div class="container">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>

@@ -478,3 +478,8 @@ svg.icon {
         width: 100%;
     }
 }
+
+.container-remove-padding {
+    padding-right: 0;
+    padding-left: 0;
+}

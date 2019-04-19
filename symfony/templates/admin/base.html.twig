@@ -20,40 +20,25 @@
     <div class="container p-3">
         <div class="row vmargin">
             <div id="website_logo" class="col-lg-3 tpad sm-text-center">
-                <a href="{{ path('app_index') }}" title={{ 'trans.Classifieds'|trans }}>
+                <a href="{{ path('app_admin_index') }}" title={{ 'trans.Classifieds'|trans }}>
                     <img src="{{ asset('asset/img/logo.png') }}" alt="Classifieds Plus" width="240">
                 </a>
             </div>
 
-            <div class="col-md-4">
-                <label class="sr-only" for="keyword">Keyword</label>
-                <div class="input-group mb-2 mr-2">
-                    <div class="input-group-prepend">
-                        <div class="input-group-text"><i class="fas fa-search"></i></div>
-                    </div>
+            <div class="col-md-4"></div>
 
-                    <form method="get" action="{{ path('app_listing_list') }}">
-                        <input type="text" class="form-control" name="query" placeholder="{{ 'trans.keyword'|trans }}" value="{{ app.request.get('query') | default }}">
-                    </form>
-                </div>
-            </div>
-
-            <div class="col-md-2">
-                <button type="submit" class="btn btn-primary btn-block mb-2">{{ 'trans.Search' | trans }}</button>
-            </div>
-
-            <div id="header-controls" class="col-lg-3 text-right">
+            <div id="header-controls" class="col-lg-5 text-right">
                 <ul class="list-inline">
                     <li class="list-inline-item">
-                        {% if app.user %}
-                            <a href="{{ path('app_logout') }}">{{ 'trans.Logout' | trans }}</a>
-                        {% else %}
-                            <a href="{{ path('app_login') }}">{{ 'trans.Sign in' | trans }}</a>
-                        {% endif %}
+                        <a href="{{ path('app_logout') }}">{{ 'trans.Logout' | trans }}</a>
                     </li>
 
                     <li class="list-inline-item">
-                        <a href="{{ path('app_listing_new') }}" class="btn btn-primary">{{ 'trans.Get Listed Today' | trans }} <i class="fas fa-chevron-right"></i></a>
+                        <a href="//www.jaslo4u.pl" class="btn btn-dark">J4U</a>
+                    </li>
+
+                    <li class="list-inline-item">
+                        <a href="{{ path('app_index') }}" class="btn btn-primary">{{ 'trans.Public classifieds' | trans }} <i class="fas fa-chevron-right"></i></a>
                     </li>
                 </ul>
             </div>
@@ -75,12 +60,6 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ path('app_admin_listing_search') }}">{{ 'trans.Search' | trans }}</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="//www.jaslo4u.pl">Jaslo4u.pl</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ path('app_index') }}">{{ 'trans.Public classifieds' | trans }}</a>
                 </li>
                 <li class="nav-item active">
                     <a class="nav-link" href="{{ path('app_admin_index') }}">{{ 'trans.Admin panel' | trans }}</a>

@@ -82,4 +82,52 @@ class TwigListingRuntime implements RuntimeExtensionInterface
 
         return $map[$status] ?? 'listing-status-not-found';
     }
+
+    public function adminShowActivate(Listing $listing): bool
+    {
+        if ($listing->getAdminConfirmed()) {
+            return false;
+        }
+
+        if ($listing->getAdminRemoved()) {
+            return false;
+        }
+
+        if ($listing->getUserRemoved()) {
+            return false;
+        }
+
+        if ($listing->getUserDeactivated()) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public function adminShowReject(Listing $listing): bool
+    {
+        if ($listing->getAdminRejected()) {
+            return false;
+        }
+
+        if ($listing->getAdminRemoved()) {
+            return false;
+        }
+
+        if ($listing->getUserRemoved()) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public function displayTextWarning(bool $bool): string
+    {
+        return $bool ? 'text-warning-color' : '';
+    }
+
+    public function isExpired(\DateTime $date): bool
+    {
+        return $date <= new \DateTime();
+    }
 }

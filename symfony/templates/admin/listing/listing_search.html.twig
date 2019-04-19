@@ -1,5 +1,7 @@
 {% extends 'admin/base.html.twig' %}
 
+{% import "admin/listing/_admin_macro.html.twig" as adminMacro %}
+
 {% block title %}{{ 'trans.Search Engine' | trans }}{% endblock %}
 
 {% block body %}
@@ -74,38 +76,25 @@
                                     {{- 'trans.Edit' | trans -}}
                                 </a>
 
-                                {% if not listing.adminConfirmed %}
+                                {% if adminShowActivate(listing) %}
                                     {{ include('admin/listing/_confirm_form.html.twig') }}
                                 {% endif %}
 
-                                <a
-                                        href="{{ path('app_admin_listing_reject', {'id': listing.id}) }}"
-                                        target="_blank"
-                                        class="btn btn-warning"
-                                >
-                                    {{ 'trans.Reject' | trans }}
-                                </a>
+                                {% if adminShowReject(listing) %}
+                                    <a
+                                            href="{{ path('app_admin_listing_reject', {'id': listing.id}) }}"
+                                            target="_blank"
+                                            class="btn btn-warning"
+                                    >
+                                        {{ 'trans.Reject' | trans }}
+                                    </a>
+                                {% endif %}
                             </td>
                         </tr>
                         <tr class="collapse" id="collapse{{ listing.id }}" data-parent="#listings">
                             <td colspan="99">
                                 <div class="row">
-                                    <div class="col-md-4">{{ 'trans.Admin last confirmation' | trans }}: {{ listing.adminLastConfirmationDate | date }}</div>
-                                    <div class="col-md-4">{{ 'trans.Featured until' | trans }}:
-                                        {% if listing.featured and listing.featuredUntilDate %}
-                                            {{ listing.featuredUntilDate | date }}
-                                        {% else %}
-                                            {{ 'trans.No' | trans }}
-                                        {% endif %}
-                                    </div>
-                                    <div class="col-md-4">{{ 'trans.Last edit' | trans }}: {{ listing.lastEditDate | date }}</div>
-                                    <div class="col-md-4">{{ 'trans.Creation date' | trans }}: {{ listing.firstCreatedDate | date }}</div>
-                                    <div class="col-md-4">{{ 'trans.Last raising' | trans }}: {{ listing.orderByDate | date }}</div>
-                                    <div class="col-md-4">{{ 'trans.Valid until' | trans }}: {{ listing.validUntilDate | date }}</div>
-                                    <div class="col-md-4">{{ 'trans.Confirmed by Admin?' | trans }}: {{ listing.adminConfirmed | boolText | trans }}</div>
-                                    <div class="col-md-4">{{ 'trans.Removed by Admin?' | trans }}: {{ listing.adminRemoved | boolText | trans }}</div>
-                                    <div class="col-md-4">{{ 'trans.Removed by User?' | trans }}: {{ listing.userRemoved | boolText | trans }}</div>
-                                    <div class="col-md-4">{{ 'trans.Deactivated by User?' | trans }}: {{ listing.userDeactivated | boolText | trans }}</div>
+                                    {{ adminMacro.listingInfo(listing) }}
                                 </div>
                             </td>
                         </tr>

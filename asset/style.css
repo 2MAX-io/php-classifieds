@@ -473,6 +473,10 @@ svg.icon {
     color: #f44336;
 }
 
+.text-warning-color {
+    color: #f44336;
+}
+
 @media (max-width: 768px) {
     .w-100-small {
         width: 100%;

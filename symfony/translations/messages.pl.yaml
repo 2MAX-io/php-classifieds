@@ -1,3 +1,9 @@
+Year: Rok
+Month: Miesiąc
+Day: Dzień
+Hour: Godzina
+Minute: Minuta
+
 trans:
   listing.status.STATUS_PENDING: 'Oczekuje na aktywacje'
   listing.status.STATUS_ACTIVE: 'Aktywne do: %activeUntilDate%'
@@ -219,3 +225,4 @@ trans:
   file was chosen: 'został wybrany'
   Pasting a file, click here to cancel: 'Wklejanie pliku, kliknij tutaj aby anulować'
   Registration confirmation failed, please check if confirmation link is correct: 'Niepowodzenie podczas potwierdzenia rejestracji, sprawdź czy link potwierdzający jest poprawny'
+  Previous rejection: 'Poprzednie odrzucenie'

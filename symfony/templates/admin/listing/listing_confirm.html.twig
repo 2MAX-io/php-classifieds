@@ -46,6 +46,11 @@
                                 </a>
                             </span>
                         </div>
+                        {% if listing.rejectionReason is not empty %}
+                            <div>
+                                <span class="text-warning-color">{{ 'trans.Previous rejection' | trans }}: {{ listing.rejectionReason }}</span>
+                            </div>
+                        {% endif %}
                     </td>
                     <td>{{ listing.lastEditDate | date }}</td>
                     <td>

@@ -537,12 +537,12 @@ class Listing
             return static::STATUS_USER_REMOVED;
         }
 
-        if ($this->getValidUntilDate() <= new DateTime()) {
-            return static::STATUS_EXPIRED;
-        }
-
         if ($this->getUserDeactivated()) {
             return static::STATUS_DEACTIVATED;
+        }
+
+        if ($this->getValidUntilDate() <= new DateTime()) {
+            return static::STATUS_EXPIRED;
         }
 
         if (false === $this->getAdminConfirmed()) {

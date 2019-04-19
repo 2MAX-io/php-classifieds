@@ -1,5 +1,7 @@
 {% extends 'admin/base.html.twig' %}
 
+{% import "admin/listing/_admin_macro.html.twig" as adminMacro %}
+
 {% block title %}{{ 'trans.Edit listing' | trans }}{% endblock %}
 
 {% block body %}
@@ -7,6 +9,24 @@
         <a href="{{ path('app_admin_listing_edit_advanced', {'id': listing.id}) }}">
             {{- 'trans.Edit listing advanced settings' | trans -}}
         </a>
+
+        <div class="float-right">
+            <span class="{{ getListingStatusClass(listing) }}">{{ getListingStatus(listing) }}</span>
+
+            {% if adminShowActivate(listing) %}
+                {{ include('admin/listing/_confirm_form.html.twig') }}
+            {% endif %}
+
+            {% if adminShowReject(listing) %}
+                <a
+                href="{{ path('app_admin_listing_reject', {'id': listing.id}) }}"
+                target="_blank"
+                class="btn btn-warning"
+                >
+                    {{ 'trans.Reject' | trans }}
+                </a>
+            {% endif %}
+        </div>
 
         {{ form_start(form) }}
         {{ form_widget(form) }}
@@ -23,6 +43,10 @@
                     </div>
                 </div>
             {% endfor %}
+        </div>
+
+        <div>
+            {{ adminMacro.listingInfo(listing) }}
         </div>
     </div>
 {% endblock %}

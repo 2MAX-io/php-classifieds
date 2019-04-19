@@ -15,7 +15,7 @@
         > {{ listing.title }}
     </div>
 
-    <div class="container mt-3">
+    <div class="container mt-3 tpl-listing-show">
         <div class="row">
             <div class="col-md-7">
                 <div class="row mb-3">
@@ -24,19 +24,21 @@
                     </div>
                 </div>
 
-                {% if listing.listingFiles is not empty %}
-                    <div class="owl-carousel">
-                        {% for listingFile in listing.listingFiles %}
-                            <a href="{{ asset(listingFile.pathNormalSize) }}" data-toggle="lightbox" data-gallery="multiimages" data-title="{{ listing.title }}">
-                                <img
-                                        src="{{ asset(listingFile.pathNormalSize) }}"
-                                        class="mx-auto listing-show-top-image"
-                                        alt="{{ listing.title }}"
-                                />
-                            </a>
-                        {% endfor %}
-                    </div>
-                {% endif %}
+                <div class="mb-2">
+                    {% if listing.listingFiles is not empty %}
+                        <div class="owl-carousel">
+                            {% for listingFile in listing.listingFiles %}
+                                <a href="{{ asset(listingFile.pathNormalSize) }}" data-toggle="lightbox" data-gallery="multiimages" data-title="{{ listing.title }}">
+                                    <img
+                                            src="{{ asset(listingFile.pathNormalSize) }}"
+                                            class="mx-auto listing-show-top-image"
+                                            alt="{{ listing.title }}"
+                                    />
+                                </a>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
 
                 <!-- Tabs nav -->
                 <ul class="nav nav-tabs flex-column flex-sm-row" id="myTab" role="tablist">

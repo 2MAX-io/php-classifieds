@@ -88,13 +88,13 @@ a:hover, a:focus {
     object-fit: cover;
 }
 
-.tpl-listing .tab-content {
+.tpl-listing-show .tab-content {
     background-color: #edeef0;
     border: 1px solid #eee;
     border-top: 0;
 }
 
-.tpl-listing .nav-link.active {
+.tpl-listing-show .nav-link.active {
     background-color: #edeef0;
     border: 1px solid #eee;
 }
@@ -471,4 +471,10 @@ svg.icon {
 
 .listing-status-rejected, .listing-status-admin-removed {
     color: #f44336;
+}
+
+@media (max-width: 768px) {
+    .w-100-small {
+        width: 100%;
+    }
 }

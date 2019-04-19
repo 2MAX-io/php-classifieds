@@ -20,7 +20,7 @@
             <div class="col-md-7">
                 <div class="row mb-3">
                     <div class="col-sm-10">
-                        <h1>{{ listing.title }}</h1>
+                        <h1 class="user-text-wrap">{{ listing.title }}</h1>
                     </div>
                 </div>
 
@@ -79,7 +79,7 @@
                         <div class="zebra">
                             <!-- description -->
                             <div class="block">
-                                <div class="listing-description px-3 mb-3 mt-2">
+                                <div class="user-text-wrap px-3 mb-3 mt-2">
                                     {{ listing.description | nl2br }}
                                 </div>
                                 <div class="px-3 py-1 clearfix">
@@ -111,7 +111,7 @@
                     <div class="my-2">
                         {% for listingFile in listing.listingFiles %}
                             <a href="{{ asset(listingFile.pathNormalSize) }}" data-toggle="lightbox" data-gallery="multiimages" data-title="{{ listing.title }}">
-                                <img src="{{ asset(listingFile.pathNormalSize) }}" alt="{{ listing.title }}" />
+                                <img class="mb-2" src="{{ asset(listingFile.pathNormalSize) }}" alt="{{ listing.title }}" />
                             </a>
                         {% endfor %}
                     </div>
@@ -131,7 +131,12 @@
                 {% endif %}
 
                 {% if lowSecurityCheckIsAdminInPublic() %}
-                    <a href="{{ path('app_admin_listing_edit', {'id': listing.id}) }}" class="btn btn-outline-danger">{{ 'trans.Edit listing as Admin' | trans }}</a>
+                    <a
+                            href="{{ path('app_admin_listing_edit', {'id': listing.id}) }}"
+                            class="btn btn-outline-danger mb-1"
+                    >
+                        {{ 'trans.Edit listing as Admin' | trans }}
+                    </a>
                 {% endif %}
 
                 {% if listing.price is not empty %}

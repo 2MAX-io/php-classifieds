@@ -13,6 +13,7 @@ $stmt = $pdo->prepare("
     SELECT 
             o_ogloszenia.id AS listing_id,
             o_ogloszenia.user_id AS listing_user_id,
+            o_ogloszenia.user_id AS listing_user_id_legacy,
             
             o_ogloszenia.tytul AS listing_title,
             o_ogloszenia.opis_d AS listing_description,
@@ -34,6 +35,9 @@ $stmt = $pdo->prepare("
            
             o_ogloszenia.odwiedziny AS listing_views_count,
             CONCAT(' | ', o_ogloszenia.d_ip, ' ', o_ogloszenia.data, ' | ') AS listing_police_log,
+           
+           o_galeria.kolejnosc AS listing_file_sort,
+           o_galeria.img AS listing_file_path_legacy,
         
            null
     FROM o_ogloszenia 
@@ -79,6 +83,13 @@ $header = [
     'listing_email_show',
     'listing_order_by_date',
     'listing_slug',
+
+    'listing_file_sort',
+    'listing_file_path',
+    'listing_file_user_removed',
+    'listing_file_filename',
+    'listing_file_mime_type',
+    'listing_file_size_bytes',
 ];
 fputcsv($fpCsv, $header);
 while ($dbRow = $stmt->fetch(\PDO::FETCH_ASSOC)) {
@@ -94,10 +105,22 @@ while ($dbRow = $stmt->fetch(\PDO::FETCH_ASSOC)) {
     $dbRow['listing_order_by_date'] = $dbRow['listing_last_edit_date'];
     $dbRow['listing_slug'] = $dbRow['listing_id'];
 
+    if ($dbRow['listing_file_sort'] === null) {
+        time();
+    }
+
+    // file
+//    $dbRow['listing_file_sort'] = $dbRow['listing_file_sort'] ?? 0;
+    $dbRow['listing_file_path'] = getOldImagesPath($dbRow);
+    $dbRow['listing_file_user_removed'] = 0;
+    $dbRow['listing_file_filename'] = basename($dbRow['listing_file_path']);
+    $dbRow['listing_file_mime_type'] = 'image/jpg';
+    $dbRow['listing_file_size_bytes'] = 1024*150;
+
     $csvRow = [];
     foreach ($header as $headerValue) {
         if (!isset($dbRow[$headerValue])) {
-            continue;
+            $csvRow[$headerValue] = null;
         }
         $csvRow[$headerValue] = $dbRow[$headerValue];
     }
@@ -106,3 +129,15 @@ while ($dbRow = $stmt->fetch(\PDO::FETCH_ASSOC)) {
 }
 
 fclose($fpCsv);
+
+function getOldImagesPath(array $dbRow) {
+    if (empty(trim($dbRow['listing_file_path_legacy']))) {
+        return '';
+    }
+
+    $userId = (int) $dbRow['listing_user_id_legacy'];
+    $imgDir = (int) ($userId / 32000);
+
+    $filename = basename($dbRow['listing_file_path_legacy']);
+    return "static/user/listing/0000_legacy/images/galeria/$imgDir/$userId/s$filename";
+}

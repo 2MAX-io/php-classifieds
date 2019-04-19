@@ -187,3 +187,27 @@ php symfony/bin/importer_import_to_new.php
 php symfony/bin/importer_import_to_new.php 
 php symfony/bin/importer_export_from_old.php 
 php symfony/bin/importer_import_to_new.php 
+php symfony/bin/importer_export_from_old.php 
+php symfony/bin/importer_import_to_new.php 
+php symfony/bin/importer_export_from_old.php 
+php symfony/bin/importer_export_from_old.php 
+php symfony/bin/importer_export_from_old.php 
+php symfony/bin/importer_export_from_old.php 
+php symfony/bin/importer_import_to_new.php 
+php symfony/bin/importer_export_from_old.php 
+php symfony/bin/importer_import_to_new.php 
+php symfony/bin/importer_import_to_new.php 
+php symfony/bin/importer_export_from_old.php 
+php symfony/bin/importer_import_to_new.php 
+php symfony/bin/importer_export_from_old.php 
+php symfony/bin/importer_import_to_new.php 
+php symfony/bin/importer_export_from_old.php 
+php symfony/bin/importer_export_from_old.php 
+php symfony/bin/importer_export_from_old.php 
+php symfony/bin/importer_import_to_new.php 
+php symfony/bin/importer_import_to_new.php 
+chown -R 1000:www-data static/
+chmod -R 775 static/
+ls -l static/user/listing/0000_legacy/images/galeria/0/10957/
+php symfony/bin/importer_export_from_old.php 
+php symfony/bin/importer_import_to_new.php 

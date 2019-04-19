@@ -22,16 +22,15 @@ while (($csvRow = fgetcsv($csvHandle, 0, ",")) !== FALSE) {
     }
     $csvRow = array_combine($header, $csvRow);
 
+    $csvRow['listing_id'] = $csvRow['listing_id'] + 1000 * 1; // todo: make production
     $csvRow['listing_price'] = 0; // todo: make production
     $csvRow['listing_category'] = 3; // todo: make production
     $csvRow['listing_user_id'] = 66; // todo: make production
 
     $csvRow['listing_search_text'] = $csvRow['listing_title'] . ' ' . $csvRow['listing_description']; // default value, should be regenerated
 
-    $sql = /** @lang MySQL */
-        'INSERT INTO listing SET '.arrayToSetString($csvRow).';';
-
-    saveSql($sql, $sqlHandle);
+    saveSql( /** @lang MySQL */ 'INSERT INTO listing SET '.arrayToSetString($csvRow).';', $sqlHandle);
+    saveGallery($csvRow, $sqlHandle);
 }
 fclose($csvHandle);
 fclose($sqlHandle);
@@ -57,6 +56,7 @@ function escape($unescaped): string {
 function arrayToSetString(array $csvRow): string {
     $csvRow = array_map('escape', $csvRow);
     $map = [
+        'listing_id' => 'listing.id',
         'listing_title' => 'listing.title',
         'listing_user_id' => 'listing.user_id',
         'listing_description' => 'listing.description',
@@ -95,4 +95,57 @@ function arrayToSetString(array $csvRow): string {
     }
 
     return rtrim($result, ', ');
+}
+
+function arrayToSetString2(array $csvRow): string {
+    $csvRow = array_map('escape', $csvRow);
+    $map = [
+        'listing_file_listing_id' => 'listing_file.listing_id',
+        'listing_file_path' => 'listing_file.path',
+        'listing_file_sort' => 'listing_file.sort',
+        'listing_file_user_removed' => 'listing_file.user_removed',
+        'listing_file_filename' => 'listing_file.filename',
+        'listing_file_mime_type' => 'listing_file.mime_type',
+        'listing_file_size_bytes' => 'listing_file.size_bytes',
+    ];
+
+    $result = '';
+    foreach ($csvRow as $key => $value) {
+        if (!isset($map[$key])) {
+            continue;
+        }
+
+        $targetKey = $map[$key];
+        $result .= " $targetKey = '$value', ";
+    }
+
+    return rtrim($result, ', ');
+}
+
+function saveGallery(array $csvRow, $sqlHandle) {
+    if (empty($csvRow['listing_file_path'])) {
+        return;
+    }
+
+    $csvRow['listing_file_listing_id'] = $csvRow['listing_id'];
+
+    $fileColumns = [
+        'listing_file_listing_id',
+        'listing_file_path',
+        'listing_file_user_removed',
+        'listing_file_filename',
+        'listing_file_mime_type',
+        'listing_file_size_bytes',
+        'listing_file_sort',
+    ];
+
+    $fileRow = [];
+    foreach ($fileColumns as $fileColumn) {
+        if (!isset($csvRow[$fileColumn])) {
+            continue;
+        }
+        $fileRow[$fileColumn] = $csvRow[$fileColumn];
+    }
+
+    saveSql( /** @lang MySQL */ 'INSERT INTO listing_file SET '.arrayToSetString2($fileRow).';', $sqlHandle);
 }

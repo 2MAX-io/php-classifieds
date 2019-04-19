@@ -6,7 +6,7 @@
     <div class="container mt-5">
         <div class="row">
             <div class="col-md-4 col-lg-3 mb-5">
-                {% include 'listing/user_navigation_card.html.twig' %}
+                {% include 'user/listing/user_navigation_card.html.twig' %}
             </div>
 
             <div class="col-md-8 col-lg-9">
@@ -24,25 +24,25 @@
                     {% endif %}
 
                     {% if listing.userDeactivated %}
-                        {{ include('listing/_activate_form.html.twig') }}
+                        {{ include('user/listing/_activate_form.html.twig') }}
                     {% else %}
-                        {{ include('listing/_deactivate_form.html.twig') }}
+                        {{ include('user/listing/_deactivate_form.html.twig') }}
                     {% endif %}
 
-                    {{ include('listing/_delete_form.html.twig') }}
+                    {{ include('user/listing/_delete_form.html.twig') }}
                 </div>
 
                 <h2 class="mb-5">{{ 'trans.Edit listing' | trans }}</h2>
 
-                {{ include('listing/_form.html.twig', {'button_label': 'trans.Update' | trans}) }}
+                {{ include('user/listing/_form.html.twig', {'button_label': 'trans.Update' | trans}) }}
             </div>
         </div>
     </div>
 {% endblock %}
 
 {% block js %}
-    {% include 'listing/_custom_fields.html.twig' %}
-    {% include 'listing/_file_upload.html.twig' %}
-    {% include 'listing/_category_select.html.twig' %}
+    {% include 'user/listing/_custom_fields.html.twig' %}
+    {% include 'user/listing/_file_upload.html.twig' %}
+    {% include 'user/listing/_category_select.html.twig' %}
 
 {% endblock %}

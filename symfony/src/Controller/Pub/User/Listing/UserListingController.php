@@ -37,7 +37,7 @@ class UserListingController extends AbstractUserController
     {
         $userListingListDto = $userListingListService->getList((int) $request->get('page', 1));
 
-        return $this->render('listing/index.html.twig', [
+        return $this->render('user/listing/index.html.twig', [
             'listings' => $userListingListDto->getResults(),
             'pagination' => $paginationService->getPaginationHtml($userListingListDto->getPager()),
             'pager' => $userListingListDto->getPager(),
@@ -89,7 +89,7 @@ class UserListingController extends AbstractUserController
             return $this->redirectToRoute('app_listing_edit', ['id' => $listing->getId()]);
         }
 
-        return $this->render('listing/new.html.twig', [
+        return $this->render('user/listing/new.html.twig', [
             'listing' => $listing,
             'formCategorySelectList' => $categoryListService->getFormCategorySelectList(),
             'form' => $form->createView(),
@@ -133,7 +133,7 @@ class UserListingController extends AbstractUserController
             ]);
         }
 
-        return $this->render('listing/edit.html.twig', [
+        return $this->render('user/listing/edit.html.twig', [
             'listing' => $listing,
             'form' => $form->createView(),
             'listingFilesForJavascript' => $createListingService->getListingFilesForJavascript($listing),

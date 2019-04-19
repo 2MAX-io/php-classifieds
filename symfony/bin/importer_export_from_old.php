@@ -25,11 +25,11 @@ $stmt = $pdo->prepare("
 #          o_ogloszenia.poziom AS listing_,
             o_ogloszenia.akceptacja AS listing_admin_confirmed,
             o_ogloszenia.bDeleted AS listing_user_deleted,
-            o_ogloszenia.dokiedy AS listing_valid_until,
+            o_ogloszenia.dokiedy AS listing_valid_until_date,
             o_ogloszenia.premium AS listing_featured,
             o_ogloszenia.dokiedy_premium AS listing_featured_until_date,
-            o_ogloszenia.data AS listing_first_creation_date,
-            o_ogloszenia.data_ostatnia_modyfikacja AS listing_last_edit,
+            o_ogloszenia.data AS listing_first_created_date,
+            o_ogloszenia.data_ostatnia_modyfikacja AS listing_last_edit_date,
             o_ogloszenia.data_ostatnia_aktywacja AS listing_last_confirm,
            
             o_ogloszenia.odwiedziny AS listing_views_count,
@@ -39,15 +39,17 @@ $stmt = $pdo->prepare("
     FROM o_ogloszenia 
         LEFT JOIN o_uzytkownicy ON (o_uzytkownicy.id = o_ogloszenia.user_id)
         LEFT JOIN o_galeria ON (o_galeria.o_id = o_ogloszenia.id)
+    WHERE o_ogloszenia.bDeleted=0
 ORDER BY 
-    o_ogloszenia.id ASC,
+    o_ogloszenia.id DESC,
+#    o_ogloszenia.id ASC,
     o_uzytkownicy.id ASC,
     o_galeria.id ASC
 LIMIT 100
 ");
 $stmt->execute();
 
-$fpCsv = fopen('old_classifieds_export.csv', 'w');
+$fpCsv = fopen('importer_export_from_old.csv', 'w');
 $header = [
     'listing_id',
     'listing_user_id',
@@ -62,21 +64,45 @@ $header = [
 
     'listing_admin_confirmed',
     'listing_user_deleted',
-    'listing_valid_until',
+    'listing_valid_until_date',
     'listing_featured',
     'listing_featured_until_date',
-    'listing_first_creation_date',
-    'listing_last_edit',
+    'listing_first_created_date',
+    'listing_last_edit_date',
 
     'listing_views_count',
     'listing_police_log',
+    'listing_featured_weight',
+    'listing_admin_removed',
+    'listing_user_deactivated',
+    'listing_admin_rejected',
+    'listing_email_show',
+    'listing_order_by_date',
+    'listing_slug',
 ];
 fputcsv($fpCsv, $header);
 while ($dbRow = $stmt->fetch(\PDO::FETCH_ASSOC)) {
 
     $dbRow['listing_category'] = $dbRow['listing_category_legacy']; // todo mapper
+    $dbRow['listing_user_deactivated'] = 0; // todo mapper
+    $dbRow['listing_admin_rejected'] = 0; // todo mapper
 
-    fputcsv($fpCsv, array_intersect_key($dbRow, array_flip($header)));
+    // not present set default
+    $dbRow['listing_featured_weight'] = 0;
+    $dbRow['listing_admin_removed'] = 0;
+    $dbRow['listing_email_show'] = 1;
+    $dbRow['listing_order_by_date'] = $dbRow['listing_last_edit_date'];
+    $dbRow['listing_slug'] = $dbRow['listing_id'];
+
+    $csvRow = [];
+    foreach ($header as $headerValue) {
+        if (!isset($dbRow[$headerValue])) {
+            continue;
+        }
+        $csvRow[$headerValue] = $dbRow[$headerValue];
+    }
+
+    fputcsv($fpCsv, $csvRow);
 }
 
 fclose($fpCsv);

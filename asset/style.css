@@ -75,10 +75,13 @@ a:hover, a:focus {
 }
 
 .card-featured {
+    text-align: center;
+    height: 25rem;
     background-color: #f8f9fa;
 }
 
 .card-featured .card-img-top {
+    width: auto;
     max-height: 202px;
 }
 

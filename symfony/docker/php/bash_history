@@ -275,3 +275,30 @@ php symfony/bin/console doctrine:schema:update --force
 php symfony/bin/console doctrine:schema:update --force
 php symfony/bin/console doctrine:schema:update --force
 su
+php symfony/bin/importer_export_from_old.php /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv
+grep "0000-" /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv
+grep "0000-00" /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv
+head -1 /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv
+php symfony/bin/importer_export_from_old.php /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv
+grep "0000-00" /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv
+grep "0000-00" /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv
+grep "0000-00" -C5 /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv
+grep "0000-00" -C5 /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv
+php symfony/bin/importer_export_from_old.php /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv
+grep "0000-00" -C5 /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv
+grep "0000-00" /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv
+php symfony/bin/importer_export_from_old.php /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv
+grep "0000-00" /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv
+grep "0000-00" /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv
+grep "0000-00" -C2 /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv
+grep "0000-00" -C2 /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv
+php symfony/bin/importer_export_from_old.php /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv
+grep "0000-00" -C2 /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv
+php symfony/bin/importer_export_from_old.php /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv
+grep "0000-00" -C2 /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv
+grep "0000-00" -C2 /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv
+php symfony/bin/importer_export_from_old.php /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv
+grep "0000-00" -C2 /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv
+grep "0000-00" -C2 /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv
+grep "0000-00" -C2 /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv
+grep "0000-00" -C2 /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv

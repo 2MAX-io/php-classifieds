@@ -9,7 +9,8 @@ $pdo = new \PDO(
 ]
 );
 
-$stmt = $pdo->prepare("
+$stmt = $pdo->prepare(
+    /** @lang MySQL */ "
     SELECT 
             o_ogloszenia.id AS listing_id,
             o_ogloszenia.user_id AS listing_user_id,
@@ -46,15 +47,15 @@ $stmt = $pdo->prepare("
         LEFT JOIN o_galeria ON (o_galeria.o_id = o_ogloszenia.id)
     WHERE o_ogloszenia.bDeleted=0
 ORDER BY 
-    o_ogloszenia.id DESC,
-#    o_ogloszenia.id ASC,
+#    o_ogloszenia.id DESC,
+    o_ogloszenia.id ASC,
     o_uzytkownicy.id ASC,
     o_galeria.id ASC
-LIMIT 100
+# LIMIT 100
 ");
 $stmt->execute();
 
-$fpCsv = fopen('importer_export_from_old.csv', 'w');
+$fpCsv = fopen($argv[1], 'w');
 $header = [
     'listing_id',
     'listing_user_id',

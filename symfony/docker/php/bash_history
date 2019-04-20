@@ -235,3 +235,19 @@ php symfony/bin/importer_export_from_old.php
 php symfony/bin/importer_export_from_old.php 
 chown -R 1000:www-data importer_export_from_old.csv importer_import_to_new.sql 
 php symfony/bin/importer_import_to_new.php 
+php symfony/bin/importer_export_from_old.php 
+php symfony/bin/importer_import_to_new.php 
+php symfony/bin/importer_export_from_old.php 
+php symfony/bin/importer_import_to_new.php 
+php symfony/bin/importer_import_to_new.php 
+chown -R 1000:www-data importer_export_from_old.csv importer_import_to_new.sql 
+sudo
+su www-data
+su -i www-data
+su www-data
+php symfony/bin/importer_export_from_old.php /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv
+php symfony/bin/importer_export_from_old.php /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv
+cat symfony/bin/importer_export_from_old.php
+cat symfony/bin/importer_export_from_old.php
+php symfony/bin/importer_export_from_old.php /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv
+php symfony/bin/importer_import_to_new.php /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv /var/www/html/symfony/docker/mysql/sql/importer_import_to_new.sql

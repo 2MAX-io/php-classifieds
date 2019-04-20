@@ -9,11 +9,13 @@ $pdo = new \PDO(
 ]
 );
 
-$csvHandle = fopen("importer_export_from_old.csv", "r");
-$sqlHandle = fopen("importer_import_to_new.sql", "w");
+$csvHandle = fopen($argv[1], "r");
+$sqlHandle = fopen($argv[2], "w");
+saveSql( /** @lang MySQL */ 'SET NAMES utf8;', $sqlHandle);
 
 $csvRowNumber = -1;
 $header = [];
+$currentOldListingId = null;
 while (($csvRow = fgetcsv($csvHandle, 0, ",")) !== FALSE) {
     $csvRowNumber++;
     if ($csvRowNumber === 0) {
@@ -29,7 +31,10 @@ while (($csvRow = fgetcsv($csvHandle, 0, ",")) !== FALSE) {
 
     $csvRow['listing_search_text'] = $csvRow['listing_title'] . ' ' . $csvRow['listing_description']; // default value, should be regenerated
 
-    saveSql( /** @lang MySQL */ 'INSERT INTO listing SET '.arrayToSetStringListing($csvRow).';', $sqlHandle);
+    if ($currentOldListingId !== $csvRow['listing_id']) {
+        $currentOldListingId = $csvRow['listing_id'];
+        saveSql( /** @lang MySQL */ 'INSERT INTO listing SET '.arrayToSetStringListing($csvRow).';', $sqlHandle);
+    }
     saveGallery($csvRow, $sqlHandle);
 }
 fclose($csvHandle);

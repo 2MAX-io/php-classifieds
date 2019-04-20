@@ -36,7 +36,7 @@ class ListingHelperService
         $qb->leftJoin('listing.listingFiles', 'listingFile');
         $this->listingPublicDisplayService->applyPublicDisplayConditions($qb);
 
-        $qb->orderBy('listing.firstCreatedDate', 'DESC');
+        $qb->orderBy('listing.id', 'DESC');
         $qb->groupBy('listing.id');
         $qb->setMaxResults($count);
 

@@ -1,0 +1,10 @@
+/sql/mysqltuner.pl
+history
+history --help
+history -a
+/sql/mysqltuner.pl
+/sql/mysqltuner.pl
+rm -rvf /var/lib/mysql/ib_logfile*
+chown -R mysql:mysql /var/lib/mysql
+rm -rvf /var/lib/mysql/ib_logfile*
+chown -R mysql:mysql /var/lib/mysql

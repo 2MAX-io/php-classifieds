@@ -35,9 +35,6 @@ class ListingListService
     {
         $qb = $this->em->getRepository(Listing::class)->createQueryBuilder('listing');
         $qb->addSelect('listingFile');
-        $qb->leftJoin('listing.listingCustomFieldValues', 'listingCustomFieldValue');
-        $qb->leftJoin('listingCustomFieldValue.customField', 'customField');
-        $qb->leftJoin('listing.category', 'category');
         $qb->leftJoin('listing.listingFiles', 'listingFile');
 
         if (!empty($_GET['form_custom_field'])) {
@@ -85,12 +82,16 @@ class ListingListService
 
             $customFieldsCount = count(array_unique($usedCustomFieldIdList));
             if ($customFieldsCount > 0) {
+                $qb->leftJoin('listing.listingCustomFieldValues', 'listingCustomFieldValue');
+                $qb->leftJoin('listingCustomFieldValue.customField', 'customField');
+
                 $qb->andHaving($qb->expr()->eq($qb->expr()->countDistinct('listingCustomFieldValue.id'), ':uniqueCustomFieldsCount'));
                 $qb->setParameter(':uniqueCustomFieldsCount', $customFieldsCount);
             }
         }
 
         if ($category) {
+            $qb->leftJoin('listing.category', 'category');
             $qb->leftJoin(
                 Category::class,
                 'requestedCategory',

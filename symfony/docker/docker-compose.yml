@@ -29,11 +29,12 @@ services:
     volumes:
       - './mysql/data:/var/lib/mysql'
       - './mysql/sql:/sql'
-#      - './mysql/bash_history:/root/.bash_history'
+      - './mysql/my.cnf:/etc/mysql/conf.d/my.cnf'
+      - './mysql/bash_history:/root/.bash_history'
     environment:
       - MYSQL_ALLOW_EMPTY_PASSWORD=true
       - MYSQL_ROOT_PASSWORD=
       - MYSQL_DATABASE=classifieds
       - MYSQL_USER=classifieds
       - MYSQL_PASSWORD=classifieds
-      - PROMPT_COMMAND='history -a'
+      - PROMPT_COMMAND=history -a

@@ -12,10 +12,15 @@ use Doctrine\ORM\Mapping\Index;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ListingRepository")
  * @ORM\Table(indexes={
- *     @Index(columns={"valid_until_date", "user_removed", "user_deactivated", "user_removed", "featured", "featured_weight", "order_by_date"}),
- *     @Index(columns={"category_id", "valid_until_date", "user_removed", "user_deactivated", "user_removed", "featured", "featured_weight", "order_by_date"}),
- *     @Index(columns={"search_text"}, flags={"fulltext"}),
- *     @Index(columns={"search_text", "email", "phone", "rejection_reason"}, flags={"fulltext"})
+ *     @Index(columns={"valid_until_date", "user_removed", "user_deactivated", "admin_confirmed", "admin_removed", "featured", "featured_weight", "order_by_date"}, name="IDX_public_listings"),
+ *     @Index(columns={"featured", "featured_weight", "order_by_date", "valid_until_date", "user_removed", "user_deactivated", "admin_confirmed", "admin_removed"}, name="IDX_public_listings_order_by"),
+ *     @Index(columns={"featured", "featured_weight", "order_by_date"}, name="IDX_public_listings_order_by2"),
+ *     @Index(columns={"order_by_date"}, name="IDX_public_listings_order_by3"),
+ *     @Index(columns={"valid_until_date", "user_removed", "user_deactivated", "admin_confirmed", "admin_removed", "first_created_date"}, name="IDX_latest_listings"),
+ *     @Index(columns={"first_created_date", "valid_until_date", "user_removed", "user_deactivated", "admin_confirmed", "admin_removed"}, name="IDX_latest_listings2"),
+ *     @Index(columns={"category_id", "valid_until_date", "user_removed", "user_deactivated", "user_removed", "admin_confirmed", "featured", "featured_weight", "order_by_date"}, name="IDX_public_listings_with_cat"),
+ *     @Index(columns={"search_text"}, flags={"fulltext"}, name="IDX_fulltext_search"),
+ *     @Index(columns={"search_text", "email", "phone", "rejection_reason"}, flags={"fulltext"}, name="IDX_fulltext_search_admin")
  * })
  */
 class Listing

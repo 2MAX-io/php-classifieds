@@ -36,7 +36,7 @@ $stmt = $pdo->prepare(
             o_ogloszenia.powod_odrzucenia AS listing_rejection_reason,
            
             o_ogloszenia.odwiedziny AS listing_views_count,
-            CONCAT(' | ', o_ogloszenia.d_ip, ' ', o_ogloszenia.data, ' | ') AS listing_police_log,
+            o_ogloszenia.d_ip AS ip_legacy,
            
            o_galeria.kolejnosc AS listing_file_sort,
            o_galeria.img AS listing_file_path_legacy,
@@ -106,6 +106,24 @@ while ($dbRow = $stmt->fetch(\PDO::FETCH_ASSOC)) {
     }
 
     $dbRow = setBasedOnLegacyLevel($dbRow);
+
+    if ($dbRow['listing_featured_until_date'] < '2000-00-00 00:00:00') {
+        $dbRow['listing_featured_until_date'] = null;
+    }
+
+    if ($dbRow['listing_last_edit_date'] < '2000-00-00 00:00:00') {
+        $dbRow['listing_last_edit_date'] = $dbRow['listing_first_created_date'];
+    }
+
+    if ($dbRow['listing_first_created_date'] < '2000-00-00 00:00:00') {
+        $dbRow['listing_first_created_date'] = $dbRow['listing_last_edit_date'];
+    }
+
+    if ($dbRow['listing_valid_until_date'] < '2000-00-00 00:00:00') {
+        $dbRow['listing_valid_until_date'] = $dbRow['listing_first_created_date'];
+    }
+
+    $dbRow['listing_police_log'] = " | {$dbRow['ip_legacy']} {$dbRow['listing_first_created_date']} | ";
 
     // not present set default
     $dbRow['listing_featured_weight'] = 0;

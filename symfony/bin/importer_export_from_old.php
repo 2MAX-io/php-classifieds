@@ -112,7 +112,7 @@ while ($dbRow = $stmt->fetch(\PDO::FETCH_ASSOC)) {
     $dbRow['listing_admin_removed'] = 0;
     $dbRow['listing_email_show'] = 1;
     $dbRow['listing_order_by_date'] = $dbRow['listing_last_edit_date'];
-    $dbRow['listing_slug'] = $dbRow['listing_id'];
+    $dbRow['listing_slug'] = $dbRow['listing_id'] . '-ogloszenia-jaslo';
 
     // file
     $dbRow['listing_file_path'] = getOldImagesPath($dbRow);

@@ -108,7 +108,7 @@
             </tbody>
         </table>
 
-        {% if pager.getNbPages > 1 %}
+        {% if pager.haveToPaginate %}
             {{ pagination | raw }}
         {% endif %}
     </div>

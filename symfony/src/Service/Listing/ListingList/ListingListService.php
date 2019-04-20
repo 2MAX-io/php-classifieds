@@ -88,8 +88,6 @@ class ListingListService
                 $qb->andHaving($qb->expr()->eq($qb->expr()->countDistinct('listingCustomFieldValue.id'), ':uniqueCustomFieldsCount'));
                 $qb->setParameter(':uniqueCustomFieldsCount', $customFieldsCount);
             }
-
-            $qb->groupBy('listing.id');
         }
 
         if ($category) {
@@ -135,7 +133,12 @@ class ListingListService
         $qb->addOrderBy('listing.featuredWeight', 'DESC');
         $qb->addOrderBy('listing.orderByDate', 'DESC');
 
-        $adapter = new DoctrineORMAdapter($qb);
+//        $qb->setMaxResults(15);
+//        $qb->getQuery()->getResult();
+
+        $qb->groupBy('listing.id');
+
+        $adapter = new DoctrineORMAdapter($qb, false, $qb->getDQLPart('having') !== null);
         $pager = new Pagerfanta($adapter);
         $pager->setMaxPerPage(10);
         $pager->setCurrentPage($page);

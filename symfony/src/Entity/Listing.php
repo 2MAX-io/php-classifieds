@@ -12,6 +12,8 @@ use Doctrine\ORM\Mapping\Index;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ListingRepository")
  * @ORM\Table(indexes={
+ *     @Index(columns={"valid_until_date", "user_removed", "user_deactivated", "user_removed", "featured", "featured_weight", "order_by_date"}),
+ *     @Index(columns={"category_id", "valid_until_date", "user_removed", "user_deactivated", "user_removed", "featured", "featured_weight", "order_by_date"}),
  *     @Index(columns={"search_text"}, flags={"fulltext"}),
  *     @Index(columns={"search_text", "email", "phone", "rejection_reason"}, flags={"fulltext"})
  * })

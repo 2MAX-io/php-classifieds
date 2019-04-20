@@ -34,10 +34,10 @@ class ListingHelperService
         $qb = $this->em->getRepository(Listing::class)->createQueryBuilder('listing');
         $qb->addSelect('listingFile');
         $qb->leftJoin('listing.listingFiles', 'listingFile');
-        $qb->orderBy('listing.firstCreatedDate', 'DESC');
-
         $this->listingPublicDisplayService->applyPublicDisplayConditions($qb);
 
+        $qb->orderBy('listing.firstCreatedDate', 'DESC');
+        $qb->groupBy('listing.id');
         $qb->setMaxResults($count);
 
         return $qb->getQuery()->getResult();
@@ -55,15 +55,17 @@ class ListingHelperService
         $this->listingPublicDisplayService->applyPublicDisplayConditions($qb);
 
         $qbCount = clone $qb;
-        $qbCount->select($qbCount->expr()->count('listing.id'));
+        $qbCount->select($qbCount->expr()->countDistinct('listing.id'));
         $count = (int) $qbCount->getQuery()->getSingleScalarResult();
 
-        $qb->setFirstResult(random_int(0, max($count-($maxResultsCount*5), 0)));
-        $qb->setMaxResults($maxResultsCount);
+        $maxResultToGetFromDb = $maxResultsCount * 5;
+        $qb->setFirstResult(random_int(0, max($count-($maxResultToGetFromDb), 0)));
+        $qb->setMaxResults($maxResultToGetFromDb);
+        $qb->groupBy('listing.id');
 
         $results = $qb->getQuery()->getResult();
         shuffle($results);
-        array_slice($results, 0, $maxResultsCount);
+        $results = array_slice($results, 0, $maxResultsCount);
 
         return $results;
     }

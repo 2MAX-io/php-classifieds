@@ -39,11 +39,11 @@ class ResizeImageController
     private function getParams(string $type): array
     {
         if ('list' === $type) {
-            return ['w' => 180, 'h' => 180];
+            return ['w' => 260, 'h' => 200, 'fit' => 'max',];
         }
 
         if ('normal' === $type) {
-            return ['w' => 1920, 'h' => 1080];
+            return ['w' => 1920, 'h' => 1080, 'fit' => 'max',];
         }
 
         throw new NotFoundHttpException();

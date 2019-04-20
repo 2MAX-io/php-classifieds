@@ -23,7 +23,7 @@ $stmt = $pdo->prepare("
             o_ogloszenia.miejscowosc AS listing_city,
             o_ogloszenia.podkat AS listing_category_legacy,
            
-#          o_ogloszenia.poziom AS listing_,
+            o_ogloszenia.poziom AS listing_level_legacy,
             o_ogloszenia.akceptacja AS listing_admin_confirmed,
             o_ogloszenia.bDeleted AS listing_user_deleted,
             o_ogloszenia.dokiedy AS listing_valid_until_date,
@@ -32,6 +32,7 @@ $stmt = $pdo->prepare("
             o_ogloszenia.data AS listing_first_created_date,
             o_ogloszenia.data_ostatnia_modyfikacja AS listing_last_edit_date,
             o_ogloszenia.data_ostatnia_aktywacja AS listing_last_confirm,
+            o_ogloszenia.powod_odrzucenia AS listing_rejection_reason,
            
             o_ogloszenia.odwiedziny AS listing_views_count,
             CONCAT(' | ', o_ogloszenia.d_ip, ' ', o_ogloszenia.data, ' | ') AS listing_police_log,
@@ -79,6 +80,7 @@ $header = [
     'listing_featured_weight',
     'listing_admin_removed',
     'listing_user_deactivated',
+    'listing_rejection_reason',
     'listing_admin_rejected',
     'listing_email_show',
     'listing_order_by_date',
@@ -95,8 +97,14 @@ fputcsv($fpCsv, $header);
 while ($dbRow = $stmt->fetch(\PDO::FETCH_ASSOC)) {
 
     $dbRow['listing_category'] = $dbRow['listing_category_legacy']; // todo mapper
-    $dbRow['listing_user_deactivated'] = 0; // todo mapper
-    $dbRow['listing_admin_rejected'] = 0; // todo mapper
+
+    $dbRow['listing_admin_rejected'] = 0;
+    if ($dbRow['listing_admin_confirmed'] === -1) {
+        $dbRow['listing_admin_confirmed'] = 0;
+        $dbRow['listing_admin_rejected'] = 1;
+    }
+
+    $dbRow = setBasedOnLegacyLevel($dbRow);
 
     // not present set default
     $dbRow['listing_featured_weight'] = 0;
@@ -105,12 +113,7 @@ while ($dbRow = $stmt->fetch(\PDO::FETCH_ASSOC)) {
     $dbRow['listing_order_by_date'] = $dbRow['listing_last_edit_date'];
     $dbRow['listing_slug'] = $dbRow['listing_id'];
 
-    if ($dbRow['listing_file_sort'] === null) {
-        time();
-    }
-
     // file
-//    $dbRow['listing_file_sort'] = $dbRow['listing_file_sort'] ?? 0;
     $dbRow['listing_file_path'] = getOldImagesPath($dbRow);
     $dbRow['listing_file_user_removed'] = 0;
     $dbRow['listing_file_filename'] = basename($dbRow['listing_file_path']);
@@ -119,10 +122,15 @@ while ($dbRow = $stmt->fetch(\PDO::FETCH_ASSOC)) {
 
     $csvRow = [];
     foreach ($header as $headerValue) {
-        if (!isset($dbRow[$headerValue])) {
-            $csvRow[$headerValue] = null;
+        if (!array_key_exists($headerValue, $dbRow)) {
+            echo $headerValue.' ';
+            continue;
         }
         $csvRow[$headerValue] = $dbRow[$headerValue];
+    }
+
+    if (count($csvRow) !== count($header)) {
+        print_r($csvRow) . "\r\n";
     }
 
     fputcsv($fpCsv, $csvRow);
@@ -140,4 +148,18 @@ function getOldImagesPath(array $dbRow) {
 
     $filename = basename($dbRow['listing_file_path_legacy']);
     return "static/user/listing/0000_legacy/images/galeria/$imgDir/$userId/s$filename";
+}
+
+function setBasedOnLegacyLevel(array $dbRow) {
+    $dbRow['listing_user_deactivated'] = 0;
+
+    if ($dbRow['listing_level_legacy'] === 0) {
+        $dbRow['listing_user_deactivated'] = 1;
+    }
+
+    if ($dbRow['listing_level_legacy'] === 1) {
+        $dbRow['listing_user_deactivated'] = 0;
+    }
+
+    return $dbRow;
 }

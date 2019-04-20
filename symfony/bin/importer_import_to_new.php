@@ -22,14 +22,14 @@ while (($csvRow = fgetcsv($csvHandle, 0, ",")) !== FALSE) {
     }
     $csvRow = array_combine($header, $csvRow);
 
-    $csvRow['listing_id'] = $csvRow['listing_id'] + 1000 * 1; // todo: make production
+    $csvRow['listing_id'] = $csvRow['listing_id'] + 1000 * 0; // todo: make production
     $csvRow['listing_price'] = 0; // todo: make production
     $csvRow['listing_category'] = 3; // todo: make production
     $csvRow['listing_user_id'] = 66; // todo: make production
 
     $csvRow['listing_search_text'] = $csvRow['listing_title'] . ' ' . $csvRow['listing_description']; // default value, should be regenerated
 
-    saveSql( /** @lang MySQL */ 'INSERT INTO listing SET '.arrayToSetString($csvRow).';', $sqlHandle);
+    saveSql( /** @lang MySQL */ 'INSERT INTO listing SET '.arrayToSetStringListing($csvRow).';', $sqlHandle);
     saveGallery($csvRow, $sqlHandle);
 }
 fclose($csvHandle);
@@ -53,7 +53,7 @@ function escape($unescaped): string {
     return strtr($unescaped,$replacements);
 }
 
-function arrayToSetString(array $csvRow): string {
+function arrayToSetStringListing(array $csvRow): string {
     $csvRow = array_map('escape', $csvRow);
     $map = [
         'listing_id' => 'listing.id',
@@ -97,7 +97,7 @@ function arrayToSetString(array $csvRow): string {
     return rtrim($result, ', ');
 }
 
-function arrayToSetString2(array $csvRow): string {
+function arrayToSetStringListingFile(array $csvRow): string {
     $csvRow = array_map('escape', $csvRow);
     $map = [
         'listing_file_listing_id' => 'listing_file.listing_id',
@@ -147,5 +147,5 @@ function saveGallery(array $csvRow, $sqlHandle) {
         $fileRow[$fileColumn] = $csvRow[$fileColumn];
     }
 
-    saveSql( /** @lang MySQL */ 'INSERT INTO listing_file SET '.arrayToSetString2($fileRow).';', $sqlHandle);
+    saveSql( /** @lang MySQL */ 'INSERT INTO listing_file SET '.arrayToSetStringListingFile($fileRow).';', $sqlHandle);
 }

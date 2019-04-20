@@ -211,3 +211,27 @@ chmod -R 775 static/
 ls -l static/user/listing/0000_legacy/images/galeria/0/10957/
 php symfony/bin/importer_export_from_old.php 
 php symfony/bin/importer_import_to_new.php 
+php symfony/bin/importer_export_from_old.php 
+php symfony/bin/importer_import_to_new.php 
+php symfony/bin/importer_import_to_new.php 
+php symfony/bin/importer_export_from_old.php 
+php symfony/bin/importer_import_to_new.php 
+php symfony/bin/importer_export_from_old.php 
+[A
+php symfony/bin/importer_export_from_old.php 
+php symfony/bin/importer_import_to_new.php 
+php symfony/bin/importer_import_to_new.php 
+php symfony/bin/importer_export_from_old.php 
+php symfony/bin/importer_export_from_old.php 
+php symfony/bin/importer_export_from_old.php 
+php symfony/bin/importer_import_to_new.php 
+php symfony/bin/importer_import_to_new.php 
+php symfony/bin/importer_import_to_new.php 
+php symfony/bin/importer_import_to_new.php 
+php symfony/bin/importer_import_to_new.php 
+chown -R 1000:www-data old_classifieds_export.csv importer_import_to_new.sql 
+chown -R 1000:www-data importer_export_from_old.csv importer_import_to_new.sql 
+php symfony/bin/importer_export_from_old.php 
+php symfony/bin/importer_export_from_old.php 
+chown -R 1000:www-data importer_export_from_old.csv importer_import_to_new.sql 
+php symfony/bin/importer_import_to_new.php 

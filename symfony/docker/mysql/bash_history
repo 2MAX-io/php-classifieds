@@ -30,3 +30,8 @@ time mysql classifieds < /sql/importer_import_to_new.sql
 time mysql classifieds < /sql/importer_import_to_new.sql 
 time mysql classifieds < /sql/importer_import_to_new.sql 
 time mysql classifieds < /sql/importer_import_to_new.sql 
+mysqldump classifieds > /sql/ogl_$(date +%Y-%m-%d_%H%M%S).sql
+mysqldump classifieds > /sql/ogl_$(date +%Y-%m-%d_%H%M%S).sql
+mysqldump classifieds > /sql/ogl_$(date +%Y-%m-%d_%H%M%S).sql
+mysqldump classifieds > /sql/ogl_$(date +%Y-%m-%d_%H%M%S).sql
+mysqldump classifieds > /sql/ogl_$(date +%Y-%m-%d_%H%M%S).sql

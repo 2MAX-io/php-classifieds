@@ -13,6 +13,7 @@ class CustomField
 {
     public const TYPE_SELECT = 'select';
     public const TYPE_INTEGER_RANGE = 'integer_range';
+    public const TYPE_YEAR_RANGE = 'year_range';
 
     /**
      * @ORM\Id()

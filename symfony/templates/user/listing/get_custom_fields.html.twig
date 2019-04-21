@@ -32,6 +32,37 @@
                 >
             </div>
         {% endif %}
+
+        {% if customField.type == constant('\App\\Entity\\CustomField::TYPE_YEAR_RANGE') %}
+            <div class="form-group">
+                <label class="{% if customField.required %}required{% endif %}" for="custom_field_{{ customField.id }}">{{ customField.name }}</label>
+
+                <select
+                        name="form_custom_field[{{ customField.id }}]"
+                        class="form-control"
+                >
+
+                    <option value=''>{{ 'trans.Select' | trans }}</option>
+
+                    {% set startYear = date().format('Y') %}
+                    {% for year in startYear..1960 %}
+                        <option
+                                value="{{- year -}}"
+                                {% if year in customField.getListingCustomFieldValuesArray %}selected{% endif %}
+                        >
+                            {{ year }}
+                        </option>
+                    {% endfor %}
+
+                    <option
+                            {% if 1959 in customField.getListingCustomFieldValuesArray %}selected{% endif %}
+                            value="1959"
+                    >
+                        {{ 'trans.Older than 1960' | trans }}
+                    </option>
+                </select>
+            </div>
+        {% endif %}
     {% endfor %}
 
 </div>

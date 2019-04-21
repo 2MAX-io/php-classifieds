@@ -66,7 +66,7 @@ class UserListingController extends AbstractUserController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $customFieldsForListingFormService->saveCustomFieldsToListing($listing, $request->request->get('form_custom_field'));
+            $customFieldsForListingFormService->saveCustomFieldsToListing($listing, $request->request->get('form_custom_field', []));
 
             $listing->setUser($currentUserService->getUser());
             $createListingService->setFormDependent($listing, $form);
@@ -122,7 +122,7 @@ class UserListingController extends AbstractUserController
             if ($request->request->get('fileuploader-list-file')) {
                 $listingFileUploadService->updateSort($listing, \json_decode($request->request->get('fileuploader-list-file'), true));
             }
-            $customFieldsForListingFormService->saveCustomFieldsToListing($listing, $request->request->get('form_custom_field'));
+            $customFieldsForListingFormService->saveCustomFieldsToListing($listing, $request->request->get('form_custom_field', []));
 
             $createListingService->setFormDependent($listing, $form);
             $logIpService->saveLog($listing);

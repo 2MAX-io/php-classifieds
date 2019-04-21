@@ -94,7 +94,11 @@
                                     </div>
                                 {% endif %}
 
-                                {% if customField.type == constant('\App\\Entity\\CustomField::TYPE_INTEGER_RANGE') %}
+                                {% if customField.type in [
+                                        constant('\App\\Entity\\CustomField::TYPE_INTEGER_RANGE'),
+                                        constant('\App\\Entity\\CustomField::TYPE_YEAR_RANGE'),
+                                    ]
+                                %}
                                     <label>{{ customField.name }}</label>
                                     <div class="form-row mb-3">
                                         <div class="col-6">

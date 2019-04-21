@@ -168,7 +168,7 @@
                                 <div class="row" data-listing-id="340">
                                     <div class="card-thumb col-12 col-md-3 py-3">
                                         <a title="{{ listing.title }}" href="{{ path('app_listing_show', {id: listing.id, 'slug': listing.slug}) }}">
-                                            <img class="rounded" alt="{{ listing.title }}" src="{{ asset(listing.listingFiles.first.pathListSize | default('asset/img/blank.png')) }}">
+                                            <img class="rounded" alt="{{ listing.title }}" src="{{ asset(listing.listingFiles.first.pathListSize | default('static/system/blank.png')) }}">
                                         </a>
                                     </div>
 

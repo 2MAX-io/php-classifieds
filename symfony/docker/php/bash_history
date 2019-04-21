@@ -320,3 +320,6 @@ php symfony/bin/console doctrine:schema:update --force
 php symfony/bin/console doctrine:schema:update --force
 php symfony/bin/console doctrine:schema:update --force
 php symfony/bin/console doctrine:schema:update --force
+rm static/user/listing/0000_legacy/images/galeria/0/9083/sdb3b8fb0db792343f42bf3535a10d385.jpg
+rm static/user/listing/0000_legacy/images/galeria/0/9083/size_list_sdb3b8fb0db792343f42bf3535a10d385.jpg
+rm static/user/listing/0000_legacy/images/galeria/0/9083/size_list_sdb3b8fb0db792343f42bf3535a10d385.jpg

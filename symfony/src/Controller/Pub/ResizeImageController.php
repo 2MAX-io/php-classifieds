@@ -69,6 +69,10 @@ class ResizeImageController
             throw new NotFoundHttpException();
         }
 
+        if (!file_exists($sourcePath)) {
+            $sourcePath = 'system/empty.png';
+        }
+
         /**
          * -------------------------------------------------------------------------------------------------------------
          * Everything must be already valid and safe after this point

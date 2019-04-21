@@ -18,7 +18,7 @@
             <div class="col-sm-6 col-lg-3 text-center mb-4">
                 <div class="card bg-light text-white">
                     <a href="{{ path('app_category', {'categorySlug': category.slug}) }}" title="{{ category.name }}" class="text-white">
-                        <img class="card-img" src="{{ asset(category.picture | default('asset/img/blank.png')) }}" alt="">
+                        <img class="card-img" src="{{ asset(category.picture | default('static/system/blank.png')) }}" alt="">
                         <div class="card-img-overlay">
                             <h5 class="card-title down">{{ category.name }}</h5>
                         </div>
@@ -44,7 +44,7 @@
                         <div class="card card-featured mb-4">
 
                             <a href="{{ path('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}">
-                                <img class="card-img-top" alt="" src="{{ asset(listing.listingFiles.first.pathListSize | default('asset/img/blank.png')) }}">
+                                <img class="card-img-top" alt="" src="{{ asset(listing.listingFiles.first.pathListSize | default('static/system/blank.png')) }}">
                             </a>
 
                             <div class="card-body">
@@ -77,7 +77,7 @@
                         <div class="card card-featured mb-4">
 
                             <a href="{{ path('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}">
-                                <img class="card-img-top" alt="" src="{{ asset(listing.listingFiles.first.getPathForList | default('asset/img/blank.png')) }}">
+                                <img class="card-img-top" alt="" src="{{ asset(listing.listingFiles.first.getPathForList | default('static/system/blank.png')) }}">
                             </a>
 
                             <div class="card-body">

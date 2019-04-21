@@ -18,7 +18,7 @@ $stmt = $pdo->prepare(
             
             o_ogloszenia.tytul AS listing_title,
             o_ogloszenia.opis_d AS listing_description,
-            o_ogloszenia.cena AS listing_price,
+            o_ogloszenia.cena AS listing_price_legacy,
             o_ogloszenia.telefon AS listing_phone,
             o_ogloszenia.mail AS listing_email,
             o_ogloszenia.miejscowosc AS listing_city,
@@ -98,6 +98,8 @@ fputcsv($fpCsv, $header);
 while ($dbRow = $stmt->fetch(\PDO::FETCH_ASSOC)) {
 
     $dbRow['listing_category'] = mapCategory($dbRow);
+    $dbRow['listing_price'] = normalizePrice($dbRow['listing_price_legacy']);
+    $dbRow['listing_description'] .= "\r\n\r\nCena: " . $dbRow['listing_price_legacy'];
 
     $dbRow['listing_admin_rejected'] = 0;
     if ($dbRow['listing_admin_confirmed'] === -1) {
@@ -266,4 +268,58 @@ function mapCategory(array $dbRow) {
 
     $catId = $dbRow['listing_category_legacy'];
     return $map[$catId] ?? 1204;
+}
+
+function normalizePrice(string $price): ?int {
+    if (empty(trim($price))) {
+        return null;
+    }
+
+    if (ctype_digit($price)) {
+        return $price;
+    }
+
+    $return = $price;
+    $return = trim($return);
+
+    $return = str_ireplace('PLN', '', $return);
+    $return = str_ireplace('zl', '', $return);
+    $return = str_ireplace('zł', '', $return);
+    $return = str_ireplace('/', '', $return);
+    $return = str_ireplace('szt', '', $return);
+    $return = str_ireplace(',-', '', $return);
+    $return = str_ireplace('kpl', '', $return);
+    $return = str_ireplace('.000', '000', $return);
+    $return = str_ireplace(',000', '000', $return);
+    $return = str_ireplace(',00', '', $return);
+    $return = str_ireplace('.00', '', $return);
+    $return = str_ireplace('brutto', '', $return);
+    $return = str_ireplace('godz', '', $return);
+    $return = str_ireplace('netto', '', $return);
+    $return = str_ireplace('msc', '', $return);
+    $return = str_ireplace('tona', '', $return);
+    $return = str_ireplace('od', '', $return);
+    $return = str_ireplace(' ', '', $return);
+    $return = trim($return);
+    $return = trim($return, '.');
+
+    if (ctype_digit($return) && $return > 1) {
+//        echo "success $price -> $return\r\n";
+        return $return;
+    }
+
+    if (
+        stripos($return, 'neg') === false
+        && stripos($return, 'uzg') === false
+        && stripos($return, 'usta') === false
+        && stripos($return, 'atra') === false
+        && stripos($return, 'konk') === false
+        && stripos($return, 'uzgodnienia') === false
+    ) {
+        if (!empty($return)) {
+//            echo "failed: $return\r\n";
+        }
+    }
+
+    return null;
 }

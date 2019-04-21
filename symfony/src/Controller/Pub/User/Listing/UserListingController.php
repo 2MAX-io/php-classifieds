@@ -154,7 +154,7 @@ class UserListingController extends AbstractUserController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('app_user_listing_index');
+        return $this->redirect($request->headers->get('referer'));
     }
 
     /**

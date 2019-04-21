@@ -7,6 +7,7 @@ namespace App\Controller\Pub;
 use App\Helper\FilePath;
 use App\System\Glide\AppServerFactory;
 use League\Glide\Responses\SymfonyResponseFactory;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -70,7 +71,7 @@ class ResizeImageController
         }
 
         if (!file_exists($sourcePath)) {
-            $sourcePath = 'system/empty.png';
+            return new RedirectResponse('/static/system/empty.png');
         }
 
         /**

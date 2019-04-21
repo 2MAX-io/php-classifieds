@@ -338,3 +338,17 @@ php symfony/bin/importer_import_to_new.php /var/www/html/symfony/docker/mysql/sq
 php symfony/bin/importer_import_to_new.php /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv /var/www/html/symfony/docker/mysql/sql/importer_import_to_new.sql
 php symfony/bin/importer_import_to_new.php /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv /var/www/html/symfony/docker/mysql/sql/importer_import_to_new.sql
 php symfony/bin/importer_import_to_new.php /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv /var/www/html/symfony/docker/mysql/sql/importer_import_to_new.sql
+ls -l static/user/*/size
+rm static/user/*/size_*.jpg
+rm -R static/user/*/size_*.jpg
+cat user/listing/0000_legacy/images/galeria/0/31419/s10649644ab0f7395930022cfba94412d.jpg
+cat static/user/listing/0000_legacy/images/galeria/0/31419/s10649644ab0f7395930022cfba94412d.jpg
+exit
+ls /var/www/html/static/cache/user/listing/0000_legacy/images/galeria/0/31419/s10649644ab0f7395930022cfba94412d.jpg/769e883b630928e10466e75e0e8c631c
+ls /var/www/html/static/cache/user/listing/0000_legacy/images/galeria/0/31419/s10649644ab0f7395930022cfba94412d.jpg/769e883b630928e10466e75e0e8c631c
+ls zz
+chown -R 1000:www-data static
+chmod -R 775 static/
+chown -R 1000:www-data static
+chown -R www-data:www-data static
+chmod -R 775 static/

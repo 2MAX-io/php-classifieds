@@ -17,7 +17,7 @@ use Webmozart\PathUtil\Path;
 class ResizeImageController
 {
     /**
-     * @Route("/static/{path}/size_{type}_{file}", name="app_resize_image", requirements={"path"=".+"})
+     * @Route("/static/resized/{type}/{path}/{file}", name="app_resize_image", requirements={"path"=".+"})
      */
     public function index(Request $request, string $path, string $type, string $file): Response
     {
@@ -70,7 +70,7 @@ class ResizeImageController
             throw new NotFoundHttpException();
         }
 
-        if (!file_exists($sourcePath)) {
+        if (!file_exists(FilePath::getStaticPath() . '/' . $sourcePath)) {
             return new RedirectResponse('/static/system/empty.png');
         }
 
@@ -89,7 +89,7 @@ class ResizeImageController
         );
         $cachedPath = $server->makeImage($sourcePath, $this->getParams($type));
 
-        rename(FilePath::getStaticPath() . '/' . $cachedPath, $targetPath);
+        $server->getSource()->rename($cachedPath, Path::makeRelative($targetPath, FilePath::getStaticPath()));
 
         return $server->getResponseFactory()->create(
             $server->getCache(),

@@ -3,7 +3,6 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Webmozart\PathUtil\Path;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ListingFileRepository")
@@ -75,7 +74,9 @@ class ListingFile
 
     public function getSizeForType(string $type): string
     {
-        return Path::getDirectory($this->getPath()) . '/size_' . basename($type) . '_' . basename($this->getPath());
+        $type = basename($type);
+
+        return str_replace('static/', "static/resized/$type/", $this->getPath());
     }
 
     public function setPath(string $path): self

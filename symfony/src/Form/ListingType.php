@@ -100,7 +100,9 @@ class ListingType extends AbstractType
                 'required' => false,
                 'multiple' => true,
                 'constraints' => [
-//                    new Assert\File(['mimeTypes']) // todo: mime validation
+                    new Constraints\All(
+                        new Constraints\Image(),
+                    ),
                 ],
                 'attr' => ['hidden' => 'hidden'],
                 'label' => 'trans.Pictures',

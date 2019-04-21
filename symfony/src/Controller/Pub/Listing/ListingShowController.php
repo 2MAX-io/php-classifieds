@@ -16,7 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class ListingShowController extends AbstractController
 {
     /**
-     * @Route("/l/{slug}/{id}", name="app_listing_show", defaults={"slug": "show"})
+     * @Route("/l/{id}/{slug}", name="app_listing_show", defaults={"slug": "show"})
      */
     public function show(
         Request $request,

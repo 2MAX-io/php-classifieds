@@ -32,6 +32,7 @@ while (($csvRow = fgetcsv($csvHandle, 0, ",")) !== FALSE) {
     if ($currentOldListingId !== $csvRow['listing_id']) {
         $currentOldListingId = $csvRow['listing_id'];
         saveSql( /** @lang MySQL */ 'INSERT INTO listing SET '.arrayToSetStringListing($csvRow).';', $sqlHandle);
+        saveListingViews($csvRow, $sqlHandle);
     }
     saveGallery($csvRow, $sqlHandle);
 }
@@ -57,15 +58,18 @@ function escape($unescaped): string {
     return strtr($unescaped,$replacements);
 }
 
-function arrayToSetString(array $csvRow, array $map) {
+function arrayToSetString(array $csvRow, array $map = null) {
     $csvRow = array_map('escape', $csvRow);
     $result = '';
     foreach ($csvRow as $key => $value) {
-        if (!isset($map[$key])) {
-            continue;
+        if ($map === null) {
+            $column = $key;
+        } else {
+            if (!isset($map[$key])) {
+                continue;
+            }
+            $column = $map[$key];
         }
-
-        $column = $map[$key];
         $result .= arrayToSetStringItem($column, $value);
     }
 
@@ -165,4 +169,14 @@ function saveGallery(array $csvRow, $sqlHandle) {
     }
 
     saveSql( /** @lang MySQL */ 'INSERT INTO listing_file SET '.arrayToSetStringListingFile($fileRow).';', $sqlHandle);
+}
+
+function saveListingViews(array $csvRow, $sqlHandle) {
+    $fileRow = [
+        'listing_view.listing_id' => $csvRow['listing_id'],
+        'listing_view.view_count' => (int) $csvRow['listing_views_count'],
+        'listing_view.datetime' => date('Y') . '-01-01 00:00:00',
+    ];
+
+    saveSql( /** @lang MySQL */ 'INSERT INTO listing_view SET '.arrayToSetString($fileRow).';', $sqlHandle);
 }

@@ -15,3 +15,12 @@ sed -n '88087,88087p' /sql/importer_import_to_new.sql
 time mysql classifieds < /sql/importer_import_to_new.sql 
 time mysql classifieds < /sql/importer_import_to_new.sql 
 time mysql classifieds < /sql/importer_import_to_new.sql 
+time mysql classifieds < /sql/importer_import_to_new.sql 
+time mysql classifieds < /sql/importer_import_to_new.sql 
+time mysql classifieds < /sql/importer_import_to_new.sql 
+time mysql classifieds < /sql/importer_import_to_new.sql 
+time mysql classifieds < /sql/importer_import_to_new.sql 
+time mysql classifieds < /sql/importer_import_to_new.sql 
+time mysql classifieds < /sql/importer_import_to_new.sql 
+time mysql classifieds < /sql/importer_import_to_new.sql 
+time mysql classifieds < /sql/importer_import_to_new.sql 

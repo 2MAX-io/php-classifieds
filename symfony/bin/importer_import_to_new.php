@@ -36,6 +36,7 @@ while (($csvRow = fgetcsv($csvHandle, 0, ",")) !== FALSE) {
     }
     saveGallery($csvRow, $sqlHandle);
 }
+
 fclose($csvHandle);
 fclose($sqlHandle);
 
@@ -57,8 +58,42 @@ function escape($unescaped): string {
     return strtr($unescaped,$replacements);
 }
 
-function arrayToSetStringListing(array $csvRow): string {
+function arrayToSetString(array $csvRow, array $map) {
     $csvRow = array_map('escape', $csvRow);
+    $result = '';
+    foreach ($csvRow as $key => $value) {
+        if (!isset($map[$key])) {
+            continue;
+        }
+
+        $column = $map[$key];
+        $result .= arrayToSetStringItem($column, $value);
+    }
+
+    return rtrim($result, ', ');
+}
+
+function arrayToSetStringItem($column, $value) {
+    $notNull = [
+        'listing.description',
+    ];
+
+    if (in_array($column, $notNull)) {
+        return " $column = '$value', ";
+    }
+
+    if ($value === null) {
+        return " $column = NULL, ";
+    }
+
+    if ($value === '') {
+        return " $column = NULL, ";
+    }
+
+    return " $column = '$value', ";
+}
+
+function arrayToSetStringListing(array $csvRow): string {
     $map = [
         'listing_id' => 'listing.id',
         'listing_title' => 'listing.title',
@@ -88,21 +123,10 @@ function arrayToSetStringListing(array $csvRow): string {
         'listing_search_text' => 'listing.search_text',
     ];
 
-    $result = '';
-    foreach ($csvRow as $key => $value) {
-        if (!isset($map[$key])) {
-            continue;
-        }
-
-        $targetKey = $map[$key];
-        $result .= " $targetKey = '$value', ";
-    }
-
-    return rtrim($result, ', ');
+    return arrayToSetString($csvRow, $map);
 }
 
 function arrayToSetStringListingFile(array $csvRow): string {
-    $csvRow = array_map('escape', $csvRow);
     $map = [
         'listing_file_listing_id' => 'listing_file.listing_id',
         'listing_file_path' => 'listing_file.path',
@@ -113,17 +137,7 @@ function arrayToSetStringListingFile(array $csvRow): string {
         'listing_file_size_bytes' => 'listing_file.size_bytes',
     ];
 
-    $result = '';
-    foreach ($csvRow as $key => $value) {
-        if (!isset($map[$key])) {
-            continue;
-        }
-
-        $targetKey = $map[$key];
-        $result .= " $targetKey = '$value', ";
-    }
-
-    return rtrim($result, ', ');
+    return arrayToSetString($csvRow, $map);
 }
 
 function saveGallery(array $csvRow, $sqlHandle) {

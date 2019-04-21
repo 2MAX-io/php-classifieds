@@ -6,7 +6,7 @@
         {% if listing.featured and listing.featuredUntilDate %}
             <span class="{{ listing.featuredUntilDate | isExpired | displayTextWarning }}">{{ listing.featuredUntilDate | date }}</span>
         {% else %}
-            {{ 'trans.No' | trans }}
+            {{ 'trans.none' | trans }}
         {% endif %}
     </div>
     <div class="col-md-4">
@@ -32,5 +32,11 @@
     </div>
     <div class="col-md-4 {{ listing.userDeactivated | displayTextWarning }}">
         {{ 'trans.Deactivated by User?' | trans }}: {{ listing.userDeactivated | boolText | trans }}
+    </div>
+    <div class="col-md-4 {{ listing.adminRejected | displayTextWarning }}">
+        {{ 'trans.Rejected by Admin?' | trans }}: {{ listing.adminRejected | boolText | trans }}
+    </div>
+    <div class="col-md-4 {{ (listing.rejectionReason is not empty) | displayTextWarning }}">
+        {{ 'trans.Previous rejection' | trans }}: {{ listing.rejectionReason | default('trans.none') | trans }}
     </div>
 {% endmacro %}

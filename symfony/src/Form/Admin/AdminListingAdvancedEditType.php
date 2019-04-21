@@ -21,7 +21,8 @@ class AdminListingAdvancedEditType extends AbstractType
             'label' => 'trans.Featured listing?'
         ]);
         $builder->add('featuredUntilDate', DateTimeType::class, [
-            'label' => 'trans.Featured until'
+            'required' => false,
+            'label' => 'trans.Featured until',
         ]);
         $builder->add('featuredWeight', IntegerType::class, [
             'label' => 'trans.Featured weight'

@@ -415,7 +415,7 @@ class Listing
         return $this->featuredUntilDate;
     }
 
-    public function setFeaturedUntilDate(\DateTimeInterface $featuredUntilDate): self
+    public function setFeaturedUntilDate(?\DateTimeInterface $featuredUntilDate = null): self
     {
         $this->featuredUntilDate = $featuredUntilDate;
 

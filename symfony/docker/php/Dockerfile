@@ -26,5 +26,6 @@ RUN mkdir /tmp/xdebug_out
 RUN chmod 777 /tmp/xdebug_out
 RUN chown :www-data /tmp/xdebug_out/
 
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 EXPOSE 443

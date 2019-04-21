@@ -352,3 +352,22 @@ chmod -R 775 static/
 chown -R 1000:www-data static
 chown -R www-data:www-data static
 chmod -R 775 static/
+ls /tmp/xdebug_out
+ls /tmp/xdebug_out
+ls /tmp/xdebug_out
+ls /tmp/xdebug_out
+ls /tmp/xdebug_out
+ls /tmp/xdebug_out
+ls -la
+ls /tmp/xdebug_out
+ls -l /tmp/xdebug_out
+exit
+composer dump-autoload --optimize
+composer ==help
+composer --help
+composer dump-autoload --optimize -d symfony
+exit
+chown -R www-data:www-data /var/www/html/
+composer dump-autoload --optimize -d symfony
+exit
+chown -R 1000:www-data /var/www/html/

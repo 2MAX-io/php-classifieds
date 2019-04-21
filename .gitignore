@@ -14,3 +14,4 @@
 /static/cache/
 /symfony/docker/mysql/sql/
 /static/resized/
+/symfony/docker/php/xdebug_out/

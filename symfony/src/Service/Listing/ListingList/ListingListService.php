@@ -91,21 +91,15 @@ class ListingListService
         }
 
         if ($category) {
-            $qb->leftJoin('listing.category', 'category');
-            $qb->leftJoin(
-                Category::class,
-                'requestedCategory',
-                Join::WITH,
-                $qb->expr()->andX($qb->expr()->eq('requestedCategory.id', ':requestedCategory'))
-            );
-            $qb->setParameter(':requestedCategory', $category);
-
+            $qb->join('listing.category', 'category');
             $qb->andWhere(
                 $qb->expr()->andX(
-                    $qb->expr()->gte('category.lft', 'requestedCategory.lft'),
-                    $qb->expr()->lte('category.rgt', 'requestedCategory.rgt')
+                    $qb->expr()->gte('category.lft', ':requestedCategoryLft'),
+                    $qb->expr()->lte('category.rgt', ':requestedCategoryRgt')
                 )
             );
+            $qb->setParameter(':requestedCategoryLft', $category->getLft());
+            $qb->setParameter(':requestedCategoryRgt', $category->getRgt());
         }
 
         if (!empty($_GET['min_price'])) {

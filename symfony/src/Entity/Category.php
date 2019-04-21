@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping\Index;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CategoryRepository")
  * @ORM\Table(indexes={
- *     @Index(columns={"rgt", "lft"})
+ *     @Index(columns={"lft", "rgt"}),
  * })
  */
 class Category

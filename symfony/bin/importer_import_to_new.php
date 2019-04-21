@@ -26,7 +26,6 @@ while (($csvRow = fgetcsv($csvHandle, 0, ",")) !== FALSE) {
 
     $csvRow['listing_id'] = $csvRow['listing_id'] + 1000 * 0; // todo: make production
     $csvRow['listing_price'] = 0; // todo: make production
-    $csvRow['listing_category'] = 3; // todo: make production
     $csvRow['listing_user_id'] = 66; // todo: make production
 
     $csvRow['listing_search_text'] = $csvRow['listing_title'] . ' ' . $csvRow['listing_description']; // default value, should be regenerated

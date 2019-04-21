@@ -8,3 +8,9 @@ rm -rvf /var/lib/mysql/ib_logfile*
 chown -R mysql:mysql /var/lib/mysql
 rm -rvf /var/lib/mysql/ib_logfile*
 chown -R mysql:mysql /var/lib/mysql
+mysql classifieds < /sql/importer_import_to_new.sql 
+mysql classifieds < /sql/importer_import_to_new.sql 
+mysql classifieds < /sql/importer_import_to_new.sql 
+sed -n '88087,88087p' /sql/importer_import_to_new.sql
+time mysql classifieds < /sql/importer_import_to_new.sql 
+time mysql classifieds < /sql/importer_import_to_new.sql 

@@ -14,13 +14,18 @@ services:
       - './php/ssl/localhost.key:/etc/ssl/private/ssl-cert-snakeoil.key'
       - './php/bash_history:/root/.bash_history'
       - './php/bash_history:/var/www/.bash_history'
+      - '$HOME/.cache/composer:/var/zzzz_composer_cache'
     environment:
       XDEBUG_CONFIG: remote_host=172.18.0.1
       PHP_IDE_CONFIG: serverName=classifieds.localhost
       APP_DEBUG: 1
       PROMPT_COMMAND: 'history -a'
+      APACHE_RUN_USER: '#1000'
+      APACHE_RUN_GROUP: '#33'
+      COMPOSER_HOME: '/var/zzzz_composer_cache'
     stdin_open: true
     tty: true
+#    user: "1000:1000"
   mysql:
     container_name: classifieds_mysql
     command: mysqld --sql_mode=""

@@ -371,3 +371,31 @@ chown -R www-data:www-data /var/www/html/
 composer dump-autoload --optimize -d symfony
 exit
 chown -R 1000:www-data /var/www/html/
+pgrep php
+pgrep apache
+pgrep -fa apache
+pa aux
+ps
+ps aux
+id -u www-data
+chown -R 1000:1000 /var/www/html/
+less /etc/passwd
+cat /etc/passwd
+exit
+chown -R 1000:www-data /var/www/html/
+composer dump-autoload --optimize -d symfony
+ls /var/www/.composer/
+ls -l /var/www/
+exit
+ls
+ls- la
+ls -la
+composer dump-autoload --optimize -d symfony
+ls -la /var/www
+mkdir .composer
+ls
+ls -la
+composer dump-autoload --optimize -d symfony
+mkdir /var/www/.composer
+composer --help
+composer dump-autoload --optimize -d symfony

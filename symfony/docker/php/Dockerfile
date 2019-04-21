@@ -28,4 +28,6 @@ RUN chown :www-data /tmp/xdebug_out/
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
+RUN useradd -u 1000 -g www-data -d /var/www www-data-docker-host
+
 EXPOSE 443

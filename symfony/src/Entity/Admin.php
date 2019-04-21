@@ -24,7 +24,7 @@ class Admin implements UserInterface, RoleInterface
     private $email;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="json_array")
      */
     private $roles = [];
 

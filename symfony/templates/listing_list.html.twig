@@ -195,16 +195,19 @@
                                             </strong>
                                         </h5>
 
-                                        {% if listing.city is not empty %}
-                                            <div class="address">
-                                                <i class="fas fa-map-marker-alt text-danger"></i>
-                                                {{ listing.city }}
-                                            </div>
-                                        {% endif %}
+                                        <div>
+                                            {% if listing.city is not empty %}
+                                                <span class="mr-1">
+                                                    <i class="fas fa-map-marker-alt text-danger"></i>
+                                                    {{ listing.city }}
+                                                </span>
+                                            {% endif %}
 
-{#                                        <div class="tel">#}
-{#                                            <a href="tel:714 952-2527" class="text-dark"><small><i class="fas fa-phone"></i> 714 952-2527</small></a>#}
-{#                                        </div>#}
+                                            <span class="mr-1">
+                                                <i class="fas fa-calendar text-black-50"></i>
+                                                {{ listing.orderByDate | date }}
+                                            </span>
+                                        </div>
 
                                         {% if listing.price is not empty %}
                                             <div class="mt-1"><span class="btn btn-dark btn-sm price">{{ 'trans.Price' | trans }}: {{ listing.price }}</span></div>

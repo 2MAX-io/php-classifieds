@@ -99,7 +99,9 @@ while ($dbRow = $stmt->fetch(\PDO::FETCH_ASSOC)) {
 
     $dbRow['listing_category'] = mapCategory($dbRow);
     $dbRow['listing_price'] = normalizePrice($dbRow['listing_price_legacy']);
-    $dbRow['listing_description'] .= "\r\n\r\nCena: " . $dbRow['listing_price_legacy'];
+    if (!empty(trim($dbRow['listing_price_legacy']))) {
+        $dbRow['listing_description'] .= "\r\n\r\nCena: " . $dbRow['listing_price_legacy'];
+    }
 
     $dbRow['listing_admin_rejected'] = 0;
     if ($dbRow['listing_admin_confirmed'] === -1) {

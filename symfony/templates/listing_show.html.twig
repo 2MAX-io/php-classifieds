@@ -24,21 +24,21 @@
                     </div>
                 </div>
 
-                <div class="mb-2">
-                    {% if listing.listingFiles is not empty %}
+                {% if listing.listingFiles is not empty %}
+                    <div class="mb-2 listing-show-carousel">
                         <div class="owl-carousel">
                             {% for listingFile in listing.listingFiles %}
                                 <a href="{{ asset(listingFile.pathNormalSize) }}" data-toggle="lightbox" data-gallery="multiimages" data-title="{{ listing.title }}">
                                     <img
-                                            src="{{ asset(listingFile.pathNormalSize) }}"
-                                            class="mx-auto listing-show-top-image"
-                                            alt="{{ listing.title }}"
+                                            data-src="{{ asset(listingFile.pathNormalSize) }}"
+                                            class="mx-auto listing-show-top-image owl-lazy"
+                                            alt=""
                                     />
                                 </a>
                             {% endfor %}
                         </div>
-                    {% endif %}
-                </div>
+                    </div>
+                {% endif %}
 
                 <!-- Tabs nav -->
                 <ul class="nav nav-tabs flex-column flex-sm-row" id="myTab" role="tablist">
@@ -246,16 +246,15 @@
     <script src="{{ asset('asset/lib/owl-carusel/owl.carousel.js') }}"></script>
 
     <script type="text/javascript">
-        $(document).ready(function(){
-            // lightbox
-            $(document).delegate('*[data-toggle="lightbox"]', 'click', function(event) {
-                event.preventDefault();
-                $(this).ekkoLightbox();
-            });
+        $(document).delegate('*[data-toggle="lightbox"]', 'click', function(event) {
+            event.preventDefault();
+            $(this).ekkoLightbox();
         });
 
         $('.owl-carousel').owlCarousel({
             center: true,
+            autoHeight: true,
+            lazyLoad: true,
             nav: true,
             navText : ['<i class="fa fa-angle-left" aria-hidden="true"></i>','<i class="fa fa-angle-right" aria-hidden="true"></i>'],
             checkVisible: false,

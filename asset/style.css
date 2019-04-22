@@ -390,14 +390,6 @@ svg.icon {
     font-size: 1.7rem;
     text-shadow: 1px 1px 1px #000, 0px 0px 3px #000000;
 }
-
-.listing-show-top-image {
-    max-height: 30rem;
-}
-
-.owl-carousel .owl-item img.listing-show-top-image {
-    width: auto;
-}
 .owl-prev {
     width: 50px;
     height: 50px;
@@ -510,4 +502,16 @@ svg.icon {
 #main-navbar .nav-link {
     padding-top: 0;
     padding-bottom: 0;
+}
+
+.listing-show-carousel {
+}
+
+.owl-carousel .owl-item img.listing-show-top-image {
+    max-height: 25rem;
+    width: auto;
+}
+
+.listing-show-carousel .owl-height {
+    transition: height 50ms;
 }

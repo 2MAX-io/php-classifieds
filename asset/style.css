@@ -490,3 +490,19 @@ svg.icon {
     padding-right: 0;
     padding-left: 0;
 }
+
+.img-missing {
+    max-height: 10rem;
+}
+
+@media (max-width: 768px) {
+    .page-item {
+        display: none;
+    }
+    .page-item.prev {
+        display: inherit;
+    }
+    .page-item.next {
+        display: inherit;
+    }
+}

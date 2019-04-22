@@ -50,7 +50,7 @@ class PaginationService
                 );
             },
             [
-                'proximity' => 5,
+                'proximity' => 3,
                 'prev_message' => '&larr; ' . $this->trans->trans('trans.Previous'),
                 'next_message' => $this->trans->trans('trans.Next') . ' &rarr;',
             ]

@@ -34,85 +34,83 @@ class ListingType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder
-            ->add('title', TextType::class, [
+        $builder->add('title', TextType::class, [
                 'label' => 'trans.Title',
                 'empty_data' => '',
                 'constraints' => [
                     new Constraints\NotBlank(),
                     new Constraints\Length(['min' => 5]),
                 ],
-            ])
-            ->add('description', TextareaType::class, [
-                'label' => 'trans.Description',
-                'attr' => [
-                    'class' => 'form-listing-description-textarea'
-                ],
-                'constraints' => [
-                    new Constraints\NotBlank(),
-                    new Constraints\Length(['min' => 20, 'max' => 5000]),
-                ],
-                'empty_data' => '',
-            ])
-            ->add('category', CategoryType::class, [
-                'constraints' => [
-                    new Constraints\NotBlank(),
-                ],
-            ])
-            ->add('validityTimeDays', ChoiceType::class, [
-                'mapped' => false,
-                'choices' => $this->validUntilSetService->getValidityTimeDaysChoices(),
-                'constraints' => [
-                    new Constraints\Choice([
-                        'choices' => $this->validUntilSetService->getValidityTimeDaysChoices()
-                    ]),
-                ],
-                'label' => 'trans.Validity time',
-                'empty_data' => 9,
-            ])
-            ->add('phone', TextType::class, [
-                'label' => 'trans.Phone',
-                'required' => false,
-            ])
-            ->add('email', EmailType::class, [
-                'label' => 'trans.Email',
-                'required' => false,
-            ])
-            ->add('emailShow', CheckboxType::class, [
-                'label' => 'trans.Show email?',
-                'required' => false,
-            ])
-            ->add('price', IntegerType::class, [
-                'label' => 'trans.Price',
-                'required' => false,
-            ])
-            ->add('priceFor', PriceForType::class, [
-                'required' => false,
-            ])
-            ->add('city', TextType::class, [
-                'label' => 'trans.City',
-                'required' => false,
-            ])
-            ->add('customFields', HiddenType::class, [
-                'mapped' => false,
-                'attr' => [
-                    'class' => 'formCustomFieldsHidden'
-                ]
-            ])
-            ->add('file', FileSimpleType::class, [
-                'mapped' => false,
-                'required' => false,
-                'multiple' => true,
-                'constraints' => [
-                    new Constraints\All(
-                        new Constraints\Image(),
-                    ),
-                ],
-                'attr' => ['hidden' => 'hidden'],
-                'label' => 'trans.Pictures',
-                'block_name' => 'simple',
-            ])
-        ;
+            ]);
+        $builder->add('description', TextareaType::class, [
+            'label' => 'trans.Description',
+            'attr' => [
+                'class' => 'form-listing-description-textarea'
+            ],
+            'constraints' => [
+                new Constraints\NotBlank(),
+                new Constraints\Length(['min' => 20, 'max' => 5000]),
+            ],
+            'empty_data' => '',
+        ]);
+        $builder->add('category', CategoryType::class, [
+            'constraints' => [
+                new Constraints\NotBlank(),
+            ],
+        ]);
+        $builder->add('validityTimeDays', ChoiceType::class, [
+            'mapped' => false,
+            'choices' => $this->validUntilSetService->getValidityTimeDaysChoices(),
+            'constraints' => [
+                new Constraints\Choice([
+                    'choices' => $this->validUntilSetService->getValidityTimeDaysChoices()
+                ]),
+            ],
+            'label' => 'trans.Validity time',
+            'empty_data' => 9,
+        ]);
+        $builder->add('phone', TextType::class, [
+            'label' => 'trans.Phone',
+            'required' => false,
+        ]);
+        $builder->add('email', EmailType::class, [
+            'label' => 'trans.Email',
+            'required' => false,
+        ]);
+        $builder->add('emailShow', CheckboxType::class, [
+            'label' => 'trans.Show email?',
+            'required' => false,
+        ]);
+        $builder->add('price', IntegerType::class, [
+            'label' => 'trans.Price',
+            'required' => false,
+        ]);
+        $builder->add('priceFor', PriceForType::class, [
+            'required' => false,
+        ]);
+        $builder->add('city', TextType::class, [
+            'label' => 'trans.City',
+            'required' => false,
+        ]);
+        $builder->add('customFields', HiddenType::class, [
+            'mapped' => false,
+            'attr' => [
+                'class' => 'formCustomFieldsHidden'
+            ]
+        ]);
+        $builder->add('file', FileSimpleType::class, [
+            'mapped' => false,
+            'required' => false,
+            'multiple' => true,
+            'constraints' => [
+                new Constraints\All(
+                    new Constraints\Image()
+                ),
+            ],
+            'attr' => ['hidden' => 'hidden'],
+            'label' => 'trans.Pictures',
+            'block_name' => 'simple',
+        ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

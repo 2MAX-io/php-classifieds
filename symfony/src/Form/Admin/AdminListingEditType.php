@@ -6,6 +6,7 @@ namespace App\Form\Admin;
 
 use App\Entity\Listing;
 use App\Form\Type\CategoryType;
+use App\Form\Type\PriceForType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -55,6 +56,9 @@ class AdminListingEditType extends AbstractType
         ]);
         $builder->add('price', IntegerType::class, [
             'label' => 'trans.Price'
+        ]);
+        $builder->add('priceFor', PriceForType::class, [
+            'required' => false,
         ]);
         $builder->add('city', TextType::class, [
             'label' => 'trans.City'

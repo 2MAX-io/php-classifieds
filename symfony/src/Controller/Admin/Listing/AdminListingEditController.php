@@ -31,7 +31,10 @@ class AdminListingEditController extends AbstractAdminController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $customFieldsForListingFormService->saveCustomFieldsToListing($listing, $request->request->get('form_custom_field'));
+            $customFieldsForListingFormService->saveCustomFieldsToListing(
+                $listing,
+                $request->request->get('form_custom_field', [])
+            );
             $createListingService->saveSearchText($listing);
             $createListingService->updateSlug($listing);
             $this->getDoctrine()->getManager()->flush();

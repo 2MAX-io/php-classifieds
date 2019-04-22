@@ -210,7 +210,10 @@
                                         </div>
 
                                         {% if listing.price is not empty %}
-                                            <div class="mt-1"><span class="btn btn-dark btn-sm price">{{ 'trans.Price' | trans }}: {{ listing.price }}</span></div>
+                                            <div class="mt-1">
+                                                <span class="btn btn-dark btn-sm price">{{ 'trans.Price' | trans }}: {{ listing.price }}</span>
+                                                {% if listing.priceFor %}<span>{{ ('trans.priceFor.'~listing.priceFor) | trans }}</span>{% endif %}
+                                            </div>
                                         {% endif %}
                                     </div>
                                 </div>

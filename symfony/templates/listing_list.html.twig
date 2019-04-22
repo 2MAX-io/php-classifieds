@@ -170,7 +170,7 @@
                         <div class="card mb-3 regular {% if listing.featured %}listing-recommended{% endif %}">
                             <div class="container-fluid">
                                 <div class="row" data-listing-id="340">
-                                    <div class="card-thumb col-12 col-md-3 py-3">
+                                    <div class="card-thumb col-12 col-md-3 pt-3 pb-md-3">
                                         <a title="{{ listing.title }}" href="{{ path('app_listing_show', {id: listing.id, 'slug': listing.slug}) }}">
                                             <img
                                                     class="rounded {% if listing.listingFiles.first is empty %}img-missing{% endif %}"
@@ -180,7 +180,7 @@
                                         </a>
                                     </div>
 
-                                    <div class="card-text col-12 col-md-9 py-3">
+                                    <div class="card-text col-12 col-md-9 pb-3 pt-sm-3">
                                         {% if listing.featured %}
                                             <div class="pt-3 pt-sm-0 float-right">
                                                 <span class="badge badge-pill badge-warning">{{ 'trans.Recommended' | trans }}</span>

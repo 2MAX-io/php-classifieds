@@ -483,10 +483,6 @@ svg.icon {
     padding-left: 0;
 }
 
-.img-missing {
-    max-height: 10rem;
-}
-
 @media (max-width: 768px) {
     .page-item {
         display: none;
@@ -513,4 +509,9 @@ svg.icon {
 
 .listing-show-carousel .owl-height {
     transition: height 50ms;
+}
+
+
+.listing-list-img {
+    max-height: 10rem;
 }

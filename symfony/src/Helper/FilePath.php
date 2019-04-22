@@ -15,7 +15,7 @@ class FilePath
 
     public static function getListingFilePath(): string
     {
-        return self::getPath(__DIR__ . '/../../../static/user/listing');
+        return self::getPath(__DIR__ . '/../../../static/listing');
     }
 
     public static function getStaticPath(): string

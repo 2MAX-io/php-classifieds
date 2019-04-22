@@ -168,7 +168,7 @@ function getOldImagesPath(array $dbRow) {
     $imgDir = (int) ($userId / 32000);
 
     $filename = basename($dbRow['listing_file_path_legacy']);
-    return "static/user/listing/0000_legacy/images/galeria/$imgDir/$userId/s$filename";
+    return "static/listing/0000_legacy/galeria/$imgDir/$userId/s$filename";
 }
 
 function setBasedOnLegacyLevel(array $dbRow) {

@@ -19,6 +19,7 @@ use Doctrine\ORM\Mapping\Index;
  *     @Index(columns={"valid_until_date", "user_removed", "user_deactivated", "admin_confirmed", "admin_removed", "first_created_date"}, name="IDX_latest_listings"),
  *     @Index(columns={"first_created_date", "valid_until_date", "user_removed", "user_deactivated", "admin_confirmed", "admin_removed"}, name="IDX_latest_listings2"),
  *     @Index(columns={"category_id", "valid_until_date", "user_removed", "user_deactivated", "user_removed", "admin_confirmed", "featured", "featured_weight", "order_by_date"}, name="IDX_public_listings_with_cat"),
+ *     @Index(columns={"user_id", "user_removed", "last_edit_date"}, name="IDX_user_listings"),
  *     @Index(columns={"search_text"}, flags={"fulltext"}, name="IDX_fulltext_search"),
  *     @Index(columns={"search_text", "email", "phone", "rejection_reason"}, flags={"fulltext"}, name="IDX_fulltext_search_admin")
  * })

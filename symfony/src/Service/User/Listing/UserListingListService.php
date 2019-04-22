@@ -33,6 +33,10 @@ class UserListingListService
     public function getList(int $page = 1): UserListingListDto
     {
         $qb = $this->em->getRepository(Listing::class)->createQueryBuilder('listing');
+        $qb->addSelect('category');
+        $qb->addSelect('categoryParent');
+        $qb->join('listing.category', 'category');
+        $qb->join('category.parent', 'categoryParent');
         $qb->andWhere($qb->expr()->eq('listing.user', ':user'));
         $qb->setParameter(':user', $this->currentUserService->getUser());
 
@@ -45,7 +49,7 @@ class UserListingListService
 
         $qb->orderBy('listing.lastEditDate', 'DESC');
 
-        $adapter = new DoctrineORMAdapter($qb);
+        $adapter = new DoctrineORMAdapter($qb, false, $qb->getDQLPart('having') !== null);
         $pager = new Pagerfanta($adapter);
         $pager->setMaxPerPage(10);
         $pager->setCurrentPage($page);

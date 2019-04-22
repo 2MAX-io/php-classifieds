@@ -447,3 +447,18 @@ php symfony/bin/console doctrine:schema:update --dump-sql
 php symfony/bin/console doctrine:schema:update --force
 php symfony/bin/importer_export_from_old.php /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv 
 php symfony/bin/importer_import_to_new.php /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv /var/www/html/symfony/docker/mysql/sql/importer_import_to_new.sql
+php symfony/bin/console make:entity --regenerate "App\Entity"
+php symfony/bin/console doctrine:schema:update --force
+php symfony/bin/console doctrine:schema:update --force
+php symfony/bin/console doctrine:schema:update --force
+php symfony/bin/console doctrine:schema:update --force
+php symfony/bin/console doctrine:schema:update --force
+php symfony/bin/console doctrine:schema:update --force
+php symfony/bin/console doctrine:schema:update --force
+php symfony/bin/console doctrine:schema:update --dump-sql
+php symfony/bin/console doctrine:schema:update --dump-sql
+php symfony/bin/console doctrine:schema:update --force
+php symfony/bin/console doctrine:schema:update --force
+php symfony/bin/console doctrine:schema:update --force
+php symfony/bin/console doctrine:schema:update --force
+php symfony/bin/console doctrine:schema:update --force

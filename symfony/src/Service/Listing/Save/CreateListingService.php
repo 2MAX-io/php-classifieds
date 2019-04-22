@@ -60,7 +60,7 @@ class CreateListingService
                 'name' => $listingFile->getFilename(),
                 'type' => $listingFile->getMimeType(),
                 'size' => $listingFile->getSizeBytes(),
-                'file' => $this->packages->getUrl($listingFile->getPathListSize()),
+                'file' => $this->packages->getUrl($listingFile->getPathInListSize()),
                 'data' => [
                     'listingFileId' => $listingFile->getId(),
                 ],

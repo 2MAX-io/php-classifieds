@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Helper\ImageResizePath;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -62,21 +63,14 @@ class ListingFile
         return $this->path;
     }
 
-    public function getPathListSize(): ?string
+    public function getPathInListSize(): ?string
     {
-        return $this->getSizeForType('list');
+        return ImageResizePath::forType(ImageResizePath::LIST, $this->getPath());
     }
 
-    public function getPathNormalSize(): ?string
+    public function getPathInNormalSize(): ?string
     {
-        return $this->getSizeForType('normal');
-    }
-
-    public function getSizeForType(string $type): string
-    {
-        $type = basename($type);
-
-        return str_replace('static/', "static/resized/$type/", $this->getPath());
+        return ImageResizePath::forType(ImageResizePath::NORMAL, $this->getPath());
     }
 
     public function setPath(string $path): self

@@ -173,9 +173,9 @@
                                     <div class="card-thumb col-12 col-md-3 pt-3 pb-md-3">
                                         <a title="{{ listing.title }}" href="{{ path('app_listing_show', {id: listing.id, 'slug': listing.slug}) }}">
                                             <img
-                                                    class="rounded {% if listing.listingFiles.first is empty %}img-missing{% endif %}"
+                                                    class="rounded listing-list-img"
                                                     alt="{{ listing.title }}"
-                                                    src="{{ asset(listing.listingFiles.first.pathListSize | default('static/system/blank.png')) }}"
+                                                    src="{{ asset(listing.mainImage | default('static/system/blank.png')) }}"
                                             >
                                         </a>
                                     </div>

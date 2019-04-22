@@ -9,7 +9,6 @@ use App\Entity\CustomField;
 use App\Entity\Listing;
 use App\Service\Listing\ListingPublicDisplayService;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Query\Expr\Join;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
 use Pagerfanta\Pagerfanta;
 
@@ -34,8 +33,6 @@ class ListingListService
     public function getListings(int $page = 1, Category $category = null): ListingListDto
     {
         $qb = $this->em->getRepository(Listing::class)->createQueryBuilder('listing');
-        $qb->addSelect('listingFile');
-        $qb->leftJoin('listing.listingFiles', 'listingFile');
 
         if (!empty($_GET['form_custom_field'])) {
             $sqlParamId = 0;
@@ -82,8 +79,8 @@ class ListingListService
 
             $customFieldsCount = count(array_unique($usedCustomFieldIdList));
             if ($customFieldsCount > 0) {
-                $qb->leftJoin('listing.listingCustomFieldValues', 'listingCustomFieldValue');
-                $qb->leftJoin('listingCustomFieldValue.customField', 'customField');
+                $qb->innerJoin('listing.listingCustomFieldValues', 'listingCustomFieldValue');
+                $qb->innerJoin('listingCustomFieldValue.customField', 'customField');
 
                 $qb->andHaving($qb->expr()->eq($qb->expr()->countDistinct('listingCustomFieldValue.id'), ':uniqueCustomFieldsCount'));
                 $qb->setParameter(':uniqueCustomFieldsCount', $customFieldsCount);
@@ -131,9 +128,9 @@ class ListingListService
 //        $qb->setMaxResults(15);
 //        $qb->getQuery()->getResult();
 
-        $qb->groupBy('listing.id');
+//        $qb->groupBy('listing.id');
 
-        $adapter = new DoctrineORMAdapter($qb, false, $qb->getDQLPart('having') !== null);
+        $adapter = new DoctrineORMAdapter($qb, true, $qb->getDQLPart('having') !== null);
         $pager = new Pagerfanta($adapter);
         $pager->setMaxPerPage(10);
         $pager->setCurrentPage($page);

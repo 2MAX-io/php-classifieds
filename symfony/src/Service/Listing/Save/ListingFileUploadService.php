@@ -35,7 +35,7 @@ class ListingFileUploadService
                 $uploadedFile->getClientOriginalName(),
                 $uploadedFile->getClientOriginalExtension()
             );
-            $movedFile = $this->uploadBannerFile(
+            $movedFile = $this->uploadFile(
                 $uploadedFile,
                 $destinationFilepath,
                 $destinationFilename
@@ -69,9 +69,11 @@ class ListingFileUploadService
             $listingFile->setSort((int) $sort);
             $this->em->persist($listingFile);
         }
+
+        $this->updateListingMainImage($listing);
     }
 
-    public function uploadBannerFile(UploadedFile $uploadedFile, string $destinationFilepath, string $destinationFilename): File
+    public function uploadFile(UploadedFile $uploadedFile, string $destinationFilepath, string $destinationFilename): File
     {
         $this->throwExceptionIfUnsafeExtension($uploadedFile);
 
@@ -79,6 +81,18 @@ class ListingFileUploadService
             $destinationFilepath,
             $destinationFilename
         );
+    }
+
+    public function updateListingMainImage(Listing $listing): void
+    {
+        /** @var ListingFile $firstFile */
+        $firstFile = $listing->getListingFiles()->first();
+
+        if ($firstFile === null) {
+            $listing->setMainImage(null);
+        } else {
+            $listing->setMainImage($firstFile->getPath());
+        }
     }
 
     private function throwExceptionIfUnsafeExtension(UploadedFile $uploadedFile): void

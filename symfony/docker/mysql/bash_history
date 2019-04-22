@@ -35,3 +35,4 @@ mysqldump classifieds > /sql/ogl_$(date +%Y-%m-%d_%H%M%S).sql
 mysqldump classifieds > /sql/ogl_$(date +%Y-%m-%d_%H%M%S).sql
 mysqldump classifieds > /sql/ogl_$(date +%Y-%m-%d_%H%M%S).sql
 mysqldump classifieds > /sql/ogl_$(date +%Y-%m-%d_%H%M%S).sql
+mysql admin_ogloszenia < /sql/admin_ogloszenia.sql 

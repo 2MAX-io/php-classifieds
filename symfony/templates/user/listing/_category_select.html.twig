@@ -48,6 +48,10 @@
     };
 
     cascader.setValue = function (leafId) {
+        if (leafId.length < 1) {
+            return;
+        }
+
         cascader.$mainElement.find('.cascader-selected').removeClass('cascader-selected');
         cascader.$mainElement.find('.cascader-branch-list').hide();
         let $leaf = cascader.$mainElement.find('.cascader-leaf-' + leafId);

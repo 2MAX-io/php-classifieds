@@ -32,6 +32,32 @@ class Listing
     public const STATUS_USER_REMOVED = 'STATUS_USER_REMOVED';
     public const STATUS_ADMIN_REMOVED = 'STATUS_ADMIN_REMOVED';
 
+    public const PRICE_FOR_IN_DESCRIPTION = 'PRICE_FOR_IN_DESCRIPTION';
+    public const PRICE_FOR_WHOLE = 'PRICE_FOR_WHOLE';
+    public const PRICE_FOR_NETTO = 'PRICE_FOR_NETTO';
+    public const PRICE_FOR_BRUTTO = 'PRICE_FOR_BRUTTO';
+    public const PRICE_FOR_ITEM = 'PRICE_FOR_ITEM';
+    public const PRICE_FOR_MINUTE = 'PRICE_FOR_MINUTE';
+    public const PRICE_FOR_HOUR = 'PRICE_FOR_HOUR';
+    public const PRICE_FOR_SET = 'PRICE_FOR_SET';
+    public const PRICE_FOR_ACRE = 'PRICE_FOR_ACRE';
+    public const PRICE_FOR_AR = 'PRICE_FOR_AR';
+    public const PRICE_FOR_HECTARE = 'PRICE_FOR_HECTARE';
+    public const PRICE_FOR_LITER = 'PRICE_FOR_LITER';
+    public const PRICE_FOR_BAG = 'PRICE_FOR_BAG';
+    public const PRICE_FOR_PACK = 'PRICE_FOR_PACK';
+    public const PRICE_FOR_KILOGRAM = 'PRICE_FOR_KILOGRAM';
+    public const PRICE_FOR_GRAM = 'PRICE_FOR_GRAM';
+    public const PRICE_FOR_TONE = 'PRICE_FOR_TONE';
+    public const PRICE_FOR_CM = 'PRICE_FOR_CM';
+    public const PRICE_FOR_METER = 'PRICE_FOR_METER';
+    public const PRICE_FOR_KILOMETER = 'PRICE_FOR_KILOMETER';
+    public const PRICE_FOR_STERE = 'PRICE_FOR_STERE';
+    public const PRICE_FOR_MONTH = 'PRICE_FOR_MONTH';
+    public const PRICE_FOR_WEEK = 'PRICE_FOR_WEEK';
+    public const PRICE_FOR_DAY = 'PRICE_FOR_DAY';
+    public const PRICE_FOR_YEAR = 'PRICE_FOR_YEAR';
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -64,6 +90,11 @@ class Listing
      * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
      */
     private $price;
+
+    /**
+     * @ORM\Column(type="string", length=60, nullable=true)
+     */
+    private $priceFor;
 
     /**
      * @ORM\Column(type="string", length=50, nullable=true)
@@ -611,6 +642,18 @@ class Listing
     public function setMainImage(?string $mainImage): self
     {
         $this->mainImage = $mainImage;
+
+        return $this;
+    }
+
+    public function getPriceFor(): ?string
+    {
+        return $this->priceFor;
+    }
+
+    public function setPriceFor(?string $priceFor): self
+    {
+        $this->priceFor = $priceFor;
 
         return $this;
     }

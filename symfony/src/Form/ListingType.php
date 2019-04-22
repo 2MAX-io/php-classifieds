@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Listing;
 use App\Form\Type\CategoryType;
 use App\Form\Type\FileSimpleType;
+use App\Form\Type\PriceForType;
 use App\Service\Listing\ValidityExtend\ValidUntilSetService;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -83,6 +84,9 @@ class ListingType extends AbstractType
             ])
             ->add('price', IntegerType::class, [
                 'label' => 'trans.Price',
+                'required' => false,
+            ])
+            ->add('priceFor', PriceForType::class, [
                 'required' => false,
             ])
             ->add('city', TextType::class, [

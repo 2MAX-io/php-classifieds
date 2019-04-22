@@ -142,7 +142,7 @@
                 {% if listing.price is not empty %}
                     <div>
                         <div class="my-1">
-                            <h3 class="btn btn-dark price btn-lg">{{ 'trans.Price' | trans }}: {{ listing.price }}</h3>
+                            <h3 class="btn btn-dark price btn-lg">{{ 'trans.Price' | trans }}: {{ listing.price }}</h3> <span>{{ ('trans.priceFor.'~listing.priceFor) | trans }}</span>
                         </div>
                     </div>
                 {% endif %}

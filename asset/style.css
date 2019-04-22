@@ -506,3 +506,8 @@ svg.icon {
         display: inherit;
     }
 }
+
+#main-navbar .nav-link {
+    padding-top: 0;
+    padding-bottom: 0;
+}

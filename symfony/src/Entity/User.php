@@ -62,7 +62,7 @@ class User implements UserInterface, RoleInterface, EnablableInterface
     /**
      * @ORM\Column(type="datetimetz", nullable=false)
      */
-    private $firstCreatedDate;
+    private $registrationDate;
 
     /**
      * @ORM\Column(type="datetimetz", nullable=true)
@@ -214,14 +214,14 @@ class User implements UserInterface, RoleInterface, EnablableInterface
         $this->plainPassword = $plainPassword;
     }
 
-    public function getFirstCreatedDate(): ?\DateTimeInterface
+    public function getRegistrationDate(): ?\DateTimeInterface
     {
-        return $this->firstCreatedDate;
+        return $this->registrationDate;
     }
 
-    public function setFirstCreatedDate(\DateTimeInterface $firstCreatedDate): self
+    public function setRegistrationDate(\DateTimeInterface $registrationDate): self
     {
-        $this->firstCreatedDate = $firstCreatedDate;
+        $this->registrationDate = $registrationDate;
 
         return $this;
     }

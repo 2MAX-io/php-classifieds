@@ -40,12 +40,22 @@ $stmt = $pdo->prepare(
            
            o_galeria.kolejnosc AS listing_file_sort,
            o_galeria.img AS listing_file_path_legacy,
+           
+           o_uzytkownicy.id AS listing_user_id,
+           o_uzytkownicy.login AS listing_user_name,
+           o_uzytkownicy.mail AS listing_user_email,
+           o_uzytkownicy.haslo AS listing_user_pass,
+           o_uzytkownicy.data AS listing_user_registration_date,
+           o_uzytkownicy.ostatnie_logowanie AS listing_user_last_login,
         
            null
     FROM o_ogloszenia 
         LEFT JOIN o_uzytkownicy ON (o_uzytkownicy.id = o_ogloszenia.user_id)
         LEFT JOIN o_galeria ON (o_galeria.o_id = o_ogloszenia.id)
-    WHERE o_ogloszenia.bDeleted=0
+    WHERE 
+        1
+        && o_ogloszenia.bDeleted=0
+        && o_uzytkownicy.poziom=1
 ORDER BY 
 #    o_ogloszenia.id DESC,
     o_ogloszenia.id ASC,
@@ -58,7 +68,6 @@ $stmt->execute();
 $fpCsv = fopen($argv[1], 'w');
 $header = [
     'listing_id',
-    'listing_user_id',
 
     'listing_title',
     'listing_description',
@@ -93,7 +102,20 @@ $header = [
     'listing_file_filename',
     'listing_file_mime_type',
     'listing_file_size_bytes',
+
+    'listing_user_id',
+    'listing_user_name',
+    'listing_user_email',
+    'listing_user_pass',
+    'listing_user_registration_date',
+    'listing_user_last_login',
 ];
+
+if (count($header) !== count(array_unique($header))) {
+    echo "header has some duplicates, fix it\r\n";
+    exit;
+}
+
 fputcsv($fpCsv, $header);
 while ($dbRow = $stmt->fetch(\PDO::FETCH_ASSOC)) {
 
@@ -154,6 +176,7 @@ while ($dbRow = $stmt->fetch(\PDO::FETCH_ASSOC)) {
 
     if (count($csvRow) !== count($header)) {
         print_r($csvRow) . "\r\n";
+        exit;
     }
 
     fputcsv($fpCsv, $csvRow);

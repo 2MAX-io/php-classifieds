@@ -25,14 +25,15 @@ while (($csvRow = fgetcsv($csvHandle, 0, ",")) !== FALSE) {
     $csvRow = array_combine($header, $csvRow);
 
     $csvRow['listing_id'] = $csvRow['listing_id'] + 1000 * 0; // todo: make production
-    $csvRow['listing_user_id'] = 66; // todo: make production
 
     $csvRow['listing_search_text'] = $csvRow['listing_title'] . ' ' . $csvRow['listing_description']; // default value, should be regenerated
 
     if ($currentOldListingId !== $csvRow['listing_id']) {
         $currentOldListingId = $csvRow['listing_id'];
-        saveSql( /** @lang MySQL */ 'INSERT INTO listing SET '.arrayToSetStringListing($csvRow).';', $sqlHandle);
+
+        saveListing($csvRow, $sqlHandle);
         saveListingViews($csvRow, $sqlHandle);
+        saveUser($csvRow, $sqlHandle);
     }
     saveGallery($csvRow, $sqlHandle);
 }
@@ -143,6 +144,21 @@ function arrayToSetStringListingFile(array $csvRow): string {
     return arrayToSetString($csvRow, $map);
 }
 
+function arrayToSetStringUser(array $csvRow): string {
+    $map = [
+        'listing_user_id' => 'user.id',
+        'listing_user_name' => 'user.username',
+        'listing_user_email' => 'user.email',
+        'listing_user_pass' => 'user.password',
+        'listing_user_registration_date' => 'user.registration_date',
+        'listing_user_last_login' => 'user.last_login',
+        'listing_user_roles' => 'user.roles',
+        'listing_user_enabled' => 'user.enabled',
+    ];
+
+    return arrayToSetString($csvRow, $map);
+}
+
 function saveGallery(array $csvRow, $sqlHandle) {
     if (empty($csvRow['listing_file_path'])) {
         return;
@@ -169,6 +185,39 @@ function saveGallery(array $csvRow, $sqlHandle) {
     }
 
     saveSql( /** @lang MySQL */ 'INSERT INTO listing_file SET '.arrayToSetStringListingFile($fileRow).';', $sqlHandle);
+}
+
+function saveListing(array $csvRow, $sqlHandle) {
+
+    $csvRow['listing_user_id'] = 1; // todo: make production
+
+    saveSql( /** @lang MySQL */ 'INSERT INTO listing SET '.arrayToSetStringListing($csvRow).';', $sqlHandle);
+}
+
+function saveUser(array $csvRow, $sqlHandle) {
+    $fileColumns = [
+        'listing_user_id',
+        'listing_user_name',
+        'listing_user_email',
+        'listing_user_pass',
+        'listing_user_registration_date',
+        'listing_user_last_login',
+        'listing_user_roles',
+        'listing_user_enabled',
+    ];
+
+    $fileRow = [];
+    foreach ($fileColumns as $fileColumn) {
+        if (!isset($csvRow[$fileColumn])) {
+            continue;
+        }
+        $fileRow[$fileColumn] = $csvRow[$fileColumn];
+    }
+
+    $fileRow['listing_user_roles'] = '["ROLE_USER"]';
+    $fileRow['listing_user_enabled'] = 1;
+
+    saveSql( /** @lang MySQL */ 'REPLACE INTO `user` SET '.arrayToSetStringUser($fileRow).';', $sqlHandle);
 }
 
 function saveListingViews(array $csvRow, $sqlHandle) {

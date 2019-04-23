@@ -58,7 +58,7 @@ class CreateUserService
         $user->setEmail($email);
         $user->setUsername($email);
         $user->setRoles([User::ROLE_USER]);
-        $user->setFirstCreatedDate(new \DateTime());
+        $user->setRegistrationDate(new \DateTime());
         $user->setEnabled(false);
         $plainPassword = $this->passwordGenerateService->generatePassword();
         $user->setPassword(

@@ -108,7 +108,7 @@ class UserListingController extends AbstractUserController
         PoliceLogIpService $logIpService,
         CategoryListService $categoryListService
     ): Response {
-        $this->dennyUnlessCurrentUserListing($listing);
+        $this->dennyUnlessCurrentUserAllowed($listing);
 
         $form = $this->createForm(ListingType::class, $listing);
         $form->remove('validityTimeDays');
@@ -146,7 +146,7 @@ class UserListingController extends AbstractUserController
      */
     public function remove(Request $request, Listing $listing, CurrentUserService $currentUserService): Response
     {
-        $this->dennyUnlessCurrentUserListing($listing);
+        $this->dennyUnlessCurrentUserAllowed($listing);
 
         if ($this->isCsrfTokenValid('remove'.$listing->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
@@ -162,7 +162,7 @@ class UserListingController extends AbstractUserController
      */
     public function deactivate(Request $request, Listing $listing, CurrentUserService $currentUserService): Response
     {
-        $this->dennyUnlessCurrentUserListing($listing);
+        $this->dennyUnlessCurrentUserAllowed($listing);
 
         if ($this->isCsrfTokenValid('deactivate'.$listing->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
@@ -178,7 +178,7 @@ class UserListingController extends AbstractUserController
      */
     public function activate(Request $request, Listing $listing, CurrentUserService $currentUserService): Response
     {
-        $this->dennyUnlessCurrentUserListing($listing);
+        $this->dennyUnlessCurrentUserAllowed($listing);
 
         if ($this->isCsrfTokenValid('activate'.$listing->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();

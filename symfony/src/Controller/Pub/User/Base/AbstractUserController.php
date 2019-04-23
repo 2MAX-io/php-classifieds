@@ -12,7 +12,7 @@ use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 
 abstract class AbstractUserController extends AbstractController
 {
-    public function dennyUnlessCurrentUserListing(Listing $listing): void
+    public function dennyUnlessCurrentUserAllowed(Listing $listing): void
     {
         $user = $this->get('security.token_storage')->getToken()->getUser();
         if (!$user instanceof User) {
@@ -21,6 +21,10 @@ abstract class AbstractUserController extends AbstractController
 
         if ($user !== $listing->getUser()) {
             throw new UnauthorizedHttpException('user of listing do not match current user');
+        }
+
+        if ($listing->getUserRemoved() || $listing->getAdminRemoved()) {
+            throw new UnauthorizedHttpException('listing has been removed');
         }
     }
 

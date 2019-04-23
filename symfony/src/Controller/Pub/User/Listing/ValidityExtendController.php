@@ -19,7 +19,7 @@ class ValidityExtendController extends AbstractUserController
      */
     public function validityExtend(Request $request, Listing $listing, ValidUntilSetService $validUntilSetService): Response
     {
-        $this->dennyUnlessCurrentUserListing($listing);
+        $this->dennyUnlessCurrentUserAllowed($listing);
 
         $form = $this->createForm(ValidityExtendType::class, []);
 

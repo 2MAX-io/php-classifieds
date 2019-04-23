@@ -24,7 +24,7 @@ class GetCustomFieldsController extends AbstractUserController
             $listing = $this->getDoctrine()->getRepository(Listing::class)->find($listingId);
 
             if (!$currentUserService->lowSecurityCheckIsAdminInPublic()) {
-                $this->dennyUnlessCurrentUserListing($listing);
+                $this->dennyUnlessCurrentUserAllowed($listing);
             }
         }
 

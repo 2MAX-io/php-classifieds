@@ -16,7 +16,7 @@ class FeatureListingController extends AbstractUserController
      */
     public function feature(Listing $listing): Response
     {
-        $this->dennyUnlessCurrentUserListing($listing);
+        $this->dennyUnlessCurrentUserAllowed($listing);
 
         return $this->render('user/listing/featured_extend.html.twig', [
         ]);

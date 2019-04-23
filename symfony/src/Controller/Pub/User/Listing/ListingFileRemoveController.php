@@ -17,7 +17,7 @@ class ListingFileRemoveController extends AbstractUserController
     {
         $fileId = $request->request->get('listingFileId');
         $listingFile = $this->getDoctrine()->getRepository(ListingFile::class)->find($fileId);
-        $this->dennyUnlessCurrentUserListing($listingFile->getListing());
+        $this->dennyUnlessCurrentUserAllowed($listingFile->getListing());
 
         $listingFile->setUserRemoved(true);
 

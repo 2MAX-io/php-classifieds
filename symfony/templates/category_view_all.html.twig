@@ -6,21 +6,24 @@
     <div class="container mt-5">
         <h2 class="">{{ 'trans.All Categories' | trans }}</h2>
     </div>
+    <div class="container mt-5">
+        <div class="row">
 
-    {% for category in categories %}
-        <div class="container mt-5">
-            <div class="card mb-3">
-                <h5 class="card-header"><a href="{{ path('app_category', {'categorySlug': category.slug}) }}" class="text-dark">{{ category.name }}</a></h5>
-                <div class="card-body">
-                    <div class="row">
-                        {% for categoryChild in category.children %}
-                            <div class="col-sm-12 col-md-6 col-lg-3">
-                                <a href="{{ path('app_category', {'categorySlug': categoryChild.slug}) }}">{{ categoryChild.name }}</a>
-                            </div>
-                        {% endfor %}
+            {% for category in categories %}
+                <div class="col-md-3">
+                    <div class="card mb-3">
+                        <h5 class="card-header"><a href="{{ path('app_category', {'categorySlug': category.slug}) }}"
+                                                   class="text-dark">{{ category.name }}</a></h5>
+                        <div class="card-body">
+                            {% for categoryChild in category.children %}
+                                <div>
+                                    <a href="{{ path('app_category', {'categorySlug': categoryChild.slug}) }}">{{ categoryChild.name }}</a>
+                                </div>
+                            {% endfor %}
+                        </div>
                     </div>
                 </div>
-            </div>
+            {% endfor %}
         </div>
-    {% endfor %}
+    </div>
 {% endblock %}

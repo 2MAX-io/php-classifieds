@@ -48,6 +48,7 @@ trans:
   Extend: 'Przedłuż'
   User Dashboard: 'Panel użytkownika'
   Feature this listing: 'Wyróżnij to ogłoszenie'
+  Feature listing: 'Wyróżnij ogłoszenie'
   View Listing: 'Zobacz ogłoszenie'
   Select: 'Wybierz'
   Waiting for activation: 'Oczekuje na aktywacje'
@@ -261,4 +262,9 @@ trans:
   Price is negotiable?: 'Cena do negocjacji?'
   to negotiate: 'do negocjacji'
   is NOT negotiable: 'NIE podglega negocjacji'
+  Feature as a demonstration for 30 minutes: 'Wyróżnij demonstracyjnie na 30 minut'
+  'Feature as a demonstration for 30 minutes: %listing%?': 'Wyróżnić demonstracyjnie na 30 minut: %listing%?'
+  Demonstration of featured has been used up: 'Demonstracja wyróżnienia ogłoszenia została wykorzystana'
+  Listing has been featured for 30 minutes, to see how it looks click: 'Ogłoszenie zostało wyróżnione na 30 minut, aby zobaczyć jak wygląda kliknij'
+  HERE: 'TUTAJ'
 

@@ -10,7 +10,27 @@
             </div>
 
             <div class="col-md-8 col-lg-9">
-                <h1>{{ 'trans.Feature this listing' | trans }}</h1>
+                <h1>
+                    {{ 'trans.Feature listing' | trans }}:
+                    <a href="{{ path('app_listing_show', {'id': listing.id, 'slug': listing.title}) }}">
+                        {{ listing.title }}
+                    </a>
+                </h1>
+
+                {% include 'form/_flash_above_form.html.twig' %}
+
+                {% if app.request.query.get('demoStarted') %}
+                    <div class="alert alert-success" role="alert">
+                        {{ 'trans.Listing has been featured for 30 minutes, to see how it looks click' | trans }}
+                        <a href="{{ path('app_category', {'categorySlug': listing.category.slug}) }}#listing-{{ listing.id }}">{{ 'trans.HERE' | trans }}</a>
+                    </div>
+                {% endif %}
+
+                {% if listing.featuredUntilDate is null %}
+                    {{ include('user/listing/_feature_as_demo_form.html.twig') }}
+                {% else %}
+                    <span class="btn btn-secondary btn-sm disabled">{{ 'trans.Demonstration of featured has been used up' | trans }}</span>
+                {% endif %}
             </div>
         </div>
     </div>

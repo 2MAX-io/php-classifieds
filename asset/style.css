@@ -515,3 +515,7 @@ svg.icon {
 .listing-list-img {
     max-height: 10rem;
 }
+
+.user-listings-feature-this-link {
+    color: #f44336;
+}

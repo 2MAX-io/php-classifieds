@@ -79,7 +79,12 @@
 
                                 {% if listing.adminConfirmed and not listing.featured %}
                                     <div>
-                                        <a href="{{ path('app_user_feature_listing', {"id": listing.id}) }}">{{ 'trans.Feature this listing' | trans }}</a>
+                                        <a
+                                                href="{{ path('app_user_feature_listing', {"id": listing.id}) }}"
+                                                class="user-listings-feature-this-link"
+                                        >
+                                            {{ 'trans.Feature this listing' | trans }}
+                                        </a>
                                     </div>
                                 {% endif %}
                                 {% if listing.adminRejected %}

@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Listing;
+use App\Form\Type\BoolType;
 use App\Form\Type\CategoryType;
 use App\Form\Type\FileSimpleType;
 use App\Form\Type\PriceForType;
@@ -83,6 +84,10 @@ class ListingType extends AbstractType
         ]);
         $builder->add('price', IntegerType::class, [
             'label' => 'trans.Price',
+            'required' => false,
+        ]);
+        $builder->add('priceNegotiable', BoolType::class, [
+            'label' => 'trans.Price is negotiable?',
             'required' => false,
         ]);
         $builder->add('priceFor', PriceForType::class, [

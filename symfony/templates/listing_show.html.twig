@@ -144,6 +144,13 @@
                         <div class="my-1">
                             <h3 class="btn btn-dark price btn-lg">{{ 'trans.Price' | trans }}: {{ listing.price }}</h3>
                             {% if listing.priceFor %}<span>{{ ('trans.priceFor.'~listing.priceFor) | trans }}</span>{% endif %}
+                            {% if listing.priceNegotiable is not null %}
+                                {% if listing.priceNegotiable %}
+                                    <span class="badge badge-success">{{ 'trans.to negotiate' | trans }}</span>
+                                {% else %}
+                                    <span class="badge badge-danger">{{ 'trans.is NOT negotiable' | trans }}</span>
+                                {% endif %}
+                            {% endif %}
                         </div>
                     </div>
                 {% endif %}

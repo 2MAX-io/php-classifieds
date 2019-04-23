@@ -257,4 +257,8 @@ trans:
     PRICE_FOR_YEAR: 'rok'
     not required: 'niewymagane'
   required: 'wymagane'
+  not required: 'niewymagane'
+  Price is negotiable?: 'Cena do negocjacji?'
+  to negotiate: 'do negocjacji'
+  is NOT negotiable: 'NIE podglega negocjacji'
 

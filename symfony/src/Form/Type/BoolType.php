@@ -16,6 +16,8 @@ class BoolType extends AbstractType
             'trans.Yes' => 1,
             'trans.No' => 0,
         ]);
+
+        $resolver->setDefault('placeholder', 'trans.not required');
     }
 
     public function getParent()

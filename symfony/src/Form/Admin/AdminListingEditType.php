@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Form\Admin;
 
 use App\Entity\Listing;
+use App\Form\Type\BoolType;
 use App\Form\Type\CategoryType;
 use App\Form\Type\PriceForType;
 use Symfony\Component\Form\AbstractType;
@@ -58,6 +59,10 @@ class AdminListingEditType extends AbstractType
             'label' => 'trans.Price'
         ]);
         $builder->add('priceFor', PriceForType::class, [
+            'required' => false,
+        ]);
+        $builder->add('priceNegotiable', BoolType::class, [
+            'label' => 'trans.Price is negotiable?',
             'required' => false,
         ]);
         $builder->add('city', TextType::class, [

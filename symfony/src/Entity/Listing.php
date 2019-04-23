@@ -97,6 +97,11 @@ class Listing
     private $priceFor;
 
     /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $priceNegotiable;
+
+    /**
      * @ORM\Column(type="string", length=50, nullable=true)
      */
     private $phone;
@@ -654,6 +659,18 @@ class Listing
     public function setPriceFor(?string $priceFor): self
     {
         $this->priceFor = $priceFor;
+
+        return $this;
+    }
+
+    public function getPriceNegotiable(): ?bool
+    {
+        return $this->priceNegotiable;
+    }
+
+    public function setPriceNegotiable(?bool $priceNegotiable): self
+    {
+        $this->priceNegotiable = $priceNegotiable;
 
         return $this;
     }

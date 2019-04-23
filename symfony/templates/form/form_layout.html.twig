@@ -12,3 +12,10 @@
 
     {% include 'form/_flash_above_form.html.twig' %}
 {%- endblock form_start -%}
+
+{% block form_label -%}
+    {{ parent() }}
+    {% if required and (label is not same as(false)) and (errors|length < 1) -%}
+        <span class="badge badge-primary">{{ 'trans.required' | trans }}</span>
+    {% endif %}
+{%- endblock form_label %}

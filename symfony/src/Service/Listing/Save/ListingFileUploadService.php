@@ -8,6 +8,7 @@ use App\Entity\Listing;
 use App\Entity\ListingFile;
 use App\Helper\Arr;
 use App\Helper\FilePath;
+use App\Service\Event\FileModificationEventService;
 use Ausi\SlugGenerator\SlugGenerator;
 use Ausi\SlugGenerator\SlugOptions;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -22,9 +23,15 @@ class ListingFileUploadService
      */
     private $em;
 
-    public function __construct(ObjectManager $em)
+    /**
+     * @var FileModificationEventService
+     */
+    private $fileModificationEventService;
+
+    public function __construct(ObjectManager $em, FileModificationEventService $fileModificationEventService)
     {
         $this->em = $em;
+        $this->fileModificationEventService = $fileModificationEventService;
     }
 
     public function addMultipleFilesFromUpload(Listing $listing, array $uploadedFileList): void
@@ -70,7 +77,7 @@ class ListingFileUploadService
             $this->em->persist($listingFile);
         }
 
-        $this->updateListingMainImage($listing);
+        $this->fileModificationEventService->updateListingMainImage($listing);
     }
 
     public function uploadFile(UploadedFile $uploadedFile, string $destinationFilepath, string $destinationFilename): File
@@ -81,18 +88,6 @@ class ListingFileUploadService
             $destinationFilepath,
             $destinationFilename
         );
-    }
-
-    public function updateListingMainImage(Listing $listing): void
-    {
-        /** @var ListingFile $firstFile */
-        $firstFile = $listing->getListingFiles()->first();
-
-        if ($firstFile === null) {
-            $listing->setMainImage(null);
-        } else {
-            $listing->setMainImage($firstFile->getPath());
-        }
     }
 
     private function throwExceptionIfUnsafeExtension(UploadedFile $uploadedFile): void

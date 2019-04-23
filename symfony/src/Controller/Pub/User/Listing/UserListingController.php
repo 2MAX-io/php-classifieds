@@ -7,6 +7,7 @@ use App\Entity\Listing;
 use App\Form\ListingType;
 use App\Security\CurrentUserService;
 use App\Service\Category\CategoryListService;
+use App\Service\Event\FileModificationEventService;
 use App\Service\Listing\CustomField\CustomFieldsForListingFormService;
 use App\Service\Listing\Save\CreateListingService;
 use App\Service\Listing\Save\ListingFileUploadService;
@@ -144,13 +145,14 @@ class UserListingController extends AbstractUserController
     /**
      * @Route("/user/listing/{id}", name="app_listing_remove", methods={"DELETE"})
      */
-    public function remove(Request $request, Listing $listing): Response
+    public function remove(Request $request, Listing $listing, FileModificationEventService $fileModificationEventService): Response
     {
         $this->dennyUnlessCurrentUserAllowed($listing);
 
         if ($this->isCsrfTokenValid('remove'.$listing->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $listing->setUserRemoved(true);
+            $fileModificationEventService->onFileModificationByListing($listing);
             $entityManager->flush();
         }
 

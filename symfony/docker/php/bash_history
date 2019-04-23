@@ -471,3 +471,31 @@ php symfony/bin/console doctrine:schema:update --force
 php symfony/bin/console doctrine:schema:update --force
 php symfony/bin/console make:entity --regenerate "App\Entity"
 php symfony/bin/console doctrine:schema:update --force
+php symfony/bin/console help
+php symfony/bin/console list
+php symfony/bin/console make:command
+php symfony/bin/console app:cron:search-text-regenerate
+php symfony/bin/console app:cron:search-text-regenerate
+php symfony/bin/console app:cron:search-text-regenerate
+php symfony/bin/console app:cron:search-text-regenerate
+php symfony/bin/console app:cron:search-text-regenerate
+php symfony/bin/console app:cron:search-text-regenerate
+php symfony/bin/console app:cron:search-text-regenerate
+php symfony/bin/console app:cron:search-text-regenerate
+php symfony/bin/console app:cron:search-text-regenerate
+[A
+php symfony/bin/console app:cron:search-text-regenerate
+php symfony/bin/console app:cron:search-text-regenerate
+php symfony/bin/console app:cron:search-text-regenerate
+php symfony/bin/console app:cron:search-text-regenerate
+php symfony/bin/console app:cron:search-text-regenerate
+php symfony/bin/console app:cron:search-text-regenerate
+php symfony/bin/console app:cron:search-text-regenerate
+php symfony/bin/console app:cron:search-text-regenerate
+php symfony/bin/console app:cron:search-text-regenerate
+php symfony/bin/console app:cron:search-text-regenerate
+php symfony/bin/console app:cron:search-text-regenerate
+php symfony/bin/console app:cron:search-text-regenerate
+php symfony/bin/console app:cron:search-text-regenerate
+php symfony/bin/console app:cron:search-text-regenerate
+php symfony/bin/console app:cron:search-text-regenerate

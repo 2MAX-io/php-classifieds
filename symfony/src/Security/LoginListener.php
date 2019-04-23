@@ -30,29 +30,36 @@ class LoginListener
         $userInterface = $event->getAuthenticationToken()->getUser();
 
         if ($userInterface instanceof User) {
-            $this->user($userInterface);
-            if ($userInterface->getEncoderName() !== null && $event->getRequest()->request->get('password', false)) {
-                $this->migrateLegacyPassword($userInterface, $event->getRequest()->request->get('password'));
-            }
+            $this->updateLastLoginOfUser($userInterface);
+            $this->migrateLegacyPassword($userInterface, $event);
         }
 
         $this->em->flush();
     }
 
-    private function user(User $user)
+    private function updateLastLoginOfUser(User $user)
     {
         $user->setLastLogin(new \DateTime());
         $this->em->persist($user);
     }
 
-    private function migrateLegacyPassword(User $user, string $plainPassword)
+    private function migrateLegacyPassword(User $user, InteractiveLoginEvent $event)
     {
         if ($user->getEncoderName() === null) {
             return;
         }
 
+        if (false === $event->getRequest()->request->get('password', false)) {
+            return;
+        }
+
         $user->setPassword('removed ' . Random::string(20));
-        $user->setPassword($this->userPasswordEncoder->encodePassword($user, $plainPassword));
+        $user->setPassword(
+            $this->userPasswordEncoder->encodePassword(
+                $user,
+                $event->getRequest()->request->get('password')
+            )
+        );
 
         $this->em->persist($user);
     }

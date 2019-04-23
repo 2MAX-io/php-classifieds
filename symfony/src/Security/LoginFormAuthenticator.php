@@ -3,6 +3,7 @@
 namespace App\Security;
 
 use App\Entity\User;
+use App\Helper\Str;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -64,7 +65,11 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
             throw new InvalidCsrfTokenException();
         }
 
-        $user = $this->entityManager->getRepository(User::class)->findOneBy(['email' => $credentials['email']]);
+        if (Str::contains($credentials['email'], '@')) {
+            $user = $this->entityManager->getRepository(User::class)->findOneBy(['email' => $credentials['email']]);
+        } else {
+            $user = $this->entityManager->getRepository(User::class)->findOneBy(['username' => $credentials['email']]);
+        }
 
         if (!$user) {
             // fail authentication with a custom error

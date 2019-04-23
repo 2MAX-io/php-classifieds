@@ -2,12 +2,14 @@
 
 namespace App\Entity;
 
+use App\Helper\Str;
 use App\Security\Base\EnablableInterface;
 use App\Service\User\RoleInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\Encoder\EncoderAwareInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -15,7 +17,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * @UniqueEntity(fields={"email"})
  * @UniqueEntity(fields={"username"})
  */
-class User implements UserInterface, RoleInterface, EnablableInterface
+class User implements UserInterface, RoleInterface, EnablableInterface, EncoderAwareInterface
 {
     /**
      * @ORM\Id()
@@ -279,5 +281,22 @@ class User implements UserInterface, RoleInterface, EnablableInterface
         $this->passwordRequestedAt = $passwordRequestedAt;
 
         return $this;
+    }
+
+    /**
+     * Gets the name of the encoder used to encode the password.
+     *
+     * If the method returns null, the standard way to retrieve the encoder
+     * will be used instead.
+     *
+     * @return string
+     */
+    public function getEncoderName()
+    {
+        if (Str::beginsWith($this->getPassword(), '$2a$')) {
+            return 'legacy_phpass'; // security.yaml
+        }
+
+        return null; // use the default encoder
     }
 }

@@ -9,6 +9,7 @@
         "beberlei/DoctrineExtensions": "^1.2",
         "friendsofsymfony/jsrouting-bundle": "^2.3",
         "hackzilla/password-generator": "^1.4",
+        "hautelook/phpass": "^1.1",
         "league/glide-symfony": "^1.0",
         "nesbot/carbon": "^2.16",
         "pagerfanta/pagerfanta": "^2.1",

@@ -3,7 +3,9 @@ security:
       App\Entity\User:
         algorithm: argon2i
       App\Entity\Admin:
-          algorithm: argon2i
+        algorithm: argon2i
+      legacy_phpass:
+        id: 'App\Security\Encoder\PhpassPasswordEncoder'
 
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:

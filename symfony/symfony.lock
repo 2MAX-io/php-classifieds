@@ -114,6 +114,9 @@
     "hackzilla/password-generator": {
         "version": "1.4.0"
     },
+    "hautelook/phpass": {
+        "version": "1.1.0"
+    },
     "intervention/image": {
         "version": "2.4.2"
     },

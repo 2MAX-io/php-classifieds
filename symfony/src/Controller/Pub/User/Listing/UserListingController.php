@@ -144,7 +144,7 @@ class UserListingController extends AbstractUserController
     /**
      * @Route("/user/listing/{id}", name="app_listing_remove", methods={"DELETE"})
      */
-    public function remove(Request $request, Listing $listing, CurrentUserService $currentUserService): Response
+    public function remove(Request $request, Listing $listing): Response
     {
         $this->dennyUnlessCurrentUserAllowed($listing);
 
@@ -160,7 +160,7 @@ class UserListingController extends AbstractUserController
     /**
      * @Route("/user/listing/deactivate/{id}", name="app_listing_deactivate", methods={"PATCH"})
      */
-    public function deactivate(Request $request, Listing $listing, CurrentUserService $currentUserService): Response
+    public function deactivate(Request $request, Listing $listing): Response
     {
         $this->dennyUnlessCurrentUserAllowed($listing);
 
@@ -176,7 +176,7 @@ class UserListingController extends AbstractUserController
     /**
      * @Route("/user/listing/activate/{id}", name="app_listing_activate", methods={"PATCH"})
      */
-    public function activate(Request $request, Listing $listing, CurrentUserService $currentUserService): Response
+    public function activate(Request $request, Listing $listing): Response
     {
         $this->dennyUnlessCurrentUserAllowed($listing);
 

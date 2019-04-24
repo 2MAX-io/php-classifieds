@@ -1,5 +1,4 @@
 security:
-    erase_credentials: false
     encoders:
       App\Entity\User:
         algorithm: argon2i

@@ -18,17 +18,19 @@
     <div class="container mt-3 tpl-listing-show">
         <div class="row">
             <div class="col-md-7">
-                <div class="alert alert-danger">
-                    <h1>{{ 'trans.Listing has expired' | trans }}</h1>
-                    <div>
-                        {{ 'trans.See other active listings in category' | trans }}:
-                        <a href="{{ path('app_category', {'categorySlug': listing.category.slug}) }}">
-                            {{ listing.category.parent.name }}
-                            ⇾
-                            {{ listing.category.name }}
-                        </a>
+                {% if displayAsExpired(listing) %}
+                    <div class="alert alert-danger">
+                        <h1>{{ 'trans.Listing has expired' | trans }}</h1>
+                        <div>
+                            {{ 'trans.See other active listings in category' | trans }}:
+                            <a href="{{ path('app_category', {'categorySlug': listing.category.slug}) }}">
+                                {{ listing.category.parent.name }}
+                                ⇾
+                                {{ listing.category.name }}
+                            </a>
+                        </div>
                     </div>
-                </div>
+                {% endif %}
 
                 <div class="row mb-3">
                     <div class="col-sm-10">
@@ -174,7 +176,7 @@
                     </div>
 
                     <div class="card-body">
-                        {% if listing.phone is not empty and not listing.displayAsExpired %}
+                        {% if listing.phone is not empty and not displayAsExpired(listing)  %}
                         <div class="mb-2 py-2">
                             <div class="row">
                                 <div class="col-sm-4">{{ 'trans.Phone' | trans }}</div>
@@ -186,7 +188,7 @@
                         </div>
                         {% endif %}
 
-                        {% if listing.email is not empty and listing.emailShow and not listing.displayAsExpired %}
+                        {% if listing.email is not empty and listing.emailShow and not displayAsExpired(listing)  %}
                         <div class="mb-2 py-2">
                             <div class="row">
                                 <div class="col-sm-4">{{ 'trans.Email' | trans }}</div>
@@ -198,7 +200,7 @@
                         </div>
                         {% endif %}
 
-                        {% if listing.city is not empty %}
+                        {% if listing.city is not empty and not displayAsExpired(listing) %}
                             <div class="mb-2 py-2">
                                 <div class="row">
                                     <div class="col-sm-4">{{ 'trans.City' | trans }}</div>
@@ -230,13 +232,18 @@
                             </div>
                         </div>
                     </div>
+
+                    {% if not displayAsExpired(listing) %}
                     <div class="card-footer">
                         <a href="{{ path('app_user_listings', {"user": listing.user.id}) }}" class="btn btn-sm btn-dark btn-block mt-auto">
                             {{ 'trans.User listings' | trans }}
                         </a>
                     </div>
+                    {% endif %}
                 </div>
 
+
+                {% if not displayAsExpired(listing) %}
                 <!-- Share listing -->
                 <div class="card mb-3" style="width: 100%;">
                     <div class="card-header">
@@ -254,6 +261,7 @@
                         <a class="twitter-share-button" href="https://twitter.com/intent/tweet?url={{ absolute_url('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}&text={{ listing.title }}">Tweet</a>
                     </div>
                 </div>
+                {% endif %}
             </div>
         </div>
     </div>

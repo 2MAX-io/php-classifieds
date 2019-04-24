@@ -1,0 +1,129 @@
+{% extends 'base.html.twig' %}
+
+{% block title -%}
+    {{- listing.category.parent.name }}
+    ⇾
+    {{ listing.category.name -}}
+{%- endblock %}
+
+{% block body %}
+
+    <div class="container mt-3 mb-3">
+        <a href="//www.jaslo4u.pl">Jaslo4u.pl</a>
+        > <a href="{{ path('app_index') }}">{{ 'trans.Classifieds' | trans }}</a>
+
+        {% for category in categoryBreadcrumbs %}
+            &gt; <a href="{{ path('app_category', {'categorySlug': category.slug}) }}">{{ category.name }}</a>
+        {% endfor %}
+    </div>
+
+    <div class="container mt-3 tpl-listing-show">
+        <div class="row">
+            <div class="col-md-7">
+                <div class="alert alert-danger">
+                    {% if listing.adminRemoved %}
+                        <h1>{{ 'trans.Listing has been deleted' | trans }}</h1>
+                    {% endif %}
+                    {% if not listing.adminConfirmed or listing.adminRejected %}
+                        <h1>{{ 'trans.Listing awaits activation' | trans }}</h1>
+                    {% endif %}
+                    <div>
+                        {{ 'trans.See other active listings in category' | trans }}:
+                        <a href="{{ path('app_category', {'categorySlug': listing.category.slug}) }}">
+                            {{ listing.category.parent.name }}
+                            ⇾
+                            {{ listing.category.name }}
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Tabs contents -->
+                <div class="tab-content p-3 rounded-bottom">
+                    <!-- tab overview -->
+                    <div class="tab-pane fade show active" role="tabpanel" id="overview">
+                        <div class="zebra">
+                            <!-- description -->
+                            <div class="block">
+                                <div class="px-3 py-1 clearfix">
+                                    <div class="float-md-right">
+                                        {{ 'trans.Views' | trans }}: {{ listingShowDto.viewsCount+1 }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- end div class zebra -->
+                    </div>
+                    <!-- end tab overview -->
+                </div>
+
+                <div>
+                    {{ 'trans.Listing identifier' | trans }}: {{ listing.id }}
+                </div>
+
+                <!-- end tabs contents -->
+            </div>
+
+            <!-- Sidebar -->
+            <div class="col-md-5">
+                {% if isCurrentUserListing(listing) %}
+                    <a href="{{ path('app_listing_edit', {'id': listing.id}) }}" class="btn btn-primary mb-1">{{ 'trans.Edit listing' | trans }}</a>
+                {% endif %}
+
+                {% if lowSecurityCheckIsAdminInPublic() %}
+                    <a
+                            href="{{ path('app_admin_listing_edit', {'id': listing.id}) }}"
+                            class="btn btn-outline-danger mb-1"
+                    >
+                        {{ 'trans.Edit listing as Admin' | trans }}
+                    </a>
+                {% endif %}
+
+                {% if listing.price is not empty %}
+                    <div>
+                        <div class="my-1">
+                            <h3 class="btn btn-dark price btn-lg">{{ 'trans.Price' | trans }}: {{ listing.price }}</h3>
+                            {% if listing.priceFor %}<span>{{ ('trans.priceFor.'~listing.priceFor) | trans }}</span>{% endif %}
+                            {% if listing.priceNegotiable is not null %}
+                                {% if listing.priceNegotiable %}
+                                    <span class="badge badge-success">{{ 'trans.to negotiate' | trans }}</span>
+                                {% else %}
+                                    <span class="badge badge-danger">{{ 'trans.is NOT negotiable' | trans }}</span>
+                                {% endif %}
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endif %}
+
+                {# Informations #}
+                <div class="card mb-3 w-100">
+                    <div class="card-header">
+                        <h5>{{ 'trans.Informations' | trans }}</h5>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="mb-2 py-2">
+                            <div class="row">
+                                <div class="col-sm-4">{{ 'trans.Date added' | trans }}</div>
+
+                                <div class="col-sm-8">
+                                    {{ listing.orderByDate | date }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-2 py-2">
+                            <div class="row">
+                                <div class="col-sm-4">{{ 'trans.Expiration date' | trans }}</div>
+
+                                <div class="col-sm-8">
+                                    {{ listing.validUntilDate | date }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock body %}

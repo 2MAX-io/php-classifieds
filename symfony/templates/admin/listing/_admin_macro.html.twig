@@ -37,6 +37,6 @@
         {{ 'trans.Rejected by Admin?' | trans }}: {{ listing.adminRejected | boolText | trans }}
     </div>
     <div class="col-md-4 {{ (listing.rejectionReason is not empty) | displayTextWarning }}">
-        {{ 'trans.Previous rejection' | trans }}: {{ listing.rejectionReason | default('trans.none') | trans }}
+        {{ 'trans.Previous rejection' | trans }}: {{ listing.rejectionReason | default('trans.none') }}
     </div>
 {% endmacro %}

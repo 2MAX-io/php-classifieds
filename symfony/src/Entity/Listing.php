@@ -675,9 +675,4 @@ class Listing
 
         return $this;
     }
-
-    public function getDisplayAsExpired(): bool
-    {
-        return $this->getUserRemoved() || $this->getUserDeactivated() || $this->getValidUntilDate() < Carbon::now();
-    }
 }

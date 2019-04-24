@@ -34,7 +34,16 @@ class ListingShowController extends AbstractController
 
         $forceDisplay = $listingShowDto->getListing()->getUser() === $currentUserService->getUser() || $currentUserService->lowSecurityCheckIsAdminInPublic();
         if (!$forceDisplay && !$listingPublicDisplayService->canPublicDisplay($listingShowDto->getListing())) {
-            throw $this->createNotFoundException();
+            return $this->render(
+                'listing_show_when_removed.html.twig',
+                [
+                    'listingShowDto' => $listingShowDto,
+                    'listing' => $listingShowDto->getListing(),
+                    'categoryBreadcrumbs' => $categoryListService->getBreadcrumbs(
+                        $listingShowDto->getListing()->getCategory()
+                    ),
+                ]
+            );
         }
 
         if ($slug !== $listingShowDto->getListing()->getSlug()) {

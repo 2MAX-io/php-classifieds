@@ -56,7 +56,7 @@
                             <td>
                                 <div class="card-thumb">
                                     <a title="{{ listing.title }}" href="{{ path('app_listing_show', {id: listing.id, 'slug': listing.slug}) }}">
-                                        <img class="rounded list-small-img" alt="{{ listing.title }}" src="{{ asset(listing.mainImage | default('static/system/blank.png')) }}">
+                                        <img class="rounded list-small-img" alt="{{ listing.title }}" src="{{ asset(listing.mainImageInListSize | default('static/system/blank.png')) }}">
                                     </a>
                                 </div>
                             </td>

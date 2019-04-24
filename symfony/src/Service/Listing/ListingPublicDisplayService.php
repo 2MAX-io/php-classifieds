@@ -22,6 +22,6 @@ class ListingPublicDisplayService
 
     public function canPublicDisplay(Listing $listing): bool
     {
-        return $listing->getAdminConfirmed() && $listing->getAdminRemoved() === false;
+        return $listing->getAdminConfirmed() && !$listing->getAdminRemoved() && !$listing->getAdminRejected();
     }
 }

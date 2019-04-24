@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Helper\ImageResizePath;
+use Carbon\Carbon;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -673,5 +674,10 @@ class Listing
         $this->priceNegotiable = $priceNegotiable;
 
         return $this;
+    }
+
+    public function getDisplayAsExpired(): bool
+    {
+        return $this->getUserRemoved() || $this->getUserDeactivated() || $this->getValidUntilDate() < Carbon::now();
     }
 }

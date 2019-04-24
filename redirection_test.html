@@ -123,13 +123,17 @@ http://www.ogloszenia.jaslo4u.pl/ogloszenie.php?id=341278
 </div>
 
 <pre>
-# copy links on page to clipboard
+/* copy links on page to clipboard */
+
+
 var out = '';
 $("a[href]").each(function(index, el) {
     out += el.href + "\r\n";
 });
 console.log(out);
 copy(out);
+
+
 </pre>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>

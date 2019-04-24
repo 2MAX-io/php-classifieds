@@ -15,8 +15,10 @@ class IndexController extends AbstractController
     /**
      * @Route("/", name="app_index")
      */
-    public function index(CategoryListService $categoryListService, ListingHelperService $listingHelperService): Response
-    {
+    public function index(
+        CategoryListService $categoryListService,
+        ListingHelperService $listingHelperService
+    ): Response {
         return $this->render('index.html.twig', [
             'categoryList' => $categoryListService->getCategoryList(),
             'latestListings' => $listingHelperService->getLatestListings(8),

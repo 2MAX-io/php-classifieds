@@ -20,8 +20,11 @@ class RegisterController extends AbstractController
     /**
      * @Route("/register", name="app_register")
      */
-    public function register(Request $request, CreateUserService $createUserService, FlashService $flashService): Response
-    {
+    public function register(
+        Request $request,
+        CreateUserService $createUserService,
+        FlashService $flashService
+    ): Response {
         $form = $this->createForm(RegisterType::class, []);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {

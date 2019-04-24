@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller\Pub\Listing;
 
-use App\Entity\Category;
+use App\Repository\CategoryRepository;
 use App\Service\Category\CategoryListService;
 use App\Service\Listing\ListingList\ListingListService;
 use Pagerfanta\View\TwitterBootstrap4View;
@@ -38,13 +38,14 @@ class ListingListController extends AbstractController
         RouterInterface $router,
         ListingListService $listingListService,
         CategoryListService $categoryListService,
+        CategoryRepository $categoryRepository,
         string $categorySlug = null
     ): Response {
         $view = new TwitterBootstrap4View();
         $page = (int) $request->get('page', 1);
         $category = null;
         if ($categorySlug) {
-            $category = $this->getDoctrine()->getRepository(Category::class)->findOneBy(['slug' => $categorySlug]);
+            $category = $categoryRepository->findOneBy(['slug' => $categorySlug]);
             if ($category === null) {
                 throw $this->createNotFoundException();
             }

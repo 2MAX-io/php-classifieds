@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller\Pub;
 
+use App\Helper\File;
 use App\Helper\FilePath;
 use App\System\Glide\AppServerFactory;
 use League\Glide\Responses\SymfonyResponseFactory;
@@ -23,11 +24,11 @@ class ResizeImageController
     {
         ini_set('memory_limit','256M'); // todo: check if can reduce it
 
-        if (!in_array(Path::getExtension($file, true), ['jpg', 'png', 'gif', 'jpeg'], true)) {
+        if (!File::isImage($file)) {
             throw new NotFoundHttpException();
         }
 
-        if (!in_array(Path::getExtension($request->getRequestUri(), true), ['jpg', 'png', 'gif', 'jpeg'], true)) {
+        if (!File::isImage($request->getRequestUri())) {
             throw new NotFoundHttpException();
         }
 
@@ -52,7 +53,7 @@ class ResizeImageController
 
     private function getResponse(Request $request, string $type, string $sourcePath, string $targetPath): Response
     {
-        if (!in_array(Path::getExtension($targetPath, true), ['jpg', 'png', 'gif', 'jpeg'], true)) {
+        if (!File::isImage($targetPath)) {
             throw new NotFoundHttpException();
         }
 
@@ -61,7 +62,7 @@ class ResizeImageController
             throw new NotFoundHttpException();
         }
 
-        if (!in_array(Path::getExtension($sourcePath, true), ['jpg', 'png', 'gif', 'jpeg'], true)) {
+        if (!File::isImage($sourcePath)) {
             throw new NotFoundHttpException();
         }
 
@@ -89,7 +90,10 @@ class ResizeImageController
         );
         $cachedPath = $server->makeImage($sourcePath, $this->getParams($type));
 
-        $server->getSource()->rename($cachedPath, Path::makeRelative($targetPath, FilePath::getStaticPath()));
+        $server->getSource()->rename(
+            $cachedPath,
+            Path::makeRelative($targetPath, FilePath::getStaticPath())
+        );
 
         return $server->getResponseFactory()->create(
             $server->getCache(),

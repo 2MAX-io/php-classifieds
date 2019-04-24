@@ -23,7 +23,9 @@ class ListingConfirmController extends AbstractAdminController
     ): Response {
         $this->denyUnlessAdmin();
 
-        $adminListingListDto = $listingConfirmListService->getToConfirmListingList((int) $request->query->get('page', 1));
+        $adminListingListDto = $listingConfirmListService->getToConfirmListingList(
+            (int) $request->query->get('page', 1)
+        );
 
         return $this->render('admin/listing/listing_confirm.html.twig', [
             'listings' => $adminListingListDto->getResults(),

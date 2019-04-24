@@ -16,8 +16,11 @@ class ListingFileRemoveController extends AbstractAdminController
     /**
      * @Route("/admin/red5/listing/file-remove/{id}", name="app_admin_listing_file_remove", methods={"DELETE"})
      */
-    public function remove(Request $request, ListingFile $listingFile, FileModificationEventService $fileModificationEventService): Response
-    {
+    public function remove(
+        Request $request,
+        ListingFile $listingFile,
+        FileModificationEventService $fileModificationEventService
+    ): Response {
         $this->denyUnlessAdmin();
 
         if ($this->isCsrfTokenValid('adminRemoveFile'.$listingFile->getId(), $request->request->get('_token'))) {
@@ -27,6 +30,8 @@ class ListingFileRemoveController extends AbstractAdminController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('app_admin_listing_edit', ['id' => $listingFile->getListing()->getId()]);
+        return $this->redirectToRoute('app_admin_listing_edit', [
+            'id' => $listingFile->getListing()->getId(),
+        ]);
     }
 }

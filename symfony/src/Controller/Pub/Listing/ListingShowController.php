@@ -16,7 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class ListingShowController extends AbstractController
 {
     /**
-     * @Route("/l/{id}/{slug}", name="app_listing_show", defaults={"slug": "show"})
+     * @Route("/l/{id}/{slug}", name="app_listing_show")
      */
     public function show(
         Request $request,
@@ -37,7 +37,7 @@ class ListingShowController extends AbstractController
             throw $this->createNotFoundException();
         }
 
-        if ($slug !== $listingShowDto->getListing()->getSlug() && $slug !== 'listing') {
+        if ($slug !== $listingShowDto->getListing()->getSlug()) {
             return $this->redirectToRoute($request->get('_route'), [
                 'id' => (int) $id,
                 'slug' => $listingShowDto->getListing()->getSlug(),
@@ -51,7 +51,9 @@ class ListingShowController extends AbstractController
             [
                 'listingShowDto' => $listingShowDto,
                 'listing' => $listingShowDto->getListing(),
-                'categoryBreadcrumbs' => $categoryListService->getBreadcrumbs($listingShowDto->getListing()->getCategory()),
+                'categoryBreadcrumbs' => $categoryListService->getBreadcrumbs(
+                    $listingShowDto->getListing()->getCategory()
+                ),
             ]
         );
     }

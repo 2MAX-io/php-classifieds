@@ -21,8 +21,11 @@ class RemindPasswordController extends AbstractController
     /**
      * @Route("/remind-password", name="app_remind_password")
      */
-    public function remindPassword(Request $request, RemindPasswordService $remindPasswordService, FlashService $flashService): Response
-    {
+    public function remindPassword(
+        Request $request,
+        RemindPasswordService $remindPasswordService,
+        FlashService $flashService
+    ): Response {
         $form = $this->createForm(RemindPasswordType::class, []);
 
         $form->handleRequest($request);

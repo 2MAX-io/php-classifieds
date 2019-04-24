@@ -30,7 +30,6 @@ class AdminListingEditController extends AbstractAdminController
         $form = $this->createForm(AdminListingEditType::class, $listing);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-
             $customFieldsForListingFormService->saveCustomFieldsToListing(
                 $listing,
                 $request->request->get('form_custom_field', [])
@@ -89,7 +88,7 @@ class AdminListingEditController extends AbstractAdminController
             $entityManager->flush();
         }
 
-        return $this->redirect($request->headers->get('referer'));;
+        return $this->redirect($request->headers->get('referer'));
     }
 
     /**
@@ -105,7 +104,7 @@ class AdminListingEditController extends AbstractAdminController
             $entityManager->flush();
         }
 
-        return $this->redirect($request->headers->get('referer'));;
+        return $this->redirect($request->headers->get('referer'));
     }
 
     /**
@@ -121,6 +120,6 @@ class AdminListingEditController extends AbstractAdminController
             $entityManager->flush();
         }
 
-        return $this->redirect($request->headers->get('referer'));;
+        return $this->redirect($request->headers->get('referer'));
     }
 }

@@ -17,8 +17,11 @@ class ValidityExtendController extends AbstractUserController
     /**
      * @Route("/user/validity-extend/{id}", name="app_user_validity_extend")
      */
-    public function validityExtend(Request $request, Listing $listing, ValidUntilSetService $validUntilSetService): Response
-    {
+    public function validityExtend(
+        Request $request,
+        Listing $listing,
+        ValidUntilSetService $validUntilSetService
+    ): Response {
         $this->dennyUnlessCurrentUserAllowed($listing);
 
         $form = $this->createForm(ValidityExtendType::class, []);

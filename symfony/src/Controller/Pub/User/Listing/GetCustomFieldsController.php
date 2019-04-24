@@ -17,8 +17,11 @@ class GetCustomFieldsController extends AbstractUserController
     /**
      * @Route("/listing/get-custom-fields", options={"expose"=true}, name="app_listing_get_custom_fields")
      */
-    public function getCustomFields(Request $request, CustomFieldsForListingFormService $customFieldsForListingFormService, CurrentUserService $currentUserService): Response
-    {
+    public function getCustomFields(
+        Request $request,
+        CustomFieldsForListingFormService $customFieldsForListingFormService,
+        CurrentUserService $currentUserService
+    ): Response {
         $listingId = $request->query->get('listingId', null);
         if ($listingId) {
             $listing = $this->getDoctrine()->getRepository(Listing::class)->find($listingId);
@@ -30,9 +33,15 @@ class GetCustomFieldsController extends AbstractUserController
 
         $categoryId = $request->query->get('categoryId', null);
 
-        return $this->render('user/listing/get_custom_fields.html.twig', [
-            'customFieldList' => $customFieldsForListingFormService->getFields((int) $categoryId, (int) $listingId),
-        ]);
+        return $this->render(
+            'user/listing/get_custom_fields.html.twig',
+            [
+                'customFieldList' => $customFieldsForListingFormService->getFields(
+                    (int)$categoryId,
+                    (int)$listingId
+                ),
+            ]
+        );
     }
 }
 

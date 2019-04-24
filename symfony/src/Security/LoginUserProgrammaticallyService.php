@@ -33,8 +33,12 @@ class LoginUserProgrammaticallyService
      */
     private $eventDispatcher;
 
-    public function __construct(TokenStorageInterface $tokenStorage, SessionInterface $session, RequestStack $requestStack, EventDispatcherInterface $eventDispatcher)
-    {
+    public function __construct(
+        TokenStorageInterface $tokenStorage,
+        SessionInterface $session,
+        RequestStack $requestStack,
+        EventDispatcherInterface $eventDispatcher
+    ) {
         $this->tokenStorage = $tokenStorage;
         $this->session = $session;
         $this->requestStack = $requestStack;

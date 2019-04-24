@@ -16,8 +16,11 @@ class ListingSearchController extends AbstractAdminController
     /**
      * @Route("/admin/red5/listing/search", name="app_admin_listing_search")
      */
-    public function search(Request $request, AdminListingSearchService $listingSearchService, PaginationService $paginationService): Response
-    {
+    public function search(
+        Request $request,
+        AdminListingSearchService $listingSearchService,
+        PaginationService $paginationService
+    ): Response {
         $this->denyUnlessAdmin();
 
         $adminListingListDto = $listingSearchService->getList((int) $request->query->get('page', 1));

@@ -12,7 +12,15 @@ class Arr
     }
 
     public static function random(array $array, int $count = 1)
-    { // todo: handle empty array, count less than 1 (zero or minus)
+    {
+        if ($count < 1) {
+            throw new \UnexpectedValueException('count should be more than 0');
+        }
+
+        if (count($array) < 1) {
+            throw new \UnexpectedValueException('array is empty');
+        }
+
         if (1 === $count) {
             return $array[array_rand($array)];
         }

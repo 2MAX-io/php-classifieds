@@ -34,15 +34,21 @@ class UserListingController extends AbstractUserController
     /**
      * @Route("/user/listing/", name="app_user_listing_index", methods={"GET"})
      */
-    public function index(Request $request, UserListingListService $userListingListService, PaginationService $paginationService): Response
-    {
-        $userListingListDto = $userListingListService->getList((int) $request->get('page', 1));
+    public function index(
+        Request $request,
+        UserListingListService $userListingListService,
+        PaginationService $paginationService
+    ): Response {
+        $userListingListDto = $userListingListService->getList((int)$request->get('page', 1));
 
-        return $this->render('user/listing/index.html.twig', [
-            'listings' => $userListingListDto->getResults(),
-            'pagination' => $paginationService->getPaginationHtml($userListingListDto->getPager()),
-            'pager' => $userListingListDto->getPager(),
-        ]);
+        return $this->render(
+            'user/listing/index.html.twig',
+            [
+                'listings' => $userListingListDto->getResults(),
+                'pagination' => $paginationService->getPaginationHtml($userListingListDto->getPager()),
+                'pager' => $userListingListDto->getPager(),
+            ]
+        );
     }
 
     /**
@@ -67,7 +73,10 @@ class UserListingController extends AbstractUserController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $customFieldsForListingFormService->saveCustomFieldsToListing($listing, $request->request->get('form_custom_field', []));
+            $customFieldsForListingFormService->saveCustomFieldsToListing(
+                $listing,
+                $request->request->get('form_custom_field', [])
+            );
 
             $listing->setUser($currentUserService->getUser());
             $createListingService->setFormDependent($listing, $form);
@@ -77,11 +86,17 @@ class UserListingController extends AbstractUserController
             $entityManager->flush();
 
             if ($form->get('file')->getData()) {
-                $listingFileUploadService->addMultipleFilesFromUpload($listing, $form->get('file')->getData());
+                $listingFileUploadService->addMultipleFilesFromUpload(
+                    $listing,
+                    $form->get('file')->getData()
+                );
             }
 
             if ($request->request->get('fileuploader-list-file')) {
-                $listingFileUploadService->updateSort($listing, \json_decode($request->request->get('fileuploader-list-file'), true));
+                $listingFileUploadService->updateSort(
+                    $listing,
+                    \json_decode($request->request->get('fileuploader-list-file'), true)
+                );
             }
 
             $logIpService->saveLog($listing);
@@ -90,11 +105,14 @@ class UserListingController extends AbstractUserController
             return $this->redirectToRoute('app_listing_edit', ['id' => $listing->getId()]);
         }
 
-        return $this->render('user/listing/new.html.twig', [
-            'listing' => $listing,
-            'formCategorySelectList' => $categoryListService->getFormCategorySelectList(),
-            'form' => $form->createView(),
-        ]);
+        return $this->render(
+            'user/listing/new.html.twig',
+            [
+                'listing' => $listing,
+                'formCategorySelectList' => $categoryListService->getFormCategorySelectList(),
+                'form' => $form->createView(),
+            ]
+        );
     }
 
     /**
@@ -117,39 +135,57 @@ class UserListingController extends AbstractUserController
 
         if ($form->isSubmitted() && $form->isValid()) {
             if ($form->get('file')->getData()) {
-                $listingFileUploadService->addMultipleFilesFromUpload($listing, $form->get('file')->getData());
+                $listingFileUploadService->addMultipleFilesFromUpload(
+                    $listing,
+                    $form->get('file')->getData()
+                );
             }
 
             if ($request->request->get('fileuploader-list-file')) {
-                $listingFileUploadService->updateSort($listing, \json_decode($request->request->get('fileuploader-list-file'), true));
+                $listingFileUploadService->updateSort(
+                    $listing,
+                    \json_decode($request->request->get('fileuploader-list-file'), true)
+                );
             }
-            $customFieldsForListingFormService->saveCustomFieldsToListing($listing, $request->request->get('form_custom_field', []));
+            $customFieldsForListingFormService->saveCustomFieldsToListing(
+                $listing,
+                $request->request->get('form_custom_field', [])
+            );
 
             $createListingService->setFormDependent($listing, $form);
             $logIpService->saveLog($listing);
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('app_listing_edit', [
-                'id' => $listing->getId(),
-            ]);
+            return $this->redirectToRoute(
+                'app_listing_edit',
+                [
+                    'id' => $listing->getId(),
+                ]
+            );
         }
 
-        return $this->render('user/listing/edit.html.twig', [
-            'listing' => $listing,
-            'form' => $form->createView(),
-            'listingFilesForJavascript' => $createListingService->getListingFilesForJavascript($listing),
-            'formCategorySelectList' => $categoryListService->getFormCategorySelectList(),
-        ]);
+        return $this->render(
+            'user/listing/edit.html.twig',
+            [
+                'listing' => $listing,
+                'form' => $form->createView(),
+                'listingFilesForJavascript' => $createListingService->getListingFilesForJavascript($listing),
+                'formCategorySelectList' => $categoryListService->getFormCategorySelectList(),
+            ]
+        );
     }
 
     /**
      * @Route("/user/listing/{id}", name="app_listing_remove", methods={"DELETE"})
      */
-    public function remove(Request $request, Listing $listing, FileModificationEventService $fileModificationEventService): Response
-    {
+    public function remove(
+        Request $request,
+        Listing $listing,
+        FileModificationEventService $fileModificationEventService
+    ): Response {
         $this->dennyUnlessCurrentUserAllowed($listing);
 
-        if ($this->isCsrfTokenValid('remove'.$listing->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('remove' . $listing->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $listing->setUserRemoved(true);
             $fileModificationEventService->onFileModificationByListing($listing);
@@ -166,7 +202,7 @@ class UserListingController extends AbstractUserController
     {
         $this->dennyUnlessCurrentUserAllowed($listing);
 
-        if ($this->isCsrfTokenValid('deactivate'.$listing->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('deactivate' . $listing->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $listing->setUserDeactivated(true);
             $entityManager->flush();
@@ -182,7 +218,7 @@ class UserListingController extends AbstractUserController
     {
         $this->dennyUnlessCurrentUserAllowed($listing);
 
-        if ($this->isCsrfTokenValid('activate'.$listing->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('activate' . $listing->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $listing->setUserDeactivated(false);
             $entityManager->flush();

@@ -50,7 +50,10 @@ class ChangeEmailController extends AbstractController
     }
 
     /**
-     * @Route("/user/account/changeEmail/confirmation/previous/{token}", name="app_user_change_email_previous_email_confirmation")
+     * @Route(
+     *     "/user/account/changeEmail/confirmation/previous/{token}",
+     *     name="app_user_change_email_previous_email_confirmation"
+     * )
      */
     public function changeEmailPreviousConfirmation(
         string $token,

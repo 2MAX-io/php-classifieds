@@ -48,6 +48,7 @@ class CreateListingService
         }
 
         $listing->setAdminConfirmed(false);
+        $listing->setAdminRejected(false);
         $this->updateSlug($listing);
         $this->saveSearchText($listing);
     }

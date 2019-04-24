@@ -12,7 +12,7 @@
             <div class="col-md-8 col-lg-9">
                 <h1>
                     {{ 'trans.Feature listing' | trans }}:
-                    <a href="{{ path('app_listing_show', {'id': listing.id, 'slug': listing.title}) }}">
+                    <a href="{{ path('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}">
                         {{ listing.title }}
                     </a>
                 </h1>

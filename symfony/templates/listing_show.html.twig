@@ -42,7 +42,11 @@
                     <div class="mb-2 listing-show-carousel">
                         <div class="owl-carousel">
                             {% for listingFile in listing.listingFiles %}
-                                <a href="{{ asset(listingFile.pathInNormalSize) }}" data-toggle="lightbox" data-gallery="multiimages" data-title="{{ listing.title }}">
+                                <a
+                                        href="{{ asset(listingFile.pathInNormalSize) }}"
+                                        data-fancybox="galleryTop"
+                                        class="fancybox"
+                                >
                                     <img
                                             data-src="{{ asset(listingFile.pathInNormalSize) }}"
                                             class="mx-auto listing-show-top-image owl-lazy"
@@ -112,7 +116,11 @@
                     <div id="photos" class="tab-pane fade clearfix" role="tabpanel">
                         {% for listingFile in listing.listingFiles %}
                             <div class="listing-thumb float-left img-thumbnail mr-2 mb-2" style="width: 120px">
-                                <a href="{{ asset(listingFile.pathInNormalSize) }}" data-toggle="lightbox" data-gallery="multiimages" data-title="{{ listing.title }}">
+                                <a
+                                        href="{{ asset(listingFile.pathInNormalSize) }}"
+                                        data-fancybox="galleryDescription"
+                                        class="fancybox"
+                                >
                                     <div class="dummy container-img rounded" style="background-image:url('{{ asset(listingFile.pathInNormalSize) }}');"></div>
                                 </a>
                             </div>
@@ -124,8 +132,16 @@
                 {% if listing.listingFiles is not empty %}
                     <div class="my-2">
                         {% for listingFile in listing.listingFiles %}
-                            <a href="{{ asset(listingFile.pathInNormalSize) }}" data-toggle="lightbox" data-gallery="multiimages" data-title="{{ listing.title }}">
-                                <img class="mb-2" src="{{ asset(listingFile.pathInNormalSize) }}" alt="{{ listing.title }}" />
+                            <a
+                                    href="{{ asset(listingFile.pathInNormalSize) }}"
+                                    data-fancybox="galleryBottom"
+                                    class="fancybox"
+                            >
+                                <img
+                                        class="mb-2"
+                                        src="{{ asset(listingFile.pathInNormalSize) }}"
+                                        alt="{{ listing.title }}"
+                                />
                             </a>
                         {% endfor %}
                     </div>
@@ -268,15 +284,13 @@
 {% endblock body %}
 
 {% block js %}
-    <link rel="stylesheet" href="{{ asset('asset/lib/lightbox-master/dist/ekko-lightbox.css') }}">
-    <link rel="stylesheet" href="{{ asset('asset/lib/owl-carusel/assets/owl.carousel.css') }}">
-    <script src="{{ asset('asset/lib/lightbox-master/dist/ekko-lightbox.min.js') }}"></script>
-    <script src="{{ asset('asset/lib/owl-carusel/owl.carousel.js') }}"></script>
-
     <script type="text/javascript">
-        $(document).delegate('*[data-toggle="lightbox"]', 'click', function(event) {
-            event.preventDefault();
-            $(this).ekkoLightbox();
+        $('.fancybox').fancybox({
+            buttons: [
+                "zoom",
+                "thumbs",
+                "close"
+            ],
         });
 
         $('.owl-carousel').owlCarousel({

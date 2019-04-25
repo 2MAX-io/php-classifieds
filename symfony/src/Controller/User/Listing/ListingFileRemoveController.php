@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Controller\Pub\User\Listing;
+namespace App\Controller\User\Listing;
 
-use App\Controller\Pub\User\Base\AbstractUserController;
+use App\Controller\User\Base\AbstractUserController;
 use App\Entity\ListingFile;
 use App\Service\Event\FileModificationEventService;
 use Symfony\Component\HttpFoundation\Request;

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Controller\Pub\User\Listing;
+namespace App\Controller\User;
 
-use App\Controller\Pub\User\Base\AbstractUserController;
+use App\Controller\User\Base\AbstractUserController;
 use App\Entity\Listing;
 use App\Form\ListingType;
 use App\Security\CurrentUserService;

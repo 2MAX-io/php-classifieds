@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Controller\Pub\User\Account;
+namespace App\Controller\User\Account;
 
 use App\Entity\Token;
 use App\Form\User\RegisterType;

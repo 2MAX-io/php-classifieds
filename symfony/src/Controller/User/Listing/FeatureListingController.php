@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Controller\Pub\User\Listing;
+namespace App\Controller\User\Listing;
 
-use App\Controller\Pub\User\Base\AbstractUserController;
+use App\Controller\User\Base\AbstractUserController;
 use App\Entity\Listing;
 use App\Service\Listing\Featured\FeaturedListingService;
 use Symfony\Component\HttpFoundation\Request;

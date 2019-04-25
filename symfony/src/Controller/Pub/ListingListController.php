@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Controller\Pub\Listing;
+namespace App\Controller\Pub;
 
 use App\Repository\CategoryRepository;
 use App\Service\Category\CategoryListService;

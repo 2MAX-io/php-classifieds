@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Controller\Pub\User\Base;
+namespace App\Controller\User\Base;
 
 use App\Entity\Admin;
 use App\Entity\Listing;

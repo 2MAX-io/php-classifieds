@@ -51,7 +51,7 @@ class SettingsType extends AbstractType
             ],
         ]);
         $builder->add('rssTitle', TextType::class, [
-            'label' => 'trans.Rss title',
+            'label' => 'trans.RSS title',
             'required' => true,
             'empty_data' => '',
             'constraints' => [
@@ -60,7 +60,7 @@ class SettingsType extends AbstractType
             ],
         ]);
         $builder->add('rssDescription', TextareaType::class, [
-            'label' => 'trans.Rss description',
+            'label' => 'trans.RSS description',
             'required' => true,
             'empty_data' => '',
             'constraints' => [

@@ -20,6 +20,7 @@ class AppExtension extends AbstractExtension
             new TwigFunction('adminShowActivate', [TwigListingRuntime::class, 'adminShowActivate']),
             new TwigFunction('adminShowReject', [TwigListingRuntime::class, 'adminShowReject']),
             new TwigFunction('displayAsExpired', [TwigUserRuntime::class, 'displayAsExpired']),
+            new TwigFunction('settings', [TwigSettingsRuntime::class, 'settings']),
         ];
     }
 

@@ -11,6 +11,11 @@ class SettingsDto
      */
     private $indexPageTitle;
 
+    /**
+     * @var string|null
+     */
+    private $pageTitleSuffix;
+
     public function getIndexPageTitle(): ?string
     {
         return $this->indexPageTitle;
@@ -19,5 +24,15 @@ class SettingsDto
     public function setIndexPageTitle(string $indexPageTitle): void
     {
         $this->indexPageTitle = $indexPageTitle;
+    }
+
+    public function getPageTitleSuffix(): ?string
+    {
+        return $this->pageTitleSuffix;
+    }
+
+    public function setPageTitleSuffix(?string $pageTitleSuffix): void
+    {
+        $this->pageTitleSuffix = $pageTitleSuffix;
     }
 }

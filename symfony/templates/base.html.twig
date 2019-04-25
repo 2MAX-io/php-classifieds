@@ -3,7 +3,14 @@
 <html lang="pl">
 <head>
     <meta charset="utf-8">
-    <title>{% block title %}{{ 'trans.Classifieds' | trans }}{% endblock %}</title>
+    <title>
+        {%- set _blockTitleOverride = block('titleOverride') -%}
+        {%- if _blockTitleOverride is empty -%}
+            {% block title %}{{ 'trans.Classifieds' | trans }}{% endblock title -%}{{ ' ' }}{{- settings().pageTitleSuffix }}
+        {%- else -%}
+            {% block titleOverride %}{% endblock titleOverride -%}
+        {%- endif -%}
+    </title>
     <meta name="description" content="Description">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 

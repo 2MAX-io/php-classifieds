@@ -25,6 +25,15 @@ class SettingsType extends AbstractType
                 new Length(['min' => 1]),
             ],
         ]);
+        $builder->add('pageTitleSuffix', TextType::class, [
+            'label' => 'trans.Page title suffix',
+            'required' => true,
+            'empty_data' => '',
+            'constraints' => [
+                new NotBlank(),
+                new Length(['min' => 1]),
+            ],
+        ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

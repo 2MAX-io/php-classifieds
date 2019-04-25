@@ -532,3 +532,5 @@ php symfony/bin/console make:entity --regenerate "App\Entity"
 php symfony/bin/console make:entity --regenerate "App\Entity"
 php symfony/bin/console make:crud
 php symfony/bin/console doctrine:schema:update --force
+composer require -r symfony zendframework/zend-feed
+composer require -d symfony zendframework/zend-feed

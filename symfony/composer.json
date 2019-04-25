@@ -30,7 +30,8 @@
         "symfony/twig-bundle": "4.2.*",
         "symfony/validator": "4.2.*",
         "symfony/yaml": "4.2.*",
-        "webmozart/path-util": "^2.3"
+        "webmozart/path-util": "^2.3",
+        "zendframework/zend-feed": "^2.12"
     },
     "config": {
         "preferred-install": {

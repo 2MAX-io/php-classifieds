@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace App\Controller\User\Account;
 
 use App\Entity\Token;
+use App\Entity\TokenField;
 use App\Form\User\ChangeEmailType;
+use App\Helper\Str;
 use App\Security\CurrentUserService;
 use App\Service\FlashBag\FlashService;
 use App\Service\System\Token\TokenService;
@@ -73,33 +75,28 @@ class ChangeEmailController extends AbstractController
             return $this->redirectToRoute('app_user_change_email');
         }
 
-        $newEmail = $tokenEntity->getValueMain();
-
-        if ($tokenEntity->getTokenString() === $currentUserService->getUser()->getConfirmationToken()) {
-            $changeEmailService->changeEmail(
-                $currentUserService->getUser(),
-                $tokenEntity->getValueMain()
-            );
-
-            $this->getDoctrine()->getManager()->flush();
-
+        $newEmail = $tokenEntity->getFieldByName(TokenField::USER_NEW_EMAIL_FIELD);
+        $userId = $tokenEntity->getFieldByName(TokenField::USER_ID_FIELD);
+        if (!$newEmail || Str::toInt($userId) !== $currentUserService->getUser()->getId()) {
             $flashService->addFlash(
-                FlashService::SUCCESS_ABOVE_FORM,
-                'trans.Email address change has been successful'
+                FlashService::ERROR_ABOVE_FORM,
+                'trans.Confirmation link is invalid or expired'
             );
-        } else {
-            if ($newEmail === $currentUserService->getUser()->getEmail()) {
-                $flashService->addFlash(
-                    FlashService::SUCCESS_ABOVE_FORM,
-                    'trans.Email address change has been successful'
-                );
-            } else {
-                $flashService->addFlash(
-                    FlashService::ERROR_ABOVE_FORM,
-                    'trans.Email change failed, please check if confirmation link is correct'
-                );
-            }
+
+            return $this->redirectToRoute('app_user_change_email');
         }
+
+        $changeEmailService->changeEmail(
+            $currentUserService->getUser(),
+            $newEmail
+        );
+
+        $this->getDoctrine()->getManager()->flush();
+
+        $flashService->addFlash(
+            FlashService::SUCCESS_ABOVE_FORM,
+            'trans.Email address change has been successful'
+        );
 
         return $this->redirectToRoute('app_user_change_email');
     }

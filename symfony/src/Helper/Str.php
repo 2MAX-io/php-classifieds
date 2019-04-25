@@ -15,4 +15,9 @@ class Str
     {
         return strpos($string, $needle) !== false;
     }
+
+    public static function toInt(string $value): int
+    {
+        return (int) $value;
+    }
 }

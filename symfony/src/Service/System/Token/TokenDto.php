@@ -12,16 +12,16 @@ class TokenDto
     /**
      * @var Token
      */
-    private $token;
+    private $tokenEntity;
 
     /**
      * @var TokenField[]
      */
     private $fields;
 
-    public function __construct(Token $token)
+    public function __construct(Token $tokenEntity)
     {
-        $this->token = $token;
+        $this->tokenEntity = $tokenEntity;
     }
 
     public function getFields(): array
@@ -40,11 +40,11 @@ class TokenDto
         $tokenField->setName($name);
         $tokenField->setValue($value);
 
-        $this->token->addField($tokenField);
+        $this->tokenEntity->addField($tokenField);
     }
 
-    public function getToken(): Token
+    public function getTokenEntity(): Token
     {
-        return $this->token;
+        return $this->tokenEntity;
     }
 }

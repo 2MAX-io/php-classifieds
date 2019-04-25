@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Service\User\Account;
 
 use App\Entity\Token;
+use App\Entity\TokenField;
 use App\Entity\User;
 use App\Service\Email\EmailService;
 use App\Service\System\Token\TokenService;
@@ -50,8 +51,12 @@ class ChangePasswordService
         $hashedPassword = $this->encodePasswordService->getEncodedPassword($user, $newPassword);
         unset($newPassword);
 
-        $token = $this->tokenService->createToken($hashedPassword, Token::USER_PASSWORD_CHANGE_TYPE, Carbon::now()->add('day', 7));
-        $this->emailService->changePasswordConfirmation($user, $token);
+        $token = $this->tokenService->getTokenBuilder(Token::USER_PASSWORD_CHANGE_TYPE, Carbon::now()->add('day', 7));
+        $token->addField(TokenField::USER_ID_FIELD, (string) $user->getId());
+        $token->addField(TokenField::CHANGED_NEW_HASHED_PASSWORD, $hashedPassword);
+        $this->emailService->changePasswordConfirmation($user, $token->getTokenEntity()->getTokenString());
+
+        $this->em->persist($token->getTokenEntity());
     }
 
     public function changePassword(User $user, string $newPassword)

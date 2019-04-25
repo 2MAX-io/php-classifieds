@@ -67,9 +67,9 @@ class RemindPasswordService
         $tokenDto->addField(TokenField::USER_ID_FIELD, (string) $user->getId());
         $tokenDto->addField(TokenField::REMINDED_HASHED_PASSWORD, (string) $hashedPassword);
 
-        $this->em->persist($tokenDto->getToken());
+        $this->em->persist($tokenDto->getTokenEntity());
 
-        $this->emailService->remindPasswordConfirmation($user, $tokenDto->getToken()->getTokenString());
+        $this->emailService->remindPasswordConfirmation($user, $tokenDto->getTokenEntity()->getTokenString());
     }
 
     public function setHashedPassword(User $user, string $newPasswordHash)

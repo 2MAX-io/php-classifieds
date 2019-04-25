@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace App\Controller\User\Account;
 
 use App\Entity\Token;
+use App\Entity\TokenField;
 use App\Form\User\ChangePasswordType;
+use App\Helper\Str;
 use App\Security\CurrentUserService;
 use App\Service\FlashBag\FlashService;
 use App\Service\System\Token\TokenService;
@@ -70,33 +72,28 @@ class ChangePasswordController extends AbstractController
             return $this->redirectToRoute('app_user_change_password');
         }
 
-        $newHashedPassword = $tokenEntity->getValueMain();
-
-        if ($tokenEntity->getTokenString() === $currentUserService->getUser()->getConfirmationToken()) {
-            $changePasswordService->setHashedPassword(
-                $currentUserService->getUser(),
-                $newHashedPassword
-            );
-
-            $this->getDoctrine()->getManager()->flush();
-
+        $newHashedPassword = $tokenEntity->getFieldByName(TokenField::CHANGED_NEW_HASHED_PASSWORD);
+        $userId = $tokenEntity->getFieldByName(TokenField::USER_ID_FIELD);
+        if (!$newHashedPassword || !$userId || Str::toInt($userId) !== $currentUserService->getUser()->getId()) {
             $flashService->addFlash(
-                FlashService::SUCCESS_ABOVE_FORM,
-                'trans.Password change has been successful'
+                FlashService::ERROR_ABOVE_FORM,
+                'trans.Confirmation link is invalid or expired'
             );
-        } else {
-            if ($newHashedPassword === $currentUserService->getUser()->getPassword()) {
-                $flashService->addFlash(
-                    FlashService::SUCCESS_ABOVE_FORM,
-                    'trans.Password change has been successful'
-                );
-            } else {
-                $flashService->addFlash(
-                    FlashService::ERROR_ABOVE_FORM,
-                    'trans.Password change failed, please check if confirmation link is correct'
-                );
-            }
+
+            return $this->redirectToRoute('app_user_change_password');
         }
+
+        $changePasswordService->setHashedPassword(
+            $currentUserService->getUser(),
+            $newHashedPassword
+        );
+
+        $this->getDoctrine()->getManager()->flush();
+
+        $flashService->addFlash(
+            FlashService::SUCCESS_ABOVE_FORM,
+            'trans.Password change has been successful'
+        );
 
         return $this->redirectToRoute('app_user_change_password');
     }

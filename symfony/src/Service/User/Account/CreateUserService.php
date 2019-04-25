@@ -74,10 +74,10 @@ class CreateUserService
         );
         $tokenDto->addField(TokenField::USER_EMAIL_FIELD, (string) $user->getEmail());
 
-        $this->em->persist($tokenDto->getToken());
+        $this->em->persist($tokenDto->getTokenEntity());
         $this->em->persist($user);
 
-        $this->emailService->sendRegisterEmail($user, $tokenDto->getToken()->getTokenString());
+        $this->emailService->sendRegisterEmail($user, $tokenDto->getTokenEntity()->getTokenString());
 
         return $user;
     }

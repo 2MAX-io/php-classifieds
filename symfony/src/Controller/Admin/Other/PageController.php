@@ -2,21 +2,23 @@
 
 namespace App\Controller\Admin\Other;
 
+use App\Controller\Admin\Base\AbstractAdminController;
 use App\Entity\Page;
 use App\Form\PageType;
 use App\Repository\PageRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class PageController extends AbstractController
+class PageController extends AbstractAdminController
 {
     /**
      * @Route("/admin/red5/page", name="app_admin_page_index", methods={"GET"})
      */
     public function index(PageRepository $pageRepository): Response
     {
+        $this->denyUnlessAdmin();
+
         return $this->render('admin/page/index.html.twig', [
             'pages' => $pageRepository->findAll(),
         ]);
@@ -27,6 +29,8 @@ class PageController extends AbstractController
      */
     public function new(Request $request): Response
     {
+        $this->denyUnlessAdmin();
+
         $page = new Page();
         $page->setEnabled(true);
         $form = $this->createForm(PageType::class, $page);
@@ -51,6 +55,8 @@ class PageController extends AbstractController
      */
     public function edit(Request $request, Page $page): Response
     {
+        $this->denyUnlessAdmin();
+
         $form = $this->createForm(PageType::class, $page);
         $form->handleRequest($request);
 
@@ -73,6 +79,8 @@ class PageController extends AbstractController
      */
     public function delete(Request $request, Page $page): Response
     {
+        $this->denyUnlessAdmin();
+
         if ($this->isCsrfTokenValid('delete'.$page->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($page);

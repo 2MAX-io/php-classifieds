@@ -23,7 +23,7 @@ class PageController extends AbstractController
     }
 
     /**
-     * @Route("/admin/red5/page/new", name="page_new", methods={"GET","POST"})
+     * @Route("/admin/red5/page/new", name="app_admin_page_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
     {
@@ -46,7 +46,7 @@ class PageController extends AbstractController
     }
 
     /**
-     * @Route("/admin/red5/page/{id}/edit", name="page_edit", methods={"GET","POST"})
+     * @Route("/admin/red5/page/{id}/edit", name="app_admin_page_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Page $page): Response
     {
@@ -68,7 +68,7 @@ class PageController extends AbstractController
     }
 
     /**
-     * @Route("/admin/red5/page/{id}", name="page_delete", methods={"DELETE"})
+     * @Route("/admin/red5/page/{id}", name="app_admin_page_delete", methods={"DELETE"})
      */
     public function delete(Request $request, Page $page): Response
     {

@@ -19,10 +19,6 @@ class PageType extends AbstractType
         ]);
         $builder->add('title', TextType::class, [
             'label' => 'trans.Title',
-            'label' => 'trans.Title',
-        ]);
-        $builder->add('title', TextType::class, [
-            'label' => 'trans.Title',
         ]);
         $builder->add('content', TextareaType::class, [
             'label' => 'trans.Content',

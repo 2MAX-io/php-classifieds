@@ -4,7 +4,7 @@
 
 {% block body %}
     <div class="container mt-5">
-        <h1>Page index</h1>
+        <h1>{{ 'trans.Subpages' | trans }}</h1>
 
         <table class="table">
             <thead>
@@ -20,7 +20,7 @@
                     <td><a href="{{ path('app_page', {'slug': page.slug}) }}">{{ page.title }}</a></td>
                     <td>{{ (page.enabled ? 'trans.Yes' : 'trans.No') | trans }}</td>
                     <td>
-                        <a href="{{ path('page_edit', {'id': page.id}) }}" class="btn btn-primary">
+                        <a href="{{ path('app_admin_page_edit', {'id': page.id}) }}" class="btn btn-primary">
                             {{ 'trans.edit' | trans }}
                         </a>
                     </td>
@@ -33,6 +33,6 @@
             </tbody>
         </table>
 
-        <a href="{{ path('page_new') }}">Create new</a>
+        <a href="{{ path('app_admin_page_new') }}" class="btn btn-primary">{{ 'trans.Create new' | trans }}</a>
     </div>
 {% endblock %}

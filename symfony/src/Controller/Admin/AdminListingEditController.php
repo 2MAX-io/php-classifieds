@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Controller\Admin\Listing;
+namespace App\Controller\Admin;
 
 use App\Controller\Admin\Base\AbstractAdminController;
 use App\Entity\Listing;

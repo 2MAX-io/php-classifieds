@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Command;
+namespace App\Command\Cron;
 
 use App\Service\Cron\RegenerateSearchTextCron;
 use Symfony\Component\Console\Command\Command;

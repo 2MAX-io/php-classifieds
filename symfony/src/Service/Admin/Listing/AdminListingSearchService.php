@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Service\Admin\Listing;
 
 use App\Entity\Listing;
+use App\Helper\Search;
 use Doctrine\ORM\EntityManagerInterface;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
 use Pagerfanta\Pagerfanta;
@@ -30,7 +31,7 @@ class AdminListingSearchService
 
         if (!empty($_GET['query'])) {
             $qb->andWhere('MATCH (listing.searchText, listing.email, listing.phone, listing.rejectionReason) AGAINST (:query BOOLEAN) > 0');
-            $qb->setParameter(':query', rtrim($_GET['query'], '*') .'*');
+            $qb->setParameter(':query', Search::optimize($_GET['query']));
         }
 
         $qb->orderBy('listing.id', 'DESC');

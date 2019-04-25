@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Service\User\Listing;
 
 use App\Entity\Listing;
+use App\Helper\Search;
 use App\Security\CurrentUserService;
 use Doctrine\ORM\EntityManagerInterface;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
@@ -44,7 +45,7 @@ class UserListingListService
 
         if (!empty($_GET['query'])) {
             $qb->andWhere('MATCH (listing.searchText) AGAINST (:query BOOLEAN) > 0');
-            $qb->setParameter(':query', rtrim($_GET['query'], '*') .'*');
+            $qb->setParameter(':query', Search::optimize($_GET['query']));
         }
 
         $qb->orderBy('listing.lastEditDate', 'DESC');

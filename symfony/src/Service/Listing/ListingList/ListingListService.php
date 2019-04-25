@@ -7,6 +7,7 @@ namespace App\Service\Listing\ListingList;
 use App\Entity\Category;
 use App\Entity\CustomField;
 use App\Entity\Listing;
+use App\Helper\Search;
 use App\Service\Listing\ListingPublicDisplayService;
 use Doctrine\ORM\EntityManagerInterface;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
@@ -111,7 +112,7 @@ class ListingListService
 
         if (!empty($_GET['query'])) {
             $qb->andWhere('MATCH (listing.searchText) AGAINST (:query BOOLEAN) > 0');
-            $qb->setParameter(':query', rtrim($_GET['query'], '*') .'*');
+            $qb->setParameter(':query', Search::optimize($_GET['query']));
         }
 
         if (!empty($_GET['user'])) {

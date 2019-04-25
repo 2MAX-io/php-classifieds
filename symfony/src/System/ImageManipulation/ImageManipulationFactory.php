@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\System\Glide;
+namespace App\System\ImageManipulation;
 
 use League\Glide\Manipulators\Orientation;
 use League\Glide\Server;
@@ -13,7 +13,7 @@ use League\Glide\ServerFactory;
  * except removing Orientation because it requires EXIF
  * https://github.com/thephpleague/glide/issues/176#issuecomment-279174123
  */
-class AppServerFactory extends ServerFactory
+class ImageManipulationFactory extends ServerFactory
 {
     /**
      * @inheritDoc

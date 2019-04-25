@@ -23,20 +23,18 @@ class ValidityExtendType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder
-            ->add('validityTimeDays', ChoiceType::class, [
-                'mapped' => false,
-                'choices' => $this->validUntilSetService->getValidityTimeDaysChoices(),
-                'constraints' => [
-                    new Constraints\NotBlank(),
-                    new Constraints\Choice([
-                        'choices' => $this->validUntilSetService->getValidityTimeDaysChoices()
-                    ]),
-                ],
-                'label' => 'trans.Counting from today, extend by',
-                'data' => 9,
-            ])
-        ;
+        $builder->add('validityTimeDays', ChoiceType::class, [
+            'mapped' => false,
+            'choices' => $this->validUntilSetService->getValidityTimeDaysChoices(),
+            'constraints' => [
+                new Constraints\NotBlank(),
+                new Constraints\Choice([
+                    'choices' => $this->validUntilSetService->getValidityTimeDaysChoices()
+                ]),
+            ],
+            'label' => 'trans.Counting from today, extend by',
+            'data' => 9,
+        ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

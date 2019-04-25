@@ -6,7 +6,7 @@ namespace App\Controller\Pub;
 
 use App\Helper\File;
 use App\Helper\FilePath;
-use App\System\Glide\AppServerFactory;
+use App\System\ImageManipulation\ImageManipulationFactory;
 use League\Glide\Responses\SymfonyResponseFactory;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -80,7 +80,7 @@ class ResizeImageController
          * Everything must be already valid and safe after this point
          * -------------------------------------------------------------------------------------------------------------
          */
-        $server = AppServerFactory::create(
+        $server = ImageManipulationFactory::create(
             [
                 'source' => FilePath::getStaticPath(),
                 'cache' => FilePath::getStaticPath(),

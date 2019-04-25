@@ -13,8 +13,9 @@
     </title>
     <meta name="description" content="Description">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
     <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="description" content="{{- settings().metaDescription }}" />
+    <meta name='keywords' content='{{- settings().metaKeywords }}'/>
 
     {% block stylesheets %}
         <link rel="stylesheet" href="{{ asset('asset/bootstrap.css') }}">
@@ -22,7 +23,7 @@
     {% endblock %}
     {% block css %}{% endblock %}
 
-    <link rel='alternate' type='application/rss+xml' title='Ogłoszenia Jasło - Jaslo4u.pl' href='{{ url('app_rss') }}'/>
+    <link rel='alternate' type='application/rss+xml' title='{{- settings().rssTitle }}' href='{{ url('app_rss') }}'/>
 </head>
 <body>
 <!-- Top Header -->

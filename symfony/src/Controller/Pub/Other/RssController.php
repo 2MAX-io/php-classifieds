@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller\Pub\Other;
 
 use App\Service\Listing\Helper\ListingHelperService;
+use App\Service\Setting\SettingsService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -17,11 +18,16 @@ class RssController extends AbstractController
     /**
      * @Route("/rss", name="app_rss")
      */
-    public function index(ListingHelperService $listingHelperService, UrlGeneratorInterface $urlGenerator): Response
-    {
+    public function index(
+        ListingHelperService $listingHelperService,
+        UrlGeneratorInterface $urlGenerator,
+        SettingsService $settingsService
+    ): Response {
+        $settingsDto = $settingsService->getHydratedSettingsDto();
+
         $feed = new Feed;
-        $feed->setTitle("Ogłoszenia Jasło - Jaslo4u.pl");
-        $feed->setDescription("Darmowe ogłoszenia w mieście Jasło. Nasz serwis ogłoszeniowy odwiedza codziennie 5.000 użytkowników. Warto u nas dodawać ogłoszenia!");
+        $feed->setTitle($settingsDto->getRssTitle());
+        $feed->setDescription($settingsDto->getRssDescription());
         $feed->setLink($urlGenerator->generate('app_index'));
 
         foreach ($listingHelperService->getLatestListings(100) as $listing) {

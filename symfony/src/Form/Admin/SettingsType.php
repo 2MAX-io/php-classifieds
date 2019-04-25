@@ -6,6 +6,7 @@ namespace App\Form\Admin;
 
 use App\Service\Setting\SettingsDto;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -32,6 +33,39 @@ class SettingsType extends AbstractType
             'constraints' => [
                 new NotBlank(),
                 new Length(['min' => 1]),
+            ],
+        ]);
+        $builder->add('metaDescription', TextareaType::class, [
+            'label' => 'trans.Meta description',
+            'empty_data' => '',
+            'constraints' => [
+                new Length(['min' => 2]),
+            ],
+        ]);
+        $builder->add('metaKeywords', TextareaType::class, [
+            'label' => 'trans.Meta keywords',
+            'empty_data' => '',
+            'constraints' => [
+                new NotBlank(),
+                new Length(['min' => 5]),
+            ],
+        ]);
+        $builder->add('rssTitle', TextType::class, [
+            'label' => 'trans.Rss title',
+            'required' => true,
+            'empty_data' => '',
+            'constraints' => [
+                new NotBlank(),
+                new Length(['min' => 2]),
+            ],
+        ]);
+        $builder->add('rssDescription', TextareaType::class, [
+            'label' => 'trans.Rss description',
+            'required' => true,
+            'empty_data' => '',
+            'constraints' => [
+                new NotBlank(),
+                new Length(['min' => 2]),
             ],
         ]);
     }

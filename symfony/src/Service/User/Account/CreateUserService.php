@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Service\User\Account;
 
 use App\Entity\Token;
+use App\Entity\TokenField;
 use App\Entity\User;
 use App\Service\Email\EmailService;
 use App\Service\System\Token\TokenService;
@@ -66,12 +67,17 @@ class CreateUserService
         );
         $user->setPlainPassword($plainPassword);
         unset($plainPassword);
-        $token = $this->tokenService->createToken($email, Token::USER_REGISTER_TYPE, Carbon::now()->add('day', 7));
-        $user->setConfirmationToken($token);
 
+        $tokenDto = $this->tokenService->getTokenBuilder(
+            Token::USER_REGISTER_TYPE,
+            Carbon::now()->add('day', 7)
+        );
+        $tokenDto->addField(TokenField::USER_EMAIL_FIELD, (string) $user->getEmail());
+
+        $this->em->persist($tokenDto->getToken());
         $this->em->persist($user);
 
-        $this->emailService->sendRegisterEmail($user);
+        $this->emailService->sendRegisterEmail($user, $tokenDto->getToken()->getTokenString());
 
         return $user;
     }

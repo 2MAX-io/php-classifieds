@@ -72,22 +72,6 @@ class User implements UserInterface, RoleInterface, EnablableInterface, EncoderA
     private $lastLogin;
 
     /**
-     * Random string sent to the user email address in order to verify it.
-     *
-     * @var string|null
-     *
-     * @ORM\Column(type="string", length=180, unique=true, nullable=true)
-     */
-    protected $confirmationToken;
-
-    /**
-     * @var \DateTime|null
-     *
-     * @ORM\Column(type="datetimetz", nullable=true)
-     */
-    protected $passwordRequestedAt;
-
-    /**
      * @ORM\OneToMany(targetEntity="App\Entity\Listing", mappedBy="user")
      */
     private $listings;
@@ -255,30 +239,6 @@ class User implements UserInterface, RoleInterface, EnablableInterface, EncoderA
     public function setEnabled(bool $enabled): self
     {
         $this->enabled = $enabled;
-
-        return $this;
-    }
-
-    public function getConfirmationToken(): ?string
-    {
-        return $this->confirmationToken;
-    }
-
-    public function setConfirmationToken(?string $confirmationToken): self
-    {
-        $this->confirmationToken = $confirmationToken;
-
-        return $this;
-    }
-
-    public function getPasswordRequestedAt(): ?\DateTimeInterface
-    {
-        return $this->passwordRequestedAt;
-    }
-
-    public function setPasswordRequestedAt(?\DateTimeInterface $passwordRequestedAt): self
-    {
-        $this->passwordRequestedAt = $passwordRequestedAt;
 
         return $this;
     }

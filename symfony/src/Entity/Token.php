@@ -25,9 +25,9 @@ class Token
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=false)
+     * @ORM\Column(type="string", length=255, nullable=false, unique=true)
      */
-    private $token;
+    private $tokenString;
 
     /**
      * @ORM\Column(type="string", length=50, nullable=false)
@@ -62,18 +62,6 @@ class Token
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getTokenString(): ?string
-    {
-        return $this->token;
-    }
-
-    public function setTokenString(string $token): self
-    {
-        $this->token = $token;
-
-        return $this;
     }
 
     public function getType(): ?string
@@ -167,14 +155,14 @@ class Token
         return $field->getValue();
     }
 
-    public function getToken(): ?string
+    public function getTokenString(): ?string
     {
-        return $this->token;
+        return $this->tokenString;
     }
 
-    public function setToken(string $token): self
+    public function setTokenString(string $tokenString): self
     {
-        $this->token = $token;
+        $this->tokenString = $tokenString;
 
         return $this;
     }

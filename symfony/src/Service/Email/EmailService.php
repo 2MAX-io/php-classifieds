@@ -38,7 +38,7 @@ class EmailService
         $this->trans = $trans;
     }
 
-    public function sendRegisterEmail(User $user): void
+    public function sendRegisterEmail(User $user, string $token): void
     {
         $message = (new \Swift_Message($this->trans->trans('trans.Confirm account registration')))
             ->setReplyTo($this->environmentService->getMailerReplyToAddress())
@@ -47,37 +47,9 @@ class EmailService
             ->setBody(
                 $this->twig->render(
                     'email/registration.html.twig',
-                    ['user' => $user]
-                ),
-                'text/html'
-            )
-            /*
-             * If you also want to include a plaintext version of the message
-            ->addPart(
-                $this->renderView(
-                    'emails/registration.txt.twig',
-                    ['name' => $name]
-                ),
-                'text/plain'
-            )
-            */
-        ;
-        $this->mailer->send($message);
-        $this->mailer->getTransport();
-    }
-
-    public function sendEmailChangeConfirmationToPreviousEmail(User $user, string $newEmail): void
-    {
-        $message = (new \Swift_Message($this->trans->trans('trans.Confirmation of email address change')))
-            ->setReplyTo($this->environmentService->getMailerReplyToAddress())
-            ->setFrom($this->environmentService->getMailerFromEmailAddress(), $this->environmentService->getMailerFromName())
-            ->setTo($user->getEmail())
-            ->setBody(
-                $this->twig->render(
-                    'email/change_email_previous_email_confirmation.html.twig',
                     [
                         'user' => $user,
-                        'newEmail' => $newEmail,
+                        'token' => $token,
                     ]
                 ),
                 'text/html'
@@ -97,7 +69,39 @@ class EmailService
         $this->mailer->getTransport();
     }
 
-    public function sendEmailChangeNotificationToNewEmail(User $user, string $newEmail): void
+    public function sendEmailChangeConfirmationToPreviousEmail(User $user, string $newEmail, string $token): void
+    {
+        $message = (new \Swift_Message($this->trans->trans('trans.Confirmation of email address change')))
+            ->setReplyTo($this->environmentService->getMailerReplyToAddress())
+            ->setFrom($this->environmentService->getMailerFromEmailAddress(), $this->environmentService->getMailerFromName())
+            ->setTo($user->getEmail())
+            ->setBody(
+                $this->twig->render(
+                    'email/change_email_previous_email_confirmation.html.twig',
+                    [
+                        'user' => $user,
+                        'newEmail' => $newEmail,
+                        'token' => $token,
+                    ]
+                ),
+                'text/html'
+            )
+            /*
+             * If you also want to include a plaintext version of the message
+            ->addPart(
+                $this->renderView(
+                    'emails/registration.txt.twig',
+                    ['name' => $name]
+                ),
+                'text/plain'
+            )
+            */
+        ;
+        $this->mailer->send($message);
+        $this->mailer->getTransport();
+    }
+
+    public function sendEmailChangeNotificationToNewEmail(User $user, string $newEmail, string $token): void
     {
         $message = (new \Swift_Message($this->trans->trans('trans.Confirmation of email address change')))
             ->setReplyTo($this->environmentService->getMailerReplyToAddress())
@@ -110,6 +114,7 @@ class EmailService
                         'user' => $user,
                         'newEmail' => $newEmail,
                         'oldEmail' => $user->getEmail(),
+                        'token' => $token,
                     ]
                 ),
                 'text/html'
@@ -129,7 +134,7 @@ class EmailService
         $this->mailer->getTransport();
     }
 
-    public function changePasswordConfirmation(User $user): void
+    public function changePasswordConfirmation(User $user, string $token): void
     {
         $message = (new \Swift_Message($this->trans->trans('trans.Change password confirmation')))
             ->setReplyTo($this->environmentService->getMailerReplyToAddress())
@@ -140,6 +145,7 @@ class EmailService
                     'email/change_password_confirmation.html.twig',
                     [
                         'user' => $user,
+                        'token' => $token,
                     ]
                 ),
                 'text/html'
@@ -159,7 +165,7 @@ class EmailService
         $this->mailer->getTransport();
     }
 
-    public function remindPasswordConfirmation(User $user): void
+    public function remindPasswordConfirmation(User $user, string $token): void
     {
         $message = (new \Swift_Message($this->trans->trans('trans.Remind password confirmation')))
             ->setReplyTo($this->environmentService->getMailerReplyToAddress())
@@ -170,6 +176,7 @@ class EmailService
                     'email/remind_password_confirmation.html.twig',
                     [
                         'user' => $user,
+                        'token' => $token,
                     ]
                 ),
                 'text/html'

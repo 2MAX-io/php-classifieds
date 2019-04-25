@@ -21,7 +21,7 @@ class TokenRepository extends ServiceEntityRepository
 
     public function findByToken(string $token): ?Token
     {
-        return $this->findOneBy(['token' => $token]);
+        return $this->findOneBy(['tokenString' => $token]);
     }
 
     // /**

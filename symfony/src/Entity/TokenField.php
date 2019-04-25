@@ -12,6 +12,7 @@ class TokenField
 {
     public const USER_ID_FIELD = 'USER_ID_FIELD';
     public const REMINDED_HASHED_PASSWORD = 'REMINDED_HASHED_PASSWORD';
+    public const USER_EMAIL_FIELD = 'USER_EMAIL_FIELD';
 
     /**
      * @ORM\Id()

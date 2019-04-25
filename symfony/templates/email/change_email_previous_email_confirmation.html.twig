@@ -19,7 +19,7 @@
 </p>
 
 <div>
-    <a href="{{ url('app_user_change_email_previous_email_confirmation', {'token': user.confirmationToken}) }}">
+    <a href="{{ url('app_user_change_email_previous_email_confirmation', {'token': token}) }}">
         {{ 'trans.I confirm change of email addres to' | trans }}: {{ newEmail }}
     </a>
 
@@ -27,5 +27,5 @@
         {{ 'trans.If the link above does not work, try to copy the link below to your browser' | trans }}:
     </p>
 
-    <pre>{{ url('app_user_change_email_previous_email_confirmation', {'token': user.confirmationToken}) }}</pre>
+    <pre>{{ url('app_user_change_email_previous_email_confirmation', {'token': token}) }}</pre>
 </div>

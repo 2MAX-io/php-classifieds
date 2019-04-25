@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace App\Controller\User\Account;
 
 use App\Entity\Token;
+use App\Entity\TokenField;
 use App\Form\User\RegisterType;
+use App\Repository\UserRepository;
 use App\Service\FlashBag\FlashService;
 use App\Service\System\Token\TokenService;
 use App\Service\User\Account\RegisterConfirmService;
@@ -52,7 +54,8 @@ class RegisterController extends AbstractController
         string $token,
         RegisterConfirmService $registerConfirmService,
         FlashService $flashService,
-        TokenService $tokenService
+        TokenService $tokenService,
+        UserRepository $userRepository
     ): Response {
         $tokenEntity = $tokenService->getToken($token, Token::USER_REGISTER_TYPE);
 
@@ -65,10 +68,8 @@ class RegisterController extends AbstractController
             return $this->redirectToRoute('app_register');
         }
 
-        $userEmailFromToken = $tokenEntity->getValueMain();
-        $user = $registerConfirmService->getUserByToken($token);
-
-        if ($user === null || $user->getEmail() !== $userEmailFromToken) {
+        $userEmail = $tokenEntity->getFieldByName(TokenField::USER_EMAIL_FIELD);
+        if ($userEmail === null) {
             $flashService->addFlash(
                 FlashService::ERROR_ABOVE_FORM,
                 'trans.Confirmation link is invalid or expired'
@@ -77,27 +78,25 @@ class RegisterController extends AbstractController
             return $this->redirectToRoute('app_register');
         }
 
-        if ($tokenEntity->getTokenString() === $user->getConfirmationToken()) {
-            $registerConfirmService->confirmRegistration($user);
+        $user = $userRepository->findByEmail($userEmail);
+        if ($user->getEmail() !== $userEmail) {
+            $flashService->addFlash(
+                FlashService::ERROR_ABOVE_FORM,
+                'trans.Confirmation link is invalid or expired'
+            );
 
-            $this->getDoctrine()->getManager()->flush();
+            return $this->redirectToRoute('app_register');
+        }
 
+        $registerConfirmService->confirmRegistration($user);
+
+        $this->getDoctrine()->getManager()->flush();
+
+        if ($user->getEnabled()) {
             $flashService->addFlash(
                 FlashService::SUCCESS_ABOVE_FORM,
                 'trans.You have been successfully registered. Now you can add some listings.'
             );
-        } else {
-            if ($user->getEnabled()) {
-                $flashService->addFlash(
-                    FlashService::SUCCESS_ABOVE_FORM,
-                    'trans.You have been successfully registered. Now you can add some listings.'
-                );
-            } else {
-                $flashService->addFlash(
-                    FlashService::ERROR_ABOVE_FORM,
-                    'trans.Registration confirmation failed, please check if confirmation link is correct'
-                );
-            }
         }
 
         return $this->redirectToRoute('app_listing_new');

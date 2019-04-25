@@ -60,14 +60,16 @@ class RemindPasswordService
         $user->setPlainPassword($newPassword);
         $hashedPassword = $this->encodePasswordService->getEncodedPassword($user, $newPassword);
 
-        $tokenDto = $this->tokenService->getTokenBuilder(Token::USER_PASSWORD_REMIND, Carbon::now()->add('day', 7));
+        $tokenDto = $this->tokenService->getTokenBuilder(
+            Token::USER_PASSWORD_REMIND,
+            Carbon::now()->add('day', 7)
+        );
         $tokenDto->addField(TokenField::USER_ID_FIELD, (string) $user->getId());
         $tokenDto->addField(TokenField::REMINDED_HASHED_PASSWORD, (string) $hashedPassword);
 
         $this->em->persist($tokenDto->getToken());
 
-        $user->setConfirmationToken($tokenDto->getToken()->getTokenString());
-        $this->emailService->remindPasswordConfirmation($user);
+        $this->emailService->remindPasswordConfirmation($user, $tokenDto->getToken()->getTokenString());
     }
 
     public function setHashedPassword(User $user, string $newPasswordHash)

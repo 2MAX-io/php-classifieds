@@ -537,3 +537,5 @@ composer require -d symfony zendframework/zend-feed
 php symfony/bin/console make:entity
 composer require -d symfony symfony/property-info
 php symfony/bin/console doctrine:schema:update --force
+php symfony/bin/console make:entity --regenerate "App\Entity"
+php symfony/bin/console doctrine:schema:update --force

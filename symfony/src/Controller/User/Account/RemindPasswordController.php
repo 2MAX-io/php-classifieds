@@ -69,38 +69,37 @@ class RemindPasswordController extends AbstractController
 
         $userId = $tokenEntity->getFieldByName(TokenField::USER_ID_FIELD);
         $newHashedPassword = $tokenEntity->getFieldByName(TokenField::REMINDED_HASHED_PASSWORD);
+        if (!$userId || !$newHashedPassword) {
+            $flashService->addFlash(
+                FlashService::ERROR_ABOVE_FORM,
+                'trans.Confirmation link is invalid or expired'
+            );
+
+            return $this->redirectToRoute('app_remind_password');
+        }
         $user = $this->getDoctrine()->getRepository(User::class)->find($userId);
 
-        if ($tokenEntity->getTokenString() === $user->getConfirmationToken()) {
-            $remindPasswordService->setHashedPassword(
-                $user,
-                $newHashedPassword
-            );
-
-            $this->getDoctrine()->getManager()->flush();
-
+        if (!$user instanceof User) {
             $flashService->addFlash(
-                FlashService::SUCCESS_ABOVE_FORM,
-                'trans.Password reset has been successful'
+                FlashService::ERROR_ABOVE_FORM,
+                'trans.Confirmation link is invalid or expired'
             );
 
-            return $this->redirectToRoute('app_login');
-        } else {
-            if ($newHashedPassword === $user->getPassword()) {
-                $flashService->addFlash(
-                    FlashService::SUCCESS_ABOVE_FORM,
-                    'trans.Password reset has been successful'
-                );
-
-                return $this->redirectToRoute('app_login');
-            } else {
-                $flashService->addFlash(
-                    FlashService::ERROR_ABOVE_FORM,
-                    'trans.Password reset failed, please check if confirmation link is correct'
-                );
-            }
+            return $this->redirectToRoute('app_remind_password');
         }
 
-        return $this->redirectToRoute('app_remind_password');
+        $remindPasswordService->setHashedPassword(
+            $user,
+            $newHashedPassword
+        );
+
+        $this->getDoctrine()->getManager()->flush();
+
+        $flashService->addFlash(
+            FlashService::SUCCESS_ABOVE_FORM,
+            'trans.Password reset has been successful'
+        );
+
+        return $this->redirectToRoute('app_login');
     }
 }

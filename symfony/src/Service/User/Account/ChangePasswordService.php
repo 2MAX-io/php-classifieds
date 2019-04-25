@@ -51,8 +51,7 @@ class ChangePasswordService
         unset($newPassword);
 
         $token = $this->tokenService->createToken($hashedPassword, Token::USER_PASSWORD_CHANGE_TYPE, Carbon::now()->add('day', 7));
-        $user->setConfirmationToken($token);
-        $this->emailService->changePasswordConfirmation($user);
+        $this->emailService->changePasswordConfirmation($user, $token);
     }
 
     public function changePassword(User $user, string $newPassword)

@@ -1,0 +1,38 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Page index{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <h1>Page index</h1>
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th>{{ 'trans.Title' | trans }}</th>
+                <th>{{ 'trans.Enabled' | trans }}</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for page in pages %}
+                <tr>
+                    <td><a href="{{ path('app_page', {'slug': page.slug}) }}">{{ page.title }}</a></td>
+                    <td>{{ (page.enabled ? 'trans.Yes' : 'trans.No') | trans }}</td>
+                    <td>
+                        <a href="{{ path('page_edit', {'id': page.id}) }}" class="btn btn-primary">
+                            {{ 'trans.edit' | trans }}
+                        </a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="999">{{ 'trans.no records found' | trans }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <a href="{{ path('page_new') }}">Create new</a>
+    </div>
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Page{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+
+        <div class="float-right">
+            <a href="{{ path('app_admin_page_index') }}">{{ 'trans.back to list' | trans }}</a>
+
+            {{ include('page/_delete_form.html.twig') }}
+        </div>
+
+        <h1>{{ 'trans.Edit Page' | trans }}</h1>
+
+        {{ include('page/_form.html.twig', {'button_label': 'trans.Update'}) }}
+    </div>
+{% endblock %}

@@ -526,3 +526,9 @@ cd symfony
 cd ..
 composer require -d symfony hautelook/phpass
 composer install -d symfony
+php symfony/bin/console make:entity
+php symfony/bin/console make:crud
+php symfony/bin/console make:entity --regenerate "App\Entity"
+php symfony/bin/console make:entity --regenerate "App\Entity"
+php symfony/bin/console make:crud
+php symfony/bin/console doctrine:schema:update --force

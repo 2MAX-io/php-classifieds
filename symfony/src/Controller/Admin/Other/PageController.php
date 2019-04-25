@@ -28,6 +28,7 @@ class PageController extends AbstractController
     public function new(Request $request): Response
     {
         $page = new Page();
+        $page->setEnabled(true);
         $form = $this->createForm(PageType::class, $page);
         $form->handleRequest($request);
 

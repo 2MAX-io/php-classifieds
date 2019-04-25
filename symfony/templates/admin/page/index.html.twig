@@ -1,6 +1,6 @@
 {% extends 'admin/base.html.twig' %}
 
-{% block title %}Page index{% endblock %}
+{% block title %}{{ 'trans.Subpages' | trans }}{% endblock %}
 
 {% block body %}
     <div class="container mt-5">
@@ -11,13 +11,21 @@
             <tr>
                 <th>{{ 'trans.Title' | trans }}</th>
                 <th>{{ 'trans.Enabled' | trans }}</th>
-                <th></th>
+                <th>
+                    <a href="{{ path('app_admin_page_new') }}" class="btn btn-primary">
+                        {{ 'trans.Create new' | trans }}
+                    </a>
+                </th>
             </tr>
             </thead>
             <tbody>
             {% for page in pages %}
                 <tr>
-                    <td><a href="{{ path('app_page', {'slug': page.slug}) }}">{{ page.title }}</a></td>
+                    <td>
+                        <a href="{{ path('app_page', {'slug': page.slug}) }}" target="_blank">
+                            {{ page.title }}
+                        </a>
+                    </td>
                     <td>{{ (page.enabled ? 'trans.Yes' : 'trans.No') | trans }}</td>
                     <td>
                         <a href="{{ path('app_admin_page_edit', {'id': page.id}) }}" class="btn btn-primary">
@@ -32,7 +40,5 @@
             {% endfor %}
             </tbody>
         </table>
-
-        <a href="{{ path('app_admin_page_new') }}" class="btn btn-primary">{{ 'trans.Create new' | trans }}</a>
     </div>
 {% endblock %}

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Admin\Other;
 
 use App\Entity\Page;
 use App\Form\PageType;
@@ -17,7 +17,7 @@ class PageController extends AbstractController
      */
     public function index(PageRepository $pageRepository): Response
     {
-        return $this->render('page/index.html.twig', [
+        return $this->render('admin/page/index.html.twig', [
             'pages' => $pageRepository->findAll(),
         ]);
     }
@@ -39,7 +39,7 @@ class PageController extends AbstractController
             return $this->redirectToRoute('app_admin_page_index');
         }
 
-        return $this->render('page/new.html.twig', [
+        return $this->render('admin/page/new.html.twig', [
             'page' => $page,
             'form' => $form->createView(),
         ]);
@@ -61,7 +61,7 @@ class PageController extends AbstractController
             ]);
         }
 
-        return $this->render('page/edit.html.twig', [
+        return $this->render('admin/page/edit.html.twig', [
             'page' => $page,
             'form' => $form->createView(),
         ]);

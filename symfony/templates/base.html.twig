@@ -2,11 +2,13 @@
 <!--[if IE 9]><html class="lt-ie10" lang="pl"> <![endif]-->
 <html lang="pl">
 <head>
+    {# @var settings \App\Service\Setting\SettingsDto #}
+    {% set settings = settings() %}
     <meta charset="utf-8">
     <title>
         {%- set _blockTitleOverride = block('titleOverride') -%}
         {%- if _blockTitleOverride is empty -%}
-            {% block title %}{{ 'trans.Classifieds' | trans }}{% endblock title -%}{{ ' ' }}{{- settings().pageTitleSuffix }}
+            {% block title %}{{ 'trans.Classifieds' | trans }}{% endblock title -%}{{ ' ' }}{{- settings.pageTitleSuffix }}
         {%- else -%}
             {% block titleOverride %}{% endblock titleOverride -%}
         {%- endif -%}
@@ -14,8 +16,8 @@
     <meta name="description" content="Description">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="msapplication-TileColor" content="#ffffff">
-    <meta name="description" content="{{- settings().metaDescription }}" />
-    <meta name='keywords' content='{{- settings().metaKeywords }}'/>
+    <meta name="description" content="{{- settings.metaDescription }}" />
+    <meta name='keywords' content='{{- settings.metaKeywords }}'/>
 
     {% block stylesheets %}
         <link rel="stylesheet" href="{{ asset('asset/bootstrap.css') }}">
@@ -23,7 +25,7 @@
     {% endblock %}
     {% block css %}{% endblock %}
 
-    <link rel='alternate' type='application/rss+xml' title='{{- settings().rssTitle }}' href='{{ url('app_rss') }}'/>
+    <link rel='alternate' type='application/rss+xml' title='{{- settings.rssTitle }}' href='{{ url('app_rss') }}'/>
 </head>
 <body>
 <!-- Top Header -->

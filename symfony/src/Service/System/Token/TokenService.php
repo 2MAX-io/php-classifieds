@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Service\System\Token;
 
 use App\Entity\Token;
+use App\Entity\TokenField;
+use App\Entity\User;
 use App\Helper\Random;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
@@ -79,5 +81,12 @@ class TokenService
         }
 
         return $tokenEntity;
+    }
+
+    public function getUserFromToken(Token $tokenEntity): User
+    {
+        $userId = $tokenEntity->getFieldByName(TokenField::USER_ID_FIELD);
+
+        return $this->em->getRepository(User::class)->find($userId);
     }
 }

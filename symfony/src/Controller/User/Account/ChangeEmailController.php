@@ -7,7 +7,6 @@ namespace App\Controller\User\Account;
 use App\Entity\Token;
 use App\Entity\TokenField;
 use App\Form\User\ChangeEmailType;
-use App\Helper\Str;
 use App\Security\CurrentUserService;
 use App\Service\FlashBag\FlashService;
 use App\Service\System\Token\TokenService;
@@ -53,13 +52,12 @@ class ChangeEmailController extends AbstractController
 
     /**
      * @Route(
-     *     "/user/account/changeEmail/confirmation/previous/{token}",
+     *     "/confirm/user-email-change/previous/{token}",
      *     name="app_user_change_email_previous_email_confirmation"
      * )
      */
     public function changeEmailPreviousConfirmation(
         string $token,
-        CurrentUserService $currentUserService,
         ChangeEmailService $changeEmailService,
         TokenService $tokenService,
         FlashService $flashService
@@ -77,7 +75,7 @@ class ChangeEmailController extends AbstractController
 
         $newEmail = $tokenEntity->getFieldByName(TokenField::USER_NEW_EMAIL_FIELD);
         $userId = $tokenEntity->getFieldByName(TokenField::USER_ID_FIELD);
-        if (!$newEmail || Str::toInt($userId) !== $currentUserService->getUser()->getId()) {
+        if (!$newEmail || !$userId) {
             $flashService->addFlash(
                 FlashService::ERROR_ABOVE_FORM,
                 'trans.Confirmation link is invalid or expired'
@@ -87,7 +85,7 @@ class ChangeEmailController extends AbstractController
         }
 
         $changeEmailService->changeEmail(
-            $currentUserService->getUser(),
+            $tokenService->getUserFromToken($tokenEntity),
             $newEmail
         );
 

@@ -7,7 +7,6 @@ namespace App\Controller\User\Account;
 use App\Entity\Token;
 use App\Entity\TokenField;
 use App\Form\User\ChangePasswordType;
-use App\Helper\Str;
 use App\Security\CurrentUserService;
 use App\Service\FlashBag\FlashService;
 use App\Service\System\Token\TokenService;
@@ -52,12 +51,11 @@ class ChangePasswordController extends AbstractController
     }
 
     /**
-     * @Route("/user/account/changePassword/confirm/{token}", name="app_user_change_password_confirm")
+     * @Route("/confirm/user-password-change/{token}", name="app_user_change_password_confirm")
      */
     public function changePasswordConfirm(
         string $token,
         ChangePasswordService $changePasswordService,
-        CurrentUserService $currentUserService,
         TokenService $tokenService,
         FlashService $flashService
     ): Response {
@@ -74,7 +72,7 @@ class ChangePasswordController extends AbstractController
 
         $newHashedPassword = $tokenEntity->getFieldByName(TokenField::CHANGED_NEW_HASHED_PASSWORD);
         $userId = $tokenEntity->getFieldByName(TokenField::USER_ID_FIELD);
-        if (!$newHashedPassword || !$userId || Str::toInt($userId) !== $currentUserService->getUser()->getId()) {
+        if (!$newHashedPassword || !$userId) {
             $flashService->addFlash(
                 FlashService::ERROR_ABOVE_FORM,
                 'trans.Confirmation link is invalid or expired'
@@ -84,7 +82,7 @@ class ChangePasswordController extends AbstractController
         }
 
         $changePasswordService->setHashedPassword(
-            $currentUserService->getUser(),
+            $tokenService->getUserFromToken($tokenEntity),
             $newHashedPassword
         );
 

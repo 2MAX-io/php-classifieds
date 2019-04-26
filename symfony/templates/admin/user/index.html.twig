@@ -10,10 +10,10 @@
         <table class="table">
             <thead>
             <tr>
-                <th>Email</th>
-                <th>Enabled</th>
-                <th>RegistrationDate</th>
-                <th>LastLogin</th>
+                <th>{{ 'trans.Email' | trans }}</th>
+                <th>{{ 'trans.Enabled' | trans }}</th>
+                <th>{{ 'trans.Registration date' | trans }}</th>
+                <th>{{ 'trans.Last login' | trans }}</th>
                 <th></th>
             </tr>
             </thead>
@@ -21,7 +21,7 @@
             {% for user in users %}
                 <tr>
                     <td>{{ user.email }} {{ user.username }}</td>
-                    <td>{{ user.enabled ? 'Yes' : 'No' }}</td>
+                    <td>{{ (user.enabled ? 'trans.Yes' : 'trans.No') | trans }}</td>
                     <td>{{ user.registrationDate ? user.registrationDate|date : '' }}</td>
                     <td>{{ user.lastLogin ? user.lastLogin|date : '' }}</td>
                     <td>

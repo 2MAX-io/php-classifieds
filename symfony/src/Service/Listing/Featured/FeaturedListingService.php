@@ -56,7 +56,7 @@ class FeaturedListingService
 
     public function makeFeaturedByBalance(Listing $listing, int $featuredTimeSeconds): void
     {
-        // todo: secure that listing bellongs to user
+        // todo: secure that listing belongs to user
 
         $cost = 1 * 100;
         if (!$this->userBalanceService->hasAmount($cost, $listing->getUser())) {

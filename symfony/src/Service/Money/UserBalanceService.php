@@ -27,6 +27,7 @@ class UserBalanceService
 
     public function removeBalance(int $removeAmountPositive, User $user): void
     {
+        // todo: make transactional
         if ($removeAmountPositive <= 0) {
             throw new \UnexpectedValueException('should be positive');
         }

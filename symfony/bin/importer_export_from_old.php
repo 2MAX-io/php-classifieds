@@ -149,6 +149,10 @@ while ($dbRow = $stmt->fetch(\PDO::FETCH_ASSOC)) {
         $dbRow['listing_valid_until_date'] = $dbRow['listing_first_created_date'];
     }
 
+    if ($dbRow['listing_user_last_login'] < '2000-00-00 00:00:00') {
+        $dbRow['listing_user_last_login'] = null;
+    }
+
     $dbRow['listing_police_log'] = " | {$dbRow['ip_legacy']} {$dbRow['listing_first_created_date']} | ";
 
     // not present set default

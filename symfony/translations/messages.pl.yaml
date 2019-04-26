@@ -295,3 +295,8 @@ trans:
   Users: 'Użytkownicy'
   Registration date: 'Data rejestracji'
   Last login: 'Ostatnie logowanie'
+  Change user balance: 'Zmień saldo klienta'
+  Change balance: 'Zmień saldo'
+  Change balance of user: 'Zmień saldo użytkownika'
+  Current user balance: 'Aktualne saldo użytkownika'
+  Set balance to: 'Ustaw saldo na'

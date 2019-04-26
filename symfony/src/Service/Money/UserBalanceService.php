@@ -20,9 +20,22 @@ class UserBalanceService
         $this->em = $em;
     }
 
-    public function addBalance(int $money): void
+    public function forceSetBalance(int $newBalance, User $user): void
     {
+        $currentBalance = $this->getCurrentBalance($user);
+        $calculatedChange = $newBalance -$currentBalance;
 
+        $userBalanceChangeNew = new UserBalanceChange();
+        $userBalanceChangeNew->setUser($user);
+        $userBalanceChangeNew->setBalanceChange($calculatedChange);
+        $userBalanceChangeNew->setBalanceFinal($currentBalance + $calculatedChange);
+        $userBalanceChangeNew->setDatetime(new \DateTime());
+
+        if ($userBalanceChangeNew->getBalanceFinal() !== $newBalance) {
+            throw new \UnexpectedValueException('new balanced set incorrectly');
+        }
+
+        $this->em->persist($userBalanceChangeNew);
     }
 
     public function removeBalance(int $removeAmountPositive, User $user): void

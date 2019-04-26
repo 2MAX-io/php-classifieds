@@ -58,4 +58,9 @@ class AppRuntime implements RuntimeExtensionInterface
 
         return 'trans.No';
     }
+
+    public function moneyAsFloat(int $value): float
+    {
+        return \round($value / 100, 2);
+    }
 }

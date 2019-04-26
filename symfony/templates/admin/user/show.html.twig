@@ -3,10 +3,17 @@
 {% block title %}User{% endblock %}
 
 {% block body %}
-    <h1>User</h1>
+    <div class="container mt-5">
+        <h1>User</h1>
 
-    <table class="table">
-        <tbody>
+        <div>
+            <a href="{{ path('app_admin_user_change_balance', {'id': user.id}) }}" class="btn btn-primary">
+                {{ 'trans.Change user balance' | trans }}
+            </a>
+        </div>
+
+        <table class="table">
+            <tbody>
             <tr>
                 <th>Id</th>
                 <td>{{ user.id }}</td>
@@ -39,12 +46,13 @@
                 <th>LastLogin</th>
                 <td>{{ user.lastLogin ? user.lastLogin|date('Y-m-d H:i:s T') : '' }}</td>
             </tr>
-        </tbody>
-    </table>
+            </tbody>
+        </table>
 
-    <a href="{{ path('admin_user_index') }}">back to list</a>
+        <a href="{{ path('admin_user_index') }}">back to list</a>
 
-    <a href="{{ path('admin_user_edit', {'id': user.id}) }}">edit</a>
+        <a href="{{ path('admin_user_edit', {'id': user.id}) }}">edit</a>
 
-    {{ include('admin/user/_delete_form.html.twig') }}
+        {{ include('admin/user/_delete_form.html.twig') }}
+    </div>
 {% endblock %}

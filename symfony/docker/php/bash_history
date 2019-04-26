@@ -104,3 +104,4 @@ composer require -r symfony zendframework/zend-feed
 composer require -d symfony zendframework/zend-feed
 composer require -d symfony symfony/property-info
 php symfony/bin/console app:cron:main
+php symfony/bin/console make:crud

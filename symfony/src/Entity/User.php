@@ -113,7 +113,7 @@ class User implements UserInterface, RoleInterface, EnablableInterface, EncoderA
      */
     public function getUsername(): string
     {
-        return (string) $this->email;
+        return $this->username;
     }
 
     /**

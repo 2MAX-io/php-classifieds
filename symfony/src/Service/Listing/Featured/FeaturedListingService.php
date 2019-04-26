@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Service\Listing\Featured;
 
 use App\Entity\Listing;
+use App\Security\CurrentUserService;
 use App\Service\Money\UserBalanceService;
 use Carbon\Carbon;
 use Doctrine\ORM\EntityManagerInterface;
@@ -21,10 +22,19 @@ class FeaturedListingService
      */
     private $userBalanceService;
 
-    public function __construct(EntityManagerInterface $em, UserBalanceService $userBalanceService)
-    {
+    /**
+     * @var CurrentUserService
+     */
+    private $currentUserService;
+
+    public function __construct(
+        EntityManagerInterface $em,
+        UserBalanceService $userBalanceService,
+        CurrentUserService $currentUserService
+    ) {
         $this->em = $em;
         $this->userBalanceService = $userBalanceService;
+        $this->currentUserService = $currentUserService;
     }
 
     public function makeFeatured(Listing $listing, int $featuredTimeSeconds): void
@@ -57,14 +67,26 @@ class FeaturedListingService
     public function makeFeaturedByBalance(Listing $listing, int $featuredTimeSeconds): void
     {
         // todo: secure that listing belongs to user
+        $this->em->beginTransaction();
 
-        $cost = 1 * 100;
-        if (!$this->userBalanceService->hasAmount($cost, $listing->getUser())) {
-            return;
+        if ($listing->getUser() !== $this->currentUserService->getUser() || $this->currentUserService->isAdmin()) {
+            throw new \Exception('listing of different user');
         }
 
-        $this->makeFeatured($listing, $featuredTimeSeconds);
-        $this->userBalanceService->removeBalance($cost, $listing->getUser());
+        try {
+            $cost = 1 * 100;
+            if (!$this->userBalanceService->hasAmount($cost, $listing->getUser())) {
+                return;
+            }
+
+            $this->makeFeatured($listing, $featuredTimeSeconds);
+            $this->userBalanceService->removeBalance($cost, $listing->getUser());
+        } catch (\Throwable $e) {
+            $this->em->rollback();
+            throw $e;
+        }
+
+        $this->em->commit();
     }
 
     /**

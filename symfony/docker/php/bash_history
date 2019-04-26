@@ -8,83 +8,13 @@ php symfony/bin/console doctrine:schema:update --force
 php symfony/bin/console make:crud Listing
 php symfony/bin/console make:crud
 php symfony/bin/console make:entity --regenerate "App\Entity"
-php symfony/bin/console make:entity --regenerate "App\Entity"
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console make:crud
-php symfony/bin/console make:crud
-php symfony/bin/console make:entity
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console make:entity --regenerate "App\Entity"
 chmod -R 775 asset/user/listing
 chown -R 1000:www-data asset/user/listing
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console make:entity --regenerate "App\Entity"
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console make:entity --regenerate "App\Entity"
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console make:entity --regenerate "App\Entity"
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console make:entity --regenerate "App\Entity"
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console make:entity --regenerate "App\Entity"
-php symfony/bin/console make:entity --regenerate "App\Entity"
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console make:entity --regenerate "App\Entity"
-php symfony/bin/console doctrine:schema:update --force
 php symfony/bin/console make:user
-php symfony/bin/console doctrine:schema:update --force
 php symfony/bin/console make:auth
-php symfony/bin/console make:auth
-php symfony/bin/console doctrine:schema:update --force
 chown -R 1000:www-data symfony/config/
 php symfony/bin/console help
-php symfony/bin/console list
 php symfony/bin/console security:encode-password
-php symfony/bin/console make:entity --regenerate "App\Entity"
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console make:entity --regenerate "App\Entity"
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console make:entity --regenerate "App\Entity"
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console make:entity
-php symfony/bin/console make:entity --regenerate "App\Entity"
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console make:entity --regenerate "App\Entity"
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console make:entity --regenerate "App\Entity"
-php symfony/bin/console make:entity --regenerate "App\Entity"
-php symfony/bin/console make:entity --regenerate "App\Entity"
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console make:entity --regenerate "App\Entity"
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console make:entity
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console make:entity --regenerate "App\Entity"
-php symfony/bin/console make:entity --regenerate "App\Entity"
-php symfony/bin/console make:entity --regenerate "App\Entity"
-php symfony/bin/console make:entity --regenerate "App\Entity"
 chown -R 1000:www-data *.php *.js
 chown -R 1000:www-data ./*.php ./*.js
 chown -R 1000:www-data *.php
@@ -93,251 +23,33 @@ find . ! -name "content" | xargs -I {} echo {}
 find . ! -name ".git" | xargs -I {} echo {}
 find . -not -path "*/symfony/docker/mysql*" -type f -exec echo {} \;
 find . -not -path "*/symfony/docker/mysql*" -type f -exec echo {} \; | grep mysql
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console make:entity --regenerate "App\Entity"
-php symfony/bin/console make:entity --regenerate "App\Entity"
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console make:entity --regenerate "App\Entity"
 chown -R 1000:www-data symfony/src/Entity/*.php
-php symfony/bin/console doctrine:schema:update --force
-chown -R 1000:www-data symfony/src/Entity/*.php
-php symfony/bin/console doctrine:schema:update --force
-chown -R 1000:www-data symfony/src/Entity/*.php
-php symfony/bin/console make:entity --regenerate "App\Entity"
-chown -R 1000:www-data symfony/src/Entity/*.php
-php symfony/bin/console doctrine:schema:update --force
 chmod -R 775 static/
 chown -R 1000:www-data static/
 ls /var/www/html/static/user/listing/zzzz/2019/
-chown -R 1000:www-data static/
-php symfony/bin/console make:entity --regenerate "App\Entity"
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console doctrine:schema:update --force
-chown -R 1000:www-data symfony/src/Entity/*.php
-php symfony/bin/old_generate_csv.php 
-php symfony/bin/old_generate_csv.php 
-php symfony/bin/old_generate_csv.php 
-php symfony/bin/old_generate_csv.php 
-php symfony/bin/old_generate_csv.php 
-php symfony/bin/old_generate_csv.php 
-php symfony/bin/old_generate_csv.php 
-php symfony/bin/old_generate_csv.php 
-php symfony/bin/old_generate_csv.php 
-php symfony/bin/old_generate_csv.php 
-php symfony/bin/old_generate_csv.php 
-php symfony/bin/old_generate_csv.php 
-php symfony/bin/old_generate_csv.php 
-php symfony/bin/old_generate_csv.php 
-php symfony/bin/old_generate_csv.php 
-php symfony/bin/old_generate_csv.php 
-php symfony/bin/old_generate_csv.php 
-php symfony/bin/importer_import_to_new.php 
-chown -R 1000:www-data old_classifieds_export.csv importer_import_to_new.sql 
-php symfony/bin/importer_import_to_new.php 
-php symfony/bin/importer_import_to_new.php 
-php symfony/bin/importer_import_to_new.php 
-php symfony/bin/importer_import_to_new.php 
-php symfony/bin/importer_import_to_new.php 
-php symfony/bin/importer_import_to_new.php 
-php symfony/bin/importer_import_to_new.php 
-php symfony/bin/importer_import_to_new.php 
-php symfony/bin/importer_import_to_new.php 
-php symfony/bin/importer_import_to_new.php 
-php symfony/bin/importer_import_to_new.php 
-php symfony/bin/importer_import_to_new.php 
-php symfony/bin/importer_import_to_new.php 
-php symfony/bin/importer_import_to_new.php 
-php symfony/bin/importer_import_to_new.php 
-php symfony/bin/importer_import_to_new.php 
-php symfony/bin/importer_import_to_new.php 
-php symfony/bin/importer_import_to_new.php 
-php symfony/bin/importer_import_to_new.php 
-php symfony/bin/importer_import_to_new.php 
-php symfony/bin/importer_import_to_new.php 
-php symfony/bin/importer_export_from_old.php 
-php symfony/bin/importer_import_to_new.php 
-php symfony/bin/importer_import_to_new.php 
-php symfony/bin/importer_export_from_old.php 
-php symfony/bin/importer_import_to_new.php 
-php symfony/bin/importer_export_from_old.php 
-php symfony/bin/importer_import_to_new.php 
-php symfony/bin/importer_import_to_new.php 
-php symfony/bin/importer_export_from_old.php 
-php symfony/bin/importer_import_to_new.php 
-php symfony/bin/importer_export_from_old.php 
-php symfony/bin/importer_import_to_new.php 
+php symfony/bin/old_generate_csv.php
+php symfony/bin/importer_import_to_new.php
+chown -R 1000:www-data old_classifieds_export.csv importer_import_to_new.sql
+php symfony/bin/importer_export_from_old.php
 mysqldump --help
 mysqldump
-php symfony/bin/importer_import_to_new.php 
-php symfony/bin/importer_export_from_old.php 
-php symfony/bin/importer_export_from_old.php 
-php symfony/bin/importer_import_to_new.php 
-php symfony/bin/importer_export_from_old.php 
-php symfony/bin/importer_import_to_new.php 
-php symfony/bin/importer_import_to_new.php 
-php symfony/bin/importer_import_to_new.php 
-php symfony/bin/importer_import_to_new.php 
-php symfony/bin/importer_import_to_new.php 
-php symfony/bin/importer_export_from_old.php 
-php symfony/bin/importer_import_to_new.php 
-php symfony/bin/importer_export_from_old.php 
-php symfony/bin/importer_import_to_new.php 
-php symfony/bin/importer_export_from_old.php 
-php symfony/bin/importer_export_from_old.php 
-php symfony/bin/importer_export_from_old.php 
-php symfony/bin/importer_export_from_old.php 
-php symfony/bin/importer_import_to_new.php 
-php symfony/bin/importer_export_from_old.php 
-php symfony/bin/importer_import_to_new.php 
-php symfony/bin/importer_import_to_new.php 
-php symfony/bin/importer_export_from_old.php 
-php symfony/bin/importer_import_to_new.php 
-php symfony/bin/importer_export_from_old.php 
-php symfony/bin/importer_import_to_new.php 
-php symfony/bin/importer_export_from_old.php 
-php symfony/bin/importer_export_from_old.php 
-php symfony/bin/importer_export_from_old.php 
-php symfony/bin/importer_import_to_new.php 
-php symfony/bin/importer_import_to_new.php 
-chown -R 1000:www-data static/
-chmod -R 775 static/
 ls -l static/user/listing/0000_legacy/images/galeria/0/10957/
-php symfony/bin/importer_export_from_old.php 
-php symfony/bin/importer_import_to_new.php 
-php symfony/bin/importer_export_from_old.php 
-php symfony/bin/importer_import_to_new.php 
-php symfony/bin/importer_import_to_new.php 
-php symfony/bin/importer_export_from_old.php 
-php symfony/bin/importer_import_to_new.php 
-php symfony/bin/importer_export_from_old.php 
 [A
-php symfony/bin/importer_export_from_old.php 
-php symfony/bin/importer_import_to_new.php 
-php symfony/bin/importer_import_to_new.php 
-php symfony/bin/importer_export_from_old.php 
-php symfony/bin/importer_export_from_old.php 
-php symfony/bin/importer_export_from_old.php 
-php symfony/bin/importer_import_to_new.php 
-php symfony/bin/importer_import_to_new.php 
-php symfony/bin/importer_import_to_new.php 
-php symfony/bin/importer_import_to_new.php 
-php symfony/bin/importer_import_to_new.php 
-chown -R 1000:www-data old_classifieds_export.csv importer_import_to_new.sql 
-chown -R 1000:www-data importer_export_from_old.csv importer_import_to_new.sql 
-php symfony/bin/importer_export_from_old.php 
-php symfony/bin/importer_export_from_old.php 
-chown -R 1000:www-data importer_export_from_old.csv importer_import_to_new.sql 
-php symfony/bin/importer_import_to_new.php 
-php symfony/bin/importer_export_from_old.php 
-php symfony/bin/importer_import_to_new.php 
-php symfony/bin/importer_export_from_old.php 
-php symfony/bin/importer_import_to_new.php 
-php symfony/bin/importer_import_to_new.php 
-chown -R 1000:www-data importer_export_from_old.csv importer_import_to_new.sql 
+chown -R 1000:www-data importer_export_from_old.csv importer_import_to_new.sql
 sudo
 su www-data
 su -i www-data
-su www-data
-php symfony/bin/importer_export_from_old.php /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv
 php symfony/bin/importer_export_from_old.php /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv
 cat symfony/bin/importer_export_from_old.php
-cat symfony/bin/importer_export_from_old.php
-php symfony/bin/importer_export_from_old.php /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv
 php symfony/bin/importer_import_to_new.php /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv /var/www/html/symfony/docker/mysql/sql/importer_import_to_new.sql
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console doctrine:schema:update --force
 su
-php symfony/bin/importer_export_from_old.php /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv
 grep "0000-" /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv
 grep "0000-00" /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv
 head -1 /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv
-php symfony/bin/importer_export_from_old.php /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv
-grep "0000-00" /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv
-grep "0000-00" /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv
 grep "0000-00" -C5 /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv
-grep "0000-00" -C5 /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv
-php symfony/bin/importer_export_from_old.php /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv
-grep "0000-00" -C5 /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv
-grep "0000-00" /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv
-php symfony/bin/importer_export_from_old.php /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv
-grep "0000-00" /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv
-grep "0000-00" /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv
 grep "0000-00" -C2 /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv
-grep "0000-00" -C2 /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv
-php symfony/bin/importer_export_from_old.php /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv
-grep "0000-00" -C2 /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv
-php symfony/bin/importer_export_from_old.php /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv
-grep "0000-00" -C2 /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv
-grep "0000-00" -C2 /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv
-php symfony/bin/importer_export_from_old.php /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv
-grep "0000-00" -C2 /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv
-grep "0000-00" -C2 /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv
-grep "0000-00" -C2 /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv
-grep "0000-00" -C2 /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv
-php symfony/bin/importer_export_from_old.php /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv
-php symfony/bin/importer_export_from_old.php /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv
-php symfony/bin/importer_import_to_new.php /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv /var/www/html/symfony/docker/mysql/sql/importer_import_to_new.sql
-php symfony/bin/importer_import_to_new.php /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv /var/www/html/symfony/docker/mysql/sql/importer_import_to_new.sql
-php symfony/bin/importer_export_from_old.php /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv
-php symfony/bin/importer_import_to_new.php /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv /var/www/html/symfony/docker/mysql/sql/importer_import_to_new.sql
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console doctrine:schema:update --force
 rm static/user/listing/0000_legacy/images/galeria/0/9083/sdb3b8fb0db792343f42bf3535a10d385.jpg
 rm static/user/listing/0000_legacy/images/galeria/0/9083/size_list_sdb3b8fb0db792343f42bf3535a10d385.jpg
-rm static/user/listing/0000_legacy/images/galeria/0/9083/size_list_sdb3b8fb0db792343f42bf3535a10d385.jpg
-grep "0000-00" -C2 /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv
-php symfony/bin/importer_export_from_old.php /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv
-php symfony/bin/importer_import_to_new.php /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv /var/www/html/symfony/docker/mysql/sql/importer_import_to_new.sql
-php symfony/bin/importer_import_to_new.php /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv /var/www/html/symfony/docker/mysql/sql/importer_import_to_new.sql
-grep "0000-00" -C2 /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv
-php symfony/bin/importer_import_to_new.php /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv /var/www/html/symfony/docker/mysql/sql/importer_import_to_new.sql
-php symfony/bin/importer_import_to_new.php /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv /var/www/html/symfony/docker/mysql/sql/importer_import_to_new.sql
-php symfony/bin/importer_import_to_new.php /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv /var/www/html/symfony/docker/mysql/sql/importer_import_to_new.sql
-php symfony/bin/importer_import_to_new.php /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv /var/www/html/symfony/docker/mysql/sql/importer_import_to_new.sql
-php symfony/bin/importer_import_to_new.php /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv /var/www/html/symfony/docker/mysql/sql/importer_import_to_new.sql
-php symfony/bin/importer_import_to_new.php /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv /var/www/html/symfony/docker/mysql/sql/importer_import_to_new.sql
-php symfony/bin/importer_import_to_new.php /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv /var/www/html/symfony/docker/mysql/sql/importer_import_to_new.sql
-php symfony/bin/importer_import_to_new.php /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv /var/www/html/symfony/docker/mysql/sql/importer_import_to_new.sql
-php symfony/bin/importer_import_to_new.php /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv /var/www/html/symfony/docker/mysql/sql/importer_import_to_new.sql
-php symfony/bin/importer_import_to_new.php /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv /var/www/html/symfony/docker/mysql/sql/importer_import_to_new.sql
 ls -l static/user/*/size
 rm static/user/*/size_*.jpg
 rm -R static/user/*/size_*.jpg
@@ -345,31 +57,17 @@ cat user/listing/0000_legacy/images/galeria/0/31419/s10649644ab0f7395930022cfba9
 cat static/user/listing/0000_legacy/images/galeria/0/31419/s10649644ab0f7395930022cfba94412d.jpg
 exit
 ls /var/www/html/static/cache/user/listing/0000_legacy/images/galeria/0/31419/s10649644ab0f7395930022cfba94412d.jpg/769e883b630928e10466e75e0e8c631c
-ls /var/www/html/static/cache/user/listing/0000_legacy/images/galeria/0/31419/s10649644ab0f7395930022cfba94412d.jpg/769e883b630928e10466e75e0e8c631c
 ls zz
 chown -R 1000:www-data static
-chmod -R 775 static/
-chown -R 1000:www-data static
 chown -R www-data:www-data static
-chmod -R 775 static/
-ls /tmp/xdebug_out
-ls /tmp/xdebug_out
-ls /tmp/xdebug_out
-ls /tmp/xdebug_out
-ls /tmp/xdebug_out
 ls /tmp/xdebug_out
 ls -la
-ls /tmp/xdebug_out
 ls -l /tmp/xdebug_out
-exit
 composer dump-autoload --optimize
 composer ==help
 composer --help
 composer dump-autoload --optimize -d symfony
-exit
 chown -R www-data:www-data /var/www/html/
-composer dump-autoload --optimize -d symfony
-exit
 chown -R 1000:www-data /var/www/html/
 pgrep php
 pgrep apache
@@ -381,144 +79,20 @@ id -u www-data
 chown -R 1000:1000 /var/www/html/
 less /etc/passwd
 cat /etc/passwd
-exit
-chown -R 1000:www-data /var/www/html/
-composer dump-autoload --optimize -d symfony
 ls /var/www/.composer/
 ls -l /var/www/
-exit
 ls
 ls- la
-ls -la
-composer dump-autoload --optimize -d symfony
 ls -la /var/www
 mkdir .composer
-ls
-ls -la
-composer dump-autoload --optimize -d symfony
 mkdir /var/www/.composer
-composer --help
-composer dump-autoload --optimize -d symfony
-php symfony/bin/importer_export_from_old.php /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv
-php symfony/bin/importer_export_from_old.php /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv
-php symfony/bin/importer_export_from_old.php /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv
-php symfony/bin/importer_export_from_old.php /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv
-php symfony/bin/importer_export_from_old.php /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv
-php symfony/bin/importer_export_from_old.php /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv
-php symfony/bin/importer_export_from_old.php /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv
-php symfony/bin/importer_export_from_old.php /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv
-php symfony/bin/importer_export_from_old.php /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv
-php symfony/bin/importer_export_from_old.php /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv
-php symfony/bin/importer_export_from_old.php /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv
-php symfony/bin/importer_export_from_old.php /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv
-php symfony/bin/importer_export_from_old.php /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv
-php symfony/bin/importer_export_from_old.php /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv
-php symfony/bin/importer_export_from_old.php /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv
-php symfony/bin/importer_export_from_old.php /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv
-php symfony/bin/importer_export_from_old.php /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv
-php symfony/bin/importer_export_from_old.php /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv
-php symfony/bin/importer_export_from_old.php /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv
-php symfony/bin/importer_export_from_old.php /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv
 php symfony/bin/importer_export_from_old.php /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv > out.txt
-php symfony/bin/importer_export_from_old.php /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv > out.txt
-php symfony/bin/importer_export_from_old.php /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv > out.txt
-php symfony/bin/importer_export_from_old.php /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv > out.txt
-php symfony/bin/importer_export_from_old.php /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv > out.txt
-php symfony/bin/importer_export_from_old.php /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv > out.txt
-php symfony/bin/importer_export_from_old.php /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv > out.txt
-php symfony/bin/importer_export_from_old.php /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv > out.txt
-php symfony/bin/importer_export_from_old.php /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv > out.txt
-php symfony/bin/importer_export_from_old.php /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv > out.txt
-php symfony/bin/importer_export_from_old.php /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv > out.txt
-php symfony/bin/importer_export_from_old.php /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv > out.txt
-php symfony/bin/importer_export_from_old.php /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv > out.txt
-php symfony/bin/importer_export_from_old.php /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv > out.txt
-php symfony/bin/importer_export_from_old.php /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv 
-php symfony/bin/importer_import_to_new.php /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv /var/www/html/symfony/docker/mysql/sql/importer_import_to_new.sql
-php symfony/bin/importer_import_to_new.php /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv /var/www/html/symfony/docker/mysql/sql/importer_import_to_new.sql
-php symfony/bin/importer_import_to_new.php /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv /var/www/html/symfony/docker/mysql/sql/importer_import_to_new.sql
-php symfony/bin/importer_import_to_new.php /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv /var/www/html/symfony/docker/mysql/sql/importer_import_to_new.sql
-php symfony/bin/importer_import_to_new.php /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv /var/www/html/symfony/docker/mysql/sql/importer_import_to_new.sql
+php symfony/bin/importer_export_from_old.php /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv
 history
-php symfony/bin/importer_export_from_old.php /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv 
-php symfony/bin/importer_import_to_new.php /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv /var/www/html/symfony/docker/mysql/sql/importer_import_to_new.sql
 php symfony/bin/console doctrine:schema:update --help
 php symfony/bin/console doctrine:schema:update --dump-sql
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/importer_export_from_old.php /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv 
-php symfony/bin/importer_import_to_new.php /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv /var/www/html/symfony/docker/mysql/sql/importer_import_to_new.sql
-php symfony/bin/console make:entity --regenerate "App\Entity"
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console doctrine:schema:update --dump-sql
-php symfony/bin/console doctrine:schema:update --dump-sql
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console make:entity --regenerate "App\Entity"
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console help
-php symfony/bin/console list
 php symfony/bin/console make:command
 php symfony/bin/console app:cron:search-text-regenerate
-php symfony/bin/console app:cron:search-text-regenerate
-php symfony/bin/console app:cron:search-text-regenerate
-php symfony/bin/console app:cron:search-text-regenerate
-php symfony/bin/console app:cron:search-text-regenerate
-php symfony/bin/console app:cron:search-text-regenerate
-php symfony/bin/console app:cron:search-text-regenerate
-php symfony/bin/console app:cron:search-text-regenerate
-php symfony/bin/console app:cron:search-text-regenerate
-[A
-php symfony/bin/console app:cron:search-text-regenerate
-php symfony/bin/console app:cron:search-text-regenerate
-php symfony/bin/console app:cron:search-text-regenerate
-php symfony/bin/console app:cron:search-text-regenerate
-php symfony/bin/console app:cron:search-text-regenerate
-php symfony/bin/console app:cron:search-text-regenerate
-php symfony/bin/console app:cron:search-text-regenerate
-php symfony/bin/console app:cron:search-text-regenerate
-php symfony/bin/console app:cron:search-text-regenerate
-php symfony/bin/console app:cron:search-text-regenerate
-php symfony/bin/console app:cron:search-text-regenerate
-php symfony/bin/console app:cron:search-text-regenerate
-php symfony/bin/console app:cron:search-text-regenerate
-php symfony/bin/console app:cron:search-text-regenerate
-php symfony/bin/console app:cron:search-text-regenerate
-php symfony/bin/console app:cron:search-text-regenerate
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/importer_export_from_old.php /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv 
-php symfony/bin/importer_export_from_old.php /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv 
-php symfony/bin/importer_export_from_old.php /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv 
-php symfony/bin/importer_export_from_old.php /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv 
-php symfony/bin/importer_import_to_new.php /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv /var/www/html/symfony/docker/mysql/sql/importer_import_to_new.sql
-php symfony/bin/importer_import_to_new.php /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv /var/www/html/symfony/docker/mysql/sql/importer_import_to_new.sql
-php symfony/bin/importer_import_to_new.php /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv /var/www/html/symfony/docker/mysql/sql/importer_import_to_new.sql
-php symfony/bin/importer_import_to_new.php /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv /var/www/html/symfony/docker/mysql/sql/importer_import_to_new.sql
-php symfony/bin/importer_import_to_new.php /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv /var/www/html/symfony/docker/mysql/sql/importer_import_to_new.sql
-php symfony/bin/importer_import_to_new.php /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv /var/www/html/symfony/docker/mysql/sql/importer_import_to_new.sql
-php symfony/bin/importer_import_to_new.php /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv /var/www/html/symfony/docker/mysql/sql/importer_import_to_new.sql
-php symfony/bin/importer_import_to_new.php /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv /var/www/html/symfony/docker/mysql/sql/importer_import_to_new.sql
-php symfony/bin/importer_import_to_new.php /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv /var/www/html/symfony/docker/mysql/sql/importer_import_to_new.sql
-php symfony/bin/importer_import_to_new.php /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv /var/www/html/symfony/docker/mysql/sql/importer_import_to_new.sql
-php symfony/bin/importer_import_to_new.php /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv /var/www/html/symfony/docker/mysql/sql/importer_import_to_new.sql
-php symfony/bin/importer_import_to_new.php /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv /var/www/html/symfony/docker/mysql/sql/importer_import_to_new.sql
-php symfony/bin/console make:entity --regenerate "App\Entity"
-php symfony/bin/console doctrine:schema:update --force
 composer install install
 composer install hautelook/phpass
 composer require -w symfony hautelook/phpass
@@ -526,24 +100,7 @@ cd symfony
 cd ..
 composer require -d symfony hautelook/phpass
 composer install -d symfony
-php symfony/bin/console make:entity
-php symfony/bin/console make:crud
-php symfony/bin/console make:entity --regenerate "App\Entity"
-php symfony/bin/console make:entity --regenerate "App\Entity"
-php symfony/bin/console make:crud
-php symfony/bin/console doctrine:schema:update --force
 composer require -r symfony zendframework/zend-feed
 composer require -d symfony zendframework/zend-feed
-php symfony/bin/console make:entity
 composer require -d symfony symfony/property-info
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console make:entity --regenerate "App\Entity"
-php symfony/bin/console doctrine:schema:update --force
 php symfony/bin/console app:cron:main
-php symfony/bin/console app:cron:main
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console make:entity
-php symfony/bin/console make:entity --regenerate "App\Entity"
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console doctrine:schema:update --force
-php symfony/bin/console doctrine:schema:update --force

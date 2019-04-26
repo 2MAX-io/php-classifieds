@@ -29,22 +29,6 @@ class TokenService
         $this->logger = $logger;
     }
 
-    public function createToken(string $tokenValue, string $tokenType, ?\DateTimeInterface $validUntil = null): string
-    {
-        $tokenString = Random::string(40);
-
-        $token = new Token();
-        $token->setType($tokenType);
-        $token->setTokenString($tokenString);
-        $token->setValueMain($tokenValue);
-        $token->setCreatedDate(new \DateTime());
-        $token->setValidUntilDate($validUntil);
-
-        $this->em->persist($token);
-
-        return $tokenString;
-    }
-
     public function getTokenBuilder(string $tokenType, ?\DateTimeInterface $validUntil = null): TokenDto
     {
         $token = new Token();

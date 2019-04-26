@@ -35,11 +35,6 @@ class Token
     private $type;
 
     /**
-     * @ORM\Column(type="string", length=5000, nullable=true)
-     */
-    private $valueMain;
-
-    /**
      * @ORM\Column(type="datetimetz", nullable=false)
      */
     private $createdDate;
@@ -72,18 +67,6 @@ class Token
     public function setType(string $type): self
     {
         $this->type = $type;
-
-        return $this;
-    }
-
-    public function getValueMain(): ?string
-    {
-        return $this->valueMain;
-    }
-
-    public function setValueMain(?string $valueMain): self
-    {
-        $this->valueMain = $valueMain;
 
         return $this;
     }

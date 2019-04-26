@@ -76,9 +76,17 @@ class User implements UserInterface, RoleInterface, EnablableInterface, EncoderA
      */
     private $listings;
 
+    /**
+     * @var UserBalanceChange[]
+     *
+     * @ORM\OneToMany(targetEntity="App\Entity\UserBalanceChange", mappedBy="user")
+     */
+    private $userBalanceChanges;
+
     public function __construct()
     {
         $this->listings = new ArrayCollection();
+        $this->userBalanceChanges = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -258,5 +266,36 @@ class User implements UserInterface, RoleInterface, EnablableInterface, EncoderA
         }
 
         return null; // use the default encoder
+    }
+
+    /**
+     * @return Collection|UserBalanceChange[]
+     */
+    public function getUserBalanceChanges(): Collection
+    {
+        return $this->userBalanceChanges;
+    }
+
+    public function addUserBalanceChange(UserBalanceChange $userBalanceChange): self
+    {
+        if (!$this->userBalanceChanges->contains($userBalanceChange)) {
+            $this->userBalanceChanges[] = $userBalanceChange;
+            $userBalanceChange->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserBalanceChange(UserBalanceChange $userBalanceChange): self
+    {
+        if ($this->userBalanceChanges->contains($userBalanceChange)) {
+            $this->userBalanceChanges->removeElement($userBalanceChange);
+            // set the owning side to null (unless already changed)
+            if ($userBalanceChange->getUser() === $this) {
+                $userBalanceChange->setUser(null);
+            }
+        }
+
+        return $this;
     }
 }

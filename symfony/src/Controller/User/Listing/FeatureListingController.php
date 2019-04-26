@@ -28,7 +28,7 @@ class FeatureListingController extends AbstractUserController
     /**
      * @Route("/user/feature/make-featured/as-demo/{id}", name="app_user_feature_listing_as_demo", methods={"PATCH"})
      */
-    public function featureAsDemo(
+    public function makeFeaturedAsDemo(
         Request $request,
         Listing $listing,
         FeaturedListingService $featuredListingService
@@ -43,6 +43,30 @@ class FeatureListingController extends AbstractUserController
             return $this->redirectToRoute(
                 'app_user_feature_listing',
                 ['id' => $listing->getId(), 'demoStarted' => 1]
+            );
+        }
+
+        return $this->redirect($request->headers->get('referer'));
+    }
+
+    /**
+     * @Route("/user/feature/make-featured/packet/{id}", name="app_user_feature_listing_paid", methods={"PATCH"})
+     */
+    public function makeFeatured(
+        Request $request,
+        Listing $listing,
+        FeaturedListingService $featuredListingService
+    ): Response {
+        $this->dennyUnlessCurrentUserAllowed($listing);
+
+        if ($this->isCsrfTokenValid('feature'.$listing->getId(), $request->request->get('_token'))) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $featuredListingService->makeFeaturedByBalance($listing, 3600*24*7);
+            $entityManager->flush();
+
+            return $this->redirectToRoute(
+                'app_user_feature_listing',
+                ['id' => $listing->getId()]
             );
         }
 

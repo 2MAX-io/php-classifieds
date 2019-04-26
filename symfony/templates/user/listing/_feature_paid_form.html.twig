@@ -1,0 +1,5 @@
+<form method="post" action="{{ path('app_user_feature_listing_paid', {'id': listing.id}) }}" onsubmit="return confirm('{{ 'trans.Feature for 7 days: %listing%?' | trans({'%listing%': listing.title}) }}');" class="d-inline">
+    <input type="hidden" name="_method" value="PATCH">
+    <input type="hidden" name="_token" value="{{ csrf_token('feature' ~ listing.id) }}">
+    <button class="btn btn-success btn-mini">{{ 'trans.Feature for 7 days' | trans }}</button>
+</form>

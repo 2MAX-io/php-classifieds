@@ -542,3 +542,8 @@ php symfony/bin/console doctrine:schema:update --force
 php symfony/bin/console app:cron:main
 php symfony/bin/console app:cron:main
 php symfony/bin/console doctrine:schema:update --force
+php symfony/bin/console make:entity
+php symfony/bin/console make:entity --regenerate "App\Entity"
+php symfony/bin/console doctrine:schema:update --force
+php symfony/bin/console doctrine:schema:update --force
+php symfony/bin/console doctrine:schema:update --force

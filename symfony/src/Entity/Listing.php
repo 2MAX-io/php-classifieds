@@ -675,4 +675,9 @@ class Listing
 
         return $this;
     }
+
+    public function isFeaturedActive(): bool
+    {
+        return $this->getFeaturedUntilDate() > new \DateTime();
+    }
 }

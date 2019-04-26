@@ -17,6 +17,12 @@
                     </a>
                 </h1>
 
+                {% if listing.featuredActive %}
+                    <div class="alert alert-success">
+                        {{ 'trans.Featured until' | trans }}: {{ listing.featuredUntilDate | date }}
+                    </div>
+                {% endif %}
+
                 {% include 'form/_flash_above_form.html.twig' %}
 
                 {% if app.request.query.get('demoStarted') %}
@@ -25,6 +31,10 @@
                         <a href="{{ path('app_category', {'categorySlug': listing.category.slug}) }}#listing-{{ listing.id }}">{{ 'trans.HERE' | trans }}</a>
                     </div>
                 {% endif %}
+
+                <div>
+                    {{ include('user/listing/_feature_paid_form.html.twig') }}
+                </div>
 
                 {% if listing.featuredUntilDate is null %}
                     {{ include('user/listing/_feature_as_demo_form.html.twig') }}

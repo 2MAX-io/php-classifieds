@@ -133,6 +133,14 @@
     </div>
 </nav>
 
+<div id="gdpr" class="alert alert-info cookies gdpr ad rodo reklama">
+    <div class="container">
+        {{ 'trans.This page is using cookies. You can disable cookies by using browser settings.' | trans }}
+        <a href="{{ path('app_page', {'slug': settings.linkTermsConditions}) }}">{{ 'trans.More informations' | trans }}</a>
+        <button class="btn btn-dark btn-sm" onclick="document.getElementById('gdpr').remove()">{{ 'trans.I accept' | trans }}</button>
+    </div>
+</div>
+
 {% block body %}{% endblock body %}
 
 <!-- footer -->
@@ -160,7 +168,7 @@
                 <h5>{{ 'trans.About' | trans }}</h5>
                 <ul class="list-unstyled text-small">
                     <li><a class="text-muted" href="#contact">{{ 'trans.Contact' | trans }}</a></li>
-                    <li><a class="text-muted" href="{{ path('app_page', {'slug': 'regulamin'}) }}">{{ 'trans.Terms and conditions' | trans }}</a></li>
+                    <li><a class="text-muted" href="{{ path('app_page', {'slug': settings.linkTermsConditions}) }}">{{ 'trans.Terms and conditions' | trans }}</a></li>
                     <li><a class="text-muted" href="#report-abuse">{{ 'trans.Report abuse' | trans }}</a></li>
                 </ul>
             </div>

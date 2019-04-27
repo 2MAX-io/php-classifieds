@@ -7,8 +7,10 @@ namespace App\Controller\User\Listing;
 use App\Controller\User\Base\AbstractUserController;
 use App\Entity\FeaturedPackage;
 use App\Entity\Listing;
+use App\Security\CurrentUserService;
 use App\Service\Listing\Featured\FeaturedListingService;
 use App\Service\Listing\Featured\FeaturedPackageService;
+use App\Service\Money\UserBalanceService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -18,13 +20,18 @@ class FeatureListingController extends AbstractUserController
     /**
      * @Route("/user/feature/{id}", name="app_user_feature_listing")
      */
-    public function feature(Listing $listing, FeaturedPackageService $featuredPackageService): Response
-    {
+    public function feature(
+        Listing $listing,
+        FeaturedPackageService $featuredPackageService,
+        UserBalanceService $userBalanceService,
+        CurrentUserService $currentUserService
+    ): Response {
         $this->dennyUnlessCurrentUserAllowed($listing);
 
         return $this->render('user/listing/featured_extend.html.twig', [
             'listing' => $listing,
             'packages' => $featuredPackageService->getPackages($listing),
+            'userBalance' => $userBalanceService->getCurrentBalance($currentUserService->getUser()),
         ]);
     }
 

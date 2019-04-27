@@ -83,7 +83,7 @@ class FeaturedListingService
         }
 
         try {
-            $cost = 1 * 100;
+            $cost = $featuredPackage->getPrice();
             if (!$this->userBalanceService->hasAmount($cost, $listing->getUser())) {
                 return;
             }

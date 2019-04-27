@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Form\Admin;
 
+use App\Form\Type\PageType;
 use App\Service\Setting\SettingsDto;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -66,6 +67,13 @@ class SettingsType extends AbstractType
             'constraints' => [
                 new NotBlank(),
                 new Length(['min' => 2]),
+            ],
+        ]);
+        $builder->add('linkTermsConditions', PageType::class, [
+            'label' => 'trans.Link to terms and conditions',
+            'required' => true,
+            'constraints' => [
+                new NotBlank(),
             ],
         ]);
     }

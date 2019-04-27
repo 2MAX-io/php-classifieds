@@ -36,6 +36,11 @@ class SettingsDto
      */
     private $rssDescription;
 
+    /**
+     * @var string|null
+     */
+    private $linkTermsConditions;
+
     public function getIndexPageTitle(): ?string
     {
         return $this->indexPageTitle;
@@ -94,5 +99,15 @@ class SettingsDto
     public function setMetaKeywords(?string $metaKeywords): void
     {
         $this->metaKeywords = $metaKeywords;
+    }
+
+    public function getLinkTermsConditions(): ?string
+    {
+        return $this->linkTermsConditions;
+    }
+
+    public function setLinkTermsConditions(?string $linkTermsConditions): void
+    {
+        $this->linkTermsConditions = $linkTermsConditions;
     }
 }

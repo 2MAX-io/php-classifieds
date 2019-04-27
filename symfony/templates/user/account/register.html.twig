@@ -1,5 +1,7 @@
 {% extends 'base.html.twig' %}
 
+{# @var settings \App\Service\Setting\SettingsDto #}
+
 {% block title %}{{ 'trans.Register account' | trans }}{% endblock %}
 
 {% block body %}
@@ -15,6 +17,13 @@
                         <div class="card-body">
                             {{ form_start(form) }}
                             {{ form_widget(form) }}
+
+                            <div class="mb-3">
+                                {{ 'trans.Registration means acceptance of the' | trans }}
+                                <a href="{{ path('app_page', {'slug': settings.linkTermsConditions}) }}">
+                                    {{- 'trans.termsCondtionsLink' | trans -}}
+                                </a>
+                            </div>
 
                             <div class="form-group">
                                 <button class="btn btn-primary btn-block">{{ 'trans.Register' | trans }}</button>

@@ -27,7 +27,7 @@ class ListingView
     private $viewCount;
 
     /**
-     * @ORM\Column(type="datetimetz")
+     * @ORM\Column(type="datetime")
      */
     private $datetime;
 

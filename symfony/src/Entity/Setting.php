@@ -27,7 +27,7 @@ class Setting
     private $value;
 
     /**
-     * @ORM\Column(type="datetimetz")
+     * @ORM\Column(type="datetime")
      */
     private $lastUpdateDate;
 

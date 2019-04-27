@@ -35,12 +35,12 @@ class Token
     private $type;
 
     /**
-     * @ORM\Column(type="datetimetz", nullable=false)
+     * @ORM\Column(type="datetime", nullable=false)
      */
     private $createdDate;
 
     /**
-     * @ORM\Column(type="datetimetz", nullable=true)
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private $validUntilDate;
 

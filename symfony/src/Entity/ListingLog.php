@@ -33,7 +33,7 @@ class ListingLog
     private $text;
 
     /**
-     * @ORM\Column(type="datetimetz")
+     * @ORM\Column(type="datetime")
      */
     private $datetime;
 

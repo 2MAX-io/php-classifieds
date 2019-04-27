@@ -140,12 +140,12 @@ class Listing
     private $mainImage;
 
     /**
-     * @ORM\Column(type="datetimetz", nullable=false)
+     * @ORM\Column(type="datetime", nullable=false)
      */
     private $firstCreatedDate;
 
     /**
-     * @ORM\Column(type="datetimetz", nullable=false)
+     * @ORM\Column(type="datetime", nullable=false)
      */
     private $validUntilDate;
 
@@ -180,24 +180,24 @@ class Listing
     private $featuredWeight = 0;
 
     /**
-     * @ORM\Column(type="datetimetz", nullable=true)
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private $featuredUntilDate;
 
     /**
-     * @ORM\Column(type="datetimetz", nullable=false)
+     * @ORM\Column(type="datetime", nullable=false)
      */
     private $lastEditDate;
 
     /**
      * used to sort listings
      *
-     * @ORM\Column(type="datetimetz", nullable=false)
+     * @ORM\Column(type="datetime", nullable=false)
      */
     private $orderByDate;
 
     /**
-     * @ORM\Column(type="datetimetz", nullable=true)
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private $adminLastConfirmationDate;
 

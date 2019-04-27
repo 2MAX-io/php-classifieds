@@ -62,12 +62,12 @@ class User implements UserInterface, RoleInterface, EnablableInterface, EncoderA
     private $plainPassword;
 
     /**
-     * @ORM\Column(type="datetimetz", nullable=false)
+     * @ORM\Column(type="datetime", nullable=false)
      */
     private $registrationDate;
 
     /**
-     * @ORM\Column(type="datetimetz", nullable=true)
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private $lastLogin;
 

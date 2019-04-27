@@ -32,7 +32,7 @@ class UserBalanceChange
     private $balanceFinal;
 
     /**
-     * @ORM\Column(type="datetimetz")
+     * @ORM\Column(type="datetime")
      */
     private $datetime;
 

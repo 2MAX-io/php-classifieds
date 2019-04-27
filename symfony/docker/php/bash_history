@@ -115,3 +115,9 @@ php symfony/bin/console doctrine:schema:update --dump-sql
 php symfony/bin/console doctrine:schema:update --dump-sql
 php symfony/bin/console make:entity --regenerate "App\Entity"
 php symfony/bin/console doctrine:schema:update --force
+php symfony/bin/console doctrine:schema:update --force
+php symfony/bin/console doctrine:schema:update --force
+php symfony/bin/console doctrine:schema:update --dump-sql
+php symfony/bin/console doctrine:schema:validate
+php symfony/bin/console doctrine:schema:validate
+php symfony/bin/console doctrine:schema:update --dump-sql

@@ -78,11 +78,17 @@ class Category
      */
     private $picture;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\FeaturedPackageForCategory", mappedBy="category")
+     */
+    private $featuredPackages;
+
     public function __construct()
     {
         $this->listings = new ArrayCollection();
         $this->customFields = new ArrayCollection();
         $this->children = new ArrayCollection();
+        $this->featuredPackages = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -313,6 +319,37 @@ class Category
     public function setSort(int $sort): self
     {
         $this->sort = $sort;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|FeaturedPackageForCategory[]
+     */
+    public function getFeaturedPackages(): Collection
+    {
+        return $this->featuredPackages;
+    }
+
+    public function addFeaturedPackage(FeaturedPackageForCategory $featuredPackage): self
+    {
+        if (!$this->featuredPackages->contains($featuredPackage)) {
+            $this->featuredPackages[] = $featuredPackage;
+            $featuredPackage->setCategory($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFeaturedPackage(FeaturedPackageForCategory $featuredPackage): self
+    {
+        if ($this->featuredPackages->contains($featuredPackage)) {
+            $this->featuredPackages->removeElement($featuredPackage);
+            // set the owning side to null (unless already changed)
+            if ($featuredPackage->getCategory() === $this) {
+                $featuredPackage->setCategory(null);
+            }
+        }
 
         return $this;
     }

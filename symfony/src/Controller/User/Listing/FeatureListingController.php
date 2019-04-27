@@ -24,7 +24,7 @@ class FeatureListingController extends AbstractUserController
 
         return $this->render('user/listing/featured_extend.html.twig', [
             'listing' => $listing,
-            'packages' => $featuredPackageService->getPackages(),
+            'packages' => $featuredPackageService->getPackages($listing),
         ]);
     }
 

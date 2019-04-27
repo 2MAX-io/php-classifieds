@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -45,6 +47,16 @@ class FeaturedPackage
      * @ORM\Column(type="boolean", nullable=false)
      */
     private $defaultPackage;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\FeaturedPackageForCategory", mappedBy="featuredPackage")
+     */
+    private $featuredPackageForCategories;
+
+    public function __construct()
+    {
+        $this->featuredPackageForCategories = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -119,6 +131,37 @@ class FeaturedPackage
     public function setDefaultPackage(bool $defaultPackage): self
     {
         $this->defaultPackage = $defaultPackage;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|FeaturedPackageForCategory[]
+     */
+    public function getFeaturedPackageForCategories(): Collection
+    {
+        return $this->featuredPackageForCategories;
+    }
+
+    public function addFeaturedPackageForCategory(FeaturedPackageForCategory $featuredPackageForCategory): self
+    {
+        if (!$this->featuredPackageForCategories->contains($featuredPackageForCategory)) {
+            $this->featuredPackageForCategories[] = $featuredPackageForCategory;
+            $featuredPackageForCategory->setFeaturedPackage($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFeaturedPackageForCategory(FeaturedPackageForCategory $featuredPackageForCategory): self
+    {
+        if ($this->featuredPackageForCategories->contains($featuredPackageForCategory)) {
+            $this->featuredPackageForCategories->removeElement($featuredPackageForCategory);
+            // set the owning side to null (unless already changed)
+            if ($featuredPackageForCategory->getFeaturedPackage() === $this) {
+                $featuredPackageForCategory->setFeaturedPackage(null);
+            }
+        }
 
         return $this;
     }

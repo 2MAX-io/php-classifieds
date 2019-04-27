@@ -38,6 +38,10 @@
                             <h4>{{ package.name }}</h4>
 
                             <div>
+                                {{ package.price | moneyAsFloat }}
+                            </div>
+
+                            <div>
                                 {{ include('user/listing/_feature_paid_form.html.twig') }}
                             </div>
                         </div>

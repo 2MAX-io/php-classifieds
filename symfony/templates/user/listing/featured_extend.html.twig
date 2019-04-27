@@ -23,11 +23,13 @@
                     </div>
                 {% endif %}
 
-                <div class="my-4">
-                    {{ 'trans.Your balance is' | trans }}:
-                    <strong class="badge badge-success">{{ userBalance | moneyAsFloat }}</strong>
-                    {{ 'trans.that you can use to feature listing' | trans }}
-                </div>
+                {% if userBalance > 0 %}
+                    <div class="my-4">
+                        {{ 'trans.Your balance is' | trans }}:
+                        <strong class="badge badge-success">{{ userBalance | moneyAsFloat }}</strong>
+                        {{ 'trans.that you can use to feature listing' | trans }}
+                    </div>
+                {% endif %}
 
                 {% include 'form/_flash_above_form.html.twig' %}
 

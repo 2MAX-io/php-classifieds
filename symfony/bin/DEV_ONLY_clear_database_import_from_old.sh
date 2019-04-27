@@ -12,4 +12,3 @@ docker exec classifieds_mysql bash -c "mysql classifieds < /sql/dev/truncate_lis
 time docker exec classifieds_mysql bash -c "mysql classifieds < /sql/importer_import_to_new.sql"
 
 docker exec classifieds_mysql bash -c "mysqldump classifieds > /sql/ogl_$(date +%Y-%m-%d_%H%M%S)_new.sql"
-

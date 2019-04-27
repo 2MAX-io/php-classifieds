@@ -39,22 +39,26 @@
                 </div>
 
                 {% if listing.listingFiles is not empty %}
-                    <div class="mb-2 listing-show-carousel">
-                        <div class="owl-carousel">
-                            {% for listingFile in listing.listingFiles %}
-                                <a
-                                        href="{{ asset(listingFile.pathInNormalSize) }}"
-                                        data-fancybox="galleryTop"
-                                        class="fancybox"
-                                >
-                                    <img
-                                            data-src="{{ asset(listingFile.pathInNormalSize) }}"
-                                            class="mx-auto listing-show-top-image owl-lazy"
-                                            alt=""
-                                    />
-                                </a>
-                            {% endfor %}
-                        </div>
+                    <div class="mb-2 zoom-wrapper">
+                        <a
+                                href="javascript:"
+                                data-fancybox-trigger="file"
+                                class="fancybox"
+                        >
+                            <img
+                                    src="{{ asset(listing.listingFiles.first.pathInNormalSize) }}"
+                                    class="mx-auto listing-show-top-image"
+                                    alt=""
+                            />
+                        </a>
+                        <a
+                                dir="ltr"
+                                class="zoom"
+                                href="javascript:"
+                                data-fancybox-trigger="file"
+                        >
+                            <i dir="ltr" class="fa fa-search-plus" aria-hidden="true"></i>
+                        </a>
                     </div>
                 {% endif %}
 
@@ -118,7 +122,7 @@
                             <div class="listing-thumb float-left img-thumbnail mr-2 mb-2" style="width: 120px">
                                 <a
                                         href="{{ asset(listingFile.pathInNormalSize) }}"
-                                        data-fancybox="galleryDescription"
+                                        data-fancybox="fileInTab"
                                         class="fancybox"
                                 >
                                     <div class="dummy container-img rounded" style="background-image:url('{{ asset(listingFile.pathInNormalSize) }}');"></div>
@@ -134,7 +138,7 @@
                         {% for listingFile in listing.listingFiles %}
                             <a
                                     href="{{ asset(listingFile.pathInNormalSize) }}"
-                                    data-fancybox="galleryBottom"
+                                    data-fancybox="file"
                                     class="fancybox"
                             >
                                 <img
@@ -285,24 +289,14 @@
 
 {% block js %}
     <script type="text/javascript">
-        $('.fancybox').fancybox({
+        $('[data-fancybox="file"]').fancybox({
             buttons: [
                 "zoom",
                 "thumbs",
                 "close"
             ],
-        });
-
-        $('.owl-carousel').owlCarousel({
-            center: true,
-            autoHeight: true,
-            lazyLoad: true,
-            nav: true,
-            navText : ['<i class="fa fa-angle-left" aria-hidden="true"></i>','<i class="fa fa-angle-right" aria-hidden="true"></i>'],
-            checkVisible: false,
-            items: 1
+            hash: false,
         });
     </script>
-
 {% endblock %}
 

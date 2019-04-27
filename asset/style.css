@@ -390,48 +390,6 @@ svg.icon {
     font-size: 1.7rem;
     text-shadow: 1px 1px 1px #000, 0px 0px 3px #000000;
 }
-.owl-prev {
-    width: 50px;
-    height: 50px;
-    position: absolute;
-    top: 40%;
-    margin-left: 0;
-    display: block !important;
-    border:0px solid black;
-    cursor: pointer;
-    outline: none;
-}
-
-.owl-next {
-    width: 50px;
-    height: 50px;
-    position: absolute;
-    top: 40%;
-    right: 0;
-    display: block !important;
-    border:0px solid black;
-    cursor: pointer;
-}
-
-
-@media (min-width: 992px) {
-    .owl-prev, .owl-next {
-        height: 100%;
-        top: 0;
-    }
-
-}
-
-.owl-prev:focus, .owl-next:focus {
-    outline:0;
-}
-
-.owl-prev i, .owl-next i {
-    transform : scale(2);
-    color: white;
-    text-shadow: 1px 1px 1px #000, 0px 0px 3px #000000;
-    outline: none;
-}
 
 @media (min-width: 768px) {
     .col-checkbox-pull-down {
@@ -500,17 +458,6 @@ svg.icon {
     padding-bottom: 0;
 }
 
-.listing-show-carousel {
-}
-
-.owl-carousel .owl-item img.listing-show-top-image {
-    width: auto;
-}
-
-.listing-show-carousel .owl-height {
-    transition: height 50ms;
-}
-
 
 .listing-list-img {
     max-height: 10rem;
@@ -518,4 +465,28 @@ svg.icon {
 
 .user-listings-feature-this-link {
     color: #f44336;
+}
+
+.zoom-wrapper {
+    position: relative;
+}
+
+.zoom-wrapper .zoom {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 50;
+    width: 90px;
+    height: 90px;
+    color: #fff;
+    font-size: 50px;
+    margin-left: -45px;
+    margin-top: -45px;
+    background-color: rgba(0,0,0,.25);
+    display: block;
+    cursor: pointer;
+}
+
+.zoom .fa {
+    margin: 20px 0 0 25px;
 }

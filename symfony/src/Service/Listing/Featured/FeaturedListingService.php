@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Service\Listing\Featured;
 
+use App\Entity\FeaturedPackage;
 use App\Entity\Listing;
 use App\Security\CurrentUserService;
 use App\Service\Money\UserBalanceService;
@@ -64,7 +65,7 @@ class FeaturedListingService
         }
     }
 
-    public function makeFeaturedByBalance(Listing $listing, int $featuredTimeSeconds): void
+    public function makeFeaturedByBalance(Listing $listing, FeaturedPackage $featuredPackage): void
     {
         // todo: secure that listing belongs to user
         $this->em->beginTransaction();
@@ -79,7 +80,7 @@ class FeaturedListingService
                 return;
             }
 
-            $this->makeFeatured($listing, $featuredTimeSeconds);
+            $this->makeFeatured($listing, $featuredPackage->getDaysFeaturedExpire() * 3600 * 24);
             $this->userBalanceService->removeBalance($cost, $listing->getUser());
         } catch (\Throwable $e) {
             $this->em->rollback();

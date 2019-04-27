@@ -1,5 +1,10 @@
-<form method="post" action="{{ path('app_user_feature_listing_by_balance', {'id': listing.id}) }}" onsubmit="return confirm('{{ 'trans.Feature for 7 days: %listing%?' | trans({'%listing%': listing.title}) }}');" class="d-inline">
+<form
+        method="post"
+        action="{{ path('app_user_feature_listing_by_balance', {'id': listing.id, 'featuredPackage': package.id}) }}"
+        onsubmit="return confirm('{{ 'trans.Feature for %featuredDays% days: %listing%?' | trans({'%listing%': listing.title, '%featuredDays%': package.daysFeaturedExpire}) }}');"
+        class="d-inline"
+>
     <input type="hidden" name="_method" value="PATCH">
     <input type="hidden" name="_token" value="{{ csrf_token('feature' ~ listing.id) }}">
-    <button class="btn btn-success btn-mini mb-2">{{ 'trans.Feature for 7 days' | trans }}</button>
+    <button class="btn btn-success btn-mini mb-2">{{ 'trans.Feature for %featuredDays% days' | trans({'%featuredDays%': package.daysFeaturedExpire}) }}</button>
 </form>

@@ -10,12 +10,12 @@
             </div>
 
             <div class="col-md-8 col-lg-9">
-                <h1>
+                <h3 class="mb-5">
                     {{ 'trans.Feature listing' | trans }}:
                     <a href="{{ path('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}">
                         {{ listing.title }}
                     </a>
-                </h1>
+                </h3>
 
                 {% if listing.featuredActive %}
                     <div class="alert alert-success">
@@ -32,15 +32,30 @@
                     </div>
                 {% endif %}
 
-                <div>
-                    {{ include('user/listing/_feature_paid_form.html.twig') }}
-                </div>
+                <div class="row">
+                    {% for package in packages %}
+                        <div class="col-md-4">
+                            <h4>{{ package.name }}</h4>
 
-                {% if listing.featuredUntilDate is null %}
-                    {{ include('user/listing/_feature_as_demo_form.html.twig') }}
-                {% else %}
-                    <span class="btn btn-secondary btn-sm disabled">{{ 'trans.Demonstration of featured has been used up' | trans }}</span>
-                {% endif %}
+                            <div>
+                                {{ include('user/listing/_feature_paid_form.html.twig') }}
+                            </div>
+                        </div>
+                    {% endfor %}
+
+
+                    <div class="col-md-4">
+                        <h4>{{ 'trans.Featured demonstration' | trans }}</h4>
+
+                        <div>
+                            {% if listing.featuredUntilDate is null %}
+                                {{ include('user/listing/_feature_as_demo_form.html.twig') }}
+                            {% else %}
+                                <span class="btn btn-secondary btn-sm disabled">{{ 'trans.Demonstration of featured has been used up' | trans }}</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

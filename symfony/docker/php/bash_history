@@ -105,3 +105,11 @@ composer require -d symfony zendframework/zend-feed
 composer require -d symfony symfony/property-info
 php symfony/bin/console app:cron:main
 php symfony/bin/console make:crud
+php symfony/bin/console make:entity
+php symfony/bin/console doctrine:schema:update --dump-sql
+php symfony/bin/console doctrine:schema:update --force
+php symfony/bin/console doctrine:schema:update --force
+php symfony/bin/console doctrine:schema:update --dump-sql
+php symfony/bin/console doctrine:schema:update --dump-sql
+php symfony/bin/console doctrine:schema:update --dump-sql
+php symfony/bin/console doctrine:schema:update --dump-sql

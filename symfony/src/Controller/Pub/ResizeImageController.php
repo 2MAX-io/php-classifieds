@@ -28,12 +28,14 @@ class ResizeImageController
             throw new NotFoundHttpException();
         }
 
-        if (!File::isImage($request->getRequestUri())) {
+        $requestUriWithoutGet = strtok($request->getRequestUri(), '?');
+
+        if (!File::isImage($requestUriWithoutGet)) {
             throw new NotFoundHttpException();
         }
 
         $sourcePath = $path . '/' . $file;
-        $targetPath = Path::canonicalize(FilePath::getProjectDir() . $request->getRequestUri());
+        $targetPath = Path::canonicalize(FilePath::getProjectDir() . $requestUriWithoutGet);
 
         return $this->getResponse($request, $type, $sourcePath, $targetPath);
     }

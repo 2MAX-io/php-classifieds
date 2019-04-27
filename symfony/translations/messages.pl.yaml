@@ -225,7 +225,6 @@ trans:
   files were chosen: 'zostały wybrane'
   file was chosen: 'został wybrany'
   Pasting a file, click here to cancel: 'Wklejanie pliku, kliknij tutaj aby anulować'
-  Registration confirmation failed, please check if confirmation link is correct: 'Niepowodzenie podczas potwierdzenia rejestracji, sprawdź czy link potwierdzający jest poprawny'
   Previous rejection: 'Poprzednie odrzucenie'
   none: 'brak'
   Older than 1960: 'Starsze niż 1960'
@@ -306,3 +305,4 @@ trans:
   Feature for %featuredDays% days: 'Wyróżnij na %featuredDays% dni'
   Your balance is: 'Twoje saldo wynosi'
   that you can use to feature listing: 'które możesz wykorzystać do wyróżnienia ogłoszeń'
+  Confirmation link is invalid or expired, check if confirmation link is correct: 'Link potwierdzający jest niepoprawny lub wygasł, sprawdź czy link potwierdzający jest poprawny'

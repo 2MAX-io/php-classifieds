@@ -62,7 +62,7 @@ class RegisterController extends AbstractController
         if ($tokenEntity === null) {
             $flashService->addFlash(
                 FlashService::ERROR_ABOVE_FORM,
-                'trans.Confirmation link is invalid or expired'
+                'trans.Confirmation link is invalid or expired, check if confirmation link is correct'
             );
 
             return $this->redirectToRoute('app_register');
@@ -72,7 +72,7 @@ class RegisterController extends AbstractController
         if ($userEmail === null) {
             $flashService->addFlash(
                 FlashService::ERROR_ABOVE_FORM,
-                'trans.Confirmation link is invalid or expired'
+                'trans.Confirmation link is invalid or expired, check if confirmation link is correct'
             );
 
             return $this->redirectToRoute('app_register');
@@ -82,7 +82,7 @@ class RegisterController extends AbstractController
         if ($user->getEmail() !== $userEmail) {
             $flashService->addFlash(
                 FlashService::ERROR_ABOVE_FORM,
-                'trans.Confirmation link is invalid or expired'
+                'trans.Confirmation link is invalid or expired, check if confirmation link is correct'
             );
 
             return $this->redirectToRoute('app_register');

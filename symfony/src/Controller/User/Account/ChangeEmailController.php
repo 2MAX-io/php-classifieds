@@ -67,7 +67,7 @@ class ChangeEmailController extends AbstractController
         if ($tokenEntity === null) {
             $flashService->addFlash(
                 FlashService::ERROR_ABOVE_FORM,
-                'trans.Confirmation link is invalid or expired'
+                'trans.Confirmation link is invalid or expired, check if confirmation link is correct'
             );
 
             return $this->redirectToRoute('app_user_change_email');
@@ -78,7 +78,7 @@ class ChangeEmailController extends AbstractController
         if (!$newEmail || !$userId) {
             $flashService->addFlash(
                 FlashService::ERROR_ABOVE_FORM,
-                'trans.Confirmation link is invalid or expired'
+                'trans.Confirmation link is invalid or expired, check if confirmation link is correct'
             );
 
             return $this->redirectToRoute('app_user_change_email');

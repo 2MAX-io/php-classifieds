@@ -21,11 +21,25 @@ class ValidUntilSetService
         $this->em = $em;
     }
 
-    public function setValidUntil(Listing $listing, int $validityTimeDays)
+    public function setValidityDaysFromNow(Listing $listing, int $validityTimeDays): void
     {
         $validityTimeDays = min($validityTimeDays, $this->getMaxValidityTimeDays());
 
-        $listing->setValidUntilDate(Carbon::now()->add(CarbonInterval::days($validityTimeDays)));
+        $newValidUntilDate = Carbon::now()->add(CarbonInterval::days($validityTimeDays));
+
+        if ($newValidUntilDate < $listing->getValidUntilDate()) {
+            return;
+        }
+
+        $listing->setValidUntilDate($newValidUntilDate);
+        $this->em->persist($listing);
+    }
+
+    public function addValidityDaysWithoutRestrictions(Listing $listing, int $validityTimeDays): void
+    {
+        $newValidUntilDate = Carbon::instance($listing->getValidUntilDate())->add(CarbonInterval::days($validityTimeDays));
+        $listing->setValidUntilDate($newValidUntilDate);
+        $this->em->persist($listing);
     }
 
     public function getValidityTimeDaysChoices(): array

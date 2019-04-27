@@ -44,7 +44,7 @@ class CreateListingService
     public function setFormDependent(Listing $listing, FormInterface $form): void
     {
         if ($form->has('validityTimeDays')) {
-            $this->validUntilSetService->setValidUntil($listing, (int) $form->get('validityTimeDays')->getData());
+            $this->validUntilSetService->setValidityDaysFromNow($listing, (int) $form->get('validityTimeDays')->getData());
         }
 
         $listing->setAdminConfirmed(false);

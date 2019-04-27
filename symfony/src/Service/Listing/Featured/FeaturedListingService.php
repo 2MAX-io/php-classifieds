@@ -7,6 +7,7 @@ namespace App\Service\Listing\Featured;
 use App\Entity\FeaturedPackage;
 use App\Entity\Listing;
 use App\Security\CurrentUserService;
+use App\Service\Listing\ValidityExtend\ValidUntilSetService;
 use App\Service\Money\UserBalanceService;
 use Carbon\Carbon;
 use Doctrine\ORM\EntityManagerInterface;
@@ -28,14 +29,21 @@ class FeaturedListingService
      */
     private $currentUserService;
 
+    /**
+     * @var ValidUntilSetService
+     */
+    private $validUntilSetService;
+
     public function __construct(
         EntityManagerInterface $em,
         UserBalanceService $userBalanceService,
-        CurrentUserService $currentUserService
+        CurrentUserService $currentUserService,
+        ValidUntilSetService $validUntilSetService
     ) {
         $this->em = $em;
         $this->userBalanceService = $userBalanceService;
         $this->currentUserService = $currentUserService;
+        $this->validUntilSetService = $validUntilSetService;
     }
 
     public function makeFeatured(Listing $listing, int $featuredTimeSeconds): void
@@ -82,6 +90,10 @@ class FeaturedListingService
 
             $this->makeFeatured($listing, $featuredPackage->getDaysFeaturedExpire() * 3600 * 24);
             $this->userBalanceService->removeBalance($cost, $listing->getUser());
+            $this->validUntilSetService->addValidityDaysWithoutRestrictions(
+                $listing,
+                $featuredPackage->getDaysListingExpire()
+            );
         } catch (\Throwable $e) {
             $this->em->rollback();
             throw $e;

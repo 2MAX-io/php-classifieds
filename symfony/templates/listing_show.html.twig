@@ -196,28 +196,16 @@
                     </div>
 
                     <div class="card-body">
-                        {% if listing.phone is not empty and not displayAsExpired(listing)  %}
-                        <div class="mb-2 py-2">
-                            <div class="row">
-                                <div class="col-sm-4">{{ 'trans.Phone' | trans }}</div>
-
-                                <div class="col-sm-8">
-                                    <a href="tel:{{ listing.phone }}">{{ listing.phone }}</a>
-                                </div>
-                            </div>
-                        </div>
-                        {% endif %}
-
-                        {% if listing.email is not empty and listing.emailShow and not displayAsExpired(listing)  %}
-                        <div class="mb-2 py-2">
-                            <div class="row">
-                                <div class="col-sm-4">{{ 'trans.Email' | trans }}</div>
-
-                                <div class="col-sm-8">
-                                    <a target="_blank" href="mailto:{{ listing.email }}">{{ listing.email }}</a>
-                                </div>
-                            </div>
-                        </div>
+                        {% if displayAsExpired(listing) %}
+                            <div class="btn btn-success w-100 disabled">{{ 'trans.Listing has expired' | trans }}</div>
+                        {% else %}
+                            <button
+                                    id="showContactInformation"
+                                    class="btn btn-success w-100"
+                                    onclick="showContactInformation({{ listing.id }})"
+                            >
+                                {{ 'trans.Show contact information' | trans }}
+                            </button>
                         {% endif %}
 
                         {% if listing.city is not empty and not displayAsExpired(listing) %}
@@ -297,6 +285,14 @@
             ],
             hash: false,
         });
+
+        var showContactInformation = function (listingId) {
+            $.post(Routing.generate('app_listing_contact_data'), {listingId: listingId}, function (response) {
+                $('.listing-contact-data').remove();
+
+                $('#showContactInformation').before(response.html);
+            });
+        };
     </script>
 {% endblock %}
 

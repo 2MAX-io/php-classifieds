@@ -12,6 +12,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Twig\Environment;
 
 class ListingShowController extends AbstractController
 {
@@ -65,5 +66,38 @@ class ListingShowController extends AbstractController
                 ),
             ]
         );
+    }
+
+    /**
+     * @Route(
+     *     "/private/listing/show-contact-data",
+     *     name="app_listing_contact_data",
+     *     methods={"POST"},
+     *     options={"expose"=true},
+     * )
+     */
+    public function showContactData(
+        Request $request,
+        ListingShowSingleService $listingShowSingleService,
+        CurrentUserService $currentUserService,
+        ListingPublicDisplayService $listingPublicDisplayService,
+        Environment $twig
+    ): Response {
+        $listingId = (int) $request->request->get('listingId');
+        $listingShowDto = $listingShowSingleService->getSingle($listingId);
+        if (!$listingShowDto) {
+            throw $this->createNotFoundException();
+        }
+
+        $forceDisplay = $listingShowDto->getListing()->getUser() === $currentUserService->getUser() || $currentUserService->lowSecurityCheckIsAdminInPublic();
+        if (!$forceDisplay && !$listingPublicDisplayService->canPublicDisplay($listingShowDto->getListing())) {
+            throw $this->createAccessDeniedException();
+        }
+
+        return $this->json([
+            'html' => $twig->render('listing_show_contact.html.twig', [
+                'listing' => $listingShowDto->getListing(),
+            ])
+        ]);
     }
 }

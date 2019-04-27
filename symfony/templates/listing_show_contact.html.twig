@@ -1,0 +1,26 @@
+<div class="listing-contact-data">
+    {% if listing.phone is not empty and not displayAsExpired(listing)  %}
+        <div class="mb-2 py-2">
+            <div class="row">
+                <div class="col-sm-4">{{ 'trans.Phone' | trans }}</div>
+
+                <div class="col-sm-8">
+                    <a href="tel:{{ listing.phone }}">{{ listing.phone }}</a>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+    {% if listing.email is not empty and listing.emailShow and not displayAsExpired(listing)  %}
+        <div class="mb-2 py-2">
+            <div class="row">
+                <div class="col-sm-4">{{ 'trans.Email' | trans }}</div>
+
+                <div class="col-sm-8">
+                    <a target="_blank" href="mailto:{{ listing.email }}">{{ listing.email }}</a>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+</div>

@@ -75,10 +75,9 @@ class FeaturedListingService
 
     public function makeFeaturedByBalance(Listing $listing, FeaturedPackage $featuredPackage): void
     {
-        // todo: secure that listing belongs to user
         $this->em->beginTransaction();
 
-        if ($listing->getUser() !== $this->currentUserService->getUser() || $this->currentUserService->isAdmin()) {
+        if ($listing->getUser() !== $this->currentUserService->getUser()) {
             throw new \Exception('listing of different user');
         }
 

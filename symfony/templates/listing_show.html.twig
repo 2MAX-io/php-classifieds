@@ -39,26 +39,28 @@
                 </div>
 
                 {% if listing.listingFiles is not empty %}
-                    <div class="mb-2 zoom-wrapper">
-                        <a
-                                href="javascript:"
-                                data-fancybox-trigger="file"
-                                class="fancybox"
-                        >
-                            <img
-                                    src="{{ asset(listing.listingFiles.first.pathInNormalSize) }}"
-                                    class="mx-auto listing-show-top-image"
-                                    alt=""
-                            />
-                        </a>
-                        <a
-                                dir="ltr"
-                                class="zoom"
-                                href="javascript:"
-                                data-fancybox-trigger="file"
-                        >
-                            <i dir="ltr" class="fa fa-search-plus" aria-hidden="true"></i>
-                        </a>
+                    <div class="mb-2">
+                        <div class="zoom-wrapper">
+                            <a
+                                    href="javascript:"
+                                    data-fancybox-trigger="file"
+                                    class="fancybox"
+                            >
+                                <img
+                                        src="{{ asset(listing.listingFiles.first.pathInNormalSize) }}"
+                                        class="mx-auto listing-show-top-image"
+                                        alt=""
+                                />
+                            </a>
+                            <a
+                                    dir="ltr"
+                                    class="zoom"
+                                    href="javascript:"
+                                    data-fancybox-trigger="file"
+                            >
+                                <i dir="ltr" class="fa fa-search-plus" aria-hidden="true"></i>
+                            </a>
+                        </div>
                     </div>
                 {% endif %}
 

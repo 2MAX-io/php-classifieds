@@ -468,6 +468,7 @@ svg.icon {
 }
 
 .zoom-wrapper {
+    display: inline;
     position: relative;
 }
 

@@ -122,3 +122,4 @@ php symfony/bin/console doctrine:schema:validate
 php symfony/bin/console doctrine:schema:validate
 php symfony/bin/console doctrine:schema:update --dump-sql
 php symfony/bin/console doctrine:schema:update --dump-sql
+php symfony/bin/console doctrine:schema:update --dump-sql

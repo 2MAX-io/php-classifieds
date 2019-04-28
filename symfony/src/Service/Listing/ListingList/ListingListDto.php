@@ -2,6 +2,7 @@
 
 namespace App\Service\Listing\ListingList;
 
+use App\Entity\Category;
 use App\Entity\Listing;
 use Pagerfanta\Pagerfanta;
 
@@ -17,11 +18,15 @@ class ListingListDto
      */
     private $pager;
 
-    public function __construct(\Traversable $results, Pagerfanta $pager)
-    {
-        $this->pager = $pager;
-        $this->results = $results;
-    }
+    /**
+     * @var Category
+     */
+    private $category;
+
+    /**
+     * @var int
+     */
+    private $pageNumber;
 
     /**
      * @return \Traversable|Listing[]
@@ -34,5 +39,35 @@ class ListingListDto
     public function getPager(): Pagerfanta
     {
         return $this->pager;
+    }
+
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(Category $category): void
+    {
+        $this->category = $category;
+    }
+
+    public function setPager(Pagerfanta $pager): void
+    {
+        $this->pager = $pager;
+    }
+
+    public function setResults(\Traversable $results): void
+    {
+        $this->results = $results;
+    }
+
+    public function getPageNumber(): int
+    {
+        return $this->pageNumber;
+    }
+
+    public function setPageNumber(int $pageNumber): void
+    {
+        $this->pageNumber = $pageNumber;
     }
 }

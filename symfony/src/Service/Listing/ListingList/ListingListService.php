@@ -31,7 +31,7 @@ class ListingListService
         $this->listingPublicDisplayService = $listingPublicDisplayService;
     }
 
-    public function getListings(int $page = 1, Category $category = null): ListingListDto
+    public function getListings(ListingListDto $listingListDto): ListingListDto
     {
         $qb = $this->em->getRepository(Listing::class)->createQueryBuilder('listing');
 
@@ -88,7 +88,7 @@ class ListingListService
             }
         }
 
-        if ($category) {
+        if ($listingListDto->getCategory()) {
             $qb->join('listing.category', 'category');
             $qb->andWhere(
                 $qb->expr()->andX(
@@ -96,8 +96,8 @@ class ListingListService
                     $qb->expr()->lte('category.rgt', ':requestedCategoryRgt')
                 )
             );
-            $qb->setParameter(':requestedCategoryLft', $category->getLft());
-            $qb->setParameter(':requestedCategoryRgt', $category->getRgt());
+            $qb->setParameter(':requestedCategoryLft', $listingListDto->getCategory()->getLft());
+            $qb->setParameter(':requestedCategoryRgt', $listingListDto->getCategory()->getRgt());
         }
 
         if (!empty($_GET['min_price'])) {
@@ -134,9 +134,12 @@ class ListingListService
         $adapter = new DoctrineORMAdapter($qb, true, $qb->getDQLPart('having') !== null);
         $pager = new Pagerfanta($adapter);
         $pager->setMaxPerPage(10);
-        $pager->setCurrentPage($page);
+        $pager->setCurrentPage($listingListDto->getPageNumber());
 
-        return new ListingListDto($pager->getCurrentPageResults(), $pager);
+        $listingListDto->setPager($pager);
+        $listingListDto->setResults($pager->getCurrentPageResults());
+
+        return $listingListDto;
     }
 
     /**

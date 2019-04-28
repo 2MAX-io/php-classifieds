@@ -6,6 +6,7 @@ namespace App\Controller\Pub;
 
 use App\Repository\CategoryRepository;
 use App\Service\Category\CategoryListService;
+use App\Service\Listing\ListingList\ListingListDto;
 use App\Service\Listing\ListingList\ListingListService;
 use Pagerfanta\View\TwitterBootstrap4View;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -41,8 +42,11 @@ class ListingListController extends AbstractController
         CategoryRepository $categoryRepository,
         string $categorySlug = null
     ): Response {
+        $listingListDto = new ListingListDto();
         $view = new TwitterBootstrap4View();
         $page = (int) $request->get('page', 1);
+        $listingListDto->setPageNumber($page);
+
         $category = null;
         if ($categorySlug) {
             $category = $categoryRepository->findOneBy(['slug' => $categorySlug]);
@@ -55,7 +59,8 @@ class ListingListController extends AbstractController
             throw $this->createNotFoundException();
         }
 
-        $listingListDto = $listingListService->getListings($page, $category);
+        $listingListDto = $listingListService->getListings($listingListDto);
+        $listingListDto->setCategory($category);
 
         return $this->render(
             'listing_list.html.twig',
@@ -82,19 +87,20 @@ class ListingListController extends AbstractController
                     'user' => $request->query->get('user'),
                     'form_custom_field' => $request->query->get('form_custom_field'),
                 ],
-                'pageTitle' => $this->getPageTitleForRoute($request->get('_route')),
-                'breadcrumbLast' => $this->getPageTitleForRoute($request->get('_route')),
+                'pageTitle' => $this->getPageTitleForRoute($request->get('_route'), $listingListDto),
+                'breadcrumbLast' => $this->getPageTitleForRoute($request->get('_route'), $listingListDto),
             ]
         );
     }
 
-    private function getPageTitleForRoute(string $route): string
+    private function getPageTitleForRoute(string $route, ListingListDto $listingListDto): string
     {
         $pageTitle = $this->trans->trans('trans.Listings');
         $map = [
             'app_listing_list' => $this->trans->trans('trans.Search Engine'),
             'app_last_added' => $this->trans->trans('trans.Last added'),
             'app_user_listings' => $this->trans->trans('trans.Listings of user'),
+            'app_category' => $listingListDto->getCategory()->getName(),
         ];
 
         if (isset($map[$route])) {

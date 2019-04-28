@@ -54,11 +54,11 @@ class RemindPasswordService
 
     public function sendRemindConfirmation(string $email)
     {
-        $user = $this->em->getRepository(User::class)->findOneBy(['email' => $email]);
-
         $newPassword = $this->passwordGenerateService->generatePassword();
-        $user->setPlainPassword($newPassword);
+        $user = $this->em->getRepository(User::class)->findOneBy(['email' => $email]);
         $hashedPassword = $this->encodePasswordService->getEncodedPassword($user, $newPassword);
+
+        $user->setPlainPassword($newPassword);
 
         $tokenDto = $this->tokenService->getTokenBuilder(
             Token::USER_PASSWORD_REMIND,

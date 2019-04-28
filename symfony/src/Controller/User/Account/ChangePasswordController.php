@@ -60,7 +60,6 @@ class ChangePasswordController extends AbstractController
         FlashService $flashService
     ): Response {
         $tokenEntity = $tokenService->getToken($token, Token::USER_PASSWORD_CHANGE_TYPE);
-
         if ($tokenEntity === null) {
             $flashService->addFlash(
                 FlashService::ERROR_ABOVE_FORM,

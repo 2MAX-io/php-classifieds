@@ -55,13 +55,14 @@ class CreateUserService
 
     public function registerUser(string $email): User
     {
+        $plainPassword = $this->passwordGenerateService->generatePassword();
+
         $user = new User();
         $user->setEmail($email);
         $user->setUsername($email);
         $user->setRoles([User::ROLE_USER]);
         $user->setRegistrationDate(new \DateTime());
         $user->setEnabled(false);
-        $plainPassword = $this->passwordGenerateService->generatePassword();
         $user->setPassword(
             $this->passwordEncoder->encodePassword($user, $plainPassword)
         );
@@ -80,11 +81,5 @@ class CreateUserService
         $this->emailService->sendRegisterEmail($user, $tokenDto->getTokenEntity()->getTokenString());
 
         return $user;
-    }
-
-    public function hasUser(string $email): bool
-    {
-        $user = $this->em->getRepository(User::class)->findOneBy(['email' => $email]);
-        return $user instanceof User;
     }
 }

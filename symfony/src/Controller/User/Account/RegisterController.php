@@ -58,7 +58,6 @@ class RegisterController extends AbstractController
         UserRepository $userRepository
     ): Response {
         $tokenEntity = $tokenService->getToken($token, Token::USER_REGISTER_TYPE);
-
         if ($tokenEntity === null) {
             $flashService->addFlash(
                 FlashService::ERROR_ABOVE_FORM,

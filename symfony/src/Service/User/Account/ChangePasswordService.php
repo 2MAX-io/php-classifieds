@@ -47,11 +47,15 @@ class ChangePasswordService
 
     public function sendConfirmation(User $user, string $newPassword)
     {
-        $user->setPlainPassword($newPassword);
         $hashedPassword = $this->encodePasswordService->getEncodedPassword($user, $newPassword);
+
+        $user->setPlainPassword($newPassword);
         unset($newPassword);
 
-        $token = $this->tokenService->getTokenBuilder(Token::USER_PASSWORD_CHANGE_TYPE, Carbon::now()->add('day', 7));
+        $token = $this->tokenService->getTokenBuilder(
+            Token::USER_PASSWORD_CHANGE_TYPE,
+            Carbon::now()->add('day', 7)
+        );
         $token->addField(TokenField::USER_ID_FIELD, (string) $user->getId());
         $token->addField(TokenField::CHANGED_NEW_HASHED_PASSWORD, $hashedPassword);
         $this->emailService->changePasswordConfirmation($user, $token->getTokenEntity()->getTokenString());
@@ -59,17 +63,17 @@ class ChangePasswordService
         $this->em->persist($token->getTokenEntity());
     }
 
-    public function changePassword(User $user, string $newPassword)
+    public function setHashedPassword(User $user, string $newPasswordHash)
     {
-        $user->setPlainPassword($newPassword);
-        $this->encodePasswordService->setEncodedPassword($user, $newPassword);
+        $user->setPassword($newPasswordHash);
 
         $this->em->persist($user);
     }
 
-    public function setHashedPassword(User $user, string $newPasswordHash)
+    public function changePassword(User $user, string $newPassword)
     {
-        $user->setPassword($newPasswordHash);
+        $user->setPlainPassword($newPassword);
+        $this->encodePasswordService->setEncodedPassword($user, $newPassword);
 
         $this->em->persist($user);
     }

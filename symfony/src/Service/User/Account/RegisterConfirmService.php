@@ -25,13 +25,4 @@ class RegisterConfirmService
 
         $this->em->persist($user);
     }
-
-    public function getUserByToken(string $token): ?User
-    {
-        $qb = $this->em->getRepository(User::class)->createQueryBuilder('user');
-        $qb->andWhere($qb->expr()->eq('user.confirmationToken', ':confirmationToken'));
-        $qb->setParameter(':confirmationToken', $token);
-
-        return $qb->getQuery()->getOneOrNullResult();
-    }
 }

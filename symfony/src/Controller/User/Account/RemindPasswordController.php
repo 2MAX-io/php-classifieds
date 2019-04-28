@@ -27,10 +27,11 @@ class RemindPasswordController extends AbstractController
         FlashService $flashService
     ): Response {
         $form = $this->createForm(RemindPasswordType::class, []);
-
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $remindPasswordService->sendRemindConfirmation($form->get(RemindPasswordType::EMAIL_FIELD)->getData());
+            $remindPasswordService->sendRemindConfirmation(
+                $form->get(RemindPasswordType::EMAIL_FIELD)->getData()
+            );
 
             $this->getDoctrine()->getManager()->flush();
 
@@ -57,7 +58,6 @@ class RemindPasswordController extends AbstractController
         FlashService $flashService
     ): Response {
         $tokenEntity = $tokenService->getToken($token, Token::USER_PASSWORD_REMIND);
-
         if ($tokenEntity === null) {
             $flashService->addFlash(
                 FlashService::ERROR_ABOVE_FORM,
@@ -77,8 +77,8 @@ class RemindPasswordController extends AbstractController
 
             return $this->redirectToRoute('app_remind_password');
         }
-        $user = $this->getDoctrine()->getRepository(User::class)->find($userId);
 
+        $user = $this->getDoctrine()->getRepository(User::class)->find($userId);
         if (!$user instanceof User) {
             $flashService->addFlash(
                 FlashService::ERROR_ABOVE_FORM,

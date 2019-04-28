@@ -29,6 +29,11 @@ class ListingListDto
     private $pageNumber;
 
     /**
+     * @var boolean
+     */
+    private $lastAddedListFlag = false;
+
+    /**
      * @return \Traversable|Listing[]
      */
     public function getResults(): \Traversable
@@ -69,5 +74,15 @@ class ListingListDto
     public function setPageNumber(int $pageNumber): void
     {
         $this->pageNumber = $pageNumber;
+    }
+
+    public function isLastAddedListFlag(): bool
+    {
+        return $this->lastAddedListFlag;
+    }
+
+    public function setLastAddedListFlag(bool $lastAddedListFlag): void
+    {
+        $this->lastAddedListFlag = $lastAddedListFlag;
     }
 }

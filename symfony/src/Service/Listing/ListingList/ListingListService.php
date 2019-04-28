@@ -126,6 +126,10 @@ class ListingListService
         $qb->addOrderBy('listing.featuredWeight', 'DESC');
         $qb->addOrderBy('listing.orderByDate', 'DESC');
 
+        if ($listingListDto->isLastAddedListFlag()) {
+            $qb->orderBy('listing.orderByDate', 'DESC');
+        }
+
 //        $qb->setMaxResults(15);
 //        $qb->getQuery()->getResult();
 

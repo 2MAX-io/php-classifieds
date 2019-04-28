@@ -53,14 +53,18 @@ class ListingListController extends AbstractController
             if ($category === null) {
                 throw $this->createNotFoundException();
             }
+            $listingListDto->setCategory($category);
         }
 
         if ($request->query->has('user') && !ctype_digit($request->query->get('user', false))) {
             throw $this->createNotFoundException();
         }
 
+        if ($request->get('_route') === 'app_last_added') {
+            $listingListDto->setLastAddedListFlag(true);
+        }
+
         $listingListDto = $listingListService->getListings($listingListDto);
-        $listingListDto->setCategory($category);
 
         return $this->render(
             'listing_list.html.twig',
@@ -100,11 +104,17 @@ class ListingListController extends AbstractController
             'app_listing_list' => $this->trans->trans('trans.Search Engine'),
             'app_last_added' => $this->trans->trans('trans.Last added'),
             'app_user_listings' => $this->trans->trans('trans.Listings of user'),
-            'app_category' => $listingListDto->getCategory()->getName(),
+            'app_category' => function() use ($listingListDto) {
+                return $listingListDto->getCategory()->getName();
+            },
         ];
 
         if (isset($map[$route])) {
-            $pageTitle = $map[$route];
+            if (\is_callable($map[$route])) {
+                $pageTitle = $map[$route]();
+            } else {
+                $pageTitle = $map[$route];
+            }
         }
 
         return $pageTitle;

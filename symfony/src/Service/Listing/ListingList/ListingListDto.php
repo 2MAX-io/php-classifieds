@@ -34,6 +34,11 @@ class ListingListDto
     private $lastAddedListFlag = false;
 
     /**
+     * @var string
+     */
+    private $route;
+
+    /**
      * @return \Traversable|Listing[]
      */
     public function getResults(): \Traversable
@@ -84,5 +89,15 @@ class ListingListDto
     public function setLastAddedListFlag(bool $lastAddedListFlag): void
     {
         $this->lastAddedListFlag = $lastAddedListFlag;
+    }
+
+    public function getRoute(): string
+    {
+        return $this->route;
+    }
+
+    public function setRoute(string $route): void
+    {
+        $this->route = $route;
     }
 }

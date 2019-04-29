@@ -43,6 +43,7 @@ class ListingListController extends AbstractController
         string $categorySlug = null
     ): Response {
         $listingListDto = new ListingListDto();
+        $listingListDto->setRoute($request->get('_route'));
         $view = new TwitterBootstrap4View();
         $page = (int) $request->get('page', 1);
         $listingListDto->setPageNumber($page);
@@ -60,7 +61,7 @@ class ListingListController extends AbstractController
             throw $this->createNotFoundException();
         }
 
-        if ($request->get('_route') === 'app_last_added') {
+        if ($listingListDto->getRoute() === 'app_last_added') {
             $listingListDto->setLastAddedListFlag(true);
         }
 
@@ -91,14 +92,15 @@ class ListingListController extends AbstractController
                     'user' => $request->query->get('user'),
                     'form_custom_field' => $request->query->get('form_custom_field'),
                 ],
-                'pageTitle' => $this->getPageTitleForRoute($request->get('_route'), $listingListDto),
-                'breadcrumbLast' => $this->getPageTitleForRoute($request->get('_route'), $listingListDto),
+                'pageTitle' => $this->getPageTitleForRoute($listingListDto),
+                'breadcrumbLast' => $this->getPageTitleForRoute($listingListDto),
             ]
         );
     }
 
-    private function getPageTitleForRoute(string $route, ListingListDto $listingListDto): string
+    private function getPageTitleForRoute(ListingListDto $listingListDto): string
     {
+        $route = $listingListDto->getRoute();
         $pageTitle = $this->trans->trans('trans.Listings');
         $map = [
             'app_listing_list' => $this->trans->trans('trans.Search Engine'),

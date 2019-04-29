@@ -30,7 +30,10 @@
                         </div>
                         <div class="card-body">
                             {% for category in categoryList %}
-                                <a href="{{ path('app_category', {'categorySlug': category.slug} | merge(queryParameters)) }}" title="" class="mb-1">{{ category.name }}</a><br>
+                                <a
+                                        href="{{ path('app_category', {'categorySlug': category.slug} | merge(queryParameters)) }}"
+                                        class="mb-1 d-block"
+                                >{{ category.name }}</a>
                             {% endfor %}
                         </div>
                     </div>

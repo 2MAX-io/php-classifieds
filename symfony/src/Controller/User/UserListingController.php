@@ -183,7 +183,7 @@ class UserListingController extends AbstractUserController
         Listing $listing,
         FileModificationEventService $fileModificationEventService
     ): Response {
-        $this->dennyUnlessCurrentUserAllowed($listing);
+        $this->dennyUnlessCurrentUserAllowed($listing, true);
 
         if ($this->isCsrfTokenValid('remove' . $listing->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();

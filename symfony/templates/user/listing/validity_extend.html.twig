@@ -10,22 +10,32 @@
             </div>
 
             <div class="col-md-8 col-lg-9">
-                <h3>{{ 'trans.Extend listing' | trans }}: <a href="{{ path('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}" target="_blank">{{ listing.title }}</a></h3>
+                <div class="mb-4">
+                    <h3 class="mb-1">{{ 'trans.Extend listing' | trans }}:
+                        <a
+                                href="{{ path('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}"
+                                target="_blank"
+                        >
+                            {{ listing.title }}
+                        </a>
+                    </h3>
 
-                {% if listing.userDeactivated %}
-                    <div>
-                        {{ 'trans.Listing is currently deactivated, extending will activate it and therefore show it to the public on page' | trans }}
-                    </div>
-                {% endif %}
+                    {% if listing.userDeactivated %}
+                        <div>
+                            {{ 'trans.Listing is currently deactivated, extending will activate it and therefore show it to the public on page' | trans }}
+                        </div>
+                    {% endif %}
 
-                {% if not listing.adminConfirmed %}
-                    <div>
-                        {{ 'trans.Listing awaits activation, you can extend listing duration, but listing would only appear to the public after acceptation' | trans }}
-                    </div>
-                {% endif %}
+                    {% if not listing.adminConfirmed %}
+                        <div>
+                            {{ 'trans.Listing awaits activation, you can extend listing duration, but listing would only appear to the public after acceptation' | trans }}
+                        </div>
+                    {% endif %}
+                </div>
 
-                <div>
-                    {{ 'trans.Listing currently valid until' | trans }}: {{ listing.validUntilDate | date }}
+                <div class="mb-4">
+                    {{ 'trans.Listing currently valid until' | trans }}:
+                    <strong>{{ listing.validUntilDate | date }}</strong>
                 </div>
 
                 {{ form_start(form) }}

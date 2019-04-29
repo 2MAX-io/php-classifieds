@@ -17,6 +17,8 @@
                     </a>
                 </h3>
 
+                {% include 'form/_flash_above_form.html.twig' %}
+
                 {% if listing.featuredActive %}
                     <div class="alert alert-success">
                         {{ 'trans.Featured until' | trans }}:
@@ -32,8 +34,6 @@
                     </div>
                 {% endif %}
 
-                {% include 'form/_flash_above_form.html.twig' %}
-
                 {% if app.request.query.get('demoStarted') %}
                     <div class="alert alert-success" role="alert">
                         {{ 'trans.Listing has been featured for 30 minutes, to see how it looks click' | trans }}
@@ -41,34 +41,41 @@
                     </div>
                 {% endif %}
 
-                <div class="row">
-                    {% for package in packages %}
+                {% if listing.status in [constant('\App\\Entity\\Listing::STATUS_ACTIVE'), constant('\App\\Entity\\Listing::STATUS_ACTIVE_FEATURED')] %}
+                    <div class="row">
+                        {% for package in packages %}
+                            <div class="col-md-4">
+                                <h4>{{ package.name }}</h4>
+
+                                <div>
+                                    {{ package.price | moneyAsFloat }}
+                                </div>
+
+                                <div>
+                                    {{ include('user/listing/_feature_paid_form.html.twig') }}
+                                </div>
+                            </div>
+                        {% endfor %}
+
+
                         <div class="col-md-4">
-                            <h4>{{ package.name }}</h4>
+                            <h4>{{ 'trans.Featured demonstration' | trans }}</h4>
 
                             <div>
-                                {{ package.price | moneyAsFloat }}
+                                {% if listing.featuredUntilDate is null %}
+                                    {{ include('user/listing/_feature_as_demo_form.html.twig') }}
+                                {% else %}
+                                    <span class="btn btn-secondary btn-sm disabled">{{ 'trans.Demonstration of featured has been used up' | trans }}</span>
+                                {% endif %}
                             </div>
-
-                            <div>
-                                {{ include('user/listing/_feature_paid_form.html.twig') }}
-                            </div>
-                        </div>
-                    {% endfor %}
-
-
-                    <div class="col-md-4">
-                        <h4>{{ 'trans.Featured demonstration' | trans }}</h4>
-
-                        <div>
-                            {% if listing.featuredUntilDate is null %}
-                                {{ include('user/listing/_feature_as_demo_form.html.twig') }}
-                            {% else %}
-                                <span class="btn btn-secondary btn-sm disabled">{{ 'trans.Demonstration of featured has been used up' | trans }}</span>
-                            {% endif %}
                         </div>
                     </div>
-                </div>
+                {% else %}
+                    <div class="alert alert-danger">
+                        {{ 'trans.You can not feature listing that is deactivated. Current listings status' | trans }}:
+                    </div>
+                    <span class="{{ getListingStatusClass(listing) }}">{{ getListingStatus(listing) }}</span>
+                {% endif %}
             </div>
         </div>
     </div>

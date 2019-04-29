@@ -128,7 +128,7 @@
 
                                 {% endif %}
 
-                                {% if listing.userDeactivated or listing.adminRemoved %}
+                                {% if listing.userDeactivated or listing.adminRemoved or listing.adminRejected %}
                                     {{ include('user/listing/_delete_form.html.twig') }}
                                 {% endif %}
                             </td>

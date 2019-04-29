@@ -36,7 +36,7 @@ $stmt = $pdo->prepare(
             o_ogloszenia.powod_odrzucenia AS listing_rejection_reason,
            
             o_ogloszenia.odwiedziny AS listing_views_count,
-            o_ogloszenia.d_ip AS ip_legacy,
+            o_ogloszenia.d_ip AS listing_ip_legacy,
            
            o_galeria.kolejnosc AS listing_file_sort,
            o_galeria.img AS listing_file_path_legacy,
@@ -87,6 +87,7 @@ $header = [
 
     'listing_views_count',
     'listing_police_log',
+    'listing_ip_legacy',
     'listing_featured_weight',
     'listing_admin_removed',
     'listing_user_deactivated',
@@ -153,7 +154,7 @@ while ($dbRow = $stmt->fetch(\PDO::FETCH_ASSOC)) {
         $dbRow['listing_user_last_login'] = null;
     }
 
-    $dbRow['listing_police_log'] = " | {$dbRow['ip_legacy']} {$dbRow['listing_first_created_date']} | ";
+    $dbRow['listing_police_log'] = " | {$dbRow['listing_ip_legacy']} - {$dbRow['listing_first_created_date']} | ";
 
     // not present set default
     $dbRow['listing_featured_weight'] = 0;

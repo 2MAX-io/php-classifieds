@@ -25,6 +25,7 @@ while (($csvRow = fgetcsv($csvHandle, 0, ",")) !== FALSE) {
         saveListing($csvRow, $sqlHandle);
         saveListingViews($csvRow, $sqlHandle);
         saveUser($csvRow, $sqlHandle);
+        savePoliceLog($csvRow, $sqlHandle);
     }
     saveFiles($csvRow, $sqlHandle);
 }
@@ -206,4 +207,17 @@ function saveListingViews(array $csvRow, $sqlHandle) {
     ];
 
     saveSql( /** @lang MySQL */ 'INSERT INTO listing_view SET '.arrayToSqlSetString($fileRow).';', $sqlHandle);
+}
+
+function savePoliceLog(array $csvRow, $sqlHandle) {
+    $fileRow = [
+        'zzzz_listing_police_log.text' => $csvRow['listing_police_log'],
+        'zzzz_listing_police_log.source_ip' => $csvRow['listing_ip_legacy'],
+        'zzzz_listing_police_log.destination_ip' => '0.0.0.0',
+        'zzzz_listing_police_log.datetime' => $csvRow['listing_first_created_date'],
+        'zzzz_listing_police_log.listing_id' => $csvRow['listing_id'],
+        'zzzz_listing_police_log.user_id' => $csvRow['user_id'],
+    ];
+
+    saveSql( /** @lang MySQL */ 'INSERT INTO zzzz_listing_police_log SET '.arrayToSqlSetString($fileRow).';', $sqlHandle);
 }

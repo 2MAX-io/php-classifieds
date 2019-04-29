@@ -19,7 +19,8 @@
 
                 {% if listing.featuredActive %}
                     <div class="alert alert-success">
-                        {{ 'trans.Featured until' | trans }}: {{ listing.featuredUntilDate | date }}
+                        {{ 'trans.Featured until' | trans }}:
+                        <strong>{{ listing.featuredUntilDate | date }}</strong>
                     </div>
                 {% endif %}
 

@@ -262,7 +262,7 @@
 
                         <div class="card-body">
                             <div
-                                    class="fb-share-button"
+                                    class="fb-share-button mb-2"
                                     data-href="{{ url('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}"
                                     data-layout="button"
                                     data-size="small"
@@ -277,16 +277,18 @@
                                 </a>
                             </div>
 
-                            <a
-                                    class="twitter-share-button"
-                                    href="https://twitter.com/intent/tweet?url={{ url('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}&text={{ listing.title }}"
-                            >
-                                {{ 'trans.Share on Twitter' | trans }}
-                            </a>
+                            <div class="mb-2">
+                                <a
+                                        class="twitter-share-button"
+                                        href="https://twitter.com/intent/tweet?url={{ url('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}&text={{ listing.title }}"
+                                >
+                                    {{ 'trans.Share on Twitter' | trans }}
+                                </a>
+                            </div>
 
                             <button
                                     onclick="copyTextToClipboard('{{ url('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}')"
-                                    class="btn btn-sm btn-secondary d-block"
+                                    class="btn btn-sm btn-secondary d-block mb-2"
                             >
                                 {{ 'trans.Copy link to this listing' | trans }}
                             </button>

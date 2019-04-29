@@ -36,7 +36,7 @@ class FileModificationEventService
         /** @var ListingFile $firstFile */
         $firstFile = $listing->getListingFiles()->matching(Criteria::create()->orderBy(['sort' => 'asc'])->where(Criteria::expr()->eq("userRemoved", false)))->first();
 
-        if ($firstFile === null) {
+        if (empty($firstFile)) {
             $listing->setMainImage(null);
         } else {
             $listing->setMainImage($firstFile->getPath());

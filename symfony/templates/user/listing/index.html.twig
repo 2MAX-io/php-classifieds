@@ -128,7 +128,7 @@
 
                                 {% endif %}
 
-                                {% if listing.userDeactivated or listing.adminRemoved or listing.adminRejected %}
+                                {% if listing.userDeactivated or listing.adminRemoved or listing.adminRejected or listing.status == constant('\App\\Entity\\Listing::STATUS_EXPIRED') %}
                                     {{ include('user/listing/_delete_form.html.twig') }}
                                 {% endif %}
                             </td>

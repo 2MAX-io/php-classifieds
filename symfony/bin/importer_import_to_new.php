@@ -13,19 +13,10 @@ $csvHandle = fopen($argv[1], "r");
 $sqlHandle = fopen($argv[2], "w");
 saveSql( /** @lang MySQL */ 'SET NAMES utf8;', $sqlHandle);
 
-$csvRowNumber = -1;
-$header = [];
+$header = fgetcsv($csvHandle, 0, ",");
 $currentOldListingId = null;
 while (($csvRow = fgetcsv($csvHandle, 0, ",")) !== FALSE) {
-    $csvRowNumber++;
-    if ($csvRowNumber === 0) {
-        $header = $csvRow;
-        continue;
-    }
     $csvRow = array_combine($header, $csvRow);
-
-    $csvRow['listing_id'] = $csvRow['listing_id'] + 1000 * 0; // todo: make production
-
     $csvRow['listing_search_text'] = $csvRow['listing_title'] . ' ' . $csvRow['listing_description']; // default value, should be regenerated
 
     if ($currentOldListingId !== $csvRow['listing_id']) {
@@ -35,7 +26,7 @@ while (($csvRow = fgetcsv($csvHandle, 0, ",")) !== FALSE) {
         saveListingViews($csvRow, $sqlHandle);
         saveUser($csvRow, $sqlHandle);
     }
-    saveGallery($csvRow, $sqlHandle);
+    saveFiles($csvRow, $sqlHandle);
 }
 
 fclose($csvHandle);
@@ -46,7 +37,8 @@ function saveSql($sql, $sqlHandle) {
     fwrite($sqlHandle, $sql . "\r\n");
 }
 
-function escape($unescaped): string {
+function sqlEscape($unescaped): string {
+    // only for use without db connection, when generating large quantity of SQL
     $replacements = array(
         "\x00"=>'\x00',
         "\n"=>'\n',
@@ -59,8 +51,8 @@ function escape($unescaped): string {
     return strtr($unescaped,$replacements);
 }
 
-function arrayToSetString(array $csvRow, array $map = null) {
-    $csvRow = array_map('escape', $csvRow);
+function arrayToSqlSetString(array $csvRow, array $map = null) {
+    $csvRow = array_map('sqlEscape', $csvRow);
     $result = '';
     foreach ($csvRow as $key => $value) {
         if ($map === null) {
@@ -71,13 +63,13 @@ function arrayToSetString(array $csvRow, array $map = null) {
             }
             $column = $map[$key];
         }
-        $result .= arrayToSetStringItem($column, $value);
+        $result .= arrayToSqlSetStringSingleElement($column, $value);
     }
 
     return rtrim($result, ', ');
 }
 
-function arrayToSetStringItem($column, $value) {
+function arrayToSqlSetStringSingleElement($column, $value) {
     $notNull = [
         'listing.description',
     ];
@@ -127,7 +119,7 @@ function arrayToSetStringListing(array $csvRow): string {
         'listing_search_text' => 'listing.search_text',
     ];
 
-    return arrayToSetString($csvRow, $map);
+    return arrayToSqlSetString($csvRow, $map);
 }
 
 function arrayToSetStringListingFile(array $csvRow): string {
@@ -141,7 +133,7 @@ function arrayToSetStringListingFile(array $csvRow): string {
         'listing_file_size_bytes' => 'listing_file.size_bytes',
     ];
 
-    return arrayToSetString($csvRow, $map);
+    return arrayToSqlSetString($csvRow, $map);
 }
 
 function arrayToSetStringUser(array $csvRow): string {
@@ -156,17 +148,15 @@ function arrayToSetStringUser(array $csvRow): string {
         'listing_user_enabled' => 'user.enabled',
     ];
 
-    return arrayToSetString($csvRow, $map);
+    return arrayToSqlSetString($csvRow, $map);
 }
 
-function saveGallery(array $csvRow, $sqlHandle) {
+function saveFiles(array $csvRow, $sqlHandle) {
     if (empty($csvRow['listing_file_path'])) {
         return;
     }
 
-    $csvRow['listing_file_listing_id'] = $csvRow['listing_id'];
-
-    $fileColumns = [
+    $columnsToInclude = [
         'listing_file_listing_id',
         'listing_file_path',
         'listing_file_user_removed',
@@ -176,15 +166,10 @@ function saveGallery(array $csvRow, $sqlHandle) {
         'listing_file_sort',
     ];
 
-    $fileRow = [];
-    foreach ($fileColumns as $fileColumn) {
-        if (!isset($csvRow[$fileColumn])) {
-            continue;
-        }
-        $fileRow[$fileColumn] = $csvRow[$fileColumn];
-    }
+    $row = array_intersect_key($csvRow, array_flip($columnsToInclude));
+    $row['listing_file_listing_id'] = $csvRow['listing_id'];
 
-    saveSql( /** @lang MySQL */ 'INSERT INTO listing_file SET '.arrayToSetStringListingFile($fileRow).';', $sqlHandle);
+    saveSql( /** @lang MySQL */ 'INSERT INTO listing_file SET '.arrayToSetStringListingFile($row).';', $sqlHandle);
 }
 
 function saveListing(array $csvRow, $sqlHandle) {
@@ -195,7 +180,7 @@ function saveListing(array $csvRow, $sqlHandle) {
 }
 
 function saveUser(array $csvRow, $sqlHandle) {
-    $fileColumns = [
+    $columnsToInclude = [
         'listing_user_id',
         'listing_user_name',
         'listing_user_email',
@@ -206,18 +191,11 @@ function saveUser(array $csvRow, $sqlHandle) {
         'listing_user_enabled',
     ];
 
-    $fileRow = [];
-    foreach ($fileColumns as $fileColumn) {
-        if (!isset($csvRow[$fileColumn])) {
-            continue;
-        }
-        $fileRow[$fileColumn] = $csvRow[$fileColumn];
-    }
+    $row = array_intersect_key($csvRow, array_flip($columnsToInclude));
+    $row['listing_user_roles'] = '["ROLE_USER"]';
+    $row['listing_user_enabled'] = 1;
 
-    $fileRow['listing_user_roles'] = '["ROLE_USER"]';
-    $fileRow['listing_user_enabled'] = 1;
-
-    saveSql( /** @lang MySQL */ 'REPLACE INTO `user` SET '.arrayToSetStringUser($fileRow).';', $sqlHandle);
+    saveSql( /** @lang MySQL */ 'REPLACE INTO `user` SET '.arrayToSetStringUser($row).';', $sqlHandle);
 }
 
 function saveListingViews(array $csvRow, $sqlHandle) {
@@ -227,5 +205,5 @@ function saveListingViews(array $csvRow, $sqlHandle) {
         'listing_view.datetime' => date('Y') . '-01-01 00:00:00',
     ];
 
-    saveSql( /** @lang MySQL */ 'INSERT INTO listing_view SET '.arrayToSetString($fileRow).';', $sqlHandle);
+    saveSql( /** @lang MySQL */ 'INSERT INTO listing_view SET '.arrayToSqlSetString($fileRow).';', $sqlHandle);
 }

@@ -130,3 +130,5 @@ php symfony/bin/console assets:install --symlink web
 php symfony/bin/console assets:install --symlink web
 php symfony/bin/console assets:install --symlink public
 php symfony/bin/console assets:install --symlink bundles
+php symfony/bin/importer_import_to_new.php /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv /var/www/html/symfony/docker/mysql/sql/importer_import_to_new.sql
+php symfony/bin/importer_import_to_new.php /var/www/html/symfony/docker/mysql/sql/importer_export_from_old.csv /var/www/html/symfony/docker/mysql/sql/importer_import_to_new.sql

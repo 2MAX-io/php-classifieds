@@ -131,7 +131,7 @@ while ($dbRow = $stmt->fetch(\PDO::FETCH_ASSOC)) {
         $dbRow['listing_admin_rejected'] = 1;
     }
 
-    $dbRow = setBasedOnLegacyLevel($dbRow);
+    $dbRow = setUserDeactivated($dbRow);
 
     if ($dbRow['listing_featured_until_date'] < '2000-00-00 00:00:00') {
         $dbRow['listing_featured_until_date'] = null;
@@ -163,7 +163,7 @@ while ($dbRow = $stmt->fetch(\PDO::FETCH_ASSOC)) {
     $dbRow['listing_slug'] = $dbRow['listing_id'] . '-ogloszenia-jaslo';
 
     // file
-    $dbRow['listing_file_path'] = getOldImagesPath($dbRow);
+    $dbRow['listing_file_path'] = getNewImagePath($dbRow);
     $dbRow['listing_file_user_removed'] = 0;
     $dbRow['listing_file_filename'] = basename($dbRow['listing_file_path']);
     $dbRow['listing_file_mime_type'] = 'image/jpg';
@@ -188,7 +188,7 @@ while ($dbRow = $stmt->fetch(\PDO::FETCH_ASSOC)) {
 
 fclose($fpCsv);
 
-function getOldImagesPath(array $dbRow) {
+function getNewImagePath(array $dbRow) {
     if (empty(trim($dbRow['listing_file_path_legacy']))) {
         return '';
     }
@@ -200,7 +200,7 @@ function getOldImagesPath(array $dbRow) {
     return "static/listing/0000_legacy/galeria/$imgDir/$userId/s$filename";
 }
 
-function setBasedOnLegacyLevel(array $dbRow) {
+function setUserDeactivated(array $dbRow) {
     $dbRow['listing_user_deactivated'] = 0;
 
     if ($dbRow['listing_level_legacy'] === 0) {

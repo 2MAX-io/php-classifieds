@@ -160,9 +160,6 @@ trans:
   To finish registration, click confirmation link that you will receive in your email: 'By zakończyć rejestrację, kliknij link potwierdzający który otrzymasz na email'
   Enter your email address: 'Podaj adres email'
   Edit listing as Admin: 'Edytuj ogłoszenie jako Admin'
-  'Are you sure you want to deactivate: %listing%?': 'Jesteś pewny że chcesz dezaktywować: %listing%?'
-  'Are you sure you want to activate: %listing%?': 'Jesteś pewny że chcesz aktywować: %listing%'
-  'Are you sure you want to delete %listing%?': 'Jesteś pewny że chcesz usunąć: %listing%?'
   Last edit: 'Ostatnia edycja'
   Already have an account?: 'Masz już konto?'
   Confirm registration by clicking link bellow: 'Potwierdź rejestrację klikając link poniżej'
@@ -320,3 +317,4 @@ trans:
   More informations: Więcej informacji
   I accept: 'Akceptuje'
   Copy: 'Kopiuj'
+  Remove file of: 'Usuń plik z'

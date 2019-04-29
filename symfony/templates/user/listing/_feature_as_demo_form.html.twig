@@ -1,5 +1,10 @@
-<form method="post" action="{{ path('app_user_feature_listing_as_demo', {'id': listing.id}) }}" onsubmit="return confirm('{{ 'trans.Feature as a demonstration for 30 minutes: %listing%?' | trans({'%listing%': listing.title}) }}');" class="d-inline">
-    <input type="hidden" name="_method" value="PATCH">
+<form
+        method="post"
+        action="{{ path('app_user_feature_listing_as_demo', {'id': listing.id}) }}"
+        onsubmit="return confirm('{{ 'trans.Feature as a demonstration for 30 minutes: %listing%?' | trans({'%listing%': listing.title}) }}');"
+        class="d-inline"
+>
+<input type="hidden" name="_method" value="PATCH">
     <input type="hidden" name="_token" value="{{ csrf_token('featureAsDemo' ~ listing.id) }}">
     <button class="btn btn-success btn-mini">{{ 'trans.Feature as a demonstration for 30 minutes' | trans }}</button>
 </form>

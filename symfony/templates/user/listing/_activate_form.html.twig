@@ -1,7 +1,7 @@
 <form
         method="post"
         action="{{ path('app_listing_activate', {'id': listing.id}) }}"
-        onsubmit="return confirm('{{ 'trans.Are you sure you want to activate: %listing%?' | trans({'%listing%': listing.title}) }}');"
+        onsubmit="return confirm('{{ 'trans.Activate' | trans }}: {{ listing.title }}?');"
         class="d-inline"
 >
 <input type="hidden" name="_method" value="PATCH">

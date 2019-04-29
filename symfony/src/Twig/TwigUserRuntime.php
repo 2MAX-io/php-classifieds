@@ -22,7 +22,7 @@ class TwigUserRuntime implements RuntimeExtensionInterface
 
     public function displayAsExpired(Listing $listing): bool
     {
-        if ($this->currentUserService->getUser() === $listing->getUser()) {
+        if ($this->currentUserService->getUser() === $listing->getUser() || $this->currentUserService->lowSecurityCheckIsAdminInPublic()) {
             return false;
         }
 

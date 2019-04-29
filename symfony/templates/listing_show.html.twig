@@ -283,6 +283,13 @@
                             >
                                 {{ 'trans.Share on Twitter' | trans }}
                             </a>
+
+                            <button
+                                    onclick="copyTextToClipboard('{{ url('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}')"
+                                    class="btn btn-sm btn-secondary d-block"
+                            >
+                                {{ 'trans.Copy link to this listing' | trans }}
+                            </button>
                         </div>
                     </div>
                 {% endif %}

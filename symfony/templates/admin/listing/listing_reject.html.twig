@@ -9,17 +9,23 @@
             </div>
 
             <div class="col-md-8 col-lg-9">
-                <h2 class="mb-5">
-                    {{ 'trans.Reject listing' | trans }}:
-                    <a href="{{ path('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}" target="_blank">{{ listing.title }}</a>
-                </h2>
+                <div class="mb-3">
+                    <h2 class="mb-1">
+                        {{ 'trans.Reject listing' | trans }}:
+                        <a href="{{ path('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}" target="_blank">{{ listing.title }}</a>
+                    </h2>
+                    <span class="{{ getListingStatusClass(listing) }}">{{ getListingStatus(listing) }}</span>
+                </div>
 
                 {{ form_start(form) }}
                 {{ form_widget(form) }}
 
                 <button class="btn btn-primary">{{ button_label|default('trans.Reject' | trans) }}</button>
+                <button class="btn btn-dark float-right" onclick="window.close()">{{ 'trans.Close this page' | trans }}</button>
+
                 {{ form_end(form) }}
             </div>
+
         </div>
     </div>
 {% endblock %}

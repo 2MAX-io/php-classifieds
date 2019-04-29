@@ -84,6 +84,7 @@ class ListingListController extends AbstractController
                 ),
                 'listingList' => $listingListDto->getResults(),
                 'pager' => $listingListDto->getPager(),
+                'listingListDto' => $listingListDto,
                 'customFieldList' => $listingListService->getCustomFields($category),
                 'categoryList' => $categoryListService->getLevelOfSubcategoriesToDisplayForCategory($category),
                 'categoryBreadcrumbs' => $categoryListService->getBreadcrumbs($category),

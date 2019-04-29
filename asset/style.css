@@ -491,3 +491,7 @@ svg.icon {
 .zoom .fa {
     margin: 20px 0 0 25px;
 }
+
+.listing-list-side-category.active {
+    font-weight: bold;
+}

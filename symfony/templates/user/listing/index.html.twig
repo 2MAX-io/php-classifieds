@@ -77,7 +77,7 @@
                                     {% endif %}
                                 </div>
 
-                                {% if listing.adminConfirmed and not listing.featured %}
+                                {% if listing.adminConfirmed and not listing.featured and not listing.userDeactivated and listing.status != constant('\App\\Entity\\Listing::STATUS_EXPIRED') %}
                                     <div>
                                         <a
                                                 href="{{ path('app_user_feature_listing', {"id": listing.id}) }}"

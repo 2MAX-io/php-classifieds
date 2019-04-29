@@ -1,4 +1,9 @@
-<form method="post" action="{{ path('app_admin_listing_raise', {'id': listing.id}) }}" onsubmit="return confirm('Are you sure you want to raise {{ listing.title }}?');" class="d-inline">
+<form
+        method="post"
+        action="{{ path('app_admin_listing_raise', {'id': listing.id}) }}"
+        onsubmit="return confirm('Are you sure you want to raise {{ listing.title }}?');"
+        class="d-inline"
+>
     <input type="hidden" name="_method" value="PATCH">
     <input type="hidden" name="_token" value="{{ csrf_token('adminRaise' ~ listing.id) }}">
     <button class="btn btn-success btn-mini">{{ 'trans.Raise' | trans }}</button>

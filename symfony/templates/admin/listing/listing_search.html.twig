@@ -39,6 +39,7 @@
                                         {{- listing.title -}}
                                     </a>
                                 </div>
+
                                 <div>
                                     {% if listing.featured %}
                                         <span class="badge badge-pill badge-warning">{{ 'trans.Featured' | trans }}</span>
@@ -50,27 +51,30 @@
                                             {{- listing.category.name -}}
                                         </a>
                                     </span>
+                                </div>
+
+                                <div>
                                     <span>
                                         <a href="{{ path('app_user_listings', {'user': listing.user.id}) }}">
                                             {{- 'trans.User Listings' | trans -}}
                                         </a>
                                     </span>
+                                    <a
+                                            class="btn btn-secondary btn-sm"
+                                            data-toggle="collapse"
+                                            href="#collapse{{ listing.id }}"
+                                            role="button"
+                                            aria-expanded="true"
+                                            aria-controls="collapseOne"
+                                    >
+                                        {{- 'trans.more informations' | trans -}}
+                                    </a>
                                 </div>
                             </td>
                             <td>
                                 <span class="{{ getListingStatusClass(listing) }}">{{ getListingStatus(listing) }}</span>
                             </td>
                             <td>
-                                <a
-                                        class="btn btn-primary"
-                                        data-toggle="collapse"
-                                        href="#collapse{{ listing.id }}"
-                                        role="button"
-                                        aria-expanded="true"
-                                        aria-controls="collapseOne"
-                                >
-                                    {{- 'trans.info' | trans -}}
-                                </a>
 
                                 <a href="{{ path('app_admin_listing_edit', {'id': listing.id}) }}" class="btn btn-dark">
                                     {{- 'trans.Edit' | trans -}}

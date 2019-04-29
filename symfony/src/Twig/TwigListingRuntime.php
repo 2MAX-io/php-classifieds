@@ -85,15 +85,19 @@ class TwigListingRuntime implements RuntimeExtensionInterface
 
     public function adminShowActivate(Listing $listing): bool
     {
-        if ($listing->getAdminConfirmed()) {
-            return false;
-        }
-
         if ($listing->getAdminRemoved()) {
             return false;
         }
 
         if ($listing->getUserRemoved()) {
+            return false;
+        }
+
+        if ($listing->getAdminRejected()) {
+            return true;
+        }
+
+        if ($listing->getAdminConfirmed()) {
             return false;
         }
 
@@ -106,10 +110,6 @@ class TwigListingRuntime implements RuntimeExtensionInterface
 
     public function adminShowReject(Listing $listing): bool
     {
-        if ($listing->getAdminRejected()) {
-            return false;
-        }
-
         if ($listing->getAdminRemoved()) {
             return false;
         }

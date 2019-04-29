@@ -33,22 +33,29 @@
         {{ form_start(form) }}
         {{ form_widget(form) }}
 
-        <button class="btn btn-primary">{{ button_label|default('trans.Save' | trans) }}</button>
+        <button class="btn btn-primary mb-4">{{ button_label|default('trans.Save' | trans) }}</button>
         {{ form_end(form) }}
+
+        <div>
+            {{ adminMacro.listingInfo(listing) }}
+        </div>
 
         <div class="card-deck">
             {% for listingFile in listing.listingFiles %}
                 <div class="card-body" style="max-width: 10rem;">
-                    <div><img class="container-img" src="{{ asset(listingFile.pathInListSize) }}" alt="" style="max-height: 100px;"></div>
+                    <div class="mb-2">
+                        <img
+                                class="container-img"
+                                src="{{ asset(listingFile.pathInListSize) }}"
+                                alt=""
+                                style="max-height: 100px;"
+                        >
+                    </div>
                     <div>
                         {{ include('admin/listing/_delete_file_form.html.twig') }}
                     </div>
                 </div>
             {% endfor %}
-        </div>
-
-        <div>
-            {{ adminMacro.listingInfo(listing) }}
         </div>
     </div>
 {% endblock %}

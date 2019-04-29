@@ -4,16 +4,36 @@
 
 {% block body %}
     <div class="container mt-5">
-        <h1>{{ 'trans.Edit listing' | trans }}: <a target="_blank" href="{{ path('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}">{{ listing.title }}</a></h1>
+        <div>
+            <h1>{{ 'trans.Edit listing' | trans }}:
+                <a
+                        target="_blank"
+                        href="{{ path('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}"
+                >
+                    {{- listing.title -}}
+                </a>
+            </h1>
+        </div>
 
-        <a href="{{ path('app_admin_listing_edit', {'id': listing.id}) }}">
-            {{- 'trans.Edit listing' | trans -}}
-        </a>
+        <div>
+            <a href="{{ path('app_admin_listing_edit', {'id': listing.id}) }}">
+                {{- 'trans.Edit listing' | trans -}}
+            </a>
 
-        <a href="{{ path('app_admin_police_log', {'id': listing.id}) }}" target="_blank" class="btn btn-info">{{ 'trans.Police log' | trans }}</a>
+            <div class="float-right">
 
-        {{ include('admin/listing/_raise_form.html.twig') }}
-        {{ include('admin/listing/_delete_form.html.twig') }}
+                <a
+                        href="{{ path('app_admin_police_log', {'id': listing.id}) }}"
+                        target="_blank"
+                        class="btn btn-info"
+                >
+                    {{ 'trans.Police log' | trans }}
+                </a>
+
+                {{ include('admin/listing/_raise_form.html.twig') }}
+                {{ include('admin/listing/_delete_form.html.twig') }}
+            </div>
+        </div>
 
         {{ form_start(form) }}
         {{ form_widget(form) }}

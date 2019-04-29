@@ -31,6 +31,7 @@ class AppExtension extends AbstractExtension
             new TwigFilter('displayTextWarning', [TwigListingRuntime::class, 'displayTextWarning']),
             new TwigFilter('isExpired', [TwigListingRuntime::class, 'isExpired']),
             new TwigFilter('moneyAsFloat', [AppRuntime::class, 'moneyAsFloat']),
+            new TwigFilter('money', [TwigListingRuntime::class, 'money']),
         ];
     }
 }

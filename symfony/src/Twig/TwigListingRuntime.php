@@ -130,4 +130,13 @@ class TwigListingRuntime implements RuntimeExtensionInterface
     {
         return $date <= new \DateTime();
     }
+
+    public function money(float $money): float
+    {
+        if ($money < 40) {
+            return round($money, 2);
+        }
+
+        return round($money, 0);
+    }
 }

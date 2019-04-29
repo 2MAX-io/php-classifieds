@@ -32,6 +32,7 @@
         "symfony/validator": "4.2.*",
         "symfony/yaml": "4.2.*",
         "webmozart/path-util": "^2.3",
+        "willdurand/js-translation-bundle": "^2.6",
         "zendframework/zend-feed": "^2.12"
     },
     "config": {

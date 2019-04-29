@@ -27,7 +27,7 @@
 
     <link rel='alternate' type='application/rss+xml' title='{{- settings.rssTitle }}' href='{{ url('app_rss') }}'/>
 </head>
-<body>
+<body lang="{{ app.request.locale|split('_')[0] }}">
 <!-- Top Header -->
 <div class="container-fluid container-header ">
     <div class="container container-remove-padding">
@@ -198,6 +198,8 @@
     <script src="{{ asset('asset/lib/fancybox/jquery.fancybox.js') }}"></script>
     <script src="{{ asset('bundles/fosjsrouting/js/router.min.js') }}"></script>
     <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
+    <script src="{{ asset('bundles/bazingajstranslation/js/translator.min.js') }}"></script>
+    <script src="{{ url('bazinga_jstranslation_js') }}"></script>
     <script src="{{ asset('asset/main.js') }}"></script>
 
     <!-- CSRF -->

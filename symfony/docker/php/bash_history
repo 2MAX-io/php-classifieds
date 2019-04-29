@@ -123,3 +123,10 @@ php symfony/bin/console doctrine:schema:validate
 php symfony/bin/console doctrine:schema:update --dump-sql
 php symfony/bin/console doctrine:schema:update --dump-sql
 php symfony/bin/console doctrine:schema:update --dump-sql
+composer require -d symfony willdurand/js-translation-bundle
+php symfony/bin/console assets:install --symlink web
+php symfony/bin/console assets:install --symlink web
+php symfony/bin/console assets:install --symlink web
+php symfony/bin/console assets:install --symlink web
+php symfony/bin/console assets:install --symlink public
+php symfony/bin/console assets:install --symlink bundles

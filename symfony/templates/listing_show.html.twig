@@ -254,23 +254,37 @@
 
 
                 {% if not displayAsExpired(listing) %}
-                <!-- Share listing -->
-                <div class="card mb-3" style="width: 100%;">
-                    <div class="card-header">
-                        <h5>{{ 'trans.Share This Listing' | trans }}</h5>
-                    </div>
-
-                    <div class="card-body">
-                        <div class="fb-share-button"
-                             data-href="{{ absolute_url('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}"
-                             data-layout="button"
-                             data-size="small"
-                             data-mobile-iframe="true"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{ absolute_url('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}&src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a>
+                    <!-- share listing -->
+                    <div class="card mb-3">
+                        <div class="card-header">
+                            <h5>{{ 'trans.Share This Listing' | trans }}</h5>
                         </div>
 
-                        <a class="twitter-share-button" href="https://twitter.com/intent/tweet?url={{ absolute_url('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}&text={{ listing.title }}">Tweet</a>
+                        <div class="card-body">
+                            <div
+                                    class="fb-share-button"
+                                    data-href="{{ url('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}"
+                                    data-layout="button"
+                                    data-size="small"
+                                    data-mobile-iframe="true"
+                            >
+                                <a
+                                        target="_blank"
+                                        href="https://www.facebook.com/sharer/sharer.php?u={{ url('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}"
+                                        class="fb-xfbml-parse-ignore"
+                                >
+                                    {{ 'trans.Share on Facebook' | trans }}
+                                </a>
+                            </div>
+
+                            <a
+                                    class="twitter-share-button"
+                                    href="https://twitter.com/intent/tweet?url={{ url('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}&text={{ listing.title }}"
+                            >
+                                {{ 'trans.Share on Twitter' | trans }}
+                            </a>
+                        </div>
                     </div>
-                </div>
                 {% endif %}
             </div>
         </div>

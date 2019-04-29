@@ -87,17 +87,6 @@
                                         </a>
                                     </div>
                                 {% endif %}
-                                {% if listing.adminRejected %}
-                                    {% if listing.rejectionReason is empty %}
-                                        <div>
-                                            {{ 'trans.Listing has been rejected' | trans }}
-                                        </div>
-                                    {% else %}
-                                        <div>
-                                            {{ 'trans.Listing has been rejected, reason' | trans }}: {{ listing.rejectionReason }}
-                                        </div>
-                                    {% endif %}
-                                {% endif %}
                             </td>
                             <td>
                                 {{ listing.lastEditDate | date('d.m.Y') }}

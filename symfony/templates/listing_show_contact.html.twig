@@ -3,7 +3,7 @@
         <div class="mb-2 py-2">
             <div class="row">
                 <div class="col-sm-4">
-                    {{ 'trans.Phone' | trans }}
+                    <span>{{ 'trans.Phone' | trans }}</span>
                     <button
                             onclick="copyTextToClipboard('{{ listing.phone }}')"
                             class="btn btn-sm btn-secondary float-right"
@@ -23,8 +23,7 @@
         <div class="mb-2 py-2">
             <div class="row">
                 <div class="col-sm-4">
-                    {{ 'trans.Email' | trans }}
-
+                    <span>{{ 'trans.Email' | trans }}</span>
                     <button
                             onclick="copyTextToClipboard('{{ listing.email }}')"
                             class="btn btn-sm btn-secondary float-right"

@@ -43,15 +43,22 @@
                     <div class="card-header">
                         <strong>{{ 'trans.Refine Search' | trans }}</strong>
                     </div>
+
                     <div class="card-body">
                         <form method="get" id="" action="">
-                            <div class="mb-3" id="li-field-7">
+                            <div class="mb-3">
                                 <div class="input-group mb-2 mr-2">
                                     <div class="input-group-prepend">
                                         <div class="input-group-text"><i class="fas fa-search"></i></div>
                                     </div>
 
-                                    <input type="text" class="form-control" name="query" placeholder="{{ 'trans.keyword'|trans }}" value="{{ app.request.get('query') | default }}">
+                                    <input
+                                            type="text"
+                                            class="form-control"
+                                            name="query"
+                                            placeholder="{{ 'trans.keyword'|trans }}"
+                                            value="{{ app.request.get('query') | default }}"
+                                    >
                                 </div>
                             </div>
 
@@ -89,7 +96,12 @@
                                                     id="option_{{ customFieldOption.id }}"
                                                     class="custom-control-input"
                                                 >
-                                                <label class="custom-control-label" for="option_{{ customFieldOption.id }}">{{ customFieldOption.name }}</label>
+                                                <label
+                                                        class="custom-control-label"
+                                                        for="option_{{ customFieldOption.id }}"
+                                                >
+                                                    {{ customFieldOption.name }}
+                                                </label>
                                             </div>
                                         {% endfor %}
                                     </div>
@@ -126,11 +138,23 @@
                             <label>{{ 'trans.Price' | trans }}</label>
                             <div class="form-row mb-3">
                                 <div class="col-6">
-                                    <input type="text" id="min_price" class="form-control form-control-sm" name="min_price" value="{{ app.request.get('min_price') | default }}">
+                                    <input
+                                            type="text"
+                                            id="min_price"
+                                            class="form-control form-control-sm"
+                                            name="min_price"
+                                            value="{{ app.request.get('min_price') | default }}"
+                                    >
                                 </div>
 
                                 <div class="col-6">
-                                    <input type="text" id="max_price" class="form-control form-control-sm" name="max_price" value="{{ app.request.get('max_price') | default }}">
+                                    <input
+                                            type="text"
+                                            id="max_price"
+                                            class="form-control form-control-sm"
+                                            name="max_price"
+                                            value="{{ app.request.get('max_price') | default }}"
+                                    >
                                 </div>
                             </div>
 
@@ -166,14 +190,20 @@
 {#                </ul>#}
 
                 <!-- the listings -->
-                <div id="cards-wrapper" class="">
+                <div id="cards-wrapper">
                     {% for listing in listingList %}
-                        <div id="listing-{{ listing.id }}" class="card mb-3 regular {% if listing.featured %}listing-recommended{% endif %}">
+                        <div
+                                id="listing-{{ listing.id }}"
+                                class="card mb-3 regular {% if listing.featured %}listing-recommended{% endif %}"
+                        >
                             <div class="container-fluid">
-                                <div class="row" data-listing-id="340">
+                                <div class="row">
                                     <div class="card-thumb col-12 col-md-3 pt-3 pb-md-3">
-                                        <a title="{{ listing.title }}" href="{{ path('app_listing_show', {id: listing.id, 'slug': listing.slug}) }}">
-                                            <img
+                                        <a
+                                                title="{{ listing.title }}"
+                                                href="{{ path('app_listing_show', {id: listing.id, 'slug': listing.slug}) }}"
+                                        >
+                                        <img
                                                     class="rounded listing-list-img"
                                                     alt="{{ listing.title }}"
                                                     src="{{ asset(listing.mainImageInListSize | default('static/system/blank.png')) }}"
@@ -212,8 +242,14 @@
 
                                         {% if listing.price is not empty %}
                                             <div class="mt-1">
-                                                <span class="btn btn-dark btn-sm price">{{ 'trans.Price' | trans }}: {{ listing.price | money }}</span>
-                                                {% if listing.priceFor %}<span>{{ ('trans.priceFor.'~listing.priceFor) | trans }}</span>{% endif %}
+                                                <span class="btn btn-dark btn-sm price">
+                                                    {{ 'trans.Price' | trans }}:
+                                                    {{ listing.price | money }}
+                                                </span>
+
+                                                {% if listing.priceFor %}
+                                                    <span>{{ ('trans.priceFor.'~listing.priceFor) | trans }}</span>
+                                                {% endif %}
                                             </div>
                                         {% endif %}
                                     </div>

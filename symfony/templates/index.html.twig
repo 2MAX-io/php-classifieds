@@ -9,8 +9,14 @@
     <!-- Categories -->
     <div class="container mb-2">
         <div class="d-flex flex-row">
-            <div class="flex-grow-1"><h2>{{ 'trans.Categories' | trans }}</h2></div>
-            <div class="d-none d-sm-block"><a href="{{ path('app_category_view_all') }}" class="btn btn-light">{{ 'trans.View all' | trans }}</a></div>
+            <div class="flex-grow-1">
+                <h2>{{ 'trans.Categories' | trans }}</h2>
+            </div>
+            <div class="d-none d-sm-block">
+                <a href="{{ path('app_category_view_all') }}" class="btn btn-light">
+                    {{ 'trans.View all' | trans }}
+                </a>
+            </div>
         </div>
     </div>
 
@@ -19,8 +25,16 @@
             {% for category in categoryList %}
             <div class="col-sm-6 col-lg-3 text-center mb-4">
                 <div class="card bg-light text-white">
-                    <a href="{{ path('app_category', {'categorySlug': category.slug}) }}" title="{{ category.name }}" class="text-white">
-                        <img class="card-img" src="{{ asset(category.picture | default('static/system/blank.png')) }}" alt="">
+                    <a
+                            href="{{ path('app_category', {'categorySlug': category.slug}) }}"
+                            title="{{ category.name }}"
+                            class="text-white"
+                    >
+                        <img
+                                class="card-img"
+                                src="{{ asset(category.picture | default('static/system/blank.png')) }}"
+                                alt=""
+                        >
                         <div class="card-img-overlay">
                             <h5 class="card-title down">{{ category.name }}</h5>
                         </div>
@@ -46,15 +60,26 @@
                         <div class="card card-featured mb-4">
 
                             <a href="{{ path('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}">
-                                <img class="card-img-top" alt="" src="{{ asset(listing.mainImageInListSize | default('static/system/blank.png')) }}">
+                                <img
+                                        class="card-img-top"
+                                        alt=""
+                                        src="{{ asset(listing.mainImageInListSize | default('static/system/blank.png')) }}"
+                                >
                             </a>
 
                             <div class="card-body">
-                                <h5 class="card-title"><a href={{ path('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}>{{ listing.title }}</a></h5>
+                                <h5 class="card-title">
+                                    <a href={{ path('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}>
+                                        {{ listing.title }}
+                                    </a>
+                                </h5>
                             </div>
 
                             <div class="card-footer">
-                                <a href="{{ path('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}" class="btn btn-sm btn-dark btn-block mt-auto">
+                                <a
+                                        href="{{ path('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}"
+                                        class="btn btn-sm btn-dark btn-block mt-auto"
+                                >
                                     {{ 'trans.View Listing' | trans }}
                                 </a>
                             </div>
@@ -79,16 +104,27 @@
                         <div class="card card-featured mb-4">
 
                             <a href="{{ path('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}">
-                                <img class="card-img-top" alt="" src="{{ asset(listing.mainImageInListSize | default('static/system/blank.png')) }}">
+                                <img
+                                        class="card-img-top"
+                                        alt=""
+                                        src="{{ asset(listing.mainImageInListSize | default('static/system/blank.png')) }}"
+                                >
                             </a>
 
                             <div class="card-body">
-                                <h5 class="card-title"><a href={{ path('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}>{{ listing.title }}</a></h5>
+                                <h5 class="card-title">
+                                    <a href={{ path('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}>
+                                        {{ listing.title }}
+                                    </a>
+                                </h5>
                             </div>
 
                             <div class="card-footer">
-                                <a href="{{ path('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}" class="btn btn-sm btn-dark btn-block mt-auto">
-                                    {{ 'trans.View Listing' | trans }}
+                                <a
+                                        href="{{ path('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}"
+                                        class="btn btn-sm btn-dark btn-block mt-auto"
+                                >
+                                {{ 'trans.View Listing' | trans }}
                                 </a>
                             </div>
                         </div>

@@ -32,11 +32,19 @@
 <div class="container-fluid container-header ">
     <div class="container container-remove-padding">
         <nav class="navbar navbar-expand-lg navbar-light">
-            <a class="navbar-brand" href="{{ path('app_index') }}"  title="{{ settings.indexPageTitle }}">
-                <img src="{{ asset('static/system/logo.png') }}" alt="{{ 'trans.Classifieds' | trans }}" width="200">
+            <a class="navbar-brand" href="{{ path('app_index') }}" title="{{ settings.indexPageTitle }}">
+                <img src="{{ asset('static/system/logo.png') }}" alt="{{ 'trans.Classifieds' | trans }}" width="200"/>
             </a>
 
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <button
+                    class="navbar-toggler"
+                    type="button"
+                    data-toggle="collapse"
+                    data-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+            >
                 <span class="navbar-toggler-icon"></span>
             </button>
 
@@ -54,9 +62,15 @@
                     <li class="nav-item">
                         <a class="nav-link" href="//www.jaslo4u.pl">Jaslo4u.pl</a>
                     </li>
+
                     {% if lowSecurityCheckIsAdminInPublic() %}
                         <li class="nav-item">
-                            <a class="nav-link btn btn-outline-danger" href="{{ path('app_admin_index') }}">{{ 'trans.Admin panel' | trans }}</a>
+                            <a
+                                    class="nav-link btn btn-outline-danger"
+                                    href="{{ path('app_admin_index') }}"
+                            >
+                                {{ 'trans.Admin panel' | trans }}
+                            </a>
                         </li>
                     {% endif %}
                 </ul>
@@ -70,11 +84,22 @@
                                     <div class="input-group-text"><i class="fas fa-search"></i></div>
                                 </div>
 
-                                <input type="text" class="form-control" name="query" placeholder="{{ 'trans.keyword'|trans }}" value="{{ app.request.get('query') | default }}">
+                                <input
+                                        type="text"
+                                        class="form-control"
+                                        name="query"
+                                        placeholder="{{ 'trans.keyword'|trans }}"
+                                        value="{{ app.request.get('query') | default }}"
+                                >
                             </div>
                         </div>
                         <div class="col-md-4 container-remove-padding">
-                            <button type="submit" class="btn btn-primary btn-block mb-2">{{ 'trans.Search' | trans }}</button>
+                            <button
+                                    type="submit"
+                                    class="btn btn-primary btn-block mb-2"
+                            >
+                                {{ 'trans.Search' | trans }}
+                            </button>
                         </div>
                     </form>
                 </div>
@@ -91,7 +116,13 @@
                             </li>
 
                             <li class="list-inline-item">
-                                <a href="{{ path('app_listing_new') }}" class="btn btn-primary">{{ 'trans.Get Listed Today' | trans }} <i class="fas fa-chevron-right"></i></a>
+                                <a
+                                        href="{{ path('app_listing_new') }}"
+                                        class="btn btn-primary"
+                                >
+                                    {{ 'trans.Get Listed Today' | trans }}
+                                    <i class="fas fa-chevron-right"></i>
+                                </a>
                             </li>
                         </ul>
                     </div>
@@ -105,7 +136,15 @@
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark d-none d-md-block">
     <div class="container">
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false" aria-label="Toggle navigation">
+        <button
+                class="navbar-toggler"
+                type="button"
+                data-toggle="collapse"
+                data-target="#main-navbar"
+                aria-controls="main-navbar"
+                aria-expanded="false"
+                aria-label="Toggle navigation"
+        >
             <span class="navbar-toggler-icon"></span>
         </button>
 
@@ -123,9 +162,15 @@
                 <li class="nav-item">
                     <a class="nav-link" href="//www.jaslo4u.pl">Jaslo4u.pl</a>
                 </li>
+
                 {% if lowSecurityCheckIsAdminInPublic() %}
                     <li class="nav-item">
-                        <a class="nav-link btn btn-outline-danger" href="{{ path('app_admin_index') }}">{{ 'trans.Admin panel' | trans }}</a>
+                        <a
+                                class="nav-link btn btn-outline-danger"
+                                href="{{ path('app_admin_index') }}"
+                        >
+                            {{ 'trans.Admin panel' | trans }}
+                        </a>
                     </li>
                 {% endif %}
             </ul>
@@ -179,7 +224,14 @@
                 <h5>{{ 'trans.About' | trans }}</h5>
                 <ul class="list-unstyled text-small">
                     <li><a class="text-muted" href="#contact">{{ 'trans.Contact' | trans }}</a></li>
-                    <li><a class="text-muted" href="{{ path('app_page', {'slug': settings.linkTermsConditions}) }}">{{ 'trans.Terms and conditions' | trans }}</a></li>
+                    <li>
+                        <a
+                                class="text-muted"
+                                href="{{ path('app_page', {'slug': settings.linkTermsConditions}) }}"
+                        >
+                            {{ 'trans.Terms and conditions' | trans }}
+                        </a>
+                    </li>
                     <li><a class="text-muted" href="#report-abuse">{{ 'trans.Report abuse' | trans }}</a></li>
                 </ul>
             </div>
@@ -202,15 +254,15 @@
     <script src="{{ url('bazinga_jstranslation_js') }}"></script>
     <script src="{{ asset('asset/main.js') }}"></script>
 
-    <!-- CSRF -->
-    <script type="text/javascript">
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-Token': 'b039a3c7a100e429e4115c7b06a18d2b',
-                'X-AJAX-Setup': 1
-            }
-        });
-    </script>
+{#    <!-- CSRF -->#}
+{#    <script type="text/javascript">#}
+{#        $.ajaxSetup({#}
+{#            headers: {#}
+{#                'X-CSRF-Token': 'b039a3c7a100e429e4115c7b06a18d2b',#}
+{#                'X-AJAX-Setup': 1#}
+{#            }#}
+{#        });#}
+{#    </script>#}
 {% endblock %}
 {% block js %}{% endblock %}
 

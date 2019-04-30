@@ -348,7 +348,7 @@ class Listing
     }
 
     /**
-     * @return Collection|ListingFile[]
+     * @return ArrayCollection|ListingFile[]
      */
     public function getListingFiles(): Collection
     {

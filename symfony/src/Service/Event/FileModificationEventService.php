@@ -34,7 +34,11 @@ class FileModificationEventService
     public function updateListingMainImage(Listing $listing): void
     {
         /** @var ListingFile $firstFile */
-        $firstFile = $listing->getListingFiles()->matching(Criteria::create()->orderBy(['sort' => 'asc'])->where(Criteria::expr()->eq("userRemoved", false)))->first();
+        $firstFile = $listing->getListingFiles()->matching(
+            Criteria::create()
+                ->orderBy(['sort' => 'asc'])
+                ->where(Criteria::expr()->eq("userRemoved", false))
+        )->first();
 
         if (empty($firstFile)) {
             $listing->setMainImage(null);

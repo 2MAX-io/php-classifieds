@@ -77,12 +77,12 @@ class ValueExistValidator extends ConstraintValidator
             $em = $this->registry->getManagerForClass($constraint->entityClass);
 
             if (!$em) {
-                throw new ConstraintDefinitionException(sprintf('Unable to find the object manager associated with an entity of class "%s".', \get_class($entity)));
+                throw new ConstraintDefinitionException(sprintf('Unable to find the object manager associated with an entity of class "%s".', $constraint->entityClass));
             }
         }
 
         $class = $em->getClassMetadata($constraint->entityClass);
-        /* @var $class \Doctrine\Common\Persistence\Mapping\ClassMetadata */
+        /* @var $class ClassMetadata */
 
         $criteria = [];
         $hasNullValue = false;
@@ -136,7 +136,15 @@ class ValueExistValidator extends ConstraintValidator
                 throw new ConstraintDefinitionException(sprintf('The "%s" entity repository does not support the "%s" entity. The entity should be an instance of or extend "%s".', $constraint->entityClass, $class->getName(), $supportedClass));
             }
         } else {
-            $repository = $em->getRepository(\get_class($entity));
+            throw new ConstraintDefinitionException(
+                \sprintf(
+                    'entityClass must be set in Constraint: %s',
+                    \get_class
+                    (
+                        $constraint
+                    )
+                )
+            );
         }
 
         $result = $repository->{$constraint->repositoryMethod}($criteria);

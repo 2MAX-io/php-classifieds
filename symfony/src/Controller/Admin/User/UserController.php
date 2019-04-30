@@ -57,7 +57,7 @@ class UserController extends AbstractAdminController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('user_index', [
+            return $this->redirectToRoute('admin_user_index', [
                 'id' => $user->getId(),
             ]);
         }
@@ -81,6 +81,6 @@ class UserController extends AbstractAdminController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('user_index');
+        return $this->redirectToRoute('admin_user_index');
     }
 }

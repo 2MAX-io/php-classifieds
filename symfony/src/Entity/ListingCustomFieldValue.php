@@ -75,6 +75,9 @@ class ListingCustomFieldValue
         return $this->customField;
     }
 
+    /**
+     * @param CustomField|object|null $customField
+     */
     public function setCustomField(?CustomField $customField): self
     {
         $this->customField = $customField;

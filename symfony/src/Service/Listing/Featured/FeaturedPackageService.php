@@ -31,7 +31,7 @@ class FeaturedPackageService
             return $notDefaultPlans;
         }
 
-        return $this->getDefaultPlans($listing);
+        return $this->getDefaultPlans();
     }
 
     public function getNotDefaultPlans(Listing $listing): array
@@ -46,7 +46,7 @@ class FeaturedPackageService
         return $qb->getQuery()->getResult();
     }
 
-    public function getDefaultPlans(Listing $listing): array
+    public function getDefaultPlans(): array
     {
         $qb = $this->em->getRepository(FeaturedPackage::class)->createQueryBuilder('featuredPackage');
         $qb->andWhere($qb->expr()->eq('featuredPackage.defaultPackage', 1));

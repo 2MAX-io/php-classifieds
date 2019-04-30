@@ -51,7 +51,7 @@ class SettingsService implements LocalCacheInterface
     {
         $properties = $this->propertyInfoExtractor->getProperties($settingsDto);
         $propertyAccessor = PropertyAccess::createPropertyAccessor();
-        $settingList = $this->getSettingsIndexedByname();
+        $settingList = $this->getSettingsIndexedByName();
 
         foreach ($properties as $property) {
             $setting = null;
@@ -81,7 +81,7 @@ class SettingsService implements LocalCacheInterface
         $settingsDto = new SettingsDto();
         $propertyAccessor = PropertyAccess::createPropertyAccessor();
 
-        $settingList = $this->getSettingsIndexedByname();
+        $settingList = $this->getSettingsIndexedByName();
         foreach ($settingList as $setting) {
             if ($propertyAccessor->isWritable($settingsDto, $setting->getName())) {
                 $propertyAccessor->setValue(
@@ -98,7 +98,7 @@ class SettingsService implements LocalCacheInterface
     /**
      * @return Setting[]
      */
-    private function getSettingsIndexedByname(): array
+    private function getSettingsIndexedByName(): array
     {
         $qb = $this->settingRepository->createQueryBuilder('setting');
         $qb->indexBy('setting', 'setting.name');

@@ -21,7 +21,7 @@ class CategoryType extends AbstractType
             'attr' => [
                 'class' => 'formCategory',
             ],
-            'choice_label' => function (Category $category, $key, $value) {
+            'choice_label' => function (Category $category) {
                 $path = $category->getPath();
 
                 $path = array_map(

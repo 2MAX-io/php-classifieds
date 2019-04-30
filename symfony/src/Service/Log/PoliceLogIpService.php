@@ -7,7 +7,6 @@ namespace App\Service\Log;
 use App\Entity\Listing;
 use App\Entity\ListingPoliceLog;
 use App\Security\CurrentUserService;
-use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 
 class PoliceLogIpService
@@ -70,8 +69,8 @@ class PoliceLogIpService
             $userEmail = $user->getEmail();
         }
 
-        $requestTimeString = DateTime::createFromFormat('U.u', (string) $_SERVER['REQUEST_TIME_FLOAT'])->format('Y-m-d H:i:s.u P');
-        $currentServerTime = DateTime::createFromFormat('U.u', (string) microtime(true))->format('Y-m-d H:i:s.u P');
+        $requestTimeString = \DateTime::createFromFormat('U.u', (string) $_SERVER['REQUEST_TIME_FLOAT'])->format('Y-m-d H:i:s.u P');
+        $currentServerTime = \DateTime::createFromFormat('U.u', (string) microtime(true))->format('Y-m-d H:i:s.u P');
 
         $logText = <<<END
 Connection:

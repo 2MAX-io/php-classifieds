@@ -3,8 +3,6 @@
 namespace App\Entity;
 
 use App\Helper\ImageResizePath;
-use Carbon\Carbon;
-use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\Criteria;
@@ -588,7 +586,7 @@ class Listing
             return static::STATUS_DEACTIVATED;
         }
 
-        if ($this->getValidUntilDate() <= new DateTime()) {
+        if ($this->getValidUntilDate() <= new \DateTime()) {
             return static::STATUS_EXPIRED;
         }
 
@@ -596,7 +594,7 @@ class Listing
             return static::STATUS_PENDING;
         }
 
-        if ($this->getFeatured() && $this->getFeaturedUntilDate() >= new DateTime()) {
+        if ($this->getFeatured() && $this->getFeaturedUntilDate() >= new \DateTime()) {
             return self::STATUS_ACTIVE_FEATURED;
         }
 

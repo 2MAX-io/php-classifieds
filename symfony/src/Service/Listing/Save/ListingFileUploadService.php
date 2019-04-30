@@ -101,8 +101,7 @@ class ListingFileUploadService
                 'png',
                 'gif',
                 'swf',
-            ],
-            true
+            ]
         )) {
             throw new \UnexpectedValueException(
                 "file extension $fileExtension is not allowed"
@@ -120,8 +119,7 @@ class ListingFileUploadService
                 'bat',
                 'sh',
                 'cgi',
-            ],
-            true
+            ]
         )) {
             throw new \UnexpectedValueException(
                 "file extension $fileExtension is not allowed"

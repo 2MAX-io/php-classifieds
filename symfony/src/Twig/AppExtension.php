@@ -13,25 +13,25 @@ class AppExtension extends AbstractExtension
     public function getFunctions()
     {
         return [
-            new TwigFunction('lowSecurityCheckIsAdminInPublic', [AppRuntime::class, 'lowSecurityCheckIsAdminInPublic']),
-            new TwigFunction('isCurrentUserListing', [AppRuntime::class, 'isCurrentUserListing']),
-            new TwigFunction('getListingStatus', [TwigListingRuntime::class, 'getListingStatus']),
-            new TwigFunction('getListingStatusClass', [TwigListingRuntime::class, 'getListingStatusClass']),
-            new TwigFunction('adminShowActivate', [TwigListingRuntime::class, 'adminShowActivate']),
-            new TwigFunction('adminShowReject', [TwigListingRuntime::class, 'adminShowReject']),
-            new TwigFunction('displayAsExpired', [TwigUserRuntime::class, 'displayAsExpired']),
-            new TwigFunction('settings', [TwigSettingsRuntime::class, 'settings']),
+            new TwigFunction('lowSecurityCheckIsAdminInPublic', [TwigUser::class, 'lowSecurityCheckIsAdminInPublic']),
+            new TwigFunction('isCurrentUserListing', [TwigUser::class, 'isCurrentUserListing']),
+            new TwigFunction('getListingStatus', [TwigListingStatus::class, 'getListingStatus']),
+            new TwigFunction('getListingStatusClass', [TwigListingStatus::class, 'getListingStatusClass']),
+            new TwigFunction('adminShowActivate', [TwigListing::class, 'adminShowActivate']),
+            new TwigFunction('adminShowReject', [TwigListing::class, 'adminShowReject']),
+            new TwigFunction('displayAsExpired', [TwigUser::class, 'displayAsExpired']),
+            new TwigFunction('settings', [TwigSettings::class, 'settings']),
         ];
     }
 
     public function getFilters()
     {
         return [
-            new TwigFilter('boolText', [AppRuntime::class, 'boolText']),
-            new TwigFilter('displayTextWarning', [TwigListingRuntime::class, 'displayTextWarning']),
-            new TwigFilter('isExpired', [TwigListingRuntime::class, 'isExpired']),
-            new TwigFilter('moneyAsFloat', [AppRuntime::class, 'moneyAsFloat']),
-            new TwigFilter('money', [TwigListingRuntime::class, 'money']),
+            new TwigFilter('boolText', [TwigNoDependencies::class, 'boolText']),
+            new TwigFilter('displayTextWarning', [TwigNoDependencies::class, 'displayTextWarning']),
+            new TwigFilter('isExpired', [TwigListing::class, 'isExpired']),
+            new TwigFilter('moneyAsFloat', [TwigNoDependencies::class, 'moneyAsFloat']),
+            new TwigFilter('money', [TwigNoDependencies::class, 'money']),
         ];
     }
 }

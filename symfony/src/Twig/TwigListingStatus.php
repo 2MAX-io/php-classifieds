@@ -9,7 +9,7 @@ use App\System\EnvironmentService;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Extension\RuntimeExtensionInterface;
 
-class TwigListingRuntime implements RuntimeExtensionInterface
+class TwigListingStatus implements RuntimeExtensionInterface
 {
     /**
      * @var TranslatorInterface
@@ -81,62 +81,5 @@ class TwigListingRuntime implements RuntimeExtensionInterface
         $status = $listing->getStatus();
 
         return $map[$status] ?? 'listing-status-not-found';
-    }
-
-    public function adminShowActivate(Listing $listing): bool
-    {
-        if ($listing->getAdminRemoved()) {
-            return false;
-        }
-
-        if ($listing->getUserRemoved()) {
-            return false;
-        }
-
-        if ($listing->getAdminRejected()) {
-            return true;
-        }
-
-        if ($listing->getAdminConfirmed()) {
-            return false;
-        }
-
-        if ($listing->getUserDeactivated()) {
-            return false;
-        }
-
-        return true;
-    }
-
-    public function adminShowReject(Listing $listing): bool
-    {
-        if ($listing->getAdminRemoved()) {
-            return false;
-        }
-
-        if ($listing->getUserRemoved()) {
-            return false;
-        }
-
-        return true;
-    }
-
-    public function displayTextWarning(bool $bool): string
-    {
-        return $bool ? 'text-warning-color' : '';
-    }
-
-    public function isExpired(\DateTime $date): bool
-    {
-        return $date <= new \DateTime();
-    }
-
-    public function money(float $money): float
-    {
-        if ($money < 40) {
-            return round($money, 2);
-        }
-
-        return round($money, 0);
     }
 }

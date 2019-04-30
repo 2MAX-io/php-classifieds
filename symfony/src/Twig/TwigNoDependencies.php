@@ -4,30 +4,18 @@ declare(strict_types=1);
 
 namespace App\Twig;
 
-use App\Entity\Listing;
-use App\Security\CurrentUserService;
 use Twig\Extension\RuntimeExtensionInterface;
 
-class AppRuntime implements RuntimeExtensionInterface
+class TwigNoDependencies implements RuntimeExtensionInterface
 {
-    /**
-     * @var CurrentUserService
-     */
-    private $currentUserService;
-
-    public function __construct(CurrentUserService $currentUserService)
+    public function displayTextWarning(bool $bool): string
     {
-        $this->currentUserService = $currentUserService;
+        return $bool ? 'text-warning-color' : '';
     }
 
-    public function lowSecurityCheckIsAdminInPublic(): bool
+    public function isExpired(\DateTime $date): bool
     {
-        return $this->currentUserService->lowSecurityCheckIsAdminInPublic();
-    }
-
-    public function isCurrentUserListing(Listing $listing): bool
-    {
-        return $this->currentUserService->getUser() === $listing->getUser();
+        return $date <= new \DateTime();
     }
 
     public function boolText($value): string
@@ -62,5 +50,14 @@ class AppRuntime implements RuntimeExtensionInterface
     public function moneyAsFloat(int $value): float
     {
         return \round($value / 100, 2);
+    }
+
+    public function money(float $money): float
+    {
+        if ($money < 40) {
+            return round($money, 2);
+        }
+
+        return round($money, 0);
     }
 }

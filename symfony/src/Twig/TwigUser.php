@@ -8,7 +8,7 @@ use App\Entity\Listing;
 use App\Security\CurrentUserService;
 use Twig\Extension\RuntimeExtensionInterface;
 
-class TwigUserRuntime implements RuntimeExtensionInterface
+class TwigUser implements RuntimeExtensionInterface
 {
     /**
      * @var CurrentUserService
@@ -18,6 +18,16 @@ class TwigUserRuntime implements RuntimeExtensionInterface
     public function __construct(CurrentUserService $currentUserService)
     {
         $this->currentUserService = $currentUserService;
+    }
+
+    public function lowSecurityCheckIsAdminInPublic(): bool
+    {
+        return $this->currentUserService->lowSecurityCheckIsAdminInPublic();
+    }
+
+    public function isCurrentUserListing(Listing $listing): bool
+    {
+        return $this->currentUserService->getUser() === $listing->getUser();
     }
 
     public function displayAsExpired(Listing $listing): bool

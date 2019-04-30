@@ -10,7 +10,7 @@ use App\System\Cache\CacheService;
 use Psr\SimpleCache\CacheInterface;
 use Twig\Extension\RuntimeExtensionInterface;
 
-class TwigSettingsRuntime implements RuntimeExtensionInterface
+class TwigSettings implements RuntimeExtensionInterface
 {
     /**
      * @var SettingsService

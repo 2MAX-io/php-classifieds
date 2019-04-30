@@ -7,6 +7,7 @@ namespace App\Controller\Admin\User;
 use App\Controller\Admin\Base\AbstractAdminController;
 use App\Entity\User;
 use App\Form\Admin\UserChangeBalanceType;
+use App\Helper\Integer;
 use App\Service\Money\UserBalanceService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -29,7 +30,7 @@ class UserChangeBalanceController extends AbstractAdminController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $userBalanceService->forceSetBalance(
-                ($form->get(UserChangeBalanceType::NEW_BALANCE)->getData() * 100),
+                Integer::toInteger($form->get(UserChangeBalanceType::NEW_BALANCE)->getData() * 100),
                 $user
             );
 

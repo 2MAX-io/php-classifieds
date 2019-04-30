@@ -29,9 +29,10 @@ class AppExtension extends AbstractExtension
         return [
             new TwigFilter('boolText', [TwigNoDependencies::class, 'boolText']),
             new TwigFilter('displayTextWarning', [TwigNoDependencies::class, 'displayTextWarning']),
-            new TwigFilter('isExpired', [TwigListing::class, 'isExpired']),
+            new TwigFilter('isExpired', [TwigNoDependencies::class, 'isExpired']),
             new TwigFilter('moneyAsFloat', [TwigNoDependencies::class, 'moneyAsFloat']),
             new TwigFilter('money', [TwigNoDependencies::class, 'money']),
+            new TwigFilter('defaultTrans', [TwigTranslator::class, 'defaultTrans']),
         ];
     }
 }

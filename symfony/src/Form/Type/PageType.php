@@ -27,6 +27,7 @@ class PageType extends AbstractType
             'placeholder' => 'trans.Select page',
             'label' => 'trans.Select',
             'choices' => $this->getPages(),
+            'choice_translation_domain' => false,
         ]);
     }
 

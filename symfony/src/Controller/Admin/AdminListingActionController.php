@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class AdminListingActionController extends AbstractAdminController
 {
     /**
-     * @Route("/admin/red5/listing-confirm/confirm/{id}", name="app_admin_listing_confirm", methods={"PATCH"})
+     * @Route("/admin/red5/listing/action/confirm/{id}", name="app_admin_listing_confirm", methods={"PATCH"})
      */
     public function confirm(Request $request, Listing $listing): Response
     {
@@ -31,7 +31,7 @@ class AdminListingActionController extends AbstractAdminController
     }
 
     /**
-     * @Route("/admin/red5/listing-confirm/remove/{id}", name="app_admin_listing_remove", methods={"DELETE"})
+     * @Route("/admin/red5/listing/action/remove/{id}", name="app_admin_listing_remove", methods={"DELETE"})
      */
     public function remove(Request $request, Listing $listing): Response
     {
@@ -47,7 +47,7 @@ class AdminListingActionController extends AbstractAdminController
     }
 
     /**
-     * @Route("/admin/red5/listing-confirm/raise/{id}", name="app_admin_listing_raise", methods={"PATCH"})
+     * @Route("/admin/red5/listing/action/raise/{id}", name="app_admin_listing_raise", methods={"PATCH"})
      */
     public function raise(Request $request, Listing $listing): Response
     {

@@ -23,7 +23,6 @@ class AdminListingEditAdvancedController extends AbstractAdminController
         $form = $this->createForm(AdminListingAdvancedEditType::class, $listing);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('app_admin_listing_edit_advanced', [

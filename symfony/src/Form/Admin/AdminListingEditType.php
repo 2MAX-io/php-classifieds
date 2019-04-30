@@ -9,6 +9,7 @@ use App\Form\Type\BoolType;
 use App\Form\Type\CategoryType;
 use App\Form\Type\PriceForType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
@@ -54,6 +55,10 @@ class AdminListingEditType extends AbstractType
         ]);
         $builder->add('email', EmailType::class, [
             'label' => 'trans.Email',
+        ]);
+        $builder->add('emailShow', CheckboxType::class, [
+            'label' => 'trans.Show email?',
+            'required' => false,
         ]);
         $builder->add('price', IntegerType::class, [
             'label' => 'trans.Price'

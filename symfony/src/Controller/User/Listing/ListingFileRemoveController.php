@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller\User\Listing;
 
 use App\Controller\User\Base\AbstractUserController;

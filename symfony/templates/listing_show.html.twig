@@ -353,12 +353,18 @@
         });
 
         var showContactInformation = function (listingId) {
-            $.post(Routing.generate('app_listing_contact_data'), {listingId: listingId}, function (response) {
+            $.post(
+                Routing.generate('app_listing_contact_data', {}),
+                {
+                    listingId: listingId
+                }
+            ).done(function (response) {
                 $('.listing-contact-data').remove();
 
-                $('#showContactInformation').before(response.html);
+                let $showContactInformation = $('#showContactInformation');
+                $showContactInformation.before(response.html);
+                $showContactInformation.remove();
             });
         };
     </script>
 {% endblock %}
-

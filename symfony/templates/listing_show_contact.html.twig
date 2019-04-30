@@ -1,4 +1,12 @@
 <div class="listing-contact-data">
+    {% if listing.phone is empty and listing.email is empty %}
+        <button
+                class="alert alert-danger"
+        >
+            {{ 'trans.No contact information found, please check listing description' | trans }}
+        </button>
+    {% endif %}
+
     {% if listing.phone is not empty and not displayAsExpired(listing)  %}
         <div class="mb-2 py-2">
             <div class="row">

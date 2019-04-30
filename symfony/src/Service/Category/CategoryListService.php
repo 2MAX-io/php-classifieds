@@ -32,7 +32,12 @@ class CategoryListService
         }
 
         if ($category !== null) {
-            $qb->join(Category::class, 'requestedCategory', Join::WITH, $qb->expr()->eq('requestedCategory.id', ':requestedCategory'));
+            $qb->join(
+                Category::class,
+                'requestedCategory',
+                Join::WITH,
+                $qb->expr()->eq('requestedCategory.id', ':requestedCategory')
+            );
             $qb->setParameter(':requestedCategory', $category->getId());
 
             $qb->andWhere(

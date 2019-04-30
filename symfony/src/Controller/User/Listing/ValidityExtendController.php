@@ -28,7 +28,10 @@ class ValidityExtendController extends AbstractUserController
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $validUntilSetService->setValidityDaysFromNow($listing, (int) $form->get('validityTimeDays')->getData());
+            $validUntilSetService->setValidityDaysFromNow(
+                $listing,
+                (int) $form->get('validityTimeDays')->getData()
+            );
             $listing->setUserDeactivated(false);
 
             $entityManager = $this->getDoctrine()->getManager();

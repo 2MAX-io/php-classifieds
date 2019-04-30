@@ -37,8 +37,8 @@ class GetCustomFieldsController extends AbstractUserController
             'user/listing/get_custom_fields.html.twig',
             [
                 'customFieldList' => $customFieldsForListingFormService->getFields(
-                    (int)$categoryId,
-                    (int)$listingId
+                    (int) $categoryId,
+                    (int) $listingId
                 ),
             ]
         );

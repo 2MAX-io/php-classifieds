@@ -19,6 +19,7 @@ class LoginUserProgrammaticallyService
      * @var TokenStorageInterface
      */
     private $tokenStorage;
+
     /**
      * @var SessionInterface
      */
@@ -28,6 +29,7 @@ class LoginUserProgrammaticallyService
      * @var RequestStack
      */
     private $requestStack;
+
     /**
      * @var EventDispatcherInterface
      */

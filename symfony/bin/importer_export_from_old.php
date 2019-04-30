@@ -180,6 +180,7 @@ while ($dbRow = $stmt->fetch(\PDO::FETCH_ASSOC)) {
     }
 
     if (count($csvRow) !== count($header)) {
+        echo "CSV row columns count does not match header items count\r\n";
         print_r($csvRow) . "\r\n";
         exit;
     }
@@ -297,6 +298,11 @@ function mapCategory(array $dbRow) {
     ];
 
     $catId = $dbRow['listing_category_legacy'];
+
+    if ($map[$catId] === null) {
+        echo "not found mapping for $catId\r\n";
+    }
+
     return $map[$catId] ?? 1204;
 }
 

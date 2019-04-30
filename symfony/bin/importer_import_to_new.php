@@ -17,7 +17,6 @@ $header = fgetcsv($csvHandle, 0, ",");
 $currentOldListingId = null;
 while (($csvRow = fgetcsv($csvHandle, 0, ",")) !== FALSE) {
     $csvRow = array_combine($header, $csvRow);
-    $csvRow['listing_search_text'] = $csvRow['listing_title'] . ' ' . $csvRow['listing_description']; // default value, should be regenerated
 
     if ($currentOldListingId !== $csvRow['listing_id']) {
         $currentOldListingId = $csvRow['listing_id'];
@@ -27,7 +26,7 @@ while (($csvRow = fgetcsv($csvHandle, 0, ",")) !== FALSE) {
         saveUser($csvRow, $sqlHandle);
         savePoliceLog($csvRow, $sqlHandle);
     }
-    saveFiles($csvRow, $sqlHandle);
+    saveListingFile($csvRow, $sqlHandle);
 }
 
 fclose($csvHandle);
@@ -152,7 +151,7 @@ function arrayToSetStringUser(array $csvRow): string {
     return arrayToSqlSetString($csvRow, $map);
 }
 
-function saveFiles(array $csvRow, $sqlHandle) {
+function saveListingFile(array $csvRow, $sqlHandle) {
     if (empty($csvRow['listing_file_path'])) {
         return;
     }
@@ -176,6 +175,7 @@ function saveFiles(array $csvRow, $sqlHandle) {
 function saveListing(array $csvRow, $sqlHandle) {
 
     $csvRow['listing_user_id'] = 1; // todo: make production
+    $csvRow['listing_search_text'] = $csvRow['listing_title'] . ' ' . $csvRow['listing_description']; // default value, should be regenerated
 
     saveSql( /** @lang MySQL */ 'INSERT INTO listing SET '.arrayToSetStringListing($csvRow).';', $sqlHandle);
 }

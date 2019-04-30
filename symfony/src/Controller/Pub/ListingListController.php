@@ -70,12 +70,17 @@ class ListingListController extends AbstractController
         return $this->render(
             'listing_list.html.twig',
             [
-                'pagination' => $view->render($listingListDto->getPager(), function (int $page) use ($router, $categorySlug, $request) {
-                    return $router->generate($request->get('_route'), array_merge(
-                        $request->query->all(),
-                        ['categorySlug' => $categorySlug, 'page' => (int) $page]
-                    ));
-                },
+                'pagination' => $view->render(
+                    $listingListDto->getPager(),
+                    function (int $page) use ($router, $categorySlug, $request) {
+                        return $router->generate(
+                            $request->get('_route'),
+                            array_merge(
+                                $request->query->all(),
+                                ['categorySlug' => $categorySlug, 'page' => (int)$page]
+                            )
+                        );
+                    },
                     [
                         'proximity' => 3,
                         'prev_message' => '&larr; ' . $this->trans->trans('trans.Previous'),

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Controller\Pub;
 
-use App\Security\CurrentUserService;
 use App\Service\Category\CategoryListService;
 use App\Service\Listing\ListingPublicDisplayService;
 use App\Service\Listing\ShowSingle\ListingShowSingleService;
@@ -25,7 +24,6 @@ class ListingShowController extends AbstractController
         string $slug,
         ListingShowSingleService $listingShowSingleService,
         CategoryListService $categoryListService,
-        CurrentUserService $currentUserService,
         ListingPublicDisplayService $listingPublicDisplayService
     ): Response {
         $listingShowDto = $listingShowSingleService->getSingle($id);
@@ -33,8 +31,7 @@ class ListingShowController extends AbstractController
             throw $this->createNotFoundException();
         }
 
-        $forceDisplay = $listingShowDto->getListing()->getUser() === $currentUserService->getUser() || $currentUserService->lowSecurityCheckIsAdminInPublic();
-        if (!$forceDisplay && !$listingPublicDisplayService->canPublicDisplay($listingShowDto->getListing())) {
+        if (!$listingPublicDisplayService->canDisplay($listingShowDto->getListing())) {
             return $this->render(
                 'listing_show_when_removed.html.twig',
                 [
@@ -79,7 +76,6 @@ class ListingShowController extends AbstractController
     public function showContactData(
         Request $request,
         ListingShowSingleService $listingShowSingleService,
-        CurrentUserService $currentUserService,
         ListingPublicDisplayService $listingPublicDisplayService,
         Environment $twig
     ): Response {
@@ -89,8 +85,7 @@ class ListingShowController extends AbstractController
             throw $this->createNotFoundException();
         }
 
-        $forceDisplay = $listingShowDto->getListing()->getUser() === $currentUserService->getUser() || $currentUserService->lowSecurityCheckIsAdminInPublic();
-        if (!$forceDisplay && !$listingPublicDisplayService->canPublicDisplay($listingShowDto->getListing())) {
+        if (!$listingPublicDisplayService->canDisplay($listingShowDto->getListing())) {
             throw $this->createAccessDeniedException();
         }
 

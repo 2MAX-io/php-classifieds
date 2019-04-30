@@ -63,6 +63,11 @@ class CurrentUserService
         return $this->getAdmin() instanceof Admin;
     }
 
+    public function isCurrentUser(User $user): bool
+    {
+        return $this->getUser() === $user;
+    }
+
     /**
      * WARNING! do not use to authorize anything important, like authorizing admin actions
      *

@@ -9,3 +9,4 @@ sed -n '88087,88087p' /sql/importer_import_to_new.sql
 time mysql classifieds < /sql/importer_import_to_new.sql
 mysqldump classifieds > /sql/ogl_$(date +%Y-%m-%d_%H%M%S).sql
 mysql admin_ogloszenia < /sql/admin_ogloszenia.sql
+mysql classifieds < /sql/ogl_2019-05-01_081806_old.sql

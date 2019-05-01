@@ -27,9 +27,9 @@ class PaymentController extends AbstractController
         FeaturedListingService $featuredListingService,
         EntityManagerInterface $em
     ): Response {
-//        $em->beginTransaction();
-//
-//        try {
+        $em->beginTransaction();
+
+        try {
             $confirmPaymentDto = new ConfirmPaymentDto();
             $confirmPaymentDto = $paymentService->confirmPayment($request, $confirmPaymentDto);
 
@@ -49,11 +49,11 @@ class PaymentController extends AbstractController
                 );
             }
             $em->flush();
-//            $em->commit();
-//        } catch (\Throwable $e) {
-//            $em->rollback();
-//            throw $e;
-//        }
+            $em->commit();
+        } catch (\Throwable $e) {
+            $em->rollback();
+            throw $e;
+        }
 
         return new Response('ok');
     }

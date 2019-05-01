@@ -12,48 +12,54 @@
                 <div class="row">
 
                     <div class="col-md-4 mb-2">
-                        <select name="adminConfirmed" class="form-control">
-                            <option value="">{{ 'trans.Activated by Admin?' | trans }}</option>
+                        <label for="adminConfirmed">{{ 'trans.Activated by Admin?' | trans }}</label>
+                        <select name="adminConfirmed" class="form-control" id="adminConfirmed">
+                            <option value=""></option>
                             <option {{ optionAttr('adminConfirmed', 0) }} >{{ 'trans.Not activated' | trans }}</option>
                             <option {{ optionAttr('adminConfirmed', 1) }} >{{ 'trans.Activated' | trans }}</option>
                         </select>
                     </div>
 
                     <div class="col-md-4 mb-2">
-                        <select name="adminRejected" class="form-control">
-                            <option value="">{{ 'trans.Rejected by Admin?' | trans }}</option>
+                        <label for="adminRejected">{{ 'trans.Rejected by Admin?' | trans }}</label>
+                        <select name="adminRejected" class="form-control" id="adminRejected">
+                            <option value=""></option>
                             <option {{ optionAttr('adminRejected', 0) }} >{{ 'trans.No' | trans }}</option>
                             <option {{ optionAttr('adminRejected', 1) }} >{{ 'trans.Yes' | trans }}</option>
                         </select>
                     </div>
 
                     <div class="col-md-4 mb-2">
-                        <select name="adminRemoved" class="form-control">
-                            <option value="">{{ 'trans.Removed by Admin?' | trans }}</option>
+                        <label for="adminRemoved">{{ 'trans.Removed by Admin?' | trans }}</label>
+                        <select name="adminRemoved" class="form-control" id="adminRemoved">
+                            <option value=""></option>
                             <option {{ optionAttr('adminRemoved', 0) }} >{{ 'trans.No' | trans }}</option>
                             <option {{ optionAttr('adminRemoved', 1) }} >{{ 'trans.Yes' | trans }}</option>
                         </select>
                     </div>
 
                     <div class="col-md-4 mb-2">
-                        <select name="userDeactivated" class="form-control">
-                            <option value="">{{ 'trans.Deactivated by User?' | trans }}</option>
+                        <label for="userDeactivated">{{ 'trans.Deactivated by User?' | trans }}</label>
+                        <select name="userDeactivated" class="form-control" id="userDeactivated">
+                            <option value=""></option>
                             <option {{ optionAttr('userDeactivated', 0) }} >{{ 'trans.No' | trans }}</option>
                             <option {{ optionAttr('userDeactivated', 1) }} >{{ 'trans.Yes' | trans }}</option>
                         </select>
                     </div>
 
                     <div class="col-md-4 mb-2">
-                        <select name="userRemoved" class="form-control">
-                            <option value="">{{ 'trans.Removed by User?' | trans }}</option>
+                        <label for="userRemoved">{{ 'trans.Removed by User?' | trans }}</label>
+                        <select name="userRemoved" class="form-control" id="userRemoved">
+                            <option value=""></option>
                             <option {{ optionAttr('userRemoved', 0) }} >{{ 'trans.No' | trans }}</option>
                             <option {{ optionAttr('userRemoved', 1) }} >{{ 'trans.Yes' | trans }}</option>
                         </select>
                     </div>
 
                     <div class="col-md-4 mb-2">
-                        <select name="featured" class="form-control">
-                            <option value="">{{ 'trans.Featured listing?' | trans }}</option>
+                        <label for="featured">{{ 'trans.Featured listing?' | trans }}</label>
+                        <select name="featured" class="form-control" id="featured">
+                            <option value=""></option>
                             <option {{ optionAttr('featured', 0) }} >{{ 'trans.No' | trans }}</option>
                             <option {{ optionAttr('featured', 1) }} >{{ 'trans.Yes' | trans }}</option>
                         </select>

@@ -10,6 +10,7 @@ use App\Form\Type\CategoryType;
 use App\Form\Type\FileSimpleType;
 use App\Form\Type\PriceForType;
 use App\Service\Listing\ValidityExtend\ValidUntilSetService;
+use App\Validator\Constraints\Phone;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -75,6 +76,9 @@ class ListingType extends AbstractType
         $builder->add('phone', TextType::class, [
             'label' => 'trans.Phone',
             'required' => false,
+            'constraints' => [
+                new Phone(),
+            ],
         ]);
         $builder->add('email', EmailType::class, [
             'label' => 'trans.Email',

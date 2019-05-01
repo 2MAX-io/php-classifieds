@@ -40,7 +40,7 @@ class TwigUser implements RuntimeExtensionInterface
             || $listing->getUserDeactivated()
             || $listing->getAdminRemoved()
             || $listing->getAdminRejected()
-            || !$listing->getAdminConfirmed()
+            || !$listing->getAdminActivated()
             || $listing->getValidUntilDate() < new \DateTime();
     }
 }

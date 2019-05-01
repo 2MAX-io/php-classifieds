@@ -25,7 +25,7 @@ class ListingPublicDisplayService
         $qb->andWhere($qb->expr()->gte('listing.validUntilDate', ':todayDayStart'));
         $qb->setParameter(':todayDayStart', date('Y-m-d 00:00:00'));
 
-        $qb->andWhere('listing.adminConfirmed = 1');
+        $qb->andWhere('listing.adminActivated = 1');
         $qb->andWhere('listing.userRemoved = 0');
         $qb->andWhere('listing.userDeactivated = 0');
         $qb->andWhere('listing.adminRemoved = 0');
@@ -41,6 +41,6 @@ class ListingPublicDisplayService
             return true;
         }
 
-        return $listing->getAdminConfirmed() && !$listing->getAdminRemoved() && !$listing->getAdminRejected();
+        return $listing->getAdminActivated() && !$listing->getAdminRemoved() && !$listing->getAdminRejected();
     }
 }

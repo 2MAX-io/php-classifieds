@@ -28,7 +28,7 @@ class ListingConfirmListService
     {
         $qb = $this->em->getRepository(Listing::class)->createQueryBuilder('listing');
 
-        $qb->andWhere($qb->expr()->eq('listing.adminConfirmed', 0));
+        $qb->andWhere($qb->expr()->eq('listing.adminActivated', 0));
         $qb->andWhere($qb->expr()->eq('listing.userRemoved', 0));
         $qb->andWhere($qb->expr()->eq('listing.userDeactivated', 0));
         $qb->andWhere($qb->expr()->eq('listing.adminRemoved', 0));

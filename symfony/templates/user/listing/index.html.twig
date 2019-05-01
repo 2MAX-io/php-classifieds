@@ -98,7 +98,7 @@
                                 {% if not listing.adminRemoved %}
                                     <a href="{{ path('app_listing_edit', {'id': listing.id}) }}" class="btn btn-dark">{{ 'trans.Edit' | trans }}</a>
 
-                                    {% if (listing.adminConfirmed and not listing.adminRejected and not listing.userDeactivated) or listing.status == constant('\App\\Entity\\Listing::STATUS_EXPIRED') %}
+                                    {% if (listing.adminActivated and not listing.adminRejected and not listing.userDeactivated) or listing.status == constant('\App\\Entity\\Listing::STATUS_EXPIRED') %}
                                         <a
                                             href="{{ path('app_user_validity_extend', {'id': listing.id}) }}"
                                             class="btn btn-outline-success"

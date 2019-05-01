@@ -21,7 +21,7 @@ class AdminListingActionController extends AbstractAdminController
 
         if ($this->isCsrfTokenValid('adminConfirm'.$listing->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
-            $listing->setAdminConfirmed(true);
+            $listing->setAdminActivated(true);
             $listing->setAdminRejected(false);
             $listing->setAdminLastConfirmationDate(new \DateTime());
             $entityManager->flush();

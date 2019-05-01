@@ -14,9 +14,9 @@ use Doctrine\ORM\Mapping\Index;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ListingRepository")
  * @ORM\Table(indexes={
- *     @Index(columns={"valid_until_date", "user_removed", "user_deactivated", "admin_confirmed", "admin_removed", "featured", "featured_weight", "order_by_date"}, name="IDX_public_listings"),
- *     @Index(columns={"category_id", "valid_until_date", "user_removed", "user_deactivated", "admin_confirmed", "admin_removed", "featured", "featured_weight", "order_by_date"}, name="IDX_public_listings_cat"),
- *     @Index(columns={"valid_until_date", "user_removed", "user_deactivated", "admin_confirmed", "admin_removed", "first_created_date"}, name="IDX_latest_listings"),
+ *     @Index(columns={"valid_until_date", "user_removed", "user_deactivated", "admin_activated", "admin_removed", "featured", "featured_weight", "order_by_date"}, name="IDX_public_listings"),
+ *     @Index(columns={"category_id", "valid_until_date", "user_removed", "user_deactivated", "admin_activated", "admin_removed", "featured", "featured_weight", "order_by_date"}, name="IDX_public_listings_cat"),
+ *     @Index(columns={"valid_until_date", "user_removed", "user_deactivated", "admin_activated", "admin_removed", "first_created_date"}, name="IDX_latest_listings"),
  *     @Index(columns={"user_id", "user_removed", "last_edit_date"}, name="IDX_user_listings"),
  *     @Index(columns={"search_text"}, flags={"fulltext"}, name="IDX_fulltext_search"),
  *     @Index(columns={"search_text", "email", "phone", "rejection_reason"}, flags={"fulltext"}, name="IDX_fulltext_search_admin")
@@ -152,7 +152,7 @@ class Listing
     /**
      * @ORM\Column(type="boolean")
      */
-    private $adminConfirmed = false;
+    private $adminActivated = false;
 
     /**
      * @ORM\Column(type="boolean")
@@ -414,14 +414,14 @@ class Listing
         return $this;
     }
 
-    public function getAdminConfirmed(): ?bool
+    public function getAdminActivated(): ?bool
     {
-        return $this->adminConfirmed;
+        return $this->adminActivated;
     }
 
-    public function setAdminConfirmed(bool $adminConfirmed): self
+    public function setAdminActivated(bool $adminActivated): self
     {
-        $this->adminConfirmed = $adminConfirmed;
+        $this->adminActivated = $adminActivated;
 
         return $this;
     }
@@ -592,7 +592,7 @@ class Listing
             return static::STATUS_EXPIRED;
         }
 
-        if (false === $this->getAdminConfirmed()) {
+        if (false === $this->getAdminActivated()) {
             return static::STATUS_PENDING;
         }
 

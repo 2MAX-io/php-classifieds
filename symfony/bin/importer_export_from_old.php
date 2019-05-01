@@ -25,7 +25,7 @@ $stmt = $pdo->prepare(
             o_ogloszenia.podkat AS listing_category_legacy,
            
             o_ogloszenia.poziom AS listing_level_legacy,
-            o_ogloszenia.akceptacja AS listing_admin_confirmed,
+            o_ogloszenia.akceptacja AS listing_admin_activated,
             o_ogloszenia.bDeleted AS listing_user_deleted,
             o_ogloszenia.dokiedy AS listing_valid_until_date,
             o_ogloszenia.premium AS listing_featured,
@@ -77,7 +77,7 @@ $header = [
     'listing_city',
     'listing_category',
 
-    'listing_admin_confirmed',
+    'listing_admin_activated',
     'listing_user_deleted',
     'listing_valid_until_date',
     'listing_featured',
@@ -127,8 +127,8 @@ while ($dbRow = $stmt->fetch(\PDO::FETCH_ASSOC)) {
     }
 
     $dbRow['listing_admin_rejected'] = 0;
-    if ($dbRow['listing_admin_confirmed'] === -1) {
-        $dbRow['listing_admin_confirmed'] = 0;
+    if ($dbRow['listing_admin_activated'] === -1) {
+        $dbRow['listing_admin_activated'] = 0;
         $dbRow['listing_admin_rejected'] = 1;
     }
 

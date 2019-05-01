@@ -20,11 +20,11 @@
 
                         <span class="{{ getListingStatusClass(listing) }}">{{ getListingStatus(listing) }}</span>
 
-                        {% if listing.adminConfirmed %}
+                        {% if listing.adminActivated %}
                             <a href="{{ path('app_user_feature_listing', {"id": listing.id}) }}" class="btn btn-dark">{{ 'trans.Feature this listing' | trans }}</a>
                         {% endif %}
 
-                        {% if listing.adminConfirmed %}
+                        {% if listing.adminActivated %}
                             <a href="{{ path('app_user_validity_extend', {'id': listing.id}) }}" class="btn btn-outline-success">{{ 'trans.Extend' | trans }}</a>
                         {% endif %}
 

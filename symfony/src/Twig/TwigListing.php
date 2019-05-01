@@ -23,7 +23,7 @@ class TwigListing implements RuntimeExtensionInterface
             return true;
         }
 
-        if ($listing->getAdminConfirmed()) {
+        if ($listing->getAdminActivated()) {
             return false;
         }
 

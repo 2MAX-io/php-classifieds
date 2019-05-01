@@ -42,9 +42,9 @@ class AdminListingSearchService
             $qb->setParameter(':query', Search::optimize($_GET['query']));
         }
 
-        if (!empty($request->get('adminConfirmed', false))) {
-            $qb->andWhere($qb->expr()->eq('listing.adminConfirmed', ':adminConfirmed'));
-            $qb->setParameter(':adminConfirmed', $request->get('adminConfirmed'));
+        if (!empty($request->get('adminActivated', false))) {
+            $qb->andWhere($qb->expr()->eq('listing.adminActivated', ':adminActivated'));
+            $qb->setParameter(':adminActivated', $request->get('adminActivated'));
         }
 
         if (!empty($request->get('adminRejected', false))) {

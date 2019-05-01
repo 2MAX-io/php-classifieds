@@ -47,7 +47,7 @@ class CreateListingService
             $this->validUntilSetService->setValidityDaysFromNow($listing, (int) $form->get('validityTimeDays')->getData());
         }
 
-        $listing->setAdminConfirmed(false);
+        $listing->setAdminActivated(false);
         $listing->setAdminRejected(false);
         $this->updateSlug($listing);
         $this->saveSearchText($listing);

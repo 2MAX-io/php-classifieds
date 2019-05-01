@@ -101,7 +101,7 @@ function arrayToSetStringListing(array $csvRow): string {
         'listing_city' => 'listing.city',
         'listing_category' => 'listing.category_id',
 
-        'listing_admin_confirmed' => 'listing.admin_confirmed',
+        'listing_admin_activated' => 'listing.admin_activated',
         'listing_user_deleted' => 'listing.user_removed',
         'listing_valid_until_date' => 'listing.valid_until_date',
         'listing_featured' => 'listing.featured',

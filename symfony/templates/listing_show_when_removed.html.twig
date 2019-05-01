@@ -24,7 +24,7 @@
                     {% if listing.adminRemoved %}
                         <h1>{{ 'trans.Listing has been deleted' | trans }}</h1>
                     {% endif %}
-                    {% if not listing.adminConfirmed or listing.adminRejected %}
+                    {% if not listing.adminActivated or listing.adminRejected %}
                         <h1>{{ 'trans.Listing awaits activation' | trans }}</h1>
                     {% endif %}
                     <div>

@@ -33,10 +33,11 @@ class PaymentService
     public function createPaymentForFeaturedPackage(Listing $listing, FeaturedPackage $featuredPackage): PaymentDto
     {
         $paymentDto = new PaymentDto();
-        $paymentDto->setCurrency('PLN');
+        $paymentDto->setCurrency('PLN'); // todo: from settings
         $paymentDto->setAmount($featuredPackage->getPrice());
 
         $paymentDto = $this->createPayment($paymentDto);
+
         $paymentFeaturedPackage = new PaymentFeaturedPackage();
         $paymentFeaturedPackage->setPayment($paymentDto->getPaymentEntity());
         $paymentFeaturedPackage->setFeaturedPackage($featuredPackage);
@@ -66,7 +67,6 @@ class PaymentService
     public function markBalanceUpdated(ConfirmPaymentDto $confirmPaymentDto): void
     {
         $paymentEntity = $this->getPaymentEntity($confirmPaymentDto);
-
         $paymentEntity->setBalanceUpdated(true);
         $paymentEntity->setGatewayStatus($confirmPaymentDto->getGatewayStatus());
 

@@ -35,20 +35,24 @@ class PaymentController extends AbstractController
 
             if ($confirmPaymentDto->isConfirmed() && !$paymentService->isBalanceUpdated($confirmPaymentDto)) {
                 $paymentEntity = $paymentService->getPaymentEntity($confirmPaymentDto);
+                $paymentFeaturedPackage = $paymentEntity->getPaymentFeaturedPackage();
                 if ($confirmPaymentDto->getGatewayAmount() !== $paymentEntity->getAmount()) {
                     throw new \UnexpectedValueException('paid amount do not match between gateway and payment entity');
                 }
 
-                $userBalanceService->addBalance($confirmPaymentDto->getGatewayAmount(), $em->getRepository(User::class)->find(1));
                 $paymentService->markBalanceUpdated($confirmPaymentDto);
-                $paymentFeaturedPackage = $paymentEntity->getPaymentFeaturedPackage();
+                $userBalanceService->addBalance(
+                    $confirmPaymentDto->getGatewayAmount(),
+                    $paymentFeaturedPackage->getListing()->getUser()
+                );
                 $em->flush();
+
                 $featuredListingService->makeFeaturedByBalance(
                     $paymentFeaturedPackage->getListing(),
                     $paymentFeaturedPackage->getFeaturedPackage()
                 );
 
-                $em->flush();
+                $em->flush(); // todo: check if transaction logic with ifs and closing correct
                 $em->commit();
 
                 return $this->redirectToRoute(
@@ -56,6 +60,11 @@ class PaymentController extends AbstractController
                     ['id' => $paymentFeaturedPackage->getListing()->getId()]
                 );
             }
+
+            if ($em->getConnection()->isTransactionActive()) {
+                $em->commit();
+            }
+
         } catch (\Throwable $e) {
             $em->rollback();
             throw $e;

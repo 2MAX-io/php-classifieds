@@ -36,11 +36,11 @@ class PayPalPaymentMethod implements PaymentMethodInterface
     public function createPayment(PaymentDto $paymentDto)
     {
         $payer = new Payer();
-        $payer->setPaymentMethod("paypal");
+        $payer->setPaymentMethod("paypal"); // todo: make sure right
 
         $redirectUrls = new RedirectUrls();
         $redirectUrls->setReturnUrl($this->paymentHelperService->getSuccessUrl());
-        $redirectUrls->setCancelUrl('http://localhost:3000/cancel.php');
+        $redirectUrls->setCancelUrl('http://localhost:3000/cancel.php'); // todo: set correctly
 
         $amount = new Amount();
         $amount->setCurrency($paymentDto->getCurrency());
@@ -48,7 +48,7 @@ class PayPalPaymentMethod implements PaymentMethodInterface
 
         $transaction = new Transaction();
         $transaction->setAmount($amount);
-        $transaction->setDescription("Payment description");
+        $transaction->setDescription("Payment description"); // todo: set to something
 
         $payment = new Payment();
         $payment->setIntent('sale');
@@ -57,9 +57,7 @@ class PayPalPaymentMethod implements PaymentMethodInterface
         $payment->setTransactions(array($transaction));
 
         try {
-            $payment->create($this->getApiContext('AYSq3RDGsmBLJE-otTkBtM-jBRd1TCQwFf9RGfwddNXWz0uFU9ztymylOhRS', 'EGnHDxD_qRPdaLdZz8iCr8N7_MzF-YHPTkjs6NKYQvQSBngp4PTTVWkPZRbL'));
-
-            // Get PayPal redirect URL and redirect the customer
+            $payment->create($this->getApiContext());
             $approvalUrl = $payment->getApprovalLink();
 
             $paymentDto->setPaymentExecuteUrl($approvalUrl);
@@ -69,25 +67,22 @@ class PayPalPaymentMethod implements PaymentMethodInterface
             // Redirect the customer to $approvalUrl
         } catch (PayPalConnectionException $ex) {
             echo $ex->getCode();
-            echo $ex->getData();
+            echo $ex->getData(); // todo: handle exception better
             die($ex);
         } catch (\Exception $ex) {
-            die($ex);
+            die($ex); // todo: handle exception better
         }
 
     }
 
     public function confirmPayment(Request $request, ConfirmPaymentDto $confirmPaymentDto): ConfirmPaymentDto
     {
-        $paymentId = $request->get('paymentId');
-        $apiContext = $this->getApiContext(
-            'AYSq3RDGsmBLJE-otTkBtM-jBRd1TCQwFf9RGfwddNXWz0uFU9ztymylOhRS',
-            'EGnHDxD_qRPdaLdZz8iCr8N7_MzF-YHPTkjs6NKYQvQSBngp4PTTVWkPZRbL'
-        );
+        $paymentId = $request->get('paymentId'); // todo: pass this in dto
+        $apiContext = $this->getApiContext();
         $payment = Payment::get($paymentId, $apiContext);
 
         $execution = new PaymentExecution();
-        $execution->setPayerId($request->get('PayerID'));
+        $execution->setPayerId($request->get('PayerID')); // todo: pass this in dto
 
         try {
             $payment = $payment->execute($execution, $apiContext);
@@ -104,8 +99,13 @@ class PayPalPaymentMethod implements PaymentMethodInterface
         }
     }
 
-    public function getApiContext($clientId, $clientSecret)
+    public function getApiContext(): ApiContext
     {
+        $clientId = 'AYSq3RDGsmBLJE-otTkBtM-jBRd1TCQwFf9RGfwddNXWz0uFU9ztymylOhRS';
+        $clientSecret = 'EGnHDxD_qRPdaLdZz8iCr8N7_MzF-YHPTkjs6NKYQvQSBngp4PTTVWkPZRbL';
+
+        // todo: make this method production worthy
+
         // #### SDK configuration
         // Register the sdk_config.ini file in current directory
         // as the configuration source.
@@ -130,7 +130,7 @@ class PayPalPaymentMethod implements PaymentMethodInterface
         // based configuration
         $apiContext->setConfig(
             array(
-                'mode' => 'sandbox',
+                'mode' => 'sandbox', // todo: set correctly for production
                 'log.LogEnabled' => true,
                 'log.FileName' => FilePath::getLogDir() . '/payPal.log',
                 'log.LogLevel' => 'DEBUG', // PLEASE USE `INFO` LEVEL FOR LOGGING IN LIVE ENVIRONMENTS

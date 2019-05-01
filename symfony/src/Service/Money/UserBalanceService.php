@@ -40,7 +40,6 @@ class UserBalanceService
 
     public function addBalance(int $addAmountPositive, User $user): void
     {
-        // todo: make transactional
         if ($addAmountPositive <= 0) {
             throw new \UnexpectedValueException('should be positive');
         }
@@ -57,7 +56,6 @@ class UserBalanceService
 
     public function removeBalance(int $removeAmountPositive, User $user): void
     {
-        // todo: make transactional
         if ($removeAmountPositive <= 0) {
             throw new \UnexpectedValueException('should be positive');
         }

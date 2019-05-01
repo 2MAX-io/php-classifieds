@@ -9,6 +9,7 @@ use App\Helper\Search;
 use Doctrine\ORM\EntityManagerInterface;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
 use Pagerfanta\Pagerfanta;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 class AdminListingSearchService
 {
@@ -17,9 +18,15 @@ class AdminListingSearchService
      */
     private $em;
 
-    public function __construct(EntityManagerInterface $em)
+    /**
+     * @var RequestStack
+     */
+    private $requestStack;
+
+    public function __construct(EntityManagerInterface $em, RequestStack $requestStack)
     {
         $this->em = $em;
+        $this->requestStack = $requestStack;
     }
 
     /**
@@ -27,11 +34,17 @@ class AdminListingSearchService
      */
     public function getList(int $page): AdminListingListDto
     {
+        $request = $this->requestStack->getMasterRequest();
         $qb = $this->em->getRepository(Listing::class)->createQueryBuilder('listing');
 
         if (!empty($_GET['query'])) {
             $qb->andWhere('MATCH (listing.searchText, listing.email, listing.phone, listing.rejectionReason) AGAINST (:query BOOLEAN) > 0');
             $qb->setParameter(':query', Search::optimize($_GET['query']));
+        }
+
+        if (!empty($request->get('adminConfirmed', false))) {
+            $qb->andWhere($qb->expr()->eq('listing.adminConfirmed', ':adminConfirmed'));
+            $qb->setParameter(':adminConfirmed', $request->get('adminConfirmed'));
         }
 
         $qb->orderBy('listing.id', 'DESC');

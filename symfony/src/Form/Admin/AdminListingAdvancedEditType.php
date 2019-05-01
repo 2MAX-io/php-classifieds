@@ -34,7 +34,7 @@ class AdminListingAdvancedEditType extends AbstractType
             'label' => 'trans.Valid until'
         ]);
         $builder->add('adminConfirmed', BoolType::class, [
-            'label' => 'trans.Confirmed by Admin?'
+            'label' => 'trans.Activated by Admin?'
         ]);
         $builder->add('adminRejected', BoolType::class, [
             'label' => 'trans.Rejected by Admin?'

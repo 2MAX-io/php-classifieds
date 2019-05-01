@@ -7,10 +7,31 @@
 {% block body %}
     <div class="container mt-5">
 
-        <form method="get">
-            <input name="query" value="{{ app.request.get('query') }}" type="text" placeholder="{{ 'trans.keyword' | trans }}" />
-            <button type="submit">{{ 'trans.Search' | trans }}</button>
-        </form>
+        <div>
+            <form method="get" class="mt-2 mt-md-0" role="search">
+                <div class="row">
+
+                    <div class="col-md-4">
+                        <select name="adminConfirmed" class="form-control">
+                            <option value="">{{ 'trans.Activated by Admin?' | trans }}</option>
+                            <option {{ optionAttr('adminConfirmed', 0) }} >{{ 'trans.Not activated' | trans }}</option>
+                            <option {{ optionAttr('adminConfirmed', 1) }} >{{ 'trans.Activated' | trans }}</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text"><i class="fas fa-search"></i></div>
+                            </div>
+                            <input type="text" name="query" value="{{ app.request.get('query') }}" class="form-control" placeholder="{{ 'trans.keyword' | trans }}" />
+                            <button type="submit" class="btn btn-primary ml-1">{{ 'trans.Search' | trans }}</button>
+                        </div>
+                    </div>
+
+                </div>
+            </form>
+        </div>
 
         <div class="container mt-5">
             <div class="table-responsive">

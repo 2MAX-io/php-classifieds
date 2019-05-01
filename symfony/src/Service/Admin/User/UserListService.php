@@ -36,12 +36,12 @@ class UserListService
         $qb = $this->em->getRepository(User::class)->createQueryBuilder('user');
         $qb->orderBy('user.id', 'DESC');
 
-        if (!empty($request->query->get('query', false))) {
+        if (!empty($request->get('query', false))) {
             $qb->andWhere($qb->expr()->orX(
                 $qb->expr()->like('user.username', ':query'),
                 $qb->expr()->like('user.email', ':query')
             ));
-            $qb->setParameter(':query', '%'.$request->query->get('query').'%');
+            $qb->setParameter(':query', '%'.$request->get('query').'%');
         }
 
         $adapter = new DoctrineORMAdapter($qb, true, $qb->getDQLPart('having') !== null);

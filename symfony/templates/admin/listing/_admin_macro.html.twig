@@ -22,7 +22,7 @@
         {{ 'trans.Last raising' | trans }}: {{ listing.orderByDate | date }}
     </div>
     <div class="col-md-4 {{ (not listing.adminConfirmed) | displayTextWarning }}">
-        {{ 'trans.Confirmed by Admin?' | trans }}: {{ listing.adminConfirmed | boolText | trans }}
+        {{ 'trans.Activated by Admin?' | trans }}: {{ listing.adminConfirmed | boolText | trans }}
     </div>
     <div class="col-md-4 {{ listing.adminRemoved | displayTextWarning }}">
         {{ 'trans.Removed by Admin?' | trans }}: {{ listing.adminRemoved | boolText | trans }}

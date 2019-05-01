@@ -28,13 +28,19 @@ class PaymentController extends AbstractController
             $confirmPaymentDto = $paymentService->confirmPayment($request, $confirmPaymentDto);
 
             if ($confirmPaymentDto->isConfirmed() && !$paymentService->isBalanceUpdated($confirmPaymentDto)) {
-                $userBalanceService->addBalance(1000, $em->getRepository(User::class)->find(1));
+                $paymentEntity = $paymentService->getPaymentEntity($confirmPaymentDto);
+                if ($confirmPaymentDto->getGatewayAmount() !== $paymentEntity->getAmount()) {
+                    throw new \UnexpectedValueException('paid amount do not match between gateway and payment entity');
+                }
+
+                $userBalanceService->addBalance($confirmPaymentDto->getGatewayAmount(), $em->getRepository(User::class)->find(1));
                 $paymentService->markBalanceUpdated($confirmPaymentDto);
             }
             $em->flush();
             $em->commit();
         } catch (\Throwable $e) {
             $em->rollback();
+            throw $e;
         }
 
         return new Response('ok');

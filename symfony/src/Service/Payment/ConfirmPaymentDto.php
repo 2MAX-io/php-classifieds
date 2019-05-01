@@ -17,6 +17,11 @@ class ConfirmPaymentDto
     private $gatewayStatus;
 
     /**
+     * @var int|null
+     */
+    private $gatewayAmount;
+
+    /**
      * @var boolean
      */
     private $confirmed = false;
@@ -49,5 +54,15 @@ class ConfirmPaymentDto
     public function setGatewayTransactionId(?string $gatewayTransactionId): void
     {
         $this->gatewayTransactionId = $gatewayTransactionId;
+    }
+
+    public function getGatewayAmount(): ?int
+    {
+        return $this->gatewayAmount;
+    }
+
+    public function setGatewayAmount(?int $gatewayAmount): void
+    {
+        $this->gatewayAmount = $gatewayAmount;
     }
 }

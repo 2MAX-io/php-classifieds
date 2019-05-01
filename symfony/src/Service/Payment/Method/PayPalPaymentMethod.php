@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Service\Payment\Method;
 
 use App\Helper\FilePath;
+use App\Helper\Integer;
 use App\Service\Payment\Base\PaymentMethodInterface;
 use App\Service\Payment\ConfirmPaymentDto;
 use App\Service\Payment\PaymentDto;
@@ -43,7 +44,7 @@ class PayPalPaymentMethod implements PaymentMethodInterface
 
         $amount = new Amount();
         $amount->setCurrency($paymentDto->getCurrency());
-        $amount->setTotal($paymentDto->getAmount());
+        $amount->setTotal($paymentDto->getAmount() / 100);
 
         $transaction = new Transaction();
         $transaction->setAmount($amount);
@@ -94,14 +95,13 @@ class PayPalPaymentMethod implements PaymentMethodInterface
             $confirmPaymentDto->setGatewayTransactionId($payment->getId());
             $confirmPaymentDto->setGatewayStatus($payment->getState());
             $confirmPaymentDto->setConfirmed($payment->getState() === 'approved');
+            $confirmPaymentDto->setGatewayAmount(Integer::toInteger($payment->getTransactions()[0]->getAmount()->getTotal() * 100));
 
             return $confirmPaymentDto;
 
         } catch (\Throwable $e) {
-            throw new $e;
+            throw $e;
         }
-
-        time();
     }
 
     public function getApiContext($clientId, $clientSecret)

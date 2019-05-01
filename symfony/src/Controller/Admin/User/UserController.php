@@ -9,6 +9,7 @@ use App\Entity\User;
 use App\Form\Admin\UserType;
 use App\Service\Admin\User\UserListService;
 use App\Service\System\Pagination\PaginationService;
+use App\Service\User\Account\EncodePasswordService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -35,19 +36,9 @@ class UserController extends AbstractAdminController
     }
 
     /**
-     * @Route("/admin/red5/user/{id}", name="admin_user_show", methods={"GET"})
-     */
-    public function show(User $user): Response
-    {
-        return $this->render('admin/user/show.html.twig', [
-            'user' => $user,
-        ]);
-    }
-
-    /**
      * @Route("/admin/red5/user/{id}/edit", name="admin_user_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, User $user): Response
+    public function edit(Request $request, User $user, EncodePasswordService $encodePasswordService): Response
     {
         $this->denyUnlessAdmin();
 
@@ -55,9 +46,13 @@ class UserController extends AbstractAdminController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            if (!empty(trim($user->getPlainPassword()))) {
+                $user->setPassword($encodePasswordService->getEncodedPassword($user, $user->getPlainPassword()));
+            }
+
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('admin_user_index', [
+            return $this->redirectToRoute('admin_user_edit', [
                 'id' => $user->getId(),
             ]);
         }
@@ -66,21 +61,5 @@ class UserController extends AbstractAdminController
             'user' => $user,
             'form' => $form->createView(),
         ]);
-    }
-
-    /**
-     * @Route("/admin/red5/user/{id}", name="admin_user_delete", methods={"DELETE"})
-     */
-    public function delete(Request $request, User $user): Response
-    {
-        $this->denyUnlessAdmin();
-
-        if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($user);
-            $entityManager->flush();
-        }
-
-        return $this->redirectToRoute('admin_user_index');
     }
 }

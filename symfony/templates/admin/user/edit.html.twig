@@ -1,13 +1,57 @@
 {% extends 'admin/base.html.twig' %}
 
-{% block title %}Edit User{% endblock %}
+{% block title %}{{ 'trans.Edit User' | trans }}{% endblock %}
 
 {% block body %}
-    <h1>Edit User</h1>
 
-    {{ include('admin/user/_form.html.twig', {'button_label': 'Update'}) }}
+<div class="container mt-5">
 
-    <a href="{{ path('admin_user_index') }}">back to list</a>
+    <div class="mb-4">
+        <h1>{{ 'trans.Edit User' | trans }}: {{ user.email }}</h1>
 
-    {{ include('admin/user/_delete_form.html.twig') }}
+        <a href="{{ path('admin_user_index') }}">{{ 'trans.back to list' | trans }}</a>
+
+        <a
+                href="{{ path('app_admin_user_change_balance', {'id': user.id}) }}"
+                class="btn btn-primary float-right"
+        >
+            {{ 'trans.Change user balance' | trans }}
+        </a>
+    </div>
+
+    <table class="table">
+        <tbody>
+        <tr>
+            <th>Id</th>
+            <td>{{ user.id }}</td>
+        </tr>
+        <tr>
+            <th>{{ 'trans.Username' | trans }}</th>
+            <td>{{ user.username }}</td>
+        </tr>
+        <tr>
+            <th>{{ 'trans.Email' | trans }}</th>
+            <td>{{ user.email }}</td>
+        </tr>
+        <tr>
+            <th>{{ 'trans.Roles' | trans }}</th>
+            <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
+        </tr>
+        <tr>
+            <th>{{ 'trans.Enabled' | trans }}</th>
+            <td>{{ (user.enabled ? 'trans.Yes' : 'trans.No') | trans }}</td>
+        </tr>
+        <tr>
+            <th>{{ 'trans.Registration date' | trans }}</th>
+            <td>{{ user.registrationDate ? user.registrationDate|date('Y-m-d H:i:s T') : '' }}</td>
+        </tr>
+        <tr>
+            <th>{{ 'trans.Last login' | trans }}</th>
+            <td>{{ user.lastLogin ? user.lastLogin|date('Y-m-d H:i:s T') : '' }}</td>
+        </tr>
+        </tbody>
+    </table>
+
+    {{ include('admin/user/_form.html.twig', {'button_label': 'trans.Update' | trans}) }}
+</div>
 {% endblock %}

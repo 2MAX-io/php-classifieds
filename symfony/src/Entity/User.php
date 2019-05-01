@@ -59,7 +59,7 @@ class User implements UserInterface, RoleInterface, EnablableInterface, EncoderA
     private $password;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $plainPassword;
 
@@ -200,7 +200,7 @@ class User implements UserInterface, RoleInterface, EnablableInterface, EncoderA
         return $this;
     }
 
-    public function getPlainPassword(): string
+    public function getPlainPassword(): ?string
     {
         return $this->plainPassword;
     }

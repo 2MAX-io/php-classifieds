@@ -1,6 +1,6 @@
 {% extends 'admin/base.html.twig' %}
 
-{% block title %}User index{% endblock %}
+{% block title %}{{ 'trans.User list' | trans }}{% endblock %}
 
 {% block body %}
 
@@ -28,8 +28,9 @@
                     <td>{{ user.registrationDate ? user.registrationDate|date : '' }}</td>
                     <td>{{ user.lastLogin ? user.lastLogin|date : '' }}</td>
                     <td>
-                        <a href="{{ path('admin_user_show', {'id': user.id}) }}">show</a>
-                        <a href="{{ path('admin_user_edit', {'id': user.id}) }}">edit</a>
+                        <a href="{{ path('admin_user_edit', {'id': user.id}) }}" class="btn btn-primary">
+                            {{ 'trans.Edit' | trans }}
+                        </a>
                     </td>
                 </tr>
             {% else %}

@@ -75,7 +75,7 @@ class FeaturedListingService
 
     public function makeFeaturedByBalance(Listing $listing, FeaturedPackage $featuredPackage): void
     {
-        $this->em->beginTransaction();
+//        $this->em->beginTransaction();
 
         if ($listing->getUser() !== $this->currentUserService->getUser()) {
             throw new \Exception('listing of different user');
@@ -94,11 +94,11 @@ class FeaturedListingService
                 $featuredPackage->getDaysListingExpire()
             );
         } catch (\Throwable $e) {
-            $this->em->rollback();
+//            $this->em->rollback();
             throw $e;
         }
 
-        $this->em->commit();
+//        $this->em->commit();
     }
 
     /**

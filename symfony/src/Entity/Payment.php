@@ -123,9 +123,9 @@ class Payment
         $this->paymentFeaturedPackage = $paymentFeaturedPackage;
 
         // set (or unset) the owning side of the relation if necessary
-        $newFeaturedPackage = $paymentFeaturedPackage === null ? null : $this;
-        if ($newFeaturedPackage !== $paymentFeaturedPackage->getFeaturedPackage()) {
-            $paymentFeaturedPackage->setFeaturedPackage($newFeaturedPackage);
+        $newPayment = $paymentFeaturedPackage === null ? null : $this;
+        if ($newPayment !== $paymentFeaturedPackage->getPayment()) {
+            $paymentFeaturedPackage->setPayment($newPayment);
         }
 
         return $this;

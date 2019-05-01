@@ -42,6 +42,7 @@ class PaymentController extends AbstractController
                 $userBalanceService->addBalance($confirmPaymentDto->getGatewayAmount(), $em->getRepository(User::class)->find(1));
                 $paymentService->markBalanceUpdated($confirmPaymentDto);
                 $paymentFeaturedPackage = $paymentEntity->getPaymentFeaturedPackage();
+                $em->flush();
                 $featuredListingService->makeFeaturedByBalance(
                     $paymentFeaturedPackage->getListing(),
                     $paymentFeaturedPackage->getFeaturedPackage()

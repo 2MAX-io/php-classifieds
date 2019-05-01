@@ -42,6 +42,7 @@ class PaymentService
         $paymentFeaturedPackage->setFeaturedPackage($featuredPackage);
         $paymentFeaturedPackage->setListing($listing);
         $this->em->persist($paymentFeaturedPackage);
+        $paymentFeaturedPackage->getPayment()->setPaymentFeaturedPackage($paymentFeaturedPackage);
 
         return $paymentDto;
     }

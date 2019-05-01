@@ -80,8 +80,8 @@ class ListingType extends AbstractType
                 new Phone(),
             ],
             'attr' => [
-                'class' => 'input-phone'
-            ]
+                'class' => 'input-phone',
+            ],
         ]);
         $builder->add('email', EmailType::class, [
             'label' => 'trans.Email',
@@ -94,6 +94,15 @@ class ListingType extends AbstractType
         $builder->add('price', IntegerType::class, [
             'label' => 'trans.Price',
             'required' => false,
+            'attr' => [
+                'class' => 'input-money',
+            ],
+            'grouping' => true,
+            'constraints' => [
+                new Constraints\GreaterThanOrEqual([
+                    'value' => 0,
+                ]),
+            ],
         ]);
         $builder->add('priceNegotiable', BoolType::class, [
             'label' => 'trans.Price is negotiable?',

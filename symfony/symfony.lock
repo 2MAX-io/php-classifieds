@@ -108,6 +108,12 @@
             "config/routes/fos_js_routing.yaml"
         ]
     },
+    "giggsey/libphonenumber-for-php": {
+        "version": "8.10.11"
+    },
+    "giggsey/locale": {
+        "version": "1.7.1"
+    },
     "guzzlehttp/psr7": {
         "version": "1.5.2"
     },

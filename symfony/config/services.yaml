@@ -39,3 +39,6 @@ services:
     App\Security\LoginListener:
         tags:
             - { name: 'kernel.event_listener', event: 'security.interactive_login' }
+
+    libphonenumber\PhoneNumberUtil:
+        factory: 'App\System\Support\Phone\PhoneNumberService:factory'

@@ -34,6 +34,7 @@ class AppExtension extends AbstractExtension
             new TwigFilter('moneyAsFloat', [TwigNoDependencies::class, 'moneyAsFloat']),
             new TwigFilter('money', [TwigNoDependencies::class, 'money']),
             new TwigFilter('defaultTrans', [TwigTranslator::class, 'defaultTrans']),
+            new TwigFilter('phone', [TwigPhone::class, 'phone']),
         ];
     }
 }

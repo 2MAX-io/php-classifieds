@@ -6,6 +6,7 @@ namespace App\Controller\User\Payment;
 
 use App\Entity\User;
 use App\Service\Money\UserBalanceService;
+use App\Service\Payment\ConfirmPaymentDto;
 use App\Service\Payment\PaymentService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -20,9 +21,21 @@ class PaymentController extends AbstractController
      */
     public function index(Request $request, PaymentService $paymentService, UserBalanceService $userBalanceService, EntityManagerInterface $em): Response
     {
-        $paymentService->confirmPayment($request);
-        $userBalanceService->addBalance(1000, $em->getRepository(User::class)->find(1));
-        $em->flush();
+        $em->beginTransaction();
+
+        try {
+            $confirmPaymentDto = new ConfirmPaymentDto();
+            $confirmPaymentDto = $paymentService->confirmPayment($request, $confirmPaymentDto);
+
+            if ($confirmPaymentDto->isConfirmed() && !$paymentService->isBalanceUpdated($confirmPaymentDto)) {
+                $userBalanceService->addBalance(1000, $em->getRepository(User::class)->find(1));
+                $paymentService->markBalanceUpdated($confirmPaymentDto);
+            }
+            $em->flush();
+            $em->commit();
+        } catch (\Throwable $e) {
+            $em->rollback();
+        }
 
         return new Response('ok');
     }

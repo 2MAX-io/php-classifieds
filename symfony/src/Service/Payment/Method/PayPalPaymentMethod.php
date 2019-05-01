@@ -6,6 +6,7 @@ namespace App\Service\Payment\Method;
 
 use App\Helper\FilePath;
 use App\Service\Payment\Base\PaymentMethodInterface;
+use App\Service\Payment\ConfirmPaymentDto;
 use App\Service\Payment\PaymentDto;
 use App\Service\Payment\PaymentHelperService;
 use PayPal\Api\Amount;
@@ -41,8 +42,8 @@ class PayPalPaymentMethod implements PaymentMethodInterface
         $redirectUrls->setCancelUrl('http://localhost:3000/cancel.php');
 
         $amount = new Amount();
-        $amount->setCurrency("PLN");
-        $amount->setTotal(1);
+        $amount->setCurrency($paymentDto->getCurrency());
+        $amount->setTotal($paymentDto->getAmount());
 
         $transaction = new Transaction();
         $transaction->setAmount($amount);
@@ -61,6 +62,8 @@ class PayPalPaymentMethod implements PaymentMethodInterface
             $approvalUrl = $payment->getApprovalLink();
 
             $paymentDto->setPaymentExecuteUrl($approvalUrl);
+            $paymentDto->setGatewayTransactionId($payment->getId());
+            $paymentDto->setGatewayStatus($payment->getState());
 
             // Redirect the customer to $approvalUrl
         } catch (PayPalConnectionException $ex) {
@@ -73,7 +76,7 @@ class PayPalPaymentMethod implements PaymentMethodInterface
 
     }
 
-    public function confirmPayment(Request $request): bool
+    public function confirmPayment(Request $request, ConfirmPaymentDto $confirmPaymentDto): ConfirmPaymentDto
     {
         $paymentId = $request->get('paymentId');
         $apiContext = $this->getApiContext(
@@ -88,7 +91,11 @@ class PayPalPaymentMethod implements PaymentMethodInterface
         try {
             $payment = $payment->execute($execution, $apiContext);
 
-            return $payment->getState() === 'approved';
+            $confirmPaymentDto->setGatewayTransactionId($payment->getId());
+            $confirmPaymentDto->setGatewayStatus($payment->getState());
+            $confirmPaymentDto->setConfirmed($payment->getState() === 'approved');
+
+            return $confirmPaymentDto;
 
         } catch (\Throwable $e) {
             throw new $e;

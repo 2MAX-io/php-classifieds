@@ -82,12 +82,12 @@ class FeatureListingController extends AbstractUserController
             if ($featuredListingService->hasAmount($listing, $featuredPackage)) {
                 $featuredListingService->makeFeaturedByBalance($listing, $featuredPackage);
             } else {
-                $paymentDto = $paymentService->createPayment();
+                $paymentDto = $paymentService->createPaymentForFeaturedPackage($featuredPackage);
+
+                $entityManager->flush();
 
                 return $this->redirect($paymentDto->getPaymentExecuteUrl());
             }
-
-            $entityManager->flush();
 
             return $this->redirectToRoute(
                 'app_user_feature_listing',

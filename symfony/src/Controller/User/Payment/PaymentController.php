@@ -47,9 +47,15 @@ class PaymentController extends AbstractController
                     $paymentFeaturedPackage->getListing(),
                     $paymentFeaturedPackage->getFeaturedPackage()
                 );
+
+                $em->flush();
+                $em->commit();
+
+                return $this->redirectToRoute(
+                    'app_user_feature_listing',
+                    ['id' => $paymentFeaturedPackage->getListing()->getId()]
+                );
             }
-            $em->flush();
-            $em->commit();
         } catch (\Throwable $e) {
             $em->rollback();
             throw $e;

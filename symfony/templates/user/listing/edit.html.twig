@@ -49,4 +49,11 @@
     {% include 'user/listing/_file_upload.html.twig' %}
     {% include 'user/listing/_category_select.html.twig' %}
 
+    <script type="text/javascript">
+        var cleave = new Cleave('.input-phone', {
+            phone: true,
+            phoneRegionCode: 'pl' // todo: from settings
+        });
+    </script>
+
 {% endblock %}

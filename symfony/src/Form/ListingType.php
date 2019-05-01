@@ -79,6 +79,9 @@ class ListingType extends AbstractType
             'constraints' => [
                 new Phone(),
             ],
+            'attr' => [
+                'class' => 'input-phone'
+            ]
         ]);
         $builder->add('email', EmailType::class, [
             'label' => 'trans.Email',

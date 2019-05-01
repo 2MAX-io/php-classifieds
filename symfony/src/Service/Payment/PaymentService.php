@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace App\Service\Payment;
 
 use App\Entity\FeaturedPackage;
+use App\Entity\Listing;
 use App\Entity\Payment;
+use App\Entity\PaymentFeaturedPackage;
 use App\Service\Payment\Method\PayPalPaymentMethod;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,13 +30,20 @@ class PaymentService
         $this->em = $em;
     }
 
-    public function createPaymentForFeaturedPackage(FeaturedPackage $featuredPackage): PaymentDto
+    public function createPaymentForFeaturedPackage(Listing $listing, FeaturedPackage $featuredPackage): PaymentDto
     {
         $paymentDto = new PaymentDto();
         $paymentDto->setCurrency('PLN');
         $paymentDto->setAmount($featuredPackage->getPrice());
 
-        return $this->createPayment($paymentDto);
+        $paymentDto = $this->createPayment($paymentDto);
+        $paymentFeaturedPackage = new PaymentFeaturedPackage();
+        $paymentFeaturedPackage->setPayment($paymentDto->getPaymentEntity());
+        $paymentFeaturedPackage->setFeaturedPackage($featuredPackage);
+        $paymentFeaturedPackage->setListing($listing);
+        $this->em->persist($paymentFeaturedPackage);
+
+        return $paymentDto;
     }
 
     public function createPayment(PaymentDto $paymentDto): PaymentDto
@@ -49,6 +58,8 @@ class PaymentService
         $paymentEntity->setBalanceUpdated(false);
         $this->em->persist($paymentEntity);
 
+        $paymentDto->setPaymentEntity($paymentEntity);
+
         return $paymentDto;
     }
 
@@ -60,7 +71,6 @@ class PaymentService
         $paymentEntity->setGatewayStatus($confirmPaymentDto->getGatewayStatus());
 
         $this->em->persist($paymentEntity);
-
     }
 
     public function isBalanceUpdated(ConfirmPaymentDto $confirmPaymentDto): bool

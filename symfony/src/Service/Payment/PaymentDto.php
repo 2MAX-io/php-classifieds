@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Service\Payment;
 
+use App\Entity\Payment;
+
 class PaymentDto
 {
     /**
@@ -35,6 +37,11 @@ class PaymentDto
      * @var string|null
      */
     public $gatewayStatus;
+
+    /**
+     * @var Payment|null
+     */
+    public $paymentEntity;
 
     public function setPaymentExecuteUrl(string $paymentExecuteUrl)
     {
@@ -94,5 +101,15 @@ class PaymentDto
     public function setGatewayStatus(?string $gatewayStatus): void
     {
         $this->gatewayStatus = $gatewayStatus;
+    }
+
+    public function getPaymentEntity(): ?Payment
+    {
+        return $this->paymentEntity;
+    }
+
+    public function setPaymentEntity(?Payment $paymentEntity): void
+    {
+        $this->paymentEntity = $paymentEntity;
     }
 }

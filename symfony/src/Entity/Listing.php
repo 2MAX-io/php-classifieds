@@ -221,10 +221,16 @@ class Listing
      */
     private $searchText;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\PaymentFeaturedPackage", mappedBy="listing")
+     */
+    private $paymentFeaturedPackage;
+
     public function __construct()
     {
         $this->listingCustomFieldValues = new ArrayCollection();
         $this->listingFiles = new ArrayCollection();
+        $this->paymentFeaturedPackage = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -679,5 +685,36 @@ class Listing
     public function isFeaturedActive(): bool
     {
         return $this->getFeaturedUntilDate() > new \DateTime();
+    }
+
+    /**
+     * @return Collection|PaymentFeaturedPackage[]
+     */
+    public function getPaymentFeaturedPackage(): Collection
+    {
+        return $this->paymentFeaturedPackage;
+    }
+
+    public function addPaymentFeaturedPackage(PaymentFeaturedPackage $paymentFeaturedPackage): self
+    {
+        if (!$this->paymentFeaturedPackage->contains($paymentFeaturedPackage)) {
+            $this->paymentFeaturedPackage[] = $paymentFeaturedPackage;
+            $paymentFeaturedPackage->setListing($this);
+        }
+
+        return $this;
+    }
+
+    public function removePaymentFeaturedPackage(PaymentFeaturedPackage $paymentFeaturedPackage): self
+    {
+        if ($this->paymentFeaturedPackage->contains($paymentFeaturedPackage)) {
+            $this->paymentFeaturedPackage->removeElement($paymentFeaturedPackage);
+            // set the owning side to null (unless already changed)
+            if ($paymentFeaturedPackage->getListing() === $this) {
+                $paymentFeaturedPackage->setListing(null);
+            }
+        }
+
+        return $this;
     }
 }

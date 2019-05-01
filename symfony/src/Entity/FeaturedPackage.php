@@ -55,9 +55,15 @@ class FeaturedPackage
      */
     private $featuredPackageForCategories;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\PaymentFeaturedPackage", mappedBy="featuredPackage")
+     */
+    private $paymentFeaturedPackage;
+
     public function __construct()
     {
         $this->featuredPackageForCategories = new ArrayCollection();
+        $this->paymentFeaturedPackage = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -162,6 +168,37 @@ class FeaturedPackage
             // set the owning side to null (unless already changed)
             if ($featuredPackageForCategory->getFeaturedPackage() === $this) {
                 $featuredPackageForCategory->setFeaturedPackage(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|PaymentFeaturedPackage[]
+     */
+    public function getPaymentFeaturedPackage(): Collection
+    {
+        return $this->paymentFeaturedPackage;
+    }
+
+    public function addPaymentFeaturedPackage(PaymentFeaturedPackage $paymentFeaturedPackage): self
+    {
+        if (!$this->paymentFeaturedPackage->contains($paymentFeaturedPackage)) {
+            $this->paymentFeaturedPackage[] = $paymentFeaturedPackage;
+            $paymentFeaturedPackage->setFeaturedPackage($this);
+        }
+
+        return $this;
+    }
+
+    public function removePaymentFeaturedPackage(PaymentFeaturedPackage $paymentFeaturedPackage): self
+    {
+        if ($this->paymentFeaturedPackage->contains($paymentFeaturedPackage)) {
+            $this->paymentFeaturedPackage->removeElement($paymentFeaturedPackage);
+            // set the owning side to null (unless already changed)
+            if ($paymentFeaturedPackage->getFeaturedPackage() === $this) {
+                $paymentFeaturedPackage->setFeaturedPackage(null);
             }
         }
 

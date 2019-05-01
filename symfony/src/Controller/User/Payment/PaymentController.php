@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller\User\Payment;
 
 use App\Entity\User;
+use App\Service\Listing\Featured\FeaturedListingService;
 use App\Service\Money\UserBalanceService;
 use App\Service\Payment\ConfirmPaymentDto;
 use App\Service\Payment\PaymentService;
@@ -19,11 +20,16 @@ class PaymentController extends AbstractController
     /**
      * @Route("/user/payment", name="app_payment")
      */
-    public function index(Request $request, PaymentService $paymentService, UserBalanceService $userBalanceService, EntityManagerInterface $em): Response
-    {
-        $em->beginTransaction();
-
-        try {
+    public function index(
+        Request $request,
+        PaymentService $paymentService,
+        UserBalanceService $userBalanceService,
+        FeaturedListingService $featuredListingService,
+        EntityManagerInterface $em
+    ): Response {
+//        $em->beginTransaction();
+//
+//        try {
             $confirmPaymentDto = new ConfirmPaymentDto();
             $confirmPaymentDto = $paymentService->confirmPayment($request, $confirmPaymentDto);
 
@@ -35,13 +41,18 @@ class PaymentController extends AbstractController
 
                 $userBalanceService->addBalance($confirmPaymentDto->getGatewayAmount(), $em->getRepository(User::class)->find(1));
                 $paymentService->markBalanceUpdated($confirmPaymentDto);
+                $paymentFeaturedPackage = $paymentEntity->getPaymentFeaturedPackage();
+                $featuredListingService->makeFeaturedByBalance(
+                    $paymentFeaturedPackage->getListing(),
+                    $paymentFeaturedPackage->getFeaturedPackage()
+                );
             }
             $em->flush();
-            $em->commit();
-        } catch (\Throwable $e) {
-            $em->rollback();
-            throw $e;
-        }
+//            $em->commit();
+//        } catch (\Throwable $e) {
+//            $em->rollback();
+//            throw $e;
+//        }
 
         return new Response('ok');
     }

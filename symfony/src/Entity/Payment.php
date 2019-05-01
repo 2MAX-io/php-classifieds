@@ -43,6 +43,11 @@ class Payment
      */
     private $gatewayTransactionId;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\PaymentFeaturedPackage", mappedBy="payment", fetch="EXTRA_LAZY")
+     */
+    private $paymentFeaturedPackage;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -104,6 +109,24 @@ class Payment
     public function setGatewayTransactionId(string $gatewayTransactionId): self
     {
         $this->gatewayTransactionId = $gatewayTransactionId;
+
+        return $this;
+    }
+
+    public function getPaymentFeaturedPackage(): ?PaymentFeaturedPackage
+    {
+        return $this->paymentFeaturedPackage;
+    }
+
+    public function setPaymentFeaturedPackage(?PaymentFeaturedPackage $paymentFeaturedPackage): self
+    {
+        $this->paymentFeaturedPackage = $paymentFeaturedPackage;
+
+        // set (or unset) the owning side of the relation if necessary
+        $newFeaturedPackage = $paymentFeaturedPackage === null ? null : $this;
+        if ($newFeaturedPackage !== $paymentFeaturedPackage->getFeaturedPackage()) {
+            $paymentFeaturedPackage->setFeaturedPackage($newFeaturedPackage);
+        }
 
         return $this;
     }

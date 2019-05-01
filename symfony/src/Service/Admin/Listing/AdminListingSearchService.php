@@ -47,6 +47,31 @@ class AdminListingSearchService
             $qb->setParameter(':adminConfirmed', $request->get('adminConfirmed'));
         }
 
+        if (!empty($request->get('adminRejected', false))) {
+            $qb->andWhere($qb->expr()->eq('listing.adminRejected', ':adminRejected'));
+            $qb->setParameter(':adminRejected', $request->get('adminRejected'));
+        }
+
+        if (!empty($request->get('adminRemoved', false))) {
+            $qb->andWhere($qb->expr()->eq('listing.adminRemoved', ':adminRemoved'));
+            $qb->setParameter(':adminRemoved', $request->get('adminRemoved'));
+        }
+
+        if (!empty($request->get('userDeactivated', false))) {
+            $qb->andWhere($qb->expr()->eq('listing.userDeactivated', ':userDeactivated'));
+            $qb->setParameter(':userDeactivated', $request->get('userDeactivated'));
+        }
+
+        if (!empty($request->get('userRemoved', false))) {
+            $qb->andWhere($qb->expr()->eq('listing.userRemoved', ':userRemoved'));
+            $qb->setParameter(':userRemoved', $request->get('userRemoved'));
+        }
+
+        if (!empty($request->get('featured', false))) {
+            $qb->andWhere($qb->expr()->eq('listing.featured', ':featured'));
+            $qb->setParameter(':featured', $request->get('featured'));
+        }
+
         $qb->orderBy('listing.id', 'DESC');
 
         $adapter = new DoctrineORMAdapter($qb);

@@ -22,19 +22,19 @@
         {{ 'trans.Last raising' | trans }}: {{ listing.orderByDate | date }}
     </div>
     <div class="col-md-4 {{ (not listing.adminConfirmed) | displayTextWarning }}">
-        {{ 'trans.Activated by Admin?' | trans }}: {{ listing.adminConfirmed | boolText | trans }}
+        {{ 'trans.Activated by Admin?' | trans }} {{ listing.adminConfirmed | boolText | trans }}
     </div>
     <div class="col-md-4 {{ listing.adminRemoved | displayTextWarning }}">
-        {{ 'trans.Removed by Admin?' | trans }}: {{ listing.adminRemoved | boolText | trans }}
+        {{ 'trans.Removed by Admin?' | trans }} {{ listing.adminRemoved | boolText | trans }}
     </div>
     <div class="col-md-4 {{ listing.userRemoved | displayTextWarning }}">
-        {{ 'trans.Removed by User?' | trans }}: {{ listing.userRemoved | boolText | trans }}
+        {{ 'trans.Removed by User?' | trans }} {{ listing.userRemoved | boolText | trans }}
     </div>
     <div class="col-md-4 {{ listing.userDeactivated | displayTextWarning }}">
-        {{ 'trans.Deactivated by User?' | trans }}: {{ listing.userDeactivated | boolText | trans }}
+        {{ 'trans.Deactivated by User?' | trans }} {{ listing.userDeactivated | boolText | trans }}
     </div>
     <div class="col-md-4 {{ listing.adminRejected | displayTextWarning }}">
-        {{ 'trans.Rejected by Admin?' | trans }}: {{ listing.adminRejected | boolText | trans }}
+        {{ 'trans.Rejected by Admin?' | trans }} {{ listing.adminRejected | boolText | trans }}
     </div>
     <div class="col-md-4 {{ (listing.rejectionReason is not empty) | displayTextWarning }}">
         {{ 'trans.Previous rejection' | trans }}: {{ listing.rejectionReason | defaultTrans('trans.none') }}

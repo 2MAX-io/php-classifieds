@@ -110,4 +110,11 @@ class FeaturedListingService
             $listing->setValidUntilDate($listing->getFeaturedUntilDate());
         }
     }
+
+    public function hasAmount(Listing $listing, FeaturedPackage $featuredPackage): bool
+    {
+        $cost = $featuredPackage->getPrice();
+
+        return $this->userBalanceService->hasAmount($cost, $listing->getUser());
+    }
 }

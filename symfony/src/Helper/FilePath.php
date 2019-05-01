@@ -23,6 +23,11 @@ class FilePath
         return self::getPath(__DIR__ . '/../../../static/');
     }
 
+    public static function getLogDir(): string
+    {
+        return self::getPath(__DIR__ . '/../../../symfony/var/log');
+    }
+
     public static function getProjectDir(): string
     {
         return self::getPath(__DIR__ . '/../../../');

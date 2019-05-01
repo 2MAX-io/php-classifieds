@@ -147,6 +147,9 @@
     "pagerfanta/pagerfanta": {
         "version": "v2.1.2"
     },
+    "paypal/rest-api-sdk-php": {
+        "version": "1.14.0"
+    },
     "psr/cache": {
         "version": "1.0.1"
     },

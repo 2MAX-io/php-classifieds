@@ -11,6 +11,7 @@ use App\Security\CurrentUserService;
 use App\Service\Listing\Featured\FeaturedListingService;
 use App\Service\Listing\Featured\FeaturedPackageService;
 use App\Service\Money\UserBalanceService;
+use App\Service\Payment\PaymentService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -70,13 +71,22 @@ class FeatureListingController extends AbstractUserController
         Request $request,
         Listing $listing,
         FeaturedPackage $featuredPackage,
-        FeaturedListingService $featuredListingService
+        FeaturedListingService $featuredListingService,
+        PaymentService $paymentService
     ): Response {
         $this->dennyUnlessCurrentUserAllowed($listing);
 
         if ($this->isCsrfTokenValid('feature'.$listing->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
-            $featuredListingService->makeFeaturedByBalance($listing, $featuredPackage);
+
+            if ($featuredListingService->hasAmount($listing, $featuredPackage)) {
+                $featuredListingService->makeFeaturedByBalance($listing, $featuredPackage);
+            } else {
+                $paymentDto = $paymentService->createPayment();
+
+                return $this->redirect($paymentDto->getPaymentExecuteUrl());
+            }
+
             $entityManager->flush();
 
             return $this->redirectToRoute(

@@ -38,6 +38,23 @@ class UserBalanceService
         $this->em->persist($userBalanceChangeNew);
     }
 
+    public function addBalance(int $addAmountPositive, User $user): void
+    {
+        // todo: make transactional
+        if ($addAmountPositive <= 0) {
+            throw new \UnexpectedValueException('should be positive');
+        }
+
+        $currentBalance = $this->getCurrentBalance($user);
+        $userBalanceChangeNew = new UserBalanceChange();
+        $userBalanceChangeNew->setUser($user);
+        $userBalanceChangeNew->setBalanceChange($addAmountPositive);
+        $userBalanceChangeNew->setBalanceFinal($currentBalance + $addAmountPositive);
+        $userBalanceChangeNew->setDatetime(new \DateTime());
+
+        $this->em->persist($userBalanceChangeNew);
+    }
+
     public function removeBalance(int $removeAmountPositive, User $user): void
     {
         // todo: make transactional

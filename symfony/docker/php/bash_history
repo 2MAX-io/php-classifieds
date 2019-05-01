@@ -148,3 +148,4 @@ composer dump-autoload --optimize -d symfony
 composer dump-autoload --optimize -d symfony
 php symfony/bin/console doctrine:schema:update --force
 php symfony/bin/console doctrine:schema:update --force
+composer require -d symfony paypal/rest-api-sdk-php

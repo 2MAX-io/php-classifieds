@@ -13,6 +13,7 @@
         "league/glide-symfony": "^1.0",
         "nesbot/carbon": "^2.16",
         "pagerfanta/pagerfanta": "^2.1",
+        "paypal/rest-api-sdk-php": "^1.14",
         "sensio/framework-extra-bundle": "^5.2",
         "stefano/stefano-tree": "^4.0",
         "symfony/apache-pack": "^1.0",

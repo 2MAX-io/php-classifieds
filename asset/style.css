@@ -389,6 +389,8 @@ svg.icon {
     margin-bottom: 0.75rem;
     font-size: 1.7rem;
     text-shadow: 1px 1px 1px #000, 0px 0px 3px #000000;
+    background-color: rgba(52, 58, 64, 0.69);
+    border-radius: 15px;
 }
 
 @media (min-width: 768px) {

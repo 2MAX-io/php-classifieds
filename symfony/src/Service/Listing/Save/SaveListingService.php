@@ -6,6 +6,7 @@ namespace App\Service\Listing\Save;
 
 use App\Entity\Listing;
 use App\Service\Listing\ValidityExtend\ValidUntilSetService;
+use App\Service\System\Text\TextService;
 use Ausi\SlugGenerator\SlugGenerator;
 use Ausi\SlugGenerator\SlugOptions;
 use DateTime;
@@ -24,10 +25,19 @@ class SaveListingService
      */
     private $packages;
 
-    public function __construct(ValidUntilSetService $validUntilSetService, Packages $packages)
-    {
+    /**
+     * @var TextService
+     */
+    private $textService;
+
+    public function __construct(
+        ValidUntilSetService $validUntilSetService,
+        Packages $packages,
+        TextService $textService
+    ) {
         $this->validUntilSetService = $validUntilSetService;
         $this->packages = $packages;
+        $this->textService = $textService;
     }
 
     public function create(): Listing
@@ -51,6 +61,14 @@ class SaveListingService
         $listing->setAdminRejected(false);
         $this->updateSlug($listing);
         $this->saveSearchText($listing);
+
+        $listing->setDescription(
+            $this->textService->normalizeUserInput($listing->getDescription())
+        );
+
+        $listing->setTitle(
+            $this->textService->normalizeUserInput($listing->getTitle())
+        );
     }
 
     public function getListingFilesForJavascript(Listing $listing): array

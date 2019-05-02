@@ -130,6 +130,11 @@ class SettingsService
         return $this->getSettingsDto()->getCurrency();
     }
 
+    public function getAllowedCharacters(): string
+    {
+        return $this->getSettingsDto()->getAllowedCharacters();
+    }
+
     /**
      * @return Setting[]
      */

@@ -6,7 +6,7 @@ namespace App\Controller\User\Account;
 
 use App\Entity\Token;
 use App\Entity\TokenField;
-use App\Form\User\ChangePasswordType;
+use App\Form\User\Account\ChangePasswordType;
 use App\Security\CurrentUserService;
 use App\Service\FlashBag\FlashService;
 use App\Service\System\Token\TokenService;

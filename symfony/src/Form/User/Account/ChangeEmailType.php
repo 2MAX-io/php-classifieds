@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Form\User;
+namespace App\Form\User\Account;
 
 use App\Validator\Constraints\UserEmailNotTaken;
 use Symfony\Component\Form\AbstractType;

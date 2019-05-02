@@ -7,7 +7,7 @@ namespace App\Controller\User\Account;
 use App\Entity\Token;
 use App\Entity\TokenField;
 use App\Entity\User;
-use App\Form\User\RemindPasswordType;
+use App\Form\User\Account\RemindPasswordType;
 use App\Service\FlashBag\FlashService;
 use App\Service\System\Token\TokenService;
 use App\Service\User\Account\RemindPasswordService;

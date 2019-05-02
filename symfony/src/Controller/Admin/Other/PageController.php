@@ -6,7 +6,7 @@ namespace App\Controller\Admin\Other;
 
 use App\Controller\Admin\Base\AbstractAdminController;
 use App\Entity\Page;
-use App\Form\PageType;
+use App\Form\Admin\PageType;
 use App\Repository\PageRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

@@ -11,7 +11,7 @@ use App\Security\CurrentUserService;
 use App\Service\Category\CategoryListService;
 use App\Service\Event\FileModificationEventService;
 use App\Service\Listing\CustomField\CustomFieldsForListingFormService;
-use App\Service\Listing\Save\CreateListingService;
+use App\Service\Listing\Save\SaveListingService;
 use App\Service\Listing\Save\ListingFileUploadService;
 use App\Service\Log\PoliceLogIpService;
 use App\Service\System\Pagination\PaginationService;
@@ -60,7 +60,7 @@ class UserListingController extends AbstractUserController
         Request $request,
         ListingFileUploadService $listingFileUploadService,
         CurrentUserService $currentUserService,
-        CreateListingService $createListingService,
+        SaveListingService $createListingService,
         CustomFieldsForListingFormService $customFieldsForListingFormService,
         PoliceLogIpService $logIpService,
         CategoryListService $categoryListService
@@ -125,7 +125,7 @@ class UserListingController extends AbstractUserController
         Listing $listing,
         CustomFieldsForListingFormService $customFieldsForListingFormService,
         ListingFileUploadService $listingFileUploadService,
-        CreateListingService $createListingService,
+        SaveListingService $createListingService,
         PoliceLogIpService $logIpService,
         CategoryListService $categoryListService
     ): Response {

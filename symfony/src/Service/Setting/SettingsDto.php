@@ -53,6 +53,11 @@ class SettingsDto
      */
     private $currency;
 
+    /**
+     * @var string|null
+     */
+    private $allowedCharacters;
+
     public function getIndexPageTitle(): ?string
     {
         return $this->indexPageTitle;
@@ -141,5 +146,15 @@ class SettingsDto
     public function setCurrency(?string $currency): void
     {
         $this->currency = $currency;
+    }
+
+    public function getAllowedCharacters(): ?string
+    {
+        return $this->allowedCharacters;
+    }
+
+    public function setAllowedCharacters(?string $allowedCharacters): void
+    {
+        $this->allowedCharacters = $allowedCharacters;
     }
 }

@@ -91,6 +91,13 @@ class SettingsType extends AbstractType
                 new NotBlank(),
             ],
         ]);
+        $builder->add('allowedCharacters', TextType::class, [
+            'label' => 'trans.Allowed characters',
+            'required' => true,
+            'constraints' => [
+                new NotBlank(),
+            ],
+        ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

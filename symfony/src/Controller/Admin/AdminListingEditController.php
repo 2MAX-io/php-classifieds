@@ -8,7 +8,7 @@ use App\Controller\Admin\Base\AbstractAdminController;
 use App\Entity\Listing;
 use App\Form\Admin\AdminListingEditType;
 use App\Service\Listing\CustomField\CustomFieldsForListingFormService;
-use App\Service\Listing\Save\CreateListingService;
+use App\Service\Listing\Save\SaveListingService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -22,7 +22,7 @@ class AdminListingEditController extends AbstractAdminController
         Request $request,
         Listing $listing,
         CustomFieldsForListingFormService $customFieldsForListingFormService,
-        CreateListingService $createListingService
+        SaveListingService $createListingService
     ): Response {
         $this->denyUnlessAdmin();
 

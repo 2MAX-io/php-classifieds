@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Service\Cron;
 
 use App\Entity\Listing;
-use App\Service\Listing\Save\CreateListingService;
+use App\Service\Listing\Save\SaveListingService;
 use Carbon\Carbon;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query;
@@ -18,11 +18,11 @@ class RegenerateSearchTextCron
     private $em;
 
     /**
-     * @var CreateListingService
+     * @var SaveListingService
      */
     private $createListingService;
 
-    public function __construct(EntityManagerInterface $em, CreateListingService $createListingService)
+    public function __construct(EntityManagerInterface $em, SaveListingService $createListingService)
     {
         $this->em = $em;
         $this->createListingService = $createListingService;

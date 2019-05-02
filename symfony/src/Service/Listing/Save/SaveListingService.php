@@ -12,7 +12,7 @@ use DateTime;
 use Symfony\Component\Asset\Packages;
 use Symfony\Component\Form\FormInterface;
 
-class CreateListingService
+class SaveListingService
 {
     /**
      * @var ValidUntilSetService

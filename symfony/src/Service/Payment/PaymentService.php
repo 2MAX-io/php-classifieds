@@ -9,6 +9,7 @@ use App\Entity\Listing;
 use App\Entity\Payment;
 use App\Entity\PaymentFeaturedPackage;
 use App\Service\Payment\Method\PayPalPaymentMethod;
+use App\Service\Setting\SettingsService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -24,16 +25,22 @@ class PaymentService
      */
     private $em;
 
-    public function __construct(PayPalPaymentMethod $payPalPaymentMethod, EntityManagerInterface $em)
+    /**
+     * @var SettingsService
+     */
+    private $settingsService;
+
+    public function __construct(PayPalPaymentMethod $payPalPaymentMethod, EntityManagerInterface $em, SettingsService $settingsService)
     {
         $this->payPalPaymentMethod = $payPalPaymentMethod;
         $this->em = $em;
+        $this->settingsService = $settingsService;
     }
 
     public function createPaymentForFeaturedPackage(Listing $listing, FeaturedPackage $featuredPackage): PaymentDto
     {
         $paymentDto = new PaymentDto();
-        $paymentDto->setCurrency('PLN'); // todo: from settings
+        $paymentDto->setCurrency($this->settingsService->getCurrency());
         $paymentDto->setAmount($featuredPackage->getPrice());
 
         $paymentDto = $this->createPayment($paymentDto);

@@ -84,6 +84,13 @@ class SettingsType extends AbstractType
                 new NotBlank(),
             ],
         ]);
+        $builder->add('currency', TextType::class, [
+            'label' => 'trans.Currency',
+            'required' => true,
+            'constraints' => [
+                new NotBlank(),
+            ],
+        ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

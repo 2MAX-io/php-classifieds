@@ -48,6 +48,11 @@ class SettingsDto
      */
     private $languageTwoLetters;
 
+    /**
+     * @var string|null
+     */
+    private $currency;
+
     public function getIndexPageTitle(): ?string
     {
         return $this->indexPageTitle;
@@ -126,5 +131,15 @@ class SettingsDto
     public function setLanguageTwoLetters(?string $languageTwoLetters): void
     {
         $this->languageTwoLetters = $languageTwoLetters;
+    }
+
+    public function getCurrency(): ?string
+    {
+        return $this->currency;
+    }
+
+    public function setCurrency(?string $currency): void
+    {
+        $this->currency = $currency;
     }
 }

@@ -16,7 +16,26 @@
 
                 {% include 'form/_flash_above_form.html.twig' %}
 
+                {{ form_start(form) }}
+                {{ form_widget(form) }}
+
+                <button class="btn btn-primary">{{ 'trans.Top up account' | trans }}</button>
+                {{ form_end(form) }}
+
             </div>
         </div>
     </div>
+{% endblock %}
+
+
+{% block js %}
+    <script type="text/javascript">
+        new Cleave('.input-money', {
+            numeral: true,
+            numeralThousandsGroupStyle: 'thousand',
+            numeralPositiveOnly: true,
+            delimiter: ' ',
+            numeralDecimalMark: ','
+        });
+    </script>
 {% endblock %}

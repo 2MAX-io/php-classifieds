@@ -16,6 +16,17 @@ class Str
         return strpos($string, $needle) !== false;
     }
 
+    public static function containsOneOf(string $string, array $needleList): bool
+    {
+        foreach ($needleList as $needle) {
+            if (strpos($string, $needle) !== false) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public static function toInt(string $value): int
     {
         return (int) $value;

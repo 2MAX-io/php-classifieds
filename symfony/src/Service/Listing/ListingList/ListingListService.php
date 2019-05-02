@@ -112,7 +112,7 @@ class ListingListService
 
         if (!empty($_GET['query'])) {
             $qb->andWhere('MATCH (listing.searchText) AGAINST (:query BOOLEAN) > 0');
-            $qb->setParameter(':query', Search::optimize($_GET['query']));
+            $qb->setParameter(':query', Search::optimizeMatch($_GET['query']));
         }
 
         if (!empty($_GET['user'])) {

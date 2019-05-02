@@ -39,7 +39,7 @@ class AdminListingSearchService
 
         if (!empty($_GET['query'])) {
             $qb->andWhere('MATCH (listing.searchText, listing.email, listing.phone, listing.rejectionReason) AGAINST (:query BOOLEAN) > 0');
-            $qb->setParameter(':query', Search::optimize($_GET['query']));
+            $qb->setParameter(':query', Search::optimizeMatch($_GET['query']));
         }
 
         if (!empty($request->get('adminActivated', false))) {

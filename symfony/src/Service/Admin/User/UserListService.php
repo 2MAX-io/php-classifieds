@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Service\Admin\User;
 
 use App\Entity\User;
+use App\Helper\Search;
 use App\Service\System\Pagination\PaginationDto;
 use Doctrine\ORM\EntityManagerInterface;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
@@ -41,7 +42,7 @@ class UserListService
                 $qb->expr()->like('user.username', ':query'),
                 $qb->expr()->like('user.email', ':query')
             ));
-            $qb->setParameter(':query', '%'.$request->get('query').'%');
+            $qb->setParameter(':query', Search::optimizeLike($request->get('query')));
         }
 
         $adapter = new DoctrineORMAdapter($qb, true, $qb->getDQLPart('having') !== null);

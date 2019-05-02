@@ -44,6 +44,11 @@ class Payment
     private $gatewayTransactionId;
 
     /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $gatewayToken;
+
+    /**
      * @ORM\OneToOne(targetEntity="App\Entity\PaymentFeaturedPackage", mappedBy="payment", fetch="EXTRA_LAZY")
      */
     private $paymentFeaturedPackage;
@@ -127,6 +132,18 @@ class Payment
         if ($newPayment !== $paymentFeaturedPackage->getPayment()) {
             $paymentFeaturedPackage->setPayment($newPayment);
         }
+
+        return $this;
+    }
+
+    public function getGatewayToken(): ?string
+    {
+        return $this->gatewayToken;
+    }
+
+    public function setGatewayToken(string $gatewayToken): self
+    {
+        $this->gatewayToken = $gatewayToken;
 
         return $this;
     }

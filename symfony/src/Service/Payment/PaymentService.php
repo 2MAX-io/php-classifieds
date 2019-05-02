@@ -12,6 +12,7 @@ use App\Service\Payment\Method\PayPalPaymentMethod;
 use App\Service\Setting\SettingsService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class PaymentService
 {
@@ -30,11 +31,21 @@ class PaymentService
      */
     private $settingsService;
 
-    public function __construct(PayPalPaymentMethod $payPalPaymentMethod, EntityManagerInterface $em, SettingsService $settingsService)
-    {
+    /**
+     * @var UrlGeneratorInterface
+     */
+    private $urlGenerator;
+
+    public function __construct(
+        PayPalPaymentMethod $payPalPaymentMethod,
+        EntityManagerInterface $em,
+        SettingsService $settingsService,
+        UrlGeneratorInterface $urlGenerator
+    ) {
         $this->payPalPaymentMethod = $payPalPaymentMethod;
         $this->em = $em;
         $this->settingsService = $settingsService;
+        $this->urlGenerator = $urlGenerator;
     }
 
     public function createPaymentForFeaturedPackage(Listing $listing, FeaturedPackage $featuredPackage): PaymentDto
@@ -42,6 +53,13 @@ class PaymentService
         $paymentDto = new PaymentDto();
         $paymentDto->setCurrency($this->settingsService->getCurrency());
         $paymentDto->setAmount($featuredPackage->getPrice());
+        $paymentDto->setGatewayCancelUrl(
+            $this->urlGenerator->generate(
+                'app_user_feature_listing',
+                ['id' => $listing->getId()],
+                UrlGeneratorInterface::ABSOLUTE_URL
+            )
+        );
 
         $paymentDto = $this->createPayment($paymentDto);
 
@@ -62,6 +80,7 @@ class PaymentService
         $paymentEntity->setDatetime(new \DateTime());
         $paymentEntity->setAmount($paymentDto->getAmount());
         $paymentEntity->setGatewayTransactionId($paymentDto->getGatewayTransactionId());
+        $paymentEntity->setGatewayToken($paymentDto->getGatewayToken());
         $paymentEntity->setGatewayStatus($paymentDto->getGatewayStatus());
         $paymentEntity->setBalanceUpdated(false);
         $this->em->persist($paymentEntity);

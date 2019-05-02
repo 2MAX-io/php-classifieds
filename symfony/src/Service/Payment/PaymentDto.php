@@ -36,6 +36,16 @@ class PaymentDto
     /**
      * @var string|null
      */
+    public $gatewayToken;
+
+    /**
+     * @var string|null
+     */
+    public $gatewayCancelUrl;
+
+    /**
+     * @var string|null
+     */
     public $gatewayStatus;
 
     /**
@@ -111,5 +121,25 @@ class PaymentDto
     public function setPaymentEntity(?Payment $paymentEntity): void
     {
         $this->paymentEntity = $paymentEntity;
+    }
+
+    public function getGatewayCancelUrl(): ?string
+    {
+        return $this->gatewayCancelUrl;
+    }
+
+    public function setGatewayCancelUrl(?string $gatewayCancelUrl): void
+    {
+        $this->gatewayCancelUrl = $gatewayCancelUrl;
+    }
+
+    public function getGatewayToken(): ?string
+    {
+        return $this->gatewayToken;
+    }
+
+    public function setGatewayToken(?string $gatewayToken): void
+    {
+        $this->gatewayToken = $gatewayToken;
     }
 }

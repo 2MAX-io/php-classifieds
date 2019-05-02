@@ -58,6 +58,11 @@ class SettingsDto
      */
     private $allowedCharacters;
 
+    /**
+     * @var string|null
+     */
+    private $searchPlaceholder;
+
     public function getIndexPageTitle(): ?string
     {
         return $this->indexPageTitle;
@@ -156,5 +161,15 @@ class SettingsDto
     public function setAllowedCharacters(?string $allowedCharacters): void
     {
         $this->allowedCharacters = $allowedCharacters;
+    }
+
+    public function getSearchPlaceholder(): ?string
+    {
+        return $this->searchPlaceholder;
+    }
+
+    public function setSearchPlaceholder(?string $searchPlaceholder): void
+    {
+        $this->searchPlaceholder = $searchPlaceholder;
     }
 }

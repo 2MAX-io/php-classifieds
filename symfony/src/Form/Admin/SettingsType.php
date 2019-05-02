@@ -98,6 +98,13 @@ class SettingsType extends AbstractType
                 new NotBlank(),
             ],
         ]);
+        $builder->add('searchPlaceholder', TextType::class, [
+            'label' => 'trans.Search examples',
+            'required' => true,
+            'constraints' => [
+                new NotBlank(),
+            ],
+        ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

@@ -15,6 +15,7 @@ class LanguageTwoLettersType extends AbstractType
     {
         $resolver->setDefault('choices', $this->getLanguagesList());
         $resolver->setDefault('placeholder', 'trans.Select');
+        $resolver->setDefault('translation_domain', false);
     }
 
     public function getLanguagesList(): array

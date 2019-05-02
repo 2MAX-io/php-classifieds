@@ -71,7 +71,9 @@ class SaveListingService
         );
 
         $listing->setCity(
-            $this->textService->normalizeUserInput($listing->getCity())
+            ucwords(
+                $this->textService->normalizeUserInput($listing->getCity())
+            )
         );
     }
 

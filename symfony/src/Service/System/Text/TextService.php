@@ -23,6 +23,7 @@ class TextService
         $return = $text;
         $return = $this->removeNotAllowedCharacters($return);
         $return = $this->removeTooManyNewLines($return);
+        $return = $this->forceLowerCaseIfAllCaps($return);
         $return = \trim($return);
 
         return $return;
@@ -51,5 +52,32 @@ class TextService
     public function removeTooManyNewLines(string $text, int $threshold = 2): string
     {
         return \preg_replace('#(\r?\n){'.($threshold+2).',}#', "\r\n\r\n", $text);
+    }
+
+    public function forceLowerCaseIfAllCaps(string $text): string
+    {
+        $return = $text;
+
+        if ($this->calculateUpperCaseScore($return) > 0.3) {
+            return \mb_strtolower($return);
+        }
+
+        return $return;
+    }
+
+    private function calculateUpperCaseScore(string $text): float
+    {
+        $upperAllowedChars = \mb_strtoupper($this->settingsService->getAllowedCharacters());
+        $uppercaseLetters = \preg_replace('#[^A-Z'. $upperAllowedChars .']#', '', $text);
+        $uppercaseCount = \mb_strlen($uppercaseLetters);
+
+        if ($uppercaseCount < 10) {
+            return 0;
+        }
+
+        $textWithoutWhiteChars = \preg_replace('#['.\preg_quote(" \r\n~'!@#$%^&*_+-=?[]{}()<>.,:;|/\\\"").']#', '', $text);
+        $lettersCount = \mb_strlen($textWithoutWhiteChars);
+
+        return $uppercaseCount / $lettersCount;
     }
 }

@@ -70,6 +70,10 @@
                             </div>
                         </div>
                     </div>
+
+                    <a href="{{ path('app_user_balance_top_up') }}" class="btn btn-primary">
+                        {{ 'trans.Top up account' | trans }}
+                    </a>
                 {% else %}
                     <div class="alert alert-danger">
                         {{ 'trans.You can not feature listing that is deactivated. Current listings status' | trans }}:

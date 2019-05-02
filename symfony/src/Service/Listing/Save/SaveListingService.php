@@ -70,11 +70,13 @@ class SaveListingService
             $this->textService->normalizeUserInput($listing->getTitle())
         );
 
-        $listing->setCity(
-            ucwords(
-                $this->textService->normalizeUserInput($listing->getCity())
-            )
-        );
+        if ($listing->getCity()) {
+            $listing->setCity(
+                ucwords(
+                    $this->textService->normalizeUserInput($listing->getCity())
+                )
+            );
+        }
     }
 
     public function getListingFilesForJavascript(Listing $listing): array

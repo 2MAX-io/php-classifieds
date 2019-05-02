@@ -18,8 +18,12 @@ class TextService
         $this->settingsService = $settingsService;
     }
 
-    public function normalizeUserInput(string $text): string
+    public function normalizeUserInput(?string $text): ?string
     {
+        if ($text === null) {
+            return null;
+        }
+
         $return = $text;
         $return = $this->removeNotAllowedCharacters($return);
         $return = $this->removeTooManyNewLines($return);

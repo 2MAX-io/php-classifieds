@@ -87,8 +87,11 @@ Listing details:
     City: {$listing->getCity()}
     Email used in listing: {$listing->getEmail()}
     Registered user email: {$userEmail}
+--- 
     Description:
 {$listing->getDescription()}
+--- Description End
+
 
 END;
 

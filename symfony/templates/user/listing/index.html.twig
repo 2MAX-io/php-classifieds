@@ -1,5 +1,7 @@
 {% extends 'base.html.twig' %}
 
+{% import "user/macro/_user_macro.html.twig" as userMacro %}
+
 {% block title %}{{ 'trans.My listings' | trans }}{% endblock %}
 
 {% block body %}
@@ -97,29 +99,9 @@
                             <td>
                                 {% if not listing.adminRemoved %}
                                     <a href="{{ path('app_listing_edit', {'id': listing.id}) }}" class="btn btn-dark">{{ 'trans.Edit' | trans }}</a>
-
-                                    {% if (listing.adminActivated and not listing.adminRejected and not listing.userDeactivated) or listing.status == constant('\App\\Entity\\Listing::STATUS_EXPIRED') %}
-                                        <a
-                                            href="{{ path('app_user_validity_extend', {'id': listing.id}) }}"
-                                            class="btn btn-outline-success"
-                                        >
-                                            {{ 'trans.Extend' | trans }}
-                                        </a>
-                                    {% endif %}
-
-                                    {% if not listing.adminRejected and listing.status != constant('\App\\Entity\\Listing::STATUS_EXPIRED') %}
-                                        {% if listing.userDeactivated %}
-                                            {{ include('user/listing/_activate_form.html.twig') }}
-                                        {% else %}
-                                            {{ include('user/listing/_deactivate_form.html.twig') }}
-                                        {% endif %}
-                                    {% endif %}
-
                                 {% endif %}
 
-                                {% if listing.userDeactivated or listing.adminRemoved or listing.adminRejected or listing.status == constant('\App\\Entity\\Listing::STATUS_EXPIRED') %}
-                                    {{ include('user/listing/_delete_form.html.twig') }}
-                                {% endif %}
+                                {{ userMacro.listingButtons(listing) }}
                             </td>
                         </tr>
                     {% else %}

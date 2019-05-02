@@ -6,7 +6,11 @@
 
 {% block body %}
     <div class="container mt-5">
-        <h1>{{ 'trans.Edit listing' | trans }}: <a target="_blank" href="{{ path('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}">{{ listing.title }}</a></h1>
+        <h1>{{ 'trans.Edit listing' | trans }}:
+            <a target="_blank" href="{{ path('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}">
+                {{ listing.title }}
+            </a>
+        </h1>
 
         <a href="{{ path('app_admin_listing_edit_advanced', {'id': listing.id}) }}">
             {{- 'trans.Edit listing advanced settings' | trans -}}

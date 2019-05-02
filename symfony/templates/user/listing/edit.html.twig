@@ -1,5 +1,7 @@
 {% extends 'base.html.twig' %}
 
+{% import "user/macro/_user_macro.html.twig" as userMacro %}
+
 {% block title %}{{ 'trans.Edit listing' | trans }}{% endblock %}
 
 {% block body %}
@@ -16,25 +18,13 @@
                     </a>
 
                     <div class="text-right">
-                        <a href="{{ path('app_user_listing_index') }}">{{ 'trans.back to list' | trans }}</a>
-
                         <span class="{{ getListingStatusClass(listing) }}">{{ getListingStatus(listing) }}</span>
 
-                        {% if listing.adminActivated %}
+                        {% if listing.status in [constant('\App\\Entity\\Listing::STATUS_ACTIVE'), constant('\App\\Entity\\Listing::STATUS_ACTIVE_FEATURED')] %}
                             <a href="{{ path('app_user_feature_listing', {"id": listing.id}) }}" class="btn btn-dark">{{ 'trans.Feature this listing' | trans }}</a>
                         {% endif %}
 
-                        {% if listing.adminActivated %}
-                            <a href="{{ path('app_user_validity_extend', {'id': listing.id}) }}" class="btn btn-outline-success">{{ 'trans.Extend' | trans }}</a>
-                        {% endif %}
-
-                        {% if listing.userDeactivated %}
-                            {{ include('user/listing/_activate_form.html.twig') }}
-                        {% else %}
-                            {{ include('user/listing/_deactivate_form.html.twig') }}
-                        {% endif %}
-
-                        {{ include('user/listing/_delete_form.html.twig') }}
+                        {{ userMacro.listingButtons(listing) }}
                     </div>
                 </div>
 

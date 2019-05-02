@@ -77,13 +77,14 @@ class FeatureListingController extends AbstractUserController
         $this->dennyUnlessCurrentUserAllowed($listing);
 
         if ($this->isCsrfTokenValid('feature'.$listing->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
+            $em = $this->getDoctrine()->getManager();
 
             if ($featuredListingService->hasAmount($listing, $featuredPackage)) {
                 $featuredListingService->makeFeaturedByBalance($listing, $featuredPackage);
+                $em->flush();
             } else {
                 $paymentDto = $paymentService->createPaymentForFeaturedPackage($listing, $featuredPackage);
-                $entityManager->flush();
+                $em->flush();
 
                 return $this->redirect($paymentDto->getPaymentExecuteUrl());
             }

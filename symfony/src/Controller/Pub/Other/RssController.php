@@ -23,7 +23,7 @@ class RssController extends AbstractController
         UrlGeneratorInterface $urlGenerator,
         SettingsService $settingsService
     ): Response {
-        $settingsDto = $settingsService->getHydratedSettingsDto();
+        $settingsDto = $settingsService->getSettingsDto();
 
         $feed = new Feed;
         $feed->setTitle($settingsDto->getRssTitle());

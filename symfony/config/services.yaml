@@ -42,3 +42,5 @@ services:
 
     libphonenumber\PhoneNumberUtil:
         factory: 'App\System\Support\Phone\PhoneNumberService:factory'
+
+    Symfony\Component\Cache\Simple\ArrayCache: ~

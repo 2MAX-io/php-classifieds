@@ -6,14 +6,14 @@ namespace App\Service\Setting;
 
 use App\Entity\Setting;
 use App\Repository\SettingRepository;
-use App\System\Cache\CacheService;
-use App\System\Cache\LocalCacheInterface;
+use App\System\Cache\RuntimeCacheInterface;
 use Doctrine\ORM\EntityManagerInterface;
-use Psr\SimpleCache\CacheInterface;
+use Symfony\Component\Cache\Simple\ArrayCache;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 use Symfony\Component\PropertyInfo\PropertyInfoExtractorInterface;
+use Psr\SimpleCache\CacheInterface;
 
-class SettingsService implements LocalCacheInterface
+class SettingsService
 {
     /**
      * @var PropertyInfoExtractorInterface
@@ -33,17 +33,24 @@ class SettingsService implements LocalCacheInterface
     /**
      * @var CacheInterface
      */
+    private $arrayCache;
+
+    /**
+     * @var CacheInterface
+     */
     private $cache;
 
     public function __construct(
         PropertyInfoExtractorInterface $propertyInfoExtractor,
         SettingRepository $settingRepository,
         EntityManagerInterface $em,
+        ArrayCache $arrayCache,
         CacheInterface $cache
     ) {
         $this->propertyInfoExtractor = $propertyInfoExtractor;
         $this->settingRepository = $settingRepository;
         $this->em = $em;
+        $this->arrayCache = $arrayCache;
         $this->cache = $cache;
     }
 
@@ -73,10 +80,28 @@ class SettingsService implements LocalCacheInterface
         }
 
         $this->em->flush();
-        $this->cache->delete(CacheService::TWIG_SETTINGS_CACHE);
+        $this->cache->delete(RuntimeCacheInterface::SETTINGS_CACHE);
     }
 
-    public function getHydratedSettingsDto(): SettingsDto
+    public function getSettingsDto(): SettingsDto
+    {
+        if ($this->arrayCache->has(RuntimeCacheInterface::SETTINGS_CACHE)) {
+            return $this->arrayCache->get(RuntimeCacheInterface::SETTINGS_CACHE);
+        }
+
+        if ($this->cache->has(RuntimeCacheInterface::SETTINGS_CACHE)) {
+            return $this->cache->get(RuntimeCacheInterface::SETTINGS_CACHE);
+        }
+
+        $settingsDto = $this->getSettingsDtoWithoutCache();
+
+        $this->arrayCache->set(RuntimeCacheInterface::SETTINGS_CACHE, $settingsDto);
+        $this->cache->set(RuntimeCacheInterface::SETTINGS_CACHE, $settingsDto, 300);
+
+        return $settingsDto;
+    }
+
+    public function getSettingsDtoWithoutCache(): SettingsDto
     {
         $settingsDto = new SettingsDto();
         $propertyAccessor = PropertyAccess::createPropertyAccessor();
@@ -97,12 +122,12 @@ class SettingsService implements LocalCacheInterface
 
     public function getLanguageTwoLetters(): string
     {
-        return $this->getHydratedSettingsDto()->getLanguageTwoLetters();
+        return $this->getSettingsDto()->getLanguageTwoLetters();
     }
 
     public function getCurrency(): string
     {
-        return $this->getHydratedSettingsDto()->getCurrency();
+        return $this->getSettingsDto()->getCurrency();
     }
 
     /**

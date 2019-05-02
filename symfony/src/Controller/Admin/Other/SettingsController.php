@@ -20,7 +20,7 @@ class SettingsController extends AbstractAdminController
     {
         $this->denyUnlessAdmin();
 
-        $settingsDto = $settingsSaveService->getHydratedSettingsDto();
+        $settingsDto = $settingsSaveService->getSettingsDtoWithoutCache();
         $form = $this->createForm(SettingsType::class, $settingsDto);
 
         $form->handleRequest($request);

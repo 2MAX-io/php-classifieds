@@ -160,3 +160,11 @@ php symfony/bin/console make:entity --regenerate "App\Entity"
 php symfony/bin/console make:entity --regenerate "App\Entity"
 php symfony/bin/console doctrine:schema:update --force
 composer require -d symfony giggsey/libphonenumber-for-php
+php symfony/bin/console container:debug
+php symfony/bin/console list
+php symfony/bin/console list | grep container
+php symfony/bin/console debug:container
+php symfony/bin/console debug:container | grep array
+php symfony/bin/console debug:container | grep array
+php symfony/bin/console debug:container | grep array
+php symfony/bin/console debug:container | grep array

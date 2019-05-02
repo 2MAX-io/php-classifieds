@@ -44,6 +44,10 @@ class PhoneValidator extends ConstraintValidator
             throw new UnexpectedTypeException($constraint, __NAMESPACE__.'\Phone');
         }
 
+        if (empty($value)) {
+            return;
+        }
+
         $phoneUtil = $this->phoneNumberUtil;
 
         try {

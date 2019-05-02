@@ -69,6 +69,10 @@ class SaveListingService
         $listing->setTitle(
             $this->textService->normalizeUserInput($listing->getTitle())
         );
+
+        $listing->setCity(
+            $this->textService->normalizeUserInput($listing->getCity())
+        );
     }
 
     public function getListingFilesForJavascript(Listing $listing): array

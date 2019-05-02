@@ -1,5 +1,7 @@
 {% extends 'admin/base.html.twig' %}
 
+{% import "admin/listing/_admin_macro.html.twig" as adminMacro %}
+
 {% block title %}{{ 'trans.Activation' | trans }}{% endblock %}
 
 {% block body %}
@@ -86,22 +88,7 @@
                 <tr class="collapse" id="collapse{{ listing.id }}" data-parent="#listings">
                     <td colspan="99">
                         <div class="row">
-                            <div class="col-md-4">{{ 'trans.Admin last confirmation' | trans }}: {{ listing.adminLastConfirmationDate | date }}</div>
-                            <div class="col-md-4">{{ 'trans.Featured until' | trans }}:
-                                {% if listing.featured and listing.featuredUntilDate %}
-                                    {{ listing.featuredUntilDate | date }}
-                                {% else %}
-                                    {{ 'trans.No' | trans }}
-                                {% endif %}
-                            </div>
-                            <div class="col-md-4">{{ 'trans.Last edit' | trans }}: {{ listing.lastEditDate | date }}</div>
-                            <div class="col-md-4">{{ 'trans.Creation date' | trans }}: {{ listing.firstCreatedDate | date }}</div>
-                            <div class="col-md-4">{{ 'trans.Last raising' | trans }}: {{ listing.orderByDate | date }}</div>
-                            <div class="col-md-4">{{ 'trans.Valid until' | trans }}: {{ listing.validUntilDate | date }}</div>
-                            <div class="col-md-4">{{ 'trans.Activated by Admin?' | trans }}: {{ listing.adminActivated | boolText | trans }}</div>
-                            <div class="col-md-4">{{ 'trans.Removed by Admin?' | trans }}: {{ listing.adminRemoved | boolText | trans }}</div>
-                            <div class="col-md-4">{{ 'trans.Removed by User?' | trans }}: {{ listing.userRemoved | boolText | trans }}</div>
-                            <div class="col-md-4">{{ 'trans.Deactivated by User?' | trans }}: {{ listing.userDeactivated | boolText | trans }}</div>
+                            {{ adminMacro.listingInfo(listing) }}
                         </div>
                     </td>
                 </tr>

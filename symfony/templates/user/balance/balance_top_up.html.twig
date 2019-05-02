@@ -25,6 +25,10 @@
                 {{ form_start(form) }}
                 {{ form_widget(form) }}
 
+                <div class="alert alert-info">
+                    {{ 'trans.Funds do not expire. However, they are not subject to withdrawal. And they do not pay interest of any kind.' | trans }}
+                </div>
+
                 <button class="btn btn-primary">{{ 'trans.Top up account' | trans }}</button>
                 {{ form_end(form) }}
 

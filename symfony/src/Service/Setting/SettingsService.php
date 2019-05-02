@@ -95,6 +95,11 @@ class SettingsService implements LocalCacheInterface
         return $settingsDto;
     }
 
+    public function getLanguageTwoLetters(): string
+    {
+        return $this->getHydratedSettingsDto()->getLanguageTwoLetters();
+    }
+
     /**
      * @return Setting[]
      */

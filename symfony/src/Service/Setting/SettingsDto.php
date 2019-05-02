@@ -41,6 +41,13 @@ class SettingsDto
      */
     private $linkTermsConditions;
 
+    /**
+     * ISO 639-1
+     *
+     * @var string|null
+     */
+    private $languageTwoLetters;
+
     public function getIndexPageTitle(): ?string
     {
         return $this->indexPageTitle;
@@ -109,5 +116,15 @@ class SettingsDto
     public function setLinkTermsConditions(?string $linkTermsConditions): void
     {
         $this->linkTermsConditions = $linkTermsConditions;
+    }
+
+    public function getLanguageTwoLetters(): ?string
+    {
+        return $this->languageTwoLetters;
+    }
+
+    public function setLanguageTwoLetters(?string $languageTwoLetters): void
+    {
+        $this->languageTwoLetters = $languageTwoLetters;
     }
 }

@@ -50,11 +50,11 @@
     {% include 'user/listing/_category_select.html.twig' %}
 
     <script type="text/javascript">
-        var cleave = new Cleave('.input-phone', {
+        new Cleave('.input-phone', {
             phone: true,
-            phoneRegionCode: 'pl' // todo: from settings
+            phoneRegionCode: '{{ settings.languageTwoLetters }}' // todo: from settings
         });
-        var cleave = new Cleave('.input-money', {
+        new Cleave('.input-money', {
             numeral: true,
             numeralThousandsGroupStyle: 'thousand',
             numeralPositiveOnly: true,

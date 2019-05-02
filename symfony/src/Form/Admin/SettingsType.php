@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Form\Admin;
 
+use App\Form\Type\LanguageTwoLettersType;
 use App\Form\Type\PageType;
 use App\Service\Setting\SettingsDto;
 use Symfony\Component\Form\AbstractType;
@@ -71,6 +72,13 @@ class SettingsType extends AbstractType
         ]);
         $builder->add('linkTermsConditions', PageType::class, [
             'label' => 'trans.Link to terms and conditions',
+            'required' => true,
+            'constraints' => [
+                new NotBlank(),
+            ],
+        ]);
+        $builder->add('languageTwoLetters', LanguageTwoLettersType::class, [
+            'label' => 'trans.Language',
             'required' => true,
             'constraints' => [
                 new NotBlank(),

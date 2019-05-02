@@ -39,6 +39,11 @@ class Payment
     private $balanceUpdated;
 
     /**
+     * @ORM\Column(type="boolean")
+     */
+    private $canceled;
+
+    /**
      * @ORM\Column(type="string", length=255)
      */
     private $gatewayTransactionId;
@@ -144,6 +149,18 @@ class Payment
     public function setGatewayToken(string $gatewayToken): self
     {
         $this->gatewayToken = $gatewayToken;
+
+        return $this;
+    }
+
+    public function getCanceled(): ?bool
+    {
+        return $this->canceled;
+    }
+
+    public function setCanceled(bool $canceled): self
+    {
+        $this->canceled = $canceled;
 
         return $this;
     }

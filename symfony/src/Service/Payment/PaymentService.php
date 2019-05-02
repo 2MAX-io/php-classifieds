@@ -77,6 +77,7 @@ class PaymentService
         $this->payPalPaymentMethod->createPayment($paymentDto);
 
         $paymentEntity = new Payment();
+        $paymentEntity->setCanceled(false);
         $paymentEntity->setDatetime(new \DateTime());
         $paymentEntity->setAmount($paymentDto->getAmount());
         $paymentEntity->setGatewayTransactionId($paymentDto->getGatewayTransactionId());

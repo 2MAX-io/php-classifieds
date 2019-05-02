@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Controller\User\Payment;
 
-use App\Entity\User;
 use App\Service\Listing\Featured\FeaturedListingService;
 use App\Service\Money\UserBalanceService;
 use App\Service\Payment\ConfirmPaymentDto;
@@ -20,7 +19,7 @@ class PaymentController extends AbstractController
     /**
      * @Route("/user/payment", name="app_payment")
      */
-    public function index(
+    public function payment(
         Request $request,
         PaymentService $paymentService,
         UserBalanceService $userBalanceService,

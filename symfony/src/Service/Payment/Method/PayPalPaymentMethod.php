@@ -40,7 +40,7 @@ class PayPalPaymentMethod implements PaymentMethodInterface
 
         $redirectUrls = new RedirectUrls();
         $redirectUrls->setReturnUrl($this->paymentHelperService->getSuccessUrl());
-        $redirectUrls->setCancelUrl($paymentDto->getGatewayCancelUrl()); // todo: set correctly
+        $redirectUrls->setCancelUrl($this->paymentHelperService->getCancelUrl());
 
         $amount = new Amount();
         $amount->setCurrency($paymentDto->getCurrency());

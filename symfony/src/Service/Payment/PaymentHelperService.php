@@ -22,4 +22,9 @@ class PaymentHelperService
     {
         return $this->urlGenerator->generate('app_payment', [], UrlGeneratorInterface::ABSOLUTE_URL);
     }
+
+    public function getCancelUrl(): string
+    {
+        return $this->urlGenerator->generate('app_payment_cancel', [], UrlGeneratorInterface::ABSOLUTE_URL);
+    }
 }

@@ -34,30 +34,46 @@ class PaymentController extends AbstractController
 
             if ($confirmPaymentDto->isConfirmed() && !$paymentService->isBalanceUpdated($confirmPaymentDto)) {
                 $paymentEntity = $paymentService->getPaymentEntity($confirmPaymentDto);
-                $paymentFeaturedPackage = $paymentEntity->getPaymentFeaturedPackage();
+
                 if ($confirmPaymentDto->getGatewayAmount() !== $paymentEntity->getAmount()) {
                     throw new \UnexpectedValueException('paid amount do not match between gateway and payment entity');
                 }
 
-                $paymentService->markBalanceUpdated($confirmPaymentDto);
-                $userBalanceService->addBalance(
-                    $confirmPaymentDto->getGatewayAmount(),
-                    $paymentFeaturedPackage->getListing()->getUser()
-                );
-                $em->flush();
+                if ($paymentEntity->getPaymentFeaturedPackage()) {
+                    $paymentFeaturedPackage = $paymentEntity->getPaymentFeaturedPackage();
 
-                $featuredListingService->makeFeaturedByBalance(
-                    $paymentFeaturedPackage->getListing(),
-                    $paymentFeaturedPackage->getFeaturedPackage()
-                );
+                    $paymentService->markBalanceUpdated($confirmPaymentDto);
+                    $userBalanceService->addBalance(
+                        $confirmPaymentDto->getGatewayAmount(),
+                        $paymentFeaturedPackage->getListing()->getUser()
+                    );
+                    $em->flush();
 
-                $em->flush(); // todo: check if transaction logic with ifs and closing correct
-                $em->commit();
+                    $featuredListingService->makeFeaturedByBalance(
+                        $paymentFeaturedPackage->getListing(),
+                        $paymentFeaturedPackage->getFeaturedPackage()
+                    );
 
-                return $this->redirectToRoute(
-                    'app_user_feature_listing',
-                    ['id' => $paymentFeaturedPackage->getListing()->getId()]
-                );
+                    $em->flush(); // todo: check if transaction logic with ifs and closing correct
+                    $em->commit();
+
+                    return $this->redirectToRoute(
+                        'app_user_feature_listing',
+                        ['id' => $paymentFeaturedPackage->getListing()->getId()]
+                    );
+                }
+
+                if ($paymentEntity->getPaymentForBalanceTopUp()) {
+                    $paymentService->markBalanceUpdated($confirmPaymentDto);
+                    $userBalanceService->addBalance(
+                        $confirmPaymentDto->getGatewayAmount(),
+                        $paymentEntity->getPaymentForBalanceTopUp()->getUser()
+                    );
+                    $em->flush(); // todo: check if transaction logic with ifs and closing correct
+                    $em->commit();
+
+                    return $this->redirectToRoute('app_user_balance_top_up');
+                }
             }
 
             if ($em->getConnection()->isTransactionActive()) {

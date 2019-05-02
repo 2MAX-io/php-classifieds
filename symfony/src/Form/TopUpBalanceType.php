@@ -4,33 +4,54 @@ declare(strict_types=1);
 
 namespace App\Form;
 
-use App\Service\Listing\ValidityExtend\ValidUntilSetService;
+use App\Service\Setting\SettingsService;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class TopUpBalanceType extends AbstractType
 {
-    /**
-     * @var ValidUntilSetService
-     */
-    private $validUntilSetService;
+    public const TOP_UP_AMOUNT = 'topUpAmount';
 
-    public function __construct(ValidUntilSetService $validUntilSetService)
+    /**
+     * @var SettingsService
+     */
+    private $settingsService;
+
+    public function __construct(SettingsService $settingsService)
     {
-        $this->validUntilSetService = $validUntilSetService;
+        $this->settingsService = $settingsService;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('topUpAmount', MoneyType::class, [
-            'mapped' => false,
-            'label' => 'trans.Top up amount',
-            'attr' => [
-                'class' => 'input-money'
-            ],
-        ]);
+        $builder->add(
+            self::TOP_UP_AMOUNT,
+            MoneyType::class,
+            [
+                'mapped' => false,
+                'label' => 'trans.Top up amount',
+                'attr' => [
+                    'class' => 'input-money',
+                ],
+                'currency' => $this->settingsService->getCurrency(),
+            ]
+        );
+        $builder->add(
+            'accept',
+            CheckboxType::class,
+            [
+                'mapped' => false,
+                'required' => true,
+                'label' => 'trans.I accept and confirm, that the paid but unused funds are not refundable',
+                'constraints' => [
+                    new NotBlank(),
+                ]
+            ]
+        );
     }
 
     public function configureOptions(OptionsResolver $resolver)

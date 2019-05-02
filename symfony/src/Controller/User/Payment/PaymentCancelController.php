@@ -32,14 +32,27 @@ class PaymentCancelController extends AbstractController
         $paymentEntity->setCanceled(true);
         $em->flush();
 
-        $flashService->addFlash(
-            FlashService::ERROR_ABOVE_FORM,
-            'trans.You have canceled payment. If you want to feature listing please try again and complete payment.'
-        );
+        if ($paymentEntity->getPaymentFeaturedPackage()) {
+            $flashService->addFlash(
+                FlashService::ERROR_ABOVE_FORM,
+                'trans.You have canceled payment. If you want to feature listing, try again and complete payment'
+            );
 
-        return $this->redirectToRoute(
-            'app_user_feature_listing',
-            ['id' => $paymentEntity->getPaymentFeaturedPackage()->getListing()->getId()]
-        );
+            return $this->redirectToRoute(
+                'app_user_feature_listing',
+                ['id' => $paymentEntity->getPaymentFeaturedPackage()->getListing()->getId()]
+            );
+        }
+
+        if ($paymentEntity->getPaymentForBalanceTopUp()) {
+            $flashService->addFlash(
+                FlashService::ERROR_ABOVE_FORM,
+                'trans.You have canceled payment. If you want to top up account, try again and complete payment'
+            );
+
+            return $this->redirectToRoute('app_user_balance_top_up');
+        }
+
+        throw $this->createNotFoundException();
     }
 }

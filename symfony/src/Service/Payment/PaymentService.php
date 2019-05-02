@@ -8,6 +8,8 @@ use App\Entity\FeaturedPackage;
 use App\Entity\Listing;
 use App\Entity\Payment;
 use App\Entity\PaymentFeaturedPackage;
+use App\Entity\PaymentForBalanceTopUp;
+use App\Entity\User;
 use App\Service\Payment\Method\PayPalPaymentMethod;
 use App\Service\Setting\SettingsService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -68,6 +70,22 @@ class PaymentService
         $paymentFeaturedPackage->setFeaturedPackage($featuredPackage);
         $paymentFeaturedPackage->setListing($listing);
         $this->em->persist($paymentFeaturedPackage);
+
+        return $paymentDto;
+    }
+
+    public function createPaymentForTopUp(User $user, int $amount): PaymentDto
+    {
+        $paymentDto = new PaymentDto();
+        $paymentDto->setCurrency($this->settingsService->getCurrency());
+        $paymentDto->setAmount($amount);
+
+        $paymentDto = $this->createPayment($paymentDto);
+
+        $paymentForBalanceTopUp = new PaymentForBalanceTopUp();
+        $paymentForBalanceTopUp->setPayment($paymentDto->getPaymentEntity());
+        $paymentForBalanceTopUp->setUser($user);
+        $this->em->persist($paymentForBalanceTopUp);
 
         return $paymentDto;
     }

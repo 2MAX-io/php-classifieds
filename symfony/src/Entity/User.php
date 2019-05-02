@@ -85,10 +85,18 @@ class User implements UserInterface, RoleInterface, EnablableInterface, EncoderA
      */
     private $userBalanceChanges;
 
+    /**
+     * @var PaymentForBalanceTopUp[]
+     *
+     * @ORM\OneToMany(targetEntity="App\Entity\PaymentForBalanceTopUp", mappedBy="user")
+     */
+    private $paymentForBalanceTopUpList;
+
     public function __construct()
     {
         $this->listings = new ArrayCollection();
         $this->userBalanceChanges = new ArrayCollection();
+        $this->paymentForBalanceTopUpList = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -295,6 +303,37 @@ class User implements UserInterface, RoleInterface, EnablableInterface, EncoderA
             // set the owning side to null (unless already changed)
             if ($userBalanceChange->getUser() === $this) {
                 $userBalanceChange->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|PaymentForBalanceTopUp[]
+     */
+    public function getPaymentForBalanceTopUpList(): Collection
+    {
+        return $this->paymentForBalanceTopUpList;
+    }
+
+    public function addPaymentForBalanceTopUpList(PaymentForBalanceTopUp $paymentForBalanceTopUpList): self
+    {
+        if (!$this->paymentForBalanceTopUpList->contains($paymentForBalanceTopUpList)) {
+            $this->paymentForBalanceTopUpList[] = $paymentForBalanceTopUpList;
+            $paymentForBalanceTopUpList->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removePaymentForBalanceTopUpList(PaymentForBalanceTopUp $paymentForBalanceTopUpList): self
+    {
+        if ($this->paymentForBalanceTopUpList->contains($paymentForBalanceTopUpList)) {
+            $this->paymentForBalanceTopUpList->removeElement($paymentForBalanceTopUpList);
+            // set the owning side to null (unless already changed)
+            if ($paymentForBalanceTopUpList->getUser() === $this) {
+                $paymentForBalanceTopUpList->setUser(null);
             }
         }
 

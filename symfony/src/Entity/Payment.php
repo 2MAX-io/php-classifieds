@@ -54,9 +54,18 @@ class Payment
     private $gatewayToken;
 
     /**
+     * @var PaymentFeaturedPackage|null
+     *
      * @ORM\OneToOne(targetEntity="App\Entity\PaymentFeaturedPackage", mappedBy="payment", fetch="EXTRA_LAZY")
      */
     private $paymentFeaturedPackage;
+
+    /**
+     * @var PaymentForBalanceTopUp|null
+     *
+     * @ORM\OneToOne(targetEntity="App\Entity\PaymentForBalanceTopUp", mappedBy="payment", fetch="EXTRA_LAZY")
+     */
+    private $paymentForBalanceTopUp;
 
     public function getId(): ?int
     {
@@ -161,6 +170,24 @@ class Payment
     public function setCanceled(bool $canceled): self
     {
         $this->canceled = $canceled;
+
+        return $this;
+    }
+
+    public function getPaymentForBalanceTopUp(): ?PaymentForBalanceTopUp
+    {
+        return $this->paymentForBalanceTopUp;
+    }
+
+    public function setPaymentForBalanceTopUp(?PaymentForBalanceTopUp $paymentForBalanceTopUp): self
+    {
+        $this->paymentForBalanceTopUp = $paymentForBalanceTopUp;
+
+        // set (or unset) the owning side of the relation if necessary
+        $newPayment = $paymentForBalanceTopUp === null ? null : $this;
+        if ($newPayment !== $paymentForBalanceTopUp->getPayment()) {
+            $paymentForBalanceTopUp->setPayment($newPayment);
+        }
 
         return $this;
     }

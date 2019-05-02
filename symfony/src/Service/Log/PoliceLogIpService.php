@@ -82,13 +82,13 @@ Server time when saving this log: {$currentServerTime}
 
 Listing details:
     Title: {$listing->getTitle()}
-    Description: {$listing->getDescription()}
     Phone: {$listing->getPhone()}
     Price: {$listing->getPrice()}
     City: {$listing->getCity()}
     Email used in listing: {$listing->getEmail()}
     Registered user email: {$userEmail}
-
+    Description:
+{$listing->getDescription()}
 
 END;
 

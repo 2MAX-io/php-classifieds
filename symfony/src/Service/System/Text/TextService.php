@@ -22,6 +22,8 @@ class TextService
     {
         $return = $text;
         $return = $this->removeNotAllowedCharacters($return);
+        $return = $this->removeTooManyNewLines($return);
+        $return = \trim($return);
 
         return $return;
     }
@@ -44,5 +46,10 @@ class TextService
         $allowedCharacters .= \mb_strtoupper($this->settingsService->getAllowedCharacters());
 
         return \preg_replace('#[^'.\preg_quote($allowedCharacters).']+#', '', $text);
+    }
+
+    public function removeTooManyNewLines(string $text, int $threshold = 2): string
+    {
+        return \preg_replace('#(\r?\n){'.($threshold+2).',}#', "\r\n\r\n", $text);
     }
 }

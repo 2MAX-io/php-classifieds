@@ -32,6 +32,15 @@
                         {% endif %}
 
                         {{ userMacro.listingButtons(listing) }}
+
+                        {% if lowSecurityCheckIsAdminInPublic() %}
+                            <a
+                                    href="{{ path('app_admin_listing_edit', {'id': listing.id}) }}"
+                                    class="btn btn-outline-danger mb-1"
+                            >
+                                {{ 'trans.Edit listing as Admin' | trans }}
+                            </a>
+                        {% endif %}
                     </div>
                 </div>
 

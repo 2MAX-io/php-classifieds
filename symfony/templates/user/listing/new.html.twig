@@ -9,14 +9,10 @@
             {% include 'user/listing/user_navigation_card.html.twig' %}
         </div>
 
-        <div class="col-md-8 col-lg-9">
+        <div class="col-md-8 col-lg-9 mb-2">
             <h2 class="mb-3">{{ 'trans.Create Listing' | trans }}</h2>
 
             {{ include('user/listing/_form.html.twig') }}
-
-            <div class="float-md-right">
-                <a href="{{ path('app_user_listing_index') }}">{{ 'trans.back to list' | trans }}</a>
-            </div>
         </div>
     </div>
 </div>

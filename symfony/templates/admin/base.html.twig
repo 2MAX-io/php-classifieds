@@ -2,6 +2,8 @@
 <!--[if IE 9]><html class="lt-ie10" lang="pl"> <![endif]-->
 <html lang="pl">
 <head>
+    {# @var settings \App\Service\Setting\SettingsDto #}
+    {% set settings = settings() %}
     <meta charset="utf-8">
     <title>{% block title %}{{ 'trans.Admin' | trans }} - {{ 'trans.Classifieds' | trans }}{% endblock %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -17,14 +19,35 @@
 </head>
 <body>
 
+<div class="container-fluid d-lg-none">
+    <div class="container container-remove-padding">
+        <nav class="navbar navbar-expand-lg navbar-light">
+            <a class="navbar-brand" href="{{ path('app_admin_index') }}" title="{{ settings.indexPageTitle }}">
+                <img src="{{ asset('static/system/logo.png') }}" alt="{{ settings.indexPageTitle }}" width="200">
+            </a>
+
+            <button
+                    class="navbar-toggler"
+                    type="button"
+                    data-toggle="collapse"
+                    data-target="#adminSidebar"
+                    aria-expanded="false"
+            >
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+        </nav>
+    </div>
+</div>
+
 <div class="container-fluid">
     <div class="row">
 
         {% if app.user %}
-            <nav class="col-md-2 d-none-soft d-md-block bg-light sidebar">
+            <nav class="col-lg-3 d-none-soft d-lg-block bg-light sidebar" id="adminSidebar">
                 <div class="sidebar-sticky">
 
-                    <div id="website_logo" class="sm-text-center mb-3">
+                    <div id="website_logo" class="sm-text-center mb-3 d-none d-lg-block">
                         <a href="{{ path('app_admin_index') }}" title={{ 'trans.Classifieds'|trans }}>
                             <img src="{{ asset('static/system/logo.png') }}" alt="{{ 'trans.Classifieds' | trans }}" width="100%">
                         </a>
@@ -99,7 +122,7 @@
             </nav>
         {% endif %}
 
-        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+        <main role="main" class="col-lg-9 px-2">
 
             {% block body %}{% endblock body %}
 

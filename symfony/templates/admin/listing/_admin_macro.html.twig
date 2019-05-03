@@ -1,10 +1,16 @@
 {% macro listingInfo(listing) %}
     {# @var listing \App\Entity\Listing #}
 
-    <div class="col-md-4">{{ 'trans.Admin last confirmation' | trans }}: {{ listing.adminLastConfirmationDate | date }}</div>
-    <div class="col-md-4">{{ 'trans.Featured until' | trans }}:
+    <div class="col-md-4">
+        {{ 'trans.Admin last confirmation' | trans }}:
+        {{ listing.adminLastConfirmationDate | date }}
+    </div>
+    <div class="col-md-4">
+        {{ 'trans.Featured until' | trans }}:
         {% if listing.featured and listing.featuredUntilDate %}
-            <span class="{{ listing.featuredUntilDate | isExpired | displayTextWarning }}">{{ listing.featuredUntilDate | date }}</span>
+            <span class="{{ listing.featuredUntilDate | isExpired | displayTextWarning }}">
+                {{ listing.featuredUntilDate | date }}
+            </span>
         {% else %}
             {{ 'trans.none' | trans }}
         {% endif %}

@@ -4,7 +4,12 @@
 
         {% if customField.type == constant('\App\\Entity\\CustomField::TYPE_SELECT') %}
             <div class="form-group">
-                <label class="{% if customField.required %}required{% endif %}" for="custom_field_{{ customField.id }}">{{ customField.name }}</label>
+                <label
+                        class="{% if customField.required %}required{% endif %}"
+                        for="custom_field_{{ customField.id }}"
+                >
+                    {{ customField.name }}
+                </label>
                 <select id="custom_field_{{ customField.id }}" name="form_custom_field[{{ customField.id }}]" class="form-control">
                     <option value=''>{{ 'trans.Select' | trans }}</option>
                     {% for option in customField.customFieldOptions %}

@@ -12,7 +12,12 @@
                 <div class="mb-3">
                     <h2 class="mb-1">
                         {{ 'trans.Reject listing' | trans }}:
-                        <a href="{{ path('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}" target="_blank">{{ listing.title }}</a>
+                        <a
+                                href="{{ path('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}"
+                                target="_blank"
+                        >
+                            {{ listing.title }}
+                        </a>
                     </h2>
                     <span class="{{ getListingStatusClass(listing) }}">{{ getListingStatus(listing) }}</span>
                 </div>

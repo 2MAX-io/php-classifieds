@@ -16,14 +16,9 @@ class Search
             return '"'. trim($search) .'"' . '' . Str::replace($search, [' '], '');
         }
 
-        $hasWildcard = Str::containsOneOf($search, ['*', '?']);
         $search = Str::replace($search, ['@'], '?');
 
-        if ($hasWildcard) {
-            return $search;
-        } else {
-            return \implode('* ', \explode(' ', $search));
-        }
+        return $search;
     }
 
     public static function optimizeLike(string $search): string

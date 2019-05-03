@@ -8,6 +8,14 @@ class Search
 {
     public static function optimizeMatch(string $search): string
     {
+        if (\preg_match('#^\S+@\S+\.\S+$#', trim($search))) {
+            return '"'. trim($search) .'"';
+        }
+
+        if (\preg_match('#^[\d\s]+$#', trim($search))) {
+            return '"'. trim($search) .'"' . '' . Str::replace($search, [' '], '');
+        }
+
         $hasWildcard = Str::containsOneOf($search, ['*', '?']);
         $search = Str::replace($search, ['@'], '?');
 

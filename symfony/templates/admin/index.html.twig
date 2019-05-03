@@ -3,7 +3,34 @@
 {% block title %}{{ 'trans.Admin panel' | trans }}{% endblock %}
 
 {% block body %}
-    <div class="container mt-5">
+    <div class="container mt-3">
         <h1>{{ 'trans.Admin Dashboard' | trans }}</h1>
+
+        <div class="row tile_count">
+            <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+                <span class="count_top"><i class="fa fa-user"></i> {{ 'trans.Pending for activation' | trans }}</span>
+                <div class="count">2500</div>
+            </div>
+            <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+                <span class="count_top"><i class="fa fa-user"></i> {{ 'trans.Added last 24' | trans }}</span>
+                <div class="count">2500</div>
+            </div>
+            <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+                <span class="count_top"><i class="fa fa-user"></i> {{ 'trans.Added last 7 days' | trans }}</span>
+                <div class="count">2500</div>
+            </div>
+            <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+                <span class="count_top"><i class="fa fa-user"></i> {{ 'trans.Listings count' | trans }}</span>
+                <div class="count">2500</div>
+            </div>
+            <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+                <span class="count_top"><i class="fa fa-user"></i> {{ 'trans.Users count' | trans }}</span>
+                <div class="count">2500</div>
+            </div>
+            <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+                <span class="count_top"><i class="fa fa-user"></i> {{ 'trans.Listings views' | trans }}</span>
+                <div class="count">2500</div>
+            </div>
+        </div>
     </div>
 {% endblock %}

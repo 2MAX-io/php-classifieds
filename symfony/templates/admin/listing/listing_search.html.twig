@@ -66,6 +66,19 @@
                     </div>
 
                     <div class="col-md-4 mb-2">
+                        <label for="user">{{ 'trans.User' | trans }}</label>
+                        <input
+                                type="text"
+                                name="user"
+                                id="user"
+                                placeholder="user*  |  user5@gmail.com  |  user?@gmail.com"
+                                class="form-control"
+                                value="{{ app.request.get('user') }}"
+                        >
+                    </div>
+
+                    <div class="col-md-4 mb-2">
+                        <label for="query">{{ 'trans.Search' | trans }}</label>
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <div class="input-group-text"><i class="fas fa-search"></i></div>
@@ -73,12 +86,16 @@
                             <input
                                     type="text"
                                     name="query"
+                                    id="query"
                                     value="{{ app.request.get('query') }}"
                                     class="form-control"
                                     placeholder="Merc*   |   Audi A?   |   Clio"
                             />
-                            <button type="submit" class="btn btn-primary ml-1">{{ 'trans.Search' | trans }}</button>
                         </div>
+                    </div>
+
+                    <div class="col-md-4 mb-2">
+                        <button type="submit" class="btn btn-primary w-100 h-100">{{ 'trans.Search' | trans }}</button>
                     </div>
 
                 </div>
@@ -134,7 +151,7 @@
 
                             <div>
                                 <span>
-                                    <a href="{{ path('app_user_listings', {'user': listing.user.id}) }}">
+                                    <a href="{{ path('app_admin_listing_search', {'user': listing.user.email}) }}">
                                         {{- 'trans.User Listings' | trans -}}
                                     </a>
                                 </span>

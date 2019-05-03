@@ -27,6 +27,15 @@ class Str
         return false;
     }
 
+    public static function replace(string $string, array $from, string $to): string
+    {
+        return \str_replace(
+            $from,
+            array_fill_keys(array_keys($from), $to),
+            $string
+        );
+    }
+
     public static function toInt(string $value): int
     {
         return (int) $value;

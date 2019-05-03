@@ -72,6 +72,19 @@ class AdminListingSearchService
             $qb->setParameter(':featured', $request->get('featured'));
         }
 
+        if (!empty($request->get('user', false))) {
+            $qb->join('listing.user', 'user');
+
+            $qb->andWhere(
+                $qb->expr()->orX(
+                    $qb->expr()->like('user.email', ':user'),
+                    $qb->expr()->like('user.username', ':user'),
+                    $qb->expr()->eq('user.id', ':user')
+                )
+            );
+            $qb->setParameter(':user', Search::optimizeLike($request->get('user')));
+        }
+
         $qb->orderBy('listing.id', 'DESC');
 
         $adapter = new DoctrineORMAdapter($qb);

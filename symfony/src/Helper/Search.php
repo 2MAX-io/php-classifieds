@@ -9,6 +9,7 @@ class Search
     public static function optimizeMatch(string $search): string
     {
         $hasWildcard = Str::containsOneOf($search, ['*', '?']);
+        $search = Str::replace($search, ['@'], '?');
 
         if ($hasWildcard) {
             return $search;

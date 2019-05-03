@@ -48,7 +48,12 @@
                 <div class="sidebar-sticky">
 
                     <div id="website_logo" class="sm-text-center mb-3 d-none d-lg-block">
-                        <a href="{{ path('app_admin_index') }}" title="{{ 'trans.Classifieds'|trans }}">
+                        <a
+                                href="{{ path('app_admin_index') }}"
+                                title="{{ 'trans.Classifieds'|trans }}"
+                                class="d-block"
+                                style="max-width: 215px;"
+                        >
                             <img src="{{ asset('static/system/logo.png') }}" alt="{{ 'trans.Classifieds' | trans }}">
                         </a>
                     </div>

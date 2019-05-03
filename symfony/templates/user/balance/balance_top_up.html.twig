@@ -14,12 +14,21 @@
                     {{ 'trans.Balance top up' | trans }}
                 </h3>
 
+                <div class="alert alert-info">
+                    <p>
+                        {{ 'trans.Do you feature many listings or feature frequently? After account top up, you will be able to feature listing by one click, using your account balance. Without need to make payment for every single listing separately' | trans }}
+                    </p>
+                    <p>
+                        {{ 'trans.After topping up, you can feature listing using green buttons on feature listing page. They would use your account balance for payment, instead of redirecting you to payment page.' | trans }}
+                    </p>
+                </div>
+
                 {% include 'form/_flash_above_form.html.twig' %}
 
                 <div class="my-4">
                     {{ 'trans.Your balance is' | trans }}:
                     <strong class="badge badge-success">{{ userBalance | moneyAsFloat }}</strong>
-                    {{ 'trans.that you can use to feature listing' | trans }}
+                    {{ 'trans.that you can use to feature listings' | trans }}
                 </div>
 
                 {{ form_start(form) }}

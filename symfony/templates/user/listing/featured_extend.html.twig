@@ -48,10 +48,6 @@
                                 <h4>{{ package.name }}</h4>
 
                                 <div>
-                                    {{ package.price | moneyAsFloat }}
-                                </div>
-
-                                <div>
                                     {{ include('user/listing/_feature_paid_form.html.twig') }}
                                 </div>
                             </div>
@@ -71,9 +67,22 @@
                         </div>
                     </div>
 
-                    <a href="{{ path('app_user_balance_top_up') }}" target="_blank" class="btn btn-primary">
-                        {{ 'trans.Top up account' | trans }}
-                    </a>
+                    <div class="alert alert-info mt-3">
+                        <div>
+                            {{ 'trans.Do you feature many listings?' | trans }}
+                        </div>
+                        <div>
+                            {{ 'trans.Do you feature frequently?' | trans }}
+                        </div>
+                        <div>
+                            {{ 'trans.Consider topping up your account and feature listings by one click, using your account balance' | trans }}
+                        </div>
+
+                        <a href="{{ path('app_user_balance_top_up') }}" target="_blank" class="btn btn-primary">
+                            {{ 'trans.Top up account' | trans }}
+                        </a>
+                        <span>{{ 'trans.to feature listings by single click' | trans }}</span>
+                    </div>
                 {% else %}
                     <div class="alert alert-danger">
                         {{ 'trans.You can not feature listing that is deactivated. Current listings status' | trans }}:

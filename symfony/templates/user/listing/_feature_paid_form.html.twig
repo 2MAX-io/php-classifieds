@@ -1,10 +1,12 @@
 <form
         method="post"
         action="{{ path('app_user_feature_listing_by_balance', {'id': listing.id, 'featuredPackage': package.id}) }}"
-        onsubmit="return confirm('{{ 'trans.Feature for %featuredDays% days: %listing%?' | trans({'%listing%': listing.title, '%featuredDays%': package.daysFeaturedExpire}) }}');"
+        onsubmit="return confirm('{{ 'trans.Feature for %featuredDays% days for %price%: %listing%?' | trans({'%listing%': listing.title, '%featuredDays%': package.daysFeaturedExpire, '%price%': package.price | moneyAsFloat}) }}');"
         class="d-inline"
 >
     <input type="hidden" name="_method" value="PATCH">
     <input type="hidden" name="_token" value="{{ csrf_token('feature' ~ listing.id) }}">
-    <button class="btn btn-success btn-mini mb-2">{{ 'trans.Feature for %featuredDays% days' | trans({'%featuredDays%': package.daysFeaturedExpire}) }}</button>
+    <button class="btn btn-success btn-mini mb-2">
+        {{ 'trans.Feature for %featuredDays% days for %price%' | trans({'%featuredDays%': package.daysFeaturedExpire, '%price%': package.price | moneyAsFloat}) }}
+    </button>
 </form>

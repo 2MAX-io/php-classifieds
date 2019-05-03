@@ -28,6 +28,10 @@ textarea {
     font-family: 'Lato', sans-serif;
 }
 
+body {
+    min-height: 101vh;
+}
+
 a,a.h1,a.h2,a.h3,a.h4,a.h5,a.h6 {
     color: #0073bb;
     text-decoration: none;

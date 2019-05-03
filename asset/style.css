@@ -452,10 +452,14 @@ svg.icon {
         display: none;
     }
     .page-item.prev {
-        display: inherit;
+        display: block;
+        width: 50%;
+        text-align: center;
     }
     .page-item.next {
-        display: inherit;
+        display: block;
+        width: 50%;
+        text-align: center;
     }
 }
 
@@ -502,6 +506,11 @@ svg.icon {
     font-weight: bold;
 }
 
-.d-none-soft {
+.d-none-soft:not(.show)  {
     display: none;
+}
+@media (min-width: 576px) {
+    .d-sm-none-soft {
+        display: none;
+    }
 }

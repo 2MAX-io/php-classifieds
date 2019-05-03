@@ -19,10 +19,20 @@
         {% endif %}
     </div>
 
-    <div class="container mt-5">
+    <div class="container mt-md-5">
         <div class="row">
             <!-- Sidebar & Advanced Filters -->
-            <div class="col-md-3">
+            <div class="col-12 d-md-none">
+                <button
+                        class="btn btn-secondary btn-sm mb-2 w-100"
+                        data-toggle="collapse"
+                        data-target="#filters"
+                >
+                    {{ 'trans.Show filters' | trans }}
+                </button>
+            </div>
+
+            <div class="col-md-3 d-none-soft d-md-block collapse" id="filters">
                 {% if categoryList is not empty %}
                     <div class="card mb-3">
                         <div class="card-header">

@@ -10,13 +10,14 @@ use App\Form\Type\CategoryType;
 use App\Form\Type\FileSimpleType;
 use App\Form\Type\PriceForType;
 use App\Service\Listing\ValidityExtend\ValidUntilSetService;
+use App\Service\Setting\SettingsService;
 use App\Validator\Constraints\Phone;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -31,9 +32,15 @@ class ListingType extends AbstractType
      */
     private $validUntilSetService;
 
-    public function __construct(ValidUntilSetService $validUntilSetService)
+    /**
+     * @var SettingsService
+     */
+    private $settingsService;
+
+    public function __construct(ValidUntilSetService $validUntilSetService, SettingsService $settingsService)
     {
         $this->validUntilSetService = $validUntilSetService;
+        $this->settingsService = $settingsService;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -91,13 +98,14 @@ class ListingType extends AbstractType
             'label' => 'trans.Show email?',
             'required' => false,
         ]);
-        $builder->add('price', IntegerType::class, [
+        $builder->add('price', MoneyType::class, [
             'label' => 'trans.Price',
             'required' => false,
             'attr' => [
                 'class' => 'input-money',
             ],
             'grouping' => true,
+            'currency' => $this->settingsService->getCurrency(),
             'constraints' => [
                 new Constraints\GreaterThanOrEqual([
                     'value' => 0,

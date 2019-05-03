@@ -52,12 +52,12 @@ class TwigNoDependencies implements RuntimeExtensionInterface
         return \round($value / 100, 2);
     }
 
-    public function money(float $money): float
+    public function money(float $money): string
     {
         if ($money < 40) {
-            return round($money, 2);
+            return (string) round($money, 2);
         }
 
-        return round($money, 0);
+        return number_format($money, 0, ',', ' ');
     }
 }

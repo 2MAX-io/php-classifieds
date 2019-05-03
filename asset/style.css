@@ -497,3 +497,7 @@ svg.icon {
 .listing-list-side-category.active {
     font-weight: bold;
 }
+
+.d-none-soft {
+    display: none;
+}

@@ -155,11 +155,43 @@
                         <input type="hidden" name="_token" value="{{ csrf_token('activationActionForSelected') }}">
                     </form>
                 </div>
+
                 <div class="col-md-7">
                     <div class="float-md-right">
                         {% if pager.haveToPaginate %}
                             {{ pagination | raw }}
                         {% endif %}
+
+                        <div>
+                            <select
+                                    class="paginationMaxPerPage form-control"
+                                    style="width: 5rem"
+                                    onchange="self.location=this.options[this.selectedIndex].value"
+                            >
+                                <option
+                                        {% if app.request.get('perPage') == 10 %}selected{% endif %}
+                                        value="{{ path(app.request.get('_route'), {'perPage': 10}) }}"
+                                >
+                                    10
+                                </option>
+
+                                <option
+                                        {% if app.request.get('perPage') == 50 %}selected{% endif %}
+                                        value="{{ path(app.request.get('_route'), {'perPage': 50}) }}"
+                                >
+                                    50
+                                </option>
+
+                                <option
+                                        {% if app.request.get('perPage') == 100 %}selected{% endif %}
+                                        value="{{ path(app.request.get('_route'), {'perPage': 100}) }}"
+                                >
+                                    100
+                                </option>
+                            </select>
+
+                            <span>{{ 'trans.per page' | trans }}</span>
+                        </div>
                     </div>
                 </div>
 

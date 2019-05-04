@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Service\Admin\Listing;
 
 use App\Entity\Listing;
+use App\Service\System\Pagination\PaginationService;
 use Doctrine\ORM\EntityManagerInterface;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
 use Pagerfanta\Pagerfanta;
@@ -16,9 +17,15 @@ class ListingActivateListService
      */
     private $em;
 
-    public function __construct(EntityManagerInterface $em)
+    /**
+     * @var PaginationService
+     */
+    private $paginationService;
+
+    public function __construct(EntityManagerInterface $em, PaginationService $paginationService)
     {
         $this->em = $em;
+        $this->paginationService = $paginationService;
     }
 
     /**
@@ -40,7 +47,7 @@ class ListingActivateListService
 
         $adapter = new DoctrineORMAdapter($qb);
         $pager = new Pagerfanta($adapter);
-        $pager->setMaxPerPage(10);
+        $pager->setMaxPerPage($this->paginationService->getMaxPerPage());
         $pager->setCurrentPage($page);
 
         $adminListingListDto = new AdminListingListDto($pager->getCurrentPageResults(), $pager);

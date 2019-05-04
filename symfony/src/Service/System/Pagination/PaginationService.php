@@ -56,4 +56,11 @@ class PaginationService
             ]
         );
     }
+
+    public function getMaxPerPage(): int
+    {
+        $fromRequest = $this->requestStack->getMasterRequest()->get('perPage', 10);
+
+        return (int) min($fromRequest, 100);
+    }
 }

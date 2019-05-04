@@ -84,6 +84,12 @@ a:hover, a:focus {
     background-color: #f8f9fa;
 }
 
+@media (max-width: 768px) {
+    .card-featured {
+        height: auto;
+    }
+}
+
 .card-featured .card-img-top {
     width: auto;
     max-height: 202px;

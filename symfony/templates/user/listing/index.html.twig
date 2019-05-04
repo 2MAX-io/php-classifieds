@@ -90,7 +90,7 @@
                             </td>
                             <td>
                                 {% if not listing.adminRemoved %}
-                                    <a href="{{ path('app_listing_edit', {'id': listing.id}) }}" class="btn btn-dark">{{ 'trans.Edit' | trans }}</a>
+                                    <a href="{{ path('app_listing_edit', {'id': listing.id}) }}" class="btn btn-dark mb-1">{{ 'trans.Edit' | trans }}</a>
                                 {% endif %}
 
                                 {{ userMacro.listingButtons(listing) }}

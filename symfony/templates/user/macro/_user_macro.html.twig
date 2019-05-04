@@ -6,7 +6,7 @@
         {% if (listing.adminActivated and not listing.adminRejected and not listing.userDeactivated) or listing.status == constant('\App\\Entity\\Listing::STATUS_EXPIRED') %}
             <a
                     href="{{ path('app_user_validity_extend', {'id': listing.id}) }}"
-                    class="btn btn-outline-success"
+                    class="btn btn-outline-success mb-1"
             >
                 {{ 'trans.Extend' | trans }}
             </a>

@@ -98,16 +98,16 @@
                     </td>
                     <td>{{ listing.lastEditDate | date }}</td>
                     <td>
-
-                        <a href="{{ path('app_admin_listing_edit', {'id': listing.id}) }}" class="btn btn-dark">
+                        <a href="{{ path('app_admin_listing_edit', {'id': listing.id}) }}" class="btn btn-dark mb-1">
                             {{- 'trans.Edit' | trans -}}
                         </a>
+
                         {{ include('admin/listing/_admin_activate_form.html.twig') }}
 
                         <a
                                 href="{{ path('app_admin_listing_reject', {'id': listing.id}) }}"
                                 target="_blank"
-                                class="btn btn-warning"
+                                class="btn btn-warning mb-1"
                         >
                             {{ 'trans.Reject' | trans }}
                         </a>                    </td>

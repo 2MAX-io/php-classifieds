@@ -9,8 +9,14 @@
         <table class="table table-responsive-sm" id="listings">
             <thead>
             <tr>
-                <th style="min-width: 2rem;"></th>
-                <th></th>
+                <th style="min-width: 2rem;" class="d-none-soft listingSelectionHidden">
+                    <button class="btn btn-secondary" onclick="selectAll('.listingSelectionCheckbox')">*</button>
+                </th>
+                <th>
+                    <button class="btn btn-secondary btn-sm" onclick="enableSelection(this)">
+                        {{ 'trans.Action on selected' | trans }}
+                    </button>
+                </th>
                 <th style="min-width: 20rem;">{{ 'trans.Title' | trans }}</th>
                 <th style="min-width: 10rem;">{{ 'trans.Last edit' | trans }}</th>
                 <th>{{ 'trans.Actions' | trans }}</th>
@@ -18,15 +24,17 @@
             </thead>
             <tbody>
             {% for listing in listings %}
-                <tr>
-                    <td>
-                        <label for="checkbox_{{ listing.id }}"></label>
-                        <input
-                                type="checkbox"
-                                id="checkbox_{{ listing.id }}"
-                                value="{{ listing.id }}"
-                                class="form-control listingSelectionCheckbox"
-                        />
+                <tr onclick="toggleCheckbox('#checkbox_{{ listing.id }}')">
+                    <td class="d-none-soft listingSelectionHidden">
+                        <label class="d-block">
+                            <input
+                                    type="checkbox"
+                                    id="checkbox_{{ listing.id }}"
+                                    value="{{ listing.id }}"
+                                    class="form-control listingSelectionCheckbox"
+                                    onclick="toggleCheckbox('#checkbox_{{ listing.id }}')"
+                            />
+                        </label>
                     </td>
                     <td>
                         <div class="card-thumb">
@@ -119,19 +127,33 @@
             </tbody>
         </table>
 
-        <form action="{{ path('app_admin_listing_activate_action_for_selected') }}" method="post" class="listingSelectionForm">
             <div class="row">
-                <div class="col-md-5 mb-2">
-                    <select name="list_action" class="form-control d-inline-block align-middle" style="width: 10rem">
-                        <option value="">{{ 'trans.Select' | trans }}</option>
-                        <option value="">{{ 'trans.Activate' | trans }}</option>
-                        <option value="">{{ 'trans.Reject' | trans }}</option>
-                    </select>
+                <div class="col-md-5 mb-2 d-none-soft listingSelectionHidden">
+                    <form action="{{ path('app_admin_listing_activate_action_for_selected') }}" method="post" class="listingSelectionForm">
+                        <button
+                                type="submit"
+                                class="btn btn-secondary"
+                                onclick="return confirm('{{ 'trans.Activate selected?' | trans }}') && $('.listingSelectionActionHiddenInput').val(this.value)"
+                                value="{{ constant('\App\\Controller\\Admin\\ListingActivateController::ACTIVATE_ACTION') }}"
+                        >
+                            {{ 'trans.Activate' | trans }}
+                        </button>
 
-                    <button class="btn btn-secondary">{{ 'trans.selected' | trans }}</button>
+                        <button
+                                type="submit"
+                                class="btn btn-secondary"
+                                onclick="return confirm('{{ 'trans.Reject selected?' | trans }}') && $('.listingSelectionActionHiddenInput').val(this.value)"
+                                value="{{ constant('\App\\Controller\\Admin\\ListingActivateController::REJECT_ACTION') }}"
+                        >
+                            {{ 'trans.Reject' | trans }}
+                        </button>
 
-                    <input type="hidden" name="selected" value="" class="listingSelectionSelectedHiddenInput">
-                    <input type="hidden" name="_token" value="{{ csrf_token('activationActionForSelected') }}">
+                        <span>{{ 'trans.selected' | trans }}</span>
+
+                        <input type="hidden" name="action" value="" class="listingSelectionActionHiddenInput">
+                        <input type="hidden" name="selected" value="" class="listingSelectionSelectedHiddenInput">
+                        <input type="hidden" name="_token" value="{{ csrf_token('activationActionForSelected') }}">
+                    </form>
                 </div>
                 <div class="col-md-7">
                     <div class="float-md-right">
@@ -142,7 +164,6 @@
                 </div>
 
             </div>
-        </form>
 
     </div>
 {% endblock %}
@@ -150,13 +171,27 @@
 {% block js %}
     <script type="text/javascript">
 
+        function toggleCheckbox(selector) {
+            $(selector).click();
+        }
+
+        function selectAll(selector) {
+            $(selector).prop('checked', $('.listingSelectionCheckbox').filter(':checked').length < 1);
+        }
+
         function getCheckboxesValues(selector) {
             var values = [];
-            $(selector).each(function (i, el) {
+            $(selector + ':checked').each(function (i, el) {
                 values.push(el.value);
             });
 
             return values;
+        }
+
+        function enableSelection(button) {
+            $('.listingSelectionHidden').show();
+            $('.listingSelectionCheckbox').prop('checked', false);
+            $(button).remove();
         }
 
         let $listingSelectionForm = $('.listingSelectionForm');

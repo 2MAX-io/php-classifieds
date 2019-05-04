@@ -21,6 +21,27 @@ class ListingRepository extends ServiceEntityRepository
         parent::__construct($registry, Listing::class);
     }
 
+    /**
+     * @return Listing[]
+     */
+    public function getListingsFromIds(array $listings): array
+    {
+        $listingIds = [];
+        foreach ($listings as $listing) {
+            if ($listing instanceof Listing) {
+                $listingIds[] = $listing->getId();
+            } else {
+                $listingIds[] = (int) $listing;
+            }
+        }
+
+        $qb = $this->createQueryBuilder('listing');
+        $qb->andWhere($qb->expr()->in('listing.id', ':listingIds'));
+        $qb->setParameter('listingIds', $listingIds, \Doctrine\DBAL\Connection::PARAM_INT_ARRAY);
+
+        return $qb->getQuery()->getResult();
+    }
+
     // /**
     //  * @return Listing[] Returns an array of Listing objects
     //  */

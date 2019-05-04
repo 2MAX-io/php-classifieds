@@ -6,6 +6,7 @@ namespace App\Controller\Admin;
 
 use App\Controller\Admin\Base\AbstractAdminController;
 use App\Entity\Listing;
+use App\Service\Admin\ListingAction\ListingActionService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -15,16 +16,13 @@ class AdminListingActionController extends AbstractAdminController
     /**
      * @Route("/admin/red5/listing/action/activate/{id}", name="app_admin_listing_activate", methods={"PATCH"})
      */
-    public function activate(Request $request, Listing $listing): Response
+    public function activate(Request $request, Listing $listing, ListingActionService $listingActionService): Response
     {
         $this->denyUnlessAdmin();
 
         if ($this->isCsrfTokenValid('adminActivate'.$listing->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $listing->setAdminActivated(true);
-            $listing->setAdminRejected(false);
-            $listing->setAdminLastActivationDate(new \DateTime());
-            $entityManager->flush();
+            $listingActionService->activate([$listing]);
+            $this->getDoctrine()->getManager()->flush();
         }
 
         return $this->redirect($request->headers->get('referer'));

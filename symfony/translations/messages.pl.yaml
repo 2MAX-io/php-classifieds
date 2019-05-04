@@ -357,3 +357,6 @@ trans:
   User: 'Użytkownik'
   selected: 'zaznaczone'
   No listings selected: 'Nie wybrano ogłoszeń'
+  Action on selected: 'Akcja na wybranych'
+  Activate selected?: 'Aktywować zaznaczone?'
+  Reject selected?: 'Odrzucić zaznaczone?'

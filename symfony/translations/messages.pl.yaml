@@ -194,7 +194,7 @@ trans:
   files: 'pliki'
   Chose: 'Wybierz'
   to upload: 'do wysłania'
-  Admin last confirmation: 'Ostatnia aktywacja Admina'
+  Admin last activation: 'Ostatnia aktywacja Admina'
   Creation date: 'Data utworzenia'
   more informations: 'więcej informacji'
   Removed by Admin?: 'Usunięte przez Admina?'

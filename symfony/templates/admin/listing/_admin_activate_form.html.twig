@@ -1,10 +1,10 @@
 <form
         method="post"
-        action="{{ path('app_admin_listing_confirm', {'id': listing.id}) }}"
+        action="{{ path('app_admin_listing_activate', {'id': listing.id}) }}"
         onsubmit="return confirm('{{ 'trans.Activate' | trans }}: {{ listing.title }}?');"
         class="d-inline"
 >
 <input type="hidden" name="_method" value="PATCH">
-    <input type="hidden" name="_token" value="{{ csrf_token('adminConfirm' ~ listing.id) }}">
+    <input type="hidden" name="_token" value="{{ csrf_token('adminActivate' ~ listing.id) }}">
     <button class="btn btn-success btn-mini">{{ 'trans.Activate' | trans }}</button>
 </form>

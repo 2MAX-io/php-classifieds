@@ -32,7 +32,7 @@ $stmt = $pdo->prepare(
             o_ogloszenia.dokiedy_premium AS listing_featured_until_date,
             o_ogloszenia.data AS listing_first_created_date,
             o_ogloszenia.data_ostatnia_modyfikacja AS listing_last_edit_date,
-            o_ogloszenia.data_ostatnia_aktywacja AS listing_last_confirm,
+            o_ogloszenia.data_ostatnia_aktywacja AS listing_last_activation,
             o_ogloszenia.powod_odrzucenia AS listing_rejection_reason,
            
             o_ogloszenia.odwiedziny AS listing_views_count,

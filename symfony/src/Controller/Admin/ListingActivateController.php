@@ -5,29 +5,29 @@ declare(strict_types=1);
 namespace App\Controller\Admin;
 
 use App\Controller\Admin\Base\AbstractAdminController;
-use App\Service\Admin\Listing\ListingConfirmListService;
+use App\Service\Admin\Listing\ListingActivateListService;
 use App\Service\System\Pagination\PaginationService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class ListingConfirmController extends AbstractAdminController
+class ListingActivateController extends AbstractAdminController
 {
     /**
-     * @Route("/admin/red5/listing/confirm", name="app_admin_listing_confirm_list")
+     * @Route("/admin/red5/listing/activate", name="app_admin_listing_activate_list")
      */
-    public function listingConfirmList(
+    public function listingActivateList(
         Request $request,
-        ListingConfirmListService $listingConfirmListService,
+        ListingActivateListService $listingActivateListService,
         PaginationService $paginationService
     ): Response {
         $this->denyUnlessAdmin();
 
-        $adminListingListDto = $listingConfirmListService->getToConfirmListingList(
+        $adminListingListDto = $listingActivateListService->getToActivateListingList(
             (int) $request->query->get('page', 1)
         );
 
-        return $this->render('admin/listing/listing_confirm.html.twig', [
+        return $this->render('admin/listing/listing_activate.html.twig', [
             'listings' => $adminListingListDto->getResults(),
             'pagination' => $paginationService->getPaginationHtml($adminListingListDto->getPager()),
             'pager' => $adminListingListDto->getPager(),

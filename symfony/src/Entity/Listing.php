@@ -199,7 +199,7 @@ class Listing
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $adminLastConfirmationDate;
+    private $adminLastActivationDate;
 
     /**
      * @ORM\Column(type="boolean")
@@ -540,14 +540,14 @@ class Listing
         return $this;
     }
 
-    public function getAdminLastConfirmationDate(): ?\DateTimeInterface
+    public function getAdminLastActivationDate(): ?\DateTimeInterface
     {
-        return $this->adminLastConfirmationDate;
+        return $this->adminLastActivationDate;
     }
 
-    public function setAdminLastConfirmationDate(\DateTimeInterface $adminLastConfirmationDate): self
+    public function setAdminLastActivationDate(\DateTimeInterface $adminLastActivationDate): self
     {
-        $this->adminLastConfirmationDate = $adminLastConfirmationDate;
+        $this->adminLastActivationDate = $adminLastActivationDate;
 
         return $this;
     }

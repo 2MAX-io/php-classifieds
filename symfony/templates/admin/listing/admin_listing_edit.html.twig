@@ -20,7 +20,7 @@
             <span class="{{ getListingStatusClass(listing) }}">{{ getListingStatus(listing) }}</span>
 
             {% if adminShowActivate(listing) %}
-                {{ include('admin/listing/_confirm_form.html.twig') }}
+                {{ include('admin/listing/_admin_activate_form.html.twig') }}
             {% endif %}
 
             {% if adminShowReject(listing) %}

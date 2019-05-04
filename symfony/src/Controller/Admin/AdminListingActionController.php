@@ -13,17 +13,17 @@ use Symfony\Component\Routing\Annotation\Route;
 class AdminListingActionController extends AbstractAdminController
 {
     /**
-     * @Route("/admin/red5/listing/action/confirm/{id}", name="app_admin_listing_confirm", methods={"PATCH"})
+     * @Route("/admin/red5/listing/action/activate/{id}", name="app_admin_listing_activate", methods={"PATCH"})
      */
-    public function confirm(Request $request, Listing $listing): Response
+    public function activate(Request $request, Listing $listing): Response
     {
         $this->denyUnlessAdmin();
 
-        if ($this->isCsrfTokenValid('adminConfirm'.$listing->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('adminActivate'.$listing->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $listing->setAdminActivated(true);
             $listing->setAdminRejected(false);
-            $listing->setAdminLastConfirmationDate(new \DateTime());
+            $listing->setAdminLastActivationDate(new \DateTime());
             $entityManager->flush();
         }
 

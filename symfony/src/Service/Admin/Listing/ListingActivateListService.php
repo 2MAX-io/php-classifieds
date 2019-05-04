@@ -9,7 +9,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
 use Pagerfanta\Pagerfanta;
 
-class ListingConfirmListService
+class ListingActivateListService
 {
     /**
      * @var EntityManagerInterface
@@ -24,7 +24,7 @@ class ListingConfirmListService
     /**
      * @return Listing[]
      */
-    public function getToConfirmListingList(int $page): AdminListingListDto
+    public function getToActivateListingList(int $page): AdminListingListDto
     {
         $qb = $this->em->getRepository(Listing::class)->createQueryBuilder('listing');
 

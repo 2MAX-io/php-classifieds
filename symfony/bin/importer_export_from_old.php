@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 $pdo = new \PDO(
     'mysql:host=mysql;dbname=admin_ogloszenia', 'root', '', [
     \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
@@ -84,6 +86,7 @@ $header = [
     'listing_featured_until_date',
     'listing_first_created_date',
     'listing_last_edit_date',
+    'listing_last_activation',
 
     'listing_views_count',
     'listing_police_log',
@@ -140,6 +143,10 @@ while ($dbRow = $stmt->fetch(\PDO::FETCH_ASSOC)) {
 
     if ($dbRow['listing_last_edit_date'] < '2000-00-00 00:00:00') {
         $dbRow['listing_last_edit_date'] = $dbRow['listing_first_created_date'];
+    }
+
+    if ($dbRow['listing_last_activation'] < '2000-00-00 00:00:00') {
+        $dbRow['listing_last_activation'] = null;
     }
 
     if ($dbRow['listing_first_created_date'] < '2000-00-00 00:00:00') {

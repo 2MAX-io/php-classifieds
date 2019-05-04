@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 $pdo = new \PDO(
     'mysql:host=mysql;dbname=classifieds', 'root', '', [
     \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
@@ -108,6 +110,7 @@ function arrayToSetStringListing(array $csvRow): string {
         'listing_featured_until_date' => 'listing.featured_until_date',
         'listing_first_created_date' => 'listing.first_created_date',
         'listing_last_edit_date' => 'listing.last_edit_date',
+        'listing_last_activation' => 'listing.admin_last_activation_date',
 
         'listing_featured_weight' => 'listing.featured_weight',
         'listing_user_deactivated' => 'listing.user_deactivated',

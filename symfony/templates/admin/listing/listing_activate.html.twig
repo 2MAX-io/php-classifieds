@@ -21,7 +21,12 @@
                 <tr>
                     <td>
                         <label for="checkbox_{{ listing.id }}"></label>
-                        <input type="checkbox" class="form-control" id="checkbox_{{ listing.id }}" value="{{ listing.id }}" />
+                        <input
+                                type="checkbox"
+                                id="checkbox_{{ listing.id }}"
+                                value="{{ listing.id }}"
+                                class="form-control listingSelectionCheckbox"
+                        />
                     </td>
                     <td>
                         <div class="card-thumb">
@@ -114,15 +119,19 @@
             </tbody>
         </table>
 
-        <form action="">
+        <form action="{{ path('app_admin_listing_activate_action_for_selected') }}" method="post" class="listingSelectionForm">
             <div class="row">
                 <div class="col-md-5 mb-2">
                     <select name="list_action" class="form-control d-inline-block align-middle" style="width: 10rem">
+                        <option value="">{{ 'trans.Select' | trans }}</option>
                         <option value="">{{ 'trans.Activate' | trans }}</option>
                         <option value="">{{ 'trans.Reject' | trans }}</option>
                     </select>
 
                     <button class="btn btn-secondary">{{ 'trans.selected' | trans }}</button>
+
+                    <input type="hidden" name="selected" value="" class="listingSelectionSelectedHiddenInput">
+                    <input type="hidden" name="_token" value="{{ csrf_token('activationActionForSelected') }}">
                 </div>
                 <div class="col-md-7">
                     <div class="float-md-right">
@@ -136,4 +145,35 @@
         </form>
 
     </div>
+{% endblock %}
+
+{% block js %}
+    <script type="text/javascript">
+
+        function getCheckboxesValues(selector) {
+            var values = [];
+            $(selector).each(function (i, el) {
+                values.push(el.value);
+            });
+
+            return values;
+        }
+
+        let $listingSelectionForm = $('.listingSelectionForm');
+        $listingSelectionForm.one('submit', function listingSelectionSubmitCallback(event) {
+            event.preventDefault();
+
+            let $checked = $('.listingSelectionCheckbox').filter(':checked');
+            if ($checked.length < 1) {
+                alert(Translator.trans('trans.No listings selected'));
+
+                $listingSelectionForm.one('submit', listingSelectionSubmitCallback);
+                return;
+            }
+
+            $('.listingSelectionSelectedHiddenInput').val(getCheckboxesValues('.listingSelectionCheckbox').join());
+
+            $listingSelectionForm.submit();
+        });
+    </script>
 {% endblock %}

@@ -33,4 +33,18 @@ class ListingActivateController extends AbstractAdminController
             'pager' => $adminListingListDto->getPager(),
         ]);
     }
+
+    /**
+     * @Route("/admin/red5/listing/activate/action-for-selected", name="app_admin_listing_activate_action_for_selected")
+     */
+    public function actionForSelected(Request $request): Response
+    {
+        $this->denyUnlessAdmin();
+
+        if (!$this->isCsrfTokenValid('activationActionForSelected', $request->get('_token'))) {
+            throw $this->createAccessDeniedException('CSRF token not valid');
+        }
+
+        return $this->redirect($request->headers->get('referer'));
+    }
 }

@@ -211,7 +211,7 @@
                                     <li class="page-item disabled"><span class="page-link">…</span></li>
                                 {% endif %}
 
-                                {% for page in (max(pager.currentPage-3, 2))..(min(pager.currentPage+3, pager.nbPages)) %}
+                                {% for page in (max(pager.currentPage-3+(min(pager.nbPages-(pager.currentPage+3), 0)), 2))..(min(pager.currentPage+3-(min(pager.currentPage-3, 0)), pager.nbPages)) %}
                                     {% if page == pager.currentPage %}
                                         <li class="page-item active"><span class="page-link">{{ pager.currentPage }} <span class="sr-only">(current)</span></span></li>
                                     {% else %}

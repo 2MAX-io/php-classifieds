@@ -170,21 +170,21 @@
                             >
                                 <option
                                         {% if app.request.get('perPage') == 10 %}selected{% endif %}
-                                        value="{{ path(app.request.get('_route'), {'perPage': 10}) }}"
+                                        value="{{ path(app.request.get('_route'), app.request.query | merge({'perPage': 100, 'page': 1})) }}"
                                 >
                                     10
                                 </option>
 
                                 <option
                                         {% if app.request.get('perPage') == 50 %}selected{% endif %}
-                                        value="{{ path(app.request.get('_route'), {'perPage': 50}) }}"
+                                        value="{{ path(app.request.get('_route'), app.request.query | merge({'perPage': 100, 'page': 1})) }}"
                                 >
                                     50
                                 </option>
 
                                 <option
                                         {% if app.request.get('perPage') == 100 %}selected{% endif %}
-                                        value="{{ path(app.request.get('_route'), {'perPage': 100}) }}"
+                                        value="{{ path(app.request.get('_route'), app.request.query | merge({'perPage': 100, 'page': 1})) }}"
                                 >
                                     100
                                 </option>
@@ -192,6 +192,7 @@
 
                             <span>{{ 'trans.per page' | trans }}</span>
                         </div>
+
                     </div>
                 </div>
 

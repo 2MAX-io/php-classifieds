@@ -6,6 +6,7 @@ namespace App\Service\Admin\Listing;
 
 use App\Entity\Listing;
 use App\Helper\Search;
+use App\Service\System\Pagination\PaginationService;
 use Doctrine\ORM\EntityManagerInterface;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
 use Pagerfanta\Pagerfanta;
@@ -23,10 +24,19 @@ class AdminListingSearchService
      */
     private $requestStack;
 
-    public function __construct(EntityManagerInterface $em, RequestStack $requestStack)
-    {
+    /**
+     * @var PaginationService
+     */
+    private $paginationService;
+
+    public function __construct(
+        EntityManagerInterface $em,
+        RequestStack $requestStack,
+        PaginationService $paginationService
+    ) {
         $this->em = $em;
         $this->requestStack = $requestStack;
+        $this->paginationService = $paginationService;
     }
 
     /**
@@ -89,7 +99,7 @@ class AdminListingSearchService
 
         $adapter = new DoctrineORMAdapter($qb);
         $pager = new Pagerfanta($adapter);
-        $pager->setMaxPerPage(10);
+        $pager->setMaxPerPage($this->paginationService->getMaxPerPage());
         $pager->setCurrentPage($page);
 
         $adminListingListDto = new AdminListingListDto($pager->getCurrentPageResults(), $pager);

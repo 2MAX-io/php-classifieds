@@ -64,6 +64,30 @@
                     </div>
                 {% endif %}
 
+                {% if listing.price is not empty %}
+                    <div class="my-1 d-md-none">
+                        <h3 class="btn btn-dark price btn-lg">
+                            {{ 'trans.Price' | trans }}: {{ listing.price | money }}
+                        </h3>
+
+                        {% if listing.priceFor %}
+                            <span>{{ ('trans.priceFor.'~listing.priceFor) | trans }}</span>
+                        {% endif %}
+
+                        {% if listing.priceNegotiable is not null %}
+                            {% if listing.priceNegotiable %}
+                                <span class="badge badge-success">
+                                    {{ 'trans.to negotiate' | trans }}
+                                </span>
+                            {% else %}
+                                <span class="badge badge-danger">
+                                    {{ 'trans.is NOT negotiable' | trans }}
+                                </span>
+                            {% endif %}
+                        {% endif %}
+                    </div>
+                {% endif %}
+
                 <!-- Tabs nav -->
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                     <li class="nav-item flex-sm-fill text-sm-center">
@@ -170,10 +194,10 @@
                     </div>
                 {% endif %}
 
-                <div class="mb-2">
+                <!-- listing id -->
+                <div class="mb-2 d-none d-md-block">
                     {{ 'trans.Listing identifier' | trans }}: {{ listing.id }}
                 </div>
-
                 <!-- end tabs contents -->
             </div>
 
@@ -196,28 +220,26 @@
                 {% endif %}
 
                 {% if listing.price is not empty %}
-                    <div>
-                        <div class="my-1">
-                            <h3 class="btn btn-dark price btn-lg">
-                                {{ 'trans.Price' | trans }}: {{ listing.price | money }}
-                            </h3>
+                    <div class="my-1">
+                        <h3 class="btn btn-dark price btn-lg">
+                            {{ 'trans.Price' | trans }}: {{ listing.price | money }}
+                        </h3>
 
-                            {% if listing.priceFor %}
-                                <span>{{ ('trans.priceFor.'~listing.priceFor) | trans }}</span>
-                            {% endif %}
+                        {% if listing.priceFor %}
+                            <span>{{ ('trans.priceFor.'~listing.priceFor) | trans }}</span>
+                        {% endif %}
 
-                            {% if listing.priceNegotiable is not null %}
-                                {% if listing.priceNegotiable %}
-                                    <span class="badge badge-success">
-                                        {{ 'trans.to negotiate' | trans }}
-                                    </span>
-                                {% else %}
-                                    <span class="badge badge-danger">
-                                        {{ 'trans.is NOT negotiable' | trans }}
-                                    </span>
-                                {% endif %}
+                        {% if listing.priceNegotiable is not null %}
+                            {% if listing.priceNegotiable %}
+                                <span class="badge badge-success">
+                                    {{ 'trans.to negotiate' | trans }}
+                                </span>
+                            {% else %}
+                                <span class="badge badge-danger">
+                                    {{ 'trans.is NOT negotiable' | trans }}
+                                </span>
                             {% endif %}
-                        </div>
+                        {% endif %}
                     </div>
                 {% endif %}
 
@@ -296,7 +318,7 @@
 
                 {% if not displayAsExpired(listing) %}
                     <!-- share listing -->
-                    <div class="card mb-3">
+                    <div class="card mb-3 d-none d-md-block">
                         <div class="card-header">
                             <h5>{{ 'trans.Share This Listing' | trans }}</h5>
                         </div>
@@ -336,6 +358,11 @@
                         </div>
                     </div>
                 {% endif %}
+
+                <!-- listing id -->
+                <div class="mb-2 d-md-none">
+                    {{ 'trans.Listing identifier' | trans }}: {{ listing.id }}
+                </div>
             </div>
         </div>
     </div>

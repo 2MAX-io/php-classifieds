@@ -3,11 +3,11 @@
 {% block title %}{{ 'trans.All categories' | trans }}{% endblock %}
 
 {% block body %}
-    <div class="container mt-5">
+    <div class="container mt-3 mt-sm-4">
         <h2 class="">{{ 'trans.All Categories' | trans }}</h2>
     </div>
 
-    <div class="container mt-5">
+    <div class="container mt-3">
         <div class="row">
             {% for category in categories %}
                 <div class="col-md-3">
@@ -23,8 +23,11 @@
                         <div class="card-body">
                             {% for categoryChild in category.children %}
                                 <div>
-                                    <a href="{{ path('app_category', {'categorySlug': categoryChild.slug}) }}">
-                                        {{ categoryChild.name }}
+                                    <a
+                                            href="{{ path('app_category', {'categorySlug': categoryChild.slug}) }}"
+                                            class="py-1 d-inline-block"
+                                    >
+                                    {{ categoryChild.name }}
                                     </a>
                                 </div>
                             {% endfor %}

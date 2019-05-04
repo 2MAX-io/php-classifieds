@@ -520,3 +520,11 @@ svg.icon {
         display: none;
     }
 }
+
+@media (max-width: 576px) {
+    .mobile-link {
+        display: inline-block;
+        padding-top: 0.1rem;
+        padding-bottom: 0.1rem;
+    }
+}

@@ -42,7 +42,7 @@
                             {% for category in categoryList %}
                                 <a
                                         href="{{ path('app_category', {'categorySlug': category.slug} | merge(queryParameters)) }}"
-                                        class="mb-1 d-block listing-list-side-category {% if listingListDto.category and category.slug == listingListDto.category.slug  %}active{% endif %}"
+                                        class="py-1 d-block listing-list-side-category {% if listingListDto.category and category.slug == listingListDto.category.slug  %}active{% endif %}"
                                 >{{ category.name }}</a>
                             {% endfor %}
                         </div>

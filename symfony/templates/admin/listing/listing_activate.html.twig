@@ -9,6 +9,7 @@
         <table class="table table-responsive-sm" id="listings">
             <thead>
             <tr>
+                <th style="min-width: 2rem;"></th>
                 <th></th>
                 <th style="min-width: 20rem;">{{ 'trans.Title' | trans }}</th>
                 <th style="min-width: 10rem;">{{ 'trans.Last edit' | trans }}</th>
@@ -18,6 +19,10 @@
             <tbody>
             {% for listing in listings %}
                 <tr>
+                    <td>
+                        <label for="checkbox_{{ listing.id }}"></label>
+                        <input type="checkbox" class="form-control" id="checkbox_{{ listing.id }}" value="{{ listing.id }}" />
+                    </td>
                     <td>
                         <div class="card-thumb">
                             <a
@@ -109,8 +114,26 @@
             </tbody>
         </table>
 
-        {% if pager.haveToPaginate %}
-            {{ pagination | raw }}
-        {% endif %}
+        <form action="">
+            <div class="row">
+                <div class="col-md-5 mb-2">
+                    <select name="list_action" class="form-control d-inline-block align-middle" style="width: 10rem">
+                        <option value="">{{ 'trans.Activate' | trans }}</option>
+                        <option value="">{{ 'trans.Reject' | trans }}</option>
+                    </select>
+
+                    <button class="btn btn-secondary">{{ 'trans.selected' | trans }}</button>
+                </div>
+                <div class="col-md-7">
+                    <div class="float-md-right">
+                        {% if pager.haveToPaginate %}
+                            {{ pagination | raw }}
+                        {% endif %}
+                    </div>
+                </div>
+
+            </div>
+        </form>
+
     </div>
 {% endblock %}

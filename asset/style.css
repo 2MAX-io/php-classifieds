@@ -527,8 +527,9 @@ svg.icon {
         padding-top: 0.1rem;
         padding-bottom: 0.1rem;
     }
-}
 
-.category-link {
-    font-size: 1.2rem;
+    .category-link {
+        font-size: 1.2rem;
+    }
+
 }

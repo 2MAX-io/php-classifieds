@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-$pdo = new \PDO(
+$pdo = new PDO(
     'mysql:host=mysql;dbname=admin_ogloszenia', 'root', '', [
-    \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
-    \PDO::ATTR_EMULATE_PREPARES => false,
-    \PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8',
-    \PDO::MYSQL_ATTR_USE_BUFFERED_QUERY => false,
+    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+    PDO::ATTR_EMULATE_PREPARES => false,
+    PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8',
+    PDO::MYSQL_ATTR_USE_BUFFERED_QUERY => false,
 ]
 );
 
@@ -121,7 +121,7 @@ if (count($header) !== count(array_unique($header))) {
 }
 
 fputcsv($fpCsv, $header);
-while ($dbRow = $stmt->fetch(\PDO::FETCH_ASSOC)) {
+while ($dbRow = $stmt->fetch(PDO::FETCH_ASSOC)) {
 
     $dbRow['listing_category'] = mapCategory($dbRow);
     $dbRow['listing_price'] = normalizePrice($dbRow['listing_price_legacy']);
@@ -188,7 +188,8 @@ while ($dbRow = $stmt->fetch(\PDO::FETCH_ASSOC)) {
 
     if (count($csvRow) !== count($header)) {
         echo "CSV row columns count does not match header items count\r\n";
-        print_r($csvRow) . "\r\n";
+        print_r($csvRow);
+        echo "\r\n";
         exit;
     }
 
@@ -198,7 +199,7 @@ while ($dbRow = $stmt->fetch(\PDO::FETCH_ASSOC)) {
 fclose($fpCsv);
 
 function getNewImagePath(array $dbRow) {
-    if (empty(trim($dbRow['listing_file_path_legacy']))) {
+    if (empty(trim($dbRow['listing_file_path_legacy'] ?? ''))) {
         return '';
     }
 
@@ -319,7 +320,7 @@ function normalizePrice(string $price): ?int {
     }
 
     if (ctype_digit($price)) {
-        return $price;
+        return (int) $price;
     }
 
     $return = $price;
@@ -348,21 +349,21 @@ function normalizePrice(string $price): ?int {
 
     if (ctype_digit($return) && $return > 1) {
 //        echo "success $price -> $return\r\n";
-        return $return;
+        return (int) $return;
     }
 
-    if (
-        stripos($return, 'neg') === false
-        && stripos($return, 'uzg') === false
-        && stripos($return, 'usta') === false
-        && stripos($return, 'atra') === false
-        && stripos($return, 'konk') === false
-        && stripos($return, 'uzgodnienia') === false
-    ) {
-        if (!empty($return)) {
+//    if (
+//        stripos($return, 'neg') === false
+//        && stripos($return, 'uzg') === false
+//        && stripos($return, 'usta') === false
+//        && stripos($return, 'atra') === false
+//        && stripos($return, 'konk') === false
+//        && stripos($return, 'uzgodnienia') === false
+//    ) {
+//        if (!empty($return)) {
 //            echo "failed: $return\r\n";
-        }
-    }
+//        }
+//    }
 
     return null;
 }

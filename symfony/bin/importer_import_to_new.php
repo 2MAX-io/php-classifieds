@@ -50,7 +50,7 @@ function sqlEscape($unescaped): string {
         '"'=>'\"',
         "\x1a"=>'\x1a'
     );
-    return strtr($unescaped,$replacements);
+    return strtr((string) $unescaped, $replacements);
 }
 
 function arrayToSqlSetString(array $csvRow, array $map = null) {

@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+ini_set('memory_limit','2048M');
+
 $pdo = new PDO(
     'mysql:host=mysql;dbname=admin_ogloszenia', 'root', '', [
     PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,

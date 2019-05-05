@@ -56,8 +56,9 @@ $stmt = $pdo->prepare(
         LEFT JOIN o_galeria ON (o_galeria.o_id = o_ogloszenia.id)
     WHERE 
         1
-        && o_ogloszenia.bDeleted=0
+#        && o_ogloszenia.bDeleted=0
         && o_uzytkownicy.poziom=1
+       # && o_ogloszenia.id=69623
 ORDER BY 
 #    o_ogloszenia.id DESC,
     o_ogloszenia.id ASC,
@@ -120,7 +121,7 @@ if (count($header) !== count(array_unique($header))) {
     exit;
 }
 
-fputcsv($fpCsv, $header);
+fputcsv($fpCsv, $header, ",", '"', "\0");
 while ($dbRow = $stmt->fetch(PDO::FETCH_ASSOC)) {
 
     $dbRow['listing_category'] = mapCategory($dbRow);
@@ -193,7 +194,7 @@ while ($dbRow = $stmt->fetch(PDO::FETCH_ASSOC)) {
         exit;
     }
 
-    fputcsv($fpCsv, $csvRow);
+    fputcsv($fpCsv, $csvRow, ",", '"', "\0");
 }
 
 fclose($fpCsv);

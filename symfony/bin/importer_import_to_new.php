@@ -15,9 +15,9 @@ $csvHandle = fopen($argv[1], "r");
 $sqlHandle = fopen($argv[2], "w");
 saveSql( /** @lang MySQL */ 'SET NAMES utf8;', $sqlHandle);
 
-$header = fgetcsv($csvHandle, 0, ",");
+$header = fgetcsv($csvHandle, 0,  ",", '"', "\0");
 $currentOldListingId = null;
-while (($csvRow = fgetcsv($csvHandle, 0, ",")) !== FALSE) {
+while (($csvRow = fgetcsv($csvHandle, 0, ",", '"', "\0")) !== FALSE) {
     $csvRow = array_combine($header, $csvRow);
 
     if ($currentOldListingId !== $csvRow['listing_id']) {
@@ -73,6 +73,7 @@ function arrayToSqlSetString(array $csvRow, array $map = null) {
 
 function arrayToSqlSetStringSingleElement($column, $value) {
     $notNull = [
+        'listing.title',
         'listing.description',
     ];
 

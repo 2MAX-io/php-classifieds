@@ -21,7 +21,7 @@ mysql lpodnogl_ogl -e "SET FOREIGN_KEY_CHECKS = 0; DROP TABLE zzzz_listing_polic
 mysql lpodnogl_ogl -e "SET FOREIGN_KEY_CHECKS = 0; DROP TABLE zzzz_token"
 mysql lpodnogl_ogl -e "SET FOREIGN_KEY_CHECKS = 0; DROP TABLE zzzz_token_field"
 
-mysql lpodnogl_ogl < /home/lpodnogl/domains/oglnew-hjk1.lpodolski.com/public_html/symfony/var/ogl.sql
+mysql lpodnogl_ogl < $(ls -t symfony/var/ogl_*.sql | head -1)
 
 
 

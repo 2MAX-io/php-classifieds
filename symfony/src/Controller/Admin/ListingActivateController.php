@@ -7,7 +7,6 @@ namespace App\Controller\Admin;
 use App\Controller\Admin\Base\AbstractAdminController;
 use App\Service\Admin\Listing\ListingActivateListService;
 use App\Service\Admin\ListingAction\ListingActionService;
-use App\Service\System\Pagination\PaginationService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -22,8 +21,7 @@ class ListingActivateController extends AbstractAdminController
      */
     public function listingActivateList(
         Request $request,
-        ListingActivateListService $listingActivateListService,
-        PaginationService $paginationService
+        ListingActivateListService $listingActivateListService
     ): Response {
         $this->denyUnlessAdmin();
 
@@ -33,7 +31,6 @@ class ListingActivateController extends AbstractAdminController
 
         return $this->render('admin/listing/listing_activate.html.twig', [
             'listings' => $adminListingListDto->getResults(),
-            'pagination' => $paginationService->getPaginationHtml($adminListingListDto->getPager()),
             'pager' => $adminListingListDto->getPager(),
         ]);
     }

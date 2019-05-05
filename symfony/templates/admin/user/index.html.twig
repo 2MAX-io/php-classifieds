@@ -64,8 +64,6 @@
             </tbody>
         </table>
 
-        {% if pager.haveToPaginate %}
-            {{ pagination | raw }}
-        {% endif %}
+        {% include 'base/_pagination.html.twig' %}
     </div>
 {% endblock %}

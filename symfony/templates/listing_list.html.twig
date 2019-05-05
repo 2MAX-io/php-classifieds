@@ -269,9 +269,7 @@
                     {% endfor %}
                 </div>
 
-                {% if pager.haveToPaginate %}
-                    {{ pagination | raw }}
-                {% endif %}
+                {% include 'base/_pagination.html.twig' %}
             </div>
         </div>
     </div>

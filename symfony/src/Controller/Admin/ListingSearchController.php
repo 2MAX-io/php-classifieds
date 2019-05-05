@@ -6,7 +6,6 @@ namespace App\Controller\Admin;
 
 use App\Controller\Admin\Base\AbstractAdminController;
 use App\Service\Admin\Listing\AdminListingSearchService;
-use App\Service\System\Pagination\PaginationService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -18,8 +17,7 @@ class ListingSearchController extends AbstractAdminController
      */
     public function search(
         Request $request,
-        AdminListingSearchService $listingSearchService,
-        PaginationService $paginationService
+        AdminListingSearchService $listingSearchService
     ): Response {
         $this->denyUnlessAdmin();
 
@@ -27,7 +25,6 @@ class ListingSearchController extends AbstractAdminController
 
         return $this->render('admin/listing/listing_search.html.twig', [
             'listings' => $adminListingListDto->getResults(),
-            'pagination' => $paginationService->getPaginationHtml($adminListingListDto->getPager()),
             'pager' => $adminListingListDto->getPager(),
         ]);
     }

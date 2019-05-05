@@ -8,7 +8,6 @@ use App\Controller\Admin\Base\AbstractAdminController;
 use App\Entity\User;
 use App\Form\Admin\UserType;
 use App\Service\Admin\User\UserListService;
-use App\Service\System\Pagination\PaginationService;
 use App\Service\User\Account\EncodePasswordService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,8 +20,7 @@ class UserController extends AbstractAdminController
      */
     public function index(
         Request $request,
-        UserListService $userListService,
-        PaginationService $paginationService
+        UserListService $userListService
     ): Response {
         $this->denyUnlessAdmin();
 
@@ -30,7 +28,6 @@ class UserController extends AbstractAdminController
 
         return $this->render('admin/user/index.html.twig', [
             'users' => $paginationDto->getResults(),
-            'pagination' => $paginationService->getPaginationHtml($paginationDto->getPager()),
             'pager' => $paginationDto->getPager(),
         ]);
     }

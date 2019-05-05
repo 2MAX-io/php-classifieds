@@ -8,21 +8,21 @@
             >
                 <option
                         {% if app.request.get('perPage') == 10 %}selected{% endif %}
-                        value="{{ path(app.request.get('_route'), app.request.query | merge({'perPage': 10}) | merge({'page': 1})) }}"
+                        value="{{ path(app.request.get('_route'), (pager_route_params | default([])) | merge(app.request.query) | merge({'perPage': 10}) | merge({'page': 1})) }}"
                 >
                     10 {{ 'trans.per page' | trans }}
                 </option>
 
                 <option
                         {% if app.request.get('perPage') == 50 %}selected{% endif %}
-                        value="{{ path(app.request.get('_route'), app.request.query | merge({'perPage': 50}) | merge({'page': 1})) }}"
+                        value="{{ path(app.request.get('_route'), (pager_route_params | default([])) | merge(app.request.query) | merge({'perPage': 50}) | merge({'page': 1})) }}"
                 >
                     50 {{ 'trans.per page' | trans }}
                 </option>
 
                 <option
                         {% if app.request.get('perPage') == 100 %}selected{% endif %}
-                        value="{{ path(app.request.get('_route'), app.request.query | merge({'perPage': 100}) | merge({'page': 1})) }}"
+                        value="{{ path(app.request.get('_route'), (pager_route_params | default([])) | merge(app.request.query) | merge({'perPage': 100}) | merge({'page': 1})) }}"
                 >
                     100 {{ 'trans.per page' | trans }}
                 </option>
@@ -30,7 +30,7 @@
         </li>
         <li class="page-item prev {% if not pager.hasPreviousPage %}disabled{% endif %}">
             {% if pager.hasPreviousPage %}
-                <a class="page-link" href="{{ path(app.request.get('_route'), app.request.query | merge({'page': pager.previousPage})) }}" rel="prev">← {{ 'trans.Previous' | trans }}</a>
+                <a class="page-link" href="{{ path(app.request.get('_route'), (pager_route_params | default([])) | merge(app.request.query) | merge({'page': pager.previousPage})) }}" rel="prev">← {{ 'trans.Previous' | trans }}</a>
             {% else %}
                 <span class="page-link">← {{ 'trans.Previous' | trans }}</span>
             {% endif %}
@@ -38,7 +38,7 @@
         {% if pager.currentPage == 1 %}
             <li class="page-item active"><span class="page-link">{{ pager.currentPage }} <span class="sr-only">(current)</span></span></li>
         {% else %}
-            <li class="page-item"><a class="page-link" href="{{ path(app.request.get('_route'), app.request.query | merge({'page': 1})) }}">1</a></li>
+            <li class="page-item"><a class="page-link" href="{{ path(app.request.get('_route'), (pager_route_params | default([])) | merge(app.request.query) | merge({'page': 1})) }}">1</a></li>
         {% endif %}
 
         {% if pager.currentPage > 5 and pager.nbPages > 8 %}
@@ -49,7 +49,7 @@
             {% if page == pager.currentPage %}
                 <li class="page-item active"><span class="page-link">{{ pager.currentPage }} <span class="sr-only">(current)</span></span></li>
             {% else %}
-                <li class="page-item"><a class="page-link" href="{{ path(app.request.get('_route'), app.request.query | merge({'page': page})) }}">{{ page }}</a></li>
+                <li class="page-item"><a class="page-link" href="{{ path(app.request.get('_route'), (pager_route_params | default([])) | merge(app.request.query) | merge({'page': page})) }}">{{ page }}</a></li>
             {% endif %}
         {% endfor %}
 
@@ -58,12 +58,12 @@
         {% endif %}
 
         {% if pager.currentPage < pager.nbPages-3 and pager.nbPages > 7 %}
-            <li class="page-item"><a class="page-link" href="{{ path(app.request.get('_route'), app.request.query | merge({'page': pager.nbPages})) }}">{{ pager.nbPages }}</a></li>
+            <li class="page-item"><a class="page-link" href="{{ path(app.request.get('_route'), (pager_route_params | default([])) | merge(app.request.query) | merge({'page': pager.nbPages})) }}">{{ pager.nbPages }}</a></li>
         {% endif %}
 
-        <li class="page-item next">
+        <li class="page-item next {% if not pager.hasNextPage %}disabled{% endif %}">
             {% if pager.hasNextPage %}
-                <a class="page-link" href="{{ path(app.request.get('_route'), app.request.query | merge({'page': pager.nextPage})) }}" rel="next">{{ 'trans.Next' | trans }} →</a>
+                <a class="page-link" href="{{ path(app.request.get('_route'), (pager_route_params | default([])) | merge(app.request.query) | merge({'page': pager.nextPage})) }}" rel="next">{{ 'trans.Next' | trans }} →</a>
             {% else %}
                 <span class="page-link">{{ 'trans.Next' | trans }} →</span>
             {% endif %}

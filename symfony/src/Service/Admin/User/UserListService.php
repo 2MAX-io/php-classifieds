@@ -7,6 +7,7 @@ namespace App\Service\Admin\User;
 use App\Entity\User;
 use App\Helper\Search;
 use App\Service\System\Pagination\PaginationDto;
+use App\Service\System\Pagination\PaginationService;
 use Doctrine\ORM\EntityManagerInterface;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
 use Pagerfanta\Pagerfanta;
@@ -24,10 +25,19 @@ class UserListService
      */
     private $requestStack;
 
-    public function __construct(EntityManagerInterface $em, RequestStack $requestStack)
-    {
+    /**
+     * @var PaginationService
+     */
+    private $paginationService;
+
+    public function __construct(
+        EntityManagerInterface $em,
+        RequestStack $requestStack,
+        PaginationService $paginationService
+    ) {
         $this->em = $em;
         $this->requestStack = $requestStack;
+        $this->paginationService = $paginationService;
     }
 
     public function getUserList(int $page): PaginationDto
@@ -47,7 +57,7 @@ class UserListService
 
         $adapter = new DoctrineORMAdapter($qb, true, $qb->getDQLPart('having') !== null);
         $pager = new Pagerfanta($adapter);
-        $pager->setMaxPerPage(10);
+        $pager->setMaxPerPage($this->paginationService->getMaxPerPage());
         $pager->setCurrentPage($page);
 
         $paginationDto = new PaginationDto($pager->getCurrentPageResults(), $pager);

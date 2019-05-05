@@ -38,8 +38,7 @@ class UserListingController extends AbstractUserController
      */
     public function index(
         Request $request,
-        UserListingListService $userListingListService,
-        PaginationService $paginationService
+        UserListingListService $userListingListService
     ): Response {
         $userListingListDto = $userListingListService->getList((int)$request->get('page', 1));
 
@@ -47,7 +46,6 @@ class UserListingController extends AbstractUserController
             'user/listing/index.html.twig',
             [
                 'listings' => $userListingListDto->getResults(),
-                'pagination' => $paginationService->getPaginationHtml($userListingListDto->getPager()),
                 'pager' => $userListingListDto->getPager(),
             ]
         );

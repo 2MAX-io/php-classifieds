@@ -9,6 +9,7 @@ use App\Entity\CustomField;
 use App\Entity\Listing;
 use App\Helper\Search;
 use App\Service\Listing\ListingPublicDisplayService;
+use App\Service\System\Pagination\PaginationService;
 use Doctrine\ORM\EntityManagerInterface;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
 use Pagerfanta\Pagerfanta;
@@ -25,10 +26,19 @@ class ListingListService
      */
     private $listingPublicDisplayService;
 
-    public function __construct(EntityManagerInterface $em, ListingPublicDisplayService $listingPublicDisplayService)
-    {
+    /**
+     * @var PaginationService
+     */
+    private $paginationService;
+
+    public function __construct(
+        EntityManagerInterface $em,
+        ListingPublicDisplayService $listingPublicDisplayService,
+        PaginationService $paginationService
+    ) {
         $this->em = $em;
         $this->listingPublicDisplayService = $listingPublicDisplayService;
+        $this->paginationService = $paginationService;
     }
 
     public function getListings(ListingListDto $listingListDto): ListingListDto
@@ -137,7 +147,7 @@ class ListingListService
 
         $adapter = new DoctrineORMAdapter($qb, true, $qb->getDQLPart('having') !== null);
         $pager = new Pagerfanta($adapter);
-        $pager->setMaxPerPage(10);
+        $pager->setMaxPerPage($this->paginationService->getMaxPerPage());
         $pager->setCurrentPage($listingListDto->getPageNumber());
 
         $listingListDto->setPager($pager);

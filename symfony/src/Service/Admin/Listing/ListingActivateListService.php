@@ -7,6 +7,7 @@ namespace App\Service\Admin\Listing;
 use App\Entity\Listing;
 use App\Service\System\Pagination\PaginationService;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\QueryBuilder;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
 use Pagerfanta\Pagerfanta;
 
@@ -33,6 +34,20 @@ class ListingActivateListService
      */
     public function getToActivateListingList(int $page): AdminListingListDto
     {
+        $qb = $this->getQueryBuilder();
+
+        $adapter = new DoctrineORMAdapter($qb);
+        $pager = new Pagerfanta($adapter);
+        $pager->setMaxPerPage($this->paginationService->getMaxPerPage());
+        $pager->setCurrentPage($page);
+
+        $adminListingListDto = new AdminListingListDto($pager->getCurrentPageResults(), $pager);
+
+        return $adminListingListDto;
+    }
+
+    public function getQueryBuilder(): QueryBuilder
+    {
         $qb = $this->em->getRepository(Listing::class)->createQueryBuilder('listing');
 
         $qb->andWhere($qb->expr()->eq('listing.adminActivated', 0));
@@ -45,13 +60,6 @@ class ListingActivateListService
         $qb->addOrderBy('listing.lastEditDate', 'ASC');
         $qb->addOrderBy('listing.firstCreatedDate', 'ASC');
 
-        $adapter = new DoctrineORMAdapter($qb);
-        $pager = new Pagerfanta($adapter);
-        $pager->setMaxPerPage($this->paginationService->getMaxPerPage());
-        $pager->setCurrentPage($page);
-
-        $adminListingListDto = new AdminListingListDto($pager->getCurrentPageResults(), $pager);
-
-        return $adminListingListDto;
+        return $qb;
     }
 }

@@ -9,27 +9,47 @@
         <div class="row tile_count">
             <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
                 <span class="count_top"><i class="fa fa-user"></i> {{ 'trans.Pending for activation' | trans }}</span>
-                <div class="count">2500</div>
+                <div class="count">{{ adminStats.toActivateCount | thousandsSeparate }}</div>
+            </div>
+            <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+                <span class="count_top"><i class="fa fa-user"></i> {{ 'trans.Added last 12' | trans }}</span>
+                <div class="count">{{ adminStats.addedLastHours(12) | thousandsSeparate }}</div>
             </div>
             <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
                 <span class="count_top"><i class="fa fa-user"></i> {{ 'trans.Added last 24' | trans }}</span>
-                <div class="count">2500</div>
+                <div class="count">{{ adminStats.addedLastHours(24) | thousandsSeparate }}</div>
             </div>
             <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
                 <span class="count_top"><i class="fa fa-user"></i> {{ 'trans.Added last 7 days' | trans }}</span>
-                <div class="count">2500</div>
+                <div class="count">{{ adminStats.addedLastHours(24*7) | thousandsSeparate }}</div>
             </div>
             <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
-                <span class="count_top"><i class="fa fa-user"></i> {{ 'trans.Listings count' | trans }}</span>
-                <div class="count">2500</div>
+                <span class="count_top"><i class="fa fa-user"></i> {{ 'trans.Added last 30 days' | trans }}</span>
+                <div class="count">{{ adminStats.addedLastHours(24*30) | thousandsSeparate }}</div>
+            </div>
+            <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+                <span class="count_top"><i class="fa fa-user"></i> {{ 'trans.Added last year' | trans }}</span>
+                <div class="count">{{ adminStats.addedLastHours(24*365) | thousandsSeparate }}</div>
+            </div>
+            <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+                <span class="count_top"><i class="fa fa-user"></i> {{ 'trans.Active listings count' | trans }}</span>
+                <div class="count">{{ adminStats.activeListingsCount | thousandsSeparate }}</div>
+            </div>
+            <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+                <span class="count_top"><i class="fa fa-user"></i> {{ 'trans.All listings count' | trans }}</span>
+                <div class="count">{{ adminStats.allListingsCount | thousandsSeparate }}</div>
             </div>
             <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
                 <span class="count_top"><i class="fa fa-user"></i> {{ 'trans.Users count' | trans }}</span>
-                <div class="count">2500</div>
+                <div class="count">{{ adminStats.userCount | thousandsSeparate }}</div>
             </div>
             <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
                 <span class="count_top"><i class="fa fa-user"></i> {{ 'trans.Listings views' | trans }}</span>
-                <div class="count">2500</div>
+                <div class="count">{{ adminStats.listingViewsCount | thousandsSeparate }}</div>
+            </div>
+            <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+                <span class="count_top"><i class="fa fa-user"></i> {{ 'trans.Featured listings' | trans }}</span>
+                <div class="count">{{ adminStats.featuredListingsCount | thousandsSeparate }}</div>
             </div>
         </div>
     </div>

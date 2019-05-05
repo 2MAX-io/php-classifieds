@@ -52,6 +52,11 @@ class TwigNoDependencies implements RuntimeExtensionInterface
         return \round($value / 100, 2);
     }
 
+    public function thousandsSeparate(int $value): string
+    {
+        return number_format($value, 0, ',', ' ');
+    }
+
     public function money(float $money): string
     {
         if ($money < 40) {

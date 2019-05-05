@@ -8,21 +8,21 @@
             >
                 <option
                         {% if app.request.get('perPage') == 10 %}selected{% endif %}
-                        value="{{ path(app.request.get('_route'), app.request.query | merge({'perPage': 10, 'page': 1})) }}"
+                        value="{{ path(app.request.get('_route'), app.request.query | merge({'perPage': 10}) | merge({'page': 1})) }}"
                 >
                     10
                 </option>
 
                 <option
                         {% if app.request.get('perPage') == 50 %}selected{% endif %}
-                        value="{{ path(app.request.get('_route'), app.request.query | merge({'perPage': 50, 'page': 1})) }}"
+                        value="{{ path(app.request.get('_route'), app.request.query | merge({'perPage': 50}) | merge({'page': 1})) }}"
                 >
                     50
                 </option>
 
                 <option
                         {% if app.request.get('perPage') == 100 %}selected{% endif %}
-                        value="{{ path(app.request.get('_route'), app.request.query | merge({'perPage': 100, 'page': 1})) }}"
+                        value="{{ path(app.request.get('_route'), app.request.query | merge({'perPage': 100}) | merge({'page': 1})) }}"
                 >
                     100
                 </option>

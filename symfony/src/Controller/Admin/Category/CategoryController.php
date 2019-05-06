@@ -20,6 +20,18 @@ class CategoryController extends AbstractAdminController
 
         $treeService->rebuild();
 
+        return $this->render('admin/category/index.html.twig');
+    }
+
+    /**
+     * @Route("/admin/red5/category/rebuild", name="app_admin_category_rebuild")
+     */
+    public function rebuild(TreeService $treeService): Response
+    {
+        $this->denyUnlessAdmin();
+
+        $treeService->rebuild();
+
         return new Response('done');
     }
 }

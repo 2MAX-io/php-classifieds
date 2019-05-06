@@ -84,8 +84,11 @@
         });
     };
 
-    cascader.$mainElement.show();
-    cascader.$mainElement.find('.cascader-branch-list').first().show();
-    cascader.selectValueFromForm();
-    cascader.onFormChangeUpdateCascader();
+    if ($(window).width() >= 768) {
+        cascader.$mainElement.show();
+        cascader.$mainElement.find('.cascader-branch-list').first().show();
+        cascader.selectValueFromForm();
+        cascader.onFormChangeUpdateCascader();
+    }
+
 </script>

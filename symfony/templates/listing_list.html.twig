@@ -151,9 +151,10 @@
                                     <input
                                             type="text"
                                             id="min_price"
-                                            class="form-control form-control-sm"
+                                            class="form-control"
                                             name="min_price"
                                             value="{{ app.request.get('min_price') | default }}"
+                                            placeholder="{{ 'trans.price min' | trans }}"
                                     >
                                 </div>
 
@@ -161,14 +162,15 @@
                                     <input
                                             type="text"
                                             id="max_price"
-                                            class="form-control form-control-sm"
+                                            class="form-control"
                                             name="max_price"
                                             value="{{ app.request.get('max_price') | default }}"
+                                            placeholder="{{ 'trans.price max' | trans }}"
                                     >
                                 </div>
                             </div>
 
-                            <button class="btn btn-primary btn-sm">{{ 'trans.Filter' | trans }}</button>
+                            <button class="btn btn-primary w-100">{{ 'trans.Filter' | trans }}</button>
                         </form>
                     </div>
                 </div>

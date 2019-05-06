@@ -109,12 +109,14 @@
                     <th></th>
                     <th style="min-width: 20rem;">{{ 'trans.Title' | trans }}</th>
                     <th style="min-width: 8rem;">{{ 'trans.Status' | trans }}</th>
+                    <th style="min-width: 8rem;">{{ 'trans.Valid till' | trans }}</th>
                     <th>{{ 'trans.Actions' | trans }}</th>
                 </tr>
                 </thead>
                 <tbody>
                 {% for listing in listings %}
                     <tr>
+                        <!-- img -->
                         <td>
                             <div class="card-thumb">
                                 <a
@@ -129,6 +131,8 @@
                                 </a>
                             </div>
                         </td>
+
+                        <!-- title -->
                         <td>
                             <div>
                                 <a href="{{ path('app_listing_show', {"id": listing.id, 'slug': listing.slug}) }}">
@@ -167,9 +171,20 @@
                                 </a>
                             </div>
                         </td>
+
+                        <!-- status -->
                         <td>
                             <span class="{{ getListingStatusClass(listing) }}">{{ getListingStatus(listing) }}</span>
                         </td>
+
+                        <!-- date -->
+                        <td>
+                            <div class="{{ listing.validUntilDate | isExpired | displayTextWarning }}">
+                                {{ listing.validUntilDate | date }}
+                            </div>
+                        </td>
+
+                        <!-- action -->
                         <td>
 
                             <a href="{{ path('app_admin_listing_edit', {'id': listing.id}) }}" class="btn btn-dark mb-1">
@@ -191,6 +206,8 @@
                             {% endif %}
                         </td>
                     </tr>
+
+                    <!-- more info row -->
                     <tr class="collapse" id="collapse{{ listing.id }}" data-parent="#listings">
                         <td colspan="99">
                             <div class="row">

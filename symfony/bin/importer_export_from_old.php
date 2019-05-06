@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-ini_set('memory_limit','2048M');
-
 $pdo = new PDO(
     'mysql:host=mysql;dbname=admin_ogloszenia', 'root', '', [
     PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
@@ -21,7 +19,7 @@ $stmt = $pdo->prepare(
             o_ogloszenia.user_id AS listing_user_id_legacy,
             
             o_ogloszenia.tytul AS listing_title,
-            o_ogloszenia.opis_d AS listing_description,
+            SUBSTR(o_ogloszenia.opis_d, 0, 10000) AS listing_description,
             o_ogloszenia.cena AS listing_price_legacy,
             o_ogloszenia.telefon AS listing_phone,
             o_ogloszenia.mail AS listing_email,

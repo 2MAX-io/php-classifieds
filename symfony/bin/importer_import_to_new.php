@@ -75,6 +75,7 @@ function arrayToSqlSetStringSingleElement($column, $value) {
     $notNull = [
         'listing.title',
         'listing.description',
+        'user.email',
     ];
 
     if (in_array($column, $notNull)) {

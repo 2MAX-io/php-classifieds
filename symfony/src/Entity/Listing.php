@@ -83,7 +83,7 @@ class Listing
     private $category;
 
     /**
-     * @ORM\Column(type="string", length=5000)
+     * @ORM\Column(type="string", length=10100)
      */
     private $description;
 

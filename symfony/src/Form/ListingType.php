@@ -60,7 +60,7 @@ class ListingType extends AbstractType
             ],
             'constraints' => [
                 new Constraints\NotBlank(),
-                new Constraints\Length(['min' => 20, 'max' => 5000]),
+                new Constraints\Length(['min' => 20, 'max' => 10000]),
             ],
             'empty_data' => '',
         ]);

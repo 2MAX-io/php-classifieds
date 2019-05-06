@@ -19,7 +19,7 @@ $stmt = $pdo->prepare(
             o_ogloszenia.user_id AS listing_user_id_legacy,
             
             o_ogloszenia.tytul AS listing_title,
-            SUBSTR(o_ogloszenia.opis_d, 0, 10000) AS listing_description,
+            SUBSTR(o_ogloszenia.opis_d, 1, 9900) AS listing_description,
             o_ogloszenia.cena AS listing_price_legacy,
             o_ogloszenia.telefon AS listing_phone,
             o_ogloszenia.mail AS listing_email,

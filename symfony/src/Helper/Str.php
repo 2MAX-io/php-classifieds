@@ -40,4 +40,20 @@ class Str
     {
         return (int) $value;
     }
+
+    public static function match(string $pattern, $subject): ?array
+    {
+        $matches = [];
+        $result = preg_match_all($pattern, $subject, $matches);
+
+        if ($result === false) {
+            throw new \Exception('preg_match error' . \preg_last_error());
+        }
+
+        if ($result !== 1) {
+            return null;
+        }
+
+        return $matches;
+    }
 }

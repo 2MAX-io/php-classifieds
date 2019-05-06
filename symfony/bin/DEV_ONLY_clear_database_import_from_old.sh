@@ -38,7 +38,7 @@ docker exec classifieds_php php symfony/bin/console doctrine:schema:update --for
 #docker exec classifieds_mysql mysql classifieds -e "SET FOREIGN_KEY_CHECKS = 0; DROP TABLE zzzz_token"
 #docker exec classifieds_mysql mysql classifieds -e "SET FOREIGN_KEY_CHECKS = 0; DROP TABLE zzzz_token_field"
 
-time docker exec classifieds_mysql bash -c "mysql classifieds < /sql/importer_import_to_new.sql"
+time docker exec classifieds_mysql bash -c "mysql --max_allowed_packet=1G classifieds < /sql/importer_import_to_new.sql"
 
 docker exec classifieds_php php symfony/bin/console app:cron:main
 

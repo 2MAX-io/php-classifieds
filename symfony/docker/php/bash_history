@@ -174,3 +174,11 @@ php symfony/bin/console make:entity --regenerate "App\Entity"
 php symfony/bin/console make:entity --regenerate "App\Entity"
 php symfony/bin/console doctrine:schema:update --force
 php symfony/bin/console doctrine:schema:update --force
+php symfony/bin/convert_insert_set_to_values.php 
+php symfony/bin/convert_insert_set_to_values.php /var/www/html/symfony/docker/mysql/sql/importer_import_to_new.sql /var/www/html/symfony/docker/mysql/sql/importer_import_to_new_values.sql
+php symfony/bin/convert_insert_set_to_values.php /var/www/html/symfony/docker/mysql/sql/importer_import_to_new.sql /var/www/html/symfony/docker/mysql/sql/importer_import_to_new_values.sql
+php symfony/bin/convert_insert_set_to_values.php /var/www/html/symfony/docker/mysql/sql/importer_import_to_new.sql /var/www/html/symfony/docker/mysql/sql/importer_import_to_new_values.sql
+php symfony/bin/convert_insert_set_to_values.php /var/www/html/symfony/docker/mysql/sql/importer_import_to_new.sql /var/www/html/symfony/docker/mysql/sql/importer_import_to_new_values.sql
+php symfony/bin/convert_insert_set_to_values.php /var/www/html/symfony/docker/mysql/sql/importer_import_to_new.sql /var/www/html/symfony/docker/mysql/sql/importer_import_to_new_values.sql
+php symfony/bin/convert_insert_set_to_values.php /var/www/html/symfony/docker/mysql/sql/importer_import_to_new.sql /var/www/html/symfony/docker/mysql/sql/importer_import_to_new_values.sql
+php symfony/bin/convert_insert_set_to_values.php /var/www/html/symfony/docker/mysql/sql/importer_import_to_new.sql /var/www/html/symfony/docker/mysql/sql/importer_import_to_new_values.sql

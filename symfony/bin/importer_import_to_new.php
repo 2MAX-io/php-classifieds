@@ -14,6 +14,7 @@ $pdo = new \PDO(
 $csvHandle = fopen($argv[1], "r");
 $sqlHandle = fopen($argv[2], "w");
 saveSql( /** @lang MySQL */ 'SET NAMES utf8;', $sqlHandle);
+saveSql( /** @lang MySQL */ 'SET AUTOCOMMIT = 0;', $sqlHandle);
 
 $header = fgetcsv($csvHandle, 0,  ",", '"', "\0");
 $currentOldListingId = null;

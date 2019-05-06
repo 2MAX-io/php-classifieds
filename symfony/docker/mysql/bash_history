@@ -10,3 +10,17 @@ time mysql classifieds < /sql/importer_import_to_new.sql
 mysqldump classifieds > /sql/ogl_$(date +%Y-%m-%d_%H%M%S).sql
 mysql admin_ogloszenia < /sql/admin_ogloszenia.sql
 mysql classifieds < /sql/ogl_2019-05-01_081806_old.sql
+mysqldump classifieds listing listing_file listing_view user zzzz_listing_police_log > /sql/test.sql
+time uptime
+time mysqldump classifieds listing listing_file listing_view user zzzz_listing_police_log > /sql/test.sql
+time mysql classifieds < /sql/test.sql
+mysql classidfieds
+time mysql classifieds < /sql/test.sql
+time mysql classifieds
+time mysql classifieds  < /sql/test.sql
+time mysql classifieds  
+cat /sql/test.sql
+time mysqldump classifieds listing listing_file listing_view user zzzz_listing_police_log > /sql/test.sql
+time mysql classifieds  < /sql/ogl_2019-05-06_183437_new.sql
+time mysqldump classifieds listing listing_file listing_view user zzzz_listing_police_log > /sql/test.sql
+time mysql classifieds  < /sql/test.sql 

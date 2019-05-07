@@ -13,7 +13,7 @@
             </div>
         </div>
 
-        <div class="list-group col nested-sortable mb-2">
+        <div class="list-group col nested-sortable mb-2" data-sortable-group="root">
             {# @var category1 \App\Entity\Category #}
             {% for category1 in categoryList %}
                 <div class="list-group-item nested-1">
@@ -23,7 +23,7 @@
                         <a href="{{ path('app_admin_category_new', {'parentCategory': category1.id}) }}" class="btn btn-success">{{ 'trans.Add subcategory' | trans }}</a>
                     </div>
 
-                    <div class="list-group nested-sortable">
+                    <div class="list-group nested-sortable"  data-sortable-group="parent_{{ category1.id }}">
                     {% for category2 in category1.children  %}
                         <div class="list-group-item nested-2">
                             {{ category2.name }}
@@ -35,71 +35,19 @@
                 </div>
             {% endfor %}
         </div>
-
-
-
-
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <div id="nestedDemo" class="list-group col nested-sortable">
-            <div class="list-group-item nested-1">Item 1.1
-                <div class="list-group nested-sortable">
-                    <div class="list-group-item nested-2">Item 2.1</div>
-                    <div class="list-group-item nested-2">Item 2.2
-                        <div class="list-group nested-sortable">
-                            <div class="list-group-item nested-3">Item 3.1</div>
-                            <div class="list-group-item nested-3">Item 3.2</div>
-                            <div class="list-group-item nested-3">Item 3.3</div>
-                            <div class="list-group-item nested-3">Item 3.4</div>
-                        </div>
-                    </div>
-                    <div class="list-group-item nested-2">Item 2.3</div>
-                    <div class="list-group-item nested-2">Item 2.4</div>
-                </div>
-            </div>
-            <div class="list-group-item nested-1">Item 1.2</div>
-            <div class="list-group-item nested-1">Item 1.3</div>
-            <div class="list-group-item nested-1">Item 1.4
-                <div class="list-group nested-sortable">
-                    <div class="list-group-item nested-2">Item 2.1</div>
-                    <div class="list-group-item nested-2">Item 2.2</div>
-                    <div class="list-group-item nested-2">Item 2.3</div>
-                    <div class="list-group-item nested-2">Item 2.4</div>
-                </div>
-            </div>
-            <div class="list-group-item nested-1">Item 1.5</div>
-        </div>
     </div>
 
 {% endblock %}
 
 {% block js %}
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
-
     <script src="https://cdn.jsdelivr.net/npm/jquery-sortablejs@latest/jquery-sortable.js"></script>
 
     <script>
-
         $('.nested-sortable').each(function (i, el) {
             $(el).sortable({
-                group: 'nested',
+                group: $(el).data('sortable-group'),
             });
         });
-
-        var nestedSortables = [].slice.call(document.querySelectorAll('.nested-sortable'));
-
-        // for (var i = 0; i < nestedSortables.length; i++) {
-        //     new Sortable(nestedSortables[i], {
-        //         group: 'nested',
-        //         animation: 150,
-        //         fallbackOnBody: true,
-        //         swapThreshold: 0.65
-        //     });
-        // }
     </script>
 {% endblock %}

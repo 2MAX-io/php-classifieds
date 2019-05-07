@@ -10,13 +10,10 @@
         </div>
         <div class="col-md-6 text-md-right">
             <a href="{{ path('app_admin_custom_field_index') }}">{{ 'trans.back to list' | trans }}</a>
+            {{ include('admin/custom_field/_delete_form.html.twig') }}
         </div>
     </div>
 
-    {{ include('admin/custom_field/_form.html.twig', {'button_label': 'Update'}) }}
-
-    <a href="{{ path('app_admin_custom_field_index') }}">back to list</a>
-
-    {{ include('admin/custom_field/_delete_form.html.twig') }}
+    {{ include('admin/custom_field/_form.html.twig', {'button_label': 'trans.Update' | trans}) }}
 </div>
 {% endblock %}

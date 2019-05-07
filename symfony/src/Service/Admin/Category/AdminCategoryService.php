@@ -31,6 +31,10 @@ class AdminCategoryService
         $qb->leftJoin('category2.children', 'category3');
         $qb->andWhere($qb->expr()->eq('category1.lvl', 1));
 
+        $qb->addOrderBy('category1.sort', 'ASC');
+        $qb->addOrderBy('category2.sort', 'ASC');
+        $qb->addOrderBy('category3.sort', 'ASC');
+
         return $qb->getQuery()->getResult();
     }
 }

@@ -6,7 +6,7 @@ namespace App\Controller\Admin\Category;
 
 use App\Controller\Admin\Base\AbstractAdminController;
 use App\Entity\Category;
-use App\Form\Admin\AdminCategoryType;
+use App\Form\Admin\AdminCategorySaveType;
 use App\Service\Admin\Category\AdminCategoryService;
 use App\Service\Category\TreeService;
 use Symfony\Component\HttpFoundation\Request;
@@ -42,18 +42,23 @@ class CategoryController extends AbstractAdminController
     /**
      * @Route("/admin/red5/category/new", name="app_admin_category_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, TreeService $treeService): Response
     {
         $this->denyUnlessAdmin();
 
         $category = new Category();
-        $form = $this->createForm(AdminCategoryType::class, $category);
+        $category->setLvl(0);
+        $category->setRgt(0);
+        $category->setLft(0);
+        $form = $this->createForm(AdminCategorySaveType::class, $category);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($category);
             $entityManager->flush();
+
+            $treeService->rebuild();
 
             return $this->redirectToRoute('app_admin_category');
         }
@@ -67,15 +72,17 @@ class CategoryController extends AbstractAdminController
     /**
      * @Route("/admin/red5/category/{id}/edit", name="app_admin_category_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, Category $category): Response
+    public function edit(Request $request, Category $category, TreeService $treeService): Response
     {
         $this->denyUnlessAdmin();
 
-        $form = $this->createForm(AdminCategoryType::class, $category);
+        $form = $this->createForm(AdminCategorySaveType::class, $category);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
+
+            $treeService->rebuild();
 
             return $this->redirectToRoute('app_admin_category', [
                 'id' => $category->getId(),

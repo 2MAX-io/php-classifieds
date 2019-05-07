@@ -381,3 +381,5 @@ trans:
   Required?: 'Wymanage?'
   Searchable?: 'Przeszukiwalne?'
   Unit: 'Jednostka'
+  Add custom field: 'Dodaj pole niestandarowe'
+  Edit custom field: 'Edytuj pole niestandardowe'

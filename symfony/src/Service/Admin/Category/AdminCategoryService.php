@@ -27,13 +27,31 @@ class AdminCategoryService
         $qb = $this->em->getRepository(Category::class)->createQueryBuilder('category1');
         $qb->addSelect('category2');
         $qb->addSelect('category3');
+        $qb->addSelect('category4');
+        $qb->addSelect('category5');
+        $qb->addSelect('category6');
+        $qb->addSelect('category7');
+        $qb->addSelect('category8');
+        $qb->addSelect('category9');
         $qb->leftJoin('category1.children', 'category2');
         $qb->leftJoin('category2.children', 'category3');
+        $qb->leftJoin('category3.children', 'category4');
+        $qb->leftJoin('category4.children', 'category5');
+        $qb->leftJoin('category5.children', 'category6');
+        $qb->leftJoin('category6.children', 'category7');
+        $qb->leftJoin('category7.children', 'category8');
+        $qb->leftJoin('category8.children', 'category9');
         $qb->andWhere($qb->expr()->eq('category1.lvl', 1));
 
         $qb->addOrderBy('category1.sort', 'ASC');
         $qb->addOrderBy('category2.sort', 'ASC');
         $qb->addOrderBy('category3.sort', 'ASC');
+        $qb->addOrderBy('category4.sort', 'ASC');
+        $qb->addOrderBy('category5.sort', 'ASC');
+        $qb->addOrderBy('category6.sort', 'ASC');
+        $qb->addOrderBy('category7.sort', 'ASC');
+        $qb->addOrderBy('category8.sort', 'ASC');
+        $qb->addOrderBy('category9.sort', 'ASC');
 
         return $qb->getQuery()->getResult();
     }
@@ -58,15 +76,30 @@ class AdminCategoryService
         $qb->addSelect('category2');
         $qb->addSelect('category3');
         $qb->addSelect('category4');
+        $qb->addSelect('category5');
+        $qb->addSelect('category6');
+        $qb->addSelect('category7');
+        $qb->addSelect('category8');
+        $qb->addSelect('category9');
         $qb->leftJoin('category1.children', 'category2');
         $qb->leftJoin('category2.children', 'category3');
         $qb->leftJoin('category3.children', 'category4');
+        $qb->leftJoin('category4.children', 'category5');
+        $qb->leftJoin('category5.children', 'category6');
+        $qb->leftJoin('category6.children', 'category7');
+        $qb->leftJoin('category7.children', 'category8');
+        $qb->leftJoin('category8.children', 'category9');
         $qb->andWhere($qb->expr()->eq('category1.id', $categoryRepository->getRootNode()->getId()));
 
         $qb->addOrderBy('category1.sort', 'ASC');
         $qb->addOrderBy('category2.sort', 'ASC');
         $qb->addOrderBy('category3.sort', 'ASC');
         $qb->addOrderBy('category4.sort', 'ASC');
+        $qb->addOrderBy('category5.sort', 'ASC');
+        $qb->addOrderBy('category6.sort', 'ASC');
+        $qb->addOrderBy('category7.sort', 'ASC');
+        $qb->addOrderBy('category8.sort', 'ASC');
+        $qb->addOrderBy('category9.sort', 'ASC');
 
         /** @var Category $rootCategory */
         $rootCategory = $qb->getQuery()->getSingleResult();

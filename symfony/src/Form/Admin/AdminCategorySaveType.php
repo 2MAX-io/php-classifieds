@@ -32,7 +32,6 @@ class AdminCategorySaveType extends AbstractType
             'required' => false,
             'mapped' => false,
         ]);
-//        $builder->add('customFields');
     }
 
     public function configureOptions(OptionsResolver $resolver)

@@ -9,7 +9,7 @@
                 <h1>{{ 'trans.Categories' | trans }}</h1>
             </div>
             <div class="col-md-6 text-md-right">
-                <a href="#" class="btn btn-primary">{{ 'trans.Add category' | trans }}</a>
+                <a href="{{ path('app_admin_category_new') }}" class="btn btn-primary">{{ 'trans.Add category' | trans }}</a>
             </div>
         </div>
 
@@ -19,12 +19,15 @@
                 <div class="list-group-item nested-1">
                     <div>
                         <div class="d-inline-block mb-3">{{ category1.name }}</div>
-                        <a href="#" class="btn btn-primary">{{ 'trans.Edit' | trans }}</a>
+                        <a href="{{ path('app_admin_category_edit', {'id': category1.id}) }}" class="btn btn-primary">{{ 'trans.Edit' | trans }}</a>
                     </div>
 
                     <div class="list-group nested-sortable">
                     {% for category2 in category1.children  %}
-                        <div class="list-group-item nested-2">{{ category2.name }}</div>
+                        <div class="list-group-item nested-2">
+                            {{ category2.name }}
+                            <a href="{{ path('app_admin_category_edit', {'id': category2.id}) }}" class="btn btn-primary">{{ 'trans.Edit' | trans }}</a>
+                        </div>
                     {% endfor %}
                     </div>
                 </div>

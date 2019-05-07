@@ -7,7 +7,7 @@ namespace App\Service\Admin\Category;
 use App\Entity\Category;
 use Doctrine\ORM\EntityManagerInterface;
 
-class CategoryService
+class AdminCategoryService
 {
     /**
      * @var EntityManagerInterface

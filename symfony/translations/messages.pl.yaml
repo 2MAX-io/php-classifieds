@@ -370,3 +370,4 @@ trans:
   price max: 'cena max'
   price min: 'cena min'
   Add category: 'Dodaj kategorie'
+  Edit Category: 'Edytuj kategorie'

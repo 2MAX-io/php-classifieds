@@ -28,7 +28,7 @@
         {% for custom_field in custom_fields %}
             <tr>
                 <td>{{ custom_field.name }}</td>
-                <td>{{ custom_field.type }}</td>
+                <td>{{ ('trans.customFieldType.'~custom_field.type) | trans }}</td>
                 <td>{{ custom_field.required | boolText | trans }}</td>
                 <td>{{ custom_field.searchable | boolText | trans }}</td>
                 <td>{{ custom_field.unit }}</td>

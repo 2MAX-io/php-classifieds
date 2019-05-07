@@ -40,7 +40,7 @@
                     {{ customField.name }}
                 </td>
                 <td>
-                    {{ customField.type }}
+                    {{ ('trans.customFieldType.'~customField.type) | trans }}
                 </td>
                 <td>
                     {{ customField.required | boolText | trans }}

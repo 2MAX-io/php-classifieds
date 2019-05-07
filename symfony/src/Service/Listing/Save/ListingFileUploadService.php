@@ -34,6 +34,10 @@ class ListingFileUploadService
         $this->fileModificationEventService = $fileModificationEventService;
     }
 
+    /**
+     * @param Listing $listing
+     * @param UploadedFile[] $uploadedFileList
+     */
     public function addMultipleFilesFromUpload(Listing $listing, array $uploadedFileList): void
     {
         foreach ($uploadedFileList as $uploadedFile) {
@@ -45,7 +49,7 @@ class ListingFileUploadService
             $movedFile = $this->uploadFile(
                 $uploadedFile,
                 $destinationFilepath,
-                $destinationFilename
+                \basename($destinationFilename)
             );
             $listingFile = new ListingFile();
             $listingFile->setPath(Path::makeRelative($movedFile->getRealPath(), FilePath::getProjectDir()));

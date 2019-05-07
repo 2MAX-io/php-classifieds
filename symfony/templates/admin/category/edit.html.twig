@@ -16,6 +16,12 @@
     </div>
 
     {{ include('admin/category/_form.html.twig', {'button_label': 'trans.Update'}) }}
+
+    {% if category.path is not empty %}
+        <div class="my-2">
+            <img src="{{ asset(category.picture) }}" alt="">
+        </div>
+    {% endif %}
 </div>
 
 <div class="container mt-5">

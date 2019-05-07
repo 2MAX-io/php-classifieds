@@ -32,4 +32,9 @@ class FilePath
     {
         return self::getPath(__DIR__ . '/../../../');
     }
+
+    public static function getCategoryPicturePath()
+    {
+        return self::getPath(__DIR__ . '/../../../static/system/category');
+    }
 }

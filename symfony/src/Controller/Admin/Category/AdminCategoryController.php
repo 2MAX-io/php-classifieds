@@ -10,6 +10,7 @@ use App\Entity\CustomFieldJoinCategory;
 use App\Form\Admin\AdminCategorySaveType;
 use App\Helper\Json;
 use App\Service\Admin\Category\AdminCategoryService;
+use App\Service\Admin\Category\CategoryPictureUploadService;
 use App\Service\Admin\CustomField\CustomFieldService;
 use App\Service\Category\TreeService;
 use Symfony\Component\HttpFoundation\Request;
@@ -31,23 +32,12 @@ class AdminCategoryController extends AbstractAdminController
     }
 
     /**
-     * @Route("/admin/red5/category/rebuild", name="app_admin_category_rebuild")
-     */
-    public function rebuild(TreeService $treeService): Response
-    {
-        $this->denyUnlessAdmin();
-
-        $treeService->rebuild();
-
-        return new Response('done');
-    }
-
-    /**
      * @Route("/admin/red5/category/new", name="app_admin_category_new", methods={"GET","POST"})
      */
     public function new(
         Request $request,
-        TreeService $treeService
+        TreeService $treeService,
+        CategoryPictureUploadService $categoryPictureUploadService
     ): Response {
         $this->denyUnlessAdmin();
 
@@ -63,11 +53,13 @@ class AdminCategoryController extends AbstractAdminController
             $category->setParent($parentCategory);
         }
 
-
         $form = $this->createForm(AdminCategorySaveType::class, $category);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            if ($form->get('picture')->getData()) {
+                $categoryPictureUploadService->savePicture($category, $form->get('picture')->getData());
+            }
             $em->persist($category);
             $em->flush();
 
@@ -91,7 +83,8 @@ class AdminCategoryController extends AbstractAdminController
     public function edit(
         Request $request,
         Category $category,
-        TreeService $treeService
+        TreeService $treeService,
+        CategoryPictureUploadService $categoryPictureUploadService
     ): Response {
         $this->denyUnlessAdmin();
 
@@ -99,6 +92,9 @@ class AdminCategoryController extends AbstractAdminController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            if ($form->get('picture')->getData()) {
+                $categoryPictureUploadService->savePicture($category, $form->get('picture')->getData());
+            }
             $em = $this->getDoctrine()->getManager();
             $em->flush();
 
@@ -151,7 +147,7 @@ class AdminCategoryController extends AbstractAdminController
             $adminCategoryService->saveOrder($requestContentArray['orderedIdList']);
             $em->flush();
 
-            $adminCategoryService->reorderSort($requestContentArray['orderedIdList']);
+            $adminCategoryService->reorderSort();
             $em->flush();
         }
 

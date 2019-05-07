@@ -389,3 +389,5 @@ trans:
     integer_range: 'Pole z liczbą'
   Custom field: 'Pole niestandarowe'
   for category: 'dla kategorii'
+  Options: 'Opcje'
+  Add option: 'Dodaj opcje'

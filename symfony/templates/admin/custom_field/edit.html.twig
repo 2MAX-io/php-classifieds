@@ -16,4 +16,19 @@
 
     {{ include('admin/custom_field/_form.html.twig', {'button_label': 'trans.Update' | trans}) }}
 </div>
+
+<div class="container mt-3">
+    <div class="row mb-2">
+        <div class="col-md-6">
+            <h1>{{ 'trans.Options' | trans }}</h1>
+        </div>
+        <div class="col-md-6 text-md-right">
+            <a href="{{ path('app_admin_custom_field_index') }}" class="btn btn-success">{{ 'trans.Add option' | trans }}</a>
+        </div>
+    </div>
+
+    {% for customFieldOption in custom_field.customFieldOptions %}
+        <div>{{ customFieldOption.name }}</div>
+    {% endfor %}
+</div>
 {% endblock %}

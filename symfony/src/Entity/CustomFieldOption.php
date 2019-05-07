@@ -34,6 +34,13 @@ class CustomFieldOption
      */
     private $value;
 
+    /**
+     * @var int
+     *
+     * @ORM\Column(type="integer", nullable=false)
+     */
+    private $sort;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -71,6 +78,18 @@ class CustomFieldOption
     public function setCustomField(?CustomField $customField): self
     {
         $this->customField = $customField;
+
+        return $this;
+    }
+
+    public function getSort(): ?int
+    {
+        return $this->sort;
+    }
+
+    public function setSort(int $sort): self
+    {
+        $this->sort = $sort;
 
         return $this;
     }

@@ -5,7 +5,9 @@ namespace App\Controller\Admin\Category;
 use App\Controller\Admin\Base\AbstractAdminController;
 use App\Entity\CustomField;
 use App\Form\Admin\CustomFieldType;
+use App\Helper\Json;
 use App\Repository\CustomFieldRepository;
+use App\Service\Admin\CustomField\CustomFieldService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -13,7 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class CustomFieldController extends AbstractAdminController
 {
     /**
-     * @Route("/admin/red5/custom/field/", name="app_admin_custom_field_index", methods={"GET"})
+     * @Route("/admin/red5/custom-field/", name="app_admin_custom_field_index", methods={"GET"})
      */
     public function index(CustomFieldRepository $customFieldRepository): Response
     {
@@ -25,7 +27,7 @@ class CustomFieldController extends AbstractAdminController
     }
 
     /**
-     * @Route("/admin/red5/custom/field/new", name="app_admin_custom_field_new", methods={"GET","POST"})
+     * @Route("/admin/red5/custom-field/new", name="app_admin_custom_field_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
     {
@@ -52,7 +54,7 @@ class CustomFieldController extends AbstractAdminController
     }
 
     /**
-     * @Route("/admin/red5/custom/field/{id}/edit", name="app_admin_custom_field_edit", methods={"GET","POST"})
+     * @Route("/admin/red5/custom-field/{id}/edit", name="app_admin_custom_field_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, CustomField $customField): Response
     {
@@ -76,7 +78,7 @@ class CustomFieldController extends AbstractAdminController
     }
 
     /**
-     * @Route("/admin/red5/custom/field/{id}", name="app_admin_custom_field_delete", methods={"DELETE"})
+     * @Route("/admin/red5/custom-field/{id}", name="app_admin_custom_field_delete", methods={"DELETE"})
      */
     public function delete(Request $request, CustomField $customField): Response
     {
@@ -89,5 +91,28 @@ class CustomFieldController extends AbstractAdminController
         }
 
         return $this->redirectToRoute('app_admin_custom_field_index');
+    }
+
+    /**
+     * @Route(
+     *     "/admin/red5/custom-field/options/save-order-of-options",
+     *     name="app_admin_custom_field_options_save_order",
+     *     methods={"POST"},
+     *     options={"expose": true},
+     * )
+     */
+    public function saveCustomFieldOptionsOrder(Request $request, CustomFieldService $customFieldService): Response
+    {
+        $this->denyUnlessAdmin();
+
+        if ($this->isCsrfTokenValid('adminCustomFieldOptionsSaveSort', $request->headers->get('x-csrf-token'))) {
+            $em = $this->getDoctrine()->getManager();
+
+            $requestContentArray  = Json::decodeToArray($request->getContent());
+            $customFieldService->saveOrderOfOptions($requestContentArray['orderedIdList']);
+            $em->flush();
+        }
+
+        return $this->json([]);
     }
 }

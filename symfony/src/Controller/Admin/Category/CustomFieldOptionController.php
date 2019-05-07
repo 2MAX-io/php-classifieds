@@ -16,7 +16,7 @@ class CustomFieldOptionController extends AbstractAdminController
 {
     /**
      * @Route(
-     *     "/admin/red5/custom/field/{id}/add-option",
+     *     "/admin/red5/custom-field/{id}/add-option",
      *     name="app_admin_custom_field_add_option",
      *     methods={"GET","POST"}
      * )
@@ -51,7 +51,7 @@ class CustomFieldOptionController extends AbstractAdminController
 
     /**
      * @Route(
-     *     "/admin/red5/custom/field/option/{id}/edit-option",
+     *     "/admin/red5/custom-field/option/{id}/edit-option",
      *     name="app_admin_custom_field_edit_option",
      *     methods={"GET","POST"}
      * )
@@ -83,7 +83,7 @@ class CustomFieldOptionController extends AbstractAdminController
 
     /**
      * @Route(
-     *     "/admin/red5/custom/field/option/{id}/delete-option",
+     *     "/admin/red5/custom-field/option/{id}/delete-option",
      *     name="app_admin_custom_field_option_delete",
      *     methods={"DELETE"}
      * )

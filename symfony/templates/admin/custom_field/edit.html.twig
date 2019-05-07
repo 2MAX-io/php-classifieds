@@ -23,16 +23,50 @@
             <h1>{{ 'trans.Options' | trans }}</h1>
         </div>
         <div class="col-md-6 text-md-right">
+            <button class="btn btn-success saveOrder">{{ 'trans.Save order' | trans }}</button>
+
             <a href="{{ path('app_admin_custom_field_add_option', {id: custom_field.id}) }}" class="btn btn-success">{{ 'trans.Add option' | trans }}</a>
         </div>
     </div>
 
-    {% for customFieldOption in custom_field.customFieldOptions %}
-        <div>
-            {{ customFieldOption.name }}
+    <div class="list-group sortable">
+        {% for customFieldOption in custom_field.customFieldOptions %}
+            <div class="list-group-item"  data-id="{{ customFieldOption.id }}">
+                {{ customFieldOption.name }}
 
-            <a href="{{ path('app_admin_custom_field_edit_option', {'id': customFieldOption.id}) }}" class="btn btn-dark">{{ 'trans.Edit' | trans }}</a>
-        </div>
-    {% endfor %}
+                <a href="{{ path('app_admin_custom_field_edit_option', {'id': customFieldOption.id}) }}" class="btn btn-dark">{{ 'trans.Edit' | trans }}</a>
+            </div>
+        {% endfor %}
+    </div>
 </div>
+{% endblock %}
+
+{% block js %}
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-sortablejs@latest/jquery-sortable.js"></script>
+
+    <!-- CSRF -->
+    <script type="text/javascript">
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-Token': '{{ csrf_token('adminCustomFieldOptionsSaveSort') }}',
+            }
+        });
+    </script>
+    <script>
+        $('.sortable').sortable({});
+
+        $('.saveOrder').click(function () {
+            var orderedIdList = $('.sortable').sortable('widget').toArray();
+
+            $.ajax(Routing.generate('app_admin_custom_field_options_save_order', []), {
+                    type: 'POST',
+                    dataType: 'json',
+                    data: JSON.stringify({
+                        orderedIdList: orderedIdList
+                    })
+                }
+            );
+        });
+    </script>
 {% endblock %}

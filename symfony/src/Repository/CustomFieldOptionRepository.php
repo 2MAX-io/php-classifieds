@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Repository;
 
+use App\Entity\Category;
 use App\Entity\CustomFieldOption;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
@@ -21,32 +22,25 @@ class CustomFieldOptionRepository extends ServiceEntityRepository
         parent::__construct($registry, CustomFieldOption::class);
     }
 
-    // /**
-    //  * @return CustomFieldOption[] Returns an array of CustomFieldOption objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @return Category[]
+     */
+    public function getFromIds(array $customFieldOptionIds): array
     {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('c.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+        $ids = [];
+        foreach ($customFieldOptionIds as $customFieldOption) {
+            if ($customFieldOption instanceof CustomFieldOption) {
+                $ids[] = $customFieldOption->getId();
+            } else {
+                $ids[] = (int) $customFieldOption;
+            }
+        }
 
-    /*
-    public function findOneBySomeField($value): ?CustomFieldOption
-    {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        $qb = $this->createQueryBuilder('customFieldOption');
+        $qb->andWhere($qb->expr()->in('customFieldOption.id', ':ids'));
+        $qb->setParameter('ids', $ids, \Doctrine\DBAL\Connection::PARAM_INT_ARRAY);
+        $qb->indexBy('customFieldOption', 'customFieldOption.id');
+
+        return $qb->getQuery()->getResult();
     }
-    */
 }

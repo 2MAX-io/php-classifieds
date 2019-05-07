@@ -51,6 +51,7 @@ class CustomField
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\CustomFieldOption", mappedBy="customField")
+     * @ORM\OrderBy({"sort" = "ASC"})
      */
     private $customFieldOptions;
 

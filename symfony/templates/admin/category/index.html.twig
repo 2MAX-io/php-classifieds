@@ -3,14 +3,24 @@
 {% block title %}{{ 'trans.Categories' | trans }}{% endblock %}
 
 {% block body %}
-    <div class="mt-3">
-        <h1>{{ 'trans.Categories' | trans }}</h1>
+    <div class="container mt-3">
+        <div class="row mb-2">
+            <div class="col-md-6">
+                <h1>{{ 'trans.Categories' | trans }}</h1>
+            </div>
+            <div class="col-md-6 text-md-right">
+                <a href="#" class="btn btn-primary">{{ 'trans.Add category' | trans }}</a>
+            </div>
+        </div>
 
         <div class="list-group col nested-sortable mb-2">
             {# @var category1 \App\Entity\Category #}
             {% for category1 in categoryList %}
                 <div class="list-group-item nested-1">
-                    {{ category1.name }}
+                    <div>
+                        <div class="d-inline-block mb-3">{{ category1.name }}</div>
+                        <a href="#" class="btn btn-primary">{{ 'trans.Edit' | trans }}</a>
+                    </div>
 
                     <div class="list-group nested-sortable">
                     {% for category2 in category1.children  %}

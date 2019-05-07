@@ -24,7 +24,7 @@ class ListingRepository extends ServiceEntityRepository
     /**
      * @return Listing[]
      */
-    public function getListingsFromIds(array $listings): array
+    public function getFromIds(array $listings): array
     {
         $listingIds = [];
         foreach ($listings as $listing) {

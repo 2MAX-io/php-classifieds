@@ -38,6 +38,19 @@ class AdminCategoryService
         return $qb->getQuery()->getResult();
     }
 
+    public function saveOrder(array $orderedCategoryIdList): void
+    {
+        $categories = $this->em->getRepository(Category::class)->getFromIds($orderedCategoryIdList);
+
+        $sort = 1;
+        foreach ($orderedCategoryIdList as $categoryId) {
+            $category = $categories[$categoryId];
+            $category->setSort($sort);
+            $this->em->persist($category);
+            $sort++;
+        }
+    }
+
     public function reorderSort(): void
     {
         $categoryRepository = $this->em->getRepository(Category::class);

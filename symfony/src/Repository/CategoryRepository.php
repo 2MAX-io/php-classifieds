@@ -30,6 +30,28 @@ class CategoryRepository extends ServiceEntityRepository
         return $qb->getQuery()->getOneOrNullResult();
     }
 
+    /**
+     * @return Category[]
+     */
+    public function getFromIds(array $categoryIds): array
+    {
+        $ids = [];
+        foreach ($categoryIds as $category) {
+            if ($category instanceof Category) {
+                $ids[] = $category->getId();
+            } else {
+                $ids[] = (int) $category;
+            }
+        }
+
+        $qb = $this->createQueryBuilder('category');
+        $qb->andWhere($qb->expr()->in('category.id', ':ids'));
+        $qb->setParameter('ids', $ids, \Doctrine\DBAL\Connection::PARAM_INT_ARRAY);
+        $qb->indexBy('category', 'category.id');
+
+        return $qb->getQuery()->getResult();
+    }
+
     // /**
     //  * @return Category[] Returns an array of Category objects
     //  */

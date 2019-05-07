@@ -7,6 +7,7 @@ namespace App\Controller\Admin\Category;
 use App\Controller\Admin\Base\AbstractAdminController;
 use App\Entity\Category;
 use App\Form\Admin\AdminCategorySaveType;
+use App\Helper\Json;
 use App\Service\Admin\Category\AdminCategoryService;
 use App\Service\Category\TreeService;
 use Symfony\Component\HttpFoundation\Request;
@@ -127,5 +128,31 @@ class AdminCategoryController extends AbstractAdminController
         }
 
         return $this->redirectToRoute('app_admin_category');
+    }
+
+    /**
+     * @Route(
+     *     "/admin/red5/category/save-order",
+     *     name="app_admin_category_save_order",
+     *     methods={"POST"},
+     *     options={"expose": true},
+     * )
+     */
+    public function saveOrder(Request $request, AdminCategoryService $adminCategoryService): Response
+    {
+        $this->denyUnlessAdmin();
+
+        if ($this->isCsrfTokenValid('adminCategorySaveSort', $request->headers->get('x-csrf-token'))) {
+            $em = $this->getDoctrine()->getManager();
+
+            $requestContentArray  = Json::decodeToArray($request->getContent());
+            $adminCategoryService->saveOrder($requestContentArray['orderList']);
+            $em->flush();
+
+            $adminCategoryService->reorderSort($requestContentArray['orderList']);
+            $em->flush();
+        }
+
+        return $this->json([]);
     }
 }

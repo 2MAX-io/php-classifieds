@@ -21,7 +21,7 @@ class ListingActionService
 
     public function activate(array $listingIds)
     {
-        $listings = $this->em->getRepository(Listing::class)->getListingsFromIds($listingIds);
+        $listings = $this->em->getRepository(Listing::class)->getFromIds($listingIds);
 
         $nowDatetime = new \DateTime();
         foreach ($listings as $listing) {
@@ -34,7 +34,7 @@ class ListingActionService
 
     public function reject(array $listingIds)
     {
-        $listings = $this->em->getRepository(Listing::class)->getListingsFromIds($listingIds);
+        $listings = $this->em->getRepository(Listing::class)->getFromIds($listingIds);
 
         foreach ($listings as $listing) {
             $listing->setAdminRejected(true);

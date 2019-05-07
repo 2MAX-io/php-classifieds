@@ -13,10 +13,12 @@
             </div>
         </div>
 
+        <button class="btn btn-primary w-100 mb-2 saveOrder">{{ 'trans.Save order of categories' | trans }}</button>
+
         <div class="list-group col nested-sortable mb-2" data-sortable-group="root">
             {# @var category1 \App\Entity\Category #}
             {% for category1 in categoryList %}
-                <div class="list-group-item nested-1">
+                <div class="list-group-item nested-1" data-id="{{ category1.id }}">
                     <div>
                         <div class="d-inline-block mb-3">{{ category1.name }}</div>
                         <a href="{{ path('app_admin_category_edit', {'id': category1.id}) }}" class="btn btn-primary">{{ 'trans.Edit' | trans }}</a>
@@ -25,7 +27,7 @@
 
                     <div class="list-group nested-sortable"  data-sortable-group="parent_{{ category1.id }}">
                     {% for category2 in category1.children  %}
-                        <div class="list-group-item nested-2">
+                        <div class="list-group-item nested-2" data-id="{{ category2.id }}">
                             {{ category2.name }}
                             <a href="{{ path('app_admin_category_edit', {'id': category2.id}) }}" class="btn btn-primary">{{ 'trans.Edit' | trans }}</a>
                             <a href="{{ path('app_admin_category_new', {'parentCategory': category2.id}) }}" class="btn btn-success">{{ 'trans.Add subcategory' | trans }}</a>
@@ -35,6 +37,8 @@
                 </div>
             {% endfor %}
         </div>
+
+        <button class="btn btn-primary w-100 mb-2 saveOrder">{{ 'trans.Save order of categories' | trans }}</button>
     </div>
 
 {% endblock %}
@@ -43,11 +47,36 @@
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery-sortablejs@latest/jquery-sortable.js"></script>
 
+    <!-- CSRF -->
+    <script type="text/javascript">
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-Token': '{{ csrf_token('adminCategorySaveSort') }}',
+            }
+        });
+    </script>
     <script>
         $('.nested-sortable').each(function (i, el) {
             $(el).sortable({
                 group: $(el).data('sortable-group'),
             });
+        });
+
+        $('.saveOrder').click(function () {
+            var orderList = [];
+            $('.nested-sortable').each(function (i, el) {
+                console.log($(el).sortable('widget').toArray());
+                orderList = orderList.concat($(el).sortable('widget').toArray());
+            });
+
+            $.ajax(Routing.generate('app_admin_category_save_order', []), {
+                    type: 'POST',
+                    dataType: 'json',
+                    data: JSON.stringify({
+                        orderList: orderList
+                    })
+                }
+            );
         });
     </script>
 {% endblock %}

@@ -45,11 +45,6 @@ class CustomField
     private $searchable;
 
     /**
-     * @ORM\Column(type="smallint")
-     */
-    private $sortOrder;
-
-    /**
      * @ORM\Column(type="string", length=25, nullable=true)
      */
     private $unit;
@@ -65,15 +60,15 @@ class CustomField
     private $listingCustomFieldValues;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Category", inversedBy="customFields")
+     * @ORM\OneToMany(targetEntity="CustomFieldJoinCategory", mappedBy="customField")
      */
-    private $categories;
+    private $categoriesJoin;
 
     public function __construct()
     {
         $this->customFieldOptions = new ArrayCollection();
-        $this->categories = new ArrayCollection();
         $this->listingCustomFieldValues = new ArrayCollection();
+        $this->categoriesJoin = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -129,18 +124,6 @@ class CustomField
         return $this;
     }
 
-    public function getSortOrder(): ?int
-    {
-        return $this->sortOrder;
-    }
-
-    public function setSortOrder(int $sortOrder): self
-    {
-        $this->sortOrder = $sortOrder;
-
-        return $this;
-    }
-
     public function getUnit(): ?string
     {
         return $this->unit;
@@ -185,32 +168,6 @@ class CustomField
     }
 
     /**
-     * @return Collection|Category[]
-     */
-    public function getCategories(): Collection
-    {
-        return $this->categories;
-    }
-
-    public function addCategory(Category $category): self
-    {
-        if (!$this->categories->contains($category)) {
-            $this->categories[] = $category;
-        }
-
-        return $this;
-    }
-
-    public function removeCategory(Category $category): self
-    {
-        if ($this->categories->contains($category)) {
-            $this->categories->removeElement($category);
-        }
-
-        return $this;
-    }
-
-    /**
      * @return Collection|ListingCustomFieldValue[]
      */
     public function getListingCustomFieldValues(): Collection
@@ -245,6 +202,37 @@ class CustomField
             // set the owning side to null (unless already changed)
             if ($listingCustomFieldValue->getCustomField() === $this) {
                 $listingCustomFieldValue->setCustomField(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|CustomFieldJoinCategory[]
+     */
+    public function getCategoriesJoin(): Collection
+    {
+        return $this->categoriesJoin;
+    }
+
+    public function addCategoriesJoin(CustomFieldJoinCategory $categoriesJoin): self
+    {
+        if (!$this->categoriesJoin->contains($categoriesJoin)) {
+            $this->categoriesJoin[] = $categoriesJoin;
+            $categoriesJoin->setCustomField($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCategoriesJoin(CustomFieldJoinCategory $categoriesJoin): self
+    {
+        if ($this->categoriesJoin->contains($categoriesJoin)) {
+            $this->categoriesJoin->removeElement($categoriesJoin);
+            // set the owning side to null (unless already changed)
+            if ($categoriesJoin->getCustomField() === $this) {
+                $categoriesJoin->setCustomField(null);
             }
         }
 

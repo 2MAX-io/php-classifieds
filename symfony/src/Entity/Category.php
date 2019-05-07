@@ -71,9 +71,11 @@ class Category
     private $listings;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\CustomField", mappedBy="categories")
+     * @var CustomFieldJoinCategory[]
+     *
+     * @ORM\OneToMany(targetEntity="CustomFieldJoinCategory", mappedBy="category")
      */
-    private $customFields;
+    private $customFieldsJoin;
 
     /**
      * @ORM\Column(type="string", length=100, nullable=true)
@@ -88,7 +90,7 @@ class Category
     public function __construct()
     {
         $this->listings = new ArrayCollection();
-        $this->customFields = new ArrayCollection();
+        $this->customFieldsJoin = new ArrayCollection();
         $this->children = new ArrayCollection();
         $this->featuredPackages = new ArrayCollection();
     }
@@ -148,34 +150,6 @@ class Category
             if ($listing->getCategory() === $this) {
                 $listing->setCategory(null);
             }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|CustomField[]
-     */
-    public function getCustomFields(): Collection
-    {
-        return $this->customFields;
-    }
-
-    public function addCustomField(CustomField $customField): self
-    {
-        if (!$this->customFields->contains($customField)) {
-            $this->customFields[] = $customField;
-            $customField->addCategory($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCustomField(CustomField $customField): self
-    {
-        if ($this->customFields->contains($customField)) {
-            $this->customFields->removeElement($customField);
-            $customField->removeCategory($this);
         }
 
         return $this;
@@ -350,6 +324,47 @@ class Category
             // set the owning side to null (unless already changed)
             if ($featuredPackage->getCategory() === $this) {
                 $featuredPackage->setCategory(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|CustomField
+     */
+    public function getCustomFields(): Collection
+    {
+        return $this->getCustomFieldsJoin()->map(function(CustomFieldJoinCategory $el) {
+            return $el->getCustomField();
+        });
+    }
+
+    /**
+     * @return Collection|CustomFieldJoinCategory[]
+     */
+    public function getCustomFieldsJoin(): Collection
+    {
+        return $this->customFieldsJoin;
+    }
+
+    public function addCustomFieldsJoin(CustomFieldJoinCategory $customFieldsJoin): self
+    {
+        if (!$this->customFieldsJoin->contains($customFieldsJoin)) {
+            $this->customFieldsJoin[] = $customFieldsJoin;
+            $customFieldsJoin->setCategory($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCustomFieldsJoin(CustomFieldJoinCategory $customFieldsJoin): self
+    {
+        if ($this->customFieldsJoin->contains($customFieldsJoin)) {
+            $this->customFieldsJoin->removeElement($customFieldsJoin);
+            // set the owning side to null (unless already changed)
+            if ($customFieldsJoin->getCategory() === $this) {
+                $customFieldsJoin->setCategory(null);
             }
         }
 

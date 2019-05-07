@@ -163,8 +163,9 @@ class ListingListService
     {
         $qb = $this->em->getRepository(CustomField::class)->createQueryBuilder('customField');
         $qb->addSelect('customFieldOption');
+        $qb->join('customField.categoriesJoin', 'categoryJoin');
+        $qb->join('categoryJoin.category', 'category');
         $qb->leftJoin('customField.customFieldOptions', 'customFieldOption');
-        $qb->leftJoin('customField.categories', 'category');
 
         $qb->andWhere($qb->expr()->eq('category.id', ':category'));
         $qb->setParameter(':category', $category);

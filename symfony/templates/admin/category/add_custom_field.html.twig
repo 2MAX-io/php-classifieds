@@ -15,6 +15,16 @@
     </div>
 
     {{ form_start(form) }}
+
+    <div class="row">
+        <div class="col-md-5">
+            {{ form_widget(form.customField) }}
+        </div>
+        <div class="col-md-7">
+            <a href="{{ path('app_admin_custom_field_new') }}" class="btn btn-primary">{{ 'trans.Add missing custom field' | trans }}</a>
+        </div>
+    </div>
+
     {{ form_widget(form) }}
     <button class="btn btn-primary">{{ button_label|default('trans.Save') | trans }}</button>
     {{ form_end(form) }}

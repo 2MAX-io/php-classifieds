@@ -40,7 +40,9 @@ class CustomFieldController extends AbstractAdminController
             $entityManager->persist($customField);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_admin_custom_field_index');
+            return $this->redirectToRoute('app_admin_custom_field_edit', [
+                'id' => $customField->getId(),
+            ]);
         }
 
         return $this->render('admin/custom_field/new.html.twig', [
@@ -62,7 +64,7 @@ class CustomFieldController extends AbstractAdminController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('app_admin_custom_field_index', [
+            return $this->redirectToRoute('app_admin_custom_field_edit', [
                 'id' => $customField->getId(),
             ]);
         }

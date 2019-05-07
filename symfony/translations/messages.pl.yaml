@@ -391,3 +391,6 @@ trans:
   for category: 'dla kategorii'
   Options: 'Opcje'
   Add option: 'Dodaj opcje'
+  Value: 'Wartość'
+  for custom field: 'dla pola niestandarowego'
+  Option for custom field: 'Opcja dla pola niestandarowego'

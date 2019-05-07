@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class AddCustomFieldController extends AbstractAdminController
+class CategoryAddCustomFieldController extends AbstractAdminController
 {
     /**
      * @Route(

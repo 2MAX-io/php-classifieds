@@ -20,6 +20,7 @@
                     <div>
                         <div class="d-inline-block mb-3">{{ category1.name }}</div>
                         <a href="{{ path('app_admin_category_edit', {'id': category1.id}) }}" class="btn btn-primary">{{ 'trans.Edit' | trans }}</a>
+                        <a href="{{ path('app_admin_category_new', {'parentCategory': category1.id}) }}" class="btn btn-success">{{ 'trans.Add subcategory' | trans }}</a>
                     </div>
 
                     <div class="list-group nested-sortable">
@@ -27,6 +28,7 @@
                         <div class="list-group-item nested-2">
                             {{ category2.name }}
                             <a href="{{ path('app_admin_category_edit', {'id': category2.id}) }}" class="btn btn-primary">{{ 'trans.Edit' | trans }}</a>
+                            <a href="{{ path('app_admin_category_new', {'parentCategory': category2.id}) }}" class="btn btn-success">{{ 'trans.Add subcategory' | trans }}</a>
                         </div>
                     {% endfor %}
                     </div>

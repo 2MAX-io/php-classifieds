@@ -371,3 +371,4 @@ trans:
   price min: 'cena min'
   Add category: 'Dodaj kategorie'
   Edit Category: 'Edytuj kategorie'
+  Add subcategory: 'Dodaj podkategorie'

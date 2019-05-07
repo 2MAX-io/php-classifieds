@@ -46,17 +46,25 @@ class CategoryController extends AbstractAdminController
     {
         $this->denyUnlessAdmin();
 
+        $em = $this->getDoctrine()->getManager();
+        $parentCategory = $em->getRepository(Category::class)->find((int) $request->get('parentCategory'));
+
         $category = new Category();
         $category->setLvl(0);
         $category->setRgt(0);
         $category->setLft(0);
+        $category->setSort(9999);
+        if ($parentCategory) {
+            $category->setParent($parentCategory);
+        }
+
+
         $form = $this->createForm(AdminCategorySaveType::class, $category);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($category);
-            $entityManager->flush();
+            $em->persist($category);
+            $em->flush();
 
             $treeService->rebuild();
 

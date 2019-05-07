@@ -38,10 +38,48 @@ class AdminCategoryService
         return $qb->getQuery()->getResult();
     }
 
-    public function rebuildSort(): void
+    public function reorderSort(): void
     {
-        $pdo = $this->em->getConnection();
-        $pdo->query('SET @count = 0');
-        $pdo->query('UPDATE `category` SET sort = @count:= @count + 10 WHERE 1 ORDER BY sort ASC;');
+        $categoryRepository = $this->em->getRepository(Category::class);
+        $qb = $categoryRepository->createQueryBuilder('category1');
+        $qb->addSelect('category2');
+        $qb->addSelect('category3');
+        $qb->addSelect('category4');
+        $qb->leftJoin('category1.children', 'category2');
+        $qb->leftJoin('category2.children', 'category3');
+        $qb->leftJoin('category3.children', 'category4');
+        $qb->andWhere($qb->expr()->eq('category1.id', $categoryRepository->getRootNode()->getId()));
+
+        $qb->addOrderBy('category1.sort', 'ASC');
+        $qb->addOrderBy('category2.sort', 'ASC');
+        $qb->addOrderBy('category3.sort', 'ASC');
+        $qb->addOrderBy('category4.sort', 'ASC');
+
+        /** @var Category $rootCategory */
+        $rootCategory = $qb->getQuery()->getSingleResult();
+
+        $rootCategory->setSort(0);
+        $this->reorderCategoryAndChildren($rootCategory, $rootCategory->getSort());
+
+//        $pdo = $this->em->getConnection();
+//        $pdo->query('SET @count = 0');
+//        $pdo->query('UPDATE `category` SET sort = parent_id*1000 + @count:= @count + 1 WHERE 1 ORDER BY lft ASC, sort ASC;');
+    }
+
+    private function reorderCategoryAndChildren(Category $parentCategory, int $baseSort = null)
+    {
+        static $sort;
+        if ($baseSort !== null) {
+            $sort = $baseSort;
+        }
+        foreach ($parentCategory->getChildren() as $category) {
+            $sort++;
+            $category->setSort($sort);
+            $this->em->persist($category);
+
+            if ($category->getChildren()) {
+                $this->reorderCategoryAndChildren($category);
+            }
+        }
     }
 }

@@ -30,6 +30,7 @@ class AdminCategorySaveType extends AbstractType
         $builder->add('picture', FileType::class, [
             'label' => 'trans.Picture',
             'required' => false,
+            'mapped' => false,
         ]);
 //        $builder->add('customFields');
     }

@@ -21,6 +21,15 @@ class CategoryRepository extends ServiceEntityRepository
         parent::__construct($registry, Category::class);
     }
 
+    public function getRootNode(): Category
+    {
+        $qb =  $this->createQueryBuilder('category');
+        $qb->andWhere($qb->expr()->isNull('category.parent'));
+        $qb->orderBy('category.id', 'ASC');
+
+        return $qb->getQuery()->getOneOrNullResult();
+    }
+
     // /**
     //  * @return Category[] Returns an array of Category objects
     //  */

@@ -30,12 +30,11 @@ class AdminCategoryController extends AbstractAdminController
     /**
      * @Route("/admin/red5/category/rebuild", name="app_admin_category_rebuild")
      */
-    public function rebuild(TreeService $treeService, AdminCategoryService $adminCategoryService): Response
+    public function rebuild(TreeService $treeService): Response
     {
         $this->denyUnlessAdmin();
 
         $treeService->rebuild();
-        $adminCategoryService->rebuildSort();
 
         return new Response('done');
     }
@@ -56,7 +55,7 @@ class AdminCategoryController extends AbstractAdminController
         $category->setLvl(0);
         $category->setRgt(0);
         $category->setLft(0);
-        $category->setSort(9999);
+        $category->setSort(999999999);
         if ($parentCategory) {
             $category->setParent($parentCategory);
         }
@@ -70,6 +69,7 @@ class AdminCategoryController extends AbstractAdminController
             $em->flush();
 
             $treeService->rebuild();
+            $em->flush();
 
             return $this->redirectToRoute('app_admin_category_edit', [
                 'id' => $category->getId(),
@@ -96,9 +96,11 @@ class AdminCategoryController extends AbstractAdminController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $em = $this->getDoctrine()->getManager();
+            $em->flush();
 
             $treeService->rebuild();
+            $em->flush();
 
             return $this->redirectToRoute('app_admin_category_edit', [
                 'id' => $category->getId(),

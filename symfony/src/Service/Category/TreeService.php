@@ -36,15 +36,11 @@ class TreeService
         ], $this->em->getConnection());
 
         $tree->rebuild($this->getRootNode()->getId());
-        $this->adminCategoryService->rebuildSort();
+        $this->adminCategoryService->reorderSort();
     }
 
     private function getRootNode(): Category
     {
-        $qb =  $this->em->getRepository(Category::class)->createQueryBuilder('category');
-        $qb->andWhere($qb->expr()->isNull('category.parent'));
-        $qb->orderBy('category.id', 'ASC');
-
-        return $qb->getQuery()->getOneOrNullResult();
+        return $this->em->getRepository(Category::class)->getRootNode();
     }
 }

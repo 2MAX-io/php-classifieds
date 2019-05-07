@@ -38,8 +38,8 @@ class CategoryAddCustomFieldController extends AbstractAdminController
             $em->persist($customFieldJoinCategory);
             $em->flush();
 
-            return $this->redirectToRoute('app_admin_custom_field_edit', [
-                'id' => $customFieldJoinCategory->getCustomField()->getId(),
+            return $this->redirectToRoute('app_admin_category_edit', [
+                'id' => $customFieldJoinCategory->getCategory()->getId(),
             ]);
         }
 

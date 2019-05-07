@@ -6,6 +6,7 @@ namespace App\Controller\Admin\Category;
 
 use App\Controller\Admin\Base\AbstractAdminController;
 use App\Entity\Category;
+use App\Entity\CustomFieldJoinCategory;
 use App\Form\Admin\AdminCategorySaveType;
 use App\Helper\Json;
 use App\Service\Admin\Category\AdminCategoryService;
@@ -178,5 +179,27 @@ class AdminCategoryController extends AbstractAdminController
         }
 
         return $this->json([]);
+    }
+
+    /**
+     * @Route(
+     *     "/admin/red5/category/custom-field-join-category/{id}",
+     *     name="app_admin_category_custom_field_join_category_delete",
+     *     methods={"DELETE"}
+     * )
+     */
+    public function deleteCustomFieldJoinCategory(Request $request, CustomFieldJoinCategory $customFieldJoinCategory): Response
+    {
+        $this->denyUnlessAdmin();
+
+        if ($this->isCsrfTokenValid('deleteCustomFieldFromCategory'.$customFieldJoinCategory->getId(), $request->request->get('_token'))) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($customFieldJoinCategory);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('app_admin_category_edit', [
+            'id' => $customFieldJoinCategory->getCategory()->getId(),
+        ]);
     }
 }

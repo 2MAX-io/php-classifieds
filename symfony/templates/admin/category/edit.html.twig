@@ -45,9 +45,9 @@
         </tr>
         </thead>
         <tbody class="sortable">
-        {% for customFieldsJoin in category.customFieldsJoin %}
-            {% set customField = customFieldsJoin.customField %}
-            <tr data-id="{{ customFieldsJoin.id }}">
+        {% for customFieldJoinCategory in category.customFieldsJoin %}
+            {% set customField = customFieldJoinCategory.customField %}
+            <tr data-id="{{ customFieldJoinCategory.id }}">
                 <td>
                     {{ customField.name }}
                 </td>
@@ -65,6 +65,8 @@
                 </td>
                 <td>
                     <a href="{{ path('app_admin_custom_field_edit', {'id': customField.id}) }}" class="btn btn-dark">{{ 'trans.Edit' | trans }}</a>
+
+                    {% include 'admin/category/_delete_custom_field_join_category_form.html.twig' %}
                 </td>
             </tr>
         {% else %}

@@ -63,17 +63,17 @@
         });
 
         $('.saveOrder').click(function () {
-            var orderList = [];
+            var orderedIdList = [];
             $('.nested-sortable').each(function (i, el) {
                 console.log($(el).sortable('widget').toArray());
-                orderList = orderList.concat($(el).sortable('widget').toArray());
+                orderedIdList = orderedIdList.concat($(el).sortable('widget').toArray());
             });
 
             $.ajax(Routing.generate('app_admin_category_save_order', []), {
                     type: 'POST',
                     dataType: 'json',
                     data: JSON.stringify({
-                        orderList: orderList
+                        orderedIdList: orderedIdList
                     })
                 }
             );

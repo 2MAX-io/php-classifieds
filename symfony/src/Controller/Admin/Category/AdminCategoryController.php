@@ -9,6 +9,7 @@ use App\Entity\Category;
 use App\Form\Admin\AdminCategorySaveType;
 use App\Helper\Json;
 use App\Service\Admin\Category\AdminCategoryService;
+use App\Service\Admin\CustomField\CustomFieldService;
 use App\Service\Category\TreeService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -146,10 +147,33 @@ class AdminCategoryController extends AbstractAdminController
             $em = $this->getDoctrine()->getManager();
 
             $requestContentArray  = Json::decodeToArray($request->getContent());
-            $adminCategoryService->saveOrder($requestContentArray['orderList']);
+            $adminCategoryService->saveOrder($requestContentArray['orderedIdList']);
             $em->flush();
 
-            $adminCategoryService->reorderSort($requestContentArray['orderList']);
+            $adminCategoryService->reorderSort($requestContentArray['orderedIdList']);
+            $em->flush();
+        }
+
+        return $this->json([]);
+    }
+
+    /**
+     * @Route(
+     *     "/admin/red5/category/custom-fields/save-order",
+     *     name="app_admin_category_custom_fields_save_order",
+     *     methods={"POST"},
+     *     options={"expose": true},
+     * )
+     */
+    public function saveCustomFieldsOrderInCategory(Request $request, CustomFieldService $customFieldService): Response
+    {
+        $this->denyUnlessAdmin();
+
+        if ($this->isCsrfTokenValid('adminCustomFieldsInCategorySaveSort', $request->headers->get('x-csrf-token'))) {
+            $em = $this->getDoctrine()->getManager();
+
+            $requestContentArray  = Json::decodeToArray($request->getContent());
+            $customFieldService->saveOrder($requestContentArray['orderedIdList']);
             $em->flush();
         }
 

@@ -25,6 +25,8 @@
             <h5>{{ 'trans.to fill for listings in category' | trans }}</h5>
         </div>
         <div class="col-md-6 text-md-right">
+            <button class="btn btn-success saveOrder">{{ 'trans.Save order' | trans }}</button>
+
             <a href="{{ path('app_admin_category_add_custom_field', {'id': category.id}) }}" class="btn btn-primary">
                 {{ 'trans.Add custom field' | trans }}
             </a>
@@ -42,9 +44,10 @@
             <th></th>
         </tr>
         </thead>
-        <tbody>
-        {% for customField in category.customFields %}
-            <tr>
+        <tbody class="sortable">
+        {% for customFieldsJoin in category.customFieldsJoin %}
+            {% set customField = customFieldsJoin.customField %}
+            <tr data-id="{{ customFieldsJoin.id }}">
                 <td>
                     {{ customField.name }}
                 </td>
@@ -73,3 +76,34 @@
     </table>
 </div>
 {% endblock %}
+
+{% block js %}
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-sortablejs@latest/jquery-sortable.js"></script>
+
+    <!-- CSRF -->
+    <script type="text/javascript">
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-Token': '{{ csrf_token('adminCustomFieldsInCategorySaveSort') }}',
+            }
+        });
+    </script>
+    <script>
+        $('.sortable').sortable({});
+
+        $('.saveOrder').click(function () {
+            var orderedIdList = $('.sortable').sortable('widget').toArray();
+
+            $.ajax(Routing.generate('app_admin_category_custom_fields_save_order', []), {
+                    type: 'POST',
+                    dataType: 'json',
+                    data: JSON.stringify({
+                        orderedIdList: orderedIdList
+                    })
+                }
+            );
+        });
+    </script>
+{% endblock %}
+

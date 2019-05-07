@@ -170,6 +170,8 @@ class ListingListService
         $qb->andWhere($qb->expr()->eq('category.id', ':category'));
         $qb->setParameter(':category', $category);
 
+        $qb->addOrderBy('categoryJoin.sort', 'ASC');
+
         return $qb->getQuery()->getResult();
     }
 }

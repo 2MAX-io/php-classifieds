@@ -35,8 +35,9 @@ class CustomFieldsForListingFormService
     public function getFields(?int $categoryId, ?int $listingId): array
     {
         $qb = $this->em->getRepository(CustomField::class)->createQueryBuilder('customField');
+        $qb->join('customField.categoriesJoin', 'categoryJoin');
+        $qb->join('categoryJoin.category', 'category');
         $qb->leftJoin('customField.customFieldOptions', 'customField_options');
-        $qb->leftJoin('customField.categories', 'category');
 
         $qb->andWhere($qb->expr()->eq('category.id', ':category'));
         $qb->setParameter(':category', $categoryId);
@@ -50,7 +51,7 @@ class CustomFieldsForListingFormService
         );
         $qb->setParameter(':listingId', $listingId);
 
-        $qb->orderBy('customField.sortOrder');
+        $qb->orderBy('categoryJoin.sort', 'ASC');
 
         return $qb->getQuery()->getResult();
     }

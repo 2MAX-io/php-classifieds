@@ -1,0 +1,42 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}CustomField index{% endblock %}
+
+{% block body %}
+    <h1>CustomField index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Required</th>
+                <th>Searchable</th>
+                <th>Unit</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for custom_field in custom_fields %}
+            <tr>
+                <td>{{ custom_field.id }}</td>
+                <td>{{ custom_field.name }}</td>
+                <td>{{ custom_field.type }}</td>
+                <td>{{ custom_field.required ? 'Yes' : 'No' }}</td>
+                <td>{{ custom_field.searchable ? 'Yes' : 'No' }}</td>
+                <td>{{ custom_field.unit }}</td>
+                <td>
+                    <a href="{{ path('app_admin_custom_field_edit', {'id': custom_field.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_admin_custom_field_new') }}">Create new</a>
+{% endblock %}

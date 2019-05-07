@@ -37,4 +37,11 @@ class AdminCategoryService
 
         return $qb->getQuery()->getResult();
     }
+
+    public function rebuildSort(): void
+    {
+        $pdo = $this->em->getConnection();
+        $pdo->query('SET @count = 0');
+        $pdo->query('UPDATE `category` SET sort = @count:= @count + 10 WHERE 1 ORDER BY sort ASC;');
+    }
 }

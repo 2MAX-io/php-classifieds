@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Service\Category;
 
 use App\Entity\Category;
+use App\Service\Admin\Category\AdminCategoryService;
 use Doctrine\ORM\EntityManagerInterface;
 use StefanoTree\NestedSet;
 
@@ -15,9 +16,15 @@ class TreeService
      */
     private $em;
 
-    public function __construct(EntityManagerInterface $em)
+    /**
+     * @var AdminCategoryService
+     */
+    private $adminCategoryService;
+
+    public function __construct(EntityManagerInterface $em, AdminCategoryService $adminCategoryService)
     {
         $this->em = $em;
+        $this->adminCategoryService = $adminCategoryService;
     }
 
     public function rebuild()
@@ -29,6 +36,7 @@ class TreeService
         ], $this->em->getConnection());
 
         $tree->rebuild($this->getRootNode()->getId());
+        $this->adminCategoryService->rebuildSort();
     }
 
     private function getRootNode(): Category

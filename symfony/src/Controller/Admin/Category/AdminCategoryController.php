@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class CategoryController extends AbstractAdminController
+class AdminCategoryController extends AbstractAdminController
 {
     /**
      * @Route("/admin/red5/category", name="app_admin_category")
@@ -30,11 +30,12 @@ class CategoryController extends AbstractAdminController
     /**
      * @Route("/admin/red5/category/rebuild", name="app_admin_category_rebuild")
      */
-    public function rebuild(TreeService $treeService): Response
+    public function rebuild(TreeService $treeService, AdminCategoryService $adminCategoryService): Response
     {
         $this->denyUnlessAdmin();
 
         $treeService->rebuild();
+        $adminCategoryService->rebuildSort();
 
         return new Response('done');
     }
@@ -42,8 +43,10 @@ class CategoryController extends AbstractAdminController
     /**
      * @Route("/admin/red5/category/new", name="app_admin_category_new", methods={"GET","POST"})
      */
-    public function new(Request $request, TreeService $treeService): Response
-    {
+    public function new(
+        Request $request,
+        TreeService $treeService
+    ): Response {
         $this->denyUnlessAdmin();
 
         $em = $this->getDoctrine()->getManager();
@@ -68,7 +71,9 @@ class CategoryController extends AbstractAdminController
 
             $treeService->rebuild();
 
-            return $this->redirectToRoute('app_admin_category');
+            return $this->redirectToRoute('app_admin_category_edit', [
+                'id' => $category->getId(),
+            ]);
         }
 
         return $this->render('admin/category/new.html.twig', [
@@ -80,8 +85,11 @@ class CategoryController extends AbstractAdminController
     /**
      * @Route("/admin/red5/category/{id}/edit", name="app_admin_category_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, Category $category, TreeService $treeService): Response
-    {
+    public function edit(
+        Request $request,
+        Category $category,
+        TreeService $treeService
+    ): Response {
         $this->denyUnlessAdmin();
 
         $form = $this->createForm(AdminCategorySaveType::class, $category);
@@ -92,7 +100,7 @@ class CategoryController extends AbstractAdminController
 
             $treeService->rebuild();
 
-            return $this->redirectToRoute('app_admin_category', [
+            return $this->redirectToRoute('app_admin_category_edit', [
                 'id' => $category->getId(),
             ]);
         }

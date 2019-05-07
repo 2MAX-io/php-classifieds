@@ -17,4 +17,50 @@
 
     {{ include('admin/category/_form.html.twig', {'button_label': 'trans.Update'}) }}
 </div>
+
+<div class="container mt-5">
+    <h1>{{ 'trans.Custom fields' | trans }}</h1>
+    <h5>{{ 'trans.to fill for listings in category' | trans }}</h5>
+
+    <table class="table table-responsive-sm">
+        <thead>
+        <tr>
+            <th>{{ 'trans.Name' | trans }}</th>
+            <th>{{ 'trans.Type' | trans }}</th>
+            <th>{{ 'trans.Required?' | trans }}</th>
+            <th>{{ 'trans.Searchable?' | trans }}</th>
+            <th>{{ 'trans.Unit' | trans }}</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for customField in category.customFields %}
+            <tr>
+                <td>
+                    {{ customField.name }}
+                </td>
+                <td>
+                    {{ customField.type }}
+                </td>
+                <td>
+                    {{ customField.required | boolText | trans }}
+                </td>
+                <td>
+                    {{ customField.searchable | boolText | trans }}
+                </td>
+                <td>
+                    {{ customField.unit }}
+                </td>
+                <td>
+                    <a href="#" class="btn btn-dark">{{ 'trans.Edit' | trans }}</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="999">{{ 'trans.no records found' | trans }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
 {% endblock %}

@@ -376,3 +376,8 @@ trans:
   Order, smaller first: 'Kolejność, mniejsze są pierwsze'
   Picture: 'Obrazek'
   Save order of categories: 'Zapisz kolejnośc kategorii'
+  Custom fields: 'Pola niestandardowe'
+  to fill for listings in category: 'do wypełnienia dla ogłoszeń w kategorii'
+  Required?: 'Wymanage?'
+  Searchable?: 'Przeszukiwalne?'
+  Unit: 'Jednostka'

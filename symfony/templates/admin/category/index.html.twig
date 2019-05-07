@@ -21,7 +21,7 @@
                 <div class="list-group-item nested-1" data-id="{{ category1.id }}">
                     <div>
                         <div class="d-inline-block mb-3">{{ category1.name }}</div>
-                        <a href="{{ path('app_admin_category_edit', {'id': category1.id}) }}" class="btn btn-primary">{{ 'trans.Edit' | trans }}</a>
+                        <a href="{{ path('app_admin_category_edit', {'id': category1.id}) }}" class="btn btn-dark">{{ 'trans.Edit' | trans }}</a>
                         <a href="{{ path('app_admin_category_new', {'parentCategory': category1.id}) }}" class="btn btn-success">{{ 'trans.Add subcategory' | trans }}</a>
                     </div>
 
@@ -29,7 +29,7 @@
                     {% for category2 in category1.children  %}
                         <div class="list-group-item nested-2" data-id="{{ category2.id }}">
                             {{ category2.name }}
-                            <a href="{{ path('app_admin_category_edit', {'id': category2.id}) }}" class="btn btn-primary">{{ 'trans.Edit' | trans }}</a>
+                            <a href="{{ path('app_admin_category_edit', {'id': category2.id}) }}" class="btn btn-dark">{{ 'trans.Edit' | trans }}</a>
                             <a href="{{ path('app_admin_category_new', {'parentCategory': category2.id}) }}" class="btn btn-success">{{ 'trans.Add subcategory' | trans }}</a>
                         </div>
                     {% endfor %}

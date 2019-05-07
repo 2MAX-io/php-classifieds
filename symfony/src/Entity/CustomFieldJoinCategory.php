@@ -5,9 +5,15 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\UniqueConstraint;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CustomFieldJoinCategoryRepository")
+ * @ORM\Table(
+ *      uniqueConstraints={
+ *          @UniqueConstraint(name="unique_field_category_pair", columns={"custom_field_id", "category_id"}),
+ *      }
+ * )
  */
 class CustomFieldJoinCategory
 {

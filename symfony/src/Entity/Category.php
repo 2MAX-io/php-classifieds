@@ -25,12 +25,12 @@ class Category
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=100)
+     * @ORM\Column(type="string", length=100, nullable=false)
      */
     private $name;
 
     /**
-     * @ORM\Column(type="string", length=100, unique=true)
+     * @ORM\Column(type="string", length=100, unique=true, nullable=false)
      */
     private $slug;
 
@@ -45,17 +45,17 @@ class Category
     private $parent;
 
     /**
-     * @ORM\Column(name="lft", type="integer")
+     * @ORM\Column(name="lft", type="integer", nullable=false)
      */
     private $lft;
 
     /**
-     * @ORM\Column(name="rgt", type="integer")
+     * @ORM\Column(name="rgt", type="integer", nullable=false)
      */
     private $rgt;
 
     /**
-     * @ORM\Column(name="lvl", type="integer")
+     * @ORM\Column(name="lvl", type="integer", nullable=false)
      */
     private $lvl;
 
@@ -234,7 +234,7 @@ class Category
         return $this->picture;
     }
 
-    public function setPicture(string $picture): self
+    public function setPicture(?string $picture): self
     {
         $this->picture = $picture;
 

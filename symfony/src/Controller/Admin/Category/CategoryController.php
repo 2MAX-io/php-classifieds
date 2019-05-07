@@ -55,7 +55,7 @@ class CategoryController extends AbstractAdminController
             $entityManager->persist($category);
             $entityManager->flush();
 
-            return $this->redirectToRoute('category_index');
+            return $this->redirectToRoute('app_admin_category');
         }
 
         return $this->render('admin/category/new.html.twig', [
@@ -77,7 +77,7 @@ class CategoryController extends AbstractAdminController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('category_index', [
+            return $this->redirectToRoute('app_admin_category', [
                 'id' => $category->getId(),
             ]);
         }
@@ -101,6 +101,6 @@ class CategoryController extends AbstractAdminController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('category_index');
+        return $this->redirectToRoute('app_admin_category');
     }
 }

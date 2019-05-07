@@ -6,6 +6,7 @@ namespace App\Form\Admin;
 
 use App\Entity\Category;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -19,7 +20,9 @@ class AdminCategoryType extends AbstractType
 //        $builder->add('lft');
 //        $builder->add('rgt');
 //        $builder->add('lvl');
-        $builder->add('picture');
+        $builder->add('picture', FileType::class, [
+            'required' => false,
+        ]);
 //        $builder->add('parent');
 //        $builder->add('customFields');
     }

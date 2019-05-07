@@ -15,11 +15,9 @@ class CategoryController extends AbstractAdminController
     /**
      * @Route("/admin/red5/category", name="app_admin_category")
      */
-    public function index(CategoryService $categoryService, TreeService $treeService): Response
+    public function index(CategoryService $categoryService): Response
     {
         $this->denyUnlessAdmin();
-
-        $treeService->rebuild();
 
         return $this->render('admin/category/index.html.twig', [
             'categoryList' => $categoryService->getCategoryList(),

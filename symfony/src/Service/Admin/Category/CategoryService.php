@@ -24,8 +24,12 @@ class CategoryService
      */
     public function getCategoryList(): array
     {
-        $qb = $this->em->getRepository(Category::class)->createQueryBuilder('category');
-        $qb->andWhere($qb->expr()->eq('category.lvl', 1));
+        $qb = $this->em->getRepository(Category::class)->createQueryBuilder('category1');
+        $qb->addSelect('category2');
+        $qb->addSelect('category3');
+        $qb->leftJoin('category1.children', 'category2');
+        $qb->leftJoin('category2.children', 'category3');
+        $qb->andWhere($qb->expr()->eq('category1.lvl', 1));
 
         return $qb->getQuery()->getResult();
     }

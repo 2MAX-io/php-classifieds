@@ -372,3 +372,6 @@ trans:
   Add category: 'Dodaj kategorie'
   Edit Category: 'Edytuj kategorie'
   Add subcategory: 'Dodaj podkategorie'
+  Under category: 'Pod kategorią'
+  Order, smaller first: 'Kolejność, mniejsze są pierwsze'
+  Picture: 'Obrazek'

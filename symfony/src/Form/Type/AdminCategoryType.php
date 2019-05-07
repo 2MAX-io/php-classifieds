@@ -17,7 +17,7 @@ class AdminCategoryType extends AbstractType
         $resolver->setDefaults([
             'class' => Category::class,
             'placeholder' => 'trans.Select category',
-            'label' => 'trans.Select category',
+            'label' => 'trans.Under category',
             'choice_label' => function (Category $category) {
                 $path = $category->getPath();
 

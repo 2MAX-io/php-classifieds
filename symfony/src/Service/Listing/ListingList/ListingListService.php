@@ -140,10 +140,7 @@ class ListingListService
             $qb->orderBy('listing.orderByDate', 'DESC');
         }
 
-//        $qb->setMaxResults(15);
-//        $qb->getQuery()->getResult();
-
-//        $qb->groupBy('listing.id');
+        $qb->groupBy('listing.id');
 
         $adapter = new DoctrineORMAdapter($qb, true, $qb->getDQLPart('having') !== null);
         $pager = new Pagerfanta($adapter);

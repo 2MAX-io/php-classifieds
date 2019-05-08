@@ -10,8 +10,10 @@
         <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
             <span class="count_top"><i class="fa fa-user"></i> {{ 'trans.Pending for activation' | trans }}</span>
             <div class="count">
-                <span>{{ adminStats.toActivateCount | thousandsSeparate }}</span>
-                <a href="{{ path('app_admin_listing_activate_list') }}" class="btn btn-primary">{{ 'trans.Activate' | trans }}</a>
+                {{ adminStats.toActivateCount | thousandsSeparate }}
+                <a href="{{ path('app_admin_listing_activate_list') }}" class="btn btn-primary">
+                    {{ 'trans.Activate' | trans }}
+                </a>
             </div>
         </div>
         <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">

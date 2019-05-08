@@ -86,6 +86,32 @@
                                 </div>
                             {% endif %}
 
+                            <!-- price -->
+                            <label>{{ 'trans.Amount or price' | trans }}</label>
+                            <div class="form-row mb-3">
+                                <div class="col-6">
+                                    <input
+                                            type="text"
+                                            id="min_price"
+                                            class="form-control"
+                                            name="min_price"
+                                            value="{{ app.request.get('min_price') | default }}"
+                                            placeholder="{{ 'trans.amount min' | trans }}"
+                                    >
+                                </div>
+
+                                <div class="col-6">
+                                    <input
+                                            type="text"
+                                            id="max_price"
+                                            class="form-control"
+                                            name="max_price"
+                                            value="{{ app.request.get('max_price') | default }}"
+                                            placeholder="{{ 'trans.amount max' | trans }}"
+                                    >
+                                </div>
+                            </div>
+
                             {# @var customField \App\Entity\CustomField #}
                             {% for customField in customFieldList %}
                                 {% if customField.type == constant('\App\\Entity\\CustomField::TYPE_SELECT') and customField.customFieldOptions is not empty %}
@@ -143,32 +169,6 @@
                                     </div>
                                 {% endif %}
                             {% endfor %}
-
-                            <!-- price -->
-                            <label>{{ 'trans.Amount or price' | trans }}</label>
-                            <div class="form-row mb-3">
-                                <div class="col-6">
-                                    <input
-                                            type="text"
-                                            id="min_price"
-                                            class="form-control"
-                                            name="min_price"
-                                            value="{{ app.request.get('min_price') | default }}"
-                                            placeholder="{{ 'trans.amount min' | trans }}"
-                                    >
-                                </div>
-
-                                <div class="col-6">
-                                    <input
-                                            type="text"
-                                            id="max_price"
-                                            class="form-control"
-                                            name="max_price"
-                                            value="{{ app.request.get('max_price') | default }}"
-                                            placeholder="{{ 'trans.amount max' | trans }}"
-                                    >
-                                </div>
-                            </div>
 
                             <button class="btn btn-primary w-100">{{ 'trans.Filter' | trans }}</button>
                         </form>

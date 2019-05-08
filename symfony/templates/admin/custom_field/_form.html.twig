@@ -5,9 +5,10 @@
         <h1>{{ 'trans.Categories' | trans }}</h1>
 
         <div>
-            {% for category in categoryList %}
+            {% for categorySelection in categorySelectionList %}
+                {% set category = categorySelection.category %}
                 <div style="margin-left: {{ (category.lvl-1) * 2 }}rem">
-                    <input type="checkbox" id="category_{{ category.id }}">
+                    <input type="checkbox" id="category_{{ category.id }}" {% if categorySelection.selected %}checked{% endif %}>
                     <label for="category_{{ category.id }}">{{ category.name }}</label>
                 </div>
             {% endfor %}

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller\Admin\Category;
 
 use App\Controller\Admin\Base\AbstractAdminController;
@@ -7,7 +9,7 @@ use App\Entity\CustomField;
 use App\Form\Admin\CustomFieldType;
 use App\Helper\Json;
 use App\Repository\CustomFieldRepository;
-use App\Service\Admin\Category\AdminCategoryService;
+use App\Service\Admin\CustomField\CategorySelection\CustomFieldCategorySelectionService;
 use App\Service\Admin\CustomField\CustomFieldService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -60,7 +62,7 @@ class CustomFieldController extends AbstractAdminController
     public function edit(
         Request $request,
         CustomField $customField,
-        AdminCategoryService $adminCategoryService
+        CustomFieldCategorySelectionService $customFieldCategorySelectionService
     ): Response {
         $this->denyUnlessAdmin();
 
@@ -76,7 +78,7 @@ class CustomFieldController extends AbstractAdminController
         }
 
         return $this->render('admin/custom_field/edit.html.twig', [
-            'categoryList' => $adminCategoryService->getFlatCategoryList(),
+            'categorySelectionList' => $customFieldCategorySelectionService->getCategorySelectionList($customField),
             'custom_field' => $customField,
             'form' => $form->createView(),
         ]);

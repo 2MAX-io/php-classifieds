@@ -56,19 +56,6 @@ class AdminCategoryService
         return $qb->getQuery()->getResult();
     }
 
-    /**
-     * @return Category[]
-     */
-    public function getFlatCategoryList(): array
-    {
-        $qb = $this->em->getRepository(Category::class)->createQueryBuilder('category');
-        $qb->andWhere($qb->expr()->gt('category.lvl', 0));
-
-        $qb->addOrderBy('category.sort', 'ASC');
-
-        return $qb->getQuery()->getResult();
-    }
-
     public function saveOrder(array $orderedCategoryIdList): void
     {
         $categories = $this->em->getRepository(Category::class)->getFromIds($orderedCategoryIdList);

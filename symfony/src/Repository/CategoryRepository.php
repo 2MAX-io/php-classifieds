@@ -52,6 +52,19 @@ class CategoryRepository extends ServiceEntityRepository
         return $qb->getQuery()->getResult();
     }
 
+    /**
+     * @return Category[]
+     */
+    public function getFlatCategoryList(): array
+    {
+        $qb = $this->createQueryBuilder('category');
+        $qb->andWhere($qb->expr()->gt('category.lvl', 0));
+
+        $qb->addOrderBy('category.sort', 'ASC');
+
+        return $qb->getQuery()->getResult();
+    }
+
     // /**
     //  * @return Category[] Returns an array of Category objects
     //  */

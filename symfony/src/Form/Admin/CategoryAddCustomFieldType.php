@@ -6,6 +6,7 @@ namespace App\Form\Admin;
 
 use App\Entity\CustomField;
 use App\Entity\CustomFieldJoinCategory;
+use App\Repository\CustomFieldRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
@@ -21,6 +22,13 @@ class CategoryAddCustomFieldType extends AbstractType
             'placeholder' => 'trans.Select',
             'choice_label' => 'name',
             'label' => 'trans.Custom field',
+            'query_builder' => function (CustomFieldRepository $customFieldRepository) {
+                $qb = $customFieldRepository->createQueryBuilder('customField');
+
+                $qb->addOrderBy('customField.sort', 'ASC');
+
+                return $qb;
+            },
         ]);
 
         $builder->add('sort', IntegerType::class, [

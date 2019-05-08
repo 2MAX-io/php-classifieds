@@ -20,7 +20,7 @@
         </div>
     </div>
 
-    <div class="container mb-5 categories">
+    <div class="container mb-0 mb-md-5 categories">
         <div class="row">
             {% for category in categoryList %}
             <div class="col-sm-6 col-lg-3 text-center mb-4">
@@ -45,93 +45,64 @@
         </div>
     </div>
 
-    <!-- Recommended Listings -->
-    {% if recommendedListings is not empty %}
-        <div class="container mb-2">
-            <div class="d-flex flex-row">
-                <div class="flex-grow-1"><h2 class="">{{ 'trans.Recommended Listings' | trans }}</h2></div>
-            </div>
-        </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card card-featured mb-4">
+                    <div class="card-header">
+                        <strong>{{ 'trans.Recommended Listings' | trans }}</strong>
+                    </div>
 
-        <div class="container mb-5">
-            <div class="row">
-                {% for listing in recommendedListings %}
-                    <div class="col-md-3">
-                        <div class="card card-featured mb-4">
-
-                            <a href="{{ path('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}">
-                                <img
-                                        class="card-img-top"
-                                        alt=""
-                                        src="{{ asset(listing.mainImageInListSize | default('static/system/blank.png')) }}"
-                                >
-                            </a>
-
-                            <div class="card-body">
-                                <h5 class="card-title">
-                                    <a href={{ path('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}>
-                                        {{ listing.title }}
-                                    </a>
-                                </h5>
-                            </div>
-
-                            <div class="card-footer">
+                    <div class="card-body">
+                        {% for listing in recommendedListings %}
+                            <div>
                                 <a
                                         href="{{ path('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}"
-                                        class="btn btn-sm btn-dark btn-block mt-auto"
+                                        class="py-2 d-inline-block"
                                 >
-                                    {{ 'trans.View Listing' | trans }}
+                                    {{ listing.title }}
                                 </a>
                             </div>
-                        </div>
+                        {% endfor %}
                     </div>
-                {% endfor %}
+
+                    <div class="card-footer">
+                        <a href="{{ path('app_last_added') }}" class="btn btn-sm btn-dark btn-block mt-auto">
+                            {{ 'trans.View more' | trans }}
+                        </a>
+                    </div>
+                </div>
             </div>
-        </div>
-    {% endif %}
+            <div class="col-md-6">
 
-    <!-- Latest Listings -->
-    {% if latestListings is not empty %}
-        <div class="container mb-2">
-            <div class="d-flex flex-row">
-                <div class="flex-grow-1"><h2 class="">{{ 'trans.Latest Listings' | trans }}</h2></div>
-            </div>
-        </div>
-        <div class="container mb-5">
-            <div class="row">
-                {% for listing in latestListings %}
-                    <div class="col-md-3">
-                        <div class="card card-featured mb-4">
+                <div class="card card-featured mb-4">
+                    <div class="card-header">
+                        <strong>{{ 'trans.Latest Listings' | trans }}</strong>
+                    </div>
 
-                            <a href="{{ path('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}">
-                                <img
-                                        class="card-img-top"
-                                        alt=""
-                                        src="{{ asset(listing.mainImageInListSize | default('static/system/blank.png')) }}"
-                                >
-                            </a>
-
-                            <div class="card-body">
-                                <h5 class="card-title">
-                                    <a href={{ path('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}>
+                    <div class="card-body">
+                        <div>
+                            {% for listing in latestListings %}
+                                <div>
+                                    <a
+                                            href="{{ path('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}"
+                                            class="py-2 d-inline-block"
+                                    >
                                         {{ listing.title }}
                                     </a>
-                                </h5>
-                            </div>
-
-                            <div class="card-footer">
-                                <a
-                                        href="{{ path('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}"
-                                        class="btn btn-sm btn-dark btn-block mt-auto"
-                                >
-                                {{ 'trans.View Listing' | trans }}
-                                </a>
-                            </div>
+                                </div>
+                            {% endfor %}
                         </div>
                     </div>
-                {% endfor %}
+
+                    <div class="card-footer">
+                        <a href="{{ path('app_last_added') }}" class="btn btn-sm btn-dark btn-block mt-auto">
+                            {{ 'trans.View more' | trans }}
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
-    {% endif %}
+    </div>
 
 {% endblock body %}

@@ -79,9 +79,12 @@ a:hover, a:focus {
 }
 
 .card-featured {
-    text-align: center;
-    height: 25rem;
+    height: 28rem;
     background-color: #f8f9fa;
+}
+
+.card-featured .card-body {
+    overflow: hidden;
 }
 
 @media (max-width: 768px) {

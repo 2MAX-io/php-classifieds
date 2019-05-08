@@ -7,6 +7,7 @@ use App\Entity\CustomField;
 use App\Form\Admin\CustomFieldType;
 use App\Helper\Json;
 use App\Repository\CustomFieldRepository;
+use App\Service\Admin\Category\AdminCategoryService;
 use App\Service\Admin\CustomField\CustomFieldService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -56,8 +57,11 @@ class CustomFieldController extends AbstractAdminController
     /**
      * @Route("/admin/red5/custom-field/{id}/edit", name="app_admin_custom_field_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, CustomField $customField): Response
-    {
+    public function edit(
+        Request $request,
+        CustomField $customField,
+        AdminCategoryService $adminCategoryService
+    ): Response {
         $this->denyUnlessAdmin();
 
         $form = $this->createForm(CustomFieldType::class, $customField);
@@ -72,6 +76,7 @@ class CustomFieldController extends AbstractAdminController
         }
 
         return $this->render('admin/custom_field/edit.html.twig', [
+            'categoryList' => $adminCategoryService->getFlatCategoryList(),
             'custom_field' => $customField,
             'form' => $form->createView(),
         ]);

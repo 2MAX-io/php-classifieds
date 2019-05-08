@@ -1,6 +1,25 @@
 {% extends 'admin/base.html.twig' %}
+{% import _self as macros %}
 
 {% block title %}{{ 'trans.Categories' | trans }}{% endblock %}
+
+{% macro categoryLevel(parentCategory) %}
+    {% import _self as macros %}
+    {# @var parentCategory \App\Entity\Category #}
+    <div class="list-group-item nested-1" data-id="{{ parentCategory.id }}">
+        <div>
+            <div class="d-inline-block mb-3">{{ parentCategory.name }}</div>
+            <a href="{{ path('app_admin_category_edit', {'id': parentCategory.id}) }}" class="btn btn-dark">{{ 'trans.Edit' | trans }}</a>
+            <a href="{{ path('app_admin_category_new', {'parentCategory': parentCategory.id}) }}" class="btn btn-success">{{ 'trans.Add subcategory' | trans }}</a>
+        </div>
+
+        {% for category in parentCategory.children  %}
+            <div class="list-group nested-sortable"  data-sortable-group="parent_{{ parentCategory.id }}">
+                    {{ macros.categoryLevel(category) }}
+            </div>
+        {% endfor %}
+    </div>
+{% endmacro %}
 
 {% block body %}
     <div class="container mt-3">
@@ -17,24 +36,8 @@
 
         <div class="list-group col nested-sortable mb-2" data-sortable-group="root">
             {# @var category1 \App\Entity\Category #}
-            {% for category1 in categoryList %}
-                <div class="list-group-item nested-1" data-id="{{ category1.id }}">
-                    <div>
-                        <div class="d-inline-block mb-3">{{ category1.name }}</div>
-                        <a href="{{ path('app_admin_category_edit', {'id': category1.id}) }}" class="btn btn-dark">{{ 'trans.Edit' | trans }}</a>
-                        <a href="{{ path('app_admin_category_new', {'parentCategory': category1.id}) }}" class="btn btn-success">{{ 'trans.Add subcategory' | trans }}</a>
-                    </div>
-
-                    <div class="list-group nested-sortable"  data-sortable-group="parent_{{ category1.id }}">
-                    {% for category2 in category1.children  %}
-                        <div class="list-group-item nested-2" data-id="{{ category2.id }}">
-                            {{ category2.name }}
-                            <a href="{{ path('app_admin_category_edit', {'id': category2.id}) }}" class="btn btn-dark">{{ 'trans.Edit' | trans }}</a>
-                            <a href="{{ path('app_admin_category_new', {'parentCategory': category2.id}) }}" class="btn btn-success">{{ 'trans.Add subcategory' | trans }}</a>
-                        </div>
-                    {% endfor %}
-                    </div>
-                </div>
+            {% for category in categoryList %}
+                {{ macros.categoryLevel(category) }}
             {% endfor %}
         </div>
 

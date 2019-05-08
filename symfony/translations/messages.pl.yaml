@@ -402,3 +402,7 @@ trans:
   min: 'min'
   max: 'max'
   View more: 'Zobacz więcej'
+  Delete category: 'Usuń kategorie'
+  Delete category custom field: 'Usuń z kategorii pole niestandardowe'
+  Delete custom field option: 'Usuń z pola niestandarowego opcje'
+  Delete custom field: 'Usuń pole niestandardowe'

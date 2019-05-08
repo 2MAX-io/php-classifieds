@@ -47,6 +47,7 @@ class CustomFieldController extends AbstractAdminController
         }
 
         $customField = new CustomField();
+        $customField->setSort(999999999);
         $form = $this->createForm(CustomFieldType::class, $customField);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {

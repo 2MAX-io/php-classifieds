@@ -25,7 +25,7 @@ docker exec classifieds_php php symfony/bin/console doctrine:schema:update --for
 #docker exec classifieds_mysql mysql classifieds -e "SET FOREIGN_KEY_CHECKS = 0; DROP TABLE admin"
 #docker exec classifieds_mysql mysql classifieds -e "SET FOREIGN_KEY_CHECKS = 0; DROP TABLE category"
 #docker exec classifieds_mysql mysql classifieds -e "SET FOREIGN_KEY_CHECKS = 0; DROP TABLE custom_field"
-#docker exec classifieds_mysql mysql classifieds -e "SET FOREIGN_KEY_CHECKS = 0; DROP TABLE custom_field_category"
+#docker exec classifieds_mysql mysql classifieds -e "SET FOREIGN_KEY_CHECKS = 0; DROP TABLE custom_field_join_category"
 #docker exec classifieds_mysql mysql classifieds -e "SET FOREIGN_KEY_CHECKS = 0; DROP TABLE custom_field_option"
 #docker exec classifieds_mysql mysql classifieds -e "SET FOREIGN_KEY_CHECKS = 0; DROP TABLE featured_package"
 #docker exec classifieds_mysql mysql classifieds -e "SET FOREIGN_KEY_CHECKS = 0; DROP TABLE featured_package_for_category"

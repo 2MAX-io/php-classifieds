@@ -65,6 +65,13 @@ class CustomField
      */
     private $categoriesJoin;
 
+    /**
+     * @var int
+     *
+     * @ORM\Column(type="integer", nullable=false)
+     */
+    private $sort;
+
     public function __construct()
     {
         $this->customFieldOptions = new ArrayCollection();
@@ -236,6 +243,18 @@ class CustomField
                 $categoriesJoin->setCustomField(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getSort(): ?int
+    {
+        return $this->sort;
+    }
+
+    public function setSort(int $sort): self
+    {
+        $this->sort = $sort;
 
         return $this;
     }

@@ -8,9 +8,11 @@ use App\Controller\Admin\Base\AbstractAdminController;
 use App\Entity\Category;
 use App\Entity\CustomField;
 use App\Form\Admin\CustomFieldType;
+use App\Helper\Json;
 use App\Repository\CustomFieldRepository;
 use App\Service\Admin\CustomField\CategorySelection\CustomFieldCategorySelectionService;
 use App\Service\Admin\CustomField\CustomFieldForCategoryService;
+use App\Service\Admin\CustomField\CustomFieldService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -25,7 +27,7 @@ class CustomFieldController extends AbstractAdminController
         $this->denyUnlessAdmin();
 
         return $this->render('admin/custom_field/index.html.twig', [
-            'custom_fields' => $customFieldRepository->findAll(),
+            'custom_fields' => $customFieldRepository->findBy([], ['sort' => 'ASC']),
         ]);
     }
 
@@ -121,5 +123,32 @@ class CustomFieldController extends AbstractAdminController
         }
 
         return $this->redirectToRoute('app_admin_custom_field_index');
+    }
+
+    /**
+     * @Route(
+     *     "/admin/red5/custom-field/save-order",
+     *     name="app_admin_custom_field_save_order",
+     *     methods={"POST"},
+     *     options={"expose": true},
+     * )
+     */
+    public function saveOrder(
+        Request $request,
+        CustomFieldService $customFieldService
+    ): Response {
+        $this->denyUnlessAdmin();
+
+        if ($this->isCsrfTokenValid('adminCustomFieldsSaveSort', $request->headers->get('x-csrf-token'))) {
+            $em = $this->getDoctrine()->getManager();
+
+            $requestContentArray  = Json::decodeToArray($request->getContent());
+            $customFieldService->saveOrder($requestContentArray['orderedIdList']);
+            $em->flush();
+
+            $customFieldService->reorder();
+        }
+
+        return $this->json([]);
     }
 }

@@ -6,12 +6,10 @@ namespace App\Controller\Admin\Category;
 
 use App\Controller\Admin\Base\AbstractAdminController;
 use App\Entity\Category;
-use App\Entity\CustomFieldJoinCategory;
 use App\Form\Admin\AdminCategorySaveType;
 use App\Helper\Json;
 use App\Service\Admin\Category\AdminCategoryService;
 use App\Service\Admin\Category\CategoryPictureUploadService;
-use App\Service\Admin\CustomField\CustomFieldService;
 use App\Service\Category\TreeService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -115,13 +113,16 @@ class AdminCategoryController extends AbstractAdminController
     /**
      * @Route("/admin/red5/category/{id}", name="app_admin_category_delete", methods={"DELETE"})
      */
-    public function delete(Request $request, Category $category): Response
+    public function delete(Request $request, Category $category, TreeService $treeService): Response
     {
         $this->denyUnlessAdmin();
 
         if ($this->isCsrfTokenValid('delete'.$category->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($category);
+            $entityManager->flush();
+
+            $treeService->rebuild();
             $entityManager->flush();
         }
 
@@ -136,8 +137,11 @@ class AdminCategoryController extends AbstractAdminController
      *     options={"expose": true},
      * )
      */
-    public function saveOrder(Request $request, AdminCategoryService $adminCategoryService): Response
-    {
+    public function saveOrder(
+        Request $request,
+        AdminCategoryService $adminCategoryService,
+        TreeService $treeService
+    ): Response {
         $this->denyUnlessAdmin();
 
         if ($this->isCsrfTokenValid('adminCategorySaveSort', $request->headers->get('x-csrf-token'))) {
@@ -147,55 +151,10 @@ class AdminCategoryController extends AbstractAdminController
             $adminCategoryService->saveOrder($requestContentArray['orderedIdList']);
             $em->flush();
 
-            $adminCategoryService->reorderSort();
+            $treeService->rebuild();
             $em->flush();
         }
 
         return $this->json([]);
-    }
-
-    /**
-     * @Route(
-     *     "/admin/red5/category/custom-fields/save-order",
-     *     name="app_admin_category_custom_fields_save_order",
-     *     methods={"POST"},
-     *     options={"expose": true},
-     * )
-     */
-    public function saveCustomFieldsOrderInCategory(Request $request, CustomFieldService $customFieldService): Response
-    {
-        $this->denyUnlessAdmin();
-
-        if ($this->isCsrfTokenValid('adminCustomFieldsInCategorySaveSort', $request->headers->get('x-csrf-token'))) {
-            $em = $this->getDoctrine()->getManager();
-
-            $requestContentArray  = Json::decodeToArray($request->getContent());
-            $customFieldService->saveOrder($requestContentArray['orderedIdList']);
-            $em->flush();
-        }
-
-        return $this->json([]);
-    }
-
-    /**
-     * @Route(
-     *     "/admin/red5/category/custom-field-join-category/{id}",
-     *     name="app_admin_category_custom_field_join_category_delete",
-     *     methods={"DELETE"}
-     * )
-     */
-    public function deleteCustomFieldJoinCategory(Request $request, CustomFieldJoinCategory $customFieldJoinCategory): Response
-    {
-        $this->denyUnlessAdmin();
-
-        if ($this->isCsrfTokenValid('deleteCustomFieldFromCategory'.$customFieldJoinCategory->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($customFieldJoinCategory);
-            $entityManager->flush();
-        }
-
-        return $this->redirectToRoute('app_admin_category_edit', [
-            'id' => $customFieldJoinCategory->getCategory()->getId(),
-        ]);
     }
 }

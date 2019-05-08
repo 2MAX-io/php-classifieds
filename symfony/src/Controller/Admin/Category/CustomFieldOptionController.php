@@ -8,6 +8,8 @@ use App\Controller\Admin\Base\AbstractAdminController;
 use App\Entity\CustomField;
 use App\Entity\CustomFieldOption;
 use App\Form\Admin\CustomFieldOptionType;
+use App\Helper\Json;
+use App\Service\Admin\CustomField\CustomFieldOptionService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -23,7 +25,8 @@ class CustomFieldOptionController extends AbstractAdminController
      */
     public function addCustomFieldOption(
         Request $request,
-        CustomField $customField
+        CustomField $customField,
+        CustomFieldOptionService $customFieldOptionService
     ): Response {
         $this->denyUnlessAdmin();
 
@@ -37,6 +40,8 @@ class CustomFieldOptionController extends AbstractAdminController
             $em = $this->getDoctrine()->getManager();
             $em->persist($customFieldOption);
             $em->flush();
+
+            $customFieldOptionService->reorder();
 
             return $this->redirectToRoute('app_admin_custom_field_edit_option', [
                 'id' => $customFieldOption->getId(),
@@ -58,7 +63,8 @@ class CustomFieldOptionController extends AbstractAdminController
      */
     public function editCustomFieldOption(
         Request $request,
-        CustomFieldOption $customFieldOption
+        CustomFieldOption $customFieldOption,
+        CustomFieldOptionService $customFieldOptionService
     ): Response {
         $this->denyUnlessAdmin();
 
@@ -69,6 +75,8 @@ class CustomFieldOptionController extends AbstractAdminController
             $em = $this->getDoctrine()->getManager();
             $em->persist($customFieldOption);
             $em->flush();
+
+            $customFieldOptionService->reorder();
 
             return $this->redirectToRoute('app_admin_custom_field_edit_option', [
                 'id' => $customFieldOption->getId(),
@@ -88,16 +96,48 @@ class CustomFieldOptionController extends AbstractAdminController
      *     methods={"DELETE"}
      * )
      */
-    public function delete(Request $request, CustomFieldOption $customFieldOption): Response
-    {
+    public function delete(
+        Request $request,
+        CustomFieldOption $customFieldOption,
+        CustomFieldOptionService $customFieldOptionService
+    ): Response {
         $this->denyUnlessAdmin();
 
         if ($this->isCsrfTokenValid('delete'.$customFieldOption->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($customFieldOption);
             $entityManager->flush();
+
+            $customFieldOptionService->reorder();
         }
 
         return $this->redirectToRoute('app_admin_custom_field_edit', ['id' => $customFieldOption->getCustomField()->getId()]);
+    }
+
+    /**
+     * @Route(
+     *     "/admin/red5/custom-field/options/save-order-of-options",
+     *     name="app_admin_custom_field_options_save_order",
+     *     methods={"POST"},
+     *     options={"expose": true},
+     * )
+     */
+    public function saveCustomFieldOptionsOrder(
+        Request $request,
+        CustomFieldOptionService $customFieldOptionService
+    ): Response {
+        $this->denyUnlessAdmin();
+
+        if ($this->isCsrfTokenValid('adminCustomFieldOptionsSaveSort', $request->headers->get('x-csrf-token'))) {
+            $em = $this->getDoctrine()->getManager();
+
+            $requestContentArray  = Json::decodeToArray($request->getContent());
+            $customFieldOptionService->saveOrderOfOptions($requestContentArray['orderedIdList']);
+            $em->flush();
+
+            $customFieldOptionService->reorder();
+        }
+
+        return $this->json([]);
     }
 }

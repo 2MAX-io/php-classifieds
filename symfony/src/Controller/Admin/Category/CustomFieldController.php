@@ -8,10 +8,9 @@ use App\Controller\Admin\Base\AbstractAdminController;
 use App\Entity\Category;
 use App\Entity\CustomField;
 use App\Form\Admin\CustomFieldType;
-use App\Helper\Json;
 use App\Repository\CustomFieldRepository;
 use App\Service\Admin\CustomField\CategorySelection\CustomFieldCategorySelectionService;
-use App\Service\Admin\CustomField\CustomFieldService;
+use App\Service\Admin\CustomField\CustomFieldForCategoryService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -35,7 +34,8 @@ class CustomFieldController extends AbstractAdminController
      */
     public function new(
         Request $request,
-        CustomFieldCategorySelectionService $customFieldCategorySelectionService
+        CustomFieldCategorySelectionService $customFieldCategorySelectionService,
+        CustomFieldForCategoryService $customFieldForCategoryService
     ): Response {
         $this->denyUnlessAdmin();
 
@@ -54,6 +54,8 @@ class CustomFieldController extends AbstractAdminController
             );
             $em->persist($customField);
             $em->flush();
+
+            $customFieldForCategoryService->reorder();
 
             return $this->redirectToRoute('app_admin_custom_field_edit', [
                 'id' => $customField->getId(),
@@ -76,7 +78,8 @@ class CustomFieldController extends AbstractAdminController
     public function edit(
         Request $request,
         CustomField $customField,
-        CustomFieldCategorySelectionService $customFieldCategorySelectionService
+        CustomFieldCategorySelectionService $customFieldCategorySelectionService,
+        CustomFieldForCategoryService $customFieldForCategoryService
     ): Response {
         $this->denyUnlessAdmin();
 
@@ -89,6 +92,8 @@ class CustomFieldController extends AbstractAdminController
                 $request->get('customFieldCategories')
             );
             $this->getDoctrine()->getManager()->flush();
+
+            $customFieldForCategoryService->reorder();
 
             return $this->redirectToRoute('app_admin_custom_field_edit', [
                 'id' => $customField->getId(),
@@ -116,28 +121,5 @@ class CustomFieldController extends AbstractAdminController
         }
 
         return $this->redirectToRoute('app_admin_custom_field_index');
-    }
-
-    /**
-     * @Route(
-     *     "/admin/red5/custom-field/options/save-order-of-options",
-     *     name="app_admin_custom_field_options_save_order",
-     *     methods={"POST"},
-     *     options={"expose": true},
-     * )
-     */
-    public function saveCustomFieldOptionsOrder(Request $request, CustomFieldService $customFieldService): Response
-    {
-        $this->denyUnlessAdmin();
-
-        if ($this->isCsrfTokenValid('adminCustomFieldOptionsSaveSort', $request->headers->get('x-csrf-token'))) {
-            $em = $this->getDoctrine()->getManager();
-
-            $requestContentArray  = Json::decodeToArray($request->getContent());
-            $customFieldService->saveOrderOfOptions($requestContentArray['orderedIdList']);
-            $em->flush();
-        }
-
-        return $this->json([]);
     }
 }

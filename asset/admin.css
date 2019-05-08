@@ -114,3 +114,8 @@
         position: unset;
     }
 }
+
+.sortable-ghost {
+    background: #f2fbff;
+    border: 2px dashed #b6bcbf;
+}

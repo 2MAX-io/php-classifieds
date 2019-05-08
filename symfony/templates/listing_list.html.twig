@@ -90,7 +90,7 @@
 
                             {# @var customField \App\Entity\CustomField #}
                             {% for customField in customFieldList %}
-                                {% if customField.type == constant('\App\\Entity\\CustomField::TYPE_SELECT') %}
+                                {% if customField.type == constant('\App\\Entity\\CustomField::TYPE_SELECT') and customField.customFieldOptions is not empty %}
                                     <div class="mb-3" id="li-field-7">
                                         <p><strong>{{ customField.name }}</strong></p>
 

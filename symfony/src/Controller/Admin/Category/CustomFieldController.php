@@ -32,8 +32,10 @@ class CustomFieldController extends AbstractAdminController
     /**
      * @Route("/admin/red5/custom-field/new", name="app_admin_custom_field_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
-    {
+    public function new(
+        Request $request,
+        CustomFieldCategorySelectionService $customFieldCategorySelectionService
+    ): Response {
         $this->denyUnlessAdmin();
 
         $customField = new CustomField();
@@ -41,6 +43,10 @@ class CustomFieldController extends AbstractAdminController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $customFieldCategorySelectionService->saveSelection(
+                $customField,
+                $request->get('customFieldCategories')
+            );
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($customField);
             $entityManager->flush();
@@ -51,6 +57,7 @@ class CustomFieldController extends AbstractAdminController
         }
 
         return $this->render('admin/custom_field/new.html.twig', [
+            'categorySelectionList' => $customFieldCategorySelectionService->getCategorySelectionList($customField),
             'custom_field' => $customField,
             'form' => $form->createView(),
         ]);
@@ -70,6 +77,10 @@ class CustomFieldController extends AbstractAdminController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $customFieldCategorySelectionService->saveSelection(
+                $customField,
+                $request->get('customFieldCategories')
+            );
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('app_admin_custom_field_edit', [

@@ -7,6 +7,7 @@ namespace App\Service\Admin\CustomField\CategorySelection;
 use App\Entity\Category;
 use App\Entity\CustomField;
 use App\Entity\CustomFieldJoinCategory;
+use App\Helper\Arr;
 use App\Repository\CategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -48,6 +49,36 @@ class CustomFieldCategorySelectionService
         return $return;
     }
 
+    public function saveSelection(CustomField $customField, array $selectedCategoriesIds): void
+    {
+        $categories = $this->getCategoriesWihJoinedCustomFields();
+
+        foreach ($categories as $category) {
+            $isCurrentlySelected = Arr::inArray($category->getId(), Arr::valuesToInt($selectedCategoriesIds));
+            $selectedPreviously = $this->categoryHasCustomField($category, $customField);
+
+            $alreadySelected = $isCurrentlySelected && $selectedPreviously;
+            if ($alreadySelected) {
+                continue;
+            }
+
+            $notSelected = !$isCurrentlySelected && !$selectedPreviously;
+            if ($notSelected) {
+                continue;
+            }
+
+            $added = $isCurrentlySelected && !$selectedPreviously;
+            if ($added) {
+                $this->addCategorySelection($customField, $category);
+            }
+
+            $removed = !$isCurrentlySelected && $selectedPreviously;
+            if ($removed) {
+                $this->removeCategorySelection($customField, $category);
+            }
+        }
+    }
+
     private function categoryHasCustomField(Category $category, CustomField $customField): bool
     {
         $catCustomFields = $category->getCustomFieldsJoin()->map(function(CustomFieldJoinCategory $customFieldJoinCategory) {
@@ -72,5 +103,23 @@ class CustomFieldCategorySelectionService
         $qb->addOrderBy('category.sort', 'ASC');
 
         return $qb->getQuery()->getResult();
+    }
+
+    private function addCategorySelection(CustomField $customField, Category $category): void
+    {
+        $customFieldJoinCategory = new CustomFieldJoinCategory();
+        $customFieldJoinCategory->setCategory($category);
+        $customFieldJoinCategory->setCustomField($customField);
+        $customFieldJoinCategory->setSort(999999999);
+        $this->em->persist($customFieldJoinCategory);
+    }
+
+    private function removeCategorySelection(CustomField $customField, Category $category): void
+    {
+        foreach ($category->getCustomFieldsJoin() as $customFieldJoinCategory) {
+            if ($customFieldJoinCategory->getCustomField() === $customField) {
+                $this->em->remove($customFieldJoinCategory);
+            }
+        }
     }
 }

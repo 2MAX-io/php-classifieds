@@ -11,6 +11,11 @@ class Arr
         return \in_array($needle, $haystack, true);
     }
 
+    public static function valuesToInt(array $array): array
+    {
+        return \array_map('intval', $array);
+    }
+
     public static function random(array $array, int $count = 1)
     {
         if ($count < 1) {

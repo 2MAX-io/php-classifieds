@@ -8,7 +8,13 @@
             {% for categorySelection in categorySelectionList %}
                 {% set category = categorySelection.category %}
                 <div style="margin-left: {{ (category.lvl-1) * 2 }}rem">
-                    <input type="checkbox" id="category_{{ category.id }}" {% if categorySelection.selected %}checked{% endif %}>
+                    <input
+                            type="checkbox"
+                            id="category_{{ category.id }}"
+                            name="customFieldCategories[]"
+                            value="{{ category.id }}"
+                            {% if categorySelection.selected %}checked{% endif %}
+                    >
                     <label for="category_{{ category.id }}">{{ category.name }}</label>
                 </div>
             {% endfor %}

@@ -18,6 +18,7 @@
     <table class="table">
         <thead>
         <tr>
+            <th style="width: 2rem;"></th>
             <th>{{ 'trans.Name' | trans }}</th>
             <th>{{ 'trans.Type' | trans }}</th>
             <th>{{ 'trans.Required?' | trans }}</th>
@@ -29,6 +30,7 @@
         <tbody class="sortable">
         {% for custom_field in custom_fields %}
             <tr data-id="{{ custom_field.id }}">
+                <td><i class="fas fa-arrows-alt sortableHandle"></i></td>
                 <td>{{ custom_field.name }}</td>
                 <td>{{ ('trans.customFieldType.'~custom_field.type) | trans }}</td>
                 <td>{{ custom_field.required | boolText | trans }}</td>
@@ -63,7 +65,9 @@
         });
     </script>
     <script>
-        $('.sortable').sortable({});
+        $('.sortable').sortable({
+            handle: '.sortableHandle'
+        });
 
         $('.saveOrder').click(function () {
             var orderedIdList = $('.sortable').sortable('widget').toArray();

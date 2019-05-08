@@ -8,6 +8,7 @@
     {# @var parentCategory \App\Entity\Category #}
     <div class="list-group-item nested-1" data-id="{{ parentCategory.id }}">
         <div>
+            <i class="fas fa-arrows-alt sortableHandle"></i>
             <div class="d-inline-block mb-3">{{ parentCategory.name }}</div>
             <a href="{{ path('app_admin_category_edit', {'id': parentCategory.id}) }}" class="btn btn-dark">{{ 'trans.Edit' | trans }}</a>
             <a href="{{ path('app_admin_category_new', {'parentCategory': parentCategory.id}) }}" class="btn btn-success">{{ 'trans.Add subcategory' | trans }}</a>
@@ -62,6 +63,7 @@
         $('.nested-sortable').each(function (i, el) {
             $(el).sortable({
                 group: $(el).data('sortable-group'),
+                handle: '.sortableHandle'
             });
         });
 

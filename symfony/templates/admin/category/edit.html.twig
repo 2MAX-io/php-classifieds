@@ -42,6 +42,7 @@
     <table class="table table-responsive-sm">
         <thead>
         <tr>
+            <th style="width: 2rem;"></th>
             <th>{{ 'trans.Name' | trans }}</th>
             <th>{{ 'trans.Type' | trans }}</th>
             <th>{{ 'trans.Required?' | trans }}</th>
@@ -54,6 +55,7 @@
         {% for customFieldJoinCategory in category.customFieldsJoin %}
             {% set customField = customFieldJoinCategory.customField %}
             <tr data-id="{{ customFieldJoinCategory.id }}">
+                <td><i class="fas fa-arrows-alt sortableHandle"></i></td>
                 <td>
                     {{ customField.name }}
                 </td>
@@ -98,7 +100,9 @@
         });
     </script>
     <script>
-        $('.sortable').sortable({});
+        $('.sortable').sortable({
+            handle: '.sortableHandle'
+        });
 
         $('.saveOrder').click(function () {
             var orderedIdList = $('.sortable').sortable('widget').toArray();

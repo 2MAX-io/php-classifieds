@@ -16,9 +16,17 @@ class CategoryPictureUploadService
     {
         File::throwExceptionIfUnsafeExtension($uploadedFile);
 
+        $destinationFilename = $this->getDestinationFilename($uploadedFile);
+
+        if (!File::isImage($destinationFilename)) {
+            throw new \UnexpectedValueException(
+                "file is not image"
+            );
+        }
+
         $movedFile = $uploadedFile->move(
             FilePath::getCategoryPicturePath(),
-            \basename($this->getDestinationFilename($uploadedFile))
+            \basename($destinationFilename)
         );
 
         $category->setPicture(Path::makeRelative($movedFile->getRealPath(), FilePath::getProjectDir()));
@@ -26,6 +34,8 @@ class CategoryPictureUploadService
 
     private function getDestinationFilename(UploadedFile $uploadedFile): string
     {
-        return File::getFilenameValidCharacters($uploadedFile->getClientOriginalName()) . '.' . $uploadedFile->getClientOriginalExtension();
+        $ext = $uploadedFile->getClientOriginalExtension();
+
+        return File::getFilenameValidCharacters($uploadedFile->getClientOriginalName()) . '.' . $ext;
     }
 }

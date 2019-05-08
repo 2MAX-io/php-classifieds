@@ -55,12 +55,20 @@ class ListingListService
 
                     if (!empty($customFieldFormValueArray['range']['min'])) {
                         $rangeCondition->add($qb->expr()->gte('listingCustomFieldValue.value', ':customFieldValueMin_' . ((int) $sqlParamId)));
-                        $qb->setParameter(':customFieldValueMin_' . ((int) $sqlParamId), $customFieldFormValueArray['range']['min']);
+                        $qb->setParameter(
+                            ':customFieldValueMin_' . ((int)$sqlParamId),
+                            $customFieldFormValueArray['range']['min'],
+                            \Doctrine\DBAL\Types\Type::INTEGER
+                        );
                     }
 
                     if (!empty($customFieldFormValueArray['range']['max'])) {
                         $rangeCondition->add($qb->expr()->lte('listingCustomFieldValue.value', ':customFieldValueMax_' . ((int) $sqlParamId)));
-                        $qb->setParameter(':customFieldValueMax_' . ((int) $sqlParamId), $customFieldFormValueArray['range']['max']);
+                        $qb->setParameter(
+                            ':customFieldValueMax_' . ((int)$sqlParamId),
+                            $customFieldFormValueArray['range']['max'],
+                            \Doctrine\DBAL\Types\Type::INTEGER
+                        );
                     }
 
                     if ($rangeCondition->count() > 0) {

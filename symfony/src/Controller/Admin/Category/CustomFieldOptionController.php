@@ -10,6 +10,7 @@ use App\Entity\CustomFieldOption;
 use App\Form\Admin\CustomFieldOptionType;
 use App\Helper\Json;
 use App\Service\Admin\CustomField\CustomFieldOptionService;
+use App\Service\System\Sort\SortService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -32,7 +33,7 @@ class CustomFieldOptionController extends AbstractAdminController
 
         $customFieldOption = new CustomFieldOption();
         $customFieldOption->setCustomField($customField);
-        $customFieldOption->setSort(999999999);
+        $customFieldOption->setSort(SortService::LAST_VALUE);
         $form = $this->createForm(CustomFieldOptionType::class, $customFieldOption);
         $form->handleRequest($request);
 

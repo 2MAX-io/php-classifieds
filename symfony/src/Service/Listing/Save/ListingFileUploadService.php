@@ -9,6 +9,7 @@ use App\Entity\ListingFile;
 use App\Helper\Arr;
 use App\Helper\FilePath;
 use App\Service\Event\FileModificationEventService;
+use App\Service\System\Sort\SortService;
 use Ausi\SlugGenerator\SlugGenerator;
 use Ausi\SlugGenerator\SlugOptions;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -57,7 +58,7 @@ class ListingFileUploadService
             $listingFile->setFilename(basename($listingFile->getPath()));
             $listingFile->setMimeType(mime_content_type($listingFile->getPath()));
             $listingFile->setSizeBytes(filesize($listingFile->getPath()));
-            $listingFile->setSort(99999);
+            $listingFile->setSort(SortService::LAST_VALUE);
             $this->em->persist($listingFile);
 
             $listing->addListingFile($listingFile);

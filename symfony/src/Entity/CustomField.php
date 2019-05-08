@@ -68,7 +68,7 @@ class CustomField
     /**
      * @var int
      *
-     * @ORM\Column(type="integer", nullable=false)
+     * @ORM\Column(type="smallint", nullable=false, options={"unsigned"=true})
      */
     private $sort;
 

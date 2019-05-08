@@ -10,6 +10,7 @@ use App\Entity\CustomFieldJoinCategory;
 use App\Form\Admin\CategoryAddCustomFieldType;
 use App\Helper\Json;
 use App\Service\Admin\CustomField\CustomFieldForCategoryService;
+use App\Service\System\Sort\SortService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -32,7 +33,7 @@ class CategoryCustomFieldController extends AbstractAdminController
 
         $customFieldJoinCategory = new CustomFieldJoinCategory();
         $customFieldJoinCategory->setCategory($category);
-        $customFieldJoinCategory->setSort(999999999);
+        $customFieldJoinCategory->setSort(SortService::LAST_VALUE);
         $form = $this->createForm(CategoryAddCustomFieldType::class, $customFieldJoinCategory);
         $form->handleRequest($request);
 

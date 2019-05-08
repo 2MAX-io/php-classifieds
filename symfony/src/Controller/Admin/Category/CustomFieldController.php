@@ -13,6 +13,7 @@ use App\Repository\CustomFieldRepository;
 use App\Service\Admin\CustomField\CategorySelection\CustomFieldCategorySelectionService;
 use App\Service\Admin\CustomField\CustomFieldForCategoryService;
 use App\Service\Admin\CustomField\CustomFieldService;
+use App\Service\System\Sort\SortService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -47,7 +48,7 @@ class CustomFieldController extends AbstractAdminController
         }
 
         $customField = new CustomField();
-        $customField->setSort(999999999);
+        $customField->setSort(SortService::LAST_VALUE);
         $form = $this->createForm(CustomFieldType::class, $customField);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {

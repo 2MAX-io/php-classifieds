@@ -11,6 +11,7 @@ use App\Helper\Json;
 use App\Service\Admin\Category\AdminCategoryService;
 use App\Service\Admin\Category\CategoryPictureUploadService;
 use App\Service\Category\TreeService;
+use App\Service\System\Sort\SortService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -46,7 +47,7 @@ class AdminCategoryController extends AbstractAdminController
         $category->setLvl(0);
         $category->setRgt(0);
         $category->setLft(0);
-        $category->setSort(999999999);
+        $category->setSort(SortService::LAST_VALUE);
         if ($parentCategory) {
             $category->setParent($parentCategory);
         }

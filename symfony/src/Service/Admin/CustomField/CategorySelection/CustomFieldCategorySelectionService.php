@@ -9,6 +9,7 @@ use App\Entity\CustomField;
 use App\Entity\CustomFieldJoinCategory;
 use App\Helper\Arr;
 use App\Repository\CategoryRepository;
+use App\Service\System\Sort\SortService;
 use Doctrine\ORM\EntityManagerInterface;
 
 class CustomFieldCategorySelectionService
@@ -115,7 +116,7 @@ class CustomFieldCategorySelectionService
         $customFieldJoinCategory = new CustomFieldJoinCategory();
         $customFieldJoinCategory->setCategory($category);
         $customFieldJoinCategory->setCustomField($customField);
-        $customFieldJoinCategory->setSort(999999999);
+        $customFieldJoinCategory->setSort(SortService::LAST_VALUE);
         $this->em->persist($customFieldJoinCategory);
     }
 

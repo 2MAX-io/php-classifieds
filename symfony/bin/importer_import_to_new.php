@@ -32,6 +32,8 @@ while (($csvRow = fgetcsv($csvHandle, 0, ",", '"', "\0")) !== FALSE) {
     saveListingFile($csvRow, $sqlHandle);
 }
 
+
+saveSql( /** @lang MySQL */ 'COMMIT;', $sqlHandle);
 fclose($csvHandle);
 fclose($sqlHandle);
 

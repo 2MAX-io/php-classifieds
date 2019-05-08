@@ -42,7 +42,7 @@ class PriceForType extends AbstractType
             'trans.priceFor.PRICE_FOR_YEAR' => Listing::PRICE_FOR_YEAR,
         ]);
 
-        $resolver->setDefault('label', 'trans.Price per');
+        $resolver->setDefault('label', 'trans.Amount per');
     }
 
     public function getParent()

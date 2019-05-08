@@ -61,13 +61,13 @@ class AdminListingEditType extends AbstractType
             'required' => false,
         ]);
         $builder->add('price', IntegerType::class, [
-            'label' => 'trans.Price'
+            'label' => 'trans.Amount or price'
         ]);
         $builder->add('priceFor', PriceForType::class, [
             'required' => false,
         ]);
         $builder->add('priceNegotiable', BoolType::class, [
-            'label' => 'trans.Price is negotiable?',
+            'label' => 'trans.Amount is negotiable?',
             'required' => false,
         ]);
         $builder->add('city', TextType::class, [

@@ -99,7 +99,7 @@ class ListingType extends AbstractType
             'required' => false,
         ]);
         $builder->add('price', MoneyType::class, [
-            'label' => 'trans.Price',
+            'label' => 'trans.Amount or price',
             'required' => false,
             'attr' => [
                 'class' => 'input-money',
@@ -113,7 +113,7 @@ class ListingType extends AbstractType
             ],
         ]);
         $builder->add('priceNegotiable', BoolType::class, [
-            'label' => 'trans.Price is negotiable?',
+            'label' => 'trans.Amount is negotiable?',
             'required' => false,
         ]);
         $builder->add('priceFor', PriceForType::class, [

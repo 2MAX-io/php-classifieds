@@ -145,7 +145,7 @@
                             {% endfor %}
 
                             <!-- price -->
-                            <label>{{ 'trans.Price' | trans }}</label>
+                            <label>{{ 'trans.Amount or price' | trans }}</label>
                             <div class="form-row mb-3">
                                 <div class="col-6">
                                     <input
@@ -154,7 +154,7 @@
                                             class="form-control"
                                             name="min_price"
                                             value="{{ app.request.get('min_price') | default }}"
-                                            placeholder="{{ 'trans.price min' | trans }}"
+                                            placeholder="{{ 'trans.amount min' | trans }}"
                                     >
                                 </div>
 
@@ -165,7 +165,7 @@
                                             class="form-control"
                                             name="max_price"
                                             value="{{ app.request.get('max_price') | default }}"
-                                            placeholder="{{ 'trans.price max' | trans }}"
+                                            placeholder="{{ 'trans.amount max' | trans }}"
                                     >
                                 </div>
                             </div>

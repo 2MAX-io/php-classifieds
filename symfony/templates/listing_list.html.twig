@@ -9,9 +9,7 @@
         > <a href="{{ path('app_index') }}">{{ 'trans.Classifieds' | trans }}</a>
 
         {% for category in categoryBreadcrumbs %}
-            {% if not loop.last %}
-                &gt; <a href="{{ path('app_category', {'categorySlug': category.slug}) }}">{{ category.name }}</a>
-            {% endif %}
+            &gt; <a href="{{ path('app_category', {'categorySlug': category.slug}) }}">{{ category.name }}</a>
         {% endfor %}
 
         {% if breadcrumbLast is not empty %}

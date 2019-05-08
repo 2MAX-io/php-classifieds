@@ -399,3 +399,5 @@ trans:
   Delete completely, from all categories: 'Usuń całkowicie, z wszystkich kategorii'
   Amount: 'Kwota'
   Amount or price: 'Kwota lub cena'
+  min: 'min'
+  max: 'max'

@@ -21,7 +21,12 @@
             {{ form_widget(form.customField) }}
         </div>
         <div class="col-md-7">
-            <a href="{{ path('app_admin_custom_field_new') }}" class="btn btn-primary">{{ 'trans.Add missing custom field' | trans }}</a>
+            <a
+                    href="{{ path('app_admin_custom_field_new', {'categoryId': customFieldJoinCategory.category.id}) }}"
+                    class="btn btn-primary"
+            >
+                {{ 'trans.Add missing custom field' | trans }}
+            </a>
         </div>
     </div>
 

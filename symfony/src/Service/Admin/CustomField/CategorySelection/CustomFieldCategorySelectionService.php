@@ -32,7 +32,7 @@ class CustomFieldCategorySelectionService
     /**
      * @return CustomFieldCategorySelectionItemDto[]
      */
-    public function getCategorySelectionList(CustomField $customField) : array
+    public function getCategorySelectionList(CustomField $customField, Category $preselectedCategory = null) : array
     {
         $categories = $this->getCategoriesWihJoinedCustomFields();
 
@@ -43,6 +43,11 @@ class CustomFieldCategorySelectionService
             $customFieldCategorySelectionItemDto->setSelected(
                 $this->categoryHasCustomField($category, $customField)
             );
+
+            if ($preselectedCategory && $preselectedCategory->getId() === $category->getId()) {
+                $customFieldCategorySelectionItemDto->setSelected(true);
+            }
+
             $return[] = $customFieldCategorySelectionItemDto;
         }
 

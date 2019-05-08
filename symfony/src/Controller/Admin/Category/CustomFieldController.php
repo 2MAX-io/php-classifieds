@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller\Admin\Category;
 
 use App\Controller\Admin\Base\AbstractAdminController;
+use App\Entity\Category;
 use App\Entity\CustomField;
 use App\Form\Admin\CustomFieldType;
 use App\Helper\Json;
@@ -38,18 +39,21 @@ class CustomFieldController extends AbstractAdminController
     ): Response {
         $this->denyUnlessAdmin();
 
+        $em = $this->getDoctrine()->getManager();
+        if ($request->get('categoryId', false)) {
+            $category = $em->getRepository(Category::class)->find($request->get('categoryId'));
+        }
+
         $customField = new CustomField();
         $form = $this->createForm(CustomFieldType::class, $customField);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $customFieldCategorySelectionService->saveSelection(
                 $customField,
                 $request->get('customFieldCategories')
             );
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($customField);
-            $entityManager->flush();
+            $em->persist($customField);
+            $em->flush();
 
             return $this->redirectToRoute('app_admin_custom_field_edit', [
                 'id' => $customField->getId(),
@@ -57,7 +61,10 @@ class CustomFieldController extends AbstractAdminController
         }
 
         return $this->render('admin/custom_field/new.html.twig', [
-            'categorySelectionList' => $customFieldCategorySelectionService->getCategorySelectionList($customField),
+            'categorySelectionList' => $customFieldCategorySelectionService->getCategorySelectionList(
+                $customField,
+                $category ?? null
+            ),
             'custom_field' => $customField,
             'form' => $form->createView(),
         ]);

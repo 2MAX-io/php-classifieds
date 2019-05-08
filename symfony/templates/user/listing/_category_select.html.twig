@@ -34,7 +34,7 @@
     cascader.hideLowerLevels = function() {
         let level = cascader.currentLevel;
         while (cascader.$mainElement.find('.cascader-level.cascader-level-'+level).length) {
-            cascader.$mainElement.find('.cascader-level.cascader-level-"'+level+' .cascader-branch-list').hide();
+            cascader.$mainElement.find('.cascader-level.cascader-level-'+level+' .cascader-branch-list').hide();
             level += 1;
         }
     };

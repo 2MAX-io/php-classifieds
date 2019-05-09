@@ -560,6 +560,10 @@ svg.icon {
     background-color: #f8f9fa;
 }
 
+.listing-list .card {
+    background-color: #fff;
+}
+
 .btn-light {
     background-color: #f3f3f3;
 }

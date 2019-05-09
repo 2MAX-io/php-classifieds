@@ -202,11 +202,11 @@
 {#                </ul>#}
 
                 <!-- the listings -->
-                <div id="cards-wrapper">
+                <div class="listing-list">
                     {% for listing in listingList %}
                         <div
                                 id="listing-{{ listing.id }}"
-                                class="card mb-3 regular {% if listing.featured %}listing-recommended{% endif %}"
+                                class="card mb-3 {% if listing.featured %}listing-recommended{% endif %}"
                         >
                             <div class="container-fluid">
                                 <div class="row">

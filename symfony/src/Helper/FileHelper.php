@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace App\Helper;
 
+use App\Exception\UserVisibleMessageException;
 use Ausi\SlugGenerator\SlugGenerator;
 use Ausi\SlugGenerator\SlugOptions;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Webmozart\PathUtil\Path;
 
-class File
+class FileHelper
 {
     public static function isImage(string $path): bool
     {
@@ -44,9 +45,9 @@ class File
                 'swf',
             ]
         )) {
-            throw new \UnexpectedValueException(
+            throw new UserVisibleMessageException(
                 "file extension $fileExtension is not allowed"
-            ); // todo: #11 better passing exception to user
+            );
         }
 
         if (Arr::inArray(
@@ -62,9 +63,9 @@ class File
                 'cgi',
             ]
         )) {
-            throw new \UnexpectedValueException(
+            throw new UserVisibleMessageException(
                 "file extension $fileExtension is not allowed"
-            );// todo: #11 better passing exception to user
+            );
         }
     }
 }

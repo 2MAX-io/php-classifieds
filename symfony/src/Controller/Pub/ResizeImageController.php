@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller\Pub;
 
-use App\Helper\File;
+use App\Helper\FileHelper;
 use App\Helper\FilePath;
 use App\System\ImageManipulation\ImageManipulationFactory;
 use League\Glide\Responses\SymfonyResponseFactory;
@@ -24,13 +24,13 @@ class ResizeImageController
     {
         ini_set('memory_limit','256M'); // todo: check if can reduce it
 
-        if (!File::isImage($file)) {
+        if (!FileHelper::isImage($file)) {
             throw new NotFoundHttpException();
         }
 
         $requestUriWithoutGet = strtok($request->getRequestUri(), '?');
 
-        if (!File::isImage($requestUriWithoutGet)) {
+        if (!FileHelper::isImage($requestUriWithoutGet)) {
             throw new NotFoundHttpException();
         }
 
@@ -55,7 +55,7 @@ class ResizeImageController
 
     private function getResponse(Request $request, string $type, string $sourcePath, string $targetPath): Response
     {
-        if (!File::isImage($targetPath)) {
+        if (!FileHelper::isImage($targetPath)) {
             throw new NotFoundHttpException();
         }
 
@@ -64,7 +64,7 @@ class ResizeImageController
             throw new NotFoundHttpException();
         }
 
-        if (!File::isImage($sourcePath)) {
+        if (!FileHelper::isImage($sourcePath)) {
             throw new NotFoundHttpException();
         }
 

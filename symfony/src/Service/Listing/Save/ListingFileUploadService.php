@@ -6,7 +6,7 @@ namespace App\Service\Listing\Save;
 
 use App\Entity\Listing;
 use App\Entity\ListingFile;
-use App\Helper\Arr;
+use App\Helper\FileHelper;
 use App\Helper\FilePath;
 use App\Service\Event\FileModificationEventService;
 use App\Service\System\Sort\SortService;
@@ -87,49 +87,12 @@ class ListingFileUploadService
 
     public function uploadFile(UploadedFile $uploadedFile, string $destinationFilepath, string $destinationFilename): File
     {
-        $this->throwExceptionIfUnsafeExtension($uploadedFile);
+        FileHelper::throwExceptionIfUnsafeExtension($uploadedFile);
 
         return $uploadedFile->move(
             $destinationFilepath,
             $destinationFilename
         );
-    }
-
-    private function throwExceptionIfUnsafeExtension(UploadedFile $uploadedFile): void
-    {
-        $fileExtension = strtolower($uploadedFile->getClientOriginalExtension());
-        if (!Arr::inArray(
-            $fileExtension,
-            [
-                'jpg',
-                'jpeg',
-                'png',
-                'gif',
-                'swf',
-            ]
-        )) {
-            throw new \UnexpectedValueException(
-                "file extension $fileExtension is not allowed"
-            ); // todo: #11 better passing exception to user
-        }
-
-        if (Arr::inArray(
-            $fileExtension,
-            [
-                'php',
-                'js',
-                'css',
-                'exe',
-                'com',
-                'bat',
-                'sh',
-                'cgi',
-            ]
-        )) {
-            throw new \UnexpectedValueException(
-                "file extension $fileExtension is not allowed"
-            );// todo: #11 better passing exception to user
-        }
     }
 
     private function getDestinationFilepath(Listing $listing): string

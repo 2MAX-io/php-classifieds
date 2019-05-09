@@ -12,6 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints;
 
 class AdminCategorySaveType extends AbstractType
 {
@@ -31,6 +32,9 @@ class AdminCategorySaveType extends AbstractType
             'label' => 'trans.Picture',
             'required' => false,
             'mapped' => false,
+            'constraints' => [
+                new Constraints\Image()
+            ]
         ]);
     }
 

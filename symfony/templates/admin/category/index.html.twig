@@ -10,8 +10,16 @@
         <div>
             <i class="fas fa-arrows-alt sortableHandle"></i>
             <div class="d-inline-block mb-3">{{ parentCategory.name }}</div>
-            <a href="{{ path('app_admin_category_edit', {'id': parentCategory.id}) }}" class="btn btn-dark">{{ 'trans.Edit' | trans }}</a>
-            <a href="{{ path('app_admin_category_new', {'parentCategory': parentCategory.id}) }}" class="btn btn-success">{{ 'trans.Add subcategory' | trans }}</a>
+            <div class="ml-md-5 d-md-inline-block">
+                <a
+                        href="{{ path('app_admin_category_edit', {'id': parentCategory.id}) }}"
+                        class="btn btn-dark mb-1"
+                >{{ 'trans.Edit' | trans }}</a>
+                <a
+                        href="{{ path('app_admin_category_new', {'parentCategory': parentCategory.id}) }}"
+                        class="btn btn-success mb-1"
+                >{{ 'trans.Add subcategory' | trans }}</a>
+            </div>
         </div>
 
         {% for category in parentCategory.children  %}

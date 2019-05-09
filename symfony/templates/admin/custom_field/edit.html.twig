@@ -36,7 +36,12 @@
                         <i class="fas fa-arrows-alt sortableHandle"></i>
                         {{ customFieldOption.name }}
 
-                        <a href="{{ path('app_admin_custom_field_edit_option', {'id': customFieldOption.id}) }}" class="btn btn-dark">{{ 'trans.Edit' | trans }}</a>
+                        <div class="float-right">
+                            <a
+                                    href="{{ path('app_admin_custom_field_edit_option', {'id': customFieldOption.id}) }}"
+                                    class="btn btn-dark ml-2 ml-md-5 mb-1"
+                            >{{ 'trans.Edit' | trans }}</a>
+                        </div>
                     </div>
                 {% endfor %}
             </div>

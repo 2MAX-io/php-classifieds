@@ -25,7 +25,7 @@
                         <h1 class="h3 mb-3 font-weight-normal">{{ 'trans.Please sign in' | trans }}</h1>
 
                         <div class="form-group">
-                            <label for="inputEmail" class="sr-only">Email</label>
+                            <label for="inputEmail" class="sr-only">{{ 'trans.Email' | trans }}</label>
                             <input
                                     type="text"
                                     value="{{ last_username }}"
@@ -40,7 +40,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="inputPassword" class="sr-only">Password</label>
+                            <label for="inputPassword" class="sr-only">{{ 'trans.Password' | trans }}</label>
                             <input
                                     type="password"
                                     name="password"
@@ -51,20 +51,7 @@
                             >
                         </div>
 
-                        <input type="hidden" name="_csrf_token"
-                               value="{{ csrf_token('authenticate') }}"
-                        >
-
-                        {#
-                            Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
-                            See https://symfony.com/doc/current/security/remember_me.html
-
-                            <div class="checkbox mb-3">
-                                <label>
-                                    <input type="checkbox" name="_remember_me"> Remember me
-                                </label>
-                            </div>
-                        #}
+                        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
                         <div class="form-group">
                             <button class="btn btn-primary btn-block" type="submit">
@@ -78,11 +65,11 @@
 
 {#                    <div class="row">#}
 {#                        <div class="col-md-6 mb-3 mb-md-0">#}
-{#                            <a href="/user/sign-in?provider=facebook" class="btn btn-secondary btn-block"><i class="fab fa-facebook-f"></i> Facebook</a>#}
+{#                            <a href="#" class="btn btn-secondary btn-block"><i class="fab fa-facebook-f"></i> Facebook</a>#}
 {#                        </div>#}
 
 {#                        <div class="col-md-6">#}
-{#                            <a href="/user/sign-in?provider=twitter" class="btn btn-secondary btn-block"><i class="fab fa-twitter"></i> Twitter</a>#}
+{#                            <a href="#" class="btn btn-secondary btn-block"><i class="fab fa-twitter"></i> Twitter</a>#}
 {#                        </div>#}
 {#                    </div>#}
                 </div>

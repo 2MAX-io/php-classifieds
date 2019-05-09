@@ -17,7 +17,7 @@
         {% endfor %}
     </div>
 
-    <div class="container mt-3 tpl-listing-show">
+    <div class="container mt-3 listing-show">
         <div class="row">
             <div class="col-md-7">
                 <div class="alert alert-danger">
@@ -37,12 +37,10 @@
                     </div>
                 </div>
 
-                <!-- Tabs contents -->
+                <!-- details -->
                 <div class="tab-content p-3 rounded-bottom">
-                    <!-- tab overview -->
-                    <div class="tab-pane fade show active" role="tabpanel" id="overview">
+                    <div class="tab-pane fade show active" role="tabpanel">
                         <div class="zebra">
-                            <!-- description -->
                             <div class="block">
                                 <div class="px-3 py-1 clearfix">
                                     <div class="float-md-right">
@@ -51,20 +49,16 @@
                                 </div>
                             </div>
                         </div>
-
-                        <!-- end div class zebra -->
                     </div>
-                    <!-- end tab overview -->
                 </div>
 
                 <div>
                     {{ 'trans.Listing identifier' | trans }}: {{ listing.id }}
                 </div>
 
-                <!-- end tabs contents -->
             </div>
 
-            <!-- Sidebar -->
+            <!-- sidebar -->
             <div class="col-md-5">
                 {% if isCurrentUserListing(listing) %}
                     <a href="{{ path('app_listing_edit', {'id': listing.id}) }}" class="btn btn-primary mb-1">
@@ -101,7 +95,7 @@
                     </div>
                 {% endif %}
 
-                {# Informations #}
+                <!-- info -->
                 <div class="card mb-3 w-100">
                     <div class="card-header">
                         <h5>{{ 'trans.Informations' | trans }}</h5>

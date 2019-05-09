@@ -3,11 +3,8 @@
 {% block titleOverride %}{{ settings.indexPageTitle }}{% endblock titleOverride %}
 
 {% block body %}
-
-    <br>
-
-    <!-- Categories -->
-    <div class="container mb-2">
+    <!-- cat header -->
+    <div class="container mt-2 mt-md-3 mb-2">
         <div class="d-flex flex-row">
             <div class="flex-grow-1">
                 <h2>{{ 'trans.Categories' | trans }}</h2>
@@ -25,7 +22,8 @@
         </div>
     </div>
 
-    <div class="container mb-0 mb-md-5 categories">
+    <!-- cat list -->
+    <div class="container mb-0 mb-md-5">
         <div class="row">
             {% for category in categoryList %}
             <div class="col-sm-6 col-lg-3 text-center mb-4">
@@ -41,7 +39,7 @@
                                 alt=""
                         >
                         <div class="card-img-overlay">
-                            <h5 class="card-title down">{{ category.name }}</h5>
+                            <h5 class="card-title index-category-title">{{ category.name }}</h5>
                         </div>
                     </a>
                 </div>
@@ -50,10 +48,11 @@
         </div>
     </div>
 
+    <!-- latest listings -->
     <div class="container">
         <div class="row">
             <div class="col-md-6">
-                <div class="card card-featured mb-4">
+                <div class="card last-added-listings mb-4">
                     <div class="card-header">
                         <strong>{{ 'trans.Recommended Listings' | trans }}</strong>
                     </div>
@@ -78,7 +77,7 @@
             </div>
             <div class="col-md-6">
 
-                <div class="card card-featured mb-4">
+                <div class="card last-added-listings mb-4">
                     <div class="card-header">
                         <strong>{{ 'trans.Latest Listings' | trans }}</strong>
                     </div>

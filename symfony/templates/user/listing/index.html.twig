@@ -9,11 +9,11 @@
         <nav class="nav nav-pills nav-justified mb-2">
             <a class="nav-item nav-link active" href="{{ path('app_user_listing_index') }}">
                 <i class="fas fa-list-ul"></i>
-                <span class="menu-txt">{{ 'trans.Listings' | trans }}</span>
+                <span>{{ 'trans.Listings' | trans }}</span>
             </a>
             <a class="nav-item nav-link" href="{{ path('app_listing_new') }}">
                 <i class="far fa-plus-square"></i>
-                <span class="menu-txt">{{ 'trans.Create Listing' | trans }}</span>
+                <span>{{ 'trans.Create Listing' | trans }}</span>
             </a>
 
             <form class="mt-2 mt-md-0 w-100-small" role="search">
@@ -39,7 +39,7 @@
                         <th>
                             <a href="{{ path('app_listing_new') }}" class="btn btn-dark btn-sm float-right">
                                 <i class="far fa-plus-square"></i>
-                                <span class="menu-txt">{{ 'trans.Create Listing' | trans }}</span>
+                                <span>{{ 'trans.Create Listing' | trans }}</span>
                             </a>
                         </th>
                     </tr>
@@ -48,7 +48,7 @@
                     {% for listing in listings %}
                         <tr>
                             <td>
-                                <div class="card-thumb">
+                                <div>
                                     <a title="{{ listing.title }}" href="{{ path('app_listing_show', {id: listing.id, 'slug': listing.slug}) }}">
                                         <img class="rounded list-small-img" alt="{{ listing.title }}" src="{{ asset(listing.mainImageInListSize | default('static/system/blank.png')) }}">
                                     </a>

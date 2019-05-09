@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<!--[if IE 9]><html class="lt-ie10" lang="pl"> <![endif]-->
-<html lang="pl">
+<!--[if IE 9]><html class="lt-ie10" lang="{{ app.request.locale|split('_')[0] }}"> <![endif]-->
+<html lang="{{ app.request.locale|split('_')[0] }}">
 <head>
     {# @var settings \App\Service\Setting\SettingsDto #}
     {% set settings = settings() %}
@@ -30,7 +30,7 @@
 </head>
 <body lang="{{ app.request.locale|split('_')[0] }}">
 <!-- Top Header -->
-<div class="container-fluid container-header ">
+<div class="container-fluid page-top">
     <div class="container container-remove-padding">
         <nav class="navbar navbar-expand-lg navbar-light">
             <a class="navbar-brand" href="{{ path('app_index') }}" title="{{ settings.indexPageTitle }}">
@@ -41,15 +41,15 @@
                     class="navbar-toggler"
                     type="button"
                     data-toggle="collapse"
-                    data-target="#navbarSupportedContent"
-                    aria-controls="navbarSupportedContent"
+                    data-target="#navbarPageTop"
+                    aria-controls="navbarPageTop"
                     aria-expanded="false"
                     aria-label="Toggle navigation"
             >
                 <span class="navbar-toggler-icon"></span>
             </button>
 
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <div class="collapse navbar-collapse" id="navbarPageTop">
                 <ul class="navbar-nav justify-content-around d-sm-none">
                     <li class="nav-item">
                         <a class="nav-link" href="{{ path('app_index') }}">{{ 'trans.Home page' | trans }}</a>
@@ -79,7 +79,7 @@
                 <div class="col-md-8 container-remove-padding">
                     <form class="form-inline my-2 my-lg-0" method="get" action="{{ path('app_listing_list') }}">
                         <div class="col-md-8 container-remove-padding">
-                            <label class="sr-only" for="keyword">{{ 'trans.keyword'|trans }}</label>
+                            <label class="sr-only" for="query">{{ 'trans.keyword'|trans }}</label>
                             <div class="input-group mb-2 mr-md-2">
                                 <div class="input-group-prepend">
                                     <div class="input-group-text"><i class="fas fa-search"></i></div>
@@ -89,6 +89,7 @@
                                         type="text"
                                         class="form-control"
                                         name="query"
+                                        id="query"
                                         placeholder="{{ settings.searchPlaceholder }}"
                                         value="{{ app.request.get('query') | default }}"
                                 >
@@ -121,8 +122,8 @@
                                         href="{{ path('app_listing_new') }}"
                                         class="btn btn-primary"
                                 >
-                                    {{ 'trans.Get Listed Today' | trans }}
-                                    <i class="fas fa-chevron-right"></i>
+                                    <i class="fas fa-plus mr-1"></i>
+                                    {{ 'trans.Add listing' | trans }}
                                 </a>
                             </li>
                         </ul>

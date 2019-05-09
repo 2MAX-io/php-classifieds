@@ -15,7 +15,7 @@
         > {{ listing.title }}
     </div>
 
-    <div class="container mt-3 tpl-listing-show">
+    <div class="container mt-3 listing-show">
         <div class="row">
             <div class="col-md-7">
                 {% if displayAsExpired(listing) %}
@@ -66,7 +66,7 @@
 
                 {% if listing.price is not empty %}
                     <div class="my-1 d-md-none">
-                        <h3 class="btn btn-dark price btn-lg">
+                        <h3 class="btn btn-dark btn-lg">
                             {{ 'trans.Price' | trans }}: {{ listing.price | money }}
                         </h3>
 
@@ -89,12 +89,12 @@
                 {% endif %}
 
                 <!-- Tabs nav -->
-                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <ul class="nav nav-tabs" role="tablist">
                     <li class="nav-item flex-sm-fill text-sm-center">
                         <a
-                                href="#overview"
+                                href="#details"
                                 class="nav-link active"
-                                aria-controls="overview"
+                                aria-controls="details"
                                 role="tab"
                                 data-toggle="tab"
                                 aria-selected="true"
@@ -114,10 +114,10 @@
                     {% endif %}
                 </ul>
 
-                <!-- Tabs contents -->
+                <!-- tabs -->
                 <div class="tab-content p-md-3 rounded-bottom mb-2">
-                    <!-- tab overview -->
-                    <div class="tab-pane fade show active" role="tabpanel" id="overview">
+                    <!-- details tab -->
+                    <div class="tab-pane fade show active" role="tabpanel" id="details">
 
                         <div class="row">
                             {% for listingCustomFieldValue in listing.listingCustomFieldValues %}
@@ -151,29 +151,26 @@
                                 </div>
                             </div>
                         </div>
-
-                        <!-- end div class zebra -->
                     </div>
-                    <!-- end tab overview -->
 
                     <!-- Tab photos -->
                     <div id="photos" class="tab-pane fade clearfix" role="tabpanel">
                         {% for listingFile in listing.listingFiles %}
-                            <div class="listing-thumb float-left img-thumbnail mr-2 mb-2" style="width: 120px">
+                            <div class="float-left img-thumbnail mr-2 mb-2" style="width: 120px">
                                 <a
                                         href="{{ asset(listingFile.pathInNormalSize) }}"
                                         data-fancybox="fileInTab"
                                         class="fancybox"
                                 >
                                     <div
-                                            class="dummy container-img rounded"
+                                            class="pt-100 container-img rounded"
                                             style="background-image:url('{{ asset(listingFile.pathInNormalSize) }}');"
                                     ></div>
                                 </a>
                             </div>
                         {% endfor %}
                     </div>
-                    <!-- End tab photos -->
+
                 </div>
 
                 {% if listing.listingFiles is not empty %}
@@ -325,11 +322,8 @@
 
                         <div class="card-body">
                             <div
-                                    class="fb-share-button mb-2"
+                                    class="mb-2"
                                     data-href="{{ url('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}"
-                                    data-layout="button"
-                                    data-size="small"
-                                    data-mobile-iframe="true"
                             >
                                 <a
                                         target="_blank"
@@ -342,7 +336,6 @@
 
                             <div class="mb-2">
                                 <a
-                                        class="twitter-share-button"
                                         href="https://twitter.com/intent/tweet?url={{ url('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}&text={{ listing.title }}"
                                 >
                                     {{ 'trans.Share on Twitter' | trans }}

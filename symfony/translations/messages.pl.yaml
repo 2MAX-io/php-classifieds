@@ -406,3 +406,4 @@ trans:
   Delete category custom field: 'Usuń z kategorii pole niestandardowe'
   Delete custom field option: 'Usuń z pola niestandarowego opcje'
   Delete custom field: 'Usuń pole niestandardowe'
+  'To delete custom field, you must first delete all custom field dependencies like: custom fields assigned to categories, custom field options': 'Aby usunąć pole niestandardowe, najpierw musisz usunąć wszystkie powiązania pola niestandarowego takie jak: pola niestandardowe przypisane do kategorii, opcje pola niestandarowego'

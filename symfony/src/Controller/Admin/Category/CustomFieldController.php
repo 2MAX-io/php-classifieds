@@ -7,6 +7,7 @@ namespace App\Controller\Admin\Category;
 use App\Controller\Admin\Base\AbstractAdminController;
 use App\Entity\Category;
 use App\Entity\CustomField;
+use App\Exception\UserVisibleMessageException;
 use App\Form\Admin\CustomFieldType;
 use App\Helper\Json;
 use App\Repository\CustomFieldRepository;
@@ -14,6 +15,7 @@ use App\Service\Admin\CustomField\CategorySelection\CustomFieldCategorySelection
 use App\Service\Admin\CustomField\CustomFieldForCategoryService;
 use App\Service\Admin\CustomField\CustomFieldService;
 use App\Service\System\Sort\SortService;
+use Doctrine\DBAL\Exception\ForeignKeyConstraintViolationException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -119,9 +121,18 @@ class CustomFieldController extends AbstractAdminController
         $this->denyUnlessAdmin();
 
         if ($this->isCsrfTokenValid('delete'.$customField->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($customField);
-            $entityManager->flush();
+            try {
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->remove($customField);
+                $entityManager->flush();
+            } catch (ForeignKeyConstraintViolationException $e) {
+                throw new UserVisibleMessageException(
+                    'trans.To delete custom field, you must first delete all custom field dependencies like: custom fields assigned to categories, custom field options',
+                    [],
+                    0,
+                    $e
+                );
+            }
         }
 
         return $this->redirectToRoute('app_admin_custom_field_index');

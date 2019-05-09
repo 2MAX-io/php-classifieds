@@ -6,12 +6,14 @@ namespace App\Controller\Admin\Category;
 
 use App\Controller\Admin\Base\AbstractAdminController;
 use App\Entity\Category;
+use App\Exception\UserVisibleMessageException;
 use App\Form\Admin\AdminCategorySaveType;
 use App\Helper\Json;
 use App\Service\Admin\Category\AdminCategoryService;
 use App\Service\Admin\Category\CategoryPictureUploadService;
 use App\Service\Category\TreeService;
 use App\Service\System\Sort\SortService;
+use Doctrine\DBAL\Exception\ForeignKeyConstraintViolationException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -119,12 +121,21 @@ class AdminCategoryController extends AbstractAdminController
         $this->denyUnlessAdmin();
 
         if ($this->isCsrfTokenValid('delete'.$category->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($category);
-            $entityManager->flush();
+            $em = $this->getDoctrine()->getManager();
+            try {
+                $em->remove($category);
+                $em->flush();
 
-            $treeService->rebuild();
-            $entityManager->flush();
+                $treeService->rebuild();
+                $em->flush();
+            } catch (ForeignKeyConstraintViolationException $e) {
+                throw new UserVisibleMessageException(
+                    'trans.To delete category, you must first delete or move all dependencies like: category listings, subcategories, assigned custom fields, featured packages',
+                    [],
+                    0,
+                    $e
+                );
+            }
         }
 
         return $this->redirectToRoute('app_admin_category');

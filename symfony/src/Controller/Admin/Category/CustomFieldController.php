@@ -127,7 +127,7 @@ class CustomFieldController extends AbstractAdminController
                 $entityManager->flush();
             } catch (ForeignKeyConstraintViolationException $e) {
                 throw new UserVisibleMessageException(
-                    'trans.To delete custom field, you must first delete all custom field dependencies like: custom fields assigned to categories, custom field options',
+                    'trans.To delete custom field, you must first delete all dependencies like: custom fields assigned to categories, custom field options',
                     [],
                     0,
                     $e

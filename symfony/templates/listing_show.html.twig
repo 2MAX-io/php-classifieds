@@ -119,28 +119,25 @@
                     <!-- details tab -->
                     <div class="tab-pane fade show active" role="tabpanel" id="details">
 
-                        <div class="row">
-                            {% for listingCustomFieldValue in listing.listingCustomFieldValues %}
-                                {# @var listingCustomFieldValue \App\Entity\ListingCustomFieldValue #}
-                                <div class="mb-2 py-2 col-md-4">
-                                    <div class="row">
-                                        <div class="col-sm-12">
-                                            <strong>{{ listingCustomFieldValue.customField.name }}:&nbsp;</strong>
-
-                                            {% if listingCustomFieldValue.customFieldOption is empty %}
-                                                <span>{{ listingCustomFieldValue.value }}</span>
-                                            {% else %}
-                                                <span>{{ listingCustomFieldValue.customFieldOption.name }}</span>
-                                            {% endif %}
-                                        </div>
-                                    </div>
-                                </div>
-                            {% endfor %}
-                        </div>
-
                         <div class="zebra">
                             <!-- description -->
                             <div class="block">
+                                <div class="m-2">
+                                    {% for listingCustomFieldValue in listing.listingCustomFieldValues %}
+                                        {# @var listingCustomFieldValue \App\Entity\ListingCustomFieldValue #}
+                                        <div class="name-value-group mb-2 mr-1 mr-md-2">
+                                            <div class="name">
+                                                {{ listingCustomFieldValue.customField.name }}
+                                            </div>
+                                            {% if listingCustomFieldValue.customFieldOption is empty %}
+                                                <strong>{{ listingCustomFieldValue.value }}</strong>
+                                            {% else %}
+                                                <strong>{{ listingCustomFieldValue.customFieldOption.name }}</strong>
+                                            {% endif %}
+                                        </div>
+                                    {% endfor %}
+                                </div>
+
                                 <div class="user-text-wrap px-2 px-md-3 mb-3 mt-2">
                                     {{ listing.description | nl2br }}
                                 </div>

@@ -356,3 +356,23 @@ img {
     padding-left: 0.5rem;
     padding-right: 0.5rem;
 }
+
+input.form-control, textarea.form-control, select.form-control {
+    background-color: #fcfcfc;
+}
+
+.name-value-group {
+    display: inline-block;
+    color: #303641;
+    background-color: #d6d6d8;
+    border-radius: 3px;
+    padding: 6px 12px 6px 0;
+}
+
+.name-value-group .name {
+    display: inline;
+    background-color: #c3c3c7;
+    padding: 8px;
+    margin-right: 8px;
+    border-radius: 3px;
+}

@@ -9,3 +9,4 @@ twig:
     form_themes: ['form/form_layout.html.twig']
     date:
         format: '%twig_date_format%'
+    exception_controller: App\Exception\Controller\ExceptionController::showAction

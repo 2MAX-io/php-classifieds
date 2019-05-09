@@ -44,3 +44,8 @@ services:
         factory: 'App\System\Support\Phone\PhoneNumberService:factory'
 
     Symfony\Component\Cache\Simple\ArrayCache: ~
+
+    App\Exception\Controller\ExceptionController:
+        public: true
+        arguments:
+            $debug: '%kernel.debug%'

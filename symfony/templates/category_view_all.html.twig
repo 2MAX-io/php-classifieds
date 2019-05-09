@@ -20,16 +20,14 @@
                                 {{ category.name }}
                             </a>
                         </h5>
-                        <div class="card-body">
+                        <div>
                             {% for categoryChild in category.children %}
-                                <div>
-                                    <a
-                                            href="{{ path('app_category', {'categorySlug': categoryChild.slug}) }}"
-                                            class="py-1 d-inline-block category-link"
-                                    >
+                                <a
+                                        href="{{ path('app_category', {'categorySlug': categoryChild.slug}) }}"
+                                        class="category-link link-list-item"
+                                >
                                     {{ categoryChild.name }}
-                                    </a>
-                                </div>
+                                </a>
                             {% endfor %}
                         </div>
                     </div>

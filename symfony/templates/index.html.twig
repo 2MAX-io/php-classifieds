@@ -53,16 +53,14 @@
                         <strong>{{ 'trans.Recommended Listings' | trans }}</strong>
                     </div>
 
-                    <div class="card-body">
+                    <div class="card-body p-0">
                         {% for listing in recommendedListings %}
-                            <div>
-                                <a
-                                        href="{{ path('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}"
-                                        class="py-2 d-inline-block"
-                                >
-                                    {{ listing.title }}
-                                </a>
-                            </div>
+                            <a
+                                    href="{{ path('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}"
+                                    class="link-list-item d-flex"
+                            >
+                                {{ listing.title }}
+                            </a>
                         {% endfor %}
                     </div>
 
@@ -80,19 +78,15 @@
                         <strong>{{ 'trans.Latest Listings' | trans }}</strong>
                     </div>
 
-                    <div class="card-body">
-                        <div>
-                            {% for listing in latestListings %}
-                                <div>
-                                    <a
-                                            href="{{ path('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}"
-                                            class="py-2 d-inline-block"
-                                    >
-                                        {{ listing.title }}
-                                    </a>
-                                </div>
-                            {% endfor %}
-                        </div>
+                    <div class="card-body p-0">
+                        {% for listing in latestListings %}
+                            <a
+                                    href="{{ path('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}"
+                                    class="link-list-item d-flex"
+                            >
+                                {{ listing.title }}
+                            </a>
+                        {% endfor %}
                     </div>
 
                     <div class="card-footer">

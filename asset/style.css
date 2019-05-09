@@ -30,6 +30,7 @@ textarea {
 
 body {
     min-height: 101vh;
+    background-color: #f9f9f9;
 }
 
 a,a.h1,a.h2,a.h3,a.h4,a.h5,a.h6 {
@@ -79,7 +80,7 @@ a:hover, a:focus {
 }
 
 .card-featured {
-    height: 28rem;
+    height: 27rem;
     background-color: #f8f9fa;
 }
 
@@ -511,8 +512,28 @@ svg.icon {
     margin: 20px 0 0 25px;
 }
 
-.listing-list-side-category.active {
-    font-weight: bold;
+.link-list-item {
+    display: block;
+    border-top: 1px solid rgba(0, 0, 0, 0.125);
+    padding: 0.5rem 1.25rem;
+    background-color: #f8f9fa;
+}
+
+.link-list-item:first-child {
+    border: none;
+}
+
+.link-list-item.active {
+    color: #fff;
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.link-list-item:hover {
+    z-index: 2;
+    color: #fff;
+    background-color: #6c757d;
+    border-color: #6c757d;
 }
 
 .d-none-soft:not(.show)  {
@@ -534,5 +555,9 @@ svg.icon {
     .category-link {
         font-size: 1.2rem;
     }
+}
 
+.card {
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, .2);
+    border: none;
 }

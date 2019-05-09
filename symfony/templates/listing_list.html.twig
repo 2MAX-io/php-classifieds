@@ -36,12 +36,12 @@
                         <div class="card-header">
                             <strong>{{ 'trans.Category' | trans }}</strong>
                         </div>
-                        <div class="card-body">
+                        <div>
                             {% for category in categoryList %}
                                 <a
                                         href="{{ path('app_category', {'categorySlug': category.slug} | merge(queryParameters)) }}"
-                                        class="py-1 d-block listing-list-side-category category-link {% if listingListDto.category and category.slug == listingListDto.category.slug  %}active{% endif %}"
-                                >{{ category.name }}</a>
+                                        class="link-list-item category-link {% if listingListDto.category and category.slug == listingListDto.category.slug  %}active{% endif %}"
+                                >{{- category.name -}}</a>
                             {% endfor %}
                         </div>
                     </div>

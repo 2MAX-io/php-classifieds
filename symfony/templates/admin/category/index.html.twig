@@ -6,11 +6,11 @@
 {% macro categoryLevel(parentCategory) %}
     {% import _self as macros %}
     {# @var parentCategory \App\Entity\Category #}
-    <div class="list-group-item nested-1" data-id="{{ parentCategory.id }}">
-        <div>
+    <li class="nested-sortable-group" data-id="{{ parentCategory.id }}">
+        <div class="nested-sortable-item">
             <i class="fas fa-arrows-alt sortableHandle"></i>
-            <div class="d-inline-block mb-3">{{ parentCategory.name }}</div>
-            <div class="ml-md-5 d-md-inline-block">
+            {{ parentCategory.name }}
+            <div class="float-right ml-md-5 d-md-inline-block">
                 <a
                         href="{{ path('app_admin_category_edit', {'id': parentCategory.id}) }}"
                         class="btn btn-dark mb-1"
@@ -23,11 +23,11 @@
         </div>
 
         {% for category in parentCategory.children  %}
-            <div class="list-group nested-sortable"  data-sortable-group="parent_{{ parentCategory.id }}">
-                    {{ macros.categoryLevel(category) }}
-            </div>
+            <ul class="nested-sortable"  data-sortable-group="parent_{{ parentCategory.id }}">
+                {{ macros.categoryLevel(category) }}
+            </ul>
         {% endfor %}
-    </div>
+    </li>
 {% endmacro %}
 
 {% block body %}
@@ -43,12 +43,12 @@
 
         <button class="btn btn-primary w-100 mb-2 saveOrder">{{ 'trans.Save order of categories' | trans }}</button>
 
-        <div class="list-group col nested-sortable mb-2" data-sortable-group="root">
+        <ul class="nested-sortable mb-2 pl-0" data-sortable-group="root">
             {# @var category1 \App\Entity\Category #}
             {% for category in categoryList %}
                 {{ macros.categoryLevel(category) }}
             {% endfor %}
-        </div>
+        </ul>
 
         <button class="btn btn-primary w-100 mb-2 saveOrder">{{ 'trans.Save order of categories' | trans }}</button>
     </div>

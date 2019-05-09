@@ -567,3 +567,24 @@ svg.icon {
 .btn-light {
     background-color: #f3f3f3;
 }
+
+.nested-sortable-group {
+    display: block;
+    list-style: none;
+    margin-bottom: 0.3rem;
+}
+
+.nested-sortable-item {
+    display: block;
+    position: relative;
+    margin-bottom: 0.3rem;
+    line-height: 3rem;
+    border: 1px solid #ebebeb;
+    padding-left: 1rem;
+}
+
+.cursor-pointer, .sortableHandle {
+    cursor: pointer;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+}

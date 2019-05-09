@@ -115,7 +115,11 @@
     }
 }
 
-.sortable-ghost {
+.sortable-ghost, .sortable-chosen {
     background: #f2fbff;
     border: 2px dashed #b6bcbf;
+}
+
+.sortable-ghost .nested-sortable-item, .sortable-chosen .nested-sortable-item {
+    border: none;
 }

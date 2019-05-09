@@ -46,6 +46,11 @@ security:
             user_checker: App\Security\UserChecker
             logout:
               path:   app_logout
+            remember_me:
+              secret:   '%kernel.secret%'
+              lifetime: 31536000 # 1 year in seconds
+              path:     /
+              always_remember_me: true
 
             # activate different ways to authenticate
 

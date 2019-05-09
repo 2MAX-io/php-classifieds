@@ -123,3 +123,7 @@
 .sortable-ghost .nested-sortable-item, .sortable-chosen .nested-sortable-item {
     border: none;
 }
+
+.sortable-drag {
+    opacity: 0;
+}

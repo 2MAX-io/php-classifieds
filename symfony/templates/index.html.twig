@@ -12,9 +12,14 @@
             <div class="flex-grow-1">
                 <h2>{{ 'trans.Categories' | trans }}</h2>
             </div>
-            <div class="d-none d-sm-block">
+            <div class="d-sm-none">
                 <a href="{{ path('app_category_view_all') }}" class="btn btn-light">
                     {{ 'trans.View all' | trans }}
+                </a>
+            </div>
+            <div class="d-none d-sm-block">
+                <a href="{{ path('app_category_view_all') }}" class="btn btn-light">
+                    {{ 'trans.View all categories' | trans }}
                 </a>
             </div>
         </div>

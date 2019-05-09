@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Service\Admin\CustomField;
 
 use App\Entity\CustomFieldOption;
+use App\Entity\ListingCustomFieldValue;
+use App\Service\System\Sort\SortService;
 use Doctrine\ORM\EntityManagerInterface;
 
 class CustomFieldOptionService
@@ -32,10 +34,20 @@ class CustomFieldOptionService
         }
     }
 
+    public function removeOptionFromListingValues(): void
+    {
+        $qb = $this->em->getRepository(ListingCustomFieldValue::class)->createQueryBuilder('listingCustomFieldValue');
+        $qb->update(ListingCustomFieldValue::class, 'listingCustomFieldValue');
+        $qb->set('listingCustomFieldValue.customFieldOption', ':customFieldOption');
+        $qb->setParameter('customFieldOption', null);
+        $qb->getQuery()->execute();
+    }
+
     public function reorder(): void
     {
         $pdo = $this->em->getConnection();
-        $pdo->query('SET @count = 0');
+        $stmt = $pdo->prepare('SET @count = :count');
+        $stmt->execute([':count' => SortService::START_REORDER_FROM]);
         $pdo->query('UPDATE custom_field_option SET sort = @count:= @count + 1 WHERE 1 ORDER BY custom_field_id ASC, sort ASC;');
     }
 }

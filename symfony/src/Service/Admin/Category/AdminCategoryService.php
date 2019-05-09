@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Service\Admin\Category;
 
 use App\Entity\Category;
+use App\Service\System\Sort\SortService;
 use Doctrine\ORM\EntityManagerInterface;
 
 class AdminCategoryService
@@ -105,10 +106,11 @@ class AdminCategoryService
         $rootCategory = $qb->getQuery()->getSingleResult();
 
         $rootCategory->setSort(0);
-        $this->reorderCategoryAndChildren($rootCategory, $rootCategory->getSort());
+        $this->reorderCategoryAndChildren($rootCategory, SortService::START_REORDER_FROM);
 
 //        $pdo = $this->em->getConnection();
-//        $pdo->query('SET @count = 0');
+//        $stmt = $pdo->prepare('SET @count = :count');
+//        $stmt->execute([':count' => SortService::START_REORDER_FROM]);
 //        $pdo->query('UPDATE `category` SET sort = parent_id*1000 + @count:= @count + 1 WHERE 1 ORDER BY lft ASC, sort ASC;');
     }
 

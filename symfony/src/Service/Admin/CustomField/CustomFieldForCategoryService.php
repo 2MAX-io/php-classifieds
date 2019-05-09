@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Service\Admin\CustomField;
 
 use App\Entity\CustomFieldJoinCategory;
+use App\Service\System\Sort\SortService;
 use Doctrine\ORM\EntityManagerInterface;
 
 class CustomFieldForCategoryService
@@ -35,7 +36,8 @@ class CustomFieldForCategoryService
     public function reorder(): void
     {
         $pdo = $this->em->getConnection();
-        $pdo->query('SET @count = 0');
+        $stmt = $pdo->prepare('SET @count = :count');
+        $stmt->execute([':count' => SortService::START_REORDER_FROM]);
         $pdo->query('UPDATE custom_field_join_category SET sort = @count:= @count + 1 WHERE 1 ORDER BY category_id ASC, sort ASC;');
     }
 }

@@ -11,6 +11,7 @@ use App\Form\Admin\CustomFieldOptionType;
 use App\Helper\Json;
 use App\Service\Admin\CustomField\CustomFieldOptionService;
 use App\Service\System\Sort\SortService;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -100,14 +101,23 @@ class CustomFieldOptionController extends AbstractAdminController
     public function delete(
         Request $request,
         CustomFieldOption $customFieldOption,
-        CustomFieldOptionService $customFieldOptionService
+        CustomFieldOptionService $customFieldOptionService,
+        EntityManagerInterface $em
     ): Response {
         $this->denyUnlessAdmin();
 
         if ($this->isCsrfTokenValid('delete'.$customFieldOption->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($customFieldOption);
-            $entityManager->flush();
+            try {
+                $em->beginTransaction();
+                $customFieldOptionService->removeOptionFromListingValues();
+                $em->remove($customFieldOption);
+                $em->flush();
+                $em->commit();
+            } catch (\Throwable $e) {
+                $em->rollback();
+
+                throw $e;
+            }
 
             $customFieldOptionService->reorder();
         }

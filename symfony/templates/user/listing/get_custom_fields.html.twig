@@ -27,7 +27,10 @@
 
         {% if customField.type == constant('\App\\Entity\\CustomField::TYPE_INTEGER_RANGE') %}
             <div class="form-group">
-                <label class="{% if customField.required %}required{% endif %}" for="custom_field_{{ customField.id }}">{{ customField.name }}</label>
+                <label class="{% if customField.required %}required{% endif %}" for="custom_field_{{ customField.id }}">
+                    {{ customField.name }}
+                    {%- if customField.unit is not empty %} [{{ customField.unit }}]{% endif -%}
+                </label>
 
                 <input type="number"
                        name="form_custom_field[{{ customField.id }}]"

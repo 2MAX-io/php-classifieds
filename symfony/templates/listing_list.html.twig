@@ -145,7 +145,7 @@
                                         constant('\App\\Entity\\CustomField::TYPE_INTEGER_RANGE'),
                                     ]
                                 %}
-                                    <label>{{ customField.name }}</label>
+                                    <label>{{ customField.name }} {%- if customField.unit is not empty %} [{{ customField.unit }}]{% endif -%}</label>
                                     <div class="form-row mb-3">
                                         <div class="col-6">
                                             <input

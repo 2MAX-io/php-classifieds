@@ -131,7 +131,7 @@
                                             </div>
                                             {% if listingCustomFieldValue.customFieldOption is empty %}
                                                 {% if listingCustomFieldValue.customField.type == constant('\App\\Entity\\CustomField::TYPE_INTEGER_RANGE') %}
-                                                    <strong>{{ listingCustomFieldValue.value | thousandsSeparate }}</strong>
+                                                    <strong>{{ listingCustomFieldValue.value | thousandsSeparate }} {{ listingCustomFieldValue.customField.unit | default }}</strong>
                                                 {% else %}
                                                     <strong>{{ listingCustomFieldValue.value }}</strong>
                                                 {% endif %}

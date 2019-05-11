@@ -63,6 +63,21 @@ class SettingsDto
      */
     private $searchPlaceholder;
 
+    /**
+     * @var boolean
+     */
+    private $masterSiteLinkShow;
+
+    /**
+     * @var string|null
+     */
+    private $masterSiteUrl;
+
+    /**
+     * @var string|null
+     */
+    private $masterSiteAnchorText;
+
     public function getIndexPageTitle(): ?string
     {
         return $this->indexPageTitle;
@@ -171,5 +186,35 @@ class SettingsDto
     public function setSearchPlaceholder(?string $searchPlaceholder): void
     {
         $this->searchPlaceholder = $searchPlaceholder;
+    }
+
+    public function getMasterSiteUrl(): ?string
+    {
+        return $this->masterSiteUrl;
+    }
+
+    public function setMasterSiteUrl(?string $masterSiteUrl): void
+    {
+        $this->masterSiteUrl = $masterSiteUrl;
+    }
+
+    public function getMasterSiteAnchorText(): ?string
+    {
+        return $this->masterSiteAnchorText;
+    }
+
+    public function setMasterSiteAnchorText(?string $masterSiteAnchorText): void
+    {
+        $this->masterSiteAnchorText = $masterSiteAnchorText;
+    }
+
+    public function isMasterSiteLinkShow(): bool
+    {
+        return $this->masterSiteLinkShow ?? false;
+    }
+
+    public function setMasterSiteLinkShow(bool $masterSiteLinkShow): void
+    {
+        $this->masterSiteLinkShow = $masterSiteLinkShow;
     }
 }

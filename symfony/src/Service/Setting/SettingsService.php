@@ -67,12 +67,12 @@ class SettingsService
                 $setting = $settingList[$property];
 
                 if ($setting->getName() === $property) {
-                    $setting->setValue($propertyAccessor->getValue($settingsDto, $property));
+                    $setting->setValue((string) $propertyAccessor->getValue($settingsDto, $property));
                 }
             } else {
                 $setting = new Setting();
                 $setting->setName($property);
-                $setting->setValue($propertyAccessor->getValue($settingsDto, $property));
+                $setting->setValue((string) $propertyAccessor->getValue($settingsDto, $property));
             }
 
             $setting->setLastUpdateDate(new \DateTime());

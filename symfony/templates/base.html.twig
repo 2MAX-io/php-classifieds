@@ -3,7 +3,7 @@
 <html lang="{{ app.request.locale|split('_')[0] }}">
 <head>
     {# @var settings \App\Service\Setting\SettingsDto #}
-    {% set settings = settings() %}
+    {%- set settings = settings() -%}
     <meta charset="utf-8">
     <title>
         {%- set _blockTitleOverride = block('titleOverride') -%}
@@ -60,9 +60,11 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ path('app_last_added') }}">{{ 'trans.Last added' | trans }}</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="//www.jaslo4u.pl">Jaslo4u.pl</a>
-                    </li>
+                    {% if settings.masterSiteLinkShow %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ settings.masterSiteUrl }}">{{ settings.masterSiteAnchorText }}</a>
+                        </li>
+                    {% endif %}
 
                     {% if lowSecurityCheckIsAdminInPublic() %}
                         <li class="nav-item">
@@ -161,9 +163,11 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ path('app_last_added') }}">{{ 'trans.Last added' | trans }}</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="//www.jaslo4u.pl">Jaslo4u.pl</a>
-                </li>
+                {% if settings.masterSiteLinkShow %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ settings.masterSiteUrl }}">{{ settings.masterSiteAnchorText }}</a>
+                    </li>
+                {% endif %}
 
                 {% if lowSecurityCheckIsAdminInPublic() %}
                     <li class="nav-item">

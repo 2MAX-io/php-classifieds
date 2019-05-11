@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Form\Admin;
 
+use App\Form\Type\BoolRequiredType;
 use App\Form\Type\LanguageTwoLettersType;
 use App\Form\Type\PageType;
 use App\Service\Setting\SettingsDto;
@@ -100,6 +101,28 @@ class SettingsType extends AbstractType
         ]);
         $builder->add('searchPlaceholder', TextType::class, [
             'label' => 'trans.Search examples',
+            'required' => true,
+            'constraints' => [
+                new NotBlank(),
+            ],
+        ]);
+        $builder->add('masterSiteLinkShow', BoolRequiredType::class, [
+            'label' => 'trans.Show link to master site',
+            'help' => 'trans.if this classifieds site, is module of main site, this option enables linking to your master site in breadcrumbs, navigation and admin',
+            'required' => true,
+            'constraints' => [
+                new NotBlank(),
+            ],
+        ]);
+        $builder->add('masterSiteUrl', TextType::class, [
+            'label' => 'trans.Url to master site',
+            'required' => true,
+            'constraints' => [
+                new NotBlank(),
+            ],
+        ]);
+        $builder->add('masterSiteAnchorText', TextType::class, [
+            'label' => 'trans.Text of link to master site',
             'required' => true,
             'constraints' => [
                 new NotBlank(),

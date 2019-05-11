@@ -415,3 +415,7 @@ trans:
   Use when no package set for category, as default?: 'Używać gdy żaden pakiet nie został ustawiony dla kategorii, jako domyślny?'
   Delete featured package: 'Usunąć pakiet wyróżnień'
   Create new featured package: 'Utwórz nowy pakiet wyróżnień'
+  Show link to master site: 'Pokaż link do strony nadrzędnej'
+  if this classifieds site, is module of main site, this option enables linking to your master site in breadcrumbs, navigation and admin: 'jeżeli ta strona ogłoszeń, jest modułem nadrzędnej strony, ta opcja włącza linkowanie do nadrzędniej strony w ścieżce strony, nawigacji i panelu admina'
+  Url to master site: 'Url do strony nadrzędnej'
+  Text of link to master site: 'Tekst linku do strony nadrzędnej'

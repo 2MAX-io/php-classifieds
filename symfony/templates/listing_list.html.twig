@@ -1,12 +1,19 @@
 {% extends 'base.html.twig' %}
 
+{# @var settings \App\Service\Setting\SettingsDto #}
+{% set settings = settings() %}
+
 {% block title %}{{ pageTitle }}{% endblock %}
 
 {% block body %}
 
     <div class="container mt-3 mb-3">
-        <a href="//www.jaslo4u.pl">Jaslo4u.pl</a>
-        > <a href="{{ path('app_index') }}">{{ 'trans.Classifieds' | trans }}</a>
+        {% if settings.masterSiteLinkShow %}
+            <a href="{{ settings.masterSiteUrl }}">{{ settings.masterSiteAnchorText }}</a>
+            >
+        {% endif %}
+
+        <a href="{{ path('app_index') }}">{{ 'trans.Classifieds' | trans }}</a>
 
         {% for category in categoryBreadcrumbs %}
             &gt; <a href="{{ path('app_category', {'categorySlug': category.slug}) }}">{{ category.name }}</a>

@@ -143,7 +143,6 @@
 
                                 {% if customField.type in [
                                         constant('\App\\Entity\\CustomField::TYPE_INTEGER_RANGE'),
-                                        constant('\App\\Entity\\CustomField::TYPE_YEAR_RANGE'),
                                     ]
                                 %}
                                     <label>{{ customField.name }}</label>
@@ -165,6 +164,68 @@
                                                 placeholder="{{ 'trans.max' | trans }}"
                                                 class="form-control"
                                             >
+                                        </div>
+                                    </div>
+                                {% endif %}
+
+                                {% if customField.type in [
+                                        constant('\App\\Entity\\CustomField::TYPE_YEAR_RANGE'),
+                                    ]
+                                %}
+                                    <label>{{ customField.name }}</label>
+                                    <div class="form-row mb-3">
+                                        <div class="col-6">
+                                            <select
+                                                name="form_custom_field[{{ customField.id }}][range][min]"
+                                                type="number"
+                                                class="form-control">
+
+                                                <option value=''>{{ 'trans.min' | trans }}</option>
+
+                                                {% set startYear = date().format('Y') %}
+                                                {% for year in startYear..1960 %}
+                                                    <option
+                                                            value="{{- year -}}"
+                                                            {% if year == app.request.get('form_custom_field')[customField.id]['range']['min'] | default %}selected{% endif %}
+                                                    >
+                                                        {{ year }}
+                                                    </option>
+                                                {% endfor %}
+
+                                                <option
+                                                        {% if 1959 == app.request.get('form_custom_field')[customField.id]['range']['min'] | default %}selected{% endif %}
+                                                        value="1959"
+                                                >
+                                                    {{ 'trans.Older than 1960' | trans }}
+                                                </option>
+                                            </select>
+                                        </div>
+
+                                        <div class="col-6">
+                                            <select
+                                                name="form_custom_field[{{ customField.id }}][range][max]"
+                                                type="number"
+                                                class="form-control"
+                                            >
+                                                <option value=''>{{ 'trans.max' | trans }}</option>
+
+                                                {% set startYear = date().format('Y') %}
+                                                {% for year in startYear..1960 %}
+                                                    <option
+                                                            value="{{- year -}}"
+                                                            {% if year == app.request.get('form_custom_field')[customField.id]['range']['max'] | default %}selected{% endif %}
+                                                    >
+                                                        {{ year }}
+                                                    </option>
+                                                {% endfor %}
+
+                                                <option
+                                                        {% if 1959 == app.request.get('form_custom_field')[customField.id]['range']['max'] | default %}selected{% endif %}
+                                                        value="1959"
+                                                >
+                                                    {{ 'trans.Older than 1960' | trans }}
+                                                </option>
+                                            </select>
                                         </div>
                                     </div>
                                 {% endif %}

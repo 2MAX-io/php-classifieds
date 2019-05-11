@@ -64,6 +64,26 @@
                     </div>
                 {% endif %}
 
+                <div class="my-2">
+                    {% for listingCustomFieldValue in listing.listingCustomFieldValues %}
+                        {# @var listingCustomFieldValue \App\Entity\ListingCustomFieldValue #}
+                        <div class="name-value-group mb-2 mr-1 mr-md-2">
+                            <div class="name">
+                                {{ listingCustomFieldValue.customField.name }}
+                            </div>
+                            {% if listingCustomFieldValue.customFieldOption is empty %}
+                                {% if listingCustomFieldValue.customField.type == constant('\App\\Entity\\CustomField::TYPE_INTEGER_RANGE') %}
+                                    <strong>{{ listingCustomFieldValue.value | thousandsSeparate }} {{ listingCustomFieldValue.customField.unit | default }}</strong>
+                                {% else %}
+                                    <strong>{{ listingCustomFieldValue.value }}</strong>
+                                {% endif %}
+                            {% else %}
+                                <strong>{{ listingCustomFieldValue.customFieldOption.name }}</strong>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                </div>
+
                 {% if listing.price is not empty %}
                     <div class="my-1 d-md-none">
                         <h3 class="btn btn-dark btn-lg">
@@ -122,25 +142,6 @@
                         <div class="zebra">
                             <!-- description -->
                             <div class="block">
-                                <div class="m-2">
-                                    {% for listingCustomFieldValue in listing.listingCustomFieldValues %}
-                                        {# @var listingCustomFieldValue \App\Entity\ListingCustomFieldValue #}
-                                        <div class="name-value-group mb-2 mr-1 mr-md-2">
-                                            <div class="name">
-                                                {{ listingCustomFieldValue.customField.name }}
-                                            </div>
-                                            {% if listingCustomFieldValue.customFieldOption is empty %}
-                                                {% if listingCustomFieldValue.customField.type == constant('\App\\Entity\\CustomField::TYPE_INTEGER_RANGE') %}
-                                                    <strong>{{ listingCustomFieldValue.value | thousandsSeparate }} {{ listingCustomFieldValue.customField.unit | default }}</strong>
-                                                {% else %}
-                                                    <strong>{{ listingCustomFieldValue.value }}</strong>
-                                                {% endif %}
-                                            {% else %}
-                                                <strong>{{ listingCustomFieldValue.customFieldOption.name }}</strong>
-                                            {% endif %}
-                                        </div>
-                                    {% endfor %}
-                                </div>
 
                                 <div class="user-text-wrap px-2 px-md-3 mb-3 mt-2">
                                     {{ listing.description | nl2br }}

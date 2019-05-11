@@ -13,21 +13,23 @@
 
             <div class="col-md-8 col-lg-9">
                 <div>
-                    <a
-                            href="{{ path('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}"
-                            target="_blank"
-                            class="float-left"
-                    >
-                        {{ 'trans.Preview listing' | trans }}
-                    </a>
+                    <div>
+                        <a
+                                href="{{ path('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}"
+                                target="_blank"
+                                class="float-md-left btn btn-link pl-0"
+                        >
+                            {{ 'trans.Preview listing' | trans }}
+                        </a>
+                    </div>
 
-                    <div class="text-right">
+                    <div class="text-md-right mb-2">
                         <span class="{{ getListingStatusClass(listing) }}">{{ getListingStatus(listing) }}</span>
 
                         {% if listing.status in [constant('\App\\Entity\\Listing::STATUS_ACTIVE'), constant('\App\\Entity\\Listing::STATUS_ACTIVE_FEATURED')] %}
                             <a
                                     href="{{ path('app_user_feature_listing', {"id": listing.id}) }}"
-                                    class="btn btn-dark"
+                                    class="btn btn-dark mb-1"
                             >{{ 'trans.Feature this listing' | trans }}</a>
                         {% endif %}
 

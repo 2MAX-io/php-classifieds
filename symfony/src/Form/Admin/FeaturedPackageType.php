@@ -28,7 +28,7 @@ class FeaturedPackageType extends AbstractType
         $builder->add('description', TextareaType::class, [
             'label' => 'trans.Description',
         ]);
-        $builder->add('price', CustomMoneyType::class, [
+        $builder->add('priceFloat', CustomMoneyType::class, [
             'label' => 'trans.Price',
             'constraints' => [
                 new Constraints\GreaterThanOrEqual([

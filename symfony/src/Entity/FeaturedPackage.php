@@ -112,6 +112,18 @@ class FeaturedPackage
         return $this;
     }
 
+    public function getPriceFloat(): ?float
+    {
+        return $this->price / 100;
+    }
+
+    public function setPriceFloat(float $price): self
+    {
+        $this->price = $price * 100;
+
+        return $this;
+    }
+
     public function getDaysFeaturedExpire(): ?int
     {
         return $this->daysFeaturedExpire;

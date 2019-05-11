@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller\Admin\Payment;
 
 use App\Controller\Admin\Base\AbstractAdminController;
@@ -46,18 +48,6 @@ class FeaturedPackageController extends AbstractAdminController
         return $this->render('admin/featured_package/new.html.twig', [
             'featured_package' => $featuredPackage,
             'form' => $form->createView(),
-        ]);
-    }
-
-    /**
-     * @Route("/admin/red5/featured-package/{id}", name="app_admin_featured_package_show", methods={"GET"})
-     */
-    public function show(FeaturedPackage $featuredPackage): Response
-    {
-        $this->denyUnlessAdmin();
-
-        return $this->render('admin/featured_package/show.html.twig', [
-            'featured_package' => $featuredPackage,
         ]);
     }
 

@@ -7,6 +7,7 @@ namespace App\Form;
 use App\Entity\Listing;
 use App\Form\Type\BoolType;
 use App\Form\Type\CategoryType;
+use App\Form\Type\CustomMoneyType;
 use App\Form\Type\FileSimpleType;
 use App\Form\Type\PriceForType;
 use App\Service\Listing\ValidityExtend\ValidUntilSetService;
@@ -17,7 +18,6 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
-use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -98,14 +98,9 @@ class ListingType extends AbstractType
             'label' => 'trans.Show email?',
             'required' => false,
         ]);
-        $builder->add('price', MoneyType::class, [
+        $builder->add('price', CustomMoneyType::class, [
             'label' => 'trans.Amount or price',
             'required' => false,
-            'attr' => [
-                'class' => 'input-money',
-            ],
-            'grouping' => true,
-            'currency' => $this->settingsService->getCurrency(),
             'constraints' => [
                 new Constraints\GreaterThanOrEqual([
                     'value' => 0,

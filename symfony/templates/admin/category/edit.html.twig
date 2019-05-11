@@ -72,7 +72,7 @@
                     {{ customField.unit }}
                 </td>
                 <td>
-                    <a href="{{ path('app_admin_custom_field_edit', {'id': customField.id}) }}" class="btn btn-dark">{{ 'trans.Edit' | trans }}</a>
+                    <a href="{{ path('app_admin_custom_field_edit', {'id': customField.id}) }}" class="btn btn-dark mb-1">{{ 'trans.Edit' | trans }}</a>
 
                     {% include 'admin/category/_delete_custom_field_join_category_form.html.twig' %}
                 </td>

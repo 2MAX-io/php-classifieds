@@ -6,11 +6,14 @@ namespace App\Service\Listing\Featured;
 
 use App\Entity\FeaturedPackage;
 use App\Entity\Listing;
+use App\Entity\Payment;
+use App\Entity\UserBalanceChange;
 use App\Security\CurrentUserService;
 use App\Service\Listing\ValidityExtend\ValidUntilSetService;
 use App\Service\Money\UserBalanceService;
 use Carbon\Carbon;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class FeaturedListingService
 {
@@ -34,16 +37,23 @@ class FeaturedListingService
      */
     private $validUntilSetService;
 
+    /**
+     * @var TranslatorInterface
+     */
+    private $trans;
+
     public function __construct(
         EntityManagerInterface $em,
         UserBalanceService $userBalanceService,
         CurrentUserService $currentUserService,
-        ValidUntilSetService $validUntilSetService
+        ValidUntilSetService $validUntilSetService,
+        TranslatorInterface $trans
     ) {
         $this->em = $em;
         $this->userBalanceService = $userBalanceService;
         $this->currentUserService = $currentUserService;
         $this->validUntilSetService = $validUntilSetService;
+        $this->trans = $trans;
     }
 
     public function makeFeatured(Listing $listing, int $featuredTimeSeconds): void
@@ -73,7 +83,7 @@ class FeaturedListingService
         }
     }
 
-    public function makeFeaturedByBalance(Listing $listing, FeaturedPackage $featuredPackage): void
+    public function makeFeaturedByBalance(Listing $listing, FeaturedPackage $featuredPackage, Payment $payment = null): ?UserBalanceChange
     {
         $this->em->beginTransaction();
 
@@ -84,11 +94,11 @@ class FeaturedListingService
         try {
             $cost = $featuredPackage->getPrice();
             if (!$this->userBalanceService->hasAmount($cost, $listing->getUser())) {
-                return;
+                return null;
             }
 
             $this->makeFeatured($listing, $featuredPackage->getDaysFeaturedExpire() * 3600 * 24);
-            $this->userBalanceService->removeBalance($cost, $listing->getUser());
+            $userBalanceChange = $this->userBalanceService->removeBalance($cost, $listing->getUser(), $payment);
             $this->validUntilSetService->addValidityDaysWithoutRestrictions(
                 $listing,
                 $featuredPackage->getDaysListingExpire()
@@ -99,6 +109,8 @@ class FeaturedListingService
         }
 
         $this->em->commit();
+
+        return $userBalanceChange;
     }
 
     /**

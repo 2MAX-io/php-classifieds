@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Form\Admin;
 
+use App\Form\Type\CustomMoneyType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints;
@@ -17,7 +17,7 @@ class UserChangeBalanceType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add(
-            self::NEW_BALANCE, NumberType::class, [
+            self::NEW_BALANCE, CustomMoneyType::class, [
             'mapped' => false,
             'constraints' => [
                 new Constraints\NotBlank(),

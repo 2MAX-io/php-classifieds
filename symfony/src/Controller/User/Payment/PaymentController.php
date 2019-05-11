@@ -13,6 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class PaymentController extends AbstractController
 {
@@ -24,7 +25,8 @@ class PaymentController extends AbstractController
         PaymentService $paymentService,
         UserBalanceService $userBalanceService,
         FeaturedListingService $featuredListingService,
-        EntityManagerInterface $em
+        EntityManagerInterface $em,
+        TranslatorInterface $trans
     ): Response {
         $em->beginTransaction();
 
@@ -40,18 +42,41 @@ class PaymentController extends AbstractController
                 }
 
                 if ($paymentEntity->getPaymentFeaturedPackage()) {
-                    $paymentFeaturedPackage = $paymentEntity->getPaymentFeaturedPackage();
+                    $paymentForFeaturedPackage = $paymentEntity->getPaymentFeaturedPackage();
 
                     $paymentService->markBalanceUpdated($confirmPaymentDto);
-                    $userBalanceService->addBalance(
+                    $userBalanceChange = $userBalanceService->addBalance(
                         $confirmPaymentDto->getGatewayAmount(),
-                        $paymentFeaturedPackage->getListing()->getUser()
+                        $paymentForFeaturedPackage->getListing()->getUser(),
+                        $paymentEntity
                     );
+                    $userBalanceChange->setDescription(
+                        $trans->trans(
+                            'trans.Payment for featuring listing: id:%listingId% - %listingTitle%, using featured package: %featuredPackageName%',
+                            [
+                                'listingId' => $paymentForFeaturedPackage->getListing()->getId(),
+                                'listingTitle' => $paymentForFeaturedPackage->getListing()->getTitle(),
+                                'featuredPackageName' => $paymentForFeaturedPackage->getFeaturedPackage()->getName(),
+                            ]
+                        )
+                    );
+                    $userBalanceChange->setPayment($paymentEntity);
                     $em->flush();
 
-                    $featuredListingService->makeFeaturedByBalance(
-                        $paymentFeaturedPackage->getListing(),
-                        $paymentFeaturedPackage->getFeaturedPackage()
+                    $userBalanceChange = $featuredListingService->makeFeaturedByBalance(
+                        $paymentForFeaturedPackage->getListing(),
+                        $paymentForFeaturedPackage->getFeaturedPackage(),
+                        $paymentEntity
+                    );
+                    $userBalanceChange->setDescription(
+                        $trans->trans(
+                            'trans.Payment for featuring listing: id:%listingId% - %listingTitle%, using featured package: %featuredPackageName%',
+                            [
+                                'listingId' => $paymentForFeaturedPackage->getListing()->getId(),
+                                'listingTitle' => $paymentForFeaturedPackage->getListing()->getTitle(),
+                                'featuredPackageName' => $paymentForFeaturedPackage->getFeaturedPackage()->getName(),
+                            ]
+                        )
                     );
 
                     $em->flush(); // todo: check if transaction logic with ifs and closing correct
@@ -59,16 +84,19 @@ class PaymentController extends AbstractController
 
                     return $this->redirectToRoute(
                         'app_user_feature_listing',
-                        ['id' => $paymentFeaturedPackage->getListing()->getId()]
+                        ['id' => $paymentForFeaturedPackage->getListing()->getId()]
                     );
                 }
 
                 if ($paymentEntity->getPaymentForBalanceTopUp()) {
                     $paymentService->markBalanceUpdated($confirmPaymentDto);
-                    $userBalanceService->addBalance(
+                    $userBalanceChange = $userBalanceService->addBalance(
                         $confirmPaymentDto->getGatewayAmount(),
-                        $paymentEntity->getPaymentForBalanceTopUp()->getUser()
+                        $paymentEntity->getPaymentForBalanceTopUp()->getUser(),
+                        $paymentEntity
                     );
+                    $userBalanceChange->setPayment($paymentEntity);
+                    $userBalanceChange->setDescription($trans->trans('trans.Received payment for balance top up'));
                     $em->flush(); // todo: check if transaction logic with ifs and closing correct
                     $em->commit();
 

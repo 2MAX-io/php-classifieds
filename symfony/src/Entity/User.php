@@ -92,11 +92,19 @@ class User implements UserInterface, RoleInterface, EnablableInterface, EncoderA
      */
     private $paymentForBalanceTopUpList;
 
+    /**
+     * @var Payment[]
+     *
+     * @ORM\OneToMany(targetEntity="App\Entity\Payment", mappedBy="user")
+     */
+    private $payments;
+
     public function __construct()
     {
         $this->listings = new ArrayCollection();
         $this->userBalanceChanges = new ArrayCollection();
         $this->paymentForBalanceTopUpList = new ArrayCollection();
+        $this->payments = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -334,6 +342,37 @@ class User implements UserInterface, RoleInterface, EnablableInterface, EncoderA
             // set the owning side to null (unless already changed)
             if ($paymentForBalanceTopUpList->getUser() === $this) {
                 $paymentForBalanceTopUpList->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Payment[]
+     */
+    public function getPayments(): Collection
+    {
+        return $this->payments;
+    }
+
+    public function addPayment(Payment $payment): self
+    {
+        if (!$this->payments->contains($payment)) {
+            $this->payments[] = $payment;
+            $payment->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removePayment(Payment $payment): self
+    {
+        if ($this->payments->contains($payment)) {
+            $this->payments->removeElement($payment);
+            // set the owning side to null (unless already changed)
+            if ($payment->getUser() === $this) {
+                $payment->setUser(null);
             }
         }
 

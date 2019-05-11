@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -66,6 +68,26 @@ class Payment
      * @ORM\OneToOne(targetEntity="App\Entity\PaymentForBalanceTopUp", mappedBy="payment", fetch="EXTRA_LAZY")
      */
     private $paymentForBalanceTopUp;
+
+    /**
+     * @var UserBalanceChange[]
+     *
+     * @ORM\OneToMany(targetEntity="App\Entity\UserBalanceChange", mappedBy="payment", fetch="EXTRA_LAZY")
+     */
+    private $userBalanceChanges;
+
+    /**
+     * @var User|null
+     *
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="payments")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $user;
+
+    public function __construct()
+    {
+        $this->userBalanceChanges = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -188,6 +210,49 @@ class Payment
         if ($newPayment !== $paymentForBalanceTopUp->getPayment()) {
             $paymentForBalanceTopUp->setPayment($newPayment);
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|UserBalanceChange[]
+     */
+    public function getUserBalanceChanges(): Collection
+    {
+        return $this->userBalanceChanges;
+    }
+
+    public function addUserBalanceChange(UserBalanceChange $userBalanceChange): self
+    {
+        if (!$this->userBalanceChanges->contains($userBalanceChange)) {
+            $this->userBalanceChanges[] = $userBalanceChange;
+            $userBalanceChange->setPayment($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserBalanceChange(UserBalanceChange $userBalanceChange): self
+    {
+        if ($this->userBalanceChanges->contains($userBalanceChange)) {
+            $this->userBalanceChanges->removeElement($userBalanceChange);
+            // set the owning side to null (unless already changed)
+            if ($userBalanceChange->getPayment() === $this) {
+                $userBalanceChange->setPayment(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Service\Payment;
 
 use App\Entity\Payment;
+use App\Entity\User;
 
 class PaymentDto
 {
@@ -52,6 +53,11 @@ class PaymentDto
      * @var Payment|null
      */
     public $paymentEntity;
+
+    /**
+     * @var User|null
+     */
+    public $user;
 
     public function setPaymentExecuteUrl(string $paymentExecuteUrl)
     {
@@ -141,5 +147,15 @@ class PaymentDto
     public function setGatewayToken(?string $gatewayToken): void
     {
         $this->gatewayToken = $gatewayToken;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): void
+    {
+        $this->user = $user;
     }
 }

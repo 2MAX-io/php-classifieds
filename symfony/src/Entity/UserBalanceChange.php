@@ -34,9 +34,22 @@ class UserBalanceChange
     private $balanceFinal;
 
     /**
+     * @var Payment|null
+     *
+     * @ORM\ManyToOne(targetEntity="App\Entity\Payment", inversedBy="userBalanceChanges")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $payment;
+
+    /**
      * @ORM\Column(type="datetime")
      */
     private $datetime;
+
+    /**
+     * @ORM\Column(type="string", length=5000)
+     */
+    private $description;
 
     public function getId(): ?int
     {
@@ -87,6 +100,30 @@ class UserBalanceChange
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getPayment(): ?Payment
+    {
+        return $this->payment;
+    }
+
+    public function setPayment(?Payment $payment): self
+    {
+        $this->payment = $payment;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(string $description): self
+    {
+        $this->description = $description;
 
         return $this;
     }

@@ -12,6 +12,7 @@ use App\Service\Money\UserBalanceService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class UserChangeBalanceController extends AbstractAdminController
 {
@@ -21,7 +22,8 @@ class UserChangeBalanceController extends AbstractAdminController
     public function userChangeBalance(
         Request $request,
         User $user,
-        UserBalanceService $userBalanceService
+        UserBalanceService $userBalanceService,
+        TranslatorInterface $trans
     ): Response {
         $this->denyUnlessAdmin();
 
@@ -29,9 +31,19 @@ class UserChangeBalanceController extends AbstractAdminController
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $userBalanceService->forceSetBalance(
+            $previousBalance = $userBalanceService->getCurrentBalance($user);
+            $userBalanceChange = $userBalanceService->forceSetBalance(
                 Integer::toInteger($form->get(UserChangeBalanceType::NEW_BALANCE)->getData() * 100),
                 $user
+            );
+            $userBalanceChange->setDescription(
+                $trans->trans(
+                    'trans.Balanced change by administrator to: %newBalance% from previous: %previousBalance%',
+                    [
+                        '%newBalance%' => $userBalanceChange->getBalanceFinal() / 100,
+                        '%previousBalance%' => $previousBalance / 100
+                    ]
+                )
             );
 
             $entityManager = $this->getDoctrine()->getManager();

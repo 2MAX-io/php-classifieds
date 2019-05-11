@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Service\Money;
 
+use App\Entity\Payment;
 use App\Entity\User;
 use App\Entity\UserBalanceChange;
 use Doctrine\ORM\EntityManagerInterface;
@@ -20,7 +21,7 @@ class UserBalanceService
         $this->em = $em;
     }
 
-    public function forceSetBalance(int $newBalance, User $user): void
+    public function forceSetBalance(int $newBalance, User $user): UserBalanceChange
     {
         $currentBalance = $this->getCurrentBalance($user);
         $calculatedChange = $newBalance -$currentBalance;
@@ -36,9 +37,11 @@ class UserBalanceService
         }
 
         $this->em->persist($userBalanceChangeNew);
+
+        return $userBalanceChangeNew;
     }
 
-    public function addBalance(int $addAmountPositive, User $user): void
+    public function addBalance(int $addAmountPositive, User $user, Payment $payment): UserBalanceChange
     {
         if ($addAmountPositive <= 0) {
             throw new \UnexpectedValueException('should be positive');
@@ -50,11 +53,14 @@ class UserBalanceService
         $userBalanceChangeNew->setBalanceChange($addAmountPositive);
         $userBalanceChangeNew->setBalanceFinal($currentBalance + $addAmountPositive);
         $userBalanceChangeNew->setDatetime(new \DateTime());
+        $userBalanceChangeNew->setPayment($payment);
 
         $this->em->persist($userBalanceChangeNew);
+
+        return $userBalanceChangeNew;
     }
 
-    public function removeBalance(int $removeAmountPositive, User $user): void
+    public function removeBalance(int $removeAmountPositive, User $user, Payment $payment = null): UserBalanceChange
     {
         if ($removeAmountPositive <= 0) {
             throw new \UnexpectedValueException('should be positive');
@@ -66,8 +72,11 @@ class UserBalanceService
         $userBalanceChangeNew->setBalanceChange(- $removeAmountPositive);
         $userBalanceChangeNew->setBalanceFinal($currentBalance - $removeAmountPositive);
         $userBalanceChangeNew->setDatetime(new \DateTime());
+        $userBalanceChangeNew->setPayment($payment);
 
         $this->em->persist($userBalanceChangeNew);
+
+        return $userBalanceChangeNew;
     }
 
     public function hasAmount(int $requestedAmount, User $user): bool

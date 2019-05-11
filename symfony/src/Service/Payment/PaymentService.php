@@ -10,6 +10,7 @@ use App\Entity\Payment;
 use App\Entity\PaymentFeaturedPackage;
 use App\Entity\PaymentForBalanceTopUp;
 use App\Entity\User;
+use App\Security\CurrentUserService;
 use App\Service\Payment\Method\PayPalPaymentMethod;
 use App\Service\Setting\SettingsService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -38,16 +39,23 @@ class PaymentService
      */
     private $urlGenerator;
 
+    /**
+     * @var CurrentUserService
+     */
+    private $currentUserService;
+
     public function __construct(
         PayPalPaymentMethod $payPalPaymentMethod,
         EntityManagerInterface $em,
         SettingsService $settingsService,
+        CurrentUserService $currentUserService,
         UrlGeneratorInterface $urlGenerator
     ) {
         $this->payPalPaymentMethod = $payPalPaymentMethod;
         $this->em = $em;
         $this->settingsService = $settingsService;
         $this->urlGenerator = $urlGenerator;
+        $this->currentUserService = $currentUserService;
     }
 
     public function createPaymentForFeaturedPackage(Listing $listing, FeaturedPackage $featuredPackage): PaymentDto
@@ -62,7 +70,7 @@ class PaymentService
                 UrlGeneratorInterface::ABSOLUTE_URL
             )
         );
-
+        $paymentDto->setUser($this->currentUserService->getUser());
         $paymentDto = $this->createPayment($paymentDto);
 
         $paymentFeaturedPackage = new PaymentFeaturedPackage();
@@ -79,6 +87,7 @@ class PaymentService
         $paymentDto = new PaymentDto();
         $paymentDto->setCurrency($this->settingsService->getCurrency());
         $paymentDto->setAmount($amount);
+        $paymentDto->setUser($this->currentUserService->getUser());
 
         $paymentDto = $this->createPayment($paymentDto);
 
@@ -101,6 +110,7 @@ class PaymentService
         $paymentEntity->setGatewayTransactionId($paymentDto->getGatewayTransactionId());
         $paymentEntity->setGatewayToken($paymentDto->getGatewayToken());
         $paymentEntity->setGatewayStatus($paymentDto->getGatewayStatus());
+        $paymentEntity->setUser($paymentDto->getUser());
         $paymentEntity->setBalanceUpdated(false);
         $this->em->persist($paymentEntity);
 

@@ -30,7 +30,7 @@
                     <div class="my-4">
                         {{ 'trans.Your balance is' | trans }}:
                         <strong class="badge badge-success">{{ userBalance | moneyAsFloat }}</strong>
-                        {{ 'trans.that you can use to feature listing' | trans }}
+                        {{ 'trans.that you can use to feature listings' | trans }}
                     </div>
                 {% endif %}
 
@@ -46,6 +46,10 @@
                         {% for package in packages %}
                             <div class="col-md-4">
                                 <h4>{{ package.name }}</h4>
+
+                                <div class="mb-2">
+                                    {{ package.description | nl2br }}
+                                </div>
 
                                 <div>
                                     {{ include('user/listing/_feature_paid_form.html.twig') }}

@@ -91,23 +91,23 @@
                             <div class="form-row mb-3">
                                 <div class="col-6">
                                     <input
-                                            type="text"
+                                            type="number"
                                             id="min_price"
                                             class="form-control"
                                             name="min_price"
                                             value="{{ app.request.get('min_price') | default }}"
-                                            placeholder="{{ 'trans.amount min' | trans }}"
+                                            placeholder="{{ 'trans.min' | trans }}"
                                     >
                                 </div>
 
                                 <div class="col-6">
                                     <input
-                                            type="text"
+                                            type="number"
                                             id="max_price"
                                             class="form-control"
                                             name="max_price"
                                             value="{{ app.request.get('max_price') | default }}"
-                                            placeholder="{{ 'trans.amount max' | trans }}"
+                                            placeholder="{{ 'trans.max' | trans }}"
                                     >
                                 </div>
                             </div>
@@ -152,7 +152,7 @@
                                             <input
                                                 name="form_custom_field[{{ customField.id }}][range][min]"
                                                 value="{{ app.request.get('form_custom_field')[customField.id]['range']['min'] | default }}"
-                                                type="text"
+                                                type="number"
                                                 placeholder="{{ 'trans.min' | trans }}"
                                                 class="form-control">
                                         </div>
@@ -161,7 +161,7 @@
                                             <input
                                                 name="form_custom_field[{{ customField.id }}][range][max]"
                                                 value="{{ app.request.get('form_custom_field')[customField.id]['range']['max'] | default }}"
-                                                type="text"
+                                                type="number"
                                                 placeholder="{{ 'trans.max' | trans }}"
                                                 class="form-control"
                                             >

@@ -31,6 +31,11 @@ class FeaturedPackage
     private $name;
 
     /**
+     * @ORM\Column(type="string", length=10000, nullable=false)
+     */
+    private $description;
+
+    /**
      * @ORM\Column(type="integer", nullable=false)
      */
     private $price;
@@ -201,6 +206,18 @@ class FeaturedPackage
                 $paymentFeaturedPackage->setFeaturedPackage(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(string $description): self
+    {
+        $this->description = $description;
 
         return $this;
     }

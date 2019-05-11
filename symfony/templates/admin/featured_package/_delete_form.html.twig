@@ -1,0 +1,5 @@
+<form method="post" action="{{ path('app_admin_featured_package_delete', {'id': featured_package.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+    <input type="hidden" name="_method" value="DELETE">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ featured_package.id) }}">
+    <button class="btn">Delete</button>
+</form>

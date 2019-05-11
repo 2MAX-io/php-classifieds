@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit FeaturedPackage{% endblock %}
+
+{% block body %}
+    <h1>Edit FeaturedPackage</h1>
+
+    {{ include('admin/featured_package/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_admin_featured_package_index') }}">back to list</a>
+
+    {{ include('admin/featured_package/_delete_form.html.twig') }}
+{% endblock %}

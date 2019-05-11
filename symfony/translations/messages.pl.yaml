@@ -406,3 +406,4 @@ trans:
   'To delete custom field, you must first delete all dependencies like: custom fields assigned to categories, custom field options': 'Aby usunąć pole niestandardowe, najpierw musisz usunąć wszystkie jego powiązania takie jak: pola niestandardowe przypisane do kategorii, opcje pola niestandarowego'
   'To delete category, you must first delete or move all dependencies like: category listings, subcategories, assigned custom fields, featured packages': 'Aby usunąć kategorie, najpierw musisz usunąć lub przenieść jej wszystkie zależności takie jak: ogłoszenia w kategorii, podkategorie, przypisane pola niestandardowe, pakiety wyróżnień'
   View all categories: 'Zobacz wszystkie kategorie'
+  Featured packages: 'Pakiety wyróżnień'

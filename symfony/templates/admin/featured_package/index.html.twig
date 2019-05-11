@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}FeaturedPackage index{% endblock %}
+
+{% block body %}
+    <h1>FeaturedPackage index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>AdminName</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Price</th>
+                <th>DaysFeaturedExpire</th>
+                <th>DaysListingExpire</th>
+                <th>DefaultPackage</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for featured_package in featured_packages %}
+            <tr>
+                <td>{{ featured_package.id }}</td>
+                <td>{{ featured_package.adminName }}</td>
+                <td>{{ featured_package.name }}</td>
+                <td>{{ featured_package.description }}</td>
+                <td>{{ featured_package.price }}</td>
+                <td>{{ featured_package.daysFeaturedExpire }}</td>
+                <td>{{ featured_package.daysListingExpire }}</td>
+                <td>{{ featured_package.defaultPackage ? 'Yes' : 'No' }}</td>
+                <td>
+                    <a href="{{ path('app_admin_featured_package_show', {'id': featured_package.id}) }}">show</a>
+                    <a href="{{ path('app_admin_featured_package_edit', {'id': featured_package.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="9">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_admin_featured_package_new') }}">Create new</a>
+{% endblock %}

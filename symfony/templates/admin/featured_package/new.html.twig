@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New FeaturedPackage{% endblock %}
+
+{% block body %}
+    <h1>Create new FeaturedPackage</h1>
+
+    {{ include('admin/featured_package/_form.html.twig') }}
+
+    <a href="{{ path('app_admin_featured_package_index') }}">back to list</a>
+{% endblock %}

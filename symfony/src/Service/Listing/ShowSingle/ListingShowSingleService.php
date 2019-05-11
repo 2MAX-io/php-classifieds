@@ -8,6 +8,7 @@ use App\Entity\Listing;
 use App\Entity\ListingView;
 use App\Service\Listing\ListingPublicDisplayService;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Query\Expr\Join;
 
 class ListingShowSingleService
 {
@@ -45,8 +46,18 @@ class ListingShowSingleService
         $qb->leftJoin('listingCustomFieldValue.customFieldOption', 'customFieldOption');
         $qb->leftJoin('listingCustomFieldValue.customField', 'customField');
         $qb->leftJoin('listing.listingFiles', 'listingFile');
+        $qb->leftJoin(
+            'customField.categoriesJoin',
+            'categoryJoin',
+            Join::WITH,
+            $qb->expr()->andX(
+                $qb->expr()->eq('categoryJoin.category', 'listing.category')
+            )
+        );
         $qb->andWhere($qb->expr()->eq('listing.id', ':listingId'));
         $qb->setParameter(':listingId', $listingId);
+
+        $qb->addOrderBy('categoryJoin.sort', 'ASC');
 
         return ListingShowDto::fromDoctrineResult($qb->getQuery()->getOneOrNullResult());
     }

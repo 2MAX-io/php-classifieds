@@ -137,7 +137,7 @@ class CustomField
         return $this->unit;
     }
 
-    public function setUnit(string $unit): self
+    public function setUnit(?string $unit): self
     {
         $this->unit = $unit;
 

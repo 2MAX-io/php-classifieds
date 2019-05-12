@@ -32,7 +32,7 @@ class PaymentCancelController extends AbstractController
         $paymentEntity->setCanceled(true);
         $em->flush();
 
-        if ($paymentEntity->getPaymentFeaturedPackage()) {
+        if ($paymentEntity->getPaymentForFeaturedPackage()) {
             $flashService->addFlash(
                 FlashService::ERROR_ABOVE_FORM,
                 'trans.You have canceled payment. If you want to feature listing, try again and complete payment'
@@ -40,7 +40,7 @@ class PaymentCancelController extends AbstractController
 
             return $this->redirectToRoute(
                 'app_user_feature_listing',
-                ['id' => $paymentEntity->getPaymentFeaturedPackage()->getListing()->getId()]
+                ['id' => $paymentEntity->getPaymentForFeaturedPackage()->getListing()->getId()]
             );
         }
 

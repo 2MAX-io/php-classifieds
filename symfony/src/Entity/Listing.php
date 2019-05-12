@@ -222,7 +222,7 @@ class Listing
     private $searchText;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\PaymentFeaturedPackage", mappedBy="listing")
+     * @ORM\OneToMany(targetEntity="PaymentForFeaturedPackage", mappedBy="listing")
      */
     private $paymentFeaturedPackage;
 
@@ -688,14 +688,14 @@ class Listing
     }
 
     /**
-     * @return Collection|PaymentFeaturedPackage[]
+     * @return Collection|PaymentForFeaturedPackage[]
      */
     public function getPaymentFeaturedPackage(): Collection
     {
         return $this->paymentFeaturedPackage;
     }
 
-    public function addPaymentFeaturedPackage(PaymentFeaturedPackage $paymentFeaturedPackage): self
+    public function addPaymentFeaturedPackage(PaymentForFeaturedPackage $paymentFeaturedPackage): self
     {
         if (!$this->paymentFeaturedPackage->contains($paymentFeaturedPackage)) {
             $this->paymentFeaturedPackage[] = $paymentFeaturedPackage;
@@ -705,7 +705,7 @@ class Listing
         return $this;
     }
 
-    public function removePaymentFeaturedPackage(PaymentFeaturedPackage $paymentFeaturedPackage): self
+    public function removePaymentFeaturedPackage(PaymentForFeaturedPackage $paymentFeaturedPackage): self
     {
         if ($this->paymentFeaturedPackage->contains($paymentFeaturedPackage)) {
             $this->paymentFeaturedPackage->removeElement($paymentFeaturedPackage);

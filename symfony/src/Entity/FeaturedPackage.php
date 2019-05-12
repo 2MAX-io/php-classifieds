@@ -61,7 +61,7 @@ class FeaturedPackage
     private $featuredPackageForCategories;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\PaymentFeaturedPackage", mappedBy="featuredPackage")
+     * @ORM\OneToMany(targetEntity="PaymentForFeaturedPackage", mappedBy="featuredPackage")
      */
     private $paymentFeaturedPackage;
 
@@ -192,14 +192,14 @@ class FeaturedPackage
     }
 
     /**
-     * @return Collection|PaymentFeaturedPackage[]
+     * @return Collection|PaymentForFeaturedPackage[]
      */
     public function getPaymentFeaturedPackage(): Collection
     {
         return $this->paymentFeaturedPackage;
     }
 
-    public function addPaymentFeaturedPackage(PaymentFeaturedPackage $paymentFeaturedPackage): self
+    public function addPaymentFeaturedPackage(PaymentForFeaturedPackage $paymentFeaturedPackage): self
     {
         if (!$this->paymentFeaturedPackage->contains($paymentFeaturedPackage)) {
             $this->paymentFeaturedPackage[] = $paymentFeaturedPackage;
@@ -209,7 +209,7 @@ class FeaturedPackage
         return $this;
     }
 
-    public function removePaymentFeaturedPackage(PaymentFeaturedPackage $paymentFeaturedPackage): self
+    public function removePaymentFeaturedPackage(PaymentForFeaturedPackage $paymentFeaturedPackage): self
     {
         if ($this->paymentFeaturedPackage->contains($paymentFeaturedPackage)) {
             $this->paymentFeaturedPackage->removeElement($paymentFeaturedPackage);

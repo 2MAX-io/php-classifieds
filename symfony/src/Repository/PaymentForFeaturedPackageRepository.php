@@ -2,21 +2,21 @@
 
 namespace App\Repository;
 
-use App\Entity\PaymentFeaturedPackage;
+use App\Entity\PaymentForFeaturedPackage;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
- * @method PaymentFeaturedPackage|null find($id, $lockMode = null, $lockVersion = null)
- * @method PaymentFeaturedPackage|null findOneBy(array $criteria, array $orderBy = null)
- * @method PaymentFeaturedPackage[]    findAll()
- * @method PaymentFeaturedPackage[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method PaymentForFeaturedPackage|null find($id, $lockMode = null, $lockVersion = null)
+ * @method PaymentForFeaturedPackage|null findOneBy(array $criteria, array $orderBy = null)
+ * @method PaymentForFeaturedPackage[]    findAll()
+ * @method PaymentForFeaturedPackage[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class PaymentFeaturedPackageRepository extends ServiceEntityRepository
+class PaymentForFeaturedPackageRepository extends ServiceEntityRepository
 {
     public function __construct(RegistryInterface $registry)
     {
-        parent::__construct($registry, PaymentFeaturedPackage::class);
+        parent::__construct($registry, PaymentForFeaturedPackage::class);
     }
 
     // /**

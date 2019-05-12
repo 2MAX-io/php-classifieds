@@ -7,7 +7,7 @@ namespace App\Service\Payment;
 use App\Entity\FeaturedPackage;
 use App\Entity\Listing;
 use App\Entity\Payment;
-use App\Entity\PaymentFeaturedPackage;
+use App\Entity\PaymentForFeaturedPackage;
 use App\Entity\PaymentForBalanceTopUp;
 use App\Entity\User;
 use App\Security\CurrentUserService;
@@ -73,7 +73,7 @@ class PaymentService
         $paymentDto->setUser($this->currentUserService->getUser());
         $paymentDto = $this->createPayment($paymentDto);
 
-        $paymentFeaturedPackage = new PaymentFeaturedPackage();
+        $paymentFeaturedPackage = new PaymentForFeaturedPackage();
         $paymentFeaturedPackage->setPayment($paymentDto->getPaymentEntity());
         $paymentFeaturedPackage->setFeaturedPackage($featuredPackage);
         $paymentFeaturedPackage->setListing($listing);

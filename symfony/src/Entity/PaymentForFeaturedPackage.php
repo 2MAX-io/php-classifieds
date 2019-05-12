@@ -7,9 +7,9 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\PaymentFeaturedPackageRepository")
+ * @ORM\Entity(repositoryClass="PaymentForFeaturedPackageRepository")
  */
-class PaymentFeaturedPackage
+class PaymentForFeaturedPackage
 {
     /**
      * @ORM\Id()
@@ -19,7 +19,7 @@ class PaymentFeaturedPackage
     private $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Payment", inversedBy="paymentFeaturedPackage")
+     * @ORM\OneToOne(targetEntity="App\Entity\Payment", inversedBy="paymentForFeaturedPackage")
      */
     private $payment;
 

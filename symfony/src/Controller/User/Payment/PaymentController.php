@@ -41,8 +41,8 @@ class PaymentController extends AbstractController
                     throw new \UnexpectedValueException('paid amount do not match between gateway and payment entity');
                 }
 
-                if ($paymentEntity->getPaymentFeaturedPackage()) {
-                    $paymentForFeaturedPackage = $paymentEntity->getPaymentFeaturedPackage();
+                if ($paymentEntity->getPaymentForFeaturedPackage()) {
+                    $paymentForFeaturedPackage = $paymentEntity->getPaymentForFeaturedPackage();
 
                     $paymentService->markBalanceUpdated($confirmPaymentDto);
                     $userBalanceChange = $userBalanceService->addBalance(

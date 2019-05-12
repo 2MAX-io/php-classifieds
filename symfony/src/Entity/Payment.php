@@ -56,11 +56,11 @@ class Payment
     private $gatewayToken;
 
     /**
-     * @var PaymentFeaturedPackage|null
+     * @var PaymentForFeaturedPackage|null
      *
-     * @ORM\OneToOne(targetEntity="App\Entity\PaymentFeaturedPackage", mappedBy="payment", fetch="EXTRA_LAZY")
+     * @ORM\OneToOne(targetEntity="PaymentForFeaturedPackage", mappedBy="payment", fetch="EXTRA_LAZY")
      */
-    private $paymentFeaturedPackage;
+    private $paymentForFeaturedPackage;
 
     /**
      * @var PaymentForBalanceTopUp|null
@@ -154,19 +154,19 @@ class Payment
         return $this;
     }
 
-    public function getPaymentFeaturedPackage(): ?PaymentFeaturedPackage
+    public function getPaymentForFeaturedPackage(): ?PaymentForFeaturedPackage
     {
-        return $this->paymentFeaturedPackage;
+        return $this->paymentForFeaturedPackage;
     }
 
-    public function setPaymentFeaturedPackage(?PaymentFeaturedPackage $paymentFeaturedPackage): self
+    public function setPaymentForFeaturedPackage(?PaymentForFeaturedPackage $paymentForFeaturedPackage): self
     {
-        $this->paymentFeaturedPackage = $paymentFeaturedPackage;
+        $this->paymentForFeaturedPackage = $paymentForFeaturedPackage;
 
         // set (or unset) the owning side of the relation if necessary
-        $newPayment = $paymentFeaturedPackage === null ? null : $this;
-        if ($newPayment !== $paymentFeaturedPackage->getPayment()) {
-            $paymentFeaturedPackage->setPayment($newPayment);
+        $newPayment = $paymentForFeaturedPackage === null ? null : $this;
+        if ($newPayment !== $paymentForFeaturedPackage->getPayment()) {
+            $paymentForFeaturedPackage->setPayment($newPayment);
         }
 
         return $this;

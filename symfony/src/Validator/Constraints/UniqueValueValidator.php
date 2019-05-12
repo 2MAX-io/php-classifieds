@@ -87,7 +87,14 @@ class UniqueValueValidator extends ConstraintValidator
         $criteria = [];
         $hasNullValue = false;
 
-        foreach ($fields as $fieldName) {
+        foreach ($fields as $field) {
+            if ($field instanceof UniqueValueDto) {
+                $fieldName = $field->getName();
+                $criteria[$field->getName()] = $field->getValue();
+            } else {
+                $fieldName = $field;
+            }
+
             if (!$class->hasField($fieldName) && !$class->hasAssociation($fieldName)) {
                 throw new ConstraintDefinitionException(sprintf('The field "%s" is not mapped by Doctrine, so it cannot be validated for uniqueness.', $fieldName));
             }
@@ -102,7 +109,11 @@ class UniqueValueValidator extends ConstraintValidator
 //                continue;
 //            }
 
-            $criteria[$fieldName] = $fieldValue;
+            if ($field instanceof UniqueValueDto) {
+                $criteria[$field->getName()] = $field->getValue();
+            } else {
+                $criteria[$fieldName] = $fieldValue;
+            }
 
 //            if (null !== $criteria[$fieldName] && $class->hasAssociation($fieldName)) {
 //                /* Ensure the Proxy is initialized before using reflection to

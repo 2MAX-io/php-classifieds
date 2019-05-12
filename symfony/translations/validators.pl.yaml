@@ -3,3 +3,4 @@ trans.User with this email address was not found: 'Nie zaneziono użytkownika z 
 'This email is already used by another user.': 'Ten email jest już wykorzystywany przez innego użytkownika'
 Enter email or phone, both can not be empty: 'Podaj email lub telefon, oba nie mogą być puste'
 Phone number is incorrect.: 'Numer telefonu jest niepoprawny'
+This custom field is already assigned to this category: 'To pole niestandardowe jest już przypisane do tej kategorii'

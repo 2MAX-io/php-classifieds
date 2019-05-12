@@ -61,7 +61,7 @@ class CustomField
     private $listingCustomFieldValues;
 
     /**
-     * @ORM\OneToMany(targetEntity="CustomFieldJoinCategory", mappedBy="customField")
+     * @ORM\OneToMany(targetEntity="App\Entity\CustomFieldJoinCategory", mappedBy="customField")
      */
     private $categoriesJoin;
 

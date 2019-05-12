@@ -56,7 +56,7 @@ class CustomFieldController extends AbstractAdminController
         if ($form->isSubmitted() && $form->isValid()) {
             $customFieldCategorySelectionService->saveSelection(
                 $customField,
-                $request->get('customFieldCategories', [])
+                $request->get('selectedCategories', [])
             );
             $em->persist($customField);
             $em->flush();
@@ -95,7 +95,7 @@ class CustomFieldController extends AbstractAdminController
         if ($form->isSubmitted() && $form->isValid()) {
             $customFieldCategorySelectionService->saveSelection(
                 $customField,
-                $request->get('customFieldCategories', [])
+                $request->get('selectedCategories', [])
             );
             $this->getDoctrine()->getManager()->flush();
 

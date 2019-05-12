@@ -31,7 +31,7 @@ class FeaturedPackage
     private $name;
 
     /**
-     * @ORM\Column(type="string", length=10000, nullable=false)
+     * @ORM\Column(type="string", length=10000, nullable=true)
      */
     private $description;
 
@@ -227,7 +227,7 @@ class FeaturedPackage
         return $this->description;
     }
 
-    public function setDescription(string $description): self
+    public function setDescription(?string $description): self
     {
         $this->description = $description;
 

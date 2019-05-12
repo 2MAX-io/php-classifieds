@@ -8,6 +8,7 @@ use App\Controller\Admin\Base\AbstractAdminController;
 use App\Entity\FeaturedPackage;
 use App\Form\Admin\FeaturedPackageType;
 use App\Repository\FeaturedPackageRepository;
+use App\Service\Admin\FeaturedPackage\CategorySelection\FeaturedPackageCategorySelectionService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -29,8 +30,10 @@ class FeaturedPackageController extends AbstractAdminController
     /**
      * @Route("/admin/red5/featured-package/new", name="app_admin_featured_package_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
-    {
+    public function new(
+        Request $request,
+        FeaturedPackageCategorySelectionService $featuredPackageCategorySelectionService
+    ): Response {
         $this->denyUnlessAdmin();
 
         $featuredPackage = new FeaturedPackage();
@@ -42,11 +45,17 @@ class FeaturedPackageController extends AbstractAdminController
             $entityManager->persist($featuredPackage);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_admin_featured_package_index');
+            return $this->redirectToRoute('app_admin_featured_package_edit', [
+                'id' => $featuredPackage->getId(),
+            ]);
         }
 
         return $this->render('admin/featured_package/new.html.twig', [
             'featured_package' => $featuredPackage,
+            'categorySelectionList' => $featuredPackageCategorySelectionService->getCategorySelectionList(
+                $featuredPackage,
+                $category ?? null
+            ),
             'form' => $form->createView(),
         ]);
     }
@@ -54,23 +63,34 @@ class FeaturedPackageController extends AbstractAdminController
     /**
      * @Route("/admin/red5/featured-package/{id}/edit", name="app_admin_featured_package_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, FeaturedPackage $featuredPackage): Response
-    {
+    public function edit(
+        Request $request,
+        FeaturedPackage $featuredPackage,
+        FeaturedPackageCategorySelectionService $featuredPackageCategorySelectionService
+    ): Response {
         $this->denyUnlessAdmin();
 
         $form = $this->createForm(FeaturedPackageType::class, $featuredPackage);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $featuredPackageCategorySelectionService->saveSelection(
+                $featuredPackage,
+                $request->get('selectedCategories', [])
+            );
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('app_admin_featured_package_index', [
+            return $this->redirectToRoute('app_admin_featured_package_edit', [
                 'id' => $featuredPackage->getId(),
             ]);
         }
 
         return $this->render('admin/featured_package/edit.html.twig', [
             'featured_package' => $featuredPackage,
+            'categorySelectionList' => $featuredPackageCategorySelectionService->getCategorySelectionList(
+                $featuredPackage,
+                $category ?? null
+            ),
             'form' => $form->createView(),
         ]);
     }
@@ -88,6 +108,8 @@ class FeaturedPackageController extends AbstractAdminController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('app_admin_featured_package_index');
+        return $this->redirectToRoute('app_admin_featured_package_edit', [
+            'id' => $featuredPackage->getId(),
+        ]);
     }
 }

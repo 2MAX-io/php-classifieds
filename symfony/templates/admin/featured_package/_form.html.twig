@@ -1,4 +1,25 @@
 {{ form_start(form) }}
     {{ form_widget(form) }}
+
+    <div>
+        <h1>{{ 'trans.Categories' | trans }}</h1>
+
+        <div>
+            {% for categorySelection in categorySelectionList %}
+                {% set category = categorySelection.category %}
+                <div style="margin-left: {{ (category.lvl-1) * 2 }}rem">
+                    <input
+                            type="checkbox"
+                            id="category_{{ category.id }}"
+                            name="selectedCategories[]"
+                            value="{{ category.id }}"
+                            {% if categorySelection.selected %}checked{% endif %}
+                    >
+                    <label for="category_{{ category.id }}">{{ category.name }}</label>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
     <button class="btn btn-primary">{{ button_label|default('trans.Save' | trans) }}</button>
 {{ form_end(form) }}

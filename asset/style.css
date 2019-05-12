@@ -386,3 +386,15 @@ input.form-control, textarea.form-control, select.form-control {
     background: white;
     border: 1px solid #dddddd;
 }
+
+@media (min-width: 768px) {
+    .listing-show-description {
+        background: #ecedef;
+        border: none;
+    }
+
+    .listing-show-description-content {
+        background: white;
+        border-radius: 4px;
+    }
+}

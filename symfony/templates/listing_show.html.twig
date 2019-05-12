@@ -45,6 +45,22 @@
                     </div>
                 </div>
 
+                {% if isCurrentUserListing(listing) %}
+                    <a
+                            href="{{ path('app_listing_edit', {'id': listing.id}) }}"
+                            class="btn btn-primary mb-2 d-md-none"
+                    >{{ 'trans.Edit listing' | trans }}</a>
+                {% endif %}
+
+                {% if lowSecurityCheckIsAdminInPublic() %}
+                    <a
+                            href="{{ path('app_admin_listing_edit', {'id': listing.id}) }}"
+                            class="btn btn-outline-danger mb-2 d-md-none"
+                    >
+                        {{ 'trans.Edit listing as Admin' | trans }}
+                    </a>
+                {% endif %}
+
                 {% if listing.listingFiles is not empty %}
                     <div class="mb-2">
                         <div class="zoom-wrapper">
@@ -71,7 +87,7 @@
                     </div>
                 {% endif %}
 
-                <div class="my-2">
+                <div class="mt-2 mb-1">
                     {% for listingCustomFieldValue in listing.listingCustomFieldValues %}
                         {# @var listingCustomFieldValue \App\Entity\ListingCustomFieldValue #}
                         <div class="name-value-group mb-2 mr-1 mr-md-2">
@@ -116,8 +132,8 @@
                 {% endif %}
 
                 <!-- description -->
-                <div class="listing-show-description border-radius-1 mb-2">
-                    <div class="user-text-wrap px-2 px-md-3 mb-3 mt-2">
+                <div class="listing-show-description border-radius-1 mb-2 p-1 px-md-2 py-md-3">
+                    <div class="listing-show-description-content user-text-wrap px-2 px-md-3 py-2">
                         {{ listing.description | nl2br }}
                     </div>
                 </div>

@@ -15,6 +15,7 @@ use App\Service\Payment\PaymentService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class FeatureListingController extends AbstractUserController
 {
@@ -68,19 +69,31 @@ class FeatureListingController extends AbstractUserController
      * )
      */
     public function makeFeatured(
-        Request $request,
         Listing $listing,
         FeaturedPackage $featuredPackage,
         FeaturedListingService $featuredListingService,
-        PaymentService $paymentService
+        PaymentService $paymentService,
+        UserBalanceService $userBalanceService,
+        CurrentUserService $currentUserService,
+        TranslatorInterface $trans,
+        Request $request
     ): Response {
         $this->dennyUnlessCurrentUserAllowed($listing);
 
         if ($this->isCsrfTokenValid('feature'.$listing->getId(), $request->request->get('_token'))) {
+            $previousBalance = $userBalanceService->getCurrentBalance($currentUserService->getUser());
             $em = $this->getDoctrine()->getManager();
 
             if ($featuredListingService->hasAmount($listing, $featuredPackage)) {
-                $featuredListingService->makeFeaturedByBalance($listing, $featuredPackage);
+                $userBalanceChange = $featuredListingService->makeFeaturedByBalance($listing, $featuredPackage);
+                $userBalanceChange->setDescription($trans->trans('trans.Featuring listing using balance, listing: id:%listingId% - %listingTitle%, using featured package: %featuredPackageName%, price: %price%, previous balance: %previousBalance%, current balance: %currentBalance%', [
+                    '%listingId%' => $listing->getId(),
+                    '%listingTitle%' => $listing->getTitle(),
+                    '%featuredPackageName%' => $featuredPackage->getName(),
+                    '%price%' => $featuredPackage->getPrice() / 100,
+                    '%previousBalance%' => $previousBalance / 100,
+                    '%currentBalance%' => $userBalanceChange->getBalanceFinal() / 100,
+                ]));
                 $em->flush();
             } else {
                 $paymentDto = $paymentService->createPaymentForFeaturedPackage($listing, $featuredPackage);

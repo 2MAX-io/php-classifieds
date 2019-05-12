@@ -172,6 +172,7 @@ class ListingListService
         $qb->join('categoryJoin.category', 'category');
         $qb->leftJoin('customField.customFieldOptions', 'customFieldOption');
 
+        $qb->andWhere($qb->expr()->eq('customField.searchable', 1));
         $qb->andWhere($qb->expr()->eq('category.id', ':category'));
         $qb->setParameter(':category', $category);
 

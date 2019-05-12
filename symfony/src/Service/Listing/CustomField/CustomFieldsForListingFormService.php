@@ -8,6 +8,7 @@ use App\Entity\CustomField;
 use App\Entity\CustomFieldOption;
 use App\Entity\Listing;
 use App\Entity\ListingCustomFieldValue;
+use App\Helper\Arr;
 use App\Helper\Str;
 use App\Security\CurrentUserService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -59,9 +60,8 @@ class CustomFieldsForListingFormService
 
     public function saveCustomFieldsToListing(Listing $listing, array $customFieldValueList): void
     {
-        foreach ($listing->getListingCustomFieldValues() as $listingCustomFieldValue) {
-            $this->em->remove($listingCustomFieldValue);
-        }
+        $listingCustomFieldValues = $this->getListingCustomFieldValues($listing);
+        $listingCustomFieldValuesToRemove = $listingCustomFieldValues;
 
         foreach ($customFieldValueList as $customFieldId => $customFieldValue) {
             if (empty(trim($customFieldValue))) {
@@ -75,12 +75,41 @@ class CustomFieldsForListingFormService
                 $customFieldValue = $option->getValue();
             }
 
-            $listingCustomFieldValue = new ListingCustomFieldValue();
+            if (isset($listingCustomFieldValues[$customFieldId])) {
+                $listingCustomFieldValue = $listingCustomFieldValues[$customFieldId];
+                unset($listingCustomFieldValuesToRemove[$customFieldId]);
+            } else {
+                $listingCustomFieldValue = new ListingCustomFieldValue();
+            }
+
             $listingCustomFieldValue->setValue($customFieldValue);
             $listingCustomFieldValue->setCustomFieldOption($option);
             $listingCustomFieldValue->setCustomField($this->em->getReference(CustomField::class, $customFieldId));
             $this->em->persist($listingCustomFieldValue);
             $listing->addListingCustomFieldValue($listingCustomFieldValue);
         }
+
+        foreach ($listingCustomFieldValuesToRemove as $listingCustomFieldValue) {
+            $this->em->remove($listingCustomFieldValue);
+        }
+    }
+
+    /**
+     * indexed by custom field id
+     *
+     * @return ListingCustomFieldValue[]
+     */
+    private function getListingCustomFieldValues(Listing $listing): array
+    {
+        $qb = $this->em->getRepository(ListingCustomFieldValue::class)->createQueryBuilder('listingCustomFieldValue');
+        $qb->join('listingCustomFieldValue.customField', 'customField');
+        $qb->andWhere($qb->expr()->eq('listingCustomFieldValue.listing', ':listing'));
+        $qb->setParameter('listing', $listing);
+
+        $customFieldValues = $qb->getQuery()->getResult();
+
+        return Arr::indexBy($customFieldValues, function(ListingCustomFieldValue $customFieldValue) {
+            return [$customFieldValue->getCustomField()->getId() => $customFieldValue];
+        });
     }
 }

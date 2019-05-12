@@ -38,4 +38,15 @@ class Arr
 
         return $results;
     }
+
+    public static function indexBy(array $array, callable $callback): array
+    {
+        $return = [];
+        while ($element = \array_pop($array)) {
+            $result = $callback($element);
+            $return[\key($result)] = \current($result);
+        }
+
+        return $return;
+    }
 }

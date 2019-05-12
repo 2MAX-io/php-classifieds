@@ -187,7 +187,7 @@
 
                 {% if listing.price is not empty %}
                     <div class="my-1">
-                        <h3 class="btn btn-dark price btn-lg">
+                        <h3 class="btn btn-dark btn-lg">
                             {{ 'trans.Price' | trans }}: {{ listing.price | money }}
                         </h3>
 
@@ -334,7 +334,6 @@
                                 <a
                                         target="_blank"
                                         href="https://www.facebook.com/sharer/sharer.php?u={{ url('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}"
-                                        class="fb-xfbml-parse-ignore"
                                 >
                                     {{ 'trans.Share on Facebook' | trans }}
                                 </a>

@@ -70,6 +70,7 @@ class CustomFieldOptionController extends AbstractAdminController
     ): Response {
         $this->denyUnlessAdmin();
 
+        $oldCustomField = clone $customFieldOption;
         $form = $this->createForm(CustomFieldOptionType::class, $customFieldOption);
         $form->handleRequest($request);
 
@@ -79,6 +80,11 @@ class CustomFieldOptionController extends AbstractAdminController
             $em->flush();
 
             $customFieldOptionService->reorder();
+            $customFieldOptionService->changeStringValue(
+                $customFieldOption,
+                $oldCustomField->getValue(),
+                $customFieldOption->getValue()
+            );
 
             return $this->redirectToRoute('app_admin_custom_field_edit_option', [
                 'id' => $customFieldOption->getId(),

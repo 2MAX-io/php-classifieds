@@ -17,6 +17,7 @@ class UniqueValue extends Constraint
     public $fields = [];
     public $errorPath = null;
     public $ignoreNull = true;
+    public $excludeCurrent = null;
 
     protected static $errorNames = [
         self::NOT_UNIQUE_ERROR => 'NOT_UNIQUE_ERROR',

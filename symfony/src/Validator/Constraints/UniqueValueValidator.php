@@ -190,6 +190,13 @@ class UniqueValueValidator extends ConstraintValidator
             return;
         }
 
+        /**
+         * do not make error for current value when updating
+         */
+        if ($constraint->excludeCurrent !== null && \count($result) === 1 && current($result) === $constraint->excludeCurrent) {
+            return;
+        }
+
         $errorPath = null !== $constraint->errorPath ? $constraint->errorPath : $fields[0];
         $invalidValue = isset($criteria[$errorPath]) ? $criteria[$errorPath] : $criteria[$fields[0]];
 

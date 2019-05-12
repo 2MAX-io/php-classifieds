@@ -115,71 +115,11 @@
                     </div>
                 {% endif %}
 
-                <!-- Tabs nav -->
-                <ul class="nav nav-tabs" role="tablist">
-                    <li class="nav-item flex-sm-fill text-sm-center">
-                        <a
-                                href="#details"
-                                class="nav-link active"
-                                aria-controls="details"
-                                role="tab"
-                                data-toggle="tab"
-                                aria-selected="true"
-                        >{{ 'trans.Ad Details' | trans }}</a>
-                    </li>
-
-                    {% if listing.listingFiles.count > 0 %}
-                        <li class="nav-item flex-sm-fill text-sm-center">
-                            <a
-                                    href="#photos"
-                                    class="nav-link"
-                                    aria-controls="photos"
-                                    role="tab"
-                                    data-toggle="tab"
-                            >{{ 'trans.Photos' | trans }} ({{ listing.listingFiles.count }})</a>
-                        </li>
-                    {% endif %}
-                </ul>
-
-                <!-- tabs -->
-                <div class="tab-content p-md-3 rounded-bottom mb-2">
-                    <!-- details tab -->
-                    <div class="tab-pane fade show active" role="tabpanel" id="details">
-
-                        <div class="zebra">
-                            <!-- description -->
-                            <div class="block">
-
-                                <div class="user-text-wrap px-2 px-md-3 mb-3 mt-2">
-                                    {{ listing.description | nl2br }}
-                                </div>
-                                <div class="px-2 px-sm-3 py-1 clearfix">
-                                    <div class="float-md-right">
-                                        {{ 'trans.Views' | trans }}: {{ listingShowDto.viewsCount+1 | thousandsSeparate }}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                <!-- description -->
+                <div class="listing-show-description border-radius-1 mb-2">
+                    <div class="user-text-wrap px-2 px-md-3 mb-3 mt-2">
+                        {{ listing.description | nl2br }}
                     </div>
-
-                    <!-- Tab photos -->
-                    <div id="photos" class="tab-pane fade clearfix" role="tabpanel">
-                        {% for listingFile in listing.listingFiles %}
-                            <div class="float-left img-thumbnail mr-2 mb-2" style="width: 120px">
-                                <a
-                                        href="{{ asset(listingFile.pathInNormalSize) }}"
-                                        data-fancybox="fileInTab"
-                                        class="fancybox"
-                                >
-                                    <div
-                                            class="pt-100 container-img rounded"
-                                            style="background-image:url('{{ asset(listingFile.pathInNormalSize) }}');"
-                                    ></div>
-                                </a>
-                            </div>
-                        {% endfor %}
-                    </div>
-
                 </div>
 
                 {% if listing.listingFiles is not empty %}
@@ -203,8 +143,12 @@
                 <!-- listing id -->
                 <div class="mb-2 d-none d-md-block">
                     {{ 'trans.Listing identifier' | trans }}: {{ listing.id }}
+
+                    <div class="float-md-right">
+                        {{ 'trans.Views' | trans }}: {{ listingShowDto.viewsCount+1 | thousandsSeparate }}
+                    </div>
                 </div>
-                <!-- end tabs contents -->
+                <!-- end main content -->
             </div>
 
             <!-- Sidebar -->
@@ -273,11 +217,11 @@
                         {% if listing.city is not empty and not displayAsExpired(listing) %}
                             <div class="mb-2 py-2">
                                 <div class="row">
-                                    <div class="col-sm-4">
+                                    <div class="col-sm-4 col-md-5">
                                         {{ 'trans.City' | trans }}
                                     </div>
 
-                                    <div class="col-sm-8">
+                                    <div class="col-sm-8 col-md-7">
                                         {{ listing.city }}
                                     </div>
                                 </div>
@@ -286,11 +230,11 @@
 
                         <div class="mb-2 py-2">
                             <div class="row">
-                                <div class="col-sm-4">
+                                <div class="col-sm-4 col-md-5">
                                     {{ 'trans.Date added' | trans }}
                                 </div>
 
-                                <div class="col-sm-8">
+                                <div class="col-sm-8 col-md-7">
                                     {{ listing.orderByDate | date }}
                                 </div>
                             </div>
@@ -298,12 +242,24 @@
 
                         <div class="mb-2 py-2">
                             <div class="row">
-                                <div class="col-sm-4">
+                                <div class="col-sm-4 col-md-5">
                                     {{ 'trans.Expiration date' | trans }}
                                 </div>
 
-                                <div class="col-sm-8">
+                                <div class="col-sm-8 col-md-7">
                                     {{ listing.validUntilDate | date }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-2 py-2">
+                            <div class="row">
+                                <div class="col-sm-4 col-md-5">
+                                    {{ 'trans.Views' | trans }}
+                                </div>
+
+                                <div class="col-sm-8 col-md-7">
+                                    {{ listingShowDto.viewsCount+1 | thousandsSeparate }}
                                 </div>
                             </div>
                         </div>
@@ -321,9 +277,34 @@
                     {% endif %}
                 </div>
 
+                <!-- photos side -->
+                {% if listing.listingFiles.count > 0 %}
+                    <div class="card mb-3 d-none d-md-block">
+                        <div class="card-header">
+                            <h5>{{ 'trans.Photos' | trans }}</h5>
+                        </div>
 
+                        <div class="card-body">
+                            {% for listingFile in listing.listingFiles %}
+                                <div class="img-thumbnail d-inline-block mr-2 mb-2" style="width: 120px">
+                                    <a
+                                            href="{{ asset(listingFile.pathInNormalSize) }}"
+                                            data-fancybox="fileSidebar"
+                                            class="fancybox"
+                                    >
+                                        <div
+                                                class="pt-100 container-img rounded"
+                                                style="background-image:url('{{ asset(listingFile.pathInNormalSize) }}');"
+                                        ></div>
+                                    </a>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endif %}
+
+                <!-- share listing -->
                 {% if not displayAsExpired(listing) %}
-                    <!-- share listing -->
                     <div class="card mb-3 d-none d-md-block">
                         <div class="card-header">
                             <h5>{{ 'trans.Share This Listing' | trans }}</h5>
@@ -362,8 +343,13 @@
                 {% endif %}
 
                 <!-- listing id -->
-                <div class="mb-2 d-md-none">
-                    {{ 'trans.Listing identifier' | trans }}: {{ listing.id }}
+                <div class="mb-2 px-1 d-md-none">
+                    <div>
+                        {{ 'trans.Listing identifier' | trans }}: {{ listing.id }}
+                    </div>
+                    <div>
+                        {{ 'trans.Views' | trans }}: {{ listingShowDto.viewsCount+1 | thousandsSeparate }}
+                    </div>
                 </div>
             </div>
         </div>

@@ -43,25 +43,13 @@
                     </div>
                 </div>
 
-                <!-- details -->
-                <div class="tab-content p-3 rounded-bottom">
-                    <div class="tab-pane fade show active" role="tabpanel">
-                        <div class="zebra">
-                            <div class="block">
-                                <div class="px-3 py-1 clearfix">
-                                    <div class="float-md-right">
-                                        {{ 'trans.Views' | trans }}: {{ listingShowDto.viewsCount+1 }}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                <div class="mb-2 d-none d-md-block">
+                    {{ 'trans.Listing identifier' | trans }}: {{ listing.id }}
+
+                    <div class="float-md-right">
+                        {{ 'trans.Views' | trans }}: {{ listingShowDto.viewsCount+1 | thousandsSeparate }}
                     </div>
                 </div>
-
-                <div>
-                    {{ 'trans.Listing identifier' | trans }}: {{ listing.id }}
-                </div>
-
             </div>
 
             <!-- sidebar -->

@@ -101,14 +101,7 @@ class CustomFieldsForListingFormService
      */
     private function getListingCustomFieldValues(Listing $listing): array
     {
-        $qb = $this->em->getRepository(ListingCustomFieldValue::class)->createQueryBuilder('listingCustomFieldValue');
-        $qb->join('listingCustomFieldValue.customField', 'customField');
-        $qb->andWhere($qb->expr()->eq('listingCustomFieldValue.listing', ':listing'));
-        $qb->setParameter('listing', $listing);
-
-        $customFieldValues = $qb->getQuery()->getResult();
-
-        return Arr::indexBy($customFieldValues, function(ListingCustomFieldValue $customFieldValue) {
+        return Arr::indexBy($listing->getListingCustomFieldValues()->toArray(), function(ListingCustomFieldValue $customFieldValue) {
             return [$customFieldValue->getCustomField()->getId() => $customFieldValue];
         });
     }

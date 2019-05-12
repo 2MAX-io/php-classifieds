@@ -34,7 +34,7 @@
                             class="text-white"
                     >
                         <img
-                                class="card-img"
+                                class="index-category-img"
                                 src="{{ asset(category.picture | default('static/system/blank.png')) }}"
                                 alt=""
                         >
@@ -61,7 +61,7 @@
                         {% for listing in recommendedListings %}
                             <a
                                     href="{{ path('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}"
-                                    class="link-list-item d-flex"
+                                    class="link-list-item force-single-line"
                             >
                                 {{ listing.title }}
                             </a>
@@ -86,7 +86,7 @@
                         {% for listing in latestListings %}
                             <a
                                     href="{{ path('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}"
-                                    class="link-list-item d-flex"
+                                    class="link-list-item force-single-line"
                             >
                                 {{ listing.title }}
                             </a>

@@ -8,6 +8,7 @@ use App\Entity\CustomField;
 use App\Entity\CustomFieldOption;
 use App\Entity\Listing;
 use App\Entity\ListingCustomFieldValue;
+use App\Helper\Str;
 use App\Security\CurrentUserService;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr\Join;
@@ -68,7 +69,7 @@ class CustomFieldsForListingFormService
             }
 
             $option = null;
-            if (strpos($customFieldValue, '__form_custom_field_option_id_') === 0) {
+            if (Str::beginsWith($customFieldValue, '__form_custom_field_option_id_')) {
                 $optionId = (int) (str_replace('__form_custom_field_option_id_', '', $customFieldValue));
                 $option = $this->em->getRepository(CustomFieldOption::class)->find((int) $optionId);
                 $customFieldValue = $option->getValue();

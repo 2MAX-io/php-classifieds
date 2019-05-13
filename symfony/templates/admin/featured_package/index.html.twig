@@ -33,7 +33,11 @@
                 <td>{{ featured_package.price | moneyAsFloat }}</td>
                 <td>{{ featured_package.daysFeaturedExpire }}</td>
                 <td>{{ featured_package.daysListingExpire }}</td>
-                <td>{{ featured_package.defaultPackage | boolText | trans }}</td>
+                <td>
+                    <span class="{{ featured_package.defaultPackage | boolGreenRedClass }}">
+                        {{ featured_package.defaultPackage | boolText | trans }}
+                    </span>
+                </td>
                 <td>
                     <a href="{{ path('app_admin_featured_package_edit', {'id': featured_package.id}) }}" class="btn btn-dark">{{ 'trans.edit' | trans }}</a>
                 </td>

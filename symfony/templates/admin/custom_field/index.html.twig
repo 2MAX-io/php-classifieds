@@ -33,8 +33,16 @@
                 <td><i class="fas fa-arrows-alt sortableHandle"></i></td>
                 <td>{{ custom_field.name }}</td>
                 <td>{{ ('trans.customFieldType.'~custom_field.type) | trans }}</td>
-                <td>{{ custom_field.required | boolText | trans }}</td>
-                <td>{{ custom_field.searchable | boolText | trans }}</td>
+                <td>
+                    <span class="{{ custom_field.required | boolGreenRedClass }}">
+                        {{ custom_field.required | boolText | trans }}
+                    </span>
+                </td>
+                <td>
+                    <span class="{{ custom_field.searchable | boolGreenRedClass }}">
+                        {{ custom_field.searchable | boolText | trans }}
+                    </span>
+                </td>
                 <td>{{ custom_field.unit }}</td>
                 <td>
                     <a href="{{ path('app_admin_custom_field_edit', {'id': custom_field.id}) }}" class="btn btn-dark">

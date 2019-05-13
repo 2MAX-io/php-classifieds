@@ -13,6 +13,11 @@ class TwigNoDependencies implements RuntimeExtensionInterface
         return $bool ? 'text-warning-color' : '';
     }
 
+    public function boolGreenRedClass(bool $bool): string
+    {
+        return $bool ? 'text-success' : 'text-danger';
+    }
+
     public function isExpired(\DateTime $date): bool
     {
         return $date <= new \DateTime();

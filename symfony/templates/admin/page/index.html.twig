@@ -26,7 +26,11 @@
                             {{ page.title }}
                         </a>
                     </td>
-                    <td>{{ (page.enabled ? 'trans.Yes' : 'trans.No') | trans }}</td>
+                    <td>
+                        <span class="{{ page.enabled | boolGreenRedClass }}">
+                            {{ page.enabled | boolText | trans }}
+                        </span>
+                    </td>
                     <td>
                         <a href="{{ path('app_admin_page_edit', {'id': page.id}) }}" class="btn btn-primary">
                             {{ 'trans.edit' | trans }}

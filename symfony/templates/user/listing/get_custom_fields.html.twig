@@ -2,7 +2,7 @@
     {% for customField in customFieldList %}
         {# @var customField \App\Entity\CustomField #}
 
-        {% if customField.type == constant('\App\\Entity\\CustomField::TYPE_SELECT') %}
+        {% if customField.type in [constant('\App\\Entity\\CustomField::TYPE_SELECT'), constant('\App\\Entity\\CustomField::TYPE_SELECT_SINGLE')] %}
             <div class="form-group">
                 <label
                         class="{% if customField.required %}required{% endif %}"

@@ -63,10 +63,14 @@
                     {{ ('trans.customFieldType.'~customField.type) | trans }}
                 </td>
                 <td>
-                    {{ customField.required | boolText | trans }}
+                    <span class="{{ customField.required | boolGreenRedClass }}">
+                        {{ customField.required | boolText | trans }}
+                    </span>
                 </td>
                 <td>
-                    {{ customField.searchable | boolText | trans }}
+                    <span class="{{ customField.searchable | boolGreenRedClass }}">
+                        {{ customField.searchable | boolText | trans }}
+                    </span>
                 </td>
                 <td>
                     {{ customField.unit }}

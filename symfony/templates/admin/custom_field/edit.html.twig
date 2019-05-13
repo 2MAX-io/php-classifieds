@@ -17,7 +17,12 @@
     {{ include('admin/custom_field/_form.html.twig', {'button_label': 'trans.Update' | trans}) }}
 </div>
 
-    {% if custom_field.type in [constant('\App\\Entity\\CustomField::TYPE_SELECT'), constant('\App\\Entity\\CustomField::TYPE_CHECKBOX_MULTIPLE')] %}
+    {% if custom_field.type in [
+        constant('\App\\Entity\\CustomField::TYPE_SELECT'),
+        constant('\App\\Entity\\CustomField::TYPE_SELECT_SINGLE'),
+        constant('\App\\Entity\\CustomField::TYPE_CHECKBOX_MULTIPLE'),
+    ]
+    %}
         <div class="container mt-3">
             <div class="row mb-2">
                 <div class="col-md-6">

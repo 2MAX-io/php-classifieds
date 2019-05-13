@@ -17,6 +17,7 @@ class CustomField
     public const TYPE_INTEGER_RANGE = 'integer_range';
     public const TYPE_YEAR_RANGE = 'year_range';
     public const TYPE_CHECKBOX_MULTIPLE = 'checkbox_multiple';
+    public const TYPE_SELECT_SINGLE = 'select_single';
 
     /**
      * @ORM\Id()

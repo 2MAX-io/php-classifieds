@@ -149,6 +149,28 @@
                                     </div>
                                 {% endif %}
 
+                                {% if customField.type == constant('\App\\Entity\\CustomField::TYPE_SELECT_SINGLE') and customField.customFieldOptions is not empty %}
+                                    <div class="mb-3">
+                                        <p><strong>{{ customField.name }}</strong></p>
+
+                                        <div>
+                                            <select name="form_custom_field[{{ customField.id }}][values][]" class="custom-select">
+                                                <option value="">{{ 'trans.Select' | trans }}</option>
+                                                {% for customFieldOption in customField.customFieldOptions %}
+                                                    <option
+                                                            value="{{ customFieldOption.value }}"
+                                                            {% if customFieldOption.value in app.request.get('form_custom_field')[customField.id]['values'] | default([]) %}
+                                                                {{- 'selected' -}}
+                                                            {% endif %}
+                                                    >
+                                                        {{- customFieldOption.name -}}
+                                                    </option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+                                {% endif %}
+
                                 {% if customField.type == constant('\App\\Entity\\CustomField::TYPE_CHECKBOX_MULTIPLE') and customField.customFieldOptions is not empty %}
                                     <div class="mb-3">
                                         <p><strong>{{ customField.name }}</strong></p>

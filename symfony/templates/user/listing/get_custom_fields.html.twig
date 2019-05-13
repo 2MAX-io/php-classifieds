@@ -10,6 +10,9 @@
                 >
                     {{ customField.name }}
                 </label>
+                {% if customField.required %}
+                    <span class="badge badge-primary">{{ 'trans.required' | trans }}</span>
+                {% endif %}
                 <select
                         id="custom_field_{{ customField.id }}"
                         name="form_custom_field[{{ customField.id }}]"
@@ -36,6 +39,9 @@
                     {{ customField.name }}
                     {%- if customField.unit is not empty %} [{{ customField.unit }}]{% endif -%}
                 </label>
+                {% if customField.required %}
+                    <span class="badge badge-primary">{{ 'trans.required' | trans }}</span>
+                {% endif %}
 
                 <input type="number"
                        name="form_custom_field[{{ customField.id }}]"
@@ -50,6 +56,9 @@
         {% if customField.type == constant('\App\\Entity\\CustomField::TYPE_YEAR_RANGE') %}
             <div class="form-group">
                 <label class="{% if customField.required %}required{% endif %}" for="custom_field_{{ customField.id }}">{{ customField.name }}</label>
+                {% if customField.required %}
+                    <span class="badge badge-primary">{{ 'trans.required' | trans }}</span>
+                {% endif %}
 
                 <select
                         name="form_custom_field[{{ customField.id }}]"

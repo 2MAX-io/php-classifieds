@@ -55,8 +55,7 @@ class UserListService
             $qb->setParameter(':query', Search::optimizeLike($request->get('query')));
         }
 
-        $adapter = new DoctrineORMAdapter($qb, true, $qb->getDQLPart('having') !== null);
-        $pager = new Pagerfanta($adapter);
+        $pager = $this->paginationService->createPaginationForQb($qb);
         $pager->setMaxPerPage($this->paginationService->getMaxPerPage());
         $pager->setCurrentPage($page);
 

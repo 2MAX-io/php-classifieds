@@ -26,6 +26,7 @@ class PaginationService
         $adapter = new DoctrineORMAdapter($qb, true, $qb->getDQLPart('having') !== null);
         $pager = new Pagerfanta($adapter);
         $pager->setMaxPerPage($this->getMaxPerPage());
+        $pager->setNormalizeOutOfRangePages(true);
 
         return $pager;
     }

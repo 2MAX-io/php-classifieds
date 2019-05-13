@@ -97,8 +97,7 @@ class AdminListingSearchService
 
         $qb->orderBy('listing.id', 'DESC');
 
-        $adapter = new DoctrineORMAdapter($qb);
-        $pager = new Pagerfanta($adapter);
+        $pager = $this->paginationService->createPaginationForQb($qb);
         $pager->setMaxPerPage($this->paginationService->getMaxPerPage());
         $pager->setCurrentPage($page);
 

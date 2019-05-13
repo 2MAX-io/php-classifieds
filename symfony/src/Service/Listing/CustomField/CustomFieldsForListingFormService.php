@@ -63,7 +63,13 @@ class CustomFieldsForListingFormService
         $listingCustomFieldValues = $this->getListingCustomFieldValues($listing);
         $listingCustomFieldValuesToRemove = $listingCustomFieldValues;
 
+        /** @var string|array $customFieldValue */
         foreach ($customFieldValueList as $customFieldId => $customFieldValue) {
+            if (\is_array($customFieldValue)) {
+                $this->saveCustomFieldMultiple($listing, $customFieldId, $customFieldValue);
+                continue;
+            }
+
             if (Str::emptyTrim($customFieldValue)) {
                 continue;
             }
@@ -91,6 +97,28 @@ class CustomFieldsForListingFormService
 
         foreach ($listingCustomFieldValuesToRemove as $listingCustomFieldValue) {
             $this->em->remove($listingCustomFieldValue);
+        }
+    }
+
+    public function saveCustomFieldMultiple(Listing $listing, int $customFieldId, array $customFieldValueMultiple)
+    {
+        $option = null;
+        foreach ($customFieldValueMultiple as $customFieldValue) {
+            if (!Str::beginsWith($customFieldValue, '__form_custom_field_option_id_')) {
+                continue;
+            }
+
+            $optionId = (int) (str_replace('__form_custom_field_option_id_', '', $customFieldValue));
+            $option = $this->em->getRepository(CustomFieldOption::class)->find((int) $optionId);
+            $customFieldValue = $option->getValue();
+
+            $listingCustomFieldValue = new ListingCustomFieldValue();
+            $listingCustomFieldValue->setValue($customFieldValue);
+            $listingCustomFieldValue->setCustomFieldOption($option);
+            $listingCustomFieldValue->setCustomField($this->em->getReference(CustomField::class, $customFieldId));
+            $this->em->persist($listingCustomFieldValue);
+            $listing->addListingCustomFieldValue($listingCustomFieldValue);
+
         }
     }
 

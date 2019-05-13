@@ -23,9 +23,10 @@ class CustomFieldType extends AbstractType
             'label' => 'trans.Type',
             'placeholder' => 'trans.Select',
             'choices' => [
-                'trans.customFieldType.select' => 'select',
-                'trans.customFieldType.year_range' => 'year_range',
-                'trans.customFieldType.integer_range' => 'integer_range',
+                'trans.customFieldType.select' => CustomField::TYPE_SELECT,
+                'trans.customFieldType.year_range' => CustomField::TYPE_INTEGER_RANGE,
+                'trans.customFieldType.integer_range' => CustomField::TYPE_INTEGER_RANGE,
+                'trans.customFieldType.checkbox_multiple' => CustomField::TYPE_CHECKBOX_MULTIPLE,
             ],
         ]);
         $builder->add('required', CheckboxType::class, [

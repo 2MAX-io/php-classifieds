@@ -5,10 +5,10 @@
 {% block body %}
 <div class="container mt-3">
     <div class="row mb-2">
-        <div class="col-md-6">
+        <div class="col-md-8">
             <h1>{{ 'trans.Edit custom field' | trans }}</h1>
         </div>
-        <div class="col-md-6 text-md-right">
+        <div class="col-md-4 text-md-right">
             <a href="{{ path('app_admin_custom_field_index') }}">{{ 'trans.back to list' | trans }}</a>
             {{ include('admin/custom_field/_delete_form.html.twig') }}
         </div>
@@ -17,7 +17,7 @@
     {{ include('admin/custom_field/_form.html.twig', {'button_label': 'trans.Update' | trans}) }}
 </div>
 
-    {% if custom_field.type == constant('\App\\Entity\\CustomField::TYPE_SELECT') %}
+    {% if custom_field.type in [constant('\App\\Entity\\CustomField::TYPE_SELECT'), constant('\App\\Entity\\CustomField::TYPE_CHECKBOX_MULTIPLE')] %}
         <div class="container mt-3">
             <div class="row mb-2">
                 <div class="col-md-6">

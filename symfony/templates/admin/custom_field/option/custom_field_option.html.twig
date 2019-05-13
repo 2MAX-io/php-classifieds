@@ -5,11 +5,11 @@
 {% block body %}
 <div class="container mt-3">
     <div class="row mb-2">
-        <div class="col-md-6">
+        <div class="col-md-8">
             <h1>{{ 'trans.Option for custom field' | trans }}</h1>
-            <h5>{{ 'trans.for custom field' | trans }}: {{ customFieldOption.customField.name }}</h5>
+            <h5>{{ 'trans.for custom field' | trans }}: <strong>{{ customFieldOption.customField.name }}</strong></h5>
         </div>
-        <div class="col-md-6 text-md-right">
+        <div class="col-md-4 text-md-right">
             <a href="{{ path('app_admin_custom_field_edit', {'id': customFieldOption.customField.id}) }}">{{ 'trans.back to list' | trans }}</a>
 
             {% if customFieldOption.id %}

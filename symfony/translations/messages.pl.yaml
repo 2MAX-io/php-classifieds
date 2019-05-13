@@ -384,6 +384,7 @@ trans:
     select: 'Pole wyboru'
     year_range: 'Pole z rokiem'
     integer_range: 'Pole z liczbą'
+    checkbox_multiple: 'Pole z wieloma zaznaczeniami'
   Custom field: 'Pole niestandarowe'
   for category: 'dla kategorii'
   Options: 'Opcje'

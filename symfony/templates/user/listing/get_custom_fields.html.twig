@@ -25,7 +25,8 @@
                         {# @var customField \App\Entity\CustomField #}
                         <option
                                 value="__form_custom_field_option_id_{{ option.id }}"
-                                {% if option.value in customField.getListingCustomFieldValuesArray %}selected{% endif %}>
+                                {% if option.value in customField.getListingCustomFieldValuesArray %}selected{% endif %}
+                        >
                             {{- option.name -}}
                         </option>
                     {% endfor %}
@@ -50,6 +51,29 @@
                        class="form-control"
                        {% if customField.required %}required{% endif %}
                 >
+            </div>
+        {% endif %}
+
+        {% if customField.type == constant('\App\\Entity\\CustomField::TYPE_CHECKBOX_MULTIPLE') %}
+            <div class="form-group">
+                <label>
+                    {{ customField.name }}
+                </label>
+
+                {% for option in customField.customFieldOptions %}
+                    <div class="form-check">
+                        <input type="checkbox"
+                               name="form_custom_field[{{ customField.id }}][]"
+                               value="__form_custom_field_option_id_{{ option.id }}"
+                               id="custom_field_{{ customField.id }}_option_{{ option.id }}"
+                               class="form-check-input"
+                               {% if option.value in customField.getListingCustomFieldValuesArray %}checked{% endif %}
+                        >
+                        <label for="custom_field_{{ customField.id }}_option_{{ option.id }}" class="form-check-label">
+                            {{- option.name -}}
+                        </label>
+                    </div>
+                {% endfor %}
             </div>
         {% endif %}
 

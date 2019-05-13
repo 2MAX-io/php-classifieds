@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Service\Listing\ListingList;
 
 use App\Entity\Category;
+use App\Entity\CustomField;
 use App\Entity\Listing;
 use Pagerfanta\Pagerfanta;
 
@@ -44,6 +45,11 @@ class ListingListDto
      * @var int|null
      */
     private $redirectToPageNumber;
+
+    /**
+     * @var CustomField[]
+     */
+    private $customFieldForCategoryList;
 
     /**
      * @return \Traversable|Listing[]
@@ -116,5 +122,15 @@ class ListingListDto
     public function setRedirectToPageNumber(?int $redirectToPageNumber): void
     {
         $this->redirectToPageNumber = $redirectToPageNumber;
+    }
+
+    public function getCustomFieldForCategoryList(): array
+    {
+        return $this->customFieldForCategoryList;
+    }
+
+    public function setCustomFieldForCategoryList(array $customFieldForCategoryList): void
+    {
+        $this->customFieldForCategoryList = $customFieldForCategoryList;
     }
 }

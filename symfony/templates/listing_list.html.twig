@@ -121,7 +121,35 @@
 
                             {# @var customField \App\Entity\CustomField #}
                             {% for customField in customFieldList %}
+
                                 {% if customField.type == constant('\App\\Entity\\CustomField::TYPE_SELECT') and customField.customFieldOptions is not empty %}
+                                    <div class="mb-3">
+                                        <p><strong>{{ customField.name }}</strong></p>
+
+                                        {% for customFieldOption in customField.customFieldOptions %}
+                                            <div class="custom-control custom-checkbox">
+                                                <input
+                                                    name="form_custom_field[{{ customField.id }}][values][]"
+                                                    value="{{ customFieldOption.value }}"
+                                                    {% if customFieldOption.value in app.request.get('form_custom_field')[customField.id]['values'] | default([]) %}
+                                                        {{- 'checked' -}}
+                                                    {% endif %}
+                                                    type="checkbox"
+                                                    id="option_{{ customFieldOption.id }}"
+                                                    class="custom-control-input"
+                                                >
+                                                <label
+                                                        class="custom-control-label"
+                                                        for="option_{{ customFieldOption.id }}"
+                                                >
+                                                    {{ customFieldOption.name }}
+                                                </label>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+
+                                {% if customField.type == constant('\App\\Entity\\CustomField::TYPE_CHECKBOX_MULTIPLE') and customField.customFieldOptions is not empty %}
                                     <div class="mb-3">
                                         <p><strong>{{ customField.name }}</strong></p>
 

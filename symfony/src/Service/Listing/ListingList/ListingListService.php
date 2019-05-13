@@ -7,13 +7,11 @@ namespace App\Service\Listing\ListingList;
 use App\Entity\Category;
 use App\Entity\CustomField;
 use App\Entity\Listing;
+use App\Helper\Arr;
 use App\Helper\Search;
 use App\Service\Listing\ListingPublicDisplayService;
 use App\Service\System\Pagination\PaginationService;
 use Doctrine\ORM\EntityManagerInterface;
-use Pagerfanta\Adapter\DoctrineORMAdapter;
-use Pagerfanta\Exception\OutOfRangeCurrentPageException;
-use Pagerfanta\Pagerfanta;
 
 class ListingListService
 {
@@ -45,12 +43,18 @@ class ListingListService
     public function getListings(ListingListDto $listingListDto): ListingListDto
     {
         $qb = $this->em->getRepository(Listing::class)->createQueryBuilder('listing');
+        $customFieldForCategoryList = Arr::indexBy($listingListDto->getCustomFieldForCategoryList(), function(CustomField $customField) {
+            return [$customField->getId() => $customField];
+        });
 
         if (!empty($_GET['form_custom_field'])) {
             $sqlParamId = 0;
             $usedCustomFieldIdList = [];
             foreach ($_GET['form_custom_field'] as $customFieldId => $customFieldFormValueArray) {
                 $sqlParamId++;
+                /** @var CustomField $customField */
+                $customField = $customFieldForCategoryList[$customFieldId];
+
                 if (isset($customFieldFormValueArray['range'])) {
                     $rangeCondition = $qb->expr()->andX();
 
@@ -92,7 +96,11 @@ class ListingListService
                         $qb->setParameter(':customFieldId_' . ((int) $sqlParamId), $customFieldId);
                         $qb->setParameter(':customFieldValue_' . ((int) $sqlParamId), $valueItem);
 
-                        $usedCustomFieldIdList[] = $customFieldId;
+                        if ($customField->getType() === CustomField::TYPE_CHECKBOX_MULTIPLE) {
+                            $usedCustomFieldIdList[] = $customFieldId . "_$valueItem";
+                        } else {
+                            $usedCustomFieldIdList[] = $customFieldId;
+                        }
                     }
                 }
             }

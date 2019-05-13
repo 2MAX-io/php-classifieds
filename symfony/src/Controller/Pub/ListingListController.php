@@ -65,6 +65,8 @@ class ListingListController extends AbstractController
             'categorySlug' => $categorySlug,
         ];
 
+        $customFieldsForCategory = $listingListService->getCustomFields($category);
+        $listingListDto->setCustomFieldForCategoryList($customFieldsForCategory);
         $listingListDto = $listingListService->getListings($listingListDto);
 
         if ($listingListDto->getRedirectToPageNumber()) {
@@ -87,7 +89,7 @@ class ListingListController extends AbstractController
                 'pager' => $listingListDto->getPager(),
                 'pager_route_params' => $routeParams,
                 'listingListDto' => $listingListDto,
-                'customFieldList' => $listingListService->getCustomFields($category),
+                'customFieldList' => $customFieldsForCategory,
                 'categoryList' => $categoryListService->getLevelOfSubcategoriesToDisplayForCategory($category),
                 'categoryBreadcrumbs' => $categoryListService->getBreadcrumbs($category),
                 'queryParameters' => [

@@ -71,7 +71,8 @@ class CustomFieldsForListingFormService
                         $customFieldId,
                         $customFieldValueItem,
                         $listingCustomFieldValues,
-                        $listingCustomFieldValuesToRemove
+                        $listingCustomFieldValuesToRemove,
+                        true
                     );
                     $listing->addListingCustomFieldValue($listingCustomFieldValue);
                 }
@@ -96,8 +97,13 @@ class CustomFieldsForListingFormService
         }
     }
 
-    public function saveField($customFieldId, $customFieldValue, $listingCustomFieldValues, &$listingCustomFieldValuesToRemove): ListingCustomFieldValue
-    {
+    public function saveField(
+        $customFieldId,
+        $customFieldValue,
+        $listingCustomFieldValues,
+        &$listingCustomFieldValuesToRemove,
+        bool $multiple = false
+    ): ListingCustomFieldValue {
         $option = null;
         if (Str::beginsWith($customFieldValue, '__form_custom_field_option_id_')) {
             $optionId = (int) (str_replace('__form_custom_field_option_id_', '', $customFieldValue));
@@ -105,11 +111,20 @@ class CustomFieldsForListingFormService
             $customFieldValue = $option->getValue();
         }
 
-        if (isset($listingCustomFieldValues[$customFieldId])) {
-            $listingCustomFieldValue = $listingCustomFieldValues[$customFieldId];
-            unset($listingCustomFieldValuesToRemove[$customFieldId]);
+        if ($multiple) {
+            if (isset($listingCustomFieldValues[$customFieldId . '_' . $customFieldValue])) {
+                $listingCustomFieldValue = $listingCustomFieldValues[$customFieldId . '_' . $customFieldValue];
+                unset($listingCustomFieldValuesToRemove[$customFieldId . '_' . $customFieldValue]);
+            } else {
+                $listingCustomFieldValue = new ListingCustomFieldValue();
+            }
         } else {
-            $listingCustomFieldValue = new ListingCustomFieldValue();
+            if (isset($listingCustomFieldValues[$customFieldId])) {
+                $listingCustomFieldValue = $listingCustomFieldValues[$customFieldId];
+                unset($listingCustomFieldValuesToRemove[$customFieldId]);
+            } else {
+                $listingCustomFieldValue = new ListingCustomFieldValue();
+            }
         }
 
         $listingCustomFieldValue->setValue($customFieldValue);
@@ -121,13 +136,17 @@ class CustomFieldsForListingFormService
     }
 
     /**
-     * indexed by custom field id
+     * indexed by custom field unique identifier
      *
      * @return ListingCustomFieldValue[]
      */
     private function getListingCustomFieldValues(Listing $listing): array
     {
         return Arr::indexBy($listing->getListingCustomFieldValues()->toArray(), function(ListingCustomFieldValue $customFieldValue) {
+            if ($customFieldValue->getCustomField()->getType() === CustomField::TYPE_CHECKBOX_MULTIPLE) {
+                return [$customFieldValue->getCustomField()->getId() . '_' . $customFieldValue->getValue() => $customFieldValue];
+            }
+
             return [$customFieldValue->getCustomField()->getId() => $customFieldValue];
         });
     }

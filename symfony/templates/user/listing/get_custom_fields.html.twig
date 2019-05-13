@@ -61,15 +61,15 @@
                 </label>
 
                 {% for option in customField.customFieldOptions %}
-                    <div class="form-check">
+                    <div class="custom-control custom-checkbox">
                         <input type="checkbox"
                                name="form_custom_field[{{ customField.id }}][]"
                                value="__form_custom_field_option_id_{{ option.id }}"
                                id="custom_field_{{ customField.id }}_option_{{ option.id }}"
-                               class="form-check-input"
+                               class="custom-control-input"
                                {% if option.value in customField.getListingCustomFieldValuesArray %}checked{% endif %}
                         >
-                        <label for="custom_field_{{ customField.id }}_option_{{ option.id }}" class="form-check-label">
+                        <label for="custom_field_{{ customField.id }}_option_{{ option.id }}" class="custom-control-label">
                             {{- option.name -}}
                         </label>
                     </div>

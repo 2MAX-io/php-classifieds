@@ -12,6 +12,7 @@ use App\Service\Listing\ListingPublicDisplayService;
 use App\Service\System\Pagination\PaginationService;
 use Doctrine\ORM\EntityManagerInterface;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
+use Pagerfanta\Exception\OutOfRangeCurrentPageException;
 use Pagerfanta\Pagerfanta;
 
 class ListingListService
@@ -153,7 +154,11 @@ class ListingListService
         $adapter = new DoctrineORMAdapter($qb, true, $qb->getDQLPart('having') !== null);
         $pager = new Pagerfanta($adapter);
         $pager->setMaxPerPage($this->paginationService->getMaxPerPage());
+        $pager->setAllowOutOfRangePages(true);
         $pager->setCurrentPage($listingListDto->getPageNumber());
+        if ($pager->getCurrentPage() > $pager->getNbPages()) {
+            $listingListDto->setRedirectToPageNumber($pager->getNbPages());
+        }
 
         $listingListDto->setPager($pager);
         $listingListDto->setResults($pager->getCurrentPageResults());

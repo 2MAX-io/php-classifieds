@@ -41,6 +41,11 @@ class ListingListDto
     private $route;
 
     /**
+     * @var int|null
+     */
+    private $redirectToPageNumber;
+
+    /**
      * @return \Traversable|Listing[]
      */
     public function getResults(): \Traversable
@@ -101,5 +106,15 @@ class ListingListDto
     public function setRoute(string $route): void
     {
         $this->route = $route;
+    }
+
+    public function getRedirectToPageNumber(): ?int
+    {
+        return $this->redirectToPageNumber;
+    }
+
+    public function setRedirectToPageNumber(?int $redirectToPageNumber): void
+    {
+        $this->redirectToPageNumber = $redirectToPageNumber;
     }
 }

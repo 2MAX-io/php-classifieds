@@ -61,16 +61,31 @@ class ListingListController extends AbstractController
             $listingListDto->setLastAddedListFlag(true);
         }
 
+        $routeParams = [
+            'categorySlug' => $categorySlug,
+        ];
+
         $listingListDto = $listingListService->getListings($listingListDto);
 
+        if ($listingListDto->getRedirectToPageNumber()) {
+            return $this->redirectToRoute(
+                $listingListDto->getRoute(),
+                \array_replace(
+                    $routeParams,
+                    $request->query->all(),
+                    [
+                        'page' => $listingListDto->getRedirectToPageNumber(),
+                    ]
+                ),
+                Response::HTTP_TEMPORARY_REDIRECT
+            );
+        }
         return $this->render(
             'listing_list.html.twig',
             [
                 'listingList' => $listingListDto->getResults(),
                 'pager' => $listingListDto->getPager(),
-                'pager_route_params' => [
-                    'categorySlug' => $categorySlug,
-                ],
+                'pager_route_params' => $routeParams,
                 'listingListDto' => $listingListDto,
                 'customFieldList' => $listingListService->getCustomFields($category),
                 'categoryList' => $categoryListService->getLevelOfSubcategoriesToDisplayForCategory($category),

@@ -8,12 +8,10 @@ use App\Repository\CategoryRepository;
 use App\Service\Category\CategoryListService;
 use App\Service\Listing\ListingList\ListingListDto;
 use App\Service\Listing\ListingList\ListingListService;
-use Pagerfanta\View\TwitterBootstrap4View;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Routing\RouterInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ListingListController extends AbstractController
@@ -36,7 +34,6 @@ class ListingListController extends AbstractController
      */
     public function index(
         Request $request,
-        RouterInterface $router,
         ListingListService $listingListService,
         CategoryListService $categoryListService,
         CategoryRepository $categoryRepository,
@@ -44,7 +41,6 @@ class ListingListController extends AbstractController
     ): Response {
         $listingListDto = new ListingListDto();
         $listingListDto->setRoute($request->get('_route'));
-        $view = new TwitterBootstrap4View();
         $page = (int) $request->get('page', 1);
         $listingListDto->setPageNumber($page);
 

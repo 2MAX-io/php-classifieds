@@ -151,9 +151,7 @@ class ListingListService
 
         $qb->groupBy('listing.id');
 
-        $adapter = new DoctrineORMAdapter($qb, true, $qb->getDQLPart('having') !== null);
-        $pager = new Pagerfanta($adapter);
-        $pager->setMaxPerPage($this->paginationService->getMaxPerPage());
+        $pager = $this->paginationService->createPaginationForQb($qb);
         $pager->setAllowOutOfRangePages(true);
         $pager->setCurrentPage($listingListDto->getPageNumber());
         if ($pager->getCurrentPage() > $pager->getNbPages()) {

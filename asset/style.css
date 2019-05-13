@@ -306,8 +306,7 @@ a.use-visited-color:visited {
 
 .cursor-pointer, .sortableHandle {
     cursor: pointer;
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
+    padding: 0.5rem;
 }
 
 input.form-control, textarea.form-control, select.form-control {

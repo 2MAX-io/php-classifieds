@@ -30,6 +30,14 @@
                     {{ 'trans.Police log' | trans }}
                 </a>
 
+                <a
+                        href="{{ path('admin_user_edit', {'id': listing.user.id}) }}"
+                        target="_blank"
+                        class="btn btn-dark"
+                >
+                    {{ 'trans.User' | trans }}
+                </a>
+
                 {{ include('admin/listing/_raise_form.html.twig') }}
                 {{ include('admin/listing/_delete_form.html.twig') }}
             </div>

@@ -6,6 +6,7 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\UniqueConstraint;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CustomFieldJoinCategoryRepository")
@@ -14,6 +15,7 @@ use Doctrine\ORM\Mapping\UniqueConstraint;
  *          @UniqueConstraint(name="unique_field_category_pair", columns={"custom_field_id", "category_id"}),
  *      }
  * )
+ * @UniqueEntity(fields={"customField", "category"}, message="This custom field is already assigned to this category")
  */
 class CustomFieldJoinCategory
 {

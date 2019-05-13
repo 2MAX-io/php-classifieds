@@ -4,17 +4,15 @@ declare(strict_types=1);
 
 namespace App\Form\Admin;
 
-use App\Entity\Category;
 use App\Entity\CustomField;
 use App\Entity\CustomFieldJoinCategory;
 use App\Repository\CustomFieldRepository;
-use App\Validator\Constraints\UniqueValue;
-use App\Validator\Constraints\UniqueValueDto;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class CategoryAddCustomFieldType extends AbstractType
 {
@@ -33,16 +31,7 @@ class CategoryAddCustomFieldType extends AbstractType
                 return $qb;
             },
             'constraints' => [
-                new UniqueValue(
-                    [
-                        'fields' => [
-                            'customField',
-                            new UniqueValueDto('category', $this->getCategory($options)),
-                        ],
-                        'entityClass' => CustomFieldJoinCategory::class,
-                        'message' => 'This custom field is already assigned to this category',
-                    ]
-                ),
+                new NotBlank(),
             ],
         ]);
 
@@ -56,17 +45,5 @@ class CategoryAddCustomFieldType extends AbstractType
         $resolver->setDefaults([
             'data_class' => CustomFieldJoinCategory::class,
         ]);
-    }
-
-    private function getCategory(array $options): ?Category
-    {
-        if (!isset($options['data']) || !$options['data'] instanceof CustomFieldJoinCategory) {
-            return null;
-        }
-
-        /** @var CustomFieldJoinCategory $category */
-        $category = $options['data'];
-
-        return $category->getCategory();
     }
 }

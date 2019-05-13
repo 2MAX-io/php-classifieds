@@ -64,7 +64,7 @@ class CustomFieldsForListingFormService
         $listingCustomFieldValuesToRemove = $listingCustomFieldValues;
 
         foreach ($customFieldValueList as $customFieldId => $customFieldValue) {
-            if (empty(trim($customFieldValue))) {
+            if (Str::emptyTrim($customFieldValue)) {
                 continue;
             }
 

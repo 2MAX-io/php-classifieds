@@ -7,6 +7,7 @@ namespace App\Controller\Admin\User;
 use App\Controller\Admin\Base\AbstractAdminController;
 use App\Entity\User;
 use App\Form\Admin\UserType;
+use App\Helper\Str;
 use App\Service\Admin\User\UserListService;
 use App\Service\User\Account\EncodePasswordService;
 use Symfony\Component\HttpFoundation\Request;
@@ -43,7 +44,7 @@ class UserController extends AbstractAdminController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            if (!empty(trim($user->getPlainPassword()))) {
+            if (!Str::emptyTrim($user->getPlainPassword())) {
                 $user->setPassword($encodePasswordService->getEncodedPassword($user, $user->getPlainPassword()));
             }
 

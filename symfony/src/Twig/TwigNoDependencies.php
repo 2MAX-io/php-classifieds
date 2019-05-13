@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Twig;
 
+use App\Helper\Str;
 use Twig\Extension\RuntimeExtensionInterface;
 
 class TwigNoDependencies implements RuntimeExtensionInterface
@@ -37,7 +38,7 @@ class TwigNoDependencies implements RuntimeExtensionInterface
             return 'trans.No';
         }
 
-        if (empty(trim($value))) {
+        if (Str::emptyTrim($value)) {
             return 'trans.No';
         }
 

@@ -33,8 +33,6 @@ class UserType extends AbstractType
                     new Email([
                         'mode' => Email::VALIDATION_MODE_STRICT
                     ]),
-// todo: correct validation
-//                    new UserEmailNotTaken(),
                 ],
             ]
         );
@@ -45,7 +43,7 @@ class UserType extends AbstractType
             RepeatedType::class,
             [
                 'first_options' => [
-                    'label' => 'trans.Email',
+                    'label' => 'trans.Username',
                 ],
                 'second_options' => [
                     'label' => 'trans.Repeat new email',
@@ -55,8 +53,6 @@ class UserType extends AbstractType
                     new Length([
                         'min' => 2,
                     ]),
-// todo: correct validation
-//                    new UniqueValue(['fields' => 'username', 'entityClass' => User::class]),
                 ],
             ]
         );

@@ -56,4 +56,13 @@ class Str
 
         return $matches;
     }
+
+    public static function emptyTrim(?string $value): bool
+    {
+        if ($value === null) {
+            return true;
+        }
+
+        return empty($value) || empty(trim($value));
+    }
 }

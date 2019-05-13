@@ -19,3 +19,14 @@
         <span class="badge badge-primary">{{ 'trans.required' | trans }}</span>
     {% endif %}
 {%- endblock form_label %}
+
+{% block checkbox_widget -%}
+    {%- set parent_label_class = parent_label_class|default(label_attr.class|default('checkbox-custom')) -%}
+    {{ parent() }}
+{%- endblock checkbox_widget %}
+
+{% block checkbox_radio_label -%}
+    {%- set parent_label_class = parent_label_class|default(label_attr.class|default('checkbox-custom')) -%}
+    {{ parent() }}
+{%- endblock checkbox_radio_label %}
+

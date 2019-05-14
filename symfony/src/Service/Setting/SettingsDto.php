@@ -42,6 +42,16 @@ class SettingsDto
     private $linkTermsConditions;
 
     /**
+     * @var string|null
+     */
+    private $linkPrivacyPolicy;
+
+    /**
+     * @var string|null
+     */
+    private $linkRejectionReason;
+
+    /**
      * ISO 639-1
      *
      * @var string|null
@@ -216,5 +226,25 @@ class SettingsDto
     public function setMasterSiteLinkShow(bool $masterSiteLinkShow): void
     {
         $this->masterSiteLinkShow = $masterSiteLinkShow;
+    }
+
+    public function getLinkPrivacyPolicy(): ?string
+    {
+        return $this->linkPrivacyPolicy;
+    }
+
+    public function setLinkPrivacyPolicy(?string $linkPrivacyPolicy): void
+    {
+        $this->linkPrivacyPolicy = $linkPrivacyPolicy;
+    }
+
+    public function getLinkRejectionReason(): ?string
+    {
+        return $this->linkRejectionReason;
+    }
+
+    public function setLinkRejectionReason(?string $linkRejectionReason): void
+    {
+        $this->linkRejectionReason = $linkRejectionReason;
     }
 }

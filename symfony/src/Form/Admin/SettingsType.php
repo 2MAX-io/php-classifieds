@@ -78,6 +78,25 @@ class SettingsType extends AbstractType
                 new NotBlank(),
             ],
         ]);
+        $builder->add('linkTermsConditions', PageType::class, [
+            'label' => 'trans.Link to terms and conditions',
+            'required' => true,
+            'constraints' => [
+                new NotBlank(),
+            ],
+        ]);
+        $builder->add('linkPrivacyPolicy', PageType::class, [
+            'label' => 'trans.Link to privacy policy',
+            'required' => true,
+            'constraints' => [
+                new NotBlank(),
+            ],
+        ]);
+        $builder->add('linkRejectionReason', PageType::class, [
+            'label' => 'trans.Link to rejection reasons',
+            'required' => true,
+            'placeholder' => 'trans.not required'
+        ]);
         $builder->add('languageTwoLetters', LanguageTwoLettersType::class, [
             'label' => 'trans.Language',
             'required' => true,

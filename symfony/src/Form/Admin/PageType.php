@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Form\Admin;
 
 use App\Entity\Page;
-use App\Validator\Constraints\UniqueValue;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -19,9 +18,6 @@ class PageType extends AbstractType
     {
         $builder->add('slug', TextType::class, [
             'label' => 'trans.Slug',
-            'constraints' => [
-                new UniqueValue(['fields' => 'slug', 'entityClass' => Page::class]),
-            ],
         ]);
         $builder->add('title', TextType::class, [
             'label' => 'trans.Title',

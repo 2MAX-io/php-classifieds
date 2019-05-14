@@ -43,7 +43,9 @@ class PageController extends AbstractAdminController
             $entityManager->persist($page);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_admin_page_index');
+            return $this->redirectToRoute('app_admin_page_edit', [
+                'id' => $page->getId(),
+            ]);
         }
 
         return $this->render('admin/page/new.html.twig', [
@@ -65,7 +67,7 @@ class PageController extends AbstractAdminController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('app_admin_page_index', [
+            return $this->redirectToRoute('app_admin_page_edit', [
                 'id' => $page->getId(),
             ]);
         }

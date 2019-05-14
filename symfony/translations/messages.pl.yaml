@@ -310,8 +310,7 @@ trans:
   termsCondtionsLink: 'regulaminu'
   Link to terms and conditions: 'Link do regulaminu'
   Show contact information: 'Pokaż dane kontaktowe'
-  'This page is using cookies. You can disable cookies by using browser settings.': Ta strona używa cookies. Możesz wyłączyć pliki cookies używając ustawień przeglądarki.
-  More informations: Więcej informacji
+  More informations: 'Więcej informacji'
   I accept: 'Akceptuje'
   Copy: 'Kopiuj'
   Remove file of: 'Usuń plik z'
@@ -421,3 +420,7 @@ trans:
   if this classifieds site, is module of main site, this option enables linking to your master site in breadcrumbs, navigation and admin: 'jeżeli ta strona ogłoszeń, jest modułem nadrzędnej strony, ta opcja włącza linkowanie do nadrzędniej strony w ścieżce strony, nawigacji i panelu admina'
   Url to master site: 'Url do strony nadrzędnej'
   Text of link to master site: 'Tekst linku do strony nadrzędnej'
+  Privacy policy: 'Polityka prywatności'
+  'We use cookies to improve your experience on our site. To find out more, read our': 'Używamy plików cookie, by polepszyć Twoje interakcje z naszą stroną. Aby dowiedzieć się więcej, przeczytaj naszą'
+  'Link to privacy policy': 'Link do polityki prywatności'
+  'Link to rejection reasons': 'Link do powodów odrzucenia'

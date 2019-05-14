@@ -188,10 +188,10 @@
 <div id="gdpr" class="alert alert-info cookies gdpr ad rodo reklama" style="display: none;">
     <script>!localStorage.getItem('gdprAccepted') && (document.getElementById('gdpr').style.display='block');</script>
     <div class="container">
-        {{ 'trans.This page is using cookies. You can disable cookies by using browser settings.' | trans }}
+        {{ 'trans.We use cookies to improve your experience on our site. To find out more, read our' | trans }}
 
-        <a href="{{ path('app_page', {'slug': settings.linkTermsConditions}) }}">
-            {{ 'trans.More informations' | trans }}
+        <a href="{{ path('app_page', {'slug': settings.linkPrivacyPolicy}) }}">
+            {{ 'trans.Privacy policy' | trans }}
         </a>
 
         <button
@@ -235,7 +235,9 @@
                             {{ 'trans.Terms and conditions' | trans }}
                         </a>
                     </li>
-                    <li><a class="text-muted mobile-link" href="#report-abuse">{{ 'trans.Report abuse' | trans }}</a></li>
+                    <li>
+                        <a class="text-muted mobile-link" href="{{ path('app_page', {'slug': settings.linkPrivacyPolicy}) }}">{{ 'trans.Privacy policy' | trans }}</a>
+                    </li>
                 </ul>
             </div>
         </div>

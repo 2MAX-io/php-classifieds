@@ -4,7 +4,7 @@
     <div>
         <h1>{{ 'trans.Categories' | trans }}</h1>
 
-        <div>
+        <div class="mb-2">
             {% for categorySelection in categorySelectionList %}
                 {% set category = categorySelection.category %}
                 <div class="custom-control custom-checkbox" style="margin-left: {{ (category.lvl-1) * 2 }}rem">

@@ -14,12 +14,12 @@
         <div class="float-right">
             <a
                     href="{{ path('app_admin_user_change_balance', {'id': user.id}) }}"
-                    class="btn btn-primary"
+                    class="btn btn-primary mb-1 mr-1"
             >
                 {{ 'trans.Change user balance' | trans }}
             </a>
 
-            <a href="{{ path('app_admin_listing_search', {'user': user.email}) }}" class="btn btn-secondary ml-1">
+            <a href="{{ path('app_admin_listing_search', {'user': user.email}) }}" class="btn btn-secondary mb-1">
                 {{ 'trans.User listings' | trans }}
             </a>
         </div>

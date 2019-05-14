@@ -306,6 +306,9 @@ a.use-visited-color:visited {
 
 .cursor-pointer, .sortableHandle {
     cursor: pointer;
+}
+
+.sortableHandle {
     padding: 0.5rem;
 }
 

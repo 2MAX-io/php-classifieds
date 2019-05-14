@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<!--[if IE 9]><html class="lt-ie10" lang="pl"> <![endif]-->
-<html lang="pl">
+<html lang="{{ app.request.locale|split('_')[0] }}">
 <head>
     {# @var settings \App\Service\Setting\SettingsDto #}
     {% set settings = settings() %}
@@ -151,12 +150,8 @@
             {% block body %}{% endblock body %}
 
             <!-- footer -->
-            <footer class="pt-2 mt-md-5 mb-2 pt-md-4 border-top">
-                <div class="row">
-                    <div class="col-12 col-md">
-                        <small class="d-block mb-3 text-muted">© 2006-{{ "now" | date('Y') }}</small>
-                    </div>
-                </div>
+            <footer class="pt-2 mt-1 mt-md-2 mb-2 pt-md-4 border-top">
+                <small class="d-block mb-3 text-muted">© 2006-{{ "now" | date('Y') }}</small>
             </footer>
 
         </main>

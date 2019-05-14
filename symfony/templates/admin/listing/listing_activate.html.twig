@@ -72,7 +72,7 @@
 
                         <div>
                             <span>
-                                <a href="{{ path('app_user_listings', {'user': listing.user.id}) }}">
+                                <a href="{{ path('app_admin_listing_search', {'user': listing.user.email}) }}">
                                     {{- 'trans.User Listings' | trans -}}
                                 </a>
                             </span>

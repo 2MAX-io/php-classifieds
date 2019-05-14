@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use App\Helper\ContainerHelper;
 use App\Helper\ImageResizePath;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -598,7 +599,7 @@ class Listing
             return static::STATUS_EXPIRED;
         }
 
-        if (false === $this->getAdminActivated()) {
+        if (false === $this->getAdminActivated() && ContainerHelper::getSettings()->getRequireListingAdminActivation()) {
             return static::STATUS_PENDING;
         }
 

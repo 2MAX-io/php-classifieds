@@ -6,6 +6,7 @@ namespace App\Service\Listing;
 
 use App\Entity\Listing;
 use App\Security\CurrentUserService;
+use App\Service\Setting\SettingsService;
 use Doctrine\ORM\QueryBuilder;
 
 class ListingPublicDisplayService
@@ -15,9 +16,15 @@ class ListingPublicDisplayService
      */
     private $currentUserService;
 
-    public function __construct(CurrentUserService $currentUserService)
+    /**
+     * @var SettingsService
+     */
+    private $settingsService;
+
+    public function __construct(CurrentUserService $currentUserService, SettingsService $settingsService)
     {
         $this->currentUserService = $currentUserService;
+        $this->settingsService = $settingsService;
     }
 
     public function applyPublicDisplayConditions(QueryBuilder $qb)
@@ -25,7 +32,9 @@ class ListingPublicDisplayService
         $qb->andWhere($qb->expr()->gte('listing.validUntilDate', ':todayDayStart'));
         $qb->setParameter(':todayDayStart', date('Y-m-d 00:00:00'));
 
-        $qb->andWhere('listing.adminActivated = 1');
+        if ($this->settingsService->getSettingsDto()->getRequireListingAdminActivation()) {
+            $qb->andWhere('listing.adminActivated = 1');
+        }
         $qb->andWhere('listing.userRemoved = 0');
         $qb->andWhere('listing.userDeactivated = 0');
         $qb->andWhere('listing.adminRemoved = 0');
@@ -41,6 +50,6 @@ class ListingPublicDisplayService
             return true;
         }
 
-        return $listing->getAdminActivated() && !$listing->getAdminRemoved() && !$listing->getAdminRejected();
+        return ($listing->getAdminActivated() || !$this->settingsService->getSettingsDto()->getRequireListingAdminActivation()) && !$listing->getAdminRemoved() && !$listing->getAdminRejected();
     }
 }

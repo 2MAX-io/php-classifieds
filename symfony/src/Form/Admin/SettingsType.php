@@ -85,6 +85,13 @@ class SettingsType extends AbstractType
                 new NotBlank(),
             ],
         ]);
+        $builder->add('requireListingAdminActivation', BoolRequiredType::class, [
+            'label' => 'trans.Require listing activation by admin before making public',
+            'required' => true,
+            'constraints' => [
+                new NotBlank(),
+            ],
+        ]);
         $builder->add('linkPrivacyPolicy', PageType::class, [
             'label' => 'trans.Link to privacy policy',
             'required' => true,

@@ -6,6 +6,7 @@ namespace App\Twig;
 
 use App\Entity\Listing;
 use App\Security\CurrentUserService;
+use App\Service\Setting\SettingsService;
 use Twig\Extension\RuntimeExtensionInterface;
 
 class TwigUser implements RuntimeExtensionInterface
@@ -15,9 +16,15 @@ class TwigUser implements RuntimeExtensionInterface
      */
     private $currentUserService;
 
-    public function __construct(CurrentUserService $currentUserService)
+    /**
+     * @var SettingsService
+     */
+    private $settingsService;
+
+    public function __construct(CurrentUserService $currentUserService, SettingsService $settingsService)
     {
         $this->currentUserService = $currentUserService;
+        $this->settingsService = $settingsService;
     }
 
     public function lowSecurityCheckIsAdminInPublic(): bool
@@ -40,7 +47,7 @@ class TwigUser implements RuntimeExtensionInterface
             || $listing->getUserDeactivated()
             || $listing->getAdminRemoved()
             || $listing->getAdminRejected()
-            || !$listing->getAdminActivated()
+            || (!$listing->getAdminActivated() && $this->settingsService->getSettingsDto()->getRequireListingAdminActivation())
             || $listing->getValidUntilDate() < new \DateTime();
     }
 }

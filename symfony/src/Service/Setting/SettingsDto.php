@@ -88,6 +88,11 @@ class SettingsDto
      */
     private $masterSiteAnchorText;
 
+    /**
+     * @var bool|null
+     */
+    private $requireListingAdminActivation;
+
     public function getIndexPageTitle(): ?string
     {
         return $this->indexPageTitle;
@@ -246,5 +251,15 @@ class SettingsDto
     public function setLinkRejectionReason(?string $linkRejectionReason): void
     {
         $this->linkRejectionReason = $linkRejectionReason;
+    }
+
+    public function getRequireListingAdminActivation(): ?bool
+    {
+        return $this->requireListingAdminActivation;
+    }
+
+    public function setRequireListingAdminActivation(?bool $requireListingAdminActivation): void
+    {
+        $this->requireListingAdminActivation = $requireListingAdminActivation;
     }
 }

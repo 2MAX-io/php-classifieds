@@ -49,3 +49,6 @@ services:
         public: true
         arguments:
             $debug: '%kernel.debug%'
+
+    App\Service\Setting\SettingsService:
+        public: true

@@ -45,6 +45,22 @@
                 <th>GatewayPaymentId</th>
                 <td>{{ payment.gatewayPaymentId }}</td>
             </tr>
+            <tr>
+                <th>{{ 'trans.User' | trans }}</th>
+                <td>
+                    <a href="{{ path('admin_user_edit', {'id': payment.user.id}) }}" class="btn btn-secondary">{{ payment.user.username }}</a>
+                </td>
+            </tr>
+            <tr>
+                <th>{{ 'trans.Listing' | trans }}</th>
+                <td>
+                    {% if payment.paymentForFeaturedPackage %}
+                        <a href="{{ path('app_admin_listing_edit', {'id': payment.paymentForFeaturedPackage.listing.id}) }}" class="btn btn-secondary">{{ payment.paymentForFeaturedPackage.listing.title }}</a>
+                    {% else %}
+                        {{ 'trans.none' | trans }}
+                    {% endif %}
+                </td>
+            </tr>
         </tbody>
     </table>
 

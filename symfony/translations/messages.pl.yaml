@@ -452,3 +452,4 @@ trans:
   Payment: 'Płatność'
   Payment gateway - status: 'Bramka płatności - status'
   Payment gateway - transaction ID: 'Bramka płatności - ID transakcji'
+  Listing: 'Ogłoszenie'

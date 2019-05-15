@@ -34,6 +34,7 @@
                 <th>{{ 'trans.Balance difference' | trans }}</th>
                 <th>{{ 'trans.Balance after change' | trans }}</th>
                 <th>{{ 'trans.Description' | trans }}</th>
+                <th></th>
             </tr>
             </thead>
             <tbody>
@@ -43,6 +44,11 @@
                     <td>{{ userBalanceChange.balanceChange | moneyAsFloat | prefixWithPlusPositive }}</td>
                     <td>{{ userBalanceChange.balanceFinal | moneyAsFloat }}</td>
                     <td>{{ userBalanceChange.description }}</td>
+                    <td>
+                        <a href="{{ path('app_admin_payment_show', {'id': userBalanceChange.payment.id}) }}" class="btn btn-secondary">
+                            {{ 'trans.Payment' | trans }}
+                        </a>
+                    </td>
                 </tr>
             {% else %}
                 <tr>

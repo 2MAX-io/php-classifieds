@@ -35,7 +35,7 @@
             </tr>
             <tr>
                 <th>{{ 'trans.Payment gateway - transaction ID' | trans }}</th>
-                <td>{{ payment.gatewayTransactionId }}</td>
+                <td><a href="https://www.paypal.com/activity/payment/{{ payment.gatewayTransactionId }}">{{ payment.gatewayTransactionId }}</a></td>
             </tr>
             <tr>
                 <th>GatewayToken</th>

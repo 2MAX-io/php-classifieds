@@ -236,3 +236,14 @@ composer remove -d symfony easycorp/easy-log-handler
 composer remove -d symfony update
 composer remove -d symfony upgrade
 composer -d symfony update
+composer update -d symfony
+composer require -d symfony monolog/monolog
+composer remove -d symfony monolog/monolog
+composer remove -d symfony monolog/monolog-bundle
+composer require -d symfony monolog/monolog-bundle
+composer require -d symfony monolog/
+composer require -d symfony monolog
+composer require -d symfony monolog
+composer remove -d symfony monolog
+composer require -d symfony monolog
+composer require -d symfony easycorp/easy-log-handler

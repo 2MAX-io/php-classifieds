@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Service\Payment;
 
+use App\Entity\Payment;
+
 class ConfirmPaymentDto
 {
     /**
@@ -14,12 +16,22 @@ class ConfirmPaymentDto
     /**
      * @var string|null
      */
+    public $gatewayPaymentId;
+
+    /**
+     * @var string|null
+     */
     private $gatewayStatus;
 
     /**
      * @var int|null
      */
     private $gatewayAmount;
+
+    /**
+     * @var Payment|null
+     */
+    private $paymentEntity;
 
     /**
      * @var boolean
@@ -64,5 +76,25 @@ class ConfirmPaymentDto
     public function setGatewayAmount(?int $gatewayAmount): void
     {
         $this->gatewayAmount = $gatewayAmount;
+    }
+
+    public function getGatewayPaymentId(): ?string
+    {
+        return $this->gatewayPaymentId;
+    }
+
+    public function setGatewayPaymentId(?string $gatewayPaymentId): void
+    {
+        $this->gatewayPaymentId = $gatewayPaymentId;
+    }
+
+    public function getPaymentEntity(): ?Payment
+    {
+        return $this->paymentEntity;
+    }
+
+    public function setPaymentEntity(?Payment $paymentEntity): void
+    {
+        $this->paymentEntity = $paymentEntity;
     }
 }

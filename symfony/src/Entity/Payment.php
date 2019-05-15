@@ -21,37 +21,42 @@ class Payment
     private $id;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=false)
      */
     private $amount;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=false)
      */
     private $datetime;
 
     /**
-     * @ORM\Column(type="string", length=70)
+     * @ORM\Column(type="string", length=70, nullable=false)
      */
     private $gatewayStatus;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", nullable=false)
      */
     private $balanceUpdated;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", nullable=false)
      */
     private $canceled;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=false)
+     */
+    private $gatewayPaymentId;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $gatewayTransactionId;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=false)
      */
     private $gatewayToken;
 
@@ -253,6 +258,18 @@ class Payment
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getGatewayPaymentId(): ?string
+    {
+        return $this->gatewayPaymentId;
+    }
+
+    public function setGatewayPaymentId(string $gatewayPaymentId): self
+    {
+        $this->gatewayPaymentId = $gatewayPaymentId;
 
         return $this;
     }

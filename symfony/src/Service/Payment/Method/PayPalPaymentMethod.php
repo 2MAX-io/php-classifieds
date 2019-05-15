@@ -89,7 +89,7 @@ class PayPalPaymentMethod implements PaymentMethodInterface
             $approvalUrl = $payment->getApprovalLink();
 
             $paymentDto->setPaymentExecuteUrl($approvalUrl);
-            $paymentDto->setGatewayTransactionId($payment->getId());
+            $paymentDto->setGatewayPaymentId($payment->getId());
             $paymentDto->setGatewayToken($payment->getToken());
             $paymentDto->setGatewayStatus($payment->getState());
 
@@ -112,7 +112,8 @@ class PayPalPaymentMethod implements PaymentMethodInterface
         try {
             $payment = $payment->execute($execution, $apiContext);
 
-            $confirmPaymentDto->setGatewayTransactionId($payment->getId());
+            $confirmPaymentDto->setGatewayTransactionId($payment->getTransactions()[0]->getRelatedResources()[0]->getSale()->getId());
+            $confirmPaymentDto->setGatewayPaymentId($payment->getId());
             $confirmPaymentDto->setGatewayStatus($payment->getState());
             $confirmPaymentDto->setConfirmed($payment->getState() === 'approved');
             $confirmPaymentDto->setGatewayAmount(Integer::toInteger($payment->getTransactions()[0]->getAmount()->getTotal() * 100));

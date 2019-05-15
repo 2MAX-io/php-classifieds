@@ -7,7 +7,7 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="PaymentForFeaturedPackageRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\PaymentForFeaturedPackageRepository")
  */
 class PaymentForFeaturedPackage
 {

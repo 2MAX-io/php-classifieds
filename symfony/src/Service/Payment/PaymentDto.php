@@ -32,7 +32,7 @@ class PaymentDto
     /**
      * @var string|null
      */
-    public $gatewayTransactionId;
+    public $gatewayPaymentId;
 
     /**
      * @var string|null
@@ -99,16 +99,6 @@ class PaymentDto
         $this->currency = $currency;
     }
 
-    public function getGatewayTransactionId(): ?string
-    {
-        return $this->gatewayTransactionId;
-    }
-
-    public function setGatewayTransactionId(?string $gatewayTransactionId): void
-    {
-        $this->gatewayTransactionId = $gatewayTransactionId;
-    }
-
     public function getGatewayStatus(): ?string
     {
         return $this->gatewayStatus;
@@ -157,5 +147,15 @@ class PaymentDto
     public function setUser(?User $user): void
     {
         $this->user = $user;
+    }
+
+    public function getGatewayPaymentId(): ?string
+    {
+        return $this->gatewayPaymentId;
+    }
+
+    public function setGatewayPaymentId(?string $gatewayPaymentId): void
+    {
+        $this->gatewayPaymentId = $gatewayPaymentId;
     }
 }

@@ -107,7 +107,7 @@ class PaymentService
         $paymentEntity->setCanceled(false);
         $paymentEntity->setDatetime(new \DateTime());
         $paymentEntity->setAmount($paymentDto->getAmount());
-        $paymentEntity->setGatewayTransactionId($paymentDto->getGatewayTransactionId());
+        $paymentEntity->setGatewayPaymentId($paymentDto->getGatewayPaymentId());
         $paymentEntity->setGatewayToken($paymentDto->getGatewayToken());
         $paymentEntity->setGatewayStatus($paymentDto->getGatewayStatus());
         $paymentEntity->setUser($paymentDto->getUser());
@@ -137,13 +137,18 @@ class PaymentService
     {
         $confirmPaymentDto = $this->payPalPaymentMethod->confirmPayment($request, $confirmPaymentDto);
 
+        $paymentEntity = $this->getPaymentEntity($confirmPaymentDto);
+        $paymentEntity->setGatewayTransactionId($confirmPaymentDto->getGatewayTransactionId());
+
+        $confirmPaymentDto->setPaymentEntity($paymentEntity);
+
         return $confirmPaymentDto;
     }
 
     public function getPaymentEntity(ConfirmPaymentDto $confirmPaymentDto): ?Payment
     {
         return $this->em->getRepository(Payment::class)->findOneBy(
-            ['gatewayTransactionId' => $confirmPaymentDto->getGatewayTransactionId()]
+            ['gatewayPaymentId' => $confirmPaymentDto->getGatewayPaymentId()]
         );
     }
 }

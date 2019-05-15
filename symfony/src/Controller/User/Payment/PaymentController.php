@@ -35,7 +35,7 @@ class PaymentController extends AbstractController
             $confirmPaymentDto = $paymentService->confirmPayment($request, $confirmPaymentDto);
 
             if ($confirmPaymentDto->isConfirmed() && !$paymentService->isBalanceUpdated($confirmPaymentDto)) {
-                $paymentEntity = $paymentService->getPaymentEntity($confirmPaymentDto);
+                $paymentEntity = $confirmPaymentDto->getPaymentEntity();
 
                 if ($confirmPaymentDto->getGatewayAmount() !== $paymentEntity->getAmount()) {
                     throw new \UnexpectedValueException('paid amount do not match between gateway and payment entity');

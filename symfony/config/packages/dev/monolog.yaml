@@ -1,8 +1,26 @@
 monolog:
     handlers:
         main:
+            type: fingers_crossed
+            action_level: error
+            handler: nested
+            excluded_404s:
+                # regex: exclude all 404 errors from the logs
+                - ^/
+        nested:
             type: rotating_file
-            path: "%kernel.logs_dir%/%kernel.environment%.log"
+            path: "%kernel.logs_dir%/%kernel.environment%_error.log"
+            level: debug
+            include_stacktraces: true
+        error_only:
+            type: rotating_file
+            path: "%kernel.logs_dir%/%kernel.environment%_error_only.log"
+            level: error
+            include_stacktraces: true
+            channels: ["!event"]
+        debug_all:
+            type: rotating_file
+            path: "%kernel.logs_dir%/%kernel.environment%_debug_all.log"
             level: debug
             include_stacktraces: true
             channels: ["!event"]

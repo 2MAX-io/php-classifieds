@@ -224,6 +224,10 @@
 
             {% include 'base/_pagination.html.twig' %}
 
+            <div>
+                <a href="{{ path('app_admin_listing_execute_on_filtered') }}" class="btn btn-danger">{{ 'trans.Execute action on filtered listings' | trans }}</a>
+            </div>
+
         </div>
     </div>
 {% endblock %}

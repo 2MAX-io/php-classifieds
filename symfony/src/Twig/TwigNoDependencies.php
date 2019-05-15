@@ -71,4 +71,13 @@ class TwigNoDependencies implements RuntimeExtensionInterface
 
         return number_format($money, 0, ',', ' ');
     }
+
+    public function prefixWithPlusPositive(float $number): string
+    {
+        if ($number > 0) {
+            return '+' . $number;
+        }
+
+        return (string) $number;
+    }
 }

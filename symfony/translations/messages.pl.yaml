@@ -443,3 +443,5 @@ trans:
   Change reason in description, visible to user: 'Powód zmiany w opisie, widoczne dla użytkownika'
   'Balanced change by administrator to: %newBalance% from previous: %previousBalance%, reason: %reason%': 'Saldo zmienione przez administratora na: %newBalance% z poprzedniego: %previousBalance%, powód zmiany: %reason%'
   'Balanced change by administrator to: %newBalance% from previous: %previousBalance%': 'Saldo zmienione przez administratora na: %newBalance% z poprzedniego: %previousBalance%'
+  History of balance changes: 'Historia zmian salda'
+  History of listings featuring: 'Historia wyróżnień ogłoszeń'

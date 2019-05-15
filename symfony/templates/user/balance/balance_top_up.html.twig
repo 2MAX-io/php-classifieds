@@ -10,9 +10,16 @@
             </div>
 
             <div class="col-md-8 col-lg-9">
-                <h2 class="mb-3">
-                    {{ 'trans.Top up account' | trans }}
-                </h2>
+                <div class="row mb-2">
+                    <div class="col-md-6">
+                        <h2 class="mb-3">
+                            {{ 'trans.Top up account' | trans }}
+                        </h2>
+                    </div>
+                    <div class="col-md-6 text-md-right">
+                        <a href="{{ path('app_user_balance_history') }}" class="btn btn-secondary mb-1">{{ 'trans.History of balance changes' | trans }}</a>
+                    </div>
+                </div>
 
                 <div class="alert alert-info">
                     <p>

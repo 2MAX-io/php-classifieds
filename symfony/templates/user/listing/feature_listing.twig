@@ -93,6 +93,8 @@
                     </div>
                     <span class="{{ getListingStatusClass(listing) }}">{{ getListingStatus(listing) }}</span>
                 {% endif %}
+
+                <a href="{{ path('app_user_balance_history') }}">{{ 'trans.History of listings featuring' | trans }}</a>
             </div>
         </div>
     </div>

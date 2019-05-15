@@ -37,6 +37,7 @@ class AppExtension extends AbstractExtension
             new TwigFilter('phone', [TwigPhone::class, 'phone']),
             new TwigFilter('thousandsSeparate', [TwigNoDependencies::class, 'thousandsSeparate']),
             new TwigFilter('boolGreenRedClass', [TwigNoDependencies::class, 'boolGreenRedClass']),
+            new TwigFilter('prefixWithPlusPositive', [TwigNoDependencies::class, 'prefixWithPlusPositive']),
         ];
     }
 }

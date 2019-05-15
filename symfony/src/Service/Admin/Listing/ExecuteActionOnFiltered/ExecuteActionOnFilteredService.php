@@ -29,7 +29,8 @@ class ExecuteActionOnFilteredService
     public function addCustomField(): void
     {
         $qb = $this->adminListingSearchService->getQuery();
-        $qb->select("listingCustomFieldValue.id");
+        $qb->resetDQLPart('select');
+        $qb->addSelect("listingCustomFieldValue.id");
         $qb->addSelect("listing.id");
         $qb->leftJoin('listing.listingCustomFieldValues', 'listingCustomFieldValue');
 
@@ -52,7 +53,6 @@ class ExecuteActionOnFilteredService
 
         $selectSql = $qb->getQuery()->getSQL();
         $qb->getParameters()->toArray();
-        time();
 
         $params = [1, 2, 'fiat'];
         /** @var Parameter[] $doctrineQueryParamList */

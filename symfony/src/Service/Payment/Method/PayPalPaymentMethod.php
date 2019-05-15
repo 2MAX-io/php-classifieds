@@ -13,6 +13,8 @@ use App\Service\Payment\PaymentDto;
 use App\Service\Payment\PaymentHelperService;
 use App\Service\Setting\SettingsService;
 use PayPal\Api\Amount;
+use PayPal\Api\Item;
+use PayPal\Api\ItemList;
 use PayPal\Api\Payer;
 use PayPal\Api\Payment;
 use PayPal\Api\PaymentExecution;
@@ -63,9 +65,18 @@ class PayPalPaymentMethod implements PaymentMethodInterface
         $amount->setCurrency($paymentDto->getCurrency());
         $amount->setTotal($paymentDto->getAmount() / 100);
 
+        $item = new Item();
+        $item->setName($this->trans->trans('trans.Promotion of listings'));
+        $item->setPrice($amount->getTotal() / 100);
+        $item->setCurrency($paymentDto->getCurrency());
+        $item->setQuantity(1);
+
+        $itemList = new ItemList();
+        $itemList->setItems([$item]);
+
         $transaction = new Transaction();
         $transaction->setAmount($amount);
-        $transaction->setDescription($this->trans->trans('trans.Promotion of listings'));
+        $transaction->setItemList($itemList);
 
         $payment = new Payment();
         $payment->setIntent('sale');

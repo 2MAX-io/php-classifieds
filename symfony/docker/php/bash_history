@@ -248,3 +248,6 @@ composer remove -d symfony monolog
 composer require -d symfony monolog
 composer require -d symfony easycorp/easy-log-handler
 composer remove -d symfony easycorp/easy-log-handler
+composer dump-autoload --optimize -d symfony
+composer dump-env dev
+composer dump-env dev -d symfony

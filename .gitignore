@@ -16,3 +16,4 @@
 /static/resized/
 /symfony/docker/php/xdebug_out/
 /static/listing/
+/symfony/.env.local.php

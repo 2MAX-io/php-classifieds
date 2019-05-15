@@ -51,8 +51,8 @@ class ExecuteActionOnFilteredService
         $qb->setParameter('value', $customFieldOption->getValue());
         $qb->setParameter('categoryCustomField', $customFieldOption->getCustomField()->getId());
 
-        $qb->andWhere($qb->expr()->eq('listing.id', 412490));
-        $qb->setMaxResults(1);
+//        $qb->andWhere($qb->expr()->eq('listing.id', 412490));
+//        $qb->setMaxResults(10);
         $qb->resetDQLPart('orderBy');
         $qb->getQuery()->execute();
 

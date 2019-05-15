@@ -8,6 +8,7 @@ use App\Entity\Listing;
 use App\Helper\Search;
 use App\Service\System\Pagination\PaginationService;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\QueryBuilder;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
 use Pagerfanta\Pagerfanta;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -44,8 +45,21 @@ class AdminListingSearchService
      */
     public function getList(int $page): AdminListingListDto
     {
-        $request = $this->requestStack->getMasterRequest();
+        $qb = $this->getQuery();
+
+        $pager = $this->paginationService->createPaginationForQb($qb);
+        $pager->setMaxPerPage($this->paginationService->getMaxPerPage());
+        $pager->setCurrentPage($page);
+
+        $adminListingListDto = new AdminListingListDto($pager->getCurrentPageResults(), $pager);
+
+        return $adminListingListDto;
+    }
+
+    public function getQuery(): QueryBuilder
+    {
         $qb = $this->em->getRepository(Listing::class)->createQueryBuilder('listing');
+        $request = $this->requestStack->getMasterRequest();
 
         if (!empty($_GET['query'])) {
             $qb->andWhere('MATCH (listing.searchText, listing.email, listing.phone, listing.rejectionReason) AGAINST (:query BOOLEAN) > 0');
@@ -97,12 +111,6 @@ class AdminListingSearchService
 
         $qb->orderBy('listing.id', 'DESC');
 
-        $pager = $this->paginationService->createPaginationForQb($qb);
-        $pager->setMaxPerPage($this->paginationService->getMaxPerPage());
-        $pager->setCurrentPage($page);
-
-        $adminListingListDto = new AdminListingListDto($pager->getCurrentPageResults(), $pager);
-
-        return $adminListingListDto;
+        return $qb;
     }
 }

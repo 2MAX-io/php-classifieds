@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Service\Admin\Listing\ExecuteActionOnFiltered;
 
+use App\Entity\CustomFieldOption;
 use App\Service\Admin\Listing\AdminListingSearchService;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Parameter;
@@ -26,7 +27,7 @@ class ExecuteActionOnFilteredService
         $this->adminListingSearchService = $adminListingSearchService;
     }
 
-    public function addCustomField(): void
+    public function addCustomField(CustomFieldOption $customFieldOption): void
     {
         $qb = $this->adminListingSearchService->getQuery();
         $qb->resetDQLPart('select');
@@ -42,9 +43,9 @@ class ExecuteActionOnFilteredService
             ),
             $qb->expr()->isNull('listingCustomFieldValue.id')
         ));
-        $qb->setParameter('customField', 1);
-        $qb->setParameter('customFieldOption', 2);
-        $qb->setParameter('value', 'fiat');
+        $qb->setParameter('customField', $customFieldOption->getCustomField()->getId());
+        $qb->setParameter('customFieldOption', $customFieldOption->getId());
+        $qb->setParameter('value', $customFieldOption->getValue());
 
         $qb->andWhere($qb->expr()->eq('listing.id', 412490));
         $qb->setMaxResults(1);
@@ -54,7 +55,11 @@ class ExecuteActionOnFilteredService
         $selectSql = $qb->getQuery()->getSQL();
         $qb->getParameters()->toArray();
 
-        $params = [1, 2, 'fiat'];
+        $params = [
+            $customFieldOption->getCustomField()->getId(),
+            $customFieldOption->getId(),
+            $customFieldOption->getValue()
+        ];
         /** @var Parameter[] $doctrineQueryParamList */
         $doctrineQueryParamList = $qb->getParameters()->toArray();
         foreach ($doctrineQueryParamList as $key => $doctrineQueryParam) {
@@ -66,7 +71,7 @@ class ExecuteActionOnFilteredService
 
         $pdo = $this->em->getConnection();
         $stmt = $pdo->prepare("
-INSERT INTO listing_custom_field_value (id, listing_id, custom_field_id, custom_field_option_id, value)
+REPLACE INTO listing_custom_field_value (id, listing_id, custom_field_id, custom_field_option_id, value)
 $selectSql
 ");
         $stmt->execute($params);

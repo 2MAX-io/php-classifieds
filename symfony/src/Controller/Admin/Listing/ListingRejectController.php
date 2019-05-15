@@ -30,6 +30,7 @@ class ListingRejectController extends AbstractAdminController
 
             return $this->redirectToRoute($request->get('_route'), ['id' => $listing->getId()]);
         }
+
         return $this->render('admin/listing/listing_reject.html.twig', [
             'listing' => $listing,
             'form' => $form->createView(),

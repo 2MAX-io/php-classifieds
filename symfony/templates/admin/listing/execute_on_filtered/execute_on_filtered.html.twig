@@ -14,5 +14,13 @@
             <div>{{ 'trans.There is no way of undoing changes made by this action, except of restoring backup' | trans }}</div>
             <div>{{ 'trans.Make sure you execute action on correctly filtered listings' | trans }}</div>
         </div>
+
+        <div>
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+
+            <button class="btn btn-primary mb-4">{{ button_label|default('trans.Save' | trans) }}</button>
+            {{ form_end(form) }}
+        </div>
     </div>
 {% endblock %}

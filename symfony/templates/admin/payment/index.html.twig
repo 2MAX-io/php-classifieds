@@ -10,9 +10,10 @@
             <tr>
                 <th>{{ 'trans.Date' | trans }}</th>
                 <th>{{ 'trans.Amount' | trans }}</th>
-                <th>{{ 'trans.Status of payment gateway' | trans }}</th>
+                <th>{{ 'trans.Payment gateway - status' | trans }}</th>
                 <th>{{ 'trans.Balance updated?' | trans }}</th>
                 <th>{{ 'trans.Canceled?' | trans }}</th>
+                <th>{{ 'trans.Payment gateway - transaction ID' | trans }}</th>
                 <th></th>
             </tr>
         </thead>
@@ -28,6 +29,7 @@
                 <td>
                     <span class="{{ payment.canceled | boolGreenRedClass }}">{{ payment.canceled | boolText | trans }}</span>
                 </td>
+                <td>{{ payment.gatewayTransactionId }}</td>
                 <td>
                     <a href="{{ path('app_admin_payment_show', {'id': payment.id}) }}" class="btn btn-secondary">{{ 'trans.details' | trans }}</a>
                 </td>

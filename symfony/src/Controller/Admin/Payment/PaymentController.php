@@ -22,8 +22,10 @@ class PaymentController extends AbstractAdminController
 
         $paginationDto = $paymentHistoryService->getPaymentList((int) $request->get('page', 1));
 
+        /** @var Payment[] $payments */
+        $payments = $paginationDto->getResults();
         return $this->render('admin/payment/index.html.twig', [
-            'payments' => $paginationDto->getResults(),
+            'payments' => $payments,
             'pager' => $paginationDto->getPager(),
         ]);
     }

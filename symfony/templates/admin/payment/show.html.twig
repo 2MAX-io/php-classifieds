@@ -20,7 +20,7 @@
                 <td>{{ payment.datetime ? payment.datetime|date('Y-m-d H:i:s') : '' }}</td>
             </tr>
             <tr>
-                <th>{{ 'trans.Status of payment gateway' | trans }}</th>
+                <th>{{ 'trans.Payment gateway - status' | trans }}</th>
                 <td>{{ payment.gatewayStatus }}</td>
             </tr>
             <tr>
@@ -34,12 +34,16 @@
                 <td><span class="{{ payment.canceled | boolGreenRedClass }}">{{ payment.canceled | boolText | trans }}</span></td>
             </tr>
             <tr>
-                <th>GatewayTransactionId</th>
+                <th>{{ 'trans.Payment gateway - transaction ID' | trans }}</th>
                 <td>{{ payment.gatewayTransactionId }}</td>
             </tr>
             <tr>
                 <th>GatewayToken</th>
                 <td>{{ payment.gatewayToken }}</td>
+            </tr>
+            <tr>
+                <th>GatewayPaymentId</th>
+                <td>{{ payment.gatewayPaymentId }}</td>
             </tr>
         </tbody>
     </table>

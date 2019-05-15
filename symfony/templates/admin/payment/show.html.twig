@@ -1,0 +1,46 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}{{ 'trans.Payment' | trans }}{% endblock %}
+
+{% block body %}
+    <h1>{{ 'trans.Payment' | trans }}</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ payment.id }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'trans.Amount' | trans }}</th>
+                <td>{{ payment.amount }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'trans.Date' | trans }}</th>
+                <td>{{ payment.datetime ? payment.datetime|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>GatewayStatus</th>
+                <td>{{ payment.gatewayStatus }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'trans.Balance updated?' | trans }}</th>
+                <td>{{ payment.balanceUpdated ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'trans.Canceled?' | trans }}</th>
+                <td>{{ payment.canceled ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>GatewayTransactionId</th>
+                <td>{{ payment.gatewayTransactionId }}</td>
+            </tr>
+            <tr>
+                <th>GatewayToken</th>
+                <td>{{ payment.gatewayToken }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_admin_payment_index') }}" class="btn btn-secondary">{{ 'trans.back to list' | trans }}</a>
+{% endblock %}

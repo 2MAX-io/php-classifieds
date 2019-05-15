@@ -445,3 +445,8 @@ trans:
   'Balanced change by administrator to: %newBalance% from previous: %previousBalance%': 'Saldo zmienione przez administratora na: %newBalance% z poprzedniego: %previousBalance%'
   History of balance changes: 'Historia zmian salda'
   History of listings featuring: 'Historia wyróżnień ogłoszeń'
+  Payments: 'Płatności'
+  Balance updated?: 'Saldo zaktualizowane?'
+  Canceled?: 'Anulowane?'
+  details: 'szczegóły'
+  Payment: 'Płatność'

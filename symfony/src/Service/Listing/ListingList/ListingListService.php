@@ -53,6 +53,9 @@ class ListingListService
             foreach ($_GET['form_custom_field'] as $customFieldId => $customFieldFormValueArray) {
                 $sqlParamId++;
                 /** @var CustomField $customField */
+                if (!isset($customFieldForCategoryList[$customFieldId])) {
+                    continue;
+                }
                 $customField = $customFieldForCategoryList[$customFieldId];
 
                 if (isset($customFieldFormValueArray['range'])) {

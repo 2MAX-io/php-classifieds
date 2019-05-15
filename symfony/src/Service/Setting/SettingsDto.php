@@ -96,6 +96,11 @@ class SettingsDto
     /**
      * @var string|null
      */
+    private $paymentPayPalMode;
+
+    /**
+     * @var string|null
+     */
     private $paymentPayPalClientId;
 
     /**
@@ -271,6 +276,16 @@ class SettingsDto
     public function setRequireListingAdminActivation(?bool $requireListingAdminActivation): void
     {
         $this->requireListingAdminActivation = $requireListingAdminActivation;
+    }
+
+    public function getPaymentPayPalMode(): ?string
+    {
+        return $this->paymentPayPalMode;
+    }
+
+    public function setPaymentPayPalMode(?string $paymentPayPalMode): void
+    {
+        $this->paymentPayPalMode = $paymentPayPalMode;
     }
 
     public function getPaymentPayPalClientId(): ?string

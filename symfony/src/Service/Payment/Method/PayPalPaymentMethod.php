@@ -141,7 +141,7 @@ class PayPalPaymentMethod implements PaymentMethodInterface
         // based configuration
         $apiContext->setConfig(
             array(
-                'mode' => 'sandbox', // todo: set correctly for production
+                'mode' => $this->settingsService->getSettingsDto()->getPaymentPayPalMode() ?? 'sandbox',
                 'log.LogEnabled' => true,
                 'log.FileName' => FilePath::getLogDir() . '/payPal_'. date('Y-m') .'.log',
                 'log.LogLevel' => 'INFO', // PLEASE USE `INFO` LEVEL FOR LOGGING IN LIVE ENVIRONMENTS, DEBUG in dev only
@@ -152,10 +152,7 @@ class PayPalPaymentMethod implements PaymentMethodInterface
                 //'log.AdapterFactory' => '\PayPal\Log\DefaultLogFactory' // Factory class implementing \PayPal\Log\PayPalLogFactory
             )
         );
-        // Partner Attribution Id
-        // Use this header if you are a PayPal partner. Specify a unique BN Code to receive revenue attribution.
-        // To learn more or to request a BN Code, contact your Partner Manager or visit the PayPal Partner Portal
-        // $apiContext->addRequestHeader('PayPal-Partner-Attribution-Id', '123123123');
+
         return $apiContext;
     }
 }

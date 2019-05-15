@@ -1,0 +1,3 @@
+trans:
+  paypal.sandbox: 'sandbox - test payments'
+  paypal.live: 'live - real payments'

@@ -9,6 +9,7 @@ use App\Form\Type\LanguageTwoLettersType;
 use App\Form\Type\PageType;
 use App\Service\Setting\SettingsDto;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -154,7 +155,16 @@ class SettingsType extends AbstractType
                 new NotBlank(),
             ],
         ]);
-        $builder->add('paymentPaypalClientId', TextType::class, [
+        $builder->add('paymentPayPalMode', ChoiceType::class, [
+            'label' => 'trans.Payments - PayPal mode',
+            'required' => true,
+            'placeholder' => 'trans.Select',
+            'choices' => [
+                'trans.paypal.sandbox' => 'sandbox',
+                'trans.paypal.live' => 'live',
+            ],
+        ]);
+        $builder->add('paymentPayPalClientId', TextType::class, [
             'label' => 'trans.Payments - PayPal Client ID',
             'required' => true,
             'constraints' => [

@@ -28,6 +28,11 @@ class FilePath
         return self::getPath(__DIR__ . '/../../../symfony/var/log');
     }
 
+    public static function getCacheDir(): string
+    {
+        return self::getPath(__DIR__ . '/../../../symfony/var/cache');
+    }
+
     public static function getProjectDir(): string
     {
         return self::getPath(__DIR__ . '/../../../');

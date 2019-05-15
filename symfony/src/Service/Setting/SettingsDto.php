@@ -93,6 +93,16 @@ class SettingsDto
      */
     private $requireListingAdminActivation;
 
+    /**
+     * @var string|null
+     */
+    private $paymentPayPalClientId;
+
+    /**
+     * @var string|null
+     */
+    private $paymentPayPalClientSecret;
+
     public function getIndexPageTitle(): ?string
     {
         return $this->indexPageTitle;
@@ -261,5 +271,25 @@ class SettingsDto
     public function setRequireListingAdminActivation(?bool $requireListingAdminActivation): void
     {
         $this->requireListingAdminActivation = $requireListingAdminActivation;
+    }
+
+    public function getPaymentPayPalClientId(): ?string
+    {
+        return $this->paymentPayPalClientId;
+    }
+
+    public function setPaymentPayPalClientId(?string $paymentPayPalClientId): void
+    {
+        $this->paymentPayPalClientId = $paymentPayPalClientId;
+    }
+
+    public function getPaymentPayPalClientSecret(): ?string
+    {
+        return $this->paymentPayPalClientSecret;
+    }
+
+    public function setPaymentPayPalClientSecret(?string $paymentPayPalClientSecret): void
+    {
+        $this->paymentPayPalClientSecret = $paymentPayPalClientSecret;
     }
 }

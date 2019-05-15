@@ -4,12 +4,14 @@ declare(strict_types=1);
 
 namespace App\Service\Payment\Method;
 
+use App\Exception\UserVisibleMessageException;
 use App\Helper\FilePath;
 use App\Helper\Integer;
 use App\Service\Payment\Base\PaymentMethodInterface;
 use App\Service\Payment\ConfirmPaymentDto;
 use App\Service\Payment\PaymentDto;
 use App\Service\Payment\PaymentHelperService;
+use App\Service\Setting\SettingsService;
 use PayPal\Api\Amount;
 use PayPal\Api\Payer;
 use PayPal\Api\Payment;
@@ -17,9 +19,9 @@ use PayPal\Api\PaymentExecution;
 use PayPal\Api\RedirectUrls;
 use PayPal\Api\Transaction;
 use PayPal\Auth\OAuthTokenCredential;
-use PayPal\Exception\PayPalConnectionException;
 use PayPal\Rest\ApiContext;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class PayPalPaymentMethod implements PaymentMethodInterface
 {
@@ -28,15 +30,30 @@ class PayPalPaymentMethod implements PaymentMethodInterface
      */
     private $paymentHelperService;
 
-    public function __construct(PaymentHelperService $paymentHelperService)
-    {
+    /**
+     * @var TranslatorInterface
+     */
+    private $trans;
+
+    /**
+     * @var SettingsService
+     */
+    private $settingsService;
+
+    public function __construct(
+        PaymentHelperService $paymentHelperService,
+        TranslatorInterface $trans,
+        SettingsService $settingsService
+    ) {
         $this->paymentHelperService = $paymentHelperService;
+        $this->trans = $trans;
+        $this->settingsService = $settingsService;
     }
 
     public function createPayment(PaymentDto $paymentDto)
     {
         $payer = new Payer();
-        $payer->setPaymentMethod("paypal"); // todo: make sure right
+        $payer->setPaymentMethod("paypal");
 
         $redirectUrls = new RedirectUrls();
         $redirectUrls->setReturnUrl($this->paymentHelperService->getSuccessUrl());
@@ -48,7 +65,7 @@ class PayPalPaymentMethod implements PaymentMethodInterface
 
         $transaction = new Transaction();
         $transaction->setAmount($amount);
-        $transaction->setDescription("Payment description"); // todo: set to something
+        $transaction->setDescription($this->trans->trans('trans.Promotion of listings'));
 
         $payment = new Payment();
         $payment->setIntent('sale');
@@ -66,12 +83,8 @@ class PayPalPaymentMethod implements PaymentMethodInterface
             $paymentDto->setGatewayStatus($payment->getState());
 
             // Redirect the customer to $approvalUrl
-        } catch (PayPalConnectionException $ex) {
-            echo $ex->getCode();
-            echo $ex->getData(); // todo: handle exception better
-            die($ex);
         } catch (\Exception $ex) {
-            die($ex); // todo: handle exception better
+            throw new UserVisibleMessageException('trans.Failed to create payment, please try again later', [], 0, $ex);
         }
 
     }
@@ -102,9 +115,6 @@ class PayPalPaymentMethod implements PaymentMethodInterface
 
     public function getApiContext(): ApiContext
     {
-        $clientId = 'AYSq3RDGsmBLJE-otTkBtM-jBRd1TCQwFf9RGfwddNXWz0uFU9ztymylOhRS';
-        $clientSecret = 'EGnHDxD_qRPdaLdZz8iCr8N7_MzF-YHPTkjs6NKYQvQSBngp4PTTVWkPZRbL';
-
         // todo: make this method production worthy
 
         // #### SDK configuration
@@ -122,8 +132,8 @@ class PayPalPaymentMethod implements PaymentMethodInterface
         // developer.paypal.com
         $apiContext = new ApiContext(
             new OAuthTokenCredential(
-                $clientId,
-                $clientSecret
+                $this->settingsService->getSettingsDto()->getPaymentPayPalClientId(),
+                $this->settingsService->getSettingsDto()->getPaymentPayPalClientSecret()
             )
         );
         // Comment this line out and uncomment the PP_CONFIG_PATH
@@ -133,11 +143,11 @@ class PayPalPaymentMethod implements PaymentMethodInterface
             array(
                 'mode' => 'sandbox', // todo: set correctly for production
                 'log.LogEnabled' => true,
-                'log.FileName' => FilePath::getLogDir() . '/payPal.log',
-                'log.LogLevel' => 'DEBUG', // PLEASE USE `INFO` LEVEL FOR LOGGING IN LIVE ENVIRONMENTS
+                'log.FileName' => FilePath::getLogDir() . '/payPal_'. date('Y-m') .'.log',
+                'log.LogLevel' => 'INFO', // PLEASE USE `INFO` LEVEL FOR LOGGING IN LIVE ENVIRONMENTS, DEBUG in dev only
                 'cache.enabled' => true,
-                //'cache.FileName' => '/PaypalCache' // for determining paypal cache directory
-                // 'http.CURLOPT_CONNECTTIMEOUT' => 30
+                'cache.FileName' => FilePath::getCacheDir() . '/payPalCache.php', // for determining paypal cache directory
+                'http.CURLOPT_CONNECTTIMEOUT' => 30,
                 // 'http.headers.PayPal-Partner-Attribution-Id' => '123123123'
                 //'log.AdapterFactory' => '\PayPal\Log\DefaultLogFactory' // Factory class implementing \PayPal\Log\PayPalLogFactory
             )

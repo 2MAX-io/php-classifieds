@@ -154,6 +154,20 @@ class SettingsType extends AbstractType
                 new NotBlank(),
             ],
         ]);
+        $builder->add('paymentPaypalClientId', TextType::class, [
+            'label' => 'trans.Payments - PayPal Client ID',
+            'required' => true,
+            'constraints' => [
+                new NotBlank(),
+            ],
+        ]);
+        $builder->add('paymentPayPalClientSecret', TextType::class, [
+            'label' => 'trans.Payments - PayPal Client secret',
+            'required' => true,
+            'constraints' => [
+                new NotBlank(),
+            ],
+        ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

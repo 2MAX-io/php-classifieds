@@ -426,3 +426,7 @@ trans:
   'Link to rejection reasons': 'Link do powodów odrzucenia'
   privacy policy: 'polityką prywatności'
   Require listing activation by admin before making public: 'Wymagaj aktywacji ogłoszenia przed upublicznieniem'
+  Promotion of listings: 'Wyróżnianie ogłoszeń'
+  Failed to create payment, please try again later: 'Niepowodzenie przy tworzeniu płatności, spróbuj ponownie później'
+  Payments - PayPal Client ID: 'Płatności - PayPal Client ID'
+  Payments - PayPal Client secret: 'Płatności - PayPal Client secret'

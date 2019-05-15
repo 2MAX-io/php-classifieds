@@ -70,7 +70,7 @@
                                     class="fancybox"
                             >
                                 <img
-                                        src="{{ asset(listing.listingFiles.first.pathInNormalSize) }}"
+                                        src="{{ asset(listing.mainImageNoCache.pathInNormalSize) }}"
                                         class="mx-auto listing-show-top-image"
                                         alt=""
                                 />
@@ -396,5 +396,9 @@
                 $showContactInformation.remove();
             });
         };
+        
+        if ($('.listing-show-top-image').width() < 300 && $('.listing-show-top-image').height() < 300) {
+            $('.listing-show-top-image').parents('.zoom-wrapper').find('.zoom').remove();
+        }
     </script>
 {% endblock %}

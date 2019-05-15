@@ -16,6 +16,7 @@ use App\Service\Setting\SettingsService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class PaymentService
 {
@@ -44,11 +45,17 @@ class PaymentService
      */
     private $currentUserService;
 
+    /**
+     * @var TranslatorInterface
+     */
+    private $trans;
+
     public function __construct(
         PayPalPaymentMethod $payPalPaymentMethod,
         EntityManagerInterface $em,
         SettingsService $settingsService,
         CurrentUserService $currentUserService,
+        TranslatorInterface $trans,
         UrlGeneratorInterface $urlGenerator
     ) {
         $this->payPalPaymentMethod = $payPalPaymentMethod;
@@ -56,6 +63,7 @@ class PaymentService
         $this->settingsService = $settingsService;
         $this->urlGenerator = $urlGenerator;
         $this->currentUserService = $currentUserService;
+        $this->trans = $trans;
     }
 
     public function createPaymentForFeaturedPackage(Listing $listing, FeaturedPackage $featuredPackage): PaymentDto
@@ -101,6 +109,12 @@ class PaymentService
 
     public function createPayment(PaymentDto $paymentDto): PaymentDto
     {
+        if ($this->settingsService->getSettingsDto()->getPaymentGatewayPaymentDescription()) {
+            $paymentDto->setGatewayPaymentDescription($this->settingsService->getSettingsDto()->getPaymentGatewayPaymentDescription());
+        } else {
+            $paymentDto->setGatewayPaymentDescription($this->trans->trans('trans.Promotion of listings'));
+        }
+
         $this->payPalPaymentMethod->createPayment($paymentDto);
 
         $paymentEntity = new Payment();

@@ -108,6 +108,11 @@ class SettingsDto
      */
     private $paymentPayPalClientSecret;
 
+    /**
+     * @var string|null
+     */
+    private $paymentGatewayPaymentDescription;
+
     public function getIndexPageTitle(): ?string
     {
         return $this->indexPageTitle;
@@ -306,5 +311,15 @@ class SettingsDto
     public function setPaymentPayPalClientSecret(?string $paymentPayPalClientSecret): void
     {
         $this->paymentPayPalClientSecret = $paymentPayPalClientSecret;
+    }
+
+    public function getPaymentGatewayPaymentDescription(): ?string
+    {
+        return $this->paymentGatewayPaymentDescription;
+    }
+
+    public function setPaymentGatewayPaymentDescription(?string $paymentGatewayPaymentDescription): void
+    {
+        $this->paymentGatewayPaymentDescription = $paymentGatewayPaymentDescription;
     }
 }

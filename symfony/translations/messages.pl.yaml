@@ -453,3 +453,5 @@ trans:
   Payment gateway - status: 'Bramka płatności - status'
   Payment gateway - transaction ID: 'Bramka płatności - ID transakcji'
   Listing: 'Ogłoszenie'
+  Payment gateway - payment description: 'Bramka płatności - opis płatności'
+  used in payment gateway as description of what has been bought, ie on receipt: 'używane w brace płatności jako opis co zostało opłacone np. na pokwitowaniu'

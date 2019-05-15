@@ -23,7 +23,6 @@ use PayPal\Api\Transaction;
 use PayPal\Auth\OAuthTokenCredential;
 use PayPal\Rest\ApiContext;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
 class PayPalPaymentMethod implements PaymentMethodInterface
 {
@@ -33,22 +32,15 @@ class PayPalPaymentMethod implements PaymentMethodInterface
     private $paymentHelperService;
 
     /**
-     * @var TranslatorInterface
-     */
-    private $trans;
-
-    /**
      * @var SettingsService
      */
     private $settingsService;
 
     public function __construct(
         PaymentHelperService $paymentHelperService,
-        TranslatorInterface $trans,
         SettingsService $settingsService
     ) {
         $this->paymentHelperService = $paymentHelperService;
-        $this->trans = $trans;
         $this->settingsService = $settingsService;
     }
 
@@ -66,7 +58,7 @@ class PayPalPaymentMethod implements PaymentMethodInterface
         $amount->setTotal($paymentDto->getAmount() / 100);
 
         $item = new Item();
-        $item->setName($this->trans->trans('trans.Promotion of listings'));
+        $item->setName($paymentDto->getGatewayPaymentDescription());
         $item->setPrice($amount->getTotal());
         $item->setCurrency($paymentDto->getCurrency());
         $item->setQuantity(1);

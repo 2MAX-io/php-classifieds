@@ -50,6 +50,11 @@ class PaymentDto
     public $gatewayStatus;
 
     /**
+     * @var string|null
+     */
+    public $gatewayPaymentDescription;
+
+    /**
      * @var Payment|null
      */
     public $paymentEntity;
@@ -157,5 +162,15 @@ class PaymentDto
     public function setGatewayPaymentId(?string $gatewayPaymentId): void
     {
         $this->gatewayPaymentId = $gatewayPaymentId;
+    }
+
+    public function getGatewayPaymentDescription(): ?string
+    {
+        return $this->gatewayPaymentDescription;
+    }
+
+    public function setGatewayPaymentDescription(?string $gatewayPaymentDescription): void
+    {
+        $this->gatewayPaymentDescription = $gatewayPaymentDescription;
     }
 }

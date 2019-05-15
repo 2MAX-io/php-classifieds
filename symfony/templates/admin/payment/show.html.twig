@@ -8,28 +8,30 @@
     <table class="table">
         <tbody>
             <tr>
-                <th>Id</th>
+                <th>ID</th>
                 <td>{{ payment.id }}</td>
             </tr>
             <tr>
                 <th>{{ 'trans.Amount' | trans }}</th>
-                <td>{{ payment.amount }}</td>
+                <td>{{ payment.amount | moneyAsFloat }}</td>
             </tr>
             <tr>
                 <th>{{ 'trans.Date' | trans }}</th>
                 <td>{{ payment.datetime ? payment.datetime|date('Y-m-d H:i:s') : '' }}</td>
             </tr>
             <tr>
-                <th>GatewayStatus</th>
+                <th>{{ 'trans.Status of payment gateway' | trans }}</th>
                 <td>{{ payment.gatewayStatus }}</td>
             </tr>
             <tr>
                 <th>{{ 'trans.Balance updated?' | trans }}</th>
-                <td>{{ payment.balanceUpdated ? 'Yes' : 'No' }}</td>
+                <td>
+                    <span class="{{ payment.balanceUpdated | boolGreenRedClass }}">{{ payment.balanceUpdated | boolText | trans }}</span>
+                </td>
             </tr>
             <tr>
                 <th>{{ 'trans.Canceled?' | trans }}</th>
-                <td>{{ payment.canceled ? 'Yes' : 'No' }}</td>
+                <td><span class="{{ payment.canceled | boolGreenRedClass }}">{{ payment.canceled | boolText | trans }}</span></td>
             </tr>
             <tr>
                 <th>GatewayTransactionId</th>

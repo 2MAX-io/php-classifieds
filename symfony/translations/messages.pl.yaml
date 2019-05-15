@@ -450,3 +450,4 @@ trans:
   Canceled?: 'Anulowane?'
   details: 'szczegóły'
   Payment: 'Płatność'
+  Status of payment gateway: 'Status bramki płatności'

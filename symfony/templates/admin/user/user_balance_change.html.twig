@@ -45,9 +45,11 @@
                     <td>{{ userBalanceChange.balanceFinal | moneyAsFloat }}</td>
                     <td>{{ userBalanceChange.description }}</td>
                     <td>
-                        <a href="{{ path('app_admin_payment_show', {'id': userBalanceChange.payment.id}) }}" class="btn btn-secondary">
-                            {{ 'trans.Payment' | trans }}
-                        </a>
+                        {% if userBalanceChange.payment %}
+                            <a href="{{ path('app_admin_payment_show', {'id': userBalanceChange.payment.id}) }}" class="btn btn-secondary">
+                                {{ 'trans.Payment' | trans }}
+                            </a>
+                        {% endif %}
                     </td>
                 </tr>
             {% else %}

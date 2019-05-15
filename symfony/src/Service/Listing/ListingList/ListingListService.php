@@ -9,6 +9,7 @@ use App\Entity\CustomField;
 use App\Entity\Listing;
 use App\Helper\Arr;
 use App\Helper\Search;
+use App\Helper\Str;
 use App\Service\Listing\ListingPublicDisplayService;
 use App\Service\System\Pagination\PaginationService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -91,6 +92,10 @@ class ListingListService
 
                 if (isset($customFieldFormValueArray['values'])) {
                     foreach ($customFieldFormValueArray['values'] as $valueItem) {
+                        if (Str::emptyTrim($valueItem)) {
+                            continue;
+                        }
+
                         $sqlParamId++;
                         $qb->orWhere($qb->expr()->andX(
                             $qb->expr()->eq('listingCustomFieldValue.customField', ':customFieldId_' . ((int) $sqlParamId)),

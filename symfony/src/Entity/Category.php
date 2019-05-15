@@ -73,7 +73,7 @@ class Category
     /**
      * @var CustomFieldJoinCategory[]
      *
-     * @ORM\OneToMany(targetEntity="CustomFieldJoinCategory", mappedBy="category")
+     * @ORM\OneToMany(targetEntity="App\Entity\CustomFieldJoinCategory", mappedBy="category")
      * @ORM\OrderBy({"sort" = "ASC"})
      */
     private $customFieldsJoin;

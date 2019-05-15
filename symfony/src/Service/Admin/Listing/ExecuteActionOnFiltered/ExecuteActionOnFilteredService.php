@@ -33,6 +33,8 @@ class ExecuteActionOnFilteredService
         $qb->resetDQLPart('select');
         $qb->addSelect("listingCustomFieldValue.id");
         $qb->addSelect("listing.id");
+        $qb->join('listing.category', 'category');
+        $qb->join('category.customFieldsJoin', 'categoryCustomFieldJoin');
         $qb->leftJoin('listing.listingCustomFieldValues', 'listingCustomFieldValue');
 
         $qb->andWhere($qb->expr()->orX(
@@ -43,9 +45,11 @@ class ExecuteActionOnFilteredService
             ),
             $qb->expr()->isNull('listingCustomFieldValue.id')
         ));
+        $qb->andWhere($qb->expr()->eq('categoryCustomFieldJoin.customField', ':categoryCustomField'));
         $qb->setParameter('customField', $customFieldOption->getCustomField()->getId());
         $qb->setParameter('customFieldOption', $customFieldOption->getId());
         $qb->setParameter('value', $customFieldOption->getValue());
+        $qb->setParameter('categoryCustomField', $customFieldOption->getCustomField()->getId());
 
         $qb->andWhere($qb->expr()->eq('listing.id', 412490));
         $qb->setMaxResults(1);
@@ -63,7 +67,7 @@ class ExecuteActionOnFilteredService
         /** @var Parameter[] $doctrineQueryParamList */
         $doctrineQueryParamList = $qb->getParameters()->toArray();
         foreach ($doctrineQueryParamList as $key => $doctrineQueryParam) {
-            $params[] = $doctrineQueryParam->getValue();
+            $params[] = $doctrineQueryParam->getValue(); // TODO: incorrect keys
         }
 
         $fields = ", ?, ?, ?";

@@ -19,7 +19,7 @@ class ListingExecuteActionOnFilteredController extends AbstractAdminController
     {
         $this->denyUnlessAdmin();
 
-        $executeActionOnFilteredService->setTitle();
+        $executeActionOnFilteredService->addCustomField();
 
         return $this->render('admin/listing/execute_on_filtered/execute_on_filtered.html.twig', [
 

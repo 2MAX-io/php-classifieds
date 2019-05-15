@@ -6,6 +6,9 @@ use App\Kernel;
 use Symfony\Component\Debug\Debug;
 use Symfony\Component\HttpFoundation\Request;
 
+ini_set('log_errors', 'On');
+ini_set('error_log', 'symfony/var/log/PHP_native_error_'.date('Y-m-d').'.log');
+
 require __DIR__ . '/symfony/config/bootstrap.php';
 
 //$_SERVER['APP_DEBUG'] = false;

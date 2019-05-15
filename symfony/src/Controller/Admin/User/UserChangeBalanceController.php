@@ -8,6 +8,7 @@ use App\Controller\Admin\Base\AbstractAdminController;
 use App\Entity\User;
 use App\Form\Admin\UserChangeBalanceType;
 use App\Helper\Integer;
+use App\Service\Money\UserBalanceHistoryService;
 use App\Service\Money\UserBalanceService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,6 +24,7 @@ class UserChangeBalanceController extends AbstractAdminController
         Request $request,
         User $user,
         UserBalanceService $userBalanceService,
+        UserBalanceHistoryService $userBalanceHistoryService,
         TranslatorInterface $trans
     ): Response {
         $this->denyUnlessAdmin();
@@ -36,15 +38,30 @@ class UserChangeBalanceController extends AbstractAdminController
                 Integer::toInteger($form->get(UserChangeBalanceType::NEW_BALANCE)->getData() * 100),
                 $user
             );
-            $userBalanceChange->setDescription(
-                $trans->trans(
-                    'trans.Balanced change by administrator to: %newBalance% from previous: %previousBalance%',
-                    [
-                        '%newBalance%' => $userBalanceChange->getBalanceFinal() / 100,
-                        '%previousBalance%' => $previousBalance / 100
-                    ]
-                )
-            );
+
+            if ($form->get(UserChangeBalanceType::CHANGE_REASON)->getData()) {
+                $userBalanceChange->setDescription(
+                    $trans->trans(
+                        'trans.Balanced change by administrator to: %newBalance% from previous: %previousBalance%, reason: %reason%',
+                        [
+                            '%newBalance%' => $userBalanceChange->getBalanceFinal() / 100,
+                            '%previousBalance%' => $previousBalance / 100,
+                            '%reason%' => $form->get(UserChangeBalanceType::CHANGE_REASON)->getData(),
+                        ]
+                    )
+                );
+            } else{
+                $userBalanceChange->setDescription(
+                    $trans->trans(
+                        'trans.Balanced change by administrator to: %newBalance% from previous: %previousBalance%',
+                        [
+                            '%newBalance%' => $userBalanceChange->getBalanceFinal() / 100,
+                            '%previousBalance%' => $previousBalance / 100,
+                            '%reason%' => $form->get(UserChangeBalanceType::CHANGE_REASON)->getData(),
+                        ]
+                    )
+                );
+            }
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->flush();
@@ -56,6 +73,7 @@ class UserChangeBalanceController extends AbstractAdminController
             'form' => $form->createView(),
             'user' => $user,
             'currentBalance' => $userBalanceService->getCurrentBalance($user),
+            'userBalanceHistoryList' => $userBalanceHistoryService->getHistoryList($user),
         ]);
     }
 }

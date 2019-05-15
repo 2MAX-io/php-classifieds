@@ -52,11 +52,10 @@ class PaymentController extends AbstractController
                     );
                     $userBalanceChange->setDescription(
                         $trans->trans(
-                            'trans.Payment for featuring listing: id:%listingId% - %listingTitle%, using featured package: %featuredPackageName%',
+                            'trans.Featuring of listing: %listingTitle%, using package: %featuredPackageName%, payment acceptance',
                             [
-                                'listingId' => $paymentForFeaturedPackage->getListing()->getId(),
-                                'listingTitle' => $paymentForFeaturedPackage->getListing()->getTitle(),
-                                'featuredPackageName' => $paymentForFeaturedPackage->getFeaturedPackage()->getName(),
+                                '%listingTitle%' => $paymentForFeaturedPackage->getListing()->getTitle(),
+                                '%featuredPackageName%' => $paymentForFeaturedPackage->getFeaturedPackage()->getName(),
                             ]
                         )
                     );
@@ -70,11 +69,10 @@ class PaymentController extends AbstractController
                     );
                     $userBalanceChange->setDescription(
                         $trans->trans(
-                            'trans.Payment for featuring listing: id:%listingId% - %listingTitle%, using featured package: %featuredPackageName%',
+                            'trans.Featuring of listing: %listingTitle%, using package: %featuredPackageName%',
                             [
-                                'listingId' => $paymentForFeaturedPackage->getListing()->getId(),
-                                'listingTitle' => $paymentForFeaturedPackage->getListing()->getTitle(),
-                                'featuredPackageName' => $paymentForFeaturedPackage->getFeaturedPackage()->getName(),
+                                '%listingTitle%' => $paymentForFeaturedPackage->getListing()->getTitle(),
+                                '%featuredPackageName%' => $paymentForFeaturedPackage->getFeaturedPackage()->getName(),
                             ]
                         )
                     );
@@ -96,7 +94,7 @@ class PaymentController extends AbstractController
                         $paymentEntity
                     );
                     $userBalanceChange->setPayment($paymentEntity);
-                    $userBalanceChange->setDescription($trans->trans('trans.Received payment for balance top up'));
+                    $userBalanceChange->setDescription($trans->trans('trans.Topping up the account balance'));
                     $em->flush(); // todo: check if transaction logic with ifs and closing correct
                     $em->commit();
 

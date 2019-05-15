@@ -67,7 +67,7 @@ class PayPalPaymentMethod implements PaymentMethodInterface
 
         $item = new Item();
         $item->setName($this->trans->trans('trans.Promotion of listings'));
-        $item->setPrice($amount->getTotal() / 100);
+        $item->setPrice($amount->getTotal());
         $item->setCurrency($paymentDto->getCurrency());
         $item->setQuantity(1);
 

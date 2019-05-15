@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ 'trans.Extend featured' | trans }}{% endblock %}
+{% block title %}{{ 'trans.Feature listing' | trans }}{% endblock %}
 
 {% block body %}
     <div class="container mt-5">
@@ -82,7 +82,7 @@
                             {{ 'trans.Consider topping up your account and feature listings by one click, using your account balance' | trans }}
                         </div>
 
-                        <a href="{{ path('app_user_balance_top_up') }}" target="_blank" class="btn btn-primary">
+                        <a href="{{ path('app_user_balance_top_up') }}" class="btn btn-primary">
                             {{ 'trans.Top up account' | trans }}
                         </a>
                         <span>{{ 'trans.to feature listings by single click' | trans }}</span>

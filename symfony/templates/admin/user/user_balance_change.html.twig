@@ -20,4 +20,32 @@
         <button class="btn btn-primary">{{ 'trans.Change balance' | trans }}</button>
         {{ form_end(form) }}
     </div>
+
+    <div class="container mt-2 mt-md-5">
+        <h3>
+            {{ 'trans.Balance history for user' | trans }}:
+            <a href="{{ path('admin_user_edit', {'id': user.id}) }}">{{ user.username }}</a>
+        </h3>
+
+        <table class="table table-responsive-sm">
+            <thead>
+            <tr>
+                <th>{{ 'trans.Date' | trans }}</th>
+                <th>{{ 'trans.Balance difference' | trans }}</th>
+                <th>{{ 'trans.Balance after change' | trans }}</th>
+                <th>{{ 'trans.Description' | trans }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for userBalanceChange in userBalanceHistoryList %}
+                <tr>
+                    <td>{{ userBalanceChange.datetime | date }}</td>
+                    <td>{{ userBalanceChange.balanceChange | moneyAsFloat }}</td>
+                    <td>{{ userBalanceChange.balanceFinal | moneyAsFloat }}</td>
+                    <td>{{ userBalanceChange.description }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
 {% endblock %}

@@ -7,7 +7,6 @@
         "ext-iconv": "*",
         "ausi/slug-generator": "^1.1",
         "beberlei/DoctrineExtensions": "^1.2",
-        "easycorp/easy-log-handler": "^1.0",
         "friendsofsymfony/jsrouting-bundle": "^2.3",
         "giggsey/libphonenumber-for-php": "^8.10",
         "hackzilla/password-generator": "^1.4",

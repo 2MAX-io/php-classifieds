@@ -230,3 +230,9 @@ php symfony/bin/console make:entity --regenerate "App\Entity"
 php symfony/bin/console doctrine:schema:update --force
 php symfony/bin/console doctrine:schema:update --dump-sql
 php symfony/bin/console doctrine:schema:update --force
+composer require -d easycorp/easy-log-handler
+composer require -d symfony easycorp/easy-log-handler
+composer remove -d symfony easycorp/easy-log-handler
+composer remove -d symfony update
+composer remove -d symfony upgrade
+composer -d symfony update

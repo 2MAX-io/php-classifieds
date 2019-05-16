@@ -177,6 +177,9 @@ class SettingsType extends AbstractType
                 'trans.paypal.sandbox' => 'sandbox',
                 'trans.paypal.live' => 'live',
             ],
+            'constraints' => [
+                new NotBlank(),
+            ],
         ]);
         $builder->add('paymentPayPalClientId', TextType::class, [
             'label' => 'trans.Payments - PayPal Client ID',

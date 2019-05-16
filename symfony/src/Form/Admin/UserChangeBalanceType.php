@@ -9,7 +9,8 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints;
+use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class UserChangeBalanceType extends AbstractType
 {
@@ -20,11 +21,12 @@ class UserChangeBalanceType extends AbstractType
     {
         $builder->add(
             self::NEW_BALANCE, CustomMoneyType::class, [
+            'label' => 'trans.Set balance to',
             'mapped' => false,
             'constraints' => [
-                new Constraints\NotBlank(),
+                new NotBlank(),
+                new GreaterThanOrEqual(['value' => 0])
             ],
-            'label' => 'trans.Set balance to',
         ]);
         $builder->add(
             self::CHANGE_REASON, TextareaType::class, [

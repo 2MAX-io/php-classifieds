@@ -37,6 +37,9 @@ class CategoryAddCustomFieldType extends AbstractType
 
         $builder->add('sort', IntegerType::class, [
             'label' => 'trans.Order, smaller first',
+            'constraints' => [
+                new NotBlank(),
+            ],
         ]);
     }
 

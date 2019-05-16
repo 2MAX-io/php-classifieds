@@ -10,6 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 class TopUpBalanceType extends AbstractType
@@ -38,6 +39,10 @@ class TopUpBalanceType extends AbstractType
                     'class' => 'input-money',
                 ],
                 'currency' => $this->settingsService->getCurrency(),
+                'constraints' => [
+                    new NotBlank(),
+                    new GreaterThanOrEqual(['value' => 0])
+                ],
             ]
         );
         $builder->add(

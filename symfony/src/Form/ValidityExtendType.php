@@ -28,14 +28,14 @@ class ValidityExtendType extends AbstractType
         $builder->add('validityTimeDays', ChoiceType::class, [
             'mapped' => false,
             'choices' => $this->validUntilSetService->getValidityTimeDaysChoices(),
+            'label' => 'trans.Counting from today, extend by',
+            'data' => 9,
             'constraints' => [
                 new Constraints\NotBlank(),
                 new Constraints\Choice([
                     'choices' => $this->validUntilSetService->getValidityTimeDaysChoices()
                 ]),
             ],
-            'label' => 'trans.Counting from today, extend by',
-            'data' => 9,
         ]);
     }
 

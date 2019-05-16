@@ -58,7 +58,6 @@ class AdminListingEditType extends AbstractType
         ]);
         $builder->add('emailShow', CheckboxType::class, [
             'label' => 'trans.Show email?',
-            'required' => false,
         ]);
         $builder->add('price', IntegerType::class, [
             'label' => 'trans.Amount or price'
@@ -68,7 +67,6 @@ class AdminListingEditType extends AbstractType
         ]);
         $builder->add('priceNegotiable', BoolType::class, [
             'label' => 'trans.Amount is negotiable?',
-            'required' => false,
         ]);
         $builder->add('city', TextType::class, [
             'label' => 'trans.City'

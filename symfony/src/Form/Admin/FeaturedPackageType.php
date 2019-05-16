@@ -14,6 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class FeaturedPackageType extends AbstractType
 {
@@ -21,9 +22,15 @@ class FeaturedPackageType extends AbstractType
     {
         $builder->add('adminName', TextType::class, [
             'label' => 'trans.Name for admin',
+            'constraints' => [
+                new NotBlank(),
+            ],
         ]);
         $builder->add('name', TextType::class, [
             'label' => 'trans.Name',
+            'constraints' => [
+                new NotBlank(),
+            ],
         ]);
         $builder->add('description', TextareaType::class, [
             'label' => 'trans.Description',
@@ -32,6 +39,7 @@ class FeaturedPackageType extends AbstractType
         $builder->add('priceFloat', CustomMoneyType::class, [
             'label' => 'trans.Price',
             'constraints' => [
+                new NotBlank(),
                 new Constraints\GreaterThanOrEqual([
                     'value' => 0,
                 ]),
@@ -39,9 +47,15 @@ class FeaturedPackageType extends AbstractType
         ]);
         $builder->add('daysFeaturedExpire', IntegerType::class, [
             'label' => 'trans.Days of featured',
+            'constraints' => [
+                new NotBlank(),
+            ],
         ]);
         $builder->add('daysListingExpire', IntegerType::class, [
             'label' => 'trans.Days of expiration',
+            'constraints' => [
+                new NotBlank(),
+            ],
         ]);
         $builder->add('defaultPackage', CheckboxType::class, [
             'label' => 'trans.Use when no package set for category, as default?',

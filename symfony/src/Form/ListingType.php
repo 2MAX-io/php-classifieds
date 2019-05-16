@@ -22,7 +22,13 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints;
+use Symfony\Component\Validator\Constraints\All;
+use Symfony\Component\Validator\Constraints\Callback;
+use Symfony\Component\Validator\Constraints\Choice;
+use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
+use Symfony\Component\Validator\Constraints\Image;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class ListingType extends AbstractType
@@ -49,8 +55,8 @@ class ListingType extends AbstractType
                 'label' => 'trans.Title',
                 'empty_data' => '',
                 'constraints' => [
-                    new Constraints\NotBlank(),
-                    new Constraints\Length(['min' => 5]),
+                    new NotBlank(),
+                    new Length(['min' => 5]),
                 ],
             ]);
         $builder->add('description', TextareaType::class, [
@@ -59,21 +65,22 @@ class ListingType extends AbstractType
                 'class' => 'form-listing-description-textarea'
             ],
             'constraints' => [
-                new Constraints\NotBlank(),
-                new Constraints\Length(['min' => 20, 'max' => 10000]),
+                new NotBlank(),
+                new Length(['min' => 20, 'max' => 10000]),
             ],
             'empty_data' => '',
         ]);
         $builder->add('category', CategoryType::class, [
             'constraints' => [
-                new Constraints\NotBlank(),
+                new NotBlank(),
             ],
         ]);
         $builder->add('validityTimeDays', ChoiceType::class, [
             'mapped' => false,
             'choices' => $this->validUntilSetService->getValidityTimeDaysChoices(),
             'constraints' => [
-                new Constraints\Choice([
+                new NotBlank(),
+                new Choice([
                     'choices' => $this->validUntilSetService->getValidityTimeDaysChoices()
                 ]),
             ],
@@ -102,7 +109,7 @@ class ListingType extends AbstractType
             'label' => 'trans.Amount or price',
             'required' => false,
             'constraints' => [
-                new Constraints\GreaterThanOrEqual([
+                new GreaterThanOrEqual([
                     'value' => 0,
                 ]),
             ],
@@ -129,8 +136,8 @@ class ListingType extends AbstractType
             'required' => false,
             'multiple' => true,
             'constraints' => [
-                new Constraints\All(
-                    new Constraints\Image()
+                new All(
+                    new Image()
                 ),
             ],
             'attr' => ['hidden' => 'hidden'],
@@ -145,7 +152,7 @@ class ListingType extends AbstractType
             [
                 'data_class' => Listing::class,
                 'constraints' => [
-                    new Constraints\Callback(['callback' => function (Listing $listing, ExecutionContextInterface $context) {
+                    new Callback(['callback' => function (Listing $listing, ExecutionContextInterface $context) {
                         if (empty($listing->getPhone()) && (empty($listing->getEmail()) || !$listing->getEmailShow())) {
                             $context->buildViolation('Enter email or phone, both can not be empty')
                                 ->atPath('phone')

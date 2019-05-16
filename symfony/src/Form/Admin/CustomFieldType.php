@@ -11,6 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class CustomFieldType extends AbstractType
 {
@@ -18,6 +19,9 @@ class CustomFieldType extends AbstractType
     {
         $builder->add('name', TextType::class, [
             'label' => 'trans.Name',
+            'constraints' => [
+                new NotBlank(),
+            ],
         ]);
         $builder->add('type', ChoiceType::class, [
             'label' => 'trans.Type',
@@ -28,6 +32,9 @@ class CustomFieldType extends AbstractType
                 'trans.customFieldType.integer_range' => CustomField::TYPE_INTEGER_RANGE,
                 'trans.customFieldType.checkbox_multiple' => CustomField::TYPE_CHECKBOX_MULTIPLE,
                 'trans.customFieldType.select_single' => CustomField::TYPE_SELECT_SINGLE,
+            ],
+            'constraints' => [
+                new NotBlank(),
             ],
         ]);
         $builder->add('required', CheckboxType::class, [

@@ -37,9 +37,18 @@ class ExecuteActionOnFilteredService
 
         $qb->addSelect("listingCustomFieldValue.id");
         $qb->addSelect("listing.id");
-        $qb->join('listing.category', 'category');
-        $qb->join('category.customFieldsJoin', 'categoryCustomFieldJoin');
-        $qb->leftJoin('listing.listingCustomFieldValues', 'listingCustomFieldValue');
+
+        if (!\in_array('category', $qb->getAllAliases())) {
+            $qb->join('listing.category', 'category');
+        }
+
+        if (!\in_array('categoryCustomFieldJoin', $qb->getAllAliases())) {
+            $qb->join('category.customFieldsJoin', 'categoryCustomFieldJoin');
+        }
+
+        if (!\in_array('listingCustomFieldValue', $qb->getAllAliases())) {
+            $qb->leftJoin('listing.listingCustomFieldValues', 'listingCustomFieldValue');
+        }
 
         $qb->andWhere($qb->expr()->orX(
             $qb->expr()->andX(
@@ -57,18 +66,19 @@ class ExecuteActionOnFilteredService
 
         $selectSql = $qb->getQuery()->getSQL();
 
-        $params = [
+        $prependParams = [
             $customFieldOption->getCustomField()->getId(),
             $customFieldOption->getId(),
             $customFieldOption->getValue()
         ];
+        $params = $prependParams;
         /** @var Parameter[] $doctrineQueryParamList */
         $doctrineQueryParamList = $qb->getParameters()->toArray();
         foreach ($doctrineQueryParamList as $key => $doctrineQueryParam) {
             $params[] = $doctrineQueryParam->getValue(); // TODO: incorrect keys
         }
 
-        $fields = \str_repeat(', ?', \count($params));
+        $fields = \str_repeat(', ?', \count($prependParams));
         $selectSql = \preg_replace('#SELECT(.+)FROM(.+)#', 'SELECT $1 '.$fields.' FROM $2', $selectSql);
 
         $pdo = $this->em->getConnection();

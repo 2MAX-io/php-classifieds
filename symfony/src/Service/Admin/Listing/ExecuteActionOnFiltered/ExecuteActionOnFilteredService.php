@@ -55,10 +55,7 @@ class ExecuteActionOnFilteredService
         $qb->setParameter('value', $customFieldOption->getValue());
         $qb->setParameter('categoryCustomField', $customFieldOption->getCustomField()->getId());
 
-        $qb->getQuery()->execute();
-
         $selectSql = $qb->getQuery()->getSQL();
-        $qb->getParameters()->toArray();
 
         $params = [
             $customFieldOption->getCustomField()->getId(),
@@ -71,7 +68,7 @@ class ExecuteActionOnFilteredService
             $params[] = $doctrineQueryParam->getValue(); // TODO: incorrect keys
         }
 
-        $fields = ", ?, ?, ?";
+        $fields = \str_repeat(', ?', \count($params));
         $selectSql = \preg_replace('#SELECT(.+)FROM(.+)#', 'SELECT $1 '.$fields.' FROM $2', $selectSql);
 
         $pdo = $this->em->getConnection();
@@ -84,13 +81,40 @@ $selectSql
 
     public function setCategory(Category $category): void
     {
-        $qb = $this->getQuery();
+        $this->createTempTableWithFiltered();
 
-        $qb->update();
-        $qb->set('listing.category', ':category');
-        $qb->setParameter('category', $category->getId());
-        $qb->resetDQLPart('orderBy');
-        $qb->getQuery()->execute();
+        $pdo = $this->em->getConnection();
+        $stmt = $pdo->prepare(
+            /** @lang MySQL */ "
+UPDATE listing JOIN filtered_id_list ON listing.id = filtered_id_list.id
+SET category_id = :category_id 
+");
+        $stmt->bindValue(':category_id', $category->getId());
+        $stmt->execute();
+    }
+
+    public function createTempTableWithFiltered(): void
+    {
+        $pdo = $this->em->getConnection();
+        $stmt = $pdo->prepare('CREATE TEMPORARY TABLE filtered_id_list (`id` int(11) UNSIGNED NOT NULL);');
+        $stmt->execute();
+
+        $qb = $this->getQuery();
+        $qb->addSelect("listing.id");
+        $selectSql = $qb->getQuery()->getSQL();
+
+        $params = [];
+        /** @var Parameter[] $doctrineQueryParamList */
+        $doctrineQueryParamList = $qb->getParameters()->toArray();
+        foreach ($doctrineQueryParamList as $key => $doctrineQueryParam) {
+            $params[] = $doctrineQueryParam->getValue(); // TODO: incorrect keys
+        }
+
+        $stmt = $pdo->prepare("
+INSERT INTO filtered_id_list (id)
+$selectSql
+");
+        $stmt->execute($params);
     }
 
     public function getQuery(): QueryBuilder

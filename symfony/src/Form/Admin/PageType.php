@@ -36,6 +36,7 @@ class PageType extends AbstractType
         ]);
         $builder->add('enabled', CheckboxType::class, [
             'label' => 'trans.Enabled',
+            'required' => false,
         ]);
     }
 

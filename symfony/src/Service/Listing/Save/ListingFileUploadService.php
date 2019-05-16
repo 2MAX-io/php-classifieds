@@ -69,12 +69,12 @@ class ListingFileUploadService
     {
         $filenameIndex = [];
         foreach ($fileUploaderList as $fileUploaderListElement) {
-            $fileName = basename($fileUploaderListElement['file']);
+            $fileName = \preg_replace('#(\?.+)$#', '', basename($fileUploaderListElement['file']));
             $filenameIndex[$fileName] = $fileUploaderListElement['index'];
         }
 
         foreach ($listing->getListingFiles() as $listingFile) {
-            $sort = 99999;
+            $sort = SortService::LAST_VALUE;
             if (isset($filenameIndex[basename($listingFile->getPath())])) {
                 $sort = $filenameIndex[basename($listingFile->getPath())];
             }

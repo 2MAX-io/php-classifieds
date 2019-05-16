@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use App\Helper\ImageResizePath;
+use App\Service\System\Sort\SortService;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -26,9 +27,9 @@ class ListingFile
     private $listing;
 
     /**
-     * @ORM\Column(type="smallint", nullable=false)
+     * @ORM\Column(type="smallint", nullable=false, options={"unsigned"=true})
      */
-    private $sort = 999;
+    private $sort = SortService::LAST_VALUE;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=false)

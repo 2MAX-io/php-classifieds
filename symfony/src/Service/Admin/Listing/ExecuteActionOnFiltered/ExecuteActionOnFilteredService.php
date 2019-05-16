@@ -9,9 +9,12 @@ use App\Entity\CustomFieldOption;
 use App\Entity\Listing;
 use App\Service\Admin\Listing\AdminListingSearchService;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\Query\Parameter;
+use Doctrine\ORM\Query\ParserResult;
 use Doctrine\ORM\QueryBuilder;
 use http\Exception\UnexpectedValueException;
+use ReflectionObject;
 
 class ExecuteActionOnFilteredService
 {
@@ -35,7 +38,7 @@ class ExecuteActionOnFilteredService
     {
         $qb = $this->getQuery();
 
-        $qb->addSelect("listingCustomFieldValue.id");
+        $qb->addSelect("listingCustomFieldValueExceptChanged.id");
         $qb->addSelect("listing.id");
 
         if (!\in_array('category', $qb->getAllAliases())) {
@@ -46,47 +49,58 @@ class ExecuteActionOnFilteredService
             $qb->join('category.customFieldsJoin', 'categoryCustomFieldJoin');
         }
 
-        if (!\in_array('listingCustomFieldValue', $qb->getAllAliases())) {
-            $qb->leftJoin('listing.listingCustomFieldValues', 'listingCustomFieldValue');
-        }
-
-        $qb->andWhere($qb->expr()->orX(
-            $qb->expr()->andX(
-                $qb->expr()->eq('listingCustomFieldValue.customField', ':customField'),
-                $qb->expr()->neq('listingCustomFieldValue.customFieldOption', ':customFieldOption'),
-                $qb->expr()->neq('listingCustomFieldValue.value', ':value')
-            ),
-            $qb->expr()->isNull('listingCustomFieldValue.id')
+        $qb->leftJoin('listing.listingCustomFieldValues', 'listingCustomFieldValueExceptChanged', Join::WITH, $qb->expr()->andX(
+            $qb->expr()->eq('listingCustomFieldValueExceptChanged.customField', ':customField'),
+            $qb->expr()->eq('listingCustomFieldValueExceptChanged.customFieldOption', ':customFieldOption'),
+            $qb->expr()->eq('listingCustomFieldValueExceptChanged.value', ':value')
         ));
+
+        $qb->andWhere($qb->expr()->isNull('listingCustomFieldValueExceptChanged.id'));
         $qb->andWhere($qb->expr()->eq('categoryCustomFieldJoin.customField', ':categoryCustomField'));
-        $qb->setParameter('customField', $customFieldOption->getCustomField()->getId());
-        $qb->setParameter('customFieldOption', $customFieldOption->getId());
-        $qb->setParameter('value', $customFieldOption->getValue());
-        $qb->setParameter('categoryCustomField', $customFieldOption->getCustomField()->getId());
+        $qb->setParameter(':customField', $customFieldOption->getCustomField()->getId());
+        $qb->setParameter(':customFieldOption', $customFieldOption->getId());
+        $qb->setParameter(':value', $customFieldOption->getValue());
+        $qb->setParameter(':categoryCustomField', $customFieldOption->getCustomField()->getId());
+
+        $query = $qb->getQuery();
+        $reflector = new ReflectionObject($query);
+        $method = $reflector->getMethod('_parse');
+        $method->setAccessible(true);
+        /** @var ParserResult $parserResult */
+        $parserResult = $method->invoke($query);
+
+
+        $pdo = $this->em->getConnection();
+        $stmt = $pdo->prepare('CREATE TEMPORARY TABLE filtered_id_list (`id` int(11) UNSIGNED NOT NULL, `listing_id` int(11) UNSIGNED NOT NULL);');
+        $stmt->execute();
 
         $selectSql = $qb->getQuery()->getSQL();
 
-        $prependParams = [
-            $customFieldOption->getCustomField()->getId(),
-            $customFieldOption->getId(),
-            $customFieldOption->getValue()
-        ];
-        $params = $prependParams;
+        $params = [];
         /** @var Parameter[] $doctrineQueryParamList */
         $doctrineQueryParamList = $qb->getParameters()->toArray();
         foreach ($doctrineQueryParamList as $key => $doctrineQueryParam) {
-            $params[] = $doctrineQueryParam->getValue(); // TODO: incorrect keys
+            foreach ($parserResult->getSqlParameterPositions($doctrineQueryParam->getName()) as $sqlParameterPosition) {
+                $params[$sqlParameterPosition] = $doctrineQueryParam->getValue(); // TODO: incorrect keys
+            }
         }
 
-        $fields = \str_repeat(', ?', \count($prependParams));
-        $selectSql = \preg_replace('#SELECT(.+)FROM(.+)#', 'SELECT $1 '.$fields.' FROM $2', $selectSql);
+        $stmt = $pdo->prepare("
+INSERT INTO filtered_id_list (id, listing_id)
+$selectSql
+");
+        $stmt->execute($params);
 
         $pdo = $this->em->getConnection();
         $stmt = $pdo->prepare("
 REPLACE INTO listing_custom_field_value (id, listing_id, custom_field_id, custom_field_option_id, value)
-$selectSql
+SELECT id, listing_id, :customField, :customFieldOption, :val FROM filtered_id_list
 ");
-        $stmt->execute($params);
+        $stmt->bindValue(':customField', $customFieldOption->getCustomField()->getId());
+        $stmt->bindValue(':customFieldOption', $customFieldOption->getId());
+        $stmt->bindValue(':val', $customFieldOption->getValue());
+        $stmt->execute();
+//        die(\App\Helper\Sql::replaceParams($selectSql, $params));
     }
 
     public function setCategory(Category $category): void

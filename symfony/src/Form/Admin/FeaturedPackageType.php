@@ -41,7 +41,7 @@ class FeaturedPackageType extends AbstractType
             'constraints' => [
                 new NotBlank(),
                 new Constraints\GreaterThanOrEqual([
-                    'value' => 0,
+                    'value' => 0.01,
                 ]),
             ],
         ]);
@@ -49,12 +49,18 @@ class FeaturedPackageType extends AbstractType
             'label' => 'trans.Days of featured',
             'constraints' => [
                 new NotBlank(),
+                new Constraints\GreaterThanOrEqual([
+                    'value' => 0,
+                ]),
             ],
         ]);
         $builder->add('daysListingExpire', IntegerType::class, [
             'label' => 'trans.Days of expiration',
             'constraints' => [
                 new NotBlank(),
+                new Constraints\GreaterThanOrEqual([
+                    'value' => 0,
+                ]),
             ],
         ]);
         $builder->add('defaultPackage', CheckboxType::class, [

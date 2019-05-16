@@ -26,6 +26,7 @@ class ListingSearchController extends AbstractAdminController
         return $this->render('admin/listing/listing_search.html.twig', [
             'listings' => $adminListingListDto->getResults(),
             'pager' => $adminListingListDto->getPager(),
+            'categories' => $listingSearchService->getCategories(),
         ]);
     }
 }

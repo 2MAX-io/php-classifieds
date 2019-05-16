@@ -77,6 +77,15 @@
                     </div>
 
                     <div class="col-md-4 mb-2">
+                        <label for="user">{{ 'trans.Category' | trans }}</label>
+                        <select name="category" class="form-control">
+                            {% for categoryId, categoryName in categories %}
+                                <option value="{{ categoryId }}">{{ categoryName }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="col-md-4 mb-2">
                         <label for="query">{{ 'trans.Search' | trans }}</label>
                         <div class="input-group">
                             <div class="input-group-prepend">

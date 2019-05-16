@@ -7,7 +7,6 @@ namespace App\Service\Admin\Listing\ExecuteActionOnFiltered;
 use App\Entity\Category;
 use App\Entity\CustomFieldOption;
 use App\Entity\Listing;
-use App\Exception\UserVisibleMessageException;
 use App\Service\Admin\Listing\AdminListingSearchService;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Parameter;
@@ -56,8 +55,6 @@ class ExecuteActionOnFilteredService
         $qb->setParameter('value', $customFieldOption->getValue());
         $qb->setParameter('categoryCustomField', $customFieldOption->getCustomField()->getId());
 
-//        $qb->andWhere($qb->expr()->eq('listing.id', 412490));
-//        $qb->setMaxResults(10);
         $qb->getQuery()->execute();
 
         $selectSql = $qb->getQuery()->getSQL();
@@ -92,8 +89,6 @@ $selectSql
         $qb->update();
         $qb->set('listing.category', ':category');
         $qb->setParameter('category', $category->getId());
-        $qb->andWhere($qb->expr()->eq('listing.id', 412490));
-        $qb->setMaxResults(1);
         $qb->resetDQLPart('orderBy');
         $qb->getQuery()->execute();
     }

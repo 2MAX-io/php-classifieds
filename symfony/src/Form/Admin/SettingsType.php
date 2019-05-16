@@ -126,6 +126,12 @@ class SettingsType extends AbstractType
                 new NotBlank(),
             ],
         ]);
+        $builder->add('wordsToRemoveFromTitle', TextareaType::class, [
+            'label' => 'trans.Words to remove from listing title, separated by new line',
+            'required' => true,
+            'constraints' => [
+            ],
+        ]);
         $builder->add('searchPlaceholder', TextType::class, [
             'label' => 'trans.Search examples',
             'required' => true,

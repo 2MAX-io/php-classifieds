@@ -71,6 +71,11 @@ class SettingsDto
     /**
      * @var string|null
      */
+    private $wordsToRemoveFromTitle;
+
+    /**
+     * @var string|null
+     */
     private $searchPlaceholder;
 
     /**
@@ -321,5 +326,15 @@ class SettingsDto
     public function setPaymentGatewayPaymentDescription(?string $paymentGatewayPaymentDescription): void
     {
         $this->paymentGatewayPaymentDescription = $paymentGatewayPaymentDescription;
+    }
+
+    public function getWordsToRemoveFromTitle(): ?string
+    {
+        return $this->wordsToRemoveFromTitle;
+    }
+
+    public function setWordsToRemoveFromTitle(?string $wordsToRemoveFromTitle): void
+    {
+        $this->wordsToRemoveFromTitle = $wordsToRemoveFromTitle;
     }
 }

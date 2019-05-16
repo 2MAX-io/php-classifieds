@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Service\System\Text;
 
+use App\Helper\Str;
 use App\Service\Setting\SettingsService;
 
 class TextService
@@ -67,6 +68,20 @@ class TextService
         }
 
         return $return;
+    }
+
+    public function removeWordsFromTitle(string $string): string
+    {
+        $wordsToRemove = \explode("\n", $this->settingsService->getSettingsDto()->getWordsToRemoveFromTitle());
+        $wordsToRemove = \array_map(function(string $element) {
+            if (\mb_strlen($element) < 2) {
+                return false;
+            }
+
+            return \trim($element);
+        }, $wordsToRemove);
+
+        return trim(Str::replaceIgnoreCase($string, $wordsToRemove, ''));
     }
 
     private function calculateUpperCaseScore(string $text): float

@@ -70,6 +70,10 @@ class SaveListingService
             $this->textService->normalizeUserInput($listing->getTitle())
         );
 
+        $listing->setTitle(
+            $this->textService->removeWordsFromTitle($listing->getTitle())
+        );
+
         if ($listing->getCity()) {
             $listing->setCity(
                 ucwords(

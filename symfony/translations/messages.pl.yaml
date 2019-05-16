@@ -471,3 +471,4 @@ trans:
   'Numer of listings changed by this action would be:': 'Liczba ogłoszeń zmienionych przez tą akcje będzie wynosić'
   Execute action on %number% of listings?: 'Wykonać akcję na %number% ogłoszeniach?'
   'changes:': 'zmienia:'
+  'Words to remove from listing title, separated by new line': 'Słowa do usunięcia z tytułu ogłoszenia, odzielone nową linią'

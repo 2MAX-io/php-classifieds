@@ -36,6 +36,15 @@ class Str
         );
     }
 
+    public static function replaceIgnoreCase(string $string, array $from, string $to): string
+    {
+        return \str_ireplace(
+            $from,
+            array_fill_keys(array_keys($from), $to),
+            $string
+        );
+    }
+
     public static function toInt(string $value): int
     {
         return (int) $value;

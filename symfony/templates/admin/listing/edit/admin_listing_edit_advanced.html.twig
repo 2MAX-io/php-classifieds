@@ -24,7 +24,6 @@
 
                 <a
                         href="{{ path('app_admin_police_log', {'id': listing.id}) }}"
-                        target="_blank"
                         class="btn btn-info mb-1"
                 >
                     {{ 'trans.Police log' | trans }}
@@ -38,8 +37,8 @@
                     {{ 'trans.User' | trans }}
                 </a>
 
-                {{ include('admin/listing/_raise_form.html.twig') }}
-                {{ include('admin/listing/_delete_form.html.twig') }}
+                {{ include('admin/listing/_action/_raise_form.html.twig') }}
+                {{ include('admin/listing/_action/_delete_form.html.twig') }}
             </div>
         </div>
 

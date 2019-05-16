@@ -30,7 +30,7 @@ class AdminListingEditAdvancedController extends AbstractAdminController
             ]);
         }
 
-        return $this->render('admin/listing/admin_listing_edit_advanced.html.twig', [
+        return $this->render('admin/listing/edit/admin_listing_edit_advanced.html.twig', [
             'form' => $form->createView(),
             'listing' => $listing,
         ]);

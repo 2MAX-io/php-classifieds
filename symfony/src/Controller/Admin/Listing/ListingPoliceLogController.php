@@ -19,7 +19,7 @@ class ListingPoliceLogController extends AbstractAdminController
     {
         $this->denyUnlessAdmin();
 
-        return $this->render('admin/listing/listing_police_log.html.twig', [
+        return $this->render('admin/listing/other/listing_police_log.html.twig', [
             'listing' => $listing,
             'policeLogText' => $policeLogIpService->prepareOutput($listing),
         ]);

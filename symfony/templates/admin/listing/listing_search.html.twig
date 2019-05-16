@@ -1,6 +1,6 @@
 {% extends 'admin/base.html.twig' %}
 
-{% import "admin/listing/_admin_macro.html.twig" as adminMacro %}
+{% import "admin/listing/_part/_admin_macro.html.twig" as adminMacro %}
 
 {% block title %}{{ 'trans.Search Engine' | trans }}{% endblock %}
 
@@ -77,8 +77,8 @@
                     </div>
 
                     <div class="col-md-4 mb-2">
-                        <label for="user">{{ 'trans.Category' | trans }}</label>
-                        <select name="category" class="form-control">
+                        <label for="category">{{ 'trans.Category' | trans }}</label>
+                        <select name="category" class="form-control" id="category">
                             {% for categoryId, categoryName in categories %}
                                 <option {{ optionAttr('category', categoryId) }} value="{{ categoryId }}">{{ categoryName }}</option>
                             {% endfor %}
@@ -200,7 +200,7 @@
                             </a>
 
                             {% if adminShowActivate(listing) %}
-                                {{ include('admin/listing/_admin_activate_form.html.twig') }}
+                                {{ include('admin/listing/_action/_admin_activate_form.html.twig') }}
                             {% endif %}
 
                             {% if adminShowReject(listing) %}

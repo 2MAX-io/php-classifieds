@@ -1,6 +1,6 @@
 {% extends 'admin/base.html.twig' %}
 
-{% import "admin/listing/_admin_macro.html.twig" as adminMacro %}
+{% import "admin/listing/_part/_admin_macro.html.twig" as adminMacro %}
 
 {% block title %}{{ 'trans.Activation' | trans }}{% endblock %}
 
@@ -102,7 +102,7 @@
                             {{- 'trans.Edit' | trans -}}
                         </a>
 
-                        {{ include('admin/listing/_admin_activate_form.html.twig') }}
+                        {{ include('admin/listing/_action/_admin_activate_form.html.twig') }}
 
                         <a
                                 href="{{ path('app_admin_listing_reject', {'id': listing.id}) }}"
@@ -172,7 +172,7 @@
         }
 
         function getCheckboxesValues(selector) {
-            var values = [];
+            let values = [];
             $(selector + ':checked').each(function (i, el) {
                 values.push(el.value);
             });

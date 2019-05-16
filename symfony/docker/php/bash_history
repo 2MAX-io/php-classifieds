@@ -252,3 +252,5 @@ composer dump-autoload --optimize -d symfony
 composer dump-env dev
 composer dump-env dev -d symfony
 php symfony/bin/console doctrine:schema:update --force
+php symfony/bin/console doctrine:schema:update --force
+composer update -d symfony

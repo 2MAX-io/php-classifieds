@@ -30,3 +30,18 @@
     {{ parent() }}
 {%- endblock checkbox_radio_label %}
 
+{% block form_row -%}
+    {%- if compound is defined and compound -%}
+        {%- set element = 'fieldset' -%}
+    {%- endif -%}
+    {%- set widget_attr = {} -%}
+    {%- if help is not empty -%}
+        {%- set widget_attr = {attr: {'aria-describedby': id ~"_help"}} -%}
+    {%- endif -%}
+    {%- set form_group_attr = form_group_attr | default({}) |merge({class: (form_group_attr.class|default('') ~ ' form-group')|trim}) -%}
+    <{{ element|default('div') }} {% with { attr: form_group_attr } %}{{ block('attributes') }}{% endwith %}>
+    {{- form_label(form) -}}
+    {{- form_widget(form, widget_attr) -}}
+    {{- form_help(form) -}}
+    </{{ element|default('div') }}>
+{%- endblock form_row %}

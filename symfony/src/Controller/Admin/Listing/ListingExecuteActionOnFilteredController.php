@@ -24,13 +24,23 @@ class ListingExecuteActionOnFilteredController extends AbstractAdminController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $executeActionOnFilteredService->addCustomField($form->get(ApplyCustomFieldType::CUSTOM_FIELD_OPTION)->getData());
+            $action = $form->get(ApplyCustomFieldType::ACTION)->getData();
+
+            if ($action === ApplyCustomFieldType::ACTION_SET_CUSTOM_FIELD_OPTION) {
+                $executeActionOnFilteredService->addCustomField($form->get(ApplyCustomFieldType::CUSTOM_FIELD_OPTION_FIELD)->getData());
+            }
+
+            if ($action === ApplyCustomFieldType::ACTION_SET_CATEGORY) {
+                $executeActionOnFilteredService->setCategory($form->get(ApplyCustomFieldType::CATEGORY_FIELD)->getData());
+            }
 
             return $this->redirect($request->headers->get('referer'));
         }
 
         return $this->render('admin/listing/execute_on_filtered/execute_on_filtered.html.twig', [
             'form' => $form->createView(),
+            'affectedCount' => $executeActionOnFilteredService->getAffectedCount(),
+            'affectedPercentage' => $executeActionOnFilteredService->getAffectedPercentage() * 100,
         ]);
     }
 }

@@ -15,12 +15,51 @@
             <div>{{ 'trans.Make sure you execute action on correctly filtered listings' | trans }}</div>
         </div>
 
+        <div class="alert alert-danger">
+            {{ 'trans.Numer of listings changed by this action would be:' | trans }}
+            {{ affectedCount | thousandsSeparate }}
+
+            {% if affectedPercentage > 1 %}
+                ({{ affectedPercentage | round }}% {{ 'trans.of all' | trans }})
+            {% endif %}
+
+            {% if affectedPercentage > 80 %}
+                <h1 class="text-danger">{{ 'trans.This action will be executed on %percentage%% of listings (almost every listing), are you REALY sure you want to execute it?' | trans({'%percentage%': affectedPercentage}) }}</h1>
+            {% endif %}
+        </div>
+
         <div>
             {{ form_start(form) }}
             {{ form_widget(form) }}
 
-            <button class="btn btn-primary mb-4">{{ button_label|default('trans.Save' | trans) }}</button>
+            <button
+                    onclick="return confirm('{{ 'trans.Execute action on %number% of listings?' | trans({'%number%': affectedCount | thousandsSeparate}) }}');"
+                    class="btn btn-danger"
+            >
+                {{ 'trans.Execute action on filtered listings' | trans }}
+            </button>
+            <span class="badge badge-warning align-middle">
+                {{ 'trans.Numer of listings changed by this action would be:' | trans }}
+                {{ affectedCount | thousandsSeparate }}
+
+                {% if affectedPercentage > 1 %}
+                    ({{ affectedPercentage | round }}% {{ 'trans.of all' | trans }})
+                {% endif %}
+            </span>
             {{ form_end(form) }}
         </div>
     </div>
 {% endblock %}
+
+{% block js %}
+    <script>
+        $('.selectActonInput').on('change', function () {
+            let $select = $(this);
+            let action = $select.val();
+
+            let $actionField = $('.actionField');
+            $actionField.hide();
+            $actionField.filter('[data-for-action="'+action+'"]').show();
+        });
+    </script>
+{% endblock js %}

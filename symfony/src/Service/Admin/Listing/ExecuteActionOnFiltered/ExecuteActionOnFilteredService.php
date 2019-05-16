@@ -7,14 +7,12 @@ namespace App\Service\Admin\Listing\ExecuteActionOnFiltered;
 use App\Entity\Category;
 use App\Entity\CustomFieldOption;
 use App\Entity\Listing;
+use App\Helper\Sql;
 use App\Service\Admin\Listing\AdminListingSearchService;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr\Join;
-use Doctrine\ORM\Query\Parameter;
-use Doctrine\ORM\Query\ParserResult;
 use Doctrine\ORM\QueryBuilder;
 use http\Exception\UnexpectedValueException;
-use ReflectionObject;
 
 class ExecuteActionOnFilteredService
 {
@@ -62,34 +60,16 @@ class ExecuteActionOnFilteredService
         $qb->setParameter(':value', $customFieldOption->getValue());
         $qb->setParameter(':categoryCustomField', $customFieldOption->getCustomField()->getId());
 
-        $query = $qb->getQuery();
-        $reflector = new ReflectionObject($query);
-        $method = $reflector->getMethod('_parse');
-        $method->setAccessible(true);
-        /** @var ParserResult $parserResult */
-        $parserResult = $method->invoke($query);
-
-
         $pdo = $this->em->getConnection();
         $stmt = $pdo->prepare('CREATE TEMPORARY TABLE filtered_id_list (`id` int(11) UNSIGNED NOT NULL, `listing_id` int(11) UNSIGNED NOT NULL);');
         $stmt->execute();
 
         $selectSql = $qb->getQuery()->getSQL();
-
-        $params = [];
-        /** @var Parameter[] $doctrineQueryParamList */
-        $doctrineQueryParamList = $qb->getParameters()->toArray();
-        foreach ($doctrineQueryParamList as $key => $doctrineQueryParam) {
-            foreach ($parserResult->getSqlParameterPositions($doctrineQueryParam->getName()) as $sqlParameterPosition) {
-                $params[$sqlParameterPosition] = $doctrineQueryParam->getValue(); // TODO: incorrect keys
-            }
-        }
-
         $stmt = $pdo->prepare("
 INSERT INTO filtered_id_list (id, listing_id)
 $selectSql
 ");
-        $stmt->execute($params);
+        $stmt->execute(Sql::getParametersFromQb($qb));
 
         $pdo = $this->em->getConnection();
         $stmt = $pdo->prepare("
@@ -100,7 +80,6 @@ SELECT id, listing_id, :customField, :customFieldOption, :val FROM filtered_id_l
         $stmt->bindValue(':customFieldOption', $customFieldOption->getId());
         $stmt->bindValue(':val', $customFieldOption->getValue());
         $stmt->execute();
-//        die(\App\Helper\Sql::replaceParams($selectSql, $params));
     }
 
     public function setCategory(Category $category): void
@@ -127,18 +106,11 @@ SET category_id = :category_id
         $qb->addSelect("listing.id");
         $selectSql = $qb->getQuery()->getSQL();
 
-        $params = [];
-        /** @var Parameter[] $doctrineQueryParamList */
-        $doctrineQueryParamList = $qb->getParameters()->toArray();
-        foreach ($doctrineQueryParamList as $key => $doctrineQueryParam) {
-            $params[] = $doctrineQueryParam->getValue(); // TODO: incorrect keys
-        }
-
         $stmt = $pdo->prepare("
 INSERT INTO filtered_id_list (id)
 $selectSql
 ");
-        $stmt->execute($params);
+        $stmt->execute(Sql::getParametersFromQb($qb));
     }
 
     public function getQuery(): QueryBuilder

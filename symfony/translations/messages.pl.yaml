@@ -470,3 +470,4 @@ trans:
   This action will be executed on %percentage%% of listings (almost every listing), are you REALY sure you want to execute it?: 'Akcja zostanie wykonana na %percentage%% ogłoszeń (prawie wszystkie ogłoszenia), jesteś NAPRAWDĘ pewny że chcesz ją wykonać?'
   'Numer of listings changed by this action would be:': 'Liczba ogłoszeń zmienionych przez tą akcje będzie wynosić'
   Execute action on %number% of listings?: 'Wykonać akcję na %number% ogłoszeniach?'
+  'changes:': 'zmienia:'

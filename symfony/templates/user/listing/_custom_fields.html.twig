@@ -21,8 +21,6 @@
         });
     };
 
-    customFields.loadFromBackend();
-
     $('.formCategory').on('change', function () {
         if (customFields.loadedCategory === parseInt($('.formCategory').val())){
             return;

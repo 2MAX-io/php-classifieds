@@ -71,13 +71,6 @@ class PaymentService
         $paymentDto = new PaymentDto();
         $paymentDto->setCurrency($this->settingsService->getCurrency());
         $paymentDto->setAmount($featuredPackage->getPrice());
-        $paymentDto->setGatewayCancelUrl(
-            $this->urlGenerator->generate(
-                'app_user_feature_listing',
-                ['id' => $listing->getId()],
-                UrlGeneratorInterface::ABSOLUTE_URL
-            )
-        );
         $paymentDto->setUser($this->currentUserService->getUser());
         $paymentDto = $this->createPayment($paymentDto);
 

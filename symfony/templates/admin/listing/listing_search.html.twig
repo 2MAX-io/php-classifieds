@@ -80,7 +80,7 @@
                         <label for="user">{{ 'trans.Category' | trans }}</label>
                         <select name="category" class="form-control">
                             {% for categoryId, categoryName in categories %}
-                                <option value="{{ categoryId }}">{{ categoryName }}</option>
+                                <option {{ optionAttr('category', categoryId) }} value="{{ categoryId }}">{{ categoryName }}</option>
                             {% endfor %}
                         </select>
                     </div>

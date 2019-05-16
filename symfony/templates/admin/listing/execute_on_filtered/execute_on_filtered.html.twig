@@ -53,13 +53,19 @@
 
 {% block js %}
     <script>
-        $('.selectActonInput').on('change', function () {
-            let $select = $(this);
+        let showActionFields = function () {
+            let $select = $('.selectActonInput');
             let action = $select.val();
 
             let $actionField = $('.actionField');
             $actionField.hide();
             $actionField.filter('[data-for-action="'+action+'"]').show();
+        };
+
+        $('.selectActonInput').on('change', function () {
+            showActionFields();
         });
+
+        showActionFields();
     </script>
 {% endblock js %}

@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace App\Controller\Admin\Listing;
 
 use App\Controller\Admin\Base\AbstractAdminController;
-use App\Form\Admin\ExecuteAction\ApplyCustomFieldType;
+use App\Form\Admin\ExecuteAction\ExecuteActionType;
+use App\Form\Admin\ExecuteAction\ExecuteActionDto;
 use App\Service\Admin\Listing\ExecuteActionOnFiltered\ExecuteActionOnFilteredService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,18 +21,19 @@ class ListingExecuteActionOnFilteredController extends AbstractAdminController
     {
         $this->denyUnlessAdmin();
 
-        $form = $this->createForm(ApplyCustomFieldType::class);
+        $executeActionDto = new ExecuteActionDto();
+        $form = $this->createForm(ExecuteActionType::class, $executeActionDto);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $action = $form->get(ApplyCustomFieldType::ACTION)->getData();
+            $action = $executeActionDto->getAction();
 
-            if ($action === ApplyCustomFieldType::ACTION_SET_CUSTOM_FIELD_OPTION) {
-                $executeActionOnFilteredService->addCustomField($form->get(ApplyCustomFieldType::CUSTOM_FIELD_OPTION_FIELD)->getData());
+            if ($action === ExecuteActionType::ACTION_SET_CUSTOM_FIELD_OPTION) {
+                $executeActionOnFilteredService->addCustomField($executeActionDto->getCustomFieldOption());
             }
 
-            if ($action === ApplyCustomFieldType::ACTION_SET_CATEGORY) {
-                $executeActionOnFilteredService->setCategory($form->get(ApplyCustomFieldType::CATEGORY_FIELD)->getData());
+            if ($action === ExecuteActionType::ACTION_SET_CATEGORY) {
+                $executeActionOnFilteredService->setCategory($executeActionDto->getCategory());
             }
 
             return $this->redirect($request->headers->get('referer'));

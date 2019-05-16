@@ -12,9 +12,11 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
-class ApplyCustomFieldType extends AbstractType
+class ExecuteActionType extends AbstractType
 {
     public const CUSTOM_FIELD_OPTION_FIELD = 'customFieldOption';
     public const CATEGORY_FIELD = 'category';
@@ -84,7 +86,28 @@ class ApplyCustomFieldType extends AbstractType
     {
         $resolver->setDefaults([
             'required' => false,
-            'data_class' => null,
+            'data_class' => ExecuteActionDto::class,
+            'constraints' => [
+                new Callback(['callback' => function (ExecuteActionDto $executeActionDto, ExecutionContextInterface $context) {
+                    $action = $executeActionDto->getAction();
+
+                    if ($action === static::ACTION_SET_CUSTOM_FIELD_OPTION) {
+                        if (empty($executeActionDto->getCustomFieldOption())) {
+                            $context->buildViolation('This value should not be blank.')
+                                ->atPath(static::CUSTOM_FIELD_OPTION_FIELD)
+                                ->addViolation();
+                        }
+                    }
+
+                    if ($action === static::ACTION_SET_CATEGORY) {
+                        if (empty($executeActionDto->getCategory())) {
+                            $context->buildViolation('This value should not be blank.')
+                                ->atPath(static::CATEGORY_FIELD)
+                                ->addViolation();
+                        }
+                    }
+                }])
+            ],
         ]);
     }
 }

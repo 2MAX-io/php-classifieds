@@ -186,6 +186,18 @@ class CustomField
     }
 
     /**
+     * @return ListingCustomFieldValue|null
+     */
+    public function getListingCustomFieldValueFirst(): ?ListingCustomFieldValue
+    {
+        if ($this->getListingCustomFieldValues()->first()) {
+            return $this->getListingCustomFieldValues()->first();
+        }
+
+        return null;
+    }
+
+    /**
      * @return Collection|ListingCustomFieldValue[]
      */
     public function getListingCustomFieldValuesArray(): array

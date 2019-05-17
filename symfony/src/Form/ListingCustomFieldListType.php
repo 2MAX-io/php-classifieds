@@ -6,16 +6,15 @@ namespace App\Form;
 
 use App\Entity\CustomField;
 use App\Entity\Listing;
+use App\Entity\ListingCustomFieldValue;
 use App\Service\Listing\CustomField\CustomFieldsForListingFormService;
 use Minwork\Helper\Arr;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 class ListingCustomFieldListType extends AbstractType
@@ -45,15 +44,12 @@ class ListingCustomFieldListType extends AbstractType
 
         foreach ($this->customFieldsForListingFormService->getFields($listing->getCategory()->getId(), $listingId) as $customField) {
 
-
-            $value = $customField->getListingCustomFieldValues()->first() ? $customField->getListingCustomFieldValues()->first()->getValue() : null;
-
             if (\in_array($customField->getType(), [CustomField::TYPE_SELECT_SINGLE, CustomField::TYPE_SELECT])) {
                 $builder->add($customField->getId(), ChoiceType::class, [
                     'label' => $customField->getName(),
                     'placeholder' => 'trans.Select',
                     'choices' => $this->getChoices($customField),
-                    'empty_data' => $value,
+                    'data' => $this->getValue($customField),
                     'constraints' => $this->getConstraints($customField),
                 ]);
             }
@@ -65,7 +61,7 @@ class ListingCustomFieldListType extends AbstractType
                     'expanded' => true,
                     'multiple' => true,
                     'choices' => $this->getChoices($customField),
-//                'empty_data' => $value,
+                    'data' => $this->getValue($customField),
                     'constraints' => $this->getConstraints($customField),
                 ]);
             }
@@ -73,7 +69,7 @@ class ListingCustomFieldListType extends AbstractType
             if (\in_array($customField->getType(), [CustomField::TYPE_INTEGER_RANGE, CustomField::TYPE_YEAR_RANGE])) {
                 $builder->add($customField->getId(), IntegerType::class, [
                     'label' => $customField->getName(),
-//                'empty_data' => $value,
+                    'data' => $this->getValue($customField),
                     'constraints' => $this->getConstraints($customField),
                 ]);
             }
@@ -91,26 +87,6 @@ class ListingCustomFieldListType extends AbstractType
 //                ],
 //            ]);
 //        }
-
-//        $builder->add('zzz1', TextType::class, [
-//            'label' => 'trans.zz',
-//            'empty_data' => '',
-//            'constraints' => [
-////                new NotBlank(),
-////                new Length(['min' => 5]),
-//            ],
-//        ]);
-//        $builder->add('zzz2', ChoiceType::class, [
-//            'label' => 'trans.check',
-//            'multiple' => true,
-//            'expanded' => true,
-//            'choices' => [
-//                'asdf' => 1,
-//            ],
-//            'constraints' => [
-////                new NotBlank(),
-//            ],
-//        ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
@@ -150,5 +126,31 @@ class ListingCustomFieldListType extends AbstractType
         }
 
         return $constraints;
+    }
+
+    /**
+     * @return array|string|null
+     */
+    private function getValue(CustomField $customField)
+    {
+        if (!$customField->getListingCustomFieldValueFirst()) {
+            return null;
+        }
+
+        if (\in_array($customField->getType(), [CustomField::TYPE_SELECT_SINGLE, CustomField::TYPE_SELECT])) {
+            return '__form_custom_field_option_id_' . $customField->getListingCustomFieldValueFirst()->getCustomFieldOption()->getId();
+        }
+
+        if (\in_array($customField->getType(), [CustomField::TYPE_INTEGER_RANGE, CustomField::TYPE_YEAR_RANGE])) {
+            return $customField->getListingCustomFieldValueFirst()->getValue();
+        }
+
+        if (\in_array($customField->getType(), [CustomField::TYPE_CHECKBOX_MULTIPLE])) {
+            return \array_map(function(ListingCustomFieldValue $customFieldValue) {
+                return '__form_custom_field_option_id_' . $customFieldValue->getCustomFieldOption()->getId();
+            }, $customField->getListingCustomFieldValues()->toArray());
+        }
+
+        throw new \UnexpectedValueException('custom field type not found');
     }
 }

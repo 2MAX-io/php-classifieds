@@ -16,6 +16,7 @@ use App\Service\Listing\Save\ListingFileUploadService;
 use App\Service\Log\PoliceLogIpService;
 use App\Service\System\Pagination\PaginationService;
 use App\Service\User\Listing\UserListingListService;
+use Minwork\Helper\Arr;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -75,7 +76,7 @@ class UserListingController extends AbstractUserController
         if ($form->isSubmitted() && $form->isValid()) {
             $customFieldsForListingFormService->saveCustomFieldsToListing(
                 $listing,
-                $request->request->get('form_custom_field', [])
+                Arr::getNestedElement($request->request->all(), ['listing', 'customFieldList'])
             );
 
             $listing->setUser($currentUserService->getUser());
@@ -149,7 +150,7 @@ class UserListingController extends AbstractUserController
             }
             $customFieldsForListingFormService->saveCustomFieldsToListing(
                 $listing,
-                $request->request->get('form_custom_field', [])
+                Arr::getNestedElement($request->request->all(), ['listing', 'customFieldList']) // listing[customFieldList]
             );
 
             $createListingService->setFormDependent($listing, $form);

@@ -15,7 +15,7 @@
                 {% endif %}
                 <select
                         id="custom_field_{{ customField.id }}"
-                        name="form_custom_field[{{ customField.id }}]"
+                        name="listing[customFieldList][{{ customField.id }}]"
                         class="form-control"
                         {% if customField.required %}required{% endif %}
                 >
@@ -45,7 +45,7 @@
                 {% endif %}
 
                 <input type="number"
-                       name="form_custom_field[{{ customField.id }}]"
+                       name="listing[customFieldList][{{ customField.id }}]"
                        value="{{ customField.listingCustomFieldValues.first.value | default }}"
                        id="custom_field_{{ customField.id }}"
                        class="form-control"
@@ -63,7 +63,7 @@
                 {% for option in customField.customFieldOptions %}
                     <div class="custom-control custom-checkbox">
                         <input type="checkbox"
-                               name="form_custom_field[{{ customField.id }}][]"
+                               name="listing[customFieldList][{{ customField.id }}][]"
                                value="__form_custom_field_option_id_{{ option.id }}"
                                id="custom_field_{{ customField.id }}_option_{{ option.id }}"
                                class="custom-control-input"
@@ -85,7 +85,7 @@
                 {% endif %}
 
                 <select
-                        name="form_custom_field[{{ customField.id }}]"
+                        name="listing[customFieldList][{{ customField.id }}]"
                         class="form-control"
                         {% if customField.required %}required{% endif %}
                 >

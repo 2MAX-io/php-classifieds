@@ -11,7 +11,7 @@
             $('.formCustomFieldsLoaded').remove();
             $(data).insertAfter('.formCustomFieldsHidden');
 
-            $('.formCustomFieldsLoaded').find('[name^="form_custom_field"]').each(function(){
+            $('.formCustomFieldsLoaded').find('[name^="listing[customFieldList]"]').each(function(){
                 let $input = $(this);
 
                 if (customFields.values[$input.attr('name')] && customFields.values[$input.attr('name')].trim() !== '')  {
@@ -26,7 +26,7 @@
             return;
         }
 
-        $('.formCustomFieldsLoaded').find('[name^="form_custom_field"]').each(function(){
+        $('.formCustomFieldsLoaded').find('[name^="listing[customFieldList]"]').each(function(){
             let $input = $(this);
 
             if ($input.val().trim() === ''){

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "cfb878085f50e1d43f3e9a29bf51f8c6",
+    "content-hash": "b3bc00bd1e45933581158c5114d4efaa",
     "packages": [
         {
             "name": "ausi/slug-generator",
@@ -2002,6 +2002,57 @@
             "description": "Glide adapter for Symfony",
             "homepage": "http://glide.thephpleague.com",
             "time": "2018-02-10T14:10:07+00:00"
+        },
+        {
+            "name": "minwork/array",
+            "version": "v1.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/minwork/array.git",
+                "reference": "cab8223d09dc27ec97666587757173f51572aa76"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/minwork/array/zipball/cab8223d09dc27ec97666587757173f51572aa76",
+                "reference": "cab8223d09dc27ec97666587757173f51572aa76",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1"
+            },
+            "require-dev": {
+                "php-coveralls/php-coveralls": "^2.1",
+                "phpunit/phpunit": "^7.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Minwork\\Helper\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Christopher Kalkhoff",
+                    "email": "krzysztof.kalkhoff@gmail.com",
+                    "role": "Founder"
+                }
+            ],
+            "description": "Pack of advanced array functions specifically tailored for: associative (assoc) array, multidimensional array, array of objects and handling nested array elements",
+            "keywords": [
+                "Associative",
+                "array",
+                "arrays",
+                "assoc",
+                "helper",
+                "multidimensional",
+                "objects",
+                "php 7"
+            ],
+            "time": "2019-05-16T05:47:39+00:00"
         },
         {
             "name": "monolog/monolog",

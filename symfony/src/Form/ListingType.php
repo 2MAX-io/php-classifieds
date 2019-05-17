@@ -144,6 +144,10 @@ class ListingType extends AbstractType
             'label' => 'trans.Pictures',
             'block_name' => 'simple',
         ]);
+        $builder->add('customFieldList', ListingCustomFieldListType::class, [
+            'mapped' => false,
+            'required' => false,
+        ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
@@ -151,6 +155,7 @@ class ListingType extends AbstractType
         $resolver->setDefaults(
             [
                 'data_class' => Listing::class,
+                'allow_extra_fields' => true, // todo: remove
                 'constraints' => [
                     new Callback(['callback' => function (Listing $listing, ExecutionContextInterface $context) {
                         if (empty($listing->getPhone()) && (empty($listing->getEmail()) || !$listing->getEmailShow())) {

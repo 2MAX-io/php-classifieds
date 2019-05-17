@@ -9,6 +9,7 @@ use App\Entity\Listing;
 use App\Form\Admin\AdminListingEditType;
 use App\Service\Listing\CustomField\CustomFieldsForListingFormService;
 use App\Service\Listing\Save\SaveListingService;
+use Minwork\Helper\Arr;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -31,7 +32,7 @@ class AdminListingEditController extends AbstractAdminController
         if ($form->isSubmitted() && $form->isValid()) {
             $customFieldsForListingFormService->saveCustomFieldsToListing(
                 $listing,
-                $request->request->get('form_custom_field', [])
+                Arr::getNestedElement($request->request->all(), ['listing', 'customFieldList'])
             );
             $createListingService->saveSearchText($listing);
             $createListingService->updateSlug($listing);

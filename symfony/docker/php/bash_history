@@ -254,3 +254,4 @@ composer dump-env dev -d symfony
 php symfony/bin/console doctrine:schema:update --force
 php symfony/bin/console doctrine:schema:update --force
 composer update -d symfony
+composer require -d symfony minwork/array

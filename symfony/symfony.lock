@@ -138,6 +138,9 @@
     "league/glide-symfony": {
         "version": "1.0.3"
     },
+    "minwork/array": {
+        "version": "v1.3.0"
+    },
     "monolog/monolog": {
         "version": "1.24.0"
     },

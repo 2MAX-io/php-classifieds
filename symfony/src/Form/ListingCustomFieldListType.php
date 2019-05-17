@@ -18,6 +18,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ListingCustomFieldListType extends AbstractType
 {
@@ -36,11 +37,21 @@ class ListingCustomFieldListType extends AbstractType
      */
     private $categoryRepository;
 
-    public function __construct(RequestStack $requestStack, CustomFieldsForListingFormService $customFieldsForListingFormService, CategoryRepository $categoryRepository)
-    {
+    /**
+     * @var TranslatorInterface
+     */
+    private $trans;
+
+    public function __construct(
+        RequestStack $requestStack,
+        CustomFieldsForListingFormService $customFieldsForListingFormService,
+        CategoryRepository $categoryRepository,
+        TranslatorInterface $trans
+    ) {
         $this->requestStack = $requestStack;
         $this->customFieldsForListingFormService = $customFieldsForListingFormService;
         $this->categoryRepository = $categoryRepository;
+        $this->trans = $trans;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -57,7 +68,8 @@ class ListingCustomFieldListType extends AbstractType
             if (\in_array($customField->getType(), [CustomField::TYPE_SELECT_SINGLE, CustomField::TYPE_SELECT])) {
                 $builder->add($customField->getId(), ChoiceType::class, [
                     'label' => $customField->getName(),
-                    'placeholder' => 'trans.Select',
+                    'placeholder' => $this->trans->trans('trans.Select'),
+                    'translation_domain' => false,
                     'choices' => $this->getChoices($customField),
                     'data' => $this->getValue($customField),
                     'constraints' => $this->getConstraints($customField),
@@ -68,9 +80,10 @@ class ListingCustomFieldListType extends AbstractType
             if (\in_array($customField->getType(), [CustomField::TYPE_CHECKBOX_MULTIPLE])) {
                 $builder->add($customField->getId(), ChoiceType::class, [
                     'label' => $customField->getName(),
-                    'placeholder' => 'trans.Select',
+                    'placeholder' => $this->trans->trans('trans.Select'),
                     'expanded' => true,
                     'multiple' => true,
+                    'translation_domain' => false,
                     'choices' => $this->getChoices($customField),
                     'data' => $this->getValue($customField),
                     'constraints' => $this->getConstraints($customField),
@@ -81,6 +94,7 @@ class ListingCustomFieldListType extends AbstractType
             if (\in_array($customField->getType(), [CustomField::TYPE_INTEGER_RANGE, CustomField::TYPE_YEAR_RANGE])) {
                 $builder->add($customField->getId(), IntegerType::class, [
                     'label' => $customField->getName(),
+                    'translation_domain' => false,
                     'data' => $this->getValue($customField),
                     'constraints' => $this->getConstraints($customField),
                     'required' => $customField->getRequired(),

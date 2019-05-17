@@ -8,9 +8,9 @@
         let categoryId = parseInt($('.formCategory').val());
         customFields.loadedCategory = categoryId;
         $.get(Routing.generate('app_listing_get_custom_fields', {listingId: listingId, categoryId: categoryId}), function (html) {
-            $('.formCustomFieldsHidden').html(html);
+            $('.formCustomFieldList').html(html);
 
-            $('.formCustomFieldsHidden').find('[name^="listing[customFieldList]"]').each(function(){
+            $('.formCustomFieldList').find('[name^="listing[customFieldList]"]').each(function(){
                 let $input = $(this);
 
                 if (customFields.values[$input.attr('name')] && customFields.values[$input.attr('name')].trim() !== '')  {
@@ -25,7 +25,7 @@
             return;
         }
 
-        $('.formCustomFieldsHidden').find('[name^="listing[customFieldList]"]').each(function(){
+        $('.formCustomFieldList').find('[name^="listing[customFieldList]"]').each(function(){
             let $input = $(this);
 
             if ($input.val().trim() === ''){
@@ -38,7 +38,7 @@
         customFields.loadFromBackend();
     });
     
-    if ($('.formCustomFieldsHidden').find('.form-group').length < 1) {
+    if ($('.formCustomFieldList').find('.form-group').length < 1) {
         customFields.loadFromBackend();
     }
 

@@ -188,7 +188,7 @@ class ListingCustomFieldListType extends AbstractType
     private function getCategory(Listing $listing): ?Category
     {
         $post = $this->requestStack->getMasterRequest()->request->all();
-        $categoryId = Arr::getNestedElement($post, ['listing', 'category']) ?? false;
+        $categoryId = Arr::getNestedElement($post, [ListingType::LISTING_FIELD, ListingType::CATEGORY_FIELD]) ?? false;
         $category = $this->categoryRepository->find((int) $categoryId);
 
         if ($category) {

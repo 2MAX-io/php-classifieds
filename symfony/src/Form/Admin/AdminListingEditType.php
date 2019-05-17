@@ -74,7 +74,7 @@ class AdminListingEditType extends AbstractType
         $builder->add('customFields', HiddenType::class, [
             'mapped' => false,
             'attr' => [
-                'class' => 'formCustomFieldsHidden'
+                'class' => 'formCustomFieldList'
             ]
         ]);
     }

@@ -33,6 +33,7 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 class ListingType extends AbstractType
 {
     public const LISTING_FIELD = 'listing';
+    public const CATEGORY_FIELD = 'category';
 
     /**
      * @var ValidUntilSetService
@@ -131,7 +132,7 @@ class ListingType extends AbstractType
             'listingEntity' => $options['data'],
             'mapped' => false,
             'attr' => [
-                'class' => 'formCustomFieldsHidden'
+                'class' => 'formCustomFieldList'
             ],
         ]);
         $builder->add('file', FileSimpleType::class, [
@@ -154,7 +155,6 @@ class ListingType extends AbstractType
         $resolver->setDefaults(
             [
                 'data_class' => Listing::class,
-                'allow_extra_fields' => true, // todo: remove
                 'constraints' => [
                     new Callback(['callback' => function (Listing $listing, ExecutionContextInterface $context) {
                         if (empty($listing->getPhone()) && (empty($listing->getEmail()) || !$listing->getEmailShow())) {

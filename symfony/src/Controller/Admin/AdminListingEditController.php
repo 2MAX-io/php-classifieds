@@ -34,7 +34,7 @@ class AdminListingEditController extends AbstractAdminController
         if ($form->isSubmitted() && $form->isValid()) {
             $customFieldsForListingFormService->saveCustomFieldsToListing(
                 $listing,
-                Arr::getNestedElement($request->request->all(), [ListingType::LISTING_FIELD, ListingCustomFieldListType::CUSTOM_FIELD_LIST_FIELD])
+                Arr::getNestedElement($request->request->all(), [ListingType::LISTING_FIELD, ListingCustomFieldListType::CUSTOM_FIELD_LIST_FIELD]) ?? []
             );
             $createListingService->saveSearchText($listing);
             $createListingService->updateSlug($listing);

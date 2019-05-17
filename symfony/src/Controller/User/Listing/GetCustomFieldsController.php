@@ -26,8 +26,8 @@ class GetCustomFieldsController extends AbstractUserController
         CurrentUserService $currentUserService,
         FormFactoryInterface $formFactory
     ): Response {
-        $listingId = $request->query->get('listingId', null);
         $listing = null;
+        $listingId = $request->query->get('listingId', null);
         if ($listingId) {
             $listing = $this->getDoctrine()->getRepository(Listing::class)->find($listingId);
 
@@ -45,13 +45,22 @@ class GetCustomFieldsController extends AbstractUserController
             $listing->setCategory($category);
         }
 
-        $formBuilder = $formFactory->createNamedBuilder(ListingType::LISTING_FIELD, FormType::class, null, [
-            'csrf_protection' => false,
-        ]);
-        $formBuilder->add(ListingCustomFieldListType::CUSTOM_FIELD_LIST_FIELD, ListingCustomFieldListType::class, [
-            'listingEntity' => $listing,
+        $formBuilder = $formFactory->createNamedBuilder(
+            ListingType::LISTING_FIELD,
+            FormType::class,
+            null,
+            [
+                'csrf_protection' => false,
+            ]
+        );
+        $formBuilder->add(
+            ListingCustomFieldListType::CUSTOM_FIELD_LIST_FIELD,
+            ListingCustomFieldListType::class,
+            [
+                'listingEntity' => $listing,
 
-        ]);
+            ]
+        );
 
         return $this->render(
             'user/listing/get_custom_fields.html.twig',

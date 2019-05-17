@@ -61,6 +61,7 @@ class ListingCustomFieldListType extends AbstractType
                     'choices' => $this->getChoices($customField),
                     'data' => $this->getValue($customField),
                     'constraints' => $this->getConstraints($customField),
+                    'required' => $customField->getRequired(),
                 ]);
             }
 
@@ -73,6 +74,7 @@ class ListingCustomFieldListType extends AbstractType
                     'choices' => $this->getChoices($customField),
                     'data' => $this->getValue($customField),
                     'constraints' => $this->getConstraints($customField),
+                    'required' => false,
                 ]);
             }
 
@@ -81,6 +83,7 @@ class ListingCustomFieldListType extends AbstractType
                     'label' => $customField->getName(),
                     'data' => $this->getValue($customField),
                     'constraints' => $this->getConstraints($customField),
+                    'required' => $customField->getRequired(),
                 ]);
             }
         }
@@ -92,7 +95,6 @@ class ListingCustomFieldListType extends AbstractType
             [
                 'allow_extra_fields' => true, // todo: remove
                 'data_class' => null,
-                'required' => false,
                 'listingEntity' => null,
                 'label' => false,
             ]

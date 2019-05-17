@@ -128,7 +128,6 @@ class ListingType extends AbstractType
         $builder->add('customFieldList', ListingCustomFieldListType::class, [
             'listingEntity' => $options['data'],
             'mapped' => false,
-            'required' => false,
             'attr' => [
                 'class' => 'formCustomFieldsHidden'
             ],

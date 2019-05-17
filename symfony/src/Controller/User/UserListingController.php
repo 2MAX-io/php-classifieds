@@ -76,7 +76,7 @@ class UserListingController extends AbstractUserController
         if ($form->isSubmitted() && $form->isValid()) {
             $customFieldsForListingFormService->saveCustomFieldsToListing(
                 $listing,
-                Arr::getNestedElement($request->request->all(), ['listing', 'customFieldList'])
+                Arr::getNestedElement($request->request->all(), ['listing', 'customFieldList']) ?? [] // listing[customFieldList]
             );
 
             $listing->setUser($currentUserService->getUser());
@@ -150,7 +150,7 @@ class UserListingController extends AbstractUserController
             }
             $customFieldsForListingFormService->saveCustomFieldsToListing(
                 $listing,
-                Arr::getNestedElement($request->request->all(), ['listing', 'customFieldList']) // listing[customFieldList]
+                Arr::getNestedElement($request->request->all(), ['listing', 'customFieldList']) ?? [] // listing[customFieldList]
             );
 
             $createListingService->setFormDependent($listing, $form);

@@ -35,9 +35,13 @@ class ListingCustomFieldListType extends AbstractType
         $this->customFieldsForListingFormService = $customFieldsForListingFormService;
     }
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $listing = $this->getListingEntity($options);
+        if (!$listing->getCategory()) {
+            return;
+        }
+
         $listingId = $listing ? $listing->getId() : null;
         $request = $this->requestStack->getMasterRequest();
         $customFieldList = Arr::getNestedElement($request->request->all(), ['listing', 'customFieldList']) ?? [];

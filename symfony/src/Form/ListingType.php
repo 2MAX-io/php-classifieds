@@ -145,6 +145,7 @@ class ListingType extends AbstractType
             'block_name' => 'simple',
         ]);
         $builder->add('customFieldList', ListingCustomFieldListType::class, [
+            'listingEntity' => $options['data'],
             'mapped' => false,
             'required' => false,
         ]);

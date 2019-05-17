@@ -161,7 +161,7 @@
                     {{ 'trans.Listing identifier' | trans }}: {{ listing.id }}
 
                     <div class="float-md-right">
-                        {{ 'trans.Views' | trans }}: {{ listingShowDto.viewsCount+1 | thousandsSeparate }}
+                        {{ 'trans.Views' | trans }}: {{ (listingShowDto.viewsCount+1) | thousandsSeparate }}
                     </div>
                 </div>
                 <!-- end main content -->
@@ -275,7 +275,7 @@
                                 </div>
 
                                 <div class="col-sm-8 col-md-7">
-                                    {{ listingShowDto.viewsCount+1 | thousandsSeparate }}
+                                    {{ (listingShowDto.viewsCount+1) | thousandsSeparate }}
                                 </div>
                             </div>
                         </div>
@@ -363,7 +363,7 @@
                         {{ 'trans.Listing identifier' | trans }}: {{ listing.id }}
                     </div>
                     <div>
-                        {{ 'trans.Views' | trans }}: {{ listingShowDto.viewsCount+1 | thousandsSeparate }}
+                        {{ 'trans.Views' | trans }}: {{ (listingShowDto.viewsCount+1) | thousandsSeparate }}
                     </div>
                 </div>
             </div>

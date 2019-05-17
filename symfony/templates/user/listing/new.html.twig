@@ -6,7 +6,7 @@
 <div class="container mt-4">
     <div class="row">
         <div class="col-md-4 col-lg-3 mb-4">
-            {% include 'user/listing/user_navigation_card.html.twig' %}
+            {% include 'user/listing/_part/user_navigation_card.html.twig' %}
         </div>
 
         <div class="col-md-8 col-lg-9">
@@ -19,7 +19,7 @@
 {% endblock %}
 
  {% block js %}
-     {% include 'user/listing/_custom_fields.html.twig' %}
-     {% include 'user/listing/_file_upload.html.twig' %}
-     {% include 'user/listing/_category_select.html.twig' %}
+     {% include 'user/listing/_part/_custom_fields.html.twig' %}
+     {% include 'user/listing/_part/_file_upload.html.twig' %}
+     {% include 'user/listing/_part/_category_select.html.twig' %}
  {% endblock %}

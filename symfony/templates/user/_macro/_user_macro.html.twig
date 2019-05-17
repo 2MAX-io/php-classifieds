@@ -14,15 +14,15 @@
 
         {% if not listing.adminRejected and listing.status != constant('\App\\Entity\\Listing::STATUS_EXPIRED') %}
             {% if listing.userDeactivated %}
-                {{ include('user/listing/_activate_form.html.twig') }}
+                {{ include('user/listing/_action/_activate_form.html.twig') }}
             {% else %}
-                {{ include('user/listing/_deactivate_form.html.twig') }}
+                {{ include('user/listing/_action/_deactivate_form.html.twig') }}
             {% endif %}
         {% endif %}
 
     {% endif %}
 
     {% if listing.userDeactivated or listing.adminRemoved or listing.adminRejected or listing.status == constant('\App\\Entity\\Listing::STATUS_EXPIRED') %}
-        {{ include('user/listing/_delete_form.html.twig') }}
+        {{ include('user/listing/_action/_delete_form.html.twig') }}
     {% endif %}
 {% endmacro %}

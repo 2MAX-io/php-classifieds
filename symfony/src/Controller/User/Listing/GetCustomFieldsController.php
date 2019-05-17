@@ -63,7 +63,7 @@ class GetCustomFieldsController extends AbstractUserController
         );
 
         return $this->render(
-            'user/listing/get_custom_fields.html.twig',
+            'user/listing/other/get_custom_fields.html.twig',
             [
                 'form' => $formBuilder->getForm()->createView(),
             ]

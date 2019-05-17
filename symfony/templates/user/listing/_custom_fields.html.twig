@@ -38,6 +38,9 @@
 
         customFields.loadFromBackend();
     });
+    
+    if ($('.formCustomFieldsHidden').find('.form-group').length < 1) {
+        customFields.loadFromBackend();
+    }
 
-    customFields.loadFromBackend();
 </script>

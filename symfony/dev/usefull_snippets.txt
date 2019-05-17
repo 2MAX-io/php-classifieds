@@ -1,2 +1,5 @@
 
 die(\App\Helper\Sql::replaceParams($selectSql, $params));
+
+
+$("form").attr('novalidate', 'novalidate');

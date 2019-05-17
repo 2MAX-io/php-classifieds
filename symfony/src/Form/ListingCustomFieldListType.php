@@ -4,15 +4,18 @@ declare(strict_types=1);
 
 namespace App\Form;
 
+use App\Entity\Category;
 use App\Entity\CustomField;
 use App\Entity\Listing;
 use App\Entity\ListingCustomFieldValue;
+use App\Repository\CategoryRepository;
 use App\Service\Listing\CustomField\CustomFieldsForListingFormService;
 use Minwork\Helper\Arr;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -29,24 +32,31 @@ class ListingCustomFieldListType extends AbstractType
      */
     private $customFieldsForListingFormService;
 
-    public function __construct(RequestStack $requestStack, CustomFieldsForListingFormService $customFieldsForListingFormService)
+    /**
+     * @var CategoryRepository
+     */
+    private $categoryRepository;
+
+    public function __construct(RequestStack $requestStack, CustomFieldsForListingFormService $customFieldsForListingFormService, CategoryRepository $categoryRepository)
     {
         $this->requestStack = $requestStack;
         $this->customFieldsForListingFormService = $customFieldsForListingFormService;
+        $this->categoryRepository = $categoryRepository;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        $request = $this->requestStack->getMasterRequest();
         $listing = $this->getListingEntity($options);
-        if (!$listing->getCategory()) {
+        $category = $this->getCategory($request, $listing);
+        if (!$category) {
             return;
         }
 
         $listingId = $listing ? $listing->getId() : null;
-        $request = $this->requestStack->getMasterRequest();
         $customFieldList = Arr::getNestedElement($request->request->all(), ['listing', 'customFieldList']) ?? [];
 
-        foreach ($this->customFieldsForListingFormService->getFields($listing->getCategory()->getId(), $listingId) as $customField) {
+        foreach ($this->customFieldsForListingFormService->getFields($category->getId(), $listingId) as $customField) {
 
             if (\in_array($customField->getType(), [CustomField::TYPE_SELECT_SINGLE, CustomField::TYPE_SELECT])) {
                 $builder->add($customField->getId(), ChoiceType::class, [
@@ -156,5 +166,21 @@ class ListingCustomFieldListType extends AbstractType
         }
 
         throw new \UnexpectedValueException('custom field type not found');
+    }
+
+    private function getCategory(Request $request, Listing $listing): ?Category
+    {
+        if ($listing->getCategory()) {
+            return $listing->getCategory();
+        }
+
+        $categoryId = Arr::getNestedElement($request->request->all(), ['listing', 'category']) ?? false;
+        $category = $this->categoryRepository->find((int) $categoryId);
+
+        if ($category) {
+            return $category;
+        }
+
+        return null;
     }
 }

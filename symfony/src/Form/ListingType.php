@@ -125,11 +125,13 @@ class ListingType extends AbstractType
             'label' => 'trans.City',
             'required' => false,
         ]);
-        $builder->add('customFields', HiddenType::class, [
+        $builder->add('customFieldList', ListingCustomFieldListType::class, [
+            'listingEntity' => $options['data'],
             'mapped' => false,
+            'required' => false,
             'attr' => [
                 'class' => 'formCustomFieldsHidden'
-            ]
+            ],
         ]);
         $builder->add('file', FileSimpleType::class, [
             'mapped' => false,
@@ -143,11 +145,6 @@ class ListingType extends AbstractType
             'attr' => ['hidden' => 'hidden'],
             'label' => 'trans.Pictures',
             'block_name' => 'simple',
-        ]);
-        $builder->add('customFieldList', ListingCustomFieldListType::class, [
-            'listingEntity' => $options['data'],
-            'mapped' => false,
-            'required' => false,
         ]);
     }
 

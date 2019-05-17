@@ -17,7 +17,6 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -33,6 +32,8 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class ListingType extends AbstractType
 {
+    public const LISTING_FIELD = 'listing';
+
     /**
      * @var ValidUntilSetService
      */
@@ -125,7 +126,8 @@ class ListingType extends AbstractType
             'label' => 'trans.City',
             'required' => false,
         ]);
-        $builder->add('customFieldList', ListingCustomFieldListType::class, [
+        $builder->add(
+            ListingCustomFieldListType::CUSTOM_FIELD_LIST_FIELD, ListingCustomFieldListType::class, [
             'listingEntity' => $options['data'],
             'mapped' => false,
             'attr' => [
@@ -172,5 +174,10 @@ class ListingType extends AbstractType
                 ],
             ]
         );
+    }
+
+    public function getBlockPrefix(): string
+    {
+        return static::LISTING_FIELD;
     }
 }

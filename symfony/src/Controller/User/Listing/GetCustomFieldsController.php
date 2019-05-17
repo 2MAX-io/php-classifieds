@@ -8,7 +8,10 @@ use App\Controller\User\Base\AbstractUserController;
 use App\Entity\Category;
 use App\Entity\Listing;
 use App\Form\ListingCustomFieldListType;
+use App\Form\ListingType;
 use App\Security\CurrentUserService;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
+use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -20,9 +23,11 @@ class GetCustomFieldsController extends AbstractUserController
      */
     public function getCustomFields(
         Request $request,
-        CurrentUserService $currentUserService
+        CurrentUserService $currentUserService,
+        FormFactoryInterface $formFactory
     ): Response {
         $listingId = $request->query->get('listingId', null);
+        $listing = null;
         if ($listingId) {
             $listing = $this->getDoctrine()->getRepository(Listing::class)->find($listingId);
 
@@ -30,22 +35,26 @@ class GetCustomFieldsController extends AbstractUserController
                 $this->dennyUnlessCurrentUserAllowed($listing);
             }
         }
+        if (empty($listing)) {
+            $listing = new Listing();
+        }
 
         $categoryId = $request->query->get('categoryId', null);
         $category = $this->getDoctrine()->getRepository(Category::class)->find($categoryId);
-
-        if ($category && !empty($listing)) {
+        if ($category) {
             $listing->setCategory($category);
         }
 
-        $form = $this->createForm(ListingCustomFieldListType::class, [], [
-            'listingEntity' => $listing ?? null,
+        $formBuilder = $formFactory->createNamedBuilder(ListingType::LISTING_FIELD, FormType::class);
+        $formBuilder->add(ListingCustomFieldListType::CUSTOM_FIELD_LIST_FIELD, ListingCustomFieldListType::class, [
+            'listingEntity' => $listing,
+
         ]);
 
         return $this->render(
             'user/listing/get_custom_fields.html.twig',
             [
-                'form' => $form->createView(),
+                'form' => $formBuilder->getForm()->createView(),
             ]
         );
     }

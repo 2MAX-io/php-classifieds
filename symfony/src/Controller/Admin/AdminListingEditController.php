@@ -7,6 +7,8 @@ namespace App\Controller\Admin;
 use App\Controller\Admin\Base\AbstractAdminController;
 use App\Entity\Listing;
 use App\Form\Admin\AdminListingEditType;
+use App\Form\ListingCustomFieldListType;
+use App\Form\ListingType;
 use App\Service\Listing\CustomField\CustomFieldsForListingFormService;
 use App\Service\Listing\Save\SaveListingService;
 use Minwork\Helper\Arr;
@@ -32,7 +34,7 @@ class AdminListingEditController extends AbstractAdminController
         if ($form->isSubmitted() && $form->isValid()) {
             $customFieldsForListingFormService->saveCustomFieldsToListing(
                 $listing,
-                Arr::getNestedElement($request->request->all(), ['listing', 'customFieldList'])
+                Arr::getNestedElement($request->request->all(), [ListingType::LISTING_FIELD, ListingCustomFieldListType::CUSTOM_FIELD_LIST_FIELD])
             );
             $createListingService->saveSearchText($listing);
             $createListingService->updateSlug($listing);

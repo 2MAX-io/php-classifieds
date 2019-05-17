@@ -6,6 +6,7 @@ namespace App\Controller\User;
 
 use App\Controller\User\Base\AbstractUserController;
 use App\Entity\Listing;
+use App\Form\ListingCustomFieldListType;
 use App\Form\ListingType;
 use App\Security\CurrentUserService;
 use App\Service\Category\CategoryListService;
@@ -14,7 +15,6 @@ use App\Service\Listing\CustomField\CustomFieldsForListingFormService;
 use App\Service\Listing\Save\SaveListingService;
 use App\Service\Listing\Save\ListingFileUploadService;
 use App\Service\Log\PoliceLogIpService;
-use App\Service\System\Pagination\PaginationService;
 use App\Service\User\Listing\UserListingListService;
 use Minwork\Helper\Arr;
 use Symfony\Component\HttpFoundation\Request;
@@ -76,7 +76,7 @@ class UserListingController extends AbstractUserController
         if ($form->isSubmitted() && $form->isValid()) {
             $customFieldsForListingFormService->saveCustomFieldsToListing(
                 $listing,
-                Arr::getNestedElement($request->request->all(), ['listing', 'customFieldList']) ?? [] // listing[customFieldList]
+                Arr::getNestedElement($request->request->all(), [ListingType::LISTING_FIELD, ListingCustomFieldListType::CUSTOM_FIELD_LIST_FIELD]) ?? [] // listing[customFieldList]
             );
 
             $listing->setUser($currentUserService->getUser());
@@ -150,7 +150,7 @@ class UserListingController extends AbstractUserController
             }
             $customFieldsForListingFormService->saveCustomFieldsToListing(
                 $listing,
-                Arr::getNestedElement($request->request->all(), ['listing', 'customFieldList']) ?? [] // listing[customFieldList]
+                Arr::getNestedElement($request->request->all(), [ListingType::LISTING_FIELD, ListingCustomFieldListType::CUSTOM_FIELD_LIST_FIELD]) ?? [] // listing[customFieldList]
             );
 
             $createListingService->setFormDependent($listing, $form);

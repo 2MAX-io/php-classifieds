@@ -22,6 +22,8 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ListingCustomFieldListType extends AbstractType
 {
+    public const CUSTOM_FIELD_LIST_FIELD = 'customFieldList';
+
     /**
      * @var RequestStack
      */
@@ -107,12 +109,16 @@ class ListingCustomFieldListType extends AbstractType
     {
         $resolver->setDefaults(
             [
-                'allow_extra_fields' => true, // todo: remove
                 'data_class' => null,
                 'listingEntity' => null,
                 'label' => false,
             ]
         );
+    }
+
+    public function getBlockPrefix(): string
+    {
+        return static::CUSTOM_FIELD_LIST_FIELD;
     }
 
     private function getListingEntity(array $options): ?Listing

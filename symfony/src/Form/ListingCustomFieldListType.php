@@ -8,6 +8,7 @@ use App\Entity\Category;
 use App\Entity\CustomField;
 use App\Entity\Listing;
 use App\Entity\ListingCustomFieldValue;
+use App\Form\Type\YearType;
 use App\Repository\CategoryRepository;
 use App\Service\Listing\CustomField\CustomFieldsForListingFormService;
 use Minwork\Helper\Arr;
@@ -93,9 +94,20 @@ class ListingCustomFieldListType extends AbstractType
                 ]);
             }
 
-            if (\in_array($customField->getType(), [CustomField::TYPE_INTEGER_RANGE, CustomField::TYPE_YEAR_RANGE])) {
+            if (\in_array($customField->getType(), [CustomField::TYPE_INTEGER_RANGE])) {
                 $builder->add($customField->getId(), IntegerType::class, [
                     'label' => $customField->getName(),
+                    'translation_domain' => false,
+                    'data' => $this->getValue($customField),
+                    'constraints' => $this->getConstraints($customField),
+                    'required' => $customField->getRequired(),
+                ]);
+            }
+
+            if (\in_array($customField->getType(), [CustomField::TYPE_YEAR_RANGE])) {
+                $builder->add($customField->getId(), YearType::class, [
+                    'label' => $customField->getName(),
+                    'placeholder' => $this->trans->trans('trans.Select'),
                     'translation_domain' => false,
                     'data' => $this->getValue($customField),
                     'constraints' => $this->getConstraints($customField),

@@ -240,7 +240,7 @@
                                                 <option value=''>{{ 'trans.min' | trans }}</option>
 
                                                 {% set startYear = date().format('Y') %}
-                                                {% for year in startYear..1960 %}
+                                                {% for year in startYear..1900 %}
                                                     <option
                                                             value="{{- year -}}"
                                                             {% if year == app.request.get('form_custom_field')[customField.id]['range']['min'] | default %}selected{% endif %}
@@ -248,13 +248,6 @@
                                                         {{ year }}
                                                     </option>
                                                 {% endfor %}
-
-                                                <option
-                                                        {% if 1959 == app.request.get('form_custom_field')[customField.id]['range']['min'] | default %}selected{% endif %}
-                                                        value="1959"
-                                                >
-                                                    {{ 'trans.Older than 1960' | trans }}
-                                                </option>
                                             </select>
                                         </div>
 

@@ -45,7 +45,9 @@ class GetCustomFieldsController extends AbstractUserController
             $listing->setCategory($category);
         }
 
-        $formBuilder = $formFactory->createNamedBuilder(ListingType::LISTING_FIELD, FormType::class);
+        $formBuilder = $formFactory->createNamedBuilder(ListingType::LISTING_FIELD, FormType::class, null, [
+            'csrf_protection' => false,
+        ]);
         $formBuilder->add(ListingCustomFieldListType::CUSTOM_FIELD_LIST_FIELD, ListingCustomFieldListType::class, [
             'listingEntity' => $listing,
 

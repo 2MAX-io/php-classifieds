@@ -5,13 +5,14 @@ declare(strict_types=1);
 namespace App\Form\Admin;
 
 use App\Entity\Listing;
+use App\Form\ListingCustomFieldListType;
+use App\Form\ListingType;
 use App\Form\Type\BoolType;
 use App\Form\Type\CategoryType;
 use App\Form\Type\PriceForType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -71,11 +72,13 @@ class AdminListingEditType extends AbstractType
         $builder->add('city', TextType::class, [
             'label' => 'trans.City'
         ]);
-        $builder->add('customFields', HiddenType::class, [
+        $builder->add(
+            ListingCustomFieldListType::CUSTOM_FIELD_LIST_FIELD, ListingCustomFieldListType::class, [
+            'listingEntity' => $options['data'],
             'mapped' => false,
             'attr' => [
                 'class' => 'formCustomFieldList'
-            ]
+            ],
         ]);
     }
 
@@ -87,5 +90,10 @@ class AdminListingEditType extends AbstractType
                 'required' => false,
             ]
         );
+    }
+
+    public function getBlockPrefix(): string
+    {
+        return ListingType::LISTING_FIELD;
     }
 }

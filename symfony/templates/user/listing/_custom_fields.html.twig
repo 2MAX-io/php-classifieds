@@ -7,11 +7,10 @@
         let listingId = null | {{ listing.id | default('null') }};
         let categoryId = parseInt($('.formCategory').val());
         customFields.loadedCategory = categoryId;
-        $.get(Routing.generate('app_listing_get_custom_fields', {listingId: listingId, categoryId: categoryId}), function (data) {
-            $('.formCustomFieldsLoaded').remove();
-            $(data).insertAfter('.formCustomFieldsHidden');
+        $.get(Routing.generate('app_listing_get_custom_fields', {listingId: listingId, categoryId: categoryId}), function (html) {
+            $('.formCustomFieldsHidden').html(html);
 
-            $('.formCustomFieldsLoaded').find('[name^="listing[customFieldList]"]').each(function(){
+            $('.formCustomFieldsHidden').find('[name^="listing[customFieldList]"]').each(function(){
                 let $input = $(this);
 
                 if (customFields.values[$input.attr('name')] && customFields.values[$input.attr('name')].trim() !== '')  {
@@ -26,7 +25,7 @@
             return;
         }
 
-        $('.formCustomFieldsLoaded').find('[name^="listing[customFieldList]"]').each(function(){
+        $('.formCustomFieldsHidden').find('[name^="listing[customFieldList]"]').each(function(){
             let $input = $(this);
 
             if ($input.val().trim() === ''){

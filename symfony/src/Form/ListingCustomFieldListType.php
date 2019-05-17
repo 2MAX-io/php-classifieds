@@ -169,16 +169,19 @@ class ListingCustomFieldListType extends AbstractType
 
     private function getCategory(Listing $listing): ?Category
     {
-        if ($listing->getCategory()) {
-            return $listing->getCategory();
-        }
-
         $post = $this->requestStack->getMasterRequest()->request->all();
         $categoryId = Arr::getNestedElement($post, ['listing', 'category']) ?? false;
         $category = $this->categoryRepository->find((int) $categoryId);
 
         if ($category) {
             return $category;
+        }
+
+        /**
+         * must be after category from request, to handle cat change when editing
+         */
+        if ($listing->getCategory()) {
+            return $listing->getCategory();
         }
 
         return null;

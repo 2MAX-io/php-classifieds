@@ -68,6 +68,11 @@ class CurrentUserService
         return $this->getUser() === $user;
     }
 
+    public function isLoggedInUser(): bool
+    {
+        return $this->security->getUser() instanceof User;
+    }
+
     /**
      * WARNING! do not use to authorize anything important, like authorizing admin actions
      *

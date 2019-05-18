@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Service\FlashBag;
 
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class FlashService
@@ -23,10 +24,16 @@ class FlashService
      */
     private $translator;
 
-    public function __construct(FlashBagInterface $flashBag, TranslatorInterface $translator)
+    /**
+     * @var SessionInterface
+     */
+    private $session;
+
+    public function __construct(FlashBagInterface $flashBag, SessionInterface $session, TranslatorInterface $translator)
     {
         $this->flashBag = $flashBag;
         $this->translator = $translator;
+        $this->session = $session;
     }
 
     /**
@@ -34,6 +41,7 @@ class FlashService
      */
     public function addFlash(string $type, string $message, array $translationParams = []): void
     {
+        $this->session->start();
         $this->flashBag->add($type, $this->translator->trans($message, $translationParams));
     }
 }

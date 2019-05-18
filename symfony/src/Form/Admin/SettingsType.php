@@ -74,7 +74,7 @@ class SettingsType extends AbstractType
                 new Length(['min' => 2]),
             ],
         ]);
-        $builder->add('footerSiteCopyright', TextareaType::class, [
+        $builder->add('footerSiteCopyright', TextType::class, [
             'label' => 'trans.Site copyright in footer',
             'help' => 'trans.%year% would be replaced to current year',
             'required' => true,
@@ -82,6 +82,15 @@ class SettingsType extends AbstractType
             'constraints' => [
                 new NotBlank(),
                 new Length(['min' => 2]),
+            ],
+        ]);
+        $builder->add('emailFromName', TextType::class, [
+            'label' => 'trans.Name used before email address, in from field of email message',
+            'required' => true,
+            'empty_data' => '',
+            'constraints' => [
+                new NotBlank(),
+                new Length(['min' => 4]),
             ],
         ]);
         $builder->add('itemsPerPageMax', IntegerType::class, [

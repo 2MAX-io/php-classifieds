@@ -481,3 +481,4 @@ trans:
   Cron for this application is not set up, cron did not run single time: 'Cron dla tej aplikacji nie został ustawiony, cron nie został uruchomiony ani razu'
   'Cron for this application is not set up, cron did not run after: %date%': 'Cron dla tej aplikacji nie został ustawiony, cron nie został uruchomiony od: %date%'
   'Action has been confirmed before, and requested action has been completed': 'Akcja została już potwierdzona, a żądana akcja została wykonana'
+  'Name used before email address, in from field of email message': 'Nazwa używana przed adresem email, w polu od wiadomości email'

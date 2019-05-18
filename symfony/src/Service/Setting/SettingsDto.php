@@ -44,6 +44,11 @@ class SettingsDto
     /**
      * @var string|null
      */
+    private $emailFromName;
+
+    /**
+     * @var string|null
+     */
     private $linkTermsConditions;
 
     /**
@@ -366,5 +371,15 @@ class SettingsDto
     public function setItemsPerPageMax(?string $itemsPerPageMax): void
     {
         $this->itemsPerPageMax = $itemsPerPageMax;
+    }
+
+    public function getEmailFromName(): ?string
+    {
+        return $this->emailFromName;
+    }
+
+    public function setEmailFromName(?string $emailFromName): void
+    {
+        $this->emailFromName = $emailFromName;
     }
 }

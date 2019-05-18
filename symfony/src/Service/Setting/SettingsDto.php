@@ -123,6 +123,11 @@ class SettingsDto
      */
     private $paymentGatewayPaymentDescription;
 
+    /**
+     * @var string|null
+     */
+    private $itemsPerPageMax;
+
     public function getIndexPageTitle(): ?string
     {
         return $this->indexPageTitle;
@@ -351,5 +356,15 @@ class SettingsDto
     public function setFooterSiteCopyright(?string $footerSiteCopyright): void
     {
         $this->footerSiteCopyright = $footerSiteCopyright;
+    }
+
+    public function getItemsPerPageMax(): ?string
+    {
+        return $this->itemsPerPageMax;
+    }
+
+    public function setItemsPerPageMax(?string $itemsPerPageMax): void
+    {
+        $this->itemsPerPageMax = $itemsPerPageMax;
     }
 }

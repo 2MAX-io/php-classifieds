@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Service\System\Pagination;
 
+use App\Service\Setting\SettingsService;
 use Doctrine\ORM\QueryBuilder;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
 use Pagerfanta\Pagerfanta;
@@ -16,9 +17,15 @@ class PaginationService
      */
     private $requestStack;
 
-    public function __construct(RequestStack $requestStack)
+    /**
+     * @var SettingsService
+     */
+    private $settingsService;
+
+    public function __construct(RequestStack $requestStack, SettingsService $settingsService)
     {
         $this->requestStack = $requestStack;
+        $this->settingsService = $settingsService;
     }
 
     public function createPaginationForQb(QueryBuilder $qb): Pagerfanta
@@ -33,7 +40,12 @@ class PaginationService
 
     public function getMaxPerPage(): int
     {
-        $fromRequest = $this->requestStack->getMasterRequest()->get('perPage', 10);
+        $default = $this->settingsService->getSettingsDto()->getItemsPerPageMax();
+        if ($default < 1) {
+            $default = 10;
+        }
+
+        $fromRequest = $this->requestStack->getMasterRequest()->get('perPage', $default);
 
         return (int) min($fromRequest, 100);
     }

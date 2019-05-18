@@ -474,3 +474,4 @@ trans:
   'Words to remove from listing title, separated by new line': 'Słowa do usunięcia z tytułu ogłoszenia, odzielone nową linią'
   'Site copyright in footer': 'Prawa autorskie do strony w stopce'
   '%year% would be replaced to current year': '%year% zostanie zmieniony na bierzący rok'
+  'Maximum items per page': 'Maksymalna liczba elementów na stronie'

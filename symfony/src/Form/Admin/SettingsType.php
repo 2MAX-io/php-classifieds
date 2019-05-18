@@ -10,10 +10,12 @@ use App\Form\Type\PageType;
 use App\Service\Setting\SettingsDto;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\GreaterThan;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
@@ -82,22 +84,24 @@ class SettingsType extends AbstractType
                 new Length(['min' => 2]),
             ],
         ]);
-        $builder->add('linkTermsConditions', PageType::class, [
-            'label' => 'trans.Link to terms and conditions',
+        $builder->add('itemsPerPageMax', IntegerType::class, [
+            'label' => 'trans.Maximum items per page',
             'required' => true,
+            'empty_data' => '',
             'constraints' => [
                 new NotBlank(),
-            ],
-        ]);
-        $builder->add('linkTermsConditions', PageType::class, [
-            'label' => 'trans.Link to terms and conditions',
-            'required' => true,
-            'constraints' => [
-                new NotBlank(),
+                new GreaterThan(['value' => 0]),
             ],
         ]);
         $builder->add('requireListingAdminActivation', BoolRequiredType::class, [
             'label' => 'trans.Require listing activation by admin before making public',
+            'required' => true,
+            'constraints' => [
+                new NotBlank(),
+            ],
+        ]);
+        $builder->add('linkTermsConditions', PageType::class, [
+            'label' => 'trans.Link to terms and conditions',
             'required' => true,
             'constraints' => [
                 new NotBlank(),

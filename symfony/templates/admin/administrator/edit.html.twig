@@ -1,0 +1,42 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}{{ 'trans.Edit Administrator' | trans }}{% endblock %}
+
+{% block body %}
+
+<div class="container mt-5">
+
+    <div class="mb-4">
+        <h1>{{ 'trans.Edit Administrator' | trans }}: {{ user.email }}</h1>
+
+        <a href="{{ path('admin_administrator_index') }}">{{ 'trans.back to list' | trans }}</a>
+    </div>
+
+    <table class="table">
+        <tbody>
+        <tr>
+            <th>Id</th>
+            <td>{{ user.id }}</td>
+        </tr>
+        <tr>
+            <th>{{ 'trans.Username' | trans }}</th>
+            <td>{{ user.username }}</td>
+        </tr>
+        <tr>
+            <th>{{ 'trans.Email' | trans }}</th>
+            <td>{{ user.email }}</td>
+        </tr>
+        <tr>
+            <th>{{ 'trans.Roles' | trans }}</th>
+            <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
+        </tr>
+        <tr>
+            <th>{{ 'trans.Enabled' | trans }}</th>
+            <td>{{ (user.enabled ? 'trans.Yes' : 'trans.No') | trans }}</td>
+        </tr>
+        </tbody>
+    </table>
+
+    {{ include('admin/administrator/_form.html.twig', {'button_label': 'trans.Update' | trans}) }}
+</div>
+{% endblock %}

@@ -29,6 +29,7 @@ security:
             guard:
                 authenticators:
                     - App\Security\AdminLoginFormAuthenticator
+            user_checker: App\Security\AdministratorChecker
             entry_point: App\Security\AdminLoginFormAuthenticator
             form_login:
                 check_path: app_admin_login

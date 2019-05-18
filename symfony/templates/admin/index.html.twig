@@ -3,7 +3,7 @@
 {% block title %}{{ 'trans.Admin panel' | trans }}{% endblock %}
 
 {% block body %}
-<div class="mt-3">
+<div class="mt-3 mb-2">
     <h1>{{ 'trans.Admin Dashboard' | trans }}</h1>
 
     <div class="row tile_count">
@@ -58,4 +58,10 @@
         </div>
     </div>
 </div>
+
+    <div class="mb-2">
+        {% for problem in healthCheckService.problems  %}
+            <div class="alert alert-danger">{{ problem }}</div>
+        {% endfor %}
+    </div>
 {% endblock %}

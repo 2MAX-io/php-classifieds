@@ -475,3 +475,5 @@ trans:
   'Site copyright in footer': 'Prawa autorskie do strony w stopce'
   '%year% would be replaced to current year': '%year% zostanie zmieniony na bierzący rok'
   'Maximum items per page': 'Maksymalna liczba elementów na stronie'
+  Cron for this application is not set up, cron did not run single time: 'Cron dla tej aplikacji nie został ustawiony, cron nie został uruchomiony ani razu'
+  'Cron for this application is not set up, cron did not run after: %date%': 'Cron dla tej aplikacji nie został ustawiony, cron nie został uruchomiony od: %date%'

@@ -47,6 +47,11 @@ class Token
     private $validUntilDate;
 
     /**
+     * @ORM\Column(type="boolean", nullable=false)
+     */
+    private $used = false;
+
+    /**
      * @ORM\OneToMany(targetEntity="App\Entity\TokenField", mappedBy="token", indexBy="name", cascade={"all"})
      */
     private $fields;
@@ -148,6 +153,18 @@ class Token
     public function setTokenString(string $tokenString): self
     {
         $this->tokenString = $tokenString;
+
+        return $this;
+    }
+
+    public function getUsed(): ?bool
+    {
+        return $this->used;
+    }
+
+    public function setUsed(bool $used): self
+    {
+        $this->used = $used;
 
         return $this;
     }

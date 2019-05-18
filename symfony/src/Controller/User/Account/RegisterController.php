@@ -88,6 +88,7 @@ class RegisterController extends AbstractController
         }
 
         $registerConfirmService->confirmRegistration($user);
+        $tokenService->markTokenUsed($tokenEntity);
 
         $this->getDoctrine()->getManager()->flush();
 

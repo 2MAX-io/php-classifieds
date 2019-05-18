@@ -84,6 +84,7 @@ class ChangePasswordController extends AbstractController
             $tokenService->getUserFromToken($tokenEntity),
             $newHashedPassword
         );
+        $tokenService->markTokenUsed($tokenEntity);
 
         $this->getDoctrine()->getManager()->flush();
 

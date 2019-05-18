@@ -87,6 +87,7 @@ class ChangeEmailController extends AbstractController
             $tokenService->getUserFromToken($tokenEntity),
             $newEmail
         );
+        $tokenService->markTokenUsed($tokenEntity);
 
         $this->getDoctrine()->getManager()->flush();
 

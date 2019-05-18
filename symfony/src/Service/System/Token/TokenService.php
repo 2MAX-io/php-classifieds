@@ -56,6 +56,12 @@ class TokenService
             return null;
         }
 
+        if ($tokenEntity->getUsed()) {
+            $this->logger->debug('token used');
+
+            return null;
+        }
+
         if ($tokenEntity->getType() !== $tokenType) {
             $this->logger->critical('token found, but incorrect type', [
                 $tokenString, $tokenType
@@ -72,5 +78,11 @@ class TokenService
         $userId = $tokenEntity->getFieldByName(TokenField::USER_ID_FIELD);
 
         return $this->em->getRepository(User::class)->find($userId);
+    }
+
+    public function markTokenUsed(Token $token)
+    {
+        $token->setUsed(true);
+        $this->em->persist($token);
     }
 }

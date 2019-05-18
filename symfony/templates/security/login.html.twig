@@ -25,6 +25,9 @@
                         <h1 class="h3 mb-3 font-weight-normal">{{ 'trans.Please sign in' | trans }}</h1>
 
                         <div class="form-group">
+
+                            {% include 'form/_flash_above_form.html.twig' %}
+
                             <label for="inputEmail" class="sr-only">{{ 'trans.Email' | trans }}</label>
                             <input
                                     type="text"

@@ -66,6 +66,14 @@ class RegisterController extends AbstractController
 
             return $this->redirectToRoute('app_register');
         }
+        if ($tokenEntity->getUsed()) {
+            $flashService->addFlash(
+                FlashService::ERROR_ABOVE_FORM,
+                'trans.Action has been confirmed before, and requested action has been completed'
+            );
+
+            return $this->redirectToRoute('app_register');
+        }
 
         $userEmail = $tokenEntity->getFieldByName(TokenField::USER_EMAIL_FIELD);
         if ($userEmail === null) {

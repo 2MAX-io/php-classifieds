@@ -56,12 +56,6 @@ class TokenService
             return null;
         }
 
-        if ($tokenEntity->getUsed()) {
-            $this->logger->debug('token used');
-
-            return null;
-        }
-
         if ($tokenEntity->getType() !== $tokenType) {
             $this->logger->critical('token found, but incorrect type', [
                 $tokenString, $tokenType

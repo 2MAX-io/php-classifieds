@@ -71,6 +71,14 @@ class ChangeEmailController extends AbstractController
 
             return $this->redirectToRoute('app_user_change_email');
         }
+        if ($tokenEntity->getUsed()) {
+            $flashService->addFlash(
+                FlashService::ERROR_ABOVE_FORM,
+                'trans.Action has been confirmed before, and requested action has been completed'
+            );
+
+            return $this->redirectToRoute('app_user_change_email');
+        }
 
         $newEmail = $tokenEntity->getFieldByName(TokenField::USER_NEW_EMAIL_FIELD);
         $userId = $tokenEntity->getFieldByName(TokenField::USER_ID_FIELD);

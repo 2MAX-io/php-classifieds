@@ -66,6 +66,14 @@ class RemindPasswordController extends AbstractController
 
             return $this->redirectToRoute('app_remind_password');
         }
+        if ($tokenEntity->getUsed()) {
+            $flashService->addFlash(
+                FlashService::ERROR_ABOVE_FORM,
+                'trans.Action has been confirmed before, and requested action has been completed'
+            );
+
+            return $this->redirectToRoute('app_remind_password');
+        }
 
         $userId = $tokenEntity->getFieldByName(TokenField::USER_ID_FIELD);
         $newHashedPassword = $tokenEntity->getFieldByName(TokenField::REMINDED_HASHED_PASSWORD);

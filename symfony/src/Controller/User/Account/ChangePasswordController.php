@@ -68,6 +68,14 @@ class ChangePasswordController extends AbstractController
 
             return $this->redirectToRoute('app_user_change_password');
         }
+        if ($tokenEntity->getUsed()) {
+            $flashService->addFlash(
+                FlashService::ERROR_ABOVE_FORM,
+                'trans.Action has been confirmed before, and requested action has been completed'
+            );
+
+            return $this->redirectToRoute('app_user_change_password');
+        }
 
         $newHashedPassword = $tokenEntity->getFieldByName(TokenField::CHANGED_NEW_HASHED_PASSWORD);
         $userId = $tokenEntity->getFieldByName(TokenField::USER_ID_FIELD);

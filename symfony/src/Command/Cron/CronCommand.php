@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace App\Command\Cron;
 
-use App\Entity\SystemLog;
 use App\Service\Cron\CronService;
-use App\Service\System\SystemLog\SystemLogService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -23,21 +21,15 @@ class CronCommand extends Command
     private $cronService;
 
     /**
-     * @var SystemLogService
-     */
-    private $systemLogService;
-
-    /**
      * @var EntityManagerInterface
      */
     private $em;
 
-    public function __construct(CronService $cronService, SystemLogService $systemLogService, EntityManagerInterface $em)
+    public function __construct(CronService $cronService, EntityManagerInterface $em)
     {
         parent::__construct();
 
         $this->cronService = $cronService;
-        $this->systemLogService = $systemLogService;
         $this->em = $em;
     }
 
@@ -52,15 +44,8 @@ class CronCommand extends Command
 
         $this->cronService->run();
 
-        $this->systemLogService->addSystemLog(SystemLog::CRON_RUN_TYPE, "cron: {$this->getCronName()} executed");
+        $this->em->flush();
 
         $io->success('done');
-
-        $this->em->flush();
-    }
-
-    private function getCronName(): string
-    {
-        return static::$defaultName;
     }
 }

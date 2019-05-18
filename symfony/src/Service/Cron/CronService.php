@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Service\Cron;
 
+use App\Entity\SystemLog;
+use App\Service\System\SystemLog\SystemLogService;
 use Doctrine\ORM\EntityManagerInterface;
 
 class CronService
@@ -13,15 +15,23 @@ class CronService
      */
     private $em;
 
-    public function __construct(EntityManagerInterface $em)
+    /**
+     * @var SystemLogService
+     */
+    private $systemLogService;
+
+    public function __construct(EntityManagerInterface $em, SystemLogService $systemLogService)
     {
         $this->em = $em;
+        $this->systemLogService = $systemLogService;
     }
 
     public function run(): void
     {
         $this->updateFeatured();
         $this->setMainImage();
+
+        $this->systemLogService->addSystemLog(SystemLog::CRON_RUN_TYPE, "cron executed");
     }
 
     private function updateFeatured(): void

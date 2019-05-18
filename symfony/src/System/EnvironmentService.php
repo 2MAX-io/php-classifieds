@@ -18,16 +18,6 @@ class EnvironmentService
         $this->parameterBag = $parameterBag;
     }
 
-    public function getMailerFromEmailAddress(): string
-    {
-        return $this->parameterBag->get('mailer_from_email_address');
-    }
-
-    public function getMailerReplyToAddress(): string
-    {
-        return $this->parameterBag->get('mailer_reply_to_address');
-    }
-
     public function getTwigDateFormat(): string
     {
         return $this->parameterBag->get('twig_date_format');

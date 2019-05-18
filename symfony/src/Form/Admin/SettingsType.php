@@ -84,8 +84,27 @@ class SettingsType extends AbstractType
                 new Length(['min' => 2]),
             ],
         ]);
+        $builder->add('emailFromAddress', TextType::class, [
+            'label' => 'trans.Email address used in from field of email message',
+            'help' => 'trans.Must match email from which you send messages',
+            'required' => true,
+            'empty_data' => '',
+            'constraints' => [
+                new NotBlank(),
+                new Length(['min' => 4]),
+            ],
+        ]);
         $builder->add('emailFromName', TextType::class, [
             'label' => 'trans.Name used before email address, in from field of email message',
+            'required' => true,
+            'empty_data' => '',
+            'constraints' => [
+                new NotBlank(),
+                new Length(['min' => 4]),
+            ],
+        ]);
+        $builder->add('emailReplyTo', TextType::class, [
+            'label' => 'trans.Email used when user replies to emails from this application',
             'required' => true,
             'empty_data' => '',
             'constraints' => [

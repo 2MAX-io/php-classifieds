@@ -22,11 +22,6 @@ class EmailService
     private $twig;
 
     /**
-     * @var EnvironmentService
-     */
-    private $environmentService;
-
-    /**
      * @var TranslatorInterface
      */
     private $trans;
@@ -39,13 +34,11 @@ class EmailService
     public function __construct(
         \Swift_Mailer $mailer,
         Twig $twig,
-        EnvironmentService $environmentService,
         SettingsService $settingsService,
         TranslatorInterface $trans
     ) {
         $this->mailer = $mailer;
         $this->twig = $twig;
-        $this->environmentService = $environmentService;
         $this->trans = $trans;
         $this->settingsService = $settingsService;
     }
@@ -53,8 +46,8 @@ class EmailService
     public function sendRegisterEmail(User $user, string $token): void
     {
         $message = (new \Swift_Message($this->trans->trans('trans.Confirm account registration')))
-            ->setReplyTo($this->environmentService->getMailerReplyToAddress())
-            ->setFrom($this->environmentService->getMailerFromEmailAddress(), $this->getEmailFromName())
+            ->setReplyTo($this->getEmailReplyTo())
+            ->setFrom($this->getEmailFromAddress(), $this->getEmailFromName())
             ->setTo($user->getEmail())
             ->setBody(
                 $this->twig->render(
@@ -74,8 +67,8 @@ class EmailService
     public function sendEmailChangeConfirmationToPreviousEmail(User $user, string $newEmail, string $token): void
     {
         $message = (new \Swift_Message($this->trans->trans('trans.Confirmation of email address change')))
-            ->setReplyTo($this->environmentService->getMailerReplyToAddress())
-            ->setFrom($this->environmentService->getMailerFromEmailAddress(), $this->getEmailFromName())
+            ->setReplyTo($this->getEmailReplyTo())
+            ->setFrom($this->getEmailFromAddress(), $this->getEmailFromName())
             ->setTo($user->getEmail())
             ->setBody(
                 $this->twig->render(
@@ -96,8 +89,8 @@ class EmailService
     public function sendEmailChangeNotificationToNewEmail(User $user, string $newEmail, string $token): void
     {
         $message = (new \Swift_Message($this->trans->trans('trans.Confirmation of email address change')))
-            ->setReplyTo($this->environmentService->getMailerReplyToAddress())
-            ->setFrom($this->environmentService->getMailerFromEmailAddress(), $this->getEmailFromName())
+            ->setReplyTo($this->getEmailReplyTo())
+            ->setFrom($this->getEmailFromAddress(), $this->getEmailFromName())
             ->setTo($newEmail)
             ->setBody(
                 $this->twig->render(
@@ -119,8 +112,8 @@ class EmailService
     public function changePasswordConfirmation(User $user, string $token): void
     {
         $message = (new \Swift_Message($this->trans->trans('trans.Change password confirmation')))
-            ->setReplyTo($this->environmentService->getMailerReplyToAddress())
-            ->setFrom($this->environmentService->getMailerFromEmailAddress(), $this->getEmailFromName())
+            ->setReplyTo($this->getEmailReplyTo())
+            ->setFrom($this->getEmailFromAddress(), $this->getEmailFromName())
             ->setTo($user->getEmail())
             ->setBody(
                 $this->twig->render(
@@ -140,8 +133,8 @@ class EmailService
     public function remindPasswordConfirmation(User $user, string $token): void
     {
         $message = (new \Swift_Message($this->trans->trans('trans.Remind password confirmation')))
-            ->setReplyTo($this->environmentService->getMailerReplyToAddress())
-            ->setFrom($this->environmentService->getMailerFromEmailAddress(), $this->getEmailFromName())
+            ->setReplyTo($this->getEmailReplyTo())
+            ->setFrom($this->getEmailFromAddress(), $this->getEmailFromName())
             ->setTo($user->getEmail())
             ->setBody(
                 $this->twig->render(
@@ -167,5 +160,19 @@ class EmailService
         }
 
         return $emailFromName;
+    }
+
+    private function getEmailFromAddress(): ?string
+    {
+        return $this->settingsService->getSettingsDto()->getEmailFromAddress();
+    }
+
+    private function getEmailReplyTo(): ?string
+    {
+        if (!empty($this->settingsService->getSettingsDto()->getEmailReplyTo())) {
+            return $this->settingsService->getSettingsDto()->getEmailReplyTo();
+        }
+        
+        return $this->settingsService->getSettingsDto()->getEmailFromAddress();
     }
 }

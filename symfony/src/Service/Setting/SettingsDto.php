@@ -44,7 +44,17 @@ class SettingsDto
     /**
      * @var string|null
      */
+    private $emailFromAddress;
+
+    /**
+     * @var string|null
+     */
     private $emailFromName;
+
+    /**
+     * @var string|null
+     */
+    private $emailReplyTo;
 
     /**
      * @var string|null
@@ -381,5 +391,25 @@ class SettingsDto
     public function setEmailFromName(?string $emailFromName): void
     {
         $this->emailFromName = $emailFromName;
+    }
+
+    public function getEmailReplyTo(): ?string
+    {
+        return $this->emailReplyTo;
+    }
+
+    public function setEmailReplyTo(?string $emailReplyTo): void
+    {
+        $this->emailReplyTo = $emailReplyTo;
+    }
+
+    public function getEmailFromAddress(): ?string
+    {
+        return $this->emailFromAddress;
+    }
+
+    public function setEmailFromAddress(?string $emailFromAddress): void
+    {
+        $this->emailFromAddress = $emailFromAddress;
     }
 }

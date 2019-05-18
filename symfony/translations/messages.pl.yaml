@@ -484,3 +484,6 @@ trans:
   'Name used before email address, in from field of email message': 'Nazwa używana przed adresem email, w polu od wiadomości email'
   'Email used when user replies to emails from this application': 'Email używany gdy użytkownik odpowiada na emaile z tej aplikacji'
   'Email address used in from field of email message': 'Adres email używany w polu od wiadomości email'
+  'Configuration url for sending emails': 'Url z konfiguracją do wysyłania emaili'
+  'Must match email from which you send messages': 'Musi pasować do emaila z którego wysyłasz wiadomości '
+  'examples: smtp://mail.host.com:465?encryption=ssl&auth_mode=plain&username=login@mail.com&password=password': 'przykłady: smtp://mail.host.com:465?encryption=ssl&auth_mode=plain&username=login@mail.com&password=password'

@@ -258,3 +258,8 @@ composer require -d symfony minwork/array
 composer dump-autoload --optimize -d symfony
 composer install -d symfony
 composer dump-autoload --optimize -d symfony
+composer dump-autoload --optimize -d symfony
+php symfony/bin/console make:entity
+php symfony/bin/console doctrine:schema:update --force
+php symfony/bin/console app:cron:main
+php symfony/bin/console app:cron:main

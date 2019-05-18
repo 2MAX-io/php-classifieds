@@ -472,3 +472,5 @@ trans:
   Execute action on %number% of listings?: 'Wykonać akcję na %number% ogłoszeniach?'
   'changes:': 'zmienia:'
   'Words to remove from listing title, separated by new line': 'Słowa do usunięcia z tytułu ogłoszenia, odzielone nową linią'
+  'Site copyright in footer': 'Prawa autorskie do strony w stopce'
+  '%year% would be replaced to current year': '%year% zostanie zmieniony na bierzący rok'

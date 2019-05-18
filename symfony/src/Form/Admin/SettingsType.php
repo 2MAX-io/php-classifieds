@@ -72,6 +72,16 @@ class SettingsType extends AbstractType
                 new Length(['min' => 2]),
             ],
         ]);
+        $builder->add('footerSiteCopyright', TextareaType::class, [
+            'label' => 'trans.Site copyright in footer',
+            'help' => 'trans.%year% would be replaced to current year',
+            'required' => true,
+            'empty_data' => '',
+            'constraints' => [
+                new NotBlank(),
+                new Length(['min' => 2]),
+            ],
+        ]);
         $builder->add('linkTermsConditions', PageType::class, [
             'label' => 'trans.Link to terms and conditions',
             'required' => true,

@@ -39,6 +39,11 @@ class SettingsDto
     /**
      * @var string|null
      */
+    private $footerSiteCopyright;
+
+    /**
+     * @var string|null
+     */
     private $linkTermsConditions;
 
     /**
@@ -336,5 +341,15 @@ class SettingsDto
     public function setWordsToRemoveFromTitle(?string $wordsToRemoveFromTitle): void
     {
         $this->wordsToRemoveFromTitle = $wordsToRemoveFromTitle;
+    }
+
+    public function getFooterSiteCopyright(): ?string
+    {
+        return $this->footerSiteCopyright;
+    }
+
+    public function setFooterSiteCopyright(?string $footerSiteCopyright): void
+    {
+        $this->footerSiteCopyright = $footerSiteCopyright;
     }
 }

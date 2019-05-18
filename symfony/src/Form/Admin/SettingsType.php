@@ -10,11 +10,13 @@ use App\Form\Type\PageType;
 use App\Service\Setting\SettingsDto;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\GreaterThan;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -84,7 +86,7 @@ class SettingsType extends AbstractType
                 new Length(['min' => 2]),
             ],
         ]);
-        $builder->add('emailFromAddress', TextType::class, [
+        $builder->add('emailFromAddress', EmailType::class, [
             'label' => 'trans.Email address used in from field of email message',
             'help' => 'trans.Must match email from which you send messages',
             'required' => true,
@@ -92,6 +94,9 @@ class SettingsType extends AbstractType
             'constraints' => [
                 new NotBlank(),
                 new Length(['min' => 4]),
+                new Email([
+                    'mode' => Email::VALIDATION_MODE_STRICT
+                ]),
             ],
         ]);
         $builder->add('emailFromName', TextType::class, [
@@ -103,13 +108,16 @@ class SettingsType extends AbstractType
                 new Length(['min' => 4]),
             ],
         ]);
-        $builder->add('emailReplyTo', TextType::class, [
+        $builder->add('emailReplyTo', EmailType::class, [
             'label' => 'trans.Email used when user replies to emails from this application',
             'required' => true,
             'empty_data' => '',
             'constraints' => [
                 new NotBlank(),
                 new Length(['min' => 4]),
+                new Email([
+                    'mode' => Email::VALIDATION_MODE_STRICT
+                ]),
             ],
         ]);
         $builder->add('emailConfigUrl', TextType::class, [

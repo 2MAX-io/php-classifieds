@@ -121,6 +121,10 @@ class User implements UserInterface, RoleInterface, EnablableInterface, EncoderA
     {
         $this->email = $email;
 
+        if ($this->username && Str::contains($this->getUsername(), '@')) {
+            $this->setUsername($email);
+        }
+
         return $this;
     }
 

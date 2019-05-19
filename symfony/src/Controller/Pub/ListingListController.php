@@ -98,7 +98,7 @@ class ListingListController extends AbstractController
                     'form_custom_field' => $request->query->get('form_custom_field'),
                 ],
                 'pageTitle' => $this->getPageTitleForRoute($listingListDto),
-                'breadcrumbLast' => $this->getPageTitleForRoute($listingListDto),
+                'breadcrumbLast' => $this->getBreadcrumbsForRoute($listingListDto),
             ]
         );
     }
@@ -106,22 +106,33 @@ class ListingListController extends AbstractController
     private function getPageTitleForRoute(ListingListDto $listingListDto): string
     {
         $route = $listingListDto->getRoute();
-        $pageTitle = $this->trans->trans('trans.Listings');
         $map = [
             'app_listing_list' => $this->trans->trans('trans.Search Engine'),
             'app_last_added' => $this->trans->trans('trans.Last added'),
             'app_user_listings' => $this->trans->trans('trans.Listings of user'),
-            'app_category' => $this->trans->trans('trans.Listings'),
+            'app_category' => $listingListDto->getCategory()->getName(),
         ];
 
         if (isset($map[$route])) {
-            if (\is_callable($map[$route])) {
-                $pageTitle = $map[$route]();
-            } else {
-                $pageTitle = $map[$route];
-            }
+            return $map[$route];
+        } else {
+            return $this->trans->trans('trans.Listings');
         }
+    }
 
-        return $pageTitle;
+    private function getBreadcrumbsForRoute(ListingListDto $listingListDto): ?string
+    {
+        $route = $listingListDto->getRoute();
+        $map = [
+            'app_listing_list' => $this->trans->trans('trans.Search Engine'),
+            'app_last_added' => $this->trans->trans('trans.Last added'),
+            'app_user_listings' => $this->trans->trans('trans.Listings of user'),
+        ];
+
+        if (isset($map[$route])) {
+            return $map[$route];
+        } else {
+            return null;
+        }
     }
 }

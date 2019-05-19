@@ -6,6 +6,7 @@ namespace App\Security;
 
 use App\Entity\Admin;
 use App\Entity\User;
+use App\Service\System\LocalCache\LocalCacheService;
 use App\Service\User\RoleInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -29,11 +30,17 @@ class CurrentUserService
      */
     private $em;
 
-    public function __construct(Security $security, SessionInterface $session, EntityManagerInterface $em)
+    /**
+     * @var LocalCacheService
+     */
+    private $localCacheService;
+
+    public function __construct(Security $security, SessionInterface $session, LocalCacheService $localCacheService, EntityManagerInterface $em)
     {
         $this->security = $security;
         $this->session = $session;
         $this->em = $em;
+        $this->localCacheService = $localCacheService;
     }
 
     public function getUser(): ?User
@@ -82,6 +89,25 @@ class CurrentUserService
      */
     public function lowSecurityCheckIsAdminInPublic(): bool
     {
+        if ($this->localCacheService->has(LocalCacheService::ADMIN_IN_PUBLIC)) {
+            return (bool) $this->localCacheService->get(LocalCacheService::ADMIN_IN_PUBLIC);
+        }
+
+        $return = $this->lowSecurityCheckIsAdminInPublicNoCache();
+        $this->localCacheService->set(LocalCacheService::ADMIN_IN_PUBLIC, $return);
+
+        return $return;
+    }
+
+    /**
+     * WARNING! do not use to authorize anything important, like authorizing admin actions
+     *
+     * only use to display links to admin panel, or show not activated listings, nothing more than that
+     *
+     * @return bool
+     */
+    public function lowSecurityCheckIsAdminInPublicNoCache(): bool
+    {
         $adminSerialized = $this->session->get('_security_admin', false);
 
         if (false === $adminSerialized) {
@@ -92,8 +118,7 @@ class CurrentUserService
         $adminToken = unserialize($adminSerialized);
 
         $admin = $adminToken->getUser();
-        $admin = $this->em->merge($admin);
-        $this->em->refresh($admin);
+        $admin = $this->em->merge($admin); // merge does refresh
 
         if (!$admin instanceof Admin) {
             return false;

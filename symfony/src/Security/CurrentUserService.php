@@ -6,6 +6,7 @@ namespace App\Security;
 
 use App\Entity\Admin;
 use App\Entity\User;
+use App\Helper\SerializerHelper;
 use App\Service\System\LocalCache\LocalCacheService;
 use App\Service\User\RoleInterface;
 use Doctrine\ORM\EntityManagerInterface;
@@ -115,7 +116,7 @@ class CurrentUserService
         }
 
         /** @var TokenInterface $adminToken */
-        $adminToken = unserialize($adminSerialized);
+        $adminToken = SerializerHelper::safelyUnserialize($adminSerialized);
 
         $admin = $adminToken->getUser();
         $admin = $this->em->merge($admin); // merge does refresh

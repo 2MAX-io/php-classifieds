@@ -13,6 +13,7 @@ use App\System\Cache\AppCacheInterface;
 use Carbon\Carbon;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\SimpleCache\CacheInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 
 class AdminStatsService
 {
@@ -76,6 +77,9 @@ class AdminStatsService
         return (int) $qb->getQuery()->getSingleScalarResult();
     }
 
+    /**
+     * @Cache
+     */
     public function getAllListingsCount(): int
     {
         $cacheName = AppCacheInterface::ADMIN_STATS_LISTINGS_COUNT;

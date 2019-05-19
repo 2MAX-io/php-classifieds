@@ -1,0 +1,1190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="en" datatype="plaintext" original="file.ext">
+    <header>
+      <tool tool-id="symfony" tool-name="Symfony"/>
+    </header>
+    <body>
+      <trans-unit id="QLoEGpS" resname="trans.paypal.sandbox">
+        <source>trans.paypal.sandbox</source>
+        <target>sandbox - test payments</target>
+      </trans-unit>
+      <trans-unit id="AutZiBM" resname="trans.paypal.live">
+        <source>trans.paypal.live</source>
+        <target>live - real payments</target>
+      </trans-unit>
+      <trans-unit id="DGwP.sZ" resname="trans.Classifieds">
+        <source>trans.Classifieds</source>
+        <target>Classifieds</target>
+      </trans-unit>
+      <trans-unit id="GEOiIuP" resname="trans.Show filters">
+        <source>trans.Show filters</source>
+        <target>Show filters</target>
+      </trans-unit>
+      <trans-unit id="a62ei_K" resname="trans.Category">
+        <source>trans.Category</source>
+        <target>Category</target>
+      </trans-unit>
+      <trans-unit id="ri_uzYo" resname="trans.Refine Search">
+        <source>trans.Refine Search</source>
+        <target>Refine Search</target>
+      </trans-unit>
+      <trans-unit id="RrGS_pk" resname="trans.keyword">
+        <source>trans.keyword</source>
+        <target>keyword</target>
+      </trans-unit>
+      <trans-unit id="b2fpoYb" resname="trans.User Listings">
+        <source>trans.User Listings</source>
+        <target>User Listings</target>
+      </trans-unit>
+      <trans-unit id="r3CNsU6" resname="trans.Amount or price">
+        <source>trans.Amount or price</source>
+        <target>Amount or price</target>
+      </trans-unit>
+      <trans-unit id="v2MdsX_" resname="trans.min">
+        <source>trans.min</source>
+        <target>min</target>
+      </trans-unit>
+      <trans-unit id="ygg_LM3" resname="trans.max">
+        <source>trans.max</source>
+        <target>max</target>
+      </trans-unit>
+      <trans-unit id="W3shj6E" resname="trans.Select">
+        <source>trans.Select</source>
+        <target>Select</target>
+      </trans-unit>
+      <trans-unit id="SS1BPBs" resname="trans.Older than 1960">
+        <source>trans.Older than 1960</source>
+        <target>Older than 1960</target>
+      </trans-unit>
+      <trans-unit id="9mEMfEP" resname="trans.Filter">
+        <source>trans.Filter</source>
+        <target>Filter</target>
+      </trans-unit>
+      <trans-unit id="uwk1ODK" resname="trans.Recommended">
+        <source>trans.Recommended</source>
+        <target>Recommended</target>
+      </trans-unit>
+      <trans-unit id="RMcx5gX" resname="trans.Price">
+        <source>trans.Price</source>
+        <target>Price</target>
+      </trans-unit>
+      <trans-unit id="EnVssrY" resname="trans.Subpages">
+        <source>trans.Subpages</source>
+        <target>Subpages</target>
+      </trans-unit>
+      <trans-unit id="2DBieyA" resname="trans.Title">
+        <source>trans.Title</source>
+        <target>Title</target>
+      </trans-unit>
+      <trans-unit id="2W0U.VC" resname="trans.Enabled">
+        <source>trans.Enabled</source>
+        <target>Enabled</target>
+      </trans-unit>
+      <trans-unit id="YvtO6rG" resname="trans.Create new">
+        <source>trans.Create new</source>
+        <target>Create new</target>
+      </trans-unit>
+      <trans-unit id="Tv056SZ" resname="trans.edit">
+        <source>trans.edit</source>
+        <target>edit</target>
+      </trans-unit>
+      <trans-unit id="1UtroXS" resname="trans.no records found">
+        <source>trans.no records found</source>
+        <target>no records found</target>
+      </trans-unit>
+      <trans-unit id="iZfxLZG" resname="trans.Delete">
+        <source>trans.Delete</source>
+        <target>Delete</target>
+      </trans-unit>
+      <trans-unit id="74aEYgR" resname="trans.Edit Page">
+        <source>trans.Edit Page</source>
+        <target>Edit Page</target>
+      </trans-unit>
+      <trans-unit id="IH3keD6" resname="trans.back to list">
+        <source>trans.back to list</source>
+        <target>back to list</target>
+      </trans-unit>
+      <trans-unit id="tKhk.0P" resname="trans.Create new page">
+        <source>trans.Create new page</source>
+        <target>Create new page</target>
+      </trans-unit>
+      <trans-unit id="P2ZpFuo" resname="trans.Logo of site">
+        <source>trans.Logo of site</source>
+        <target>Logo of site</target>
+      </trans-unit>
+      <trans-unit id="xpWdJDc" resname="trans.Upload">
+        <source>trans.Upload</source>
+        <target>Upload</target>
+      </trans-unit>
+      <trans-unit id="du8qbiA" resname="trans.Preview">
+        <source>trans.Preview</source>
+        <target>Preview</target>
+      </trans-unit>
+      <trans-unit id="1XKmrAF" resname="trans.Site logo">
+        <source>trans.Site logo</source>
+        <target>Site logo</target>
+      </trans-unit>
+      <trans-unit id="Dll5Jpw" resname="trans.Search Engine">
+        <source>trans.Search Engine</source>
+        <target>Search Engine</target>
+      </trans-unit>
+      <trans-unit id="3syFywb" resname="trans.Activated by Admin?">
+        <source>trans.Activated by Admin?</source>
+        <target>Activated by Admin?</target>
+      </trans-unit>
+      <trans-unit id="y4XgF1e" resname="trans.Not activated">
+        <source>trans.Not activated</source>
+        <target>Not activated</target>
+      </trans-unit>
+      <trans-unit id="5bHHUF9" resname="trans.Activated">
+        <source>trans.Activated</source>
+        <target>Activated</target>
+      </trans-unit>
+      <trans-unit id="G3yq1sX" resname="trans.Rejected by Admin?">
+        <source>trans.Rejected by Admin?</source>
+        <target>Rejected by Admin?</target>
+      </trans-unit>
+      <trans-unit id="DomjAsc" resname="trans.No">
+        <source>trans.No</source>
+        <target>No</target>
+      </trans-unit>
+      <trans-unit id="MKYLLko" resname="trans.Yes">
+        <source>trans.Yes</source>
+        <target>Yes</target>
+      </trans-unit>
+      <trans-unit id="nZXUi9u" resname="trans.Removed by Admin?">
+        <source>trans.Removed by Admin?</source>
+        <target>Removed by Admin?</target>
+      </trans-unit>
+      <trans-unit id="ok.JGQq" resname="trans.Deactivated by User?">
+        <source>trans.Deactivated by User?</source>
+        <target>Deactivated by User?</target>
+      </trans-unit>
+      <trans-unit id="rzwMQBf" resname="trans.Removed by User?">
+        <source>trans.Removed by User?</source>
+        <target>Removed by User?</target>
+      </trans-unit>
+      <trans-unit id="WtOmQPt" resname="trans.Featured listing?">
+        <source>trans.Featured listing?</source>
+        <target>Featured listing?</target>
+      </trans-unit>
+      <trans-unit id="t8EAxQS" resname="trans.User">
+        <source>trans.User</source>
+        <target>User</target>
+      </trans-unit>
+      <trans-unit id="CDLDsfv" resname="trans.Search">
+        <source>trans.Search</source>
+        <target>Search</target>
+      </trans-unit>
+      <trans-unit id="MK65DkW" resname="trans.Status">
+        <source>trans.Status</source>
+        <target>Status</target>
+      </trans-unit>
+      <trans-unit id="voc043X" resname="trans.Valid till">
+        <source>trans.Valid till</source>
+        <target>Valid till</target>
+      </trans-unit>
+      <trans-unit id="bo4ZHmK" resname="trans.Actions">
+        <source>trans.Actions</source>
+        <target>Actions</target>
+      </trans-unit>
+      <trans-unit id="Gua7dp5" resname="trans.Featured">
+        <source>trans.Featured</source>
+        <target>Featured</target>
+      </trans-unit>
+      <trans-unit id="o7Sqck3" resname="trans.more informations">
+        <source>trans.more informations</source>
+        <target>more informations</target>
+      </trans-unit>
+      <trans-unit id="YKP4Zt7" resname="trans.Edit">
+        <source>trans.Edit</source>
+        <target>Edit</target>
+      </trans-unit>
+      <trans-unit id="CRsN8o." resname="trans.Reject">
+        <source>trans.Reject</source>
+        <target>Reject</target>
+      </trans-unit>
+      <trans-unit id="nPEPGQ1" resname="trans.Execute action on filtered listings">
+        <source>trans.Execute action on filtered listings</source>
+        <target>Execute action on filtered listings</target>
+      </trans-unit>
+      <trans-unit id="IdRXHGH" resname="trans.Activation">
+        <source>trans.Activation</source>
+        <target>Activation</target>
+      </trans-unit>
+      <trans-unit id="KDtZ4BY" resname="trans.Action on selected">
+        <source>trans.Action on selected</source>
+        <target>Action on selected</target>
+      </trans-unit>
+      <trans-unit id="09zu9m4" resname="trans.Last edit">
+        <source>trans.Last edit</source>
+        <target>Last edit</target>
+      </trans-unit>
+      <trans-unit id="yNegH8i" resname="trans.Previous rejection">
+        <source>trans.Previous rejection</source>
+        <target>Previous rejection</target>
+      </trans-unit>
+      <trans-unit id="DC9c9bL" resname="trans.Activate selected?">
+        <source>trans.Activate selected?</source>
+        <target>Activate selected?</target>
+      </trans-unit>
+      <trans-unit id="GuNikaD" resname="trans.Activate">
+        <source>trans.Activate</source>
+        <target>Activate</target>
+      </trans-unit>
+      <trans-unit id="0zuDy8V" resname="trans.Reject selected?">
+        <source>trans.Reject selected?</source>
+        <target>Reject selected?</target>
+      </trans-unit>
+      <trans-unit id="Uv7USIS" resname="trans.selected">
+        <source>trans.selected</source>
+        <target>selected</target>
+      </trans-unit>
+      <trans-unit id="o.9.dKz" resname="trans.Police log">
+        <source>trans.Police log</source>
+        <target>Police log</target>
+      </trans-unit>
+      <trans-unit id="OvNbGCI" resname="trans.Police log for listing">
+        <source>trans.Police log for listing</source>
+        <target>Police log for listing</target>
+      </trans-unit>
+      <trans-unit id="797L1cz" resname="trans.Copy to clipboard">
+        <source>trans.Copy to clipboard</source>
+        <target>Copy to clipboard</target>
+      </trans-unit>
+      <trans-unit id="sFrPZzx" resname="trans.IMPORTANT!">
+        <source>trans.IMPORTANT!</source>
+        <target>IMPORTANT!</target>
+      </trans-unit>
+      <trans-unit id="yqQM4v3" resname="trans.It is recommended that before running this action, you create restolable backup of database">
+        <source>trans.It is recommended that before running this action, you create restolable backup of database</source>
+        <target>It is recommended that before running this action, you create restolable backup of database</target>
+      </trans-unit>
+      <trans-unit id="1LGxtgf" resname="trans.Also it is recommended to run this action on test environment, that is copy of live service, before running it on live service">
+        <source>trans.Also it is recommended to run this action on test environment, that is copy of live service, before running it on live service</source>
+        <target>Also it is recommended to run this action on test environment, that is copy of live service, before running it on live service</target>
+      </trans-unit>
+      <trans-unit id="yTutKyT" resname="trans.There is no way of undoing changes made by this action, except of restoring backup">
+        <source>trans.There is no way of undoing changes made by this action, except of restoring backup</source>
+        <target>There is no way of undoing changes made by this action, except of restoring backup</target>
+      </trans-unit>
+      <trans-unit id="XkN7B1R" resname="trans.Make sure you execute action on correctly filtered listings">
+        <source>trans.Make sure you execute action on correctly filtered listings</source>
+        <target>Make sure you execute action on correctly filtered listings</target>
+      </trans-unit>
+      <trans-unit id=".YK8B91" resname="trans.Numer of listings changed by this action would be:">
+        <source>trans.Numer of listings changed by this action would be:</source>
+        <target>Numer of listings changed by this action would be:</target>
+      </trans-unit>
+      <trans-unit id="PjkEjqp" resname="trans.of all">
+        <source>trans.of all</source>
+        <target>of all</target>
+      </trans-unit>
+      <trans-unit id="N.Nv1i8" resname="trans.This action will be executed on %percentage%% of listings (almost every listing), are you REALY sure you want to execute it?">
+        <source>trans.This action will be executed on %percentage%% of listings (almost every listing), are you REALY sure you want to execute it?</source>
+        <target>This action will be executed on %percentage%% of listings (almost every listing), are you REALY sure you want to execute it?</target>
+      </trans-unit>
+      <trans-unit id="KwzXEh8" resname="trans.Execute action on %number% of listings?">
+        <source>trans.Execute action on %number% of listings?</source>
+        <target>Execute action on %number% of listings?</target>
+      </trans-unit>
+      <trans-unit id="kQTW1av" resname="trans.changes:">
+        <source>trans.changes:</source>
+        <target>changes:</target>
+      </trans-unit>
+      <trans-unit id="idOG144" resname="trans.Edit listing">
+        <source>trans.Edit listing</source>
+        <target>Edit listing</target>
+      </trans-unit>
+      <trans-unit id="K1Gw8D." resname="trans.Edit listing advanced settings">
+        <source>trans.Edit listing advanced settings</source>
+        <target>Edit listing advanced settings</target>
+      </trans-unit>
+      <trans-unit id="PWHdxmW" resname="trans.Save">
+        <source>trans.Save</source>
+        <target>Save</target>
+      </trans-unit>
+      <trans-unit id="Cd_nA5L" resname="trans.Advanced listing edit">
+        <source>trans.Advanced listing edit</source>
+        <target>Advanced listing edit</target>
+      </trans-unit>
+      <trans-unit id="KLoocJH" resname="trans.Reject listing">
+        <source>trans.Reject listing</source>
+        <target>Reject listing</target>
+      </trans-unit>
+      <trans-unit id="Z2O6HSG" resname="trans.Close this page">
+        <source>trans.Close this page</source>
+        <target>Close this page</target>
+      </trans-unit>
+      <trans-unit id="mpPcz0t" resname="trans.Raise">
+        <source>trans.Raise</source>
+        <target>Raise</target>
+      </trans-unit>
+      <trans-unit id="UCoM20M" resname="trans.Remove file of">
+        <source>trans.Remove file of</source>
+        <target>Remove file of</target>
+      </trans-unit>
+      <trans-unit id="l4UmHD_" resname="trans.Admin last activation">
+        <source>trans.Admin last activation</source>
+        <target>Admin last activation</target>
+      </trans-unit>
+      <trans-unit id="eU7oUYl" resname="trans.Featured until">
+        <source>trans.Featured until</source>
+        <target>Featured until</target>
+      </trans-unit>
+      <trans-unit id="1vnifLb" resname="trans.none">
+        <source>trans.none</source>
+        <target>none</target>
+      </trans-unit>
+      <trans-unit id="ERLWJTW" resname="trans.Creation date">
+        <source>trans.Creation date</source>
+        <target>Creation date</target>
+      </trans-unit>
+      <trans-unit id="Hc2xp.1" resname="trans.Valid until">
+        <source>trans.Valid until</source>
+        <target>Valid until</target>
+      </trans-unit>
+      <trans-unit id="dIAW.c8" resname="trans.Last raising">
+        <source>trans.Last raising</source>
+        <target>Last raising</target>
+      </trans-unit>
+      <trans-unit id="kBAlXM." resname="trans.Delete custom field option">
+        <source>trans.Delete custom field option</source>
+        <target>Delete custom field option</target>
+      </trans-unit>
+      <trans-unit id="eX7YTeG" resname="trans.Option for custom field">
+        <source>trans.Option for custom field</source>
+        <target>Option for custom field</target>
+      </trans-unit>
+      <trans-unit id="0g2GuHb" resname="trans.for custom field">
+        <source>trans.for custom field</source>
+        <target>for custom field</target>
+      </trans-unit>
+      <trans-unit id="01cDTd5" resname="trans.Add option">
+        <source>trans.Add option</source>
+        <target>Add option</target>
+      </trans-unit>
+      <trans-unit id="sLEBoZU" resname="trans.Categories">
+        <source>trans.Categories</source>
+        <target>Categories</target>
+      </trans-unit>
+      <trans-unit id="HwiWQ.T" resname="trans.Custom fields">
+        <source>trans.Custom fields</source>
+        <target>Custom fields</target>
+      </trans-unit>
+      <trans-unit id="BD5JsS." resname="trans.Save order">
+        <source>trans.Save order</source>
+        <target>Save order</target>
+      </trans-unit>
+      <trans-unit id="BWI16.M" resname="trans.Add custom field">
+        <source>trans.Add custom field</source>
+        <target>Add custom field</target>
+      </trans-unit>
+      <trans-unit id="UTnBqOH" resname="trans.Name">
+        <source>trans.Name</source>
+        <target>Name</target>
+      </trans-unit>
+      <trans-unit id="kY6CLIi" resname="trans.Type">
+        <source>trans.Type</source>
+        <target>Type</target>
+      </trans-unit>
+      <trans-unit id="UgKzMtT" resname="trans.Required?">
+        <source>trans.Required?</source>
+        <target>Required?</target>
+      </trans-unit>
+      <trans-unit id="mKya.4K" resname="trans.Searchable?">
+        <source>trans.Searchable?</source>
+        <target>Searchable?</target>
+      </trans-unit>
+      <trans-unit id="xPveSNE" resname="trans.Unit">
+        <source>trans.Unit</source>
+        <target>Unit</target>
+      </trans-unit>
+      <trans-unit id="pz7Zf6r" resname="trans.Delete custom field">
+        <source>trans.Delete custom field</source>
+        <target>Delete custom field</target>
+      </trans-unit>
+      <trans-unit id="5Tnlu7A" resname="trans.Delete completely, from all categories">
+        <source>trans.Delete completely, from all categories</source>
+        <target>Delete completely, from all categories</target>
+      </trans-unit>
+      <trans-unit id="bzO9NWl" resname="trans.Edit custom field">
+        <source>trans.Edit custom field</source>
+        <target>Edit custom field</target>
+      </trans-unit>
+      <trans-unit id="Elo8FVT" resname="trans.Update">
+        <source>trans.Update</source>
+        <target>Update</target>
+      </trans-unit>
+      <trans-unit id="VMGnllD" resname="trans.Options">
+        <source>trans.Options</source>
+        <target>Options</target>
+      </trans-unit>
+      <trans-unit id="x25.djx" resname="trans.Settings">
+        <source>trans.Settings</source>
+        <target>Settings</target>
+      </trans-unit>
+      <trans-unit id="gznb3H6" resname="trans.Page settings">
+        <source>trans.Page settings</source>
+        <target>Page settings</target>
+      </trans-unit>
+      <trans-unit id="fX7rEbh" resname="trans.Upload logo">
+        <source>trans.Upload logo</source>
+        <target>Upload logo</target>
+      </trans-unit>
+      <trans-unit id="R_lN3nW" resname="trans.Admin panel">
+        <source>trans.Admin panel</source>
+        <target>Admin panel</target>
+      </trans-unit>
+      <trans-unit id="J5LkfVb" resname="trans.Admin Dashboard">
+        <source>trans.Admin Dashboard</source>
+        <target>Admin Dashboard</target>
+      </trans-unit>
+      <trans-unit id="ayJrrWm" resname="trans.Pending for activation">
+        <source>trans.Pending for activation</source>
+        <target>Pending for activation</target>
+      </trans-unit>
+      <trans-unit id="vsiClZv" resname="trans.Added last 12">
+        <source>trans.Added last 12</source>
+        <target>Added last 12</target>
+      </trans-unit>
+      <trans-unit id="WkcArkV" resname="trans.Added last 24">
+        <source>trans.Added last 24</source>
+        <target>Added last 24</target>
+      </trans-unit>
+      <trans-unit id="q.BeZ4W" resname="trans.Added last 7 days">
+        <source>trans.Added last 7 days</source>
+        <target>Added last 7 days</target>
+      </trans-unit>
+      <trans-unit id="SB3Qw0L" resname="trans.Added last 30 days">
+        <source>trans.Added last 30 days</source>
+        <target>Added last 30 days</target>
+      </trans-unit>
+      <trans-unit id="Tq8txqt" resname="trans.Added last year">
+        <source>trans.Added last year</source>
+        <target>Added last year</target>
+      </trans-unit>
+      <trans-unit id="oaSFVlX" resname="trans.Active listings count">
+        <source>trans.Active listings count</source>
+        <target>Active listings count</target>
+      </trans-unit>
+      <trans-unit id="SoCh9K3" resname="trans.All listings count">
+        <source>trans.All listings count</source>
+        <target>All listings count</target>
+      </trans-unit>
+      <trans-unit id="ykFwEHl" resname="trans.Users count">
+        <source>trans.Users count</source>
+        <target>Users count</target>
+      </trans-unit>
+      <trans-unit id="ZlY5dXr" resname="trans.Listings views">
+        <source>trans.Listings views</source>
+        <target>Listings views</target>
+      </trans-unit>
+      <trans-unit id="IN5AVPN" resname="trans.Featured listings">
+        <source>trans.Featured listings</source>
+        <target>Featured listings</target>
+      </trans-unit>
+      <trans-unit id="eBSaHP_" resname="trans.Add category">
+        <source>trans.Add category</source>
+        <target>Add category</target>
+      </trans-unit>
+      <trans-unit id="uea.Zom" resname="trans.Save order of categories">
+        <source>trans.Save order of categories</source>
+        <target>Save order of categories</target>
+      </trans-unit>
+      <trans-unit id="DjLlXri" resname="trans.Add subcategory">
+        <source>trans.Add subcategory</source>
+        <target>Add subcategory</target>
+      </trans-unit>
+      <trans-unit id="dKe0EwA" resname="trans.Delete category custom field">
+        <source>trans.Delete category custom field</source>
+        <target>Delete category custom field</target>
+      </trans-unit>
+      <trans-unit id="LEmjZ7g" resname="trans.for category">
+        <source>trans.for category</source>
+        <target>for category</target>
+      </trans-unit>
+      <trans-unit id="axJuk7F" resname="trans.Add missing custom field">
+        <source>trans.Add missing custom field</source>
+        <target>Add missing custom field</target>
+      </trans-unit>
+      <trans-unit id="2wrzb_E" resname="trans.Delete category">
+        <source>trans.Delete category</source>
+        <target>Delete category</target>
+      </trans-unit>
+      <trans-unit id="j1gi.7Z" resname="trans.Edit Category">
+        <source>trans.Edit Category</source>
+        <target>Edit Category</target>
+      </trans-unit>
+      <trans-unit id="PjJixZF" resname="trans.to fill for listings in category">
+        <source>trans.to fill for listings in category</source>
+        <target>to fill for listings in category</target>
+      </trans-unit>
+      <trans-unit id="O2D6X6j" resname="trans.Change user balance">
+        <source>trans.Change user balance</source>
+        <target>Change user balance</target>
+      </trans-unit>
+      <trans-unit id="BSbE2Cz" resname="trans.Change balance of user">
+        <source>trans.Change balance of user</source>
+        <target>Change balance of user</target>
+      </trans-unit>
+      <trans-unit id="H8efxJv" resname="trans.Current user balance">
+        <source>trans.Current user balance</source>
+        <target>Current user balance</target>
+      </trans-unit>
+      <trans-unit id="2fWC_ok" resname="trans.Change balance">
+        <source>trans.Change balance</source>
+        <target>Change balance</target>
+      </trans-unit>
+      <trans-unit id="MsERKUV" resname="trans.Balance history for user">
+        <source>trans.Balance history for user</source>
+        <target>Balance history for user</target>
+      </trans-unit>
+      <trans-unit id="0Oq2buM" resname="trans.Date">
+        <source>trans.Date</source>
+        <target>Date</target>
+      </trans-unit>
+      <trans-unit id="eRmkV6F" resname="trans.Balance difference">
+        <source>trans.Balance difference</source>
+        <target>Balance difference</target>
+      </trans-unit>
+      <trans-unit id="QnccnpU" resname="trans.Balance after change">
+        <source>trans.Balance after change</source>
+        <target>Balance after change</target>
+      </trans-unit>
+      <trans-unit id="HWHKRCh" resname="trans.Description">
+        <source>trans.Description</source>
+        <target>Description</target>
+      </trans-unit>
+      <trans-unit id="F0pnZlC" resname="trans.Payment">
+        <source>trans.Payment</source>
+        <target>Payment</target>
+      </trans-unit>
+      <trans-unit id="_kmew7Y" resname="trans.User list">
+        <source>trans.User list</source>
+        <target>User list</target>
+      </trans-unit>
+      <trans-unit id="Uj9VhPz" resname="trans.Email">
+        <source>trans.Email</source>
+        <target>Email</target>
+      </trans-unit>
+      <trans-unit id="RNyEWP7" resname="trans.Registration date">
+        <source>trans.Registration date</source>
+        <target>Registration date</target>
+      </trans-unit>
+      <trans-unit id="6loEWIo" resname="trans.Last login">
+        <source>trans.Last login</source>
+        <target>Last login</target>
+      </trans-unit>
+      <trans-unit id="oZ5jAMC" resname="trans.Username">
+        <source>trans.Username</source>
+        <target>Username</target>
+      </trans-unit>
+      <trans-unit id="3pUbjbq" resname="trans.Edit User">
+        <source>trans.Edit User</source>
+        <target>Edit User</target>
+      </trans-unit>
+      <trans-unit id="cMf1fEw" resname="trans.User listings">
+        <source>trans.User listings</source>
+        <target>User listings</target>
+      </trans-unit>
+      <trans-unit id="E5XXjRb" resname="trans.Roles">
+        <source>trans.Roles</source>
+        <target>Roles</target>
+      </trans-unit>
+      <trans-unit id="mJRK02m" resname="trans.Payments">
+        <source>trans.Payments</source>
+        <target>Payments</target>
+      </trans-unit>
+      <trans-unit id="LhVoS_y" resname="trans.Amount">
+        <source>trans.Amount</source>
+        <target>Amount</target>
+      </trans-unit>
+      <trans-unit id="Vnj5Ilu" resname="trans.Payment gateway - status">
+        <source>trans.Payment gateway - status</source>
+        <target>Payment gateway - status</target>
+      </trans-unit>
+      <trans-unit id="UXSsxPS" resname="trans.Balance updated?">
+        <source>trans.Balance updated?</source>
+        <target>Balance updated?</target>
+      </trans-unit>
+      <trans-unit id="eyttRxq" resname="trans.Canceled?">
+        <source>trans.Canceled?</source>
+        <target>Canceled?</target>
+      </trans-unit>
+      <trans-unit id="tmF8g0G" resname="trans.Payment gateway - transaction ID">
+        <source>trans.Payment gateway - transaction ID</source>
+        <target>Payment gateway - transaction ID</target>
+      </trans-unit>
+      <trans-unit id="cCcZDWe" resname="trans.details">
+        <source>trans.details</source>
+        <target>details</target>
+      </trans-unit>
+      <trans-unit id="LALCBSq" resname="trans.Listing">
+        <source>trans.Listing</source>
+        <target>Listing</target>
+      </trans-unit>
+      <trans-unit id="XRuuWm9" resname="trans.Search listings">
+        <source>trans.Search listings</source>
+        <target>Search listings</target>
+      </trans-unit>
+      <trans-unit id="qbWl1lx" resname="trans.Users">
+        <source>trans.Users</source>
+        <target>Users</target>
+      </trans-unit>
+      <trans-unit id="zYHLLtt" resname="trans.Administrators">
+        <source>trans.Administrators</source>
+        <target>Administrators</target>
+      </trans-unit>
+      <trans-unit id="ZWbDo2J" resname="trans.Featured packages">
+        <source>trans.Featured packages</source>
+        <target>Featured packages</target>
+      </trans-unit>
+      <trans-unit id=".6GcFLi" resname="trans.External links">
+        <source>trans.External links</source>
+        <target>External links</target>
+      </trans-unit>
+      <trans-unit id="Tc7qr10" resname="trans.Public classifieds">
+        <source>trans.Public classifieds</source>
+        <target>Public classifieds</target>
+      </trans-unit>
+      <trans-unit id="1QWz2bo" resname="trans.Logout">
+        <source>trans.Logout</source>
+        <target>Logout</target>
+      </trans-unit>
+      <trans-unit id="6OU1CUM" resname="trans.Admin">
+        <source>trans.Admin</source>
+        <target>Admin</target>
+      </trans-unit>
+      <trans-unit id="HaQQQdG" resname="trans.Administrators list">
+        <source>trans.Administrators list</source>
+        <target>Administrators list</target>
+      </trans-unit>
+      <trans-unit id="9RKdrtQ" resname="trans.Add Administrator">
+        <source>trans.Add Administrator</source>
+        <target>Add Administrator</target>
+      </trans-unit>
+      <trans-unit id="NZXORfl" resname="trans.Edit Administrator">
+        <source>trans.Edit Administrator</source>
+        <target>Edit Administrator</target>
+      </trans-unit>
+      <trans-unit id="fm0IvLj" resname="trans.Name for admin">
+        <source>trans.Name for admin</source>
+        <target>Name for admin</target>
+      </trans-unit>
+      <trans-unit id="capSYta" resname="trans.Days of featured">
+        <source>trans.Days of featured</source>
+        <target>Days of featured</target>
+      </trans-unit>
+      <trans-unit id="CWQVaph" resname="trans.Days of expiration">
+        <source>trans.Days of expiration</source>
+        <target>Days of expiration</target>
+      </trans-unit>
+      <trans-unit id="x176WdA" resname="trans.Default?">
+        <source>trans.Default?</source>
+        <target>Default?</target>
+      </trans-unit>
+      <trans-unit id="J8900KW" resname="trans.Delete featured package">
+        <source>trans.Delete featured package</source>
+        <target>Delete featured package</target>
+      </trans-unit>
+      <trans-unit id="fDrjMoM" resname="trans.Edit featured package">
+        <source>trans.Edit featured package</source>
+        <target>Edit featured package</target>
+      </trans-unit>
+      <trans-unit id="dP1Pt5d" resname="trans.Create new featured package">
+        <source>trans.Create new featured package</source>
+        <target>Create new featured package</target>
+      </trans-unit>
+      <trans-unit id="EhQm3_I" resname="trans.Admin Panel Sign In">
+        <source>trans.Admin Panel Sign In</source>
+        <target>Admin Panel Sign In</target>
+      </trans-unit>
+      <trans-unit id="uu1jkpn" resname="trans.Please sign in">
+        <source>trans.Please sign in</source>
+        <target>Please sign in</target>
+      </trans-unit>
+      <trans-unit id="GFvm04E" resname="trans.Password">
+        <source>trans.Password</source>
+        <target>Password</target>
+      </trans-unit>
+      <trans-unit id="WGCGaQA" resname="trans.Sign in">
+        <source>trans.Sign in</source>
+        <target>Sign in</target>
+      </trans-unit>
+      <trans-unit id="srDsX1a" resname="trans.Log in!">
+        <source>trans.Log in!</source>
+        <target>Log in!</target>
+      </trans-unit>
+      <trans-unit id="8uoiJhM" resname="trans.Forgot password?">
+        <source>trans.Forgot password?</source>
+        <target>Forgot password?</target>
+      </trans-unit>
+      <trans-unit id="I2dJ0JJ" resname="trans.Need an account?">
+        <source>trans.Need an account?</source>
+        <target>Need an account?</target>
+      </trans-unit>
+      <trans-unit id="NjmoI6A" resname="trans.Register">
+        <source>trans.Register</source>
+        <target>Register</target>
+      </trans-unit>
+      <trans-unit id="S.278jk" resname="trans.View all">
+        <source>trans.View all</source>
+        <target>View all</target>
+      </trans-unit>
+      <trans-unit id="35stoaE" resname="trans.View all categories">
+        <source>trans.View all categories</source>
+        <target>View all categories</target>
+      </trans-unit>
+      <trans-unit id="jQXnYsA" resname="trans.Recommended Listings">
+        <source>trans.Recommended Listings</source>
+        <target>Recommended Listings</target>
+      </trans-unit>
+      <trans-unit id="0p02tBj" resname="trans.View more">
+        <source>trans.View more</source>
+        <target>View more</target>
+      </trans-unit>
+      <trans-unit id="hAQXtaj" resname="trans.Latest Listings">
+        <source>trans.Latest Listings</source>
+        <target>Latest Listings</target>
+      </trans-unit>
+      <trans-unit id="jO8Kfae" resname="trans.All categories">
+        <source>trans.All categories</source>
+        <target>All categories</target>
+      </trans-unit>
+      <trans-unit id="y.9.TnT" resname="trans.All Categories">
+        <source>trans.All Categories</source>
+        <target>All Categories</target>
+      </trans-unit>
+      <trans-unit id="6S_1JEJ" resname="trans.My listings">
+        <source>trans.My listings</source>
+        <target>My listings</target>
+      </trans-unit>
+      <trans-unit id="CsE9rRf" resname="trans.Listings">
+        <source>trans.Listings</source>
+        <target>Listings</target>
+      </trans-unit>
+      <trans-unit id="Z8ARSwa" resname="trans.Create Listing">
+        <source>trans.Create Listing</source>
+        <target>Create Listing</target>
+      </trans-unit>
+      <trans-unit id="xkJAHzP" resname="trans.Feature this listing">
+        <source>trans.Feature this listing</source>
+        <target>Feature this listing</target>
+      </trans-unit>
+      <trans-unit id="t_05bQi" resname="trans.User Dashboard">
+        <source>trans.User Dashboard</source>
+        <target>User Dashboard</target>
+      </trans-unit>
+      <trans-unit id="rJB7kEk" resname="trans.Change Password">
+        <source>trans.Change Password</source>
+        <target>Change Password</target>
+      </trans-unit>
+      <trans-unit id="_jNkcU." resname="trans.Change Email">
+        <source>trans.Change Email</source>
+        <target>Change Email</target>
+      </trans-unit>
+      <trans-unit id="5Ki2ko2" resname="trans.Top up account">
+        <source>trans.Top up account</source>
+        <target>Top up account</target>
+      </trans-unit>
+      <trans-unit id="9oen4Ie" resname="trans.Preview listing">
+        <source>trans.Preview listing</source>
+        <target>Preview listing</target>
+      </trans-unit>
+      <trans-unit id="6Qj1MHY" resname="trans.Edit listing as Admin">
+        <source>trans.Edit listing as Admin</source>
+        <target>Edit listing as Admin</target>
+      </trans-unit>
+      <trans-unit id="2d08_q3" resname="trans.New Listing">
+        <source>trans.New Listing</source>
+        <target>New Listing</target>
+      </trans-unit>
+      <trans-unit id="asbkQ9j" resname="trans.Feature for %featuredDays% days for %price%: %listing%?">
+        <source>trans.Feature for %featuredDays% days for %price%: %listing%?</source>
+        <target>Feature for %featuredDays% days for %price%: %listing%?</target>
+      </trans-unit>
+      <trans-unit id="5fnoD.s" resname="trans.Feature for %featuredDays% days for %price%">
+        <source>trans.Feature for %featuredDays% days for %price%</source>
+        <target>Feature for %featuredDays% days for %price%</target>
+      </trans-unit>
+      <trans-unit id="ESddzBY" resname="trans.Feature as a demonstration for 30 minutes: %listing%?">
+        <source>trans.Feature as a demonstration for 30 minutes: %listing%?</source>
+        <target>Feature as a demonstration for 30 minutes: %listing%?</target>
+      </trans-unit>
+      <trans-unit id="8IBHCEt" resname="trans.Feature as a demonstration for 30 minutes">
+        <source>trans.Feature as a demonstration for 30 minutes</source>
+        <target>Feature as a demonstration for 30 minutes</target>
+      </trans-unit>
+      <trans-unit id="_pJPHcJ" resname="trans.Deactivate">
+        <source>trans.Deactivate</source>
+        <target>Deactivate</target>
+      </trans-unit>
+      <trans-unit id="6C5Ks2d" resname="trans.Feature listing">
+        <source>trans.Feature listing</source>
+        <target>Feature listing</target>
+      </trans-unit>
+      <trans-unit id="FfkH99h" resname="trans.Your balance is">
+        <source>trans.Your balance is</source>
+        <target>Your balance is</target>
+      </trans-unit>
+      <trans-unit id=".hqmbVj" resname="trans.that you can use to feature listings">
+        <source>trans.that you can use to feature listings</source>
+        <target>that you can use to feature listings</target>
+      </trans-unit>
+      <trans-unit id="b11DPTm" resname="trans.Listing has been featured for 30 minutes, to see how it looks click">
+        <source>trans.Listing has been featured for 30 minutes, to see how it looks click</source>
+        <target>Listing has been featured for 30 minutes, to see how it looks click</target>
+      </trans-unit>
+      <trans-unit id="dFISw1o" resname="trans.HERE">
+        <source>trans.HERE</source>
+        <target>HERE</target>
+      </trans-unit>
+      <trans-unit id="fvs5gEg" resname="trans.Featured demonstration">
+        <source>trans.Featured demonstration</source>
+        <target>Featured demonstration</target>
+      </trans-unit>
+      <trans-unit id="cR1ZC6K" resname="trans.Demonstration of featured has been used up">
+        <source>trans.Demonstration of featured has been used up</source>
+        <target>Demonstration of featured has been used up</target>
+      </trans-unit>
+      <trans-unit id="9TBw21e" resname="trans.Do you feature many listings?">
+        <source>trans.Do you feature many listings?</source>
+        <target>Do you feature many listings?</target>
+      </trans-unit>
+      <trans-unit id="f8Cxpg." resname="trans.Do you feature frequently?">
+        <source>trans.Do you feature frequently?</source>
+        <target>Do you feature frequently?</target>
+      </trans-unit>
+      <trans-unit id="RcS4HRG" resname="trans.Consider topping up your account and feature listings by one click, using your account balance">
+        <source>trans.Consider topping up your account and feature listings by one click, using your account balance</source>
+        <target>Consider topping up your account and feature listings by one click, using your account balance</target>
+      </trans-unit>
+      <trans-unit id="35VBOua" resname="trans.to feature listings by single click">
+        <source>trans.to feature listings by single click</source>
+        <target>to feature listings by single click</target>
+      </trans-unit>
+      <trans-unit id="g53OkY7" resname="trans.You can not feature listing that is deactivated. Current listings status">
+        <source>trans.You can not feature listing that is deactivated. Current listings status</source>
+        <target>You can not feature listing that is deactivated. Current listings status</target>
+      </trans-unit>
+      <trans-unit id="yDpJqc9" resname="trans.History of listings featuring">
+        <source>trans.History of listings featuring</source>
+        <target>History of listings featuring</target>
+      </trans-unit>
+      <trans-unit id="qFAX9Jg" resname="trans.Extend validity">
+        <source>trans.Extend validity</source>
+        <target>Extend validity</target>
+      </trans-unit>
+      <trans-unit id="K8XFef_" resname="trans.Extend listing">
+        <source>trans.Extend listing</source>
+        <target>Extend listing</target>
+      </trans-unit>
+      <trans-unit id="cq5mAJB" resname="trans.Listing is currently deactivated, extending will activate it and therefore show it to the public on page">
+        <source>trans.Listing is currently deactivated, extending will activate it and therefore show it to the public on page</source>
+        <target>Listing is currently deactivated, extending will activate it and therefore show it to the public on page</target>
+      </trans-unit>
+      <trans-unit id="aJZj6bl" resname="trans.Listing awaits activation, you can extend listing duration, but listing would only appear to the public after acceptation">
+        <source>trans.Listing awaits activation, you can extend listing duration, but listing would only appear to the public after acceptation</source>
+        <target>Listing awaits activation, you can extend listing duration, but listing would only appear to the public after acceptation</target>
+      </trans-unit>
+      <trans-unit id="2K_ijx8" resname="trans.Listing currently valid until">
+        <source>trans.Listing currently valid until</source>
+        <target>Listing currently valid until</target>
+      </trans-unit>
+      <trans-unit id="ojPApO." resname="trans.Extend">
+        <source>trans.Extend</source>
+        <target>Extend</target>
+      </trans-unit>
+      <trans-unit id="jQX6cSF" resname="trans.Register account">
+        <source>trans.Register account</source>
+        <target>Register account</target>
+      </trans-unit>
+      <trans-unit id="PYz_zhN" resname="trans.Registration means acceptance of the">
+        <source>trans.Registration means acceptance of the</source>
+        <target>Registration means acceptance of the</target>
+      </trans-unit>
+      <trans-unit id="tGBUXkl" resname="trans.termsCondtionsLink">
+        <source>trans.termsCondtionsLink</source>
+        <target>termsCondtionsLink</target>
+      </trans-unit>
+      <trans-unit id="XvxLuJ0" resname="trans.Already have an account?">
+        <source>trans.Already have an account?</source>
+        <target>Already have an account?</target>
+      </trans-unit>
+      <trans-unit id="tNKhVf6" resname="trans.Remind password">
+        <source>trans.Remind password</source>
+        <target>Remind password</target>
+      </trans-unit>
+      <trans-unit id="K.tTQKc" resname="trans.Change email">
+        <source>trans.Change email</source>
+        <target>Change email</target>
+      </trans-unit>
+      <trans-unit id="wyDXZS2" resname="trans.Change password">
+        <source>trans.Change password</source>
+        <target>Change password</target>
+      </trans-unit>
+      <trans-unit id="2F5SO2g" resname="trans.History of balance changes">
+        <source>trans.History of balance changes</source>
+        <target>History of balance changes</target>
+      </trans-unit>
+      <trans-unit id="uHLahc1" resname="trans.Do you feature many listings or feature frequently? After account top up, you will be able to feature listing by one click, using your account balance. Without need to make payment for every single listing separately">
+        <source>trans.Do you feature many listings or feature frequently? After account top up, you will be able to feature listing by one click, using your account balance. Without need to make payment for every single listing separately</source>
+        <target>Do you feature many listings or feature frequently? After account top up, you will be able to feature listing by one click, using your account balance. Without need to make payment for every single listing separately</target>
+      </trans-unit>
+      <trans-unit id="Jspcd7U" resname="trans.After topping up, you can feature listing using green buttons on feature listing page. They would use your account balance for payment, instead of redirecting you to payment page.">
+        <source>trans.After topping up, you can feature listing using green buttons on feature listing page. They would use your account balance for payment, instead of redirecting you to payment page.</source>
+        <target>After topping up, you can feature listing using green buttons on feature listing page. They would use your account balance for payment, instead of redirecting you to payment page.</target>
+      </trans-unit>
+      <trans-unit id="Vft4DeT" resname="trans.Funds do not expire. However, they are not subject to withdrawal. And they do not pay interest of any kind.">
+        <source>trans.Funds do not expire. However, they are not subject to withdrawal. And they do not pay interest of any kind.</source>
+        <target>Funds do not expire. However, they are not subject to withdrawal. And they do not pay interest of any kind.</target>
+      </trans-unit>
+      <trans-unit id="CULbQLt" resname="trans.per page">
+        <source>trans.per page</source>
+        <target>per page</target>
+      </trans-unit>
+      <trans-unit id="7GBVjOo" resname="trans.Previous">
+        <source>trans.Previous</source>
+        <target>Previous</target>
+      </trans-unit>
+      <trans-unit id="300_B8t" resname="trans.Next">
+        <source>trans.Next</source>
+        <target>Next</target>
+      </trans-unit>
+      <trans-unit id="DSNv5o9" resname="trans.Relates pages">
+        <source>trans.Relates pages</source>
+        <target>Relates pages</target>
+      </trans-unit>
+      <trans-unit id="A9AbREI" resname="trans.Listing has expired">
+        <source>trans.Listing has expired</source>
+        <target>Listing has expired</target>
+      </trans-unit>
+      <trans-unit id="M1AzhwR" resname="trans.See other active listings in category">
+        <source>trans.See other active listings in category</source>
+        <target>See other active listings in category</target>
+      </trans-unit>
+      <trans-unit id="F_EZjxw" resname="trans.to negotiate">
+        <source>trans.to negotiate</source>
+        <target>to negotiate</target>
+      </trans-unit>
+      <trans-unit id="3ObhyWy" resname="trans.is NOT negotiable">
+        <source>trans.is NOT negotiable</source>
+        <target>is NOT negotiable</target>
+      </trans-unit>
+      <trans-unit id="u2_mQA9" resname="trans.Listing identifier">
+        <source>trans.Listing identifier</source>
+        <target>Listing identifier</target>
+      </trans-unit>
+      <trans-unit id="GVLvNXE" resname="trans.Views">
+        <source>trans.Views</source>
+        <target>Views</target>
+      </trans-unit>
+      <trans-unit id="vXqqIKY" resname="trans.Informations">
+        <source>trans.Informations</source>
+        <target>Informations</target>
+      </trans-unit>
+      <trans-unit id="bAUa_B7" resname="trans.Show contact information">
+        <source>trans.Show contact information</source>
+        <target>Show contact information</target>
+      </trans-unit>
+      <trans-unit id="nm14Jsl" resname="trans.City">
+        <source>trans.City</source>
+        <target>City</target>
+      </trans-unit>
+      <trans-unit id="W3256tO" resname="trans.Date added">
+        <source>trans.Date added</source>
+        <target>Date added</target>
+      </trans-unit>
+      <trans-unit id="YNkMFtl" resname="trans.Expiration date">
+        <source>trans.Expiration date</source>
+        <target>Expiration date</target>
+      </trans-unit>
+      <trans-unit id="be1sEyy" resname="trans.Photos">
+        <source>trans.Photos</source>
+        <target>Photos</target>
+      </trans-unit>
+      <trans-unit id="OPXYf4B" resname="trans.Share This Listing">
+        <source>trans.Share This Listing</source>
+        <target>Share This Listing</target>
+      </trans-unit>
+      <trans-unit id="I9v_2hD" resname="trans.Share on Facebook">
+        <source>trans.Share on Facebook</source>
+        <target>Share on Facebook</target>
+      </trans-unit>
+      <trans-unit id="OSh7dKx" resname="trans.Share on Twitter">
+        <source>trans.Share on Twitter</source>
+        <target>Share on Twitter</target>
+      </trans-unit>
+      <trans-unit id="0XMEsim" resname="trans.Copy link to this listing">
+        <source>trans.Copy link to this listing</source>
+        <target>Copy link to this listing</target>
+      </trans-unit>
+      <trans-unit id="tIXoXxd" resname="trans.Listing has been deleted">
+        <source>trans.Listing has been deleted</source>
+        <target>Listing has been deleted</target>
+      </trans-unit>
+      <trans-unit id="ha65QNM" resname="trans.Listing awaits activation">
+        <source>trans.Listing awaits activation</source>
+        <target>Listing awaits activation</target>
+      </trans-unit>
+      <trans-unit id="cFgIqzG" resname="trans.No contact information found, please check listing description">
+        <source>trans.No contact information found, please check listing description</source>
+        <target>No contact information found, please check listing description</target>
+      </trans-unit>
+      <trans-unit id="CG5r0rA" resname="trans.Phone">
+        <source>trans.Phone</source>
+        <target>Phone</target>
+      </trans-unit>
+      <trans-unit id="9SuJXP2" resname="trans.Copy">
+        <source>trans.Copy</source>
+        <target>Copy</target>
+      </trans-unit>
+      <trans-unit id="DIQkkjA" resname="trans.Home page">
+        <source>trans.Home page</source>
+        <target>Home page</target>
+      </trans-unit>
+      <trans-unit id="pTjzWMW" resname="trans.Last added">
+        <source>trans.Last added</source>
+        <target>Last added</target>
+      </trans-unit>
+      <trans-unit id="0CCh5i2" resname="trans.Add listing">
+        <source>trans.Add listing</source>
+        <target>Add listing</target>
+      </trans-unit>
+      <trans-unit id="Ny8csBd" resname="trans.We use cookies to improve your experience on our site. To find out more, read our">
+        <source>trans.We use cookies to improve your experience on our site. To find out more, read our</source>
+        <target>We use cookies to improve your experience on our site. To find out more, read our</target>
+      </trans-unit>
+      <trans-unit id="zeS5IH1" resname="trans.privacy policy">
+        <source>trans.privacy policy</source>
+        <target>privacy policy</target>
+      </trans-unit>
+      <trans-unit id="pjj7XGg" resname="trans.I accept">
+        <source>trans.I accept</source>
+        <target>I accept</target>
+      </trans-unit>
+      <trans-unit id="Q11H4iG" resname="trans.Quick links">
+        <source>trans.Quick links</source>
+        <target>Quick links</target>
+      </trans-unit>
+      <trans-unit id="I__Gqe1" resname="trans.About">
+        <source>trans.About</source>
+        <target>About</target>
+      </trans-unit>
+      <trans-unit id="4TLvtsy" resname="trans.Advertisement">
+        <source>trans.Advertisement</source>
+        <target>Advertisement</target>
+      </trans-unit>
+      <trans-unit id="Mb0QIoF" resname="trans.Contact">
+        <source>trans.Contact</source>
+        <target>Contact</target>
+      </trans-unit>
+      <trans-unit id="3Iw7yla" resname="trans.Terms and conditions">
+        <source>trans.Terms and conditions</source>
+        <target>Terms and conditions</target>
+      </trans-unit>
+      <trans-unit id="LR.fhpU" resname="trans.Privacy policy">
+        <source>trans.Privacy policy</source>
+        <target>Privacy policy</target>
+      </trans-unit>
+      <trans-unit id="eP2QHjN" resname="trans.required">
+        <source>trans.required</source>
+        <target>required</target>
+      </trans-unit>
+      <trans-unit id="N5zwDCA" resname="trans.If you did not requested password reset, ignore this email, and do NOT click link bellow">
+        <source>trans.If you did not requested password reset, ignore this email, and do NOT click link bellow</source>
+        <target>If you did not requested password reset, ignore this email, and do NOT click link bellow</target>
+      </trans-unit>
+      <trans-unit id="1wHqPMX" resname="trans.If you have requested password reset for account:">
+        <source>trans.If you have requested password reset for account:</source>
+        <target>If you have requested password reset for account:</target>
+      </trans-unit>
+      <trans-unit id="t1PdSMD" resname="trans.click link bellow to confirm">
+        <source>trans.click link bellow to confirm</source>
+        <target>click link bellow to confirm</target>
+      </trans-unit>
+      <trans-unit id="4m22kXH" resname="trans.When you confirm password reset, your password would be set to">
+        <source>trans.When you confirm password reset, your password would be set to</source>
+        <target>When you confirm password reset, your password would be set to</target>
+      </trans-unit>
+      <trans-unit id="a5BWwbi" resname="trans.I confirm password reset">
+        <source>trans.I confirm password reset</source>
+        <target>I confirm password reset</target>
+      </trans-unit>
+      <trans-unit id="m9fBoLZ" resname="trans.If the link above does not work, try to copy the link below to your browser">
+        <source>trans.If the link above does not work, try to copy the link below to your browser</source>
+        <target>If the link above does not work, try to copy the link below to your browser</target>
+      </trans-unit>
+      <trans-unit id="m5wyG2S" resname="trans.Account credentials">
+        <source>trans.Account credentials</source>
+        <target>Account credentials</target>
+      </trans-unit>
+      <trans-unit id="b_1z6ZQ" resname="trans.Login">
+        <source>trans.Login</source>
+        <target>Login</target>
+      </trans-unit>
+      <trans-unit id="df4EcdA" resname="trans.Confirm registration by clicking link bellow">
+        <source>trans.Confirm registration by clicking link bellow</source>
+        <target>Confirm registration by clicking link bellow</target>
+      </trans-unit>
+      <trans-unit id="m0N0YAQ" resname="trans.I confirm registration">
+        <source>trans.I confirm registration</source>
+        <target>I confirm registration</target>
+      </trans-unit>
+      <trans-unit id="I4FAv9d" resname="trans.If you did not requested password change for account:">
+        <source>trans.If you did not requested password change for account:</source>
+        <target>If you did not requested password change for account:</target>
+      </trans-unit>
+      <trans-unit id="EeRgDBS" resname="trans.ignore this email, and do NOT click link bellow">
+        <source>trans.ignore this email, and do NOT click link bellow</source>
+        <target>ignore this email, and do NOT click link bellow</target>
+      </trans-unit>
+      <trans-unit id="ygdVhSo" resname="trans.If you have requested password change, click confirmation link bellow">
+        <source>trans.If you have requested password change, click confirmation link bellow</source>
+        <target>If you have requested password change, click confirmation link bellow</target>
+      </trans-unit>
+      <trans-unit id="KxZB.ZU" resname="trans.I confirm password change">
+        <source>trans.I confirm password change</source>
+        <target>I confirm password change</target>
+      </trans-unit>
+      <trans-unit id="2uG7JRX" resname="trans.Change of email address to">
+        <source>trans.Change of email address to</source>
+        <target>Change of email address to</target>
+      </trans-unit>
+      <trans-unit id="NuZpgl5" resname="trans.If you did not requested email change ignore this message, and do NOT click link bellow">
+        <source>trans.If you did not requested email change ignore this message, and do NOT click link bellow</source>
+        <target>If you did not requested email change ignore this message, and do NOT click link bellow</target>
+      </trans-unit>
+      <trans-unit id="Q5uePUM" resname="trans.First, before confirming email change bellow. Check if you received change email notification on new email address. This is neccessary to verify that you entered new address correctly.">
+        <source>trans.First, before confirming email change bellow. Check if you received change email notification on new email address. This is neccessary to verify that you entered new address correctly.</source>
+        <target>First, before confirming email change bellow. Check if you received change email notification on new email address. This is neccessary to verify that you entered new address correctly.</target>
+      </trans-unit>
+      <trans-unit id="Tgg509j" resname="trans.When you reveived change email information on new email address, please confirm it clicking link bellow">
+        <source>trans.When you reveived change email information on new email address, please confirm it clicking link bellow</source>
+        <target>When you reveived change email information on new email address, please confirm it clicking link bellow</target>
+      </trans-unit>
+      <trans-unit id="yZ60kT1" resname="trans.I confirm change of email addres to">
+        <source>trans.I confirm change of email addres to</source>
+        <target>I confirm change of email addres to</target>
+      </trans-unit>
+      <trans-unit id="RDgQhw_" resname="trans.We received request to change your acount's email addrest to">
+        <source>trans.We received request to change your acount's email addrest to</source>
+        <target>We received request to change your acount's email addrest to</target>
+      </trans-unit>
+      <trans-unit id="PRFIClZ" resname="trans.(this mailbox)">
+        <source>trans.(this mailbox)</source>
+        <target>(this mailbox)</target>
+      </trans-unit>
+      <trans-unit id="VcmWhME" resname="trans.From your previous email account">
+        <source>trans.From your previous email account</source>
+        <target>From your previous email account</target>
+      </trans-unit>
+      <trans-unit id="vUe9vyb" resname="trans.This email is just verification that new email address is correct">
+        <source>trans.This email is just verification that new email address is correct</source>
+        <target>This email is just verification that new email address is correct</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

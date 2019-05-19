@@ -160,7 +160,6 @@ trans.Advertisement: Advertisement
 'trans.Listing is currently deactivated, extending will activate it and therefore show it to the public on page': 'Listing is currently deactivated, extending will activate it and therefore show it to the public on page'
 'trans.Listing awaits activation, you can extend listing duration, but listing would only appear to the public after acceptation': 'Listing awaits activation, you can extend listing duration, but listing would only appear to the public after acceptation'
 trans.Views: Views
-'trans.User Listings': 'User Listings'
 trans.Filter: Filter
 'trans.User listings': 'User listings'
 trans.Save: Save

@@ -40,6 +40,11 @@ class FilePath
 
     public static function getCategoryPicturePath()
     {
-        return self::getPath(__DIR__ . '/../../../static/system/category');
+        return self::getPath(__DIR__ . '/../../../static/category');
+    }
+
+    public static function getLogoPath()
+    {
+        return self::getPath(__DIR__ . '/../../../static/logo');
     }
 }

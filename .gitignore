@@ -18,3 +18,5 @@
 /static/listing/
 /symfony/.env.local.php
 /symfony/node_modules/
+/static/logo/
+/static/category/

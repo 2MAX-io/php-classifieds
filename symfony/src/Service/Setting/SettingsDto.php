@@ -148,6 +148,11 @@ class SettingsDto
      */
     private $itemsPerPageMax;
 
+    /**
+     * @var string|null
+     */
+    private $logoPath;
+
     public function getIndexPageTitle(): ?string
     {
         return $this->indexPageTitle;
@@ -426,5 +431,15 @@ class SettingsDto
     public function setEmailConfigUrl(?string $emailConfigUrl): void
     {
         $this->emailConfigUrl = $emailConfigUrl;
+    }
+
+    public function getLogoPath(): ?string
+    {
+        return $this->logoPath;
+    }
+
+    public function setLogoPath(?string $logoPath): void
+    {
+        $this->logoPath = $logoPath;
     }
 }

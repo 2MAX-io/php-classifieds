@@ -6,6 +6,8 @@
     <div class="container mt-5">
         <h1>{{ 'trans.Page settings' | trans }}</h1>
 
+        <a href="{{ path('app_admin_logo_upload') }}" class="btn btn-secondary">{{ 'trans.Upload logo' | trans }}</a>
+
         {{ form_start(form) }}
         {{ form_widget(form) }}
 

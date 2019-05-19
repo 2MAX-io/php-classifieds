@@ -1,0 +1,21 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}{{ 'trans.Logo of site' | trans }}{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <h1>{{ 'trans.Logo of site' | trans }}</h1>
+
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+
+        <button class="btn btn-primary">{{ button_label|default('trans.Upload' | trans) }}</button>
+        {{ form_end(form) }}
+
+        <h1>{{ 'trans.Preview' | trans }}</h1>
+
+        <div>
+            <img src="{{ asset(logoPath | default('static/system/logo_default.png')) }}" alt="{{ 'trans.Site logo' | trans }}">
+        </div>
+    </div>
+{% endblock %}

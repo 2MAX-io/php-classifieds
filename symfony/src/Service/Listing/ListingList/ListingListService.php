@@ -13,6 +13,7 @@ use App\Helper\Str;
 use App\Service\Listing\ListingPublicDisplayService;
 use App\Service\System\Pagination\PaginationService;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 class ListingListService
 {
@@ -31,27 +32,35 @@ class ListingListService
      */
     private $paginationService;
 
+    /**
+     * @var RequestStack
+     */
+    private $requestStack;
+
     public function __construct(
         EntityManagerInterface $em,
         ListingPublicDisplayService $listingPublicDisplayService,
+        RequestStack $requestStack,
         PaginationService $paginationService
     ) {
         $this->em = $em;
         $this->listingPublicDisplayService = $listingPublicDisplayService;
         $this->paginationService = $paginationService;
+        $this->requestStack = $requestStack;
     }
 
     public function getListings(ListingListDto $listingListDto): ListingListDto
     {
+        $request = $this->requestStack->getMasterRequest();
         $qb = $this->em->getRepository(Listing::class)->createQueryBuilder('listing');
         $customFieldForCategoryList = Arr::indexBy($listingListDto->getCustomFieldForCategoryList(), function(CustomField $customField) {
             return [$customField->getId() => $customField];
         });
 
-        if (!empty($_GET['form_custom_field'])) {
+        if ($request->get('form_custom_field', false)) {
             $sqlParamId = 0;
             $usedCustomFieldIdList = [];
-            foreach ($_GET['form_custom_field'] as $customFieldId => $customFieldFormValueArray) {
+            foreach ($request->get('form_custom_field') as $customFieldId => $customFieldFormValueArray) {
                 $sqlParamId++;
                 /** @var CustomField $customField */
                 if (!isset($customFieldForCategoryList[$customFieldId])) {
@@ -135,24 +144,24 @@ class ListingListService
             $qb->setParameter(':requestedCategoryRgt', $listingListDto->getCategory()->getRgt());
         }
 
-        if (!empty($_GET['min_price'])) {
+        if ($request->get('min_price', false)) {
             $qb->andWhere($qb->expr()->gte('listing.price', ':minPrice'));
-            $qb->setParameter(':minPrice', $_GET['min_price']);
+            $qb->setParameter(':minPrice', $request->get('min_price', false));
         }
 
-        if (!empty($_GET['max_price'])) {
+        if ($request->get('max_price', false)) {
             $qb->andWhere($qb->expr()->lte('listing.price', ':maxPrice'));
-            $qb->setParameter(':maxPrice', $_GET['max_price']);
+            $qb->setParameter(':maxPrice', $request->get('max_price', false));
         }
 
-        if (!empty($_GET['query'])) {
+        if ($request->get('query', false)) {
             $qb->andWhere('MATCH (listing.searchText) AGAINST (:query BOOLEAN) > 0');
-            $qb->setParameter(':query', Search::optimizeMatch($_GET['query']));
+            $qb->setParameter(':query', Search::optimizeMatch($request->get('query', false)));
         }
 
-        if (!empty($_GET['user'])) {
+        if ($request->get('user', false)) {
             $qb->andWhere($qb->expr()->eq('listing.user', ':user'));
-            $qb->setParameter(':user', (int) $_GET['user']);
+            $qb->setParameter(':user', (int) $request->get('user', false));
         }
 
         $this->listingPublicDisplayService->applyPublicDisplayConditions($qb);

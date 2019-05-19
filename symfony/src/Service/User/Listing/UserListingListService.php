@@ -11,6 +11,7 @@ use App\Service\System\Pagination\PaginationService;
 use Doctrine\ORM\EntityManagerInterface;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
 use Pagerfanta\Pagerfanta;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 class UserListingListService
 {
@@ -28,14 +29,21 @@ class UserListingListService
      */
     private $paginationService;
 
+    /**
+     * @var RequestStack
+     */
+    private $requestStack;
+
     public function __construct(
         EntityManagerInterface $em,
         CurrentUserService $currentUserService,
+        RequestStack $requestStack,
         PaginationService $paginationService
     ) {
         $this->em = $em;
         $this->currentUserService = $currentUserService;
         $this->paginationService = $paginationService;
+        $this->requestStack = $requestStack;
     }
 
     /**
@@ -43,6 +51,8 @@ class UserListingListService
      */
     public function getList(int $page = 1): UserListingListDto
     {
+        $request = $this->requestStack->getMasterRequest();
+
         $qb = $this->em->getRepository(Listing::class)->createQueryBuilder('listing');
         $qb->addSelect('category');
         $qb->addSelect('categoryParent');
@@ -53,9 +63,9 @@ class UserListingListService
 
         $qb->andWhere($qb->expr()->eq('listing.userRemoved', 0));
 
-        if (!empty($_GET['query'])) {
+        if ($request->get('query', false)) {
             $qb->andWhere('MATCH (listing.searchText) AGAINST (:query BOOLEAN) > 0');
-            $qb->setParameter(':query', Search::optimizeMatch($_GET['query']));
+            $qb->setParameter(':query', Search::optimizeMatch($request->get('query')));
         }
 
         $qb->orderBy('listing.lastEditDate', 'DESC');

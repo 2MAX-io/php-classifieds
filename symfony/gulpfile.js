@@ -33,6 +33,7 @@ function js() {
     'bundles/fosjsrouting/js/router.min.js',
     'asset/lib/cleave/cleave.js',
     'bundles/bazingajstranslation/js/translator.min.js',
+    'asset/bootstrap.bundle.js',
     'asset/main.js',
   ])
     .pipe(sourcemaps.init())

@@ -22,7 +22,7 @@
     {% block stylesheets %}
 {#        <link rel="stylesheet" href="{{ asset('asset/bootstrap.css') }}">#}
 {#        <link rel="stylesheet" href="{{ asset('asset/style.css') }}">#}
-        <link rel="stylesheet" href="{{ asset('asset/app.css') }}">
+        <link rel="stylesheet" href="{{ asset('asset/build/app.css') }}">
     {% endblock %}
     {% block css %}{% endblock %}
 
@@ -247,7 +247,7 @@
 <!-- css -->
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,400i,700,700i">
-<link rel="stylesheet" href="{{ asset('asset/app.bottom.css') }}">
+<link rel="stylesheet" href="{{ asset('asset/build/app.bottom.css') }}">
 
 {% block javascripts %}
 {#    <script src="{{ asset('asset/jquery.js') }}"></script>#}
@@ -256,7 +256,7 @@
 {#    <script src="{{ asset('asset/lib/cleave/cleave.js') }}"></script>#}
 {#    <script src="{{ asset('bundles/bazingajstranslation/js/translator.min.js') }}"></script>#}
 {#    <script src="{{ asset('asset/main.js') }}"></script>#}
-    <script src="{{ asset('asset/app.js') }}"></script>
+    <script src="{{ asset('asset/build/app.js') }}"></script>
     <script src="{{ asset('asset/lib/cleave/addons/cleave-phone.'~ settings.languageTwoLetters | lower ~'.js') }}"></script>
     <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
     <script src="{{ path('bazinga_jstranslation_js') }}"></script>

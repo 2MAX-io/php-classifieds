@@ -433,7 +433,7 @@ trans:
   Failed to create payment, please try again later: 'Niepowodzenie przy tworzeniu płatności, spróbuj ponownie później'
   Payments - PayPal mode: 'Płatności - PayPal tryb'
   Payments - PayPal Client ID: 'Płatności - PayPal Client ID'
-  Payments - PayPal Client secret: 'Płatności - PayPal Client secretc'
+  Payments - PayPal Client secret: 'Płatności - PayPal Client secret'
   paypal.sandbox: 'sandbox - testowe płatności'
   paypal.live: 'live - prawdziwe płatności'
   Date: 'Data'

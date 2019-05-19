@@ -47,4 +47,9 @@ class FilePath
     {
         return self::getPath(__DIR__ . '/../../../static/logo');
     }
+
+    public static function getFile(string $filePath): string
+    {
+        return $filePath;
+    }
 }

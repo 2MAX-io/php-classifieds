@@ -68,3 +68,476 @@ trans:
   2 weeks: '2 weeks'
   3 weeks: '3 weeks'
   1 month: 'month'
+
+trans.customFieldType.select: Select field
+trans.customFieldType.year_range: Field with year
+trans.customFieldType.integer_range: Field with integer
+trans.customFieldType.checkbox_multiple: Field with multiple checkboxes
+trans.customFieldType.select_single: Select field, single
+
+trans.listing.status.STATUS_PENDING: Pending
+trans.listing.status.STATUS_ACTIVE: Active
+trans.listing.status.STATUS_ACTIVE_FEATURED: 'Featured until: %featuredUntilDate%'
+trans.listing.status.STATUS_REJECTED.withReason: 'Rejected: %rejectionReason%'
+trans.listing.status.STATUS_REJECTED: 'Rejected'
+trans.listing.status.STATUS_ADMIN_REMOVED: 'Removed by Administrator'
+trans.listing.status.STATUS_EXPIRED: 'Expired'
+trans.listing.status.STATUS_USER_REMOVED: 'Removed by user'
+trans.listing.status.STATUS_DEACTIVATED: 'Deactivated'
+
+Year: Year
+Month: Month
+Day: Day
+Hour: Hour
+Minute: Minute
+'trans.Home page': 'Home page'
+trans.Informations: Informations
+'trans.Last added': 'Last added'
+trans.Phone: Phone
+trans.Classifieds: Classifieds
+trans.Price: Price
+trans.Email: Email
+trans.Logout: Logout
+'trans.Sign in': 'Sign in'
+trans.Listings: Listings
+'trans.Create new listing': 'Create new listing'
+'trans.Edit listing': 'Edit listing'
+'trans.Create Listing': 'Create Listing'
+'trans.I confirm registration': 'I confirm registration'
+trans.Login: Login
+trans.Password: Password
+'trans.You have registered account': 'You have registered account'
+'trans.Account registration': 'Account registration'
+'trans.To register confirm your email address by clicking link bellow': 'To register confirm your email address by clicking link bellow'
+'trans.Add listing': 'Add listing'
+trans.Search: Search
+trans.keyword: keyword
+trans.Categories: Categories
+trans.Category: Category
+trans.Edit: Edit
+trans.Delete: Delete
+trans.Actions: Actions
+trans.Title: Title
+trans.Deactivate: Deactivate
+trans.Activate: Activate
+trans.Extend: Extend
+'trans.User Dashboard': 'User Dashboard'
+'trans.Feature this listing': 'Feature this listing'
+'trans.Feature listing': 'Feature listing'
+'trans.View Listing': 'View Listing'
+trans.Select: Select
+'trans.Waiting for activation': 'Waiting for activation'
+'trans.Please sign in': 'Please sign in'
+'trans.Need an account?': 'Need an account?'
+trans.Register: Register
+'trans.Admin Panel Sign In': 'Admin Panel Sign In'
+'trans.Preview listing': 'Preview listing'
+'trans.Select category': 'Select category'
+trans.Description: Description
+trans.City: City
+trans.Pictures: Pictures
+'trans.Validity time': 'Validity time'
+'trans.1 week': '1 week'
+'trans.2 weeks': '2 weeks'
+'trans.3 weeks': '3 weeks'
+'trans.1 month': '1 month'
+'trans.Refine Search': 'Refine Search'
+'trans.Latest Listings': 'Latest Listings'
+'trans.View all': 'View all'
+'trans.Share This Listing': 'Share This Listing'
+'trans.Ad Details': 'Ad Details'
+trans.Photos: Photos
+trans.About: About
+trans.Contact: Contact
+'trans.Terms and conditions': 'Terms and conditions'
+'trans.Quick links': 'Quick links'
+'trans.Report abuse': 'Report abuse'
+trans.Advertisement: Advertisement
+'trans.Change Password': 'Change Password'
+'trans.Listing currently valid until': 'Listing currently valid until'
+'trans.Counting from today, extend by': 'Counting from today, extend by'
+'trans.Extend listing': 'Extend listing'
+'trans.Listing is currently deactivated, extending will activate it and therefore show it to the public on page': 'Listing is currently deactivated, extending will activate it and therefore show it to the public on page'
+'trans.Listing awaits activation, you can extend listing duration, but listing would only appear to the public after acceptation': 'Listing awaits activation, you can extend listing duration, but listing would only appear to the public after acceptation'
+trans.Views: Views
+'trans.User Listings': 'User Listings'
+trans.Filter: Filter
+'trans.User listings': 'User listings'
+trans.Save: Save
+trans.Update: Update
+'trans.back to list': 'back to list'
+'trans.Recommended Listings': 'Recommended Listings'
+'trans.All Categories': 'All Categories'
+trans.Reject: Reject
+'trans.Reject reason (optional)': 'Reject reason (optional)'
+'trans.Reject listing': 'Reject listing'
+trans.Status: Status
+trans.Admin: Admin
+'trans.Police log': 'Police log'
+'trans.Copy to clipboard': 'Copy to clipboard'
+'trans.Police log for listing': 'Police log for listing'
+'trans.Listings of user': 'Listings of user'
+'trans.Search Engine': 'Search Engine'
+trans.Previous: Previous
+trans.Next: Next
+trans.Recommended: Recommended
+'trans.Change Email': 'Change Email'
+'trans.Current password': 'Current password'
+'trans.Enter current password to confirm email change': 'Enter current password to confirm email change'
+'trans.New password': 'New password'
+'trans.Repeat new password': 'Repeat new password'
+'trans.Change password': 'Change password'
+'trans.New email': 'New email'
+'trans.Repeat new email': 'Repeat new email'
+'trans.Change email': 'Change email'
+'trans.Confirmation of email address change': 'Confirmation of email address change'
+'trans.Change password confirmation': 'Change password confirmation'
+'trans.Remind password': 'Remind password'
+'trans.Forgot password?': 'Forgot password?'
+'trans.To remind password, please click confirmation link that you would receive on your email address': 'To remind password, please click confirmation link that you would receive on your email address'
+'trans.Remind password confirmation': 'Remind password confirmation'
+'trans.Edit as admin': 'Edit as admin'
+'trans.Edit listing advanced settings': 'Edit listing advanced settings'
+trans.Yes: 'Yes'
+trans.No: 'No'
+'trans.Admin panel': 'Admin panel'
+'trans.Public classifieds': 'Public classifieds'
+'trans.Featured listing?': 'Featured listing?'
+'trans.Featured until': 'Featured until'
+'trans.Featured weight': 'Featured weight'
+'trans.Date of last raising': 'Date of last raising'
+'trans.Valid until': 'Valid until'
+'trans.Activated by Admin?': 'Activated by Admin?'
+'trans.Rejected by Admin?': 'Rejected by Admin?'
+'trans.Is listing removed by user?': 'Is listing removed by user?'
+'trans.Is listing deactivated by user?': 'Is listing deactivated by user?'
+'trans.Is listing removed by Admin?': 'Is listing removed by Admin?'
+'trans.You have been successfully registered. Now you can add some listings.': 'You have been successfully registered. Now you can add some listings.'
+'trans.no records found': 'no records found'
+'trans.Date added': 'Date added'
+'trans.Expiration date': 'Expiration date'
+'trans.Email change notification': 'Email change notification'
+'trans.If you did not requested password change for account:': 'If you did not requested password change for account:'
+'trans.ignore this email, and do NOT click link bellow': 'ignore this email, and do NOT click link bellow'
+'trans.We received request to change your acount\''s email addrest to': 'We received request to change your acount\''s email addrest to'
+'trans.From your previous email account': 'From your previous email account'
+'trans.This email is just verification that new email address is correct': 'This email is just verification that new email address is correct'
+'trans.Change of email address to': 'Change of email address to'
+'trans.If you did not requested email change ignore this message, and do NOT click link bellow': 'If you did not requested email change ignore this message, and do NOT click link bellow'
+'trans.Password reset confirmation': 'Password reset confirmation'
+'trans.(this mailbox)': '(this mailbox)'
+'trans.Password change confirmation': 'Password change confirmation'
+'trans.Account credentials': 'Account credentials'
+'trans.Please confirm registration by clicking link bellow': 'Please confirm registration by clicking link bellow'
+'trans.I confirm password reset': 'I confirm password reset'
+'trans.To finish registration, click confirmation link that you will receive in your email': 'To finish registration, click confirmation link that you will receive in your email'
+'trans.Enter your email address': 'Enter your email address'
+'trans.Edit listing as Admin': 'Edit listing as Admin'
+'trans.Last edit': 'Last edit'
+'trans.Already have an account?': 'Already have an account?'
+'trans.Confirm registration by clicking link bellow': 'Confirm registration by clicking link bellow'
+'trans.Confirm account registration': 'Confirm account registration'
+'trans.If the link above does not work, try to copy the link below to your browser': 'If the link above does not work, try to copy the link below to your browser'
+'trans.If you did not requested password reset, ignore this email, and do NOT click link bellow': 'If you did not requested password reset, ignore this email, and do NOT click link bellow'
+'trans.If you have requested password reset for account:': 'If you have requested password reset for account:'
+'trans.click link bellow to confirm': 'click link bellow to confirm'
+'trans.If you have requested password reset, please click link bellow to confirm': 'If you have requested password reset, please click link bellow to confirm'
+'trans.When you confirm password reset, your password would be set to': 'When you confirm password reset, your password would be set to'
+'trans.Password reset has been successful': 'Password reset has been successful'
+'trans.Password reset failed, please check if confirmation link is correct': 'Password reset failed, please check if confirmation link is correct'
+'trans.To finalize password change, open your email account and click confirmation link': 'To finalize password change, open your email account and click confirmation link'
+'trans.If you have requested password change, click confirmation link bellow': 'If you have requested password change, click confirmation link bellow'
+'trans.I confirm password change': 'I confirm password change'
+'trans.Password change has been successful': 'Password change has been successful'
+'trans.To finalize email change, open your email account and click confirmation link': 'To finalize email change, open your email account and click confirmation link'
+'trans.When you reveived change email information on new email address, please confirm it clicking link bellow': 'When you reveived change email information on new email address, please confirm it clicking link bellow'
+'trans.First, before confirming email change bellow. Check if you received change email notification on new email address. This is neccessary to verify that you entered new address correctly.': 'First, before confirming email change bellow. Check if you received change email notification on new email address. This is neccessary to verify that you entered new address correctly.'
+'trans.We received request to change your acount''s email addrest to': 'We received request to change your acount''s email addrest to'
+'trans.I confirm change of email addres to': 'I confirm change of email addres to'
+'trans.Email address change has been successful': 'Email address change has been successful'
+'trans.Extend validity': 'Extend validity'
+'trans.Register account': 'Register account'
+'trans.New Listing': 'New Listing'
+'trans.My listings': 'My listings'
+'trans.Extend featured': 'Extend featured'
+'trans.All categories': 'All categories'
+'trans.Log in!': 'Log in!'
+'trans.Advanced listing edit': 'Advanced listing edit'
+trans.Featured: Featured
+trans.Raise: Raise
+'trans.Show email?': 'Show email?'
+trans.Browse: Browse
+trans.file: file
+trans.files: files
+trans.Chose: Chose
+'trans.to upload': 'to upload'
+'trans.Admin last activation': 'Admin last activation'
+'trans.Creation date': 'Creation date'
+'trans.more informations': 'more informations'
+'trans.Removed by Admin?': 'Removed by Admin?'
+'trans.Removed by User?': 'Removed by User?'
+'trans.Deactivated by User?': 'Deactivated by User?'
+'trans.Last raising': 'Last raising'
+trans.Activation: Activation
+'trans.Listing identifier': 'Listing identifier'
+'trans.Are you sure you want to remove this file?': 'Are you sure you want to remove this file?'
+'trans.Drop the files here to Upload': 'Drop the files here to Upload'
+'trans.Only ${limit} files are allowed to be uploaded': 'Only ${limit} files are allowed to be uploaded'
+'trans.Only ${extensions} files are allowed to be uploaded': 'Only ${extensions} files are allowed to be uploaded'
+'trans.${name} is too large! Please choose a file up to ${fileMaxSize}MB': '${name} is too large! Please choose a file up to ${fileMaxSize}MB'
+'trans.Files that you chose are too large! Please upload files up to ${maxSize} MB': 'Files that you chose are too large! Please upload files up to ${maxSize} MB'
+'trans.File with the name ${name} is already selected': 'File with the name ${name} is already selected'
+'trans.You are not allowed to upload folders': 'You are not allowed to upload folders'
+trans.Remove: Remove
+trans.Download: Download
+trans.Sort: Sort
+trans.Rotate: Rotate
+trans.Crop: Crop
+trans.Duration: Duration
+trans.Dimensions: Dimensions
+trans.Size: Size
+trans.Type: Type
+trans.Name: Name
+trans.Cancel: Cancel
+trans.Confirm: Confirm
+'trans.files were chosen': 'files were chosen'
+'trans.file was chosen': 'file was chosen'
+'trans.Pasting a file, click here to cancel': 'Pasting a file, click here to cancel'
+'trans.Previous rejection': 'Previous rejection'
+trans.none: none
+'trans.Older than 1960': 'Older than 1960'
+'trans.Amount per': 'Amount per'
+trans.required: required
+'trans.not required': 'not required'
+'trans.Amount is negotiable?': 'Amount is negotiable?'
+'trans.to negotiate': 'to negotiate'
+'trans.is NOT negotiable': 'is NOT negotiable'
+'trans.Feature as a demonstration for 30 minutes': 'Feature as a demonstration for 30 minutes'
+'trans.Feature as a demonstration for 30 minutes: %listing%?': 'Feature as a demonstration for 30 minutes: %listing%?'
+'trans.Demonstration of featured has been used up': 'Demonstration of featured has been used up'
+'trans.Listing has been featured for 30 minutes, to see how it looks click': 'Listing has been featured for 30 minutes, to see how it looks click'
+trans.HERE: HERE
+'trans.Edit of listing': 'Edit of listing'
+'trans.Listing has expired': 'Listing has expired'
+'trans.See other active listings in category': 'See other active listings in category'
+'trans.Listing has been deleted': 'Listing has been deleted'
+'trans.Listing awaits activation': 'Listing awaits activation'
+'trans.Listing not active': 'Listing not active'
+trans.Pages: Pages
+'trans.Relates pages': 'Relates pages'
+trans.Enabled: Enabled
+trans.edit: edit
+'trans.Edit Page': 'Edit Page'
+'trans.Create new page': 'Create new page'
+trans.Slug: Slug
+trans.Content: Content
+trans.Subpages: Subpages
+'trans.Create new': 'Create new'
+trans.Settings: Settings
+'trans.Page settings': 'Page settings'
+'trans.Home page title': 'Home page title'
+'trans.Page title suffix': 'Page title suffix'
+'trans.Meta description': 'Meta description'
+'trans.Meta keywords': 'Meta keywords'
+'trans.RSS title': 'RSS title'
+'trans.RSS description': 'RSS description'
+trans.Users: Users
+'trans.Registration date': 'Registration date'
+'trans.Last login': 'Last login'
+'trans.Change user balance': 'Change user balance'
+'trans.Change balance': 'Change balance'
+'trans.Change balance of user': 'Change balance of user'
+'trans.Current user balance': 'Current user balance'
+'trans.Set balance to': 'Set balance to'
+'trans.User list': 'User list'
+trans.Username: Username
+'trans.Featured demonstration': 'Featured demonstration'
+'trans.Feature for %featuredDays% days for %price%: %listing%?': 'Feature for %featuredDays% days for %price%: %listing%?'
+'trans.Feature for %featuredDays% days for %price%': 'Feature for %featuredDays% days for %price%'
+'trans.Your balance is': 'Your balance is'
+'trans.that you can use to feature listings': 'that you can use to feature listings'
+'trans.Confirmation link is invalid or expired, check if confirmation link is correct': 'Confirmation link is invalid or expired, check if confirmation link is correct'
+'trans.Registration means acceptance of the': 'Registration means acceptance of the'
+trans.termsCondtionsLink: termsCondtionsLink
+'trans.Link to terms and conditions': 'Link to terms and conditions'
+'trans.Show contact information': 'Show contact information'
+'trans.More informations': 'More informations'
+'trans.I accept': 'I accept'
+trans.Copy: Copy
+'trans.Remove file of': 'Remove file of'
+'trans.Share on Facebook': 'Share on Facebook'
+'trans.Share on Twitter': 'Share on Twitter'
+'trans.Copy link to this listing': 'Copy link to this listing'
+'trans.Close this page': 'Close this page'
+'trans.You can not feature listing that is deactivated. Current listings status': 'You can not feature listing that is deactivated. Current listings status'
+'trans.No contact information found, please check listing description': 'No contact information found, please check listing description'
+'trans.Select page': 'Select page'
+'trans.Edit User': 'Edit User'
+trans.Roles: Roles
+'trans.Not activated': 'Not activated'
+trans.Activated: Activated
+trans.Language: Language
+trans.Currency: Currency
+'trans.Allowed characters': 'Allowed characters'
+'trans.Search examples': 'Search examples'
+'trans.You have canceled payment. If you want to feature listing, try again and complete payment': 'You have canceled payment. If you want to feature listing, try again and complete payment'
+'trans.You have canceled payment. If you want to top up account, try again and complete payment': 'You have canceled payment. If you want to top up account, try again and complete payment'
+'trans.Top up account': 'Top up account'
+'trans.Top up amount': 'Top up amount'
+'trans.I accept and confirm, that the paid but unused funds are not refundable': 'I accept and confirm, that the paid but unused funds are not refundable'
+'trans.Admin Dashboard': 'Admin Dashboard'
+'trans.Funds do not expire. However, they are not subject to withdrawal. And they do not pay interest of any kind.': 'Funds do not expire. However, they are not subject to withdrawal. And they do not pay interest of any kind.'
+'trans.Users count': 'Users count'
+'trans.Pending for activation': 'Pending for activation'
+'trans.Added last 7 days': 'Added last 7 days'
+'trans.Added last 24': 'Added last 24'
+'trans.Listings views': 'Listings views'
+'trans.External links': 'External links'
+'trans.Search listings': 'Search listings'
+'trans.Show filters': 'Show filters'
+'trans.Do you feature many listings or feature frequently? After account top up, you will be able to feature listing by one click, using your account balance. Without need to make payment for every single listing separately': 'Do you feature many listings or feature frequently? After account top up, you will be able to feature listing by one click, using your account balance. Without need to make payment for every single listing separately'
+'trans.After topping up, you can feature listing using green buttons on feature listing page. They would use your account balance for payment, instead of redirecting you to payment page.': 'After topping up, you can feature listing using green buttons on feature listing page. They would use your account balance for payment, instead of redirecting you to payment page.'
+'trans.Do you feature many listings?': 'Do you feature many listings?'
+'trans.Do you feature frequently?': 'Do you feature frequently?'
+'trans.Consider topping up your account and feature listings by one click, using your account balance': 'Consider topping up your account and feature listings by one click, using your account balance'
+'trans.to feature listings by single click': 'to feature listings by single click'
+trans.User: User
+trans.selected: selected
+'trans.No listings selected': 'No listings selected'
+'trans.Action on selected': 'Action on selected'
+'trans.Activate selected?': 'Activate selected?'
+'trans.Reject selected?': 'Reject selected?'
+'trans.per page': 'per page'
+'trans.Listings ever added': 'Listings ever added'
+'trans.All listings count': 'All listings count'
+'trans.Active listings count': 'Active listings count'
+'trans.Featured listings': 'Featured listings'
+'trans.Added last 30 days': 'Added last 30 days'
+'trans.Added last year': 'Added last year'
+'trans.Added last 12': 'Added last 12'
+'trans.Valid till': 'Valid till'
+'trans.Add category': 'Add category'
+'trans.Edit Category': 'Edit Category'
+'trans.Add subcategory': 'Add subcategory'
+'trans.Under category': 'Under category'
+'trans.Order, smaller first': 'Order, smaller first'
+trans.Picture: Picture
+'trans.Save order of categories': 'Save order of categories'
+'trans.Custom fields': 'Custom fields'
+'trans.to fill for listings in category': 'to fill for listings in category'
+'trans.Required?': 'Required?'
+'trans.Searchable?': 'Searchable?'
+trans.Unit: Unit
+'trans.Add custom field': 'Add custom field'
+'trans.Edit custom field': 'Edit custom field'
+'trans.Custom field': 'Custom field'
+'trans.for category': 'for category'
+trans.Options: Options
+'trans.Add option': 'Add option'
+trans.Value: Value
+'trans.for custom field': 'for custom field'
+'trans.Option for custom field': 'Option for custom field'
+'trans.Save order': 'Save order'
+'trans.Add missing custom field': 'Add missing custom field'
+'trans.Delete completely, from all categories': 'Delete completely, from all categories'
+trans.Amount: Amount
+'trans.Amount or price': 'Amount or price'
+trans.min: min
+trans.max: max
+'trans.View more': 'View more'
+'trans.Delete category': 'Delete category'
+'trans.Delete category custom field': 'Delete category custom field'
+'trans.Delete custom field option': 'Delete custom field option'
+'trans.Delete custom field': 'Delete custom field'
+'trans.To delete custom field, you must first delete all dependencies like: custom fields assigned to categories, custom field options': 'To delete custom field, you must first delete all dependencies like: custom fields assigned to categories, custom field options'
+'trans.To delete category, you must first delete or move all dependencies like: category listings, subcategories, assigned custom fields, featured packages': 'To delete category, you must first delete or move all dependencies like: category listings, subcategories, assigned custom fields, featured packages'
+'trans.View all categories': 'View all categories'
+'trans.Featured packages': 'Featured packages'
+'trans.Name for admin': 'Name for admin'
+'trans.Days of featured': 'Days of featured'
+'trans.Days of expiration': 'Days of expiration'
+'trans.Default?': 'Default?'
+'trans.Edit featured package': 'Edit featured package'
+'trans.Use when no package set for category, as default?': 'Use when no package set for category, as default?'
+'trans.Delete featured package': 'Delete featured package'
+'trans.Create new featured package': 'Create new featured package'
+'trans.Show link to master site': 'Show link to master site'
+'trans.if this classifieds site, is module of main site, this option enables linking to your master site in breadcrumbs, navigation and admin': 'if this classifieds site, is module of main site, this option enables linking to your master site in breadcrumbs, navigation and admin'
+'trans.Url to master site': 'Url to master site'
+'trans.Text of link to master site': 'Text of link to master site'
+'trans.Privacy policy': 'Privacy policy'
+'trans.We use cookies to improve your experience on our site. To find out more, read our': 'We use cookies to improve your experience on our site. To find out more, read our'
+'trans.Link to privacy policy': 'Link to privacy policy'
+'trans.Link to rejection reasons': 'Link to rejection reasons'
+'trans.privacy policy': 'privacy policy'
+'trans.Require listing activation by admin before making public': 'Require listing activation by admin before making public'
+'trans.Promotion of listings': 'Promotion of listings'
+'trans.Failed to create payment, please try again later': 'Failed to create payment, please try again later'
+'trans.Payments - PayPal mode': 'Payments - PayPal mode'
+'trans.Payments - PayPal Client ID': 'Payments - PayPal Client ID'
+'trans.Payments - PayPal Client secret': 'Payments - PayPal Client secret'
+trans.paypal.sandbox: paypal.sandbox
+trans.paypal.live: paypal.live
+trans.Date: Date
+'trans.Balance difference': 'Balance difference'
+'trans.Balance after change': 'Balance after change'
+'trans.Balance history for user': 'Balance history for user'
+'trans.Featuring of listing: %listingTitle%, using package: %featuredPackageName%, payment acceptance': 'Featuring of listing: %listingTitle%, using package: %featuredPackageName%, payment acceptance'
+'trans.Featuring of listing: %listingTitle%, using package: %featuredPackageName%': 'Featuring of listing: %listingTitle%, using package: %featuredPackageName%'
+'trans.Topping up the account balance': 'Topping up the account balance'
+'trans.Change reason in description, visible to user': 'Change reason in description, visible to user'
+'trans.Balanced change by administrator to: %newBalance% from previous: %previousBalance%, reason: %reason%': 'Balanced change by administrator to: %newBalance% from previous: %previousBalance%, reason: %reason%'
+'trans.Balanced change by administrator to: %newBalance% from previous: %previousBalance%': 'Balanced change by administrator to: %newBalance% from previous: %previousBalance%'
+'trans.History of balance changes': 'History of balance changes'
+'trans.History of listings featuring': 'History of listings featuring'
+trans.Payments: Payments
+'trans.Balance updated?': 'Balance updated?'
+'trans.Canceled?': 'Canceled?'
+trans.details: details
+trans.Payment: Payment
+'trans.Payment gateway - status': 'Payment gateway - status'
+'trans.Payment gateway - transaction ID': 'Payment gateway - transaction ID'
+trans.Listing: Listing
+'trans.Payment gateway - payment description': 'Payment gateway - payment description'
+'trans.used in payment gateway as description of what has been bought, ie on receipt': 'used in payment gateway as description of what has been bought, ie on receipt'
+'trans.Execute action on filtered listings': 'Execute action on filtered listings'
+trans.IMPORTANT!: IMPORTANT!
+'trans.It is recommended that before running this action, you create restolable backup of database': 'It is recommended that before running this action, you create restolable backup of database'
+'trans.Also it is recommended to run this action on test environment, that is copy of live service, before running it on live service': 'Also it is recommended to run this action on test environment, that is copy of live service, before running it on live service'
+'trans.There is no way of undoing changes made by this action, except of restoring backup': 'There is no way of undoing changes made by this action, except of restoring backup'
+'trans.Make sure you execute action on correctly filtered listings': 'Make sure you execute action on correctly filtered listings'
+'trans.Set custom field option': 'Set custom field option'
+'trans.Custom field option': 'Custom field option'
+'trans.Execute action': 'Execute action'
+'trans.Set category': 'Set category'
+trans.listings: listings
+'trans.of all': 'of all'
+'trans.This action will be executed on %percentage%% of listings (almost every listing), are you REALY sure you want to execute it?': 'This action will be executed on %percentage%% of listings (almost every listing), are you REALY sure you want to execute it?'
+'trans.Numer of listings changed by this action would be:': 'Numer of listings changed by this action would be:'
+'trans.Execute action on %number% of listings?': 'Execute action on %number% of listings?'
+'trans.changes:': 'changes:'
+'trans.Words to remove from listing title, separated by new line': 'Words to remove from listing title, separated by new line'
+'trans.Site copyright in footer': 'Site copyright in footer'
+'trans.%year% would be replaced to current year': '%year% would be replaced to current year'
+'trans.Maximum items per page': 'Maximum items per page'
+'trans.Cron for this application is not set up, cron did not run single time': 'Cron for this application is not set up, cron did not run single time'
+'trans.Cron for this application is not set up, cron did not run after: %date%': 'Cron for this application is not set up, cron did not run after: %date%'
+'trans.Action has been confirmed before, and requested action has been completed': 'Action has been confirmed before, and requested action has been completed'
+'trans.Name used before email address, in from field of email message': 'Name used before email address, in from field of email message'
+'trans.Email used when user replies to emails from this application': 'Email used when user replies to emails from this application'
+'trans.Email address used in from field of email message': 'Email address used in from field of email message'
+'trans.Configuration url for sending emails': 'Configuration url for sending emails'
+'trans.Must match email from which you send messages': 'Must match email from which you send messages'
+'trans.examples: smtp://mail.host.com:465?encryption=ssl&auth_mode=plain&username=login@mail.com&password=password': 'examples: smtp://mail.host.com:465?encryption=ssl&auth_mode=plain&username=login@mail.com&password=password'
+'trans.Set all application settings': 'Set all application settings'
+'trans.Some links to pages in settings are not set or disabled': 'Some links to pages in settings are not set or disabled'
+trans.Administrators: Administrators
+'trans.Edit Administrator': 'Edit Administrator'
+'trans.Administrators list': 'Administrators list'
+trans.Upload: Upload
+'trans.Logo of site': 'Logo of site'
+trans.Logo: Logo
+trans.Preview: Preview
+'trans.Upload logo': 'Upload logo'
+'trans.Add Administrator': 'Add Administrator'
+

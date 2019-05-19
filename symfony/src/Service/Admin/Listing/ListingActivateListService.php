@@ -49,11 +49,11 @@ class ListingActivateListService
     {
         $qb = $this->em->getRepository(Listing::class)->createQueryBuilder('listing');
 
-        $qb->andWhere($qb->expr()->eq('listing.adminActivated', 0));
         $qb->andWhere($qb->expr()->eq('listing.userRemoved', 0));
         $qb->andWhere($qb->expr()->eq('listing.userDeactivated', 0));
         $qb->andWhere($qb->expr()->eq('listing.adminRemoved', 0));
         $qb->andWhere($qb->expr()->eq('listing.adminRejected', 0));
+        $qb->andWhere($qb->expr()->eq('listing.adminActivated', 0));
 
         $qb->addOrderBy('listing.featured', 'DESC');
         $qb->addOrderBy('listing.lastEditDate', 'ASC');

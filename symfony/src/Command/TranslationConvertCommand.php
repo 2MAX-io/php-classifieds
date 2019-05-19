@@ -32,7 +32,7 @@ class TranslationConvertCommand extends Command
         $io = new SymfonyStyle($input, $output);
         $sourceFile = $input->getArgument('sourceFile');
 
-        $translations = Yaml::parseFile(FilePath::getFile($sourceFile));
+        $translations = Yaml::parseFile($sourceFile);
         $translations = Arr::unpack($translations);
 
         $xliffFileDumper = new XliffFileDumper();
@@ -41,7 +41,7 @@ class TranslationConvertCommand extends Command
         $output = $xliffFileDumper->formatCatalogue($messageCatalogue, 'messages');
 
         \file_put_contents(
-            \dirname(FilePath::getFile($sourceFile)) . '/' . date('Y-m-d H:i:s_') . \basename(FilePath::getFile($sourceFile)),
+            \dirname($sourceFile) . '/' . date('Y-m-d H:i:s_') . \basename($sourceFile),
             $output
         );
 

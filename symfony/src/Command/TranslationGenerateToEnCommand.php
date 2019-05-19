@@ -30,7 +30,7 @@ class TranslationGenerateToEnCommand extends Command
         $io = new SymfonyStyle($input, $output);
         $sourceFile = $input->getArgument('sourceFile');
 
-        $translations = Yaml::parseFile(FilePath::getFile($sourceFile));
+        $translations = Yaml::parseFile($sourceFile);
         $translations = Arr::unpack($translations);
 
         $translationKeys = \array_keys($translations);
@@ -41,7 +41,7 @@ class TranslationGenerateToEnCommand extends Command
         $translations = \array_combine($translationKeys, $translationValues);
 
         \file_put_contents(
-            \dirname(FilePath::getFile($sourceFile)) . '/' . date('Y-m-d H:i:s_') . \basename(FilePath::getFile($sourceFile)),
+            \dirname($sourceFile) . '/' . date('Y-m-d H:i:s_') . \basename($sourceFile),
             Yaml::dump($translations)
         );
 

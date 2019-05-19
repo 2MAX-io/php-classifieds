@@ -120,16 +120,17 @@ class SettingsType extends AbstractType
                 ]),
             ],
         ]);
-        $builder->add('emailConfigUrl', TextType::class, [
-            'label' => 'trans.Configuration url for sending emails',
-            'help' => 'trans.examples: smtp://mail.host.com:465?encryption=ssl&auth_mode=plain&username=login@mail.com&password=password',
-            'required' => true,
-            'empty_data' => '',
-            'constraints' => [
-                new NotBlank(),
-                new Length(['min' => 4]),
-            ],
-        ]);
+// todo: when figured out way to save config to PHP file
+//        $builder->add('emailConfigUrl', TextType::class, [
+//            'label' => 'trans.Configuration url for sending emails',
+//            'help' => 'trans.examples: smtp://mail.host.com:465?encryption=ssl&auth_mode=plain&username=login@mail.com&password=password',
+//            'required' => true,
+//            'empty_data' => '',
+//            'constraints' => [
+//                new NotBlank(),
+//                new Length(['min' => 4]),
+//            ],
+//        ]);
         $builder->add('itemsPerPageMax', IntegerType::class, [
             'label' => 'trans.Maximum items per page',
             'required' => true,

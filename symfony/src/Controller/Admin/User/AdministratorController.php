@@ -34,6 +34,37 @@ class AdministratorController extends AbstractAdminController
     }
 
     /**
+     * @Route("/admin/red5/administrator-user/new", name="admin_administrator_new", methods={"GET","POST"})
+     */
+    public function new(Request $request, UserPasswordEncoderInterface $userPasswordEncoder): Response
+    {
+        $this->denyUnlessAdmin();
+
+        $admin = new Admin();
+        $admin->setEnabled(true);
+        $admin->setRoles([Admin::ROLE_ADMIN]);
+        $form = $this->createForm(AdministratorType::class, $admin);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            if (!Str::emptyTrim($admin->getPlainPassword())) {
+                $admin->setPassword($userPasswordEncoder->encodePassword($admin, $admin->getPlainPassword()));
+            }
+
+            $this->getDoctrine()->getManager()->persist($admin);
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute('admin_administrator_edit', [
+                'id' => $admin->getId(),
+            ]);
+        }
+
+        return $this->render('admin/administrator/new.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
      * @Route("/admin/red5/administrator-user/{id}/edit", name="admin_administrator_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Admin $admin, UserPasswordEncoderInterface $userPasswordEncoder): Response

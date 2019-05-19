@@ -1,0 +1,17 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}{{ 'trans.Add Administrator' | trans }}{% endblock %}
+
+{% block body %}
+
+<div class="container mt-5">
+
+    <div class="mb-4">
+        <h1>{{ 'trans.Add Administrator' | trans }}</h1>
+
+        <a href="{{ path('admin_administrator_index') }}">{{ 'trans.back to list' | trans }}</a>
+    </div>
+
+    {{ include('admin/administrator/_form.html.twig', {'button_label': 'trans.Save' | trans}) }}
+</div>
+{% endblock %}

@@ -61,19 +61,6 @@
     {% include 'user/listing/_part/_custom_fields.html.twig' %}
     {% include 'user/listing/_part/_file_upload.html.twig' %}
     {% include 'user/listing/_part/_category_select.html.twig' %}
-
-    <script type="text/javascript">
-        new Cleave('.input-phone', {
-            phone: true,
-            phoneRegionCode: '{{ settings.languageTwoLetters }}' // todo: from settings
-        });
-        new Cleave('.input-money', {
-            numeral: true,
-            numeralThousandsGroupStyle: 'thousand',
-            numeralPositiveOnly: true,
-            delimiter: '{{ getCleaveConfig().delimiter }}',
-            numeralDecimalMark: '{{ getCleaveConfig().numeralDecimalMark }}'
-        });
-    </script>
+    {% include 'user/listing/_part/_secondary.html.twig' %}
 
 {% endblock %}

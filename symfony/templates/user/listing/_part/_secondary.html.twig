@@ -1,0 +1,13 @@
+<script type="text/javascript">
+    new Cleave('.input-phone', {
+        phone: true,
+        phoneRegionCode: '{{ settings.languageTwoLetters }}' // todo: from settings
+    });
+    new Cleave('.input-money', {
+        numeral: true,
+        numeralThousandsGroupStyle: 'thousand',
+        numeralPositiveOnly: true,
+        delimiter: '{{ getCleaveConfig().delimiter }}',
+        numeralDecimalMark: '{{ getCleaveConfig().numeralDecimalMark }}'
+    });
+</script>

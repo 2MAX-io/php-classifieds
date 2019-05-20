@@ -41,16 +41,20 @@ class SettingsRequiredHealthChecker implements HealthCheckerInterface
     {
         $settingsDto = $this->settingsService->getSettingsDto();
         $failed = false;
-        foreach (\get_class_methods($settingsDto) as $settingMethod) {
-            if (Arr::inArray($settingMethod, ['__construct'])) {
+        foreach (\get_class_methods($settingsDto) as $method) {
+            if (Arr::inArray($method, ['__construct'])) {
                 continue;
             }
 
-            if (Str::beginsWith($settingMethod,'set')) {
+            if (Str::beginsWith($method,'set')) {
                 continue;
             }
 
-            $value = $settingsDto->$settingMethod();
+            if (\in_array($method, $this->getExcludedMethods(), true)) {
+                continue;
+            }
+
+            $value = $settingsDto->$method();
             if (Str::emptyTrim((string) $value)) {
                 $failed = true;
             }
@@ -71,5 +75,10 @@ class SettingsRequiredHealthChecker implements HealthCheckerInterface
         }
 
         return new HealthCheckResultDto(false);
+    }
+
+    private function getExcludedMethods(): array
+    {
+        return ['getEmailConfigUrl'];
     }
 }

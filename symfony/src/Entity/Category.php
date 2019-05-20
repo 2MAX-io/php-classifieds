@@ -8,12 +8,14 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\Index;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CategoryRepository")
  * @ORM\Table(indexes={
  *     @Index(columns={"lft", "rgt"}, name="lft_rgt"),
  * })
+ * @UniqueEntity(fields={"slug"})
  */
 class Category
 {

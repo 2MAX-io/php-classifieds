@@ -6,18 +6,23 @@ namespace App\Form\Admin;
 
 use App\Entity\Category;
 use App\Form\Type\AdminCategoryType;
+use App\Helper\Str;
 use App\Validator\Constraints\Slug;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Image;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 class AdminCategorySaveType extends AbstractType
 {
+    const SLUG = 'slug';
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('name', TextType::class, [
@@ -26,13 +31,20 @@ class AdminCategorySaveType extends AbstractType
                 new NotBlank(),
             ],
         ]);
-        $builder->add('slug', TextType::class, [
+        $builder->add(
+            self::SLUG, TextType::class, [
             'label' => 'trans.Slug',
             'constraints' => [
                 new NotBlank(),
                 new Slug(),
             ],
-        ]);
+        ])
+        ->addEventListener(FormEvents::PRE_SUBMIT, function(FormEvent $formEvent) {
+            $data = $formEvent->getData();
+            $data[self::SLUG] = Str::softSlug($data[self::SLUG]);
+
+            $formEvent->setData($data);
+        });
         $builder->add('parent', AdminCategoryType::class, [
             'constraints' => [
                 new NotBlank(),

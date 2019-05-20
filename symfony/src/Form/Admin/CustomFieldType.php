@@ -28,7 +28,7 @@ class CustomFieldType extends AbstractType
             'placeholder' => 'trans.Select',
             'choices' => [
                 'trans.customFieldType.select' => CustomField::TYPE_SELECT,
-                'trans.customFieldType.year_range' => CustomField::TYPE_INTEGER_RANGE,
+                'trans.customFieldType.year_range' => CustomField::TYPE_YEAR_RANGE,
                 'trans.customFieldType.integer_range' => CustomField::TYPE_INTEGER_RANGE,
                 'trans.customFieldType.checkbox_multiple' => CustomField::TYPE_CHECKBOX_MULTIPLE,
                 'trans.customFieldType.select_single' => CustomField::TYPE_SELECT_SINGLE,

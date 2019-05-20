@@ -32,6 +32,10 @@
                         </div>
                     </div>
                 </div>
+            {% else %}
+                <div class="alert alert-info w-100">
+                    {{ 'trans.No categories found, try again latter' | trans }}
+                </div>
             {% endfor %}
         </div>
     </div>

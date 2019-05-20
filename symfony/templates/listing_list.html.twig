@@ -356,6 +356,10 @@
                                 </div>
                             </div>
                         </div>
+                    {% else %}
+                        <div class="alert alert-info w-100">
+                            {{ 'trans.No classified ads matching criteria were found' | trans }}
+                        </div>
                     {% endfor %}
                 </div>
 

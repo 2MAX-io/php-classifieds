@@ -41,16 +41,20 @@
             </div>
         </div>
 
-        <button class="btn btn-primary w-100 mb-2 saveOrder">{{ 'trans.Save order of categories' | trans }}</button>
+        {% if categoryList %}
+            <button class="btn btn-primary w-100 mb-2 saveOrder">{{ 'trans.Save order of categories' | trans }}</button>
 
-        <ul class="nested-sortable mb-2 pl-0" data-sortable-group="root">
-            {# @var category1 \App\Entity\Category #}
-            {% for category in categoryList %}
-                {{ macros.categoryLevel(category) }}
-            {% endfor %}
-        </ul>
+            <ul class="nested-sortable mb-2 pl-0" data-sortable-group="root">
+                {# @var category1 \App\Entity\Category #}
+                {% for category in categoryList %}
+                    {{ macros.categoryLevel(category) }}
+                {% endfor %}
+            </ul>
 
-        <button class="btn btn-primary w-100 mb-2 saveOrder">{{ 'trans.Save order of categories' | trans }}</button>
+            <button class="btn btn-primary w-100 mb-2 saveOrder">{{ 'trans.Save order of categories' | trans }}</button>
+        {% else %}
+            <div class="alert alert-info w-100">{{ 'trans.no records found' | trans }}</div>
+        {% endif %}
     </div>
 
 {% endblock %}

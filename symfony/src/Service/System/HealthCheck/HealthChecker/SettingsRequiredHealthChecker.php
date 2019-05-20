@@ -39,7 +39,7 @@ class SettingsRequiredHealthChecker implements HealthCheckerInterface
 
     public function checkHealth(): HealthCheckResultDto
     {
-        $settingsDto = $this->settingsService->getSettingsDto();
+        $settingsDto = $this->settingsService->getSettingsDtoWithoutCache();
         $failed = false;
         foreach (\get_class_methods($settingsDto) as $method) {
             if (Arr::inArray($method, ['__construct'])) {
@@ -65,6 +65,10 @@ class SettingsRequiredHealthChecker implements HealthCheckerInterface
         $settingList = $qb->getQuery()->getResult();
 
         foreach ($settingList as $setting) {
+            if (\in_array($setting->getName(), $this->getExcludedSettings(), true)) {
+                continue;
+            }
+
             if (Str::emptyTrim($setting->getValue())) {
                 $failed = true;
             }
@@ -79,6 +83,31 @@ class SettingsRequiredHealthChecker implements HealthCheckerInterface
 
     private function getExcludedMethods(): array
     {
-        return ['getEmailConfigUrl'];
+        return [
+            'getEmailConfigUrl',
+            'getLinkTermsConditions',
+            'getAllowedCharacters',
+            'getMasterSiteUrl',
+            'getMasterSiteAnchorText',
+            'isMasterSiteLinkShow',
+            'getLinkPrivacyPolicy',
+            'getLinkRejectionReason',
+            'getLogoPath',
+        ];
+    }
+
+    private function getExcludedSettings(): array
+    {
+        return [
+            'linkTermsConditions',
+            'allowedCharacters',
+            'masterSiteUrl',
+            'masterSiteAnchorText',
+            'masterSiteLinkShow',
+            'linkPrivacyPolicy',
+            'linkRejectionReason',
+            'emailConfigUrl',
+            'logoPath',
+        ];
     }
 }

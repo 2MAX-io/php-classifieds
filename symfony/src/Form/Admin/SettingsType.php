@@ -20,6 +20,7 @@ use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\GreaterThan;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Url;
 
 class SettingsType extends AbstractType
 {
@@ -151,14 +152,12 @@ class SettingsType extends AbstractType
             'label' => 'trans.Link to terms and conditions',
             'required' => true,
             'constraints' => [
-                new NotBlank(),
             ],
         ]);
         $builder->add('linkPrivacyPolicy', PageType::class, [
             'label' => 'trans.Link to privacy policy',
             'required' => true,
             'constraints' => [
-                new NotBlank(),
             ],
         ]);
         $builder->add('linkRejectionReason', PageType::class, [
@@ -184,7 +183,6 @@ class SettingsType extends AbstractType
             'label' => 'trans.Allowed characters',
             'required' => true,
             'constraints' => [
-                new NotBlank(),
             ],
         ]);
         $builder->add('wordsToRemoveFromTitle', TextareaType::class, [
@@ -212,14 +210,14 @@ class SettingsType extends AbstractType
             'label' => 'trans.Url to master site',
             'required' => true,
             'constraints' => [
-                new NotBlank(),
+                new Url(),
             ],
         ]);
         $builder->add('masterSiteAnchorText', TextType::class, [
             'label' => 'trans.Text of link to master site',
             'required' => true,
             'constraints' => [
-                new NotBlank(),
+                new Length(['min'=> 2]),
             ],
         ]);
         $builder->add('paymentGatewayPaymentDescription', TextType::class, [

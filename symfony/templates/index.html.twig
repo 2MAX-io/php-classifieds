@@ -44,63 +44,69 @@
                     </a>
                 </div>
             </div>
+            {% else %}
+                <div class="alert alert-info w-100">
+                    {{ 'trans.No categories found, try again latter' | trans }}
+                </div>
             {% endfor %}
         </div>
     </div>
 
     <!-- latest listings -->
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6">
-                <div class="card last-added-listings mb-4">
-                    <div class="card-header">
-                        <strong>{{ 'trans.Recommended Listings' | trans }}</strong>
-                    </div>
+    {% if recommendedListings and latestListings %}
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card last-added-listings mb-4">
+                        <div class="card-header">
+                            <strong>{{ 'trans.Recommended Listings' | trans }}</strong>
+                        </div>
 
-                    <div class="card-body p-0">
-                        {% for listing in recommendedListings %}
-                            <a
-                                    href="{{ path('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}"
-                                    class="link-list-item force-single-line"
-                            >
-                                {{ listing.title }}
+                        <div class="card-body p-0">
+                            {% for listing in recommendedListings %}
+                                <a
+                                        href="{{ path('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}"
+                                        class="link-list-item force-single-line"
+                                >
+                                    {{ listing.title }}
+                                </a>
+                            {% endfor %}
+                        </div>
+
+                        <div class="card-footer">
+                            <a href="{{ path('app_last_added') }}" class="btn btn-sm btn-dark btn-block mt-auto">
+                                {{ 'trans.View more' | trans }}
                             </a>
-                        {% endfor %}
-                    </div>
-
-                    <div class="card-footer">
-                        <a href="{{ path('app_last_added') }}" class="btn btn-sm btn-dark btn-block mt-auto">
-                            {{ 'trans.View more' | trans }}
-                        </a>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-6">
+                <div class="col-md-6">
 
-                <div class="card last-added-listings mb-4">
-                    <div class="card-header">
-                        <strong>{{ 'trans.Latest Listings' | trans }}</strong>
-                    </div>
+                    <div class="card last-added-listings mb-4">
+                        <div class="card-header">
+                            <strong>{{ 'trans.Latest Listings' | trans }}</strong>
+                        </div>
 
-                    <div class="card-body p-0">
-                        {% for listing in latestListings %}
-                            <a
-                                    href="{{ path('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}"
-                                    class="link-list-item force-single-line"
-                            >
-                                {{ listing.title }}
+                        <div class="card-body p-0">
+                            {% for listing in latestListings %}
+                                <a
+                                        href="{{ path('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}"
+                                        class="link-list-item force-single-line"
+                                >
+                                    {{ listing.title }}
+                                </a>
+                            {% endfor %}
+                        </div>
+
+                        <div class="card-footer">
+                            <a href="{{ path('app_last_added') }}" class="btn btn-sm btn-dark btn-block mt-auto">
+                                {{ 'trans.View more' | trans }}
                             </a>
-                        {% endfor %}
-                    </div>
-
-                    <div class="card-footer">
-                        <a href="{{ path('app_last_added') }}" class="btn btn-sm btn-dark btn-block mt-auto">
-                            {{ 'trans.View more' | trans }}
-                        </a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    {% endif %}
 
 {% endblock body %}

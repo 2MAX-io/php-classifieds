@@ -81,6 +81,7 @@ class SettingsService
 
         $this->em->flush();
         $this->cache->delete(RuntimeCacheInterface::SETTINGS_CACHE);
+        $this->arrayCache->delete(RuntimeCacheInterface::SETTINGS_CACHE);
     }
 
     public function getSettingsDto(): SettingsDto

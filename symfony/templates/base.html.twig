@@ -189,9 +189,13 @@
         <div class="container">
             {{ 'trans.We use cookies to improve your experience on our site. To find out more, read our' | trans }}
 
-            <a href="{{ path('app_page', {'slug': settings.linkPrivacyPolicy}) }}">
+            {% if settings.linkPrivacyPolicy %}
+                <a href="{{ path('app_page', {'slug': settings.linkPrivacyPolicy}) }}">
+                    {{ 'trans.privacy policy' | trans }}
+                </a>
+            {% else %}
                 {{ 'trans.privacy policy' | trans }}
-            </a>
+            {% endif %}
 
             <button
                     class="btn btn-dark btn-sm"
@@ -227,17 +231,21 @@
                         <li><a class="text-danger mobile-link" href="#">{{ 'trans.Advertisement' | trans }}</a></li>
                     </ul>
                     <li><a class="text-muted mobile-link" href="#contact">{{ 'trans.Contact' | trans }}</a></li>
-                    <li>
-                        <a
-                                class="text-muted mobile-link"
-                                href="{{ path('app_page', {'slug': settings.linkTermsConditions}) }}"
-                        >
-                            {{ 'trans.Terms and conditions' | trans }}
-                        </a>
-                    </li>
-                    <li>
-                        <a class="text-muted mobile-link" href="{{ path('app_page', {'slug': settings.linkPrivacyPolicy}) }}">{{ 'trans.Privacy policy' | trans }}</a>
-                    </li>
+                    {% if settings.linkTermsConditions %}
+                        <li>
+                            <a
+                                    class="text-muted mobile-link"
+                                    href="{{ path('app_page', {'slug': settings.linkTermsConditions}) }}"
+                            >
+                                {{ 'trans.Terms and conditions' | trans }}
+                            </a>
+                        </li>
+                    {% endif %}
+                    {% if settings.linkPrivacyPolicy %}
+                        <li>
+                            <a class="text-muted mobile-link" href="{{ path('app_page', {'slug': settings.linkPrivacyPolicy}) }}">{{ 'trans.Privacy policy' | trans }}</a>
+                        </li>
+                    {% endif %}
                 </ul>
             </div>
         </div>

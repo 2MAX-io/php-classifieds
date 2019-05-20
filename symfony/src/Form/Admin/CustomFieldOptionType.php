@@ -7,6 +7,7 @@ namespace App\Form\Admin;
 use App\Entity\CustomFieldOption;
 use App\Validator\Constraints\Value;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -29,7 +30,16 @@ class CustomFieldOptionType extends AbstractType
                 new NotBlank(),
                 new Value(),
             ]
-        ]);
+        ])->addModelTransformer(new CallbackTransformer(
+            function (CustomFieldOption $customFieldOption) {
+                $customFieldOption->setValue(\mb_strtolower($customFieldOption->getValue()));
+
+                return $customFieldOption;
+            },
+            function (CustomFieldOption $customFieldOption) {
+                return $customFieldOption;
+            }
+        ));
         $builder->add('sort', IntegerType::class, [
             'label' => 'trans.Order, smaller first',
             'constraints' => [

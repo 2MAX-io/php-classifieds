@@ -67,7 +67,7 @@ class CustomFieldOption
 
     public function setValue(string $value): self
     {
-        $this->value = $value;
+        $this->value = \mb_strtolower($value);
 
         return $this;
     }

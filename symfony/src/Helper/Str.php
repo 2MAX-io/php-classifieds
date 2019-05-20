@@ -66,13 +66,37 @@ class Str
         return $matches;
     }
 
-    public static function emptyTrim(?string $value): bool
+    public static function emptyTrim($value): bool
     {
+        if ($value === '0') {
+            return false;
+        }
+
+        if (\is_bool($value)) {
+            return false;
+        }
+
         if ($value === null) {
             return true;
         }
 
         return empty($value) || empty(trim($value));
+    }
+
+    public static function toString($value): string
+    {
+        if (false === $value) {
+            return '0';
+        }
+        if (true === $value) {
+            return '1';
+        }
+
+        if (null === $value) {
+            return '';
+        }
+
+        return (string) $value;
     }
 
     public static function softSlug(?string $value): ?string

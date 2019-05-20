@@ -55,7 +55,7 @@ class SettingsRequiredHealthChecker implements HealthCheckerInterface
             }
 
             $value = $settingsDto->$method();
-            if (Str::emptyTrim((string) $value)) {
+            if (Str::emptyTrim($value)) {
                 $failed = true;
             }
         }

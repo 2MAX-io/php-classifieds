@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Service\Setting;
 
 use App\Entity\Setting;
+use App\Helper\Str;
 use App\Repository\SettingRepository;
 use App\System\Cache\RuntimeCacheInterface;
 use Doctrine\ORM\EntityManagerInterface;
@@ -67,12 +68,12 @@ class SettingsService
                 $setting = $settingList[$property];
 
                 if ($setting->getName() === $property) {
-                    $setting->setValue((string) $propertyAccessor->getValue($settingsDto, $property));
+                    $setting->setValue(Str::toString($propertyAccessor->getValue($settingsDto, $property)));
                 }
             } else {
                 $setting = new Setting();
                 $setting->setName($property);
-                $setting->setValue((string) $propertyAccessor->getValue($settingsDto, $property));
+                $setting->setValue(Str::toString($propertyAccessor->getValue($settingsDto, $property)));
             }
 
             $setting->setLastUpdateDate(new \DateTime());

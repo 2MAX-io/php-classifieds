@@ -124,7 +124,7 @@
 
                                 {% if customField.type == constant('\App\\Entity\\CustomField::TYPE_SELECT') and customField.customFieldOptions is not empty %}
                                     <div class="mb-3">
-                                        <p><strong>{{ customField.name }}</strong></p>
+                                        <div>{{ customField.name }}</div>
 
                                         {% for customFieldOption in customField.customFieldOptions %}
                                             <div class="custom-control custom-checkbox">
@@ -151,7 +151,7 @@
 
                                 {% if customField.type == constant('\App\\Entity\\CustomField::TYPE_SELECT_SINGLE') and customField.customFieldOptions is not empty %}
                                     <div class="mb-3">
-                                        <p><strong>{{ customField.name }}</strong></p>
+                                        <div>{{ customField.name }}</div>
 
                                         <div>
                                             <select name="form_custom_field[{{ customField.id }}][values][]" class="custom-select">
@@ -173,7 +173,7 @@
 
                                 {% if customField.type == constant('\App\\Entity\\CustomField::TYPE_CHECKBOX_MULTIPLE') and customField.customFieldOptions is not empty %}
                                     <div class="mb-3">
-                                        <p><strong>{{ customField.name }}</strong></p>
+                                        <div>{{ customField.name }}</div>
 
                                         {% for customFieldOption in customField.customFieldOptions %}
                                             <div class="custom-control custom-checkbox">

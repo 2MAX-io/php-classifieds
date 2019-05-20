@@ -21,6 +21,7 @@ class AppExtension extends AbstractExtension
             new TwigFunction('adminShowReject', [TwigListing::class, 'adminShowReject']),
             new TwigFunction('displayAsExpired', [TwigUser::class, 'displayAsExpired']),
             new TwigFunction('settings', [TwigSettings::class, 'settings']),
+            new TwigFunction('getCleaveConfig', [TwigNoDependencies::class, 'getCleaveConfig']),
             new TwigFunction('optionAttr', [TwigForm::class, 'optionAttr'], ['is_safe' => ['html']]),
         ];
     }

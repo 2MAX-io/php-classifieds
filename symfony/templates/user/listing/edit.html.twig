@@ -71,8 +71,8 @@
             numeral: true,
             numeralThousandsGroupStyle: 'thousand',
             numeralPositiveOnly: true,
-            delimiter: ' ',
-            numeralDecimalMark: ','
+            delimiter: '{{ getCleaveConfig().delimiter }}',
+            numeralDecimalMark: '{{ getCleaveConfig().numeralDecimalMark }}'
         });
     </script>
 

@@ -80,4 +80,15 @@ class TwigNoDependencies implements RuntimeExtensionInterface
 
         return (string) $number;
     }
+
+    public function getCleaveConfig(): array
+    {
+        $formatter = new \NumberFormatter(\Locale::getDefault(), \NumberFormatter::DECIMAL);
+        $formatter->setAttribute(\NumberFormatter::GROUPING_USED, true);
+
+        return [
+            'delimiter' => $formatter->getSymbol(\NumberFormatter::GROUPING_SEPARATOR_SYMBOL),
+            'numeralDecimalMark' => $formatter->getSymbol(\NumberFormatter::DECIMAL_SEPARATOR_SYMBOL),
+        ];
+    }
 }

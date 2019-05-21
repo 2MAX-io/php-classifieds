@@ -1,14 +1,22 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ page.title }}{% endblock %}
+{% block title %}{{ 'trans.Used technologies and Services' | trans }}{% endblock %}
 
 {% block body %}
     <div class="container mt-5">
         <div class="row">
             <div class="col-md-8">
-                <h2>{{ page.title }}</h2>
+                <h2>{{ 'trans.Used technologies and Services' | trans }}</h2>
 
-                {{ page.content | nl2br }}
+                <div>
+                    <a href="https://www.freepik.com">www.freepik.com</a>
+                </div>
+                <div>
+                    <a href="https://www.pexels.com">www.pexels.com</a>
+                </div>
+                <div>
+                    <a href="https://pixabay.com">pixabay.com</a>
+                </div>
             </div>
 
             <div class="col-md-4">

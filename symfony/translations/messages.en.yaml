@@ -70,6 +70,7 @@ trans:
   1 month: 'month'
 
   It is recommended to create a backup before this operation: 'It is recommended to create a backup before this operation'
+  Used technologies and Services: 'Used technologies and Services'
 
 trans.customFieldType.select: Select field
 trans.customFieldType.year_range: Field with year
@@ -543,4 +544,6 @@ trans.Preview: Preview
 'trans.No categories found, try again latter': 'No categories found, try again latter'
 'trans.No listings found, try again latter': 'No listings found, try again latter'
 'trans.No classified ads matching criteria were found': 'No classified ads matching criteria were found'
+'trans.Link to contact page': 'Link to contact page'
+'trans.Link to information about advertisement': 'Link to information about advertisement'
 

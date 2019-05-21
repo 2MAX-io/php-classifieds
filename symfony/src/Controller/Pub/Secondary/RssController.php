@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Controller\Pub\Other;
+namespace App\Controller\Pub\Secondary;
 
 use App\Service\Listing\Helper\ListingHelperService;
 use App\Service\Setting\SettingsService;

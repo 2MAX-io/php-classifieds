@@ -24,7 +24,7 @@ class PageType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'placeholder' => 'trans.Select page',
+            'placeholder' => 'trans.not required',
             'label' => 'trans.Select',
             'choices' => $this->getPages(),
             'choice_translation_domain' => false,

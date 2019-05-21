@@ -148,6 +148,18 @@ class SettingsType extends AbstractType
                 new NotBlank(),
             ],
         ]);
+        $builder->add('linkContact', PageType::class, [
+            'label' => 'trans.Link to contact page',
+            'required' => true,
+            'constraints' => [
+            ],
+        ]);
+        $builder->add('linkAdvertisement', PageType::class, [
+            'label' => 'trans.Link to information about advertisement',
+            'required' => true,
+            'constraints' => [
+            ],
+        ]);
         $builder->add('linkTermsConditions', PageType::class, [
             'label' => 'trans.Link to terms and conditions',
             'required' => true,

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Service\System\HealthCheck\HealthChecker;
 
 use App\Entity\Page;
+use App\Helper\Str;
 use App\Service\Setting\SettingsService;
 use App\Service\System\HealthCheck\Base\HealthCheckerInterface;
 use App\Service\System\HealthCheck\HealthCheckResultDto;
@@ -62,10 +63,23 @@ class InvalidLinkToPagesHealthChecker implements HealthCheckerInterface
     {
         $settingsDto = $this->settingsService->getSettingsDto();
 
-        return [
+        $checkIfNotEmpty = [
             $settingsDto->getLinkTermsConditions(),
             $settingsDto->getLinkPrivacyPolicy(),
             $settingsDto->getLinkRejectionReason(),
+            $settingsDto->getLinkAdvertisement(),
+            $settingsDto->getLinkContact(),
         ];
+
+        $return = [];
+        foreach ($checkIfNotEmpty as $page) {
+            if (Str::emptyTrim($page)) {
+                continue;
+            }
+
+            $return[] = $page;
+        }
+
+        return $return;
     }
 }

@@ -77,6 +77,16 @@ class SettingsDto
     private $linkRejectionReason;
 
     /**
+     * @var string|null
+     */
+    private $linkContact;
+
+    /**
+     * @var string|null
+     */
+    private $linkAdvertisement;
+
+    /**
      * ISO 639-1
      *
      * @var string|null
@@ -441,5 +451,25 @@ class SettingsDto
     public function setLogoPath(?string $logoPath): void
     {
         $this->logoPath = $logoPath;
+    }
+
+    public function getLinkContact(): ?string
+    {
+        return $this->linkContact;
+    }
+
+    public function setLinkContact(?string $linkContact): void
+    {
+        $this->linkContact = $linkContact;
+    }
+
+    public function getLinkAdvertisement(): ?string
+    {
+        return $this->linkAdvertisement;
+    }
+
+    public function setLinkAdvertisement(?string $linkAdvertisement): void
+    {
+        $this->linkAdvertisement = $linkAdvertisement;
     }
 }

@@ -231,10 +231,9 @@
             <div class="col-6 col-md">
                 <h5>{{ 'trans.About' | trans }}</h5>
                 <ul class="list-unstyled text-small">
-                    <ul class="list-unstyled">
-                        <li><a class="text-danger mobile-link" href="#">{{ 'trans.Advertisement' | trans }}</a></li>
-                    </ul>
-                    <li><a class="text-muted mobile-link" href="#contact">{{ 'trans.Contact' | trans }}</a></li>
+                    {% if settings.linkAdvertisement %}
+                        <li><a class="text-danger mobile-link" href="{{ path('app_page', {'slug': settings.linkAdvertisement}) }}">{{ 'trans.Advertisement' | trans }}</a></li>
+                    {% endif %}
                     {% if settings.linkTermsConditions %}
                         <li>
                             <a
@@ -249,6 +248,9 @@
                         <li>
                             <a class="text-muted mobile-link" href="{{ path('app_page', {'slug': settings.linkPrivacyPolicy}) }}">{{ 'trans.Privacy policy' | trans }}</a>
                         </li>
+                    {% endif %}
+                    {% if settings.linkContact %}
+                        <li><a class="text-muted mobile-link" href="{{ path('app_page', {'slug': settings.linkContact}) }}">{{ 'trans.Contact' | trans }}</a></li>
                     {% endif %}
                 </ul>
             </div>

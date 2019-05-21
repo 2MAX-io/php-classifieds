@@ -310,3 +310,7 @@ php symfony/bin/console app:cron:main
 php symfony/bin/console app:cron:main
 php symfony/bin/console doctrine:schema:update --force
 composer dump-env dev -d symfony
+httpd -M | grep expires
+apache2 " grep expires
+apache2 | grep expires
+a2enmod expires

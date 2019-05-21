@@ -19,6 +19,7 @@ RUN docker-php-ext-install intl
 RUN a2enmod rewrite
 RUN a2ensite default-ssl
 RUN a2enmod ssl
+RUN a2enmod expires
 
 RUN docker-php-ext-install opcache
 

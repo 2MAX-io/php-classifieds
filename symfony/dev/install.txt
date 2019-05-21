@@ -1,0 +1,7 @@
+copy zip to public html
+
+copy .env.local.php, set config
+
+copy vendor
+
+correct place of .env.local.php

@@ -314,3 +314,4 @@ httpd -M | grep expires
 apache2 " grep expires
 apache2 | grep expires
 a2enmod expires
+composer dump-autoload -a -d symfony

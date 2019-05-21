@@ -69,11 +69,16 @@ class ListingCustomFieldListType extends AbstractType
         foreach ($this->customFieldsForListingFormService->getFields($category->getId(), $listingId) as $customField) {
 
             if (\in_array($customField->getType(), [CustomField::TYPE_SELECT_SINGLE, CustomField::TYPE_SELECT])) {
+                $choices = $this->getChoices($customField);
+                if (!$choices) {
+                    continue;
+                }
+
                 $builder->add($customField->getId(), ChoiceType::class, [
                     'label' => $customField->getName(),
                     'placeholder' => $this->trans->trans('trans.Select'),
                     'translation_domain' => false,
-                    'choices' => $this->getChoices($customField),
+                    'choices' => $choices,
                     'data' => $this->getValue($customField),
                     'constraints' => $this->getConstraints($customField),
                     'required' => $customField->getRequired(),
@@ -81,13 +86,17 @@ class ListingCustomFieldListType extends AbstractType
             }
 
             if (\in_array($customField->getType(), [CustomField::TYPE_CHECKBOX_MULTIPLE])) {
+                $choices = $this->getChoices($customField);
+                if (!$choices) {
+                    continue;
+                }
                 $builder->add($customField->getId(), ChoiceType::class, [
                     'label' => $customField->getName(),
                     'placeholder' => $this->trans->trans('trans.Select'),
                     'expanded' => true,
                     'multiple' => true,
                     'translation_domain' => false,
-                    'choices' => $this->getChoices($customField),
+                    'choices' => $choices,
                     'data' => $this->getValue($customField),
                     'constraints' => $this->getConstraints($customField),
                     'required' => false,

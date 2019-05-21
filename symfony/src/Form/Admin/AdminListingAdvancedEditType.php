@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace App\Form\Admin;
 
 use App\Entity\Listing;
+use App\Form\Type\AppDateTimeType;
 use App\Form\Type\BoolType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -24,7 +24,7 @@ class AdminListingAdvancedEditType extends AbstractType
                 new NotBlank(),
             ],
         ]);
-        $builder->add('featuredUntilDate', DateTimeType::class, [
+        $builder->add('featuredUntilDate', AppDateTimeType::class, [
             'required' => false,
             'label' => 'trans.Featured until',
         ]);
@@ -34,13 +34,13 @@ class AdminListingAdvancedEditType extends AbstractType
                 new NotBlank(),
             ],
         ]);
-        $builder->add('orderByDate', DateTimeType::class, [
+        $builder->add('orderByDate', AppDateTimeType::class, [
             'label' => 'trans.Date of last raising',
             'constraints' => [
                 new NotBlank(),
             ],
         ]);
-        $builder->add('validUntilDate', DateTimeType::class, [
+        $builder->add('validUntilDate', AppDateTimeType::class, [
             'label' => 'trans.Valid until',
             'constraints' => [
                 new NotBlank(),

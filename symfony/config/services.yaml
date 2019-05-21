@@ -6,6 +6,8 @@
 parameters:
     env(APP_LOCALE): 'en'
     locale: '%env(resolve:APP_LOCALE)%'
+    env(APP_TIMEZONE): 'UTC'
+    timezone: '%env(resolve:APP_TIMEZONE)%'
 
 services:
     # default configuration for services in *this* file

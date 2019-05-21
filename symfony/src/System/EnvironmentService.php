@@ -27,4 +27,9 @@ class EnvironmentService
     {
         return $this->parameterBag->get('twig_date_format_short');
     }
+
+    public function getAppTimezone(): string
+    {
+        return $this->parameterBag->get('timezone');
+    }
 }

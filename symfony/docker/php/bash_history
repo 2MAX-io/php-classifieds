@@ -272,3 +272,6 @@ composer dump-env dev -d symfony
 php symfony/bin/console translation:update --dump-messages --force en AppBundle
 php symfony/bin/console translation:update --dump-messages --force en App
 php symfony/bin/console translation:update --dump-messages --force en
+php symfony/bin/console doctrine:schema:update --force
+php symfony/bin/console doctrine:schema:update --force
+php symfony/bin/console doctrine:schema:update --force

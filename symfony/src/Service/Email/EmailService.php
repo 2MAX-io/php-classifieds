@@ -111,7 +111,7 @@ class EmailService
 
     public function changePasswordConfirmation(User $user, string $token): void
     {
-        $message = (new \Swift_Message($this->trans->trans('trans.Change password confirmation')))
+        $message = (new \Swift_Message($this->trans->trans('trans.Password change confirmation')))
             ->setReplyTo($this->getEmailReplyTo())
             ->setFrom($this->getEmailFromAddress(), $this->getEmailFromName())
             ->setTo($user->getEmail())
@@ -132,7 +132,7 @@ class EmailService
 
     public function remindPasswordConfirmation(User $user, string $token): void
     {
-        $message = (new \Swift_Message($this->trans->trans('trans.Remind password confirmation')))
+        $message = (new \Swift_Message($this->trans->trans('trans.Password remind confirmation')))
             ->setReplyTo($this->getEmailReplyTo())
             ->setFrom($this->getEmailFromAddress(), $this->getEmailFromName())
             ->setTo($user->getEmail())

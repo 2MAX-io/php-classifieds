@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Form\Admin;
 
 use App\Entity\FeaturedPackage;
-use App\Form\Type\CustomMoneyType;
+use App\Form\Type\AppMoneyType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
@@ -36,7 +36,7 @@ class FeaturedPackageType extends AbstractType
             'label' => 'trans.Description',
             'required' => false,
         ]);
-        $builder->add('priceFloat', CustomMoneyType::class, [
+        $builder->add('priceFloat', AppMoneyType::class, [
             'label' => 'trans.Price',
             'constraints' => [
                 new NotBlank(),

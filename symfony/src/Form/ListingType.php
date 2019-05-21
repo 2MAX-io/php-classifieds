@@ -7,7 +7,7 @@ namespace App\Form;
 use App\Entity\Listing;
 use App\Form\Type\BoolType;
 use App\Form\Type\CategoryType;
-use App\Form\Type\CustomMoneyType;
+use App\Form\Type\AppMoneyType;
 use App\Form\Type\FileSimpleType;
 use App\Form\Type\PriceForType;
 use App\Service\Listing\ValidityExtend\ValidUntilSetService;
@@ -107,7 +107,7 @@ class ListingType extends AbstractType
             'label' => 'trans.Show email?',
             'required' => false,
         ]);
-        $builder->add('price', CustomMoneyType::class, [
+        $builder->add('price', AppMoneyType::class, [
             'label' => 'trans.Amount or price',
             'required' => false,
             'constraints' => [

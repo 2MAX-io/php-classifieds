@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Form\Admin;
 
-use App\Form\Type\CustomMoneyType;
+use App\Form\Type\AppMoneyType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -20,7 +20,7 @@ class UserChangeBalanceType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add(
-            self::NEW_BALANCE, CustomMoneyType::class, [
+            self::NEW_BALANCE, AppMoneyType::class, [
             'label' => 'trans.Set balance to',
             'mapped' => false,
             'constraints' => [

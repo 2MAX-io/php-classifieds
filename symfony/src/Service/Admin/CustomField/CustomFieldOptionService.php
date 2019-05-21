@@ -35,12 +35,14 @@ class CustomFieldOptionService
         }
     }
 
-    public function removeOptionFromListingValues(): void
+    public function removeOptionFromListingValues(CustomFieldOption $customFieldOption): void
     {
         $qb = $this->em->getRepository(ListingCustomFieldValue::class)->createQueryBuilder('listingCustomFieldValue');
-        $qb->update(ListingCustomFieldValue::class, 'listingCustomFieldValue');
-        $qb->set('listingCustomFieldValue.customFieldOption', ':customFieldOption');
-        $qb->setParameter('customFieldOption', null);
+        $qb->delete(ListingCustomFieldValue::class, 'listingCustomFieldValue');
+
+        $qb->andWhere($qb->expr()->eq('listingCustomFieldValue.customFieldOption', ':customFieldOption'));
+        $qb->setParameter('customFieldOption', $customFieldOption->getId());
+
         $qb->getQuery()->execute();
     }
 

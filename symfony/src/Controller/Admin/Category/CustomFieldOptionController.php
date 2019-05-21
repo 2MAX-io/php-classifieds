@@ -115,7 +115,7 @@ class CustomFieldOptionController extends AbstractAdminController
         if ($this->isCsrfTokenValid('delete'.$customFieldOption->getId(), $request->request->get('_token'))) {
             try {
                 $em->beginTransaction();
-                $customFieldOptionService->removeOptionFromListingValues();
+                $customFieldOptionService->removeOptionFromListingValues($customFieldOption);
                 $em->remove($customFieldOption);
                 $em->flush();
                 $em->commit();

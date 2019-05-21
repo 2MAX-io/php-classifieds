@@ -49,4 +49,12 @@ class UTCDateTimeType extends DateTimeType
     {
         return new DateTimeZone('UTC');
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function requiresSQLCommentHint(AbstractPlatform $platform): bool
+    {
+        return true;
+    }
 }

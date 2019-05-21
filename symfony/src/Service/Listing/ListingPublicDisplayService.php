@@ -34,6 +34,7 @@ class ListingPublicDisplayService
 
         $qb->andWhere('listing.userDeactivated = 0');
         $qb->andWhere('listing.userRemoved = 0');
+        $qb->andWhere('listing.adminRejected = 0');
 
         if ($this->settingsService->getSettingsDto()->getRequireListingAdminActivation()) {
             $qb->andWhere('listing.adminActivated = 1');

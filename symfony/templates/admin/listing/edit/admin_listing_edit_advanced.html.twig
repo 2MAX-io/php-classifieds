@@ -21,6 +21,7 @@
             </a>
 
             <div class="float-right">
+                <span class="{{ getListingStatusClass(listing) }}">{{ getListingStatus(listing) }}</span>
 
                 <a
                         href="{{ path('app_admin_police_log', {'id': listing.id}) }}"

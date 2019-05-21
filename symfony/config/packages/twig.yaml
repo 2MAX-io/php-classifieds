@@ -1,6 +1,8 @@
 parameters:
-    twig_date_format: Y-m-d, H:i
-    twig_date_format_short: Y-m-d
+    twig_date_format: 'Y-m-d, H:i'
+    twig_date_format_short: 'Y-m-d'
+    env(APP_TIMEZONE): 'UTC'
+    twig_date_timezone: '%env(resolve:APP_TIMEZONE)%'
 
 twig:
     default_path: '%kernel.project_dir%/templates'
@@ -9,4 +11,5 @@ twig:
     form_themes: ['form/form_layout.html.twig']
     date:
         format: '%twig_date_format%'
+        timezone: '%twig_date_timezone%'
     exception_controller: App\Exception\Controller\ExceptionController::showAction

@@ -1,8 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 use Symfony\Component\Dotenv\Dotenv;
 
 require dirname(__DIR__) . '/vendor/autoload.php';
+
+date_default_timezone_set('UTC');
 
 // Load cached env vars if the .env.local.php file exists
 // Run "composer dump-env prod" to create it (requires symfony/flex >=1.2)

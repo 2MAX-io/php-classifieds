@@ -10,7 +10,10 @@ use App\Service\Listing\ShowSingle\ListingShowSingleService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+
 use Twig\Environment;
 
 class ListingShowController extends AbstractController
@@ -24,7 +27,8 @@ class ListingShowController extends AbstractController
         string $slug,
         ListingShowSingleService $listingShowSingleService,
         CategoryListService $categoryListService,
-        ListingPublicDisplayService $listingPublicDisplayService
+        ListingPublicDisplayService $listingPublicDisplayService,
+        EventDispatcherInterface $eventDispatcher
     ): Response {
         $listingShowDto = $listingShowSingleService->getSingle($id);
         if (!$listingShowDto) {
@@ -51,7 +55,9 @@ class ListingShowController extends AbstractController
             ]);
         }
 
-        $listingShowSingleService->saveView($listingShowDto->getListing());
+        $eventDispatcher->addListener(KernelEvents::TERMINATE, function() use ($listingShowSingleService, $listingShowDto) {
+            $listingShowSingleService->saveView($listingShowDto->getListing());
+        });
 
         return $this->render(
             'listing_show.html.twig',

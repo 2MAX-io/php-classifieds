@@ -275,3 +275,36 @@ php symfony/bin/console translation:update --dump-messages --force en
 php symfony/bin/console doctrine:schema:update --force
 php symfony/bin/console doctrine:schema:update --force
 php symfony/bin/console doctrine:schema:update --force
+composer require -d symfony symfony/lock
+php symfony/bin/console app:cron:main
+php symfony/bin/console app:cron:main
+php symfony/bin/console app:cron:main
+php symfony/bin/console app:cron:main
+php symfony/bin/console app:cron:main
+php symfony/bin/console app:cron:main
+php symfony/bin/console app:cron:main
+php symfony/bin/console app:cron:main
+php symfony/bin/console app:cron:main
+php symfony/bin/console app:cron:main
+php symfony/bin/console app:cron:main
+php symfony/bin/console app:cron:main
+php symfony/bin/console app:cron:main
+php symfony/bin/console app:cron:main
+php symfony/bin/console app:cron:main
+php symfony/bin/console app:cron:main
+php symfony/bin/console app:cron:main
+php symfony/bin/console app:cron:main
+php symfony/bin/console app:cron:main
+php symfony/bin/console app:cron:main
+php symfony/bin/console app:cron:main
+php symfony/bin/console app:cron:main
+php symfony/bin/console app:cron:main
+php symfony/bin/console app:cron:main
+php symfony/bin/console app:cron:main
+php symfony/bin/console app:cron:main
+php symfony/bin/console app:cron:main
+php symfony/bin/console app:cron:main
+php symfony/bin/console app:cron:main
+php symfony/bin/console app:cron:main
+php symfony/bin/console app:cron:main
+php symfony/bin/console app:cron:main

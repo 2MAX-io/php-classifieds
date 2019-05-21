@@ -1,7 +1,7 @@
 <form
         method="post"
         action="{{ path('app_admin_category_delete', {'id': category.id}) }}"
-        onsubmit="return confirm('{{ 'trans.Delete category' | trans }}: {{ category.name }}?');"
+        onsubmit="return confirm('{{ 'trans.Delete category' | trans }}: {{ category.name }}? {{ 'trans.It is recommended to create a backup before this operation' | trans }}');"
         class="d-inline"
 >
 <input type="hidden" name="_method" value="DELETE">

@@ -69,6 +69,8 @@ trans:
   3 weeks: '3 weeks'
   1 month: 'month'
 
+  It is recommended to create a backup before this operation: 'It is recommended to create a backup before this operation'
+
 trans.customFieldType.select: Select field
 trans.customFieldType.year_range: Field with year
 trans.customFieldType.integer_range: Field with integer

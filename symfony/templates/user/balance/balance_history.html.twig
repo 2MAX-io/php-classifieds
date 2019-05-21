@@ -17,7 +17,7 @@
 
                 <div class="my-4">
                     {{ 'trans.Your balance is' | trans }}:
-                    <strong class="badge badge-success">{{ userBalance | moneyAsFloat }}</strong>
+                    <strong class="badge badge-success">{{ userBalance | moneyPrecise }}</strong>
                     {{ 'trans.that you can use to feature listings' | trans }}
                 </div>
 
@@ -34,8 +34,8 @@
                     {% for userBalanceChange in userBalanceHistoryList %}
                         <tr>
                             <td><span class="text-nowrap">{{ userBalanceChange.datetime | date }}</span></td>
-                            <td>{{ userBalanceChange.balanceChange | moneyAsFloat | prefixWithPlusPositive }}</td>
-                            <td>{{ userBalanceChange.balanceFinal | moneyAsFloat }}</td>
+                            <td>{{ returnPlusIfPositive(userBalanceChange.balanceChange) }}{{ userBalanceChange.balanceChange | moneyPrecise }}</td>
+                            <td>{{ userBalanceChange.balanceFinal | moneyPrecise }}</td>
                             <td>{{ userBalanceChange.description }}</td>
                         </tr>
                     {% else %}

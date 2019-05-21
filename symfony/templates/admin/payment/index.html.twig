@@ -21,7 +21,7 @@
         {% for payment in payments %}
             <tr>
                 <td>{{ payment.datetime ? payment.datetime|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ payment.amount | moneyAsFloat }}</td>
+                <td>{{ payment.amount | moneyPrecise }}</td>
                 <td>{{ payment.gatewayStatus }}</td>
                 <td>
                     <span class="{{ payment.balanceUpdated | boolGreenRedClass }}">{{ payment.balanceUpdated | boolText | trans }}</span>

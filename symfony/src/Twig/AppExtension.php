@@ -23,6 +23,7 @@ class AppExtension extends AbstractExtension
             new TwigFunction('settings', [TwigSettings::class, 'settings']),
             new TwigFunction('getCleaveConfig', [TwigNoDependencies::class, 'getCleaveConfig']),
             new TwigFunction('optionAttr', [TwigForm::class, 'optionAttr'], ['is_safe' => ['html']]),
+            new TwigFunction('returnPlusIfPositive', [TwigNoDependencies::class, 'returnPlusIfPositive']),
         ];
     }
 
@@ -32,13 +33,12 @@ class AppExtension extends AbstractExtension
             new TwigFilter('boolText', [TwigNoDependencies::class, 'boolText']),
             new TwigFilter('displayTextWarning', [TwigNoDependencies::class, 'displayTextWarning']),
             new TwigFilter('isExpired', [TwigNoDependencies::class, 'isExpired']),
-            new TwigFilter('moneyAsFloat', [TwigNoDependencies::class, 'moneyAsFloat']),
+            new TwigFilter('moneyPrecise', [TwigNoDependencies::class, 'moneyPrecise']),
             new TwigFilter('money', [TwigNoDependencies::class, 'money']),
             new TwigFilter('defaultTrans', [TwigTranslator::class, 'defaultTrans']),
             new TwigFilter('phone', [TwigPhone::class, 'phone']),
             new TwigFilter('thousandsSeparate', [TwigNoDependencies::class, 'thousandsSeparate']),
             new TwigFilter('boolGreenRedClass', [TwigNoDependencies::class, 'boolGreenRedClass']),
-            new TwigFilter('prefixWithPlusPositive', [TwigNoDependencies::class, 'prefixWithPlusPositive']),
         ];
     }
 }

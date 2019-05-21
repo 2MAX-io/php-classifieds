@@ -11,7 +11,7 @@
 
         <div>
             {{ 'trans.Current user balance' | trans }}:
-            <strong class="badge badge-success">{{ currentBalance | moneyAsFloat }}</strong>
+            <strong class="badge badge-success">{{ currentBalance | moneyPrecise }}</strong>
         </div>
 
         {{ form_start(form) }}
@@ -41,8 +41,8 @@
             {% for userBalanceChange in userBalanceHistoryList %}
                 <tr>
                     <td>{{ userBalanceChange.datetime | date }}</td>
-                    <td>{{ userBalanceChange.balanceChange | moneyAsFloat | prefixWithPlusPositive }}</td>
-                    <td>{{ userBalanceChange.balanceFinal | moneyAsFloat }}</td>
+                    <td>{{ returnPlusIfPositive(userBalanceChange.balanceChange) }}{{ userBalanceChange.balanceChange | moneyPrecise }}</td>
+                    <td>{{ userBalanceChange.balanceFinal | moneyPrecise }}</td>
                     <td>{{ userBalanceChange.description }}</td>
                     <td>
                         {% if userBalanceChange.payment %}

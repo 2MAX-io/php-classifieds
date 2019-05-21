@@ -29,7 +29,7 @@
                 {% if userBalance > 0 %}
                     <div class="my-4">
                         {{ 'trans.Your balance is' | trans }}:
-                        <strong class="badge badge-success">{{ userBalance | moneyAsFloat }}</strong>
+                        <strong class="badge badge-success">{{ userBalance | moneyPrecise }}</strong>
                         {{ 'trans.that you can use to feature listings' | trans }}
                     </div>
                 {% endif %}

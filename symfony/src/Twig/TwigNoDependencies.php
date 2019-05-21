@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Twig;
 
 use App\Helper\Str;
+use App\System\Localization\AppNumberFormatter;
 use Twig\Extension\RuntimeExtensionInterface;
 
 class TwigNoDependencies implements RuntimeExtensionInterface
@@ -53,14 +54,24 @@ class TwigNoDependencies implements RuntimeExtensionInterface
         return 'trans.No';
     }
 
-    public function moneyAsFloat(int $value): float
+    public function moneyPrecise(int $value): string
     {
-        return \round($value / 100, 2);
+        return number_format(
+            \round($value / 100, 2),
+            2,
+            AppNumberFormatter::getDecimalSeparator(),
+            AppNumberFormatter::getThousandSeparator()
+        );
     }
 
     public function thousandsSeparate(int $value): string
     {
-        return number_format($value, 0, ',', ' ');
+        return number_format(
+            $value,
+            0,
+            AppNumberFormatter::getDecimalSeparator(),
+            AppNumberFormatter::getThousandSeparator()
+        );
     }
 
     public function money(float $money): string
@@ -69,26 +80,28 @@ class TwigNoDependencies implements RuntimeExtensionInterface
             return (string) round($money, 2);
         }
 
-        return number_format($money, 0, ',', ' ');
+        return number_format(
+            $money,
+            0,
+            AppNumberFormatter::getDecimalSeparator(),
+            AppNumberFormatter::getThousandSeparator()
+        );
     }
 
-    public function prefixWithPlusPositive(float $number): string
+    public function returnPlusIfPositive(float $number): string
     {
         if ($number > 0) {
-            return '+' . $number;
+            return '+';
         }
 
-        return (string) $number;
+        return '';
     }
 
     public function getCleaveConfig(): array
     {
-        $formatter = new \NumberFormatter(\Locale::getDefault(), \NumberFormatter::DECIMAL);
-        $formatter->setAttribute(\NumberFormatter::GROUPING_USED, true);
-
         return [
-            'delimiter' => $formatter->getSymbol(\NumberFormatter::GROUPING_SEPARATOR_SYMBOL),
-            'numeralDecimalMark' => $formatter->getSymbol(\NumberFormatter::DECIMAL_SEPARATOR_SYMBOL),
+            'delimiter' => AppNumberFormatter::getThousandSeparator(),
+            'numeralDecimalMark' => AppNumberFormatter::getDecimalSeparator(),
         ];
     }
 }

@@ -41,6 +41,7 @@ class SettingsRequiredHealthChecker implements HealthCheckerInterface
     {
         $settingsDto = $this->settingsService->getSettingsDtoWithoutCache();
         $failed = false;
+        $missingSettings = [];
         foreach (\get_class_methods($settingsDto) as $method) {
             if (Arr::inArray($method, ['__construct'])) {
                 continue;
@@ -57,6 +58,7 @@ class SettingsRequiredHealthChecker implements HealthCheckerInterface
             $value = $settingsDto->$method();
             if (Str::emptyTrim($value)) {
                 $failed = true;
+                $missingSettings[] = $method;
             }
         }
 
@@ -65,17 +67,21 @@ class SettingsRequiredHealthChecker implements HealthCheckerInterface
         $settingList = $qb->getQuery()->getResult();
 
         foreach ($settingList as $setting) {
-            if (\in_array($setting->getName(), $this->getExcludedSettings(), true)) {
+            $settingName = $setting->getName();
+            if (\in_array($settingName, $this->getExcludedSettings(), true)) {
                 continue;
             }
 
             if (Str::emptyTrim($setting->getValue())) {
                 $failed = true;
+                $missingSettings[] = $settingName;
             }
         }
 
         if ($failed) {
-            return new HealthCheckResultDto(true, $this->trans->trans('trans.Set all application settings'));
+            return new HealthCheckResultDto(true, $this->trans->trans('trans.Set all application settings. Missing settings: %missing%', [
+                '%missing%' => \join(', ', $missingSettings)
+            ]));
         }
 
         return new HealthCheckResultDto(false);
@@ -93,6 +99,8 @@ class SettingsRequiredHealthChecker implements HealthCheckerInterface
             'getLinkPrivacyPolicy',
             'getLinkRejectionReason',
             'getLogoPath',
+            'getLinkContact',
+            'getLinkAdvertisement',
         ];
     }
 
@@ -108,6 +116,8 @@ class SettingsRequiredHealthChecker implements HealthCheckerInterface
             'linkRejectionReason',
             'emailConfigUrl',
             'logoPath',
+            'linkContact',
+            'linkAdvertisement',
         ];
     }
 }

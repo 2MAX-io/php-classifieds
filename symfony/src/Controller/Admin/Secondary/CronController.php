@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Controller\Admin\Other;
+namespace App\Controller\Admin\Secondary;
 
 use App\Service\Cron\CronService;
 use Doctrine\ORM\EntityManagerInterface;

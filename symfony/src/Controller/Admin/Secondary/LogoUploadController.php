@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Controller\Admin\Other;
+namespace App\Controller\Admin\Secondary;
 
 use App\Controller\Admin\Base\AbstractAdminController;
 use App\Form\Admin\Secondary\AdminLogoUploadType;
@@ -18,6 +18,8 @@ class LogoUploadController extends AbstractAdminController
      */
     public function index(Request $request, LogoUploadService $logoUploadService): Response
     {
+        $this->denyUnlessAdmin();
+
         $form = $this->createForm(AdminLogoUploadType::class);
         $form->handleRequest($request);
 

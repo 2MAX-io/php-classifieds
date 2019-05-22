@@ -6,6 +6,6 @@ namespace App\Service\System\Upgrade;
 
 interface UpgradeApi
 {
-    const CURRENT_VERSION_URL = 'http://classifieds-upgrade.prod.2max.io/version.json';
-    const UPGRADE_URL = 'http://classifieds-upgrade.prod.2max.io/upgrade.json.php';
+    const CURRENT_VERSION_URL = 'http://upgrade-classifieds.prod.2max.io/version.json';
+    const UPGRADE_URL = 'http://upgrade-classifieds.prod.2max.io/upgrade.json.php';
 }

@@ -33,6 +33,11 @@ class FilePath
         return self::getPath(__DIR__ . '/../../../symfony/var/cache');
     }
 
+    public static function getUpgradeDir(): string
+    {
+        return self::getPath(__DIR__ . '/../../../symfony/var/cache/upgrade');
+    }
+
     public static function getProjectDir(): string
     {
         return self::getPath(__DIR__ . '/../../../');

@@ -110,4 +110,12 @@ class Str
 
         return $value;
     }
+
+    public static function toStream(string $string)
+    {
+        $stream = fopen('php://memory','r+');
+        fwrite($stream, $string);
+        rewind($stream);
+        return $stream;
+    }
 }

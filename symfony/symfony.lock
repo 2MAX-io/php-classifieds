@@ -114,6 +114,12 @@
     "giggsey/locale": {
         "version": "1.7.1"
     },
+    "guzzlehttp/guzzle": {
+        "version": "6.3.3"
+    },
+    "guzzlehttp/promises": {
+        "version": "v1.3.1"
+    },
     "guzzlehttp/psr7": {
         "version": "1.5.2"
     },

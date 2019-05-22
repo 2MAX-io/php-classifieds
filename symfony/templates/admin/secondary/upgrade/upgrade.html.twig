@@ -6,12 +6,31 @@
     <div class="container mt-5">
         <h1>{{ 'trans.Upgrade' | trans }}</h1>
 
-        <div class="alert alert-warning">{{ 'trans.It is recommended to create a backup before this operation' | trans }}</div>
+        {% if toUpgrade %}
+            <div class="alert alert-info">{{ 'trans.New version available, you can upgrade now' | trans }}</div>
+        {% endif %}
 
-        <a
-                href="{{ path('app_admin_upgrade_execute') }}"
-                class="btn btn-primary"
-                onclick="return confirm('{{ 'trans.Perform upgrade?' | trans }} {{ 'trans.It is recommended to create a backup before this operation' | trans }}')"
-        >{{ 'trans.Execute upgrade' | trans }}</a>
+        <table class="table table-responsive-sm">
+            <tr>
+                <td>{{ 'trans.Newest version' | trans }}</td>
+                <td>{{ version.version }}</td>
+                <td>{{ version.date }}</td>
+            </tr>
+            <tr>
+                <td>{{ 'trans.Current version' | trans }}</td>
+                <td>{{ currentVersion.version }}</td>
+                <td>{{ currentVersion.date }}</td>
+            </tr>
+        </table>
+
+        {% if toUpgrade %}
+            <div class="alert alert-warning">{{ 'trans.It is recommended to create a backup before this operation' | trans }}</div>
+
+            <a
+                    href="{{ path('app_admin_upgrade_execute') }}"
+                    class="btn btn-primary"
+                    onclick="return confirm('{{ 'trans.Perform upgrade?' | trans }} {{ 'trans.It is recommended to create a backup before this operation' | trans }}')"
+            >{{ 'trans.Execute upgrade' | trans }}</a>
+        {% endif %}
     </div>
 {% endblock %}

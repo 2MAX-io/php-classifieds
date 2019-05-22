@@ -71,6 +71,9 @@ trans:
 
   It is recommended to create a backup before this operation: 'It is recommended to create a backup before this operation'
   Used technologies and Services: 'Used technologies and Services'
+  Upgrade: 'Upgrade'
+  Perform upgrade?: 'Perform upgrade?'
+  Execute upgrade: 'Execute upgrade'
 
 trans.customFieldType.select: Select field
 trans.customFieldType.year_range: Field with year
@@ -503,7 +506,7 @@ trans.Listing: Listing
 'trans.used in payment gateway as description of what has been bought, ie on receipt': 'used in payment gateway as description of what has been bought, ie on receipt'
 'trans.Execute action on filtered listings': 'Execute action on filtered listings'
 trans.IMPORTANT!: IMPORTANT!
-'trans.It is recommended that before running this action, you create restolable backup of database': 'It is recommended that before running this action, you create restolable backup of database'
+'trans.It is recommended that before running this action, to create restolable backup of database': 'It is recommended that before running this action, to create restolable backup of database'
 'trans.Also it is recommended to run this action on test environment, that is copy of live service, before running it on live service': 'Also it is recommended to run this action on test environment, that is copy of live service, before running it on live service'
 'trans.There is no way of undoing changes made by this action, except of restoring backup': 'There is no way of undoing changes made by this action, except of restoring backup'
 'trans.Make sure you execute action on correctly filtered listings': 'Make sure you execute action on correctly filtered listings'

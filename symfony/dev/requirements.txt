@@ -1,0 +1,5 @@
+PHP 7.3
+
+separate database, script do not support prefixes
+
+crontab

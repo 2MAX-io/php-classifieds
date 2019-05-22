@@ -315,3 +315,26 @@ apache2 " grep expires
 apache2 | grep expires
 a2enmod expires
 composer dump-autoload -a -d symfony
+php symfony/bin/console doctrine:schema:update --force
+php symfony/bin/console doctrine:schema:update --force
+php symfony/bin/console doctrine:schema:update --force
+php symfony/bin/console list doctrine
+php symfony/bin/console 
+php symfony/bin/console 
+php symfony/bin/console doctrine:ensure-production-settings --env=prod
+php symfony/bin/console list doctrine
+php symfony/bin/console doctrine:database:create --help
+php symfony/bin/console list doctrine
+php symfony/bin/console doctrine:schema:create --help
+php symfony/bin/console doctrine:schema:create --dump-sql
+ls
+ls
+ls
+ls
+ls
+php symfony/bin/console doctrine:schema:create --dump-sql > install_MM8tHbrn/_schema.sql
+php symfony/bin/console doctrine:schema:create --dump-sql > install_MM8tHbrn/data/_schema.sql
+php symfony/bin/console doctrine:schema:create --dump-sql 
+php symfony/bin/console doctrine:schema:create --help
+php symfony/bin/console doctrine:schema:create --dump-sql --no-debug
+php symfony/bin/console doctrine:schema:create --dump-sql 

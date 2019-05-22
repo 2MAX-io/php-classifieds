@@ -530,7 +530,7 @@ trans.listings: listings
 'trans.Configuration url for sending emails': 'Configuration url for sending emails'
 'trans.Must match email from which you send messages': 'Must match email from which you send messages'
 'trans.examples: smtp://mail.host.com:465?encryption=ssl&auth_mode=plain&username=login@mail.com&password=password': 'examples: smtp://mail.host.com:465?encryption=ssl&auth_mode=plain&username=login@mail.com&password=password'
-'trans.Set all application settings': 'Set all application settings'
+'trans.Set all application settings. Missing settings: %missing%': 'Set all application settings. Missing settings: %missing%'
 'trans.Some links to pages in settings are not set or disabled': 'Some links to pages in settings are not set or disabled'
 trans.Administrators: Administrators
 'trans.Edit Administrator': 'Edit Administrator'

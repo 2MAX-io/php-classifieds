@@ -485,7 +485,7 @@ trans:
   'Configuration url for sending emails': 'Url z konfiguracją do wysyłania emaili'
   'Must match email from which you send messages': 'Musi pasować do emaila z którego wysyłasz wiadomości '
   'examples: smtp://mail.host.com:465?encryption=ssl&auth_mode=plain&username=login@mail.com&password=password': 'przykłady: smtp://mail.host.com:465?encryption=ssl&auth_mode=plain&username=login@mail.com&password=password'
-  'Set all application settings': 'Ustaw wszystkie ustawienia aplikacji'
+  'Set all application settings. Missing settings: %missing%': 'Ustaw wszystkie ustawienia aplikacji. Brakujące ustawienia: %missing%'
   Some links to pages in settings are not set or disabled: 'Niektóre linki do podstron w ustawieniach nie są ustawione lub są wyłączone'
   Administrators: 'Administratorzy'
   Edit Administrator: 'Edytuj Administratora'

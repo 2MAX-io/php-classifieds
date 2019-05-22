@@ -25,3 +25,5 @@ time mysql classifieds  < /sql/ogl_2019-05-06_183437_new.sql
 time mysqldump classifieds listing listing_file listing_view user zzzz_listing_police_log > /sql/test.sql
 time mysql classifieds  < /sql/test.sql 
 time mysql  --max_allowed_packet=1G classifieds  < /sql/test.sql 
+time mysql classifieds  -e "CREATE DATABASE dev_test"
+time mysql classifieds  < /sql/ogl_2019-05-22_051610_new.sql

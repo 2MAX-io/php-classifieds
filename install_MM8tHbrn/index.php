@@ -14,7 +14,7 @@ try {
     loadSql(__DIR__ . '/data/_schema.sql');
     loadSql(__DIR__ . '/data/_required_data.sql');
     loadSql(__DIR__ . '/data/settings.sql');
-    loadSql(__DIR__ . '/data/categories.sql');
+    loadSql(__DIR__ . '/data/example/categories.sql');
 } catch (\Throwable $e) {
     $pdo->rollBack();
     throw $e;

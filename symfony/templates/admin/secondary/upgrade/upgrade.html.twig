@@ -10,16 +10,22 @@
             <div class="alert alert-info">{{ 'trans.New version available, you can upgrade now' | trans }}</div>
         {% endif %}
 
+        {% if latestVersion is empty %}
+            <div class="alert alert-danger">{{ 'trans.Failed to get latest version. Try again later.' | trans }}</div>
+        {% endif %}
+
         <table class="table table-responsive-sm">
+            {% if latestVersion is not empty %}
             <tr>
-                <td>{{ 'trans.Newest version' | trans }}</td>
-                <td>{{ version.version }}</td>
-                <td>{{ version.date }}</td>
+                <td>{{ 'trans.Latest version' | trans }}</td>
+                <td>{{ latestVersion.version }}</td>
+                <td>{{ latestVersion.date }}</td>
             </tr>
+            {% endif %}
             <tr>
-                <td>{{ 'trans.Current version' | trans }}</td>
-                <td>{{ currentVersion.version }}</td>
-                <td>{{ currentVersion.date }}</td>
+                <td>{{ 'trans.Installed version' | trans }}</td>
+                <td>{{ installedVersion.version }}</td>
+                <td>{{ installedVersion.date }}</td>
             </tr>
         </table>
 

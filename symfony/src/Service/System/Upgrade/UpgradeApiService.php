@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace App\Service\System\Upgrade;
 
 use App\Helper\Json;
+use App\Helper\LoggerException;
 use App\Helper\Str;
-use App\Service\System\Upgrade\Dto\NewestVersionDto;
-use App\Service\System\Upgrade\Dto\UpgradeResponseDto;
+use App\Service\System\Upgrade\Dto\LatestVersionDto;
 use App\Version;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Request;
@@ -28,7 +28,7 @@ class UpgradeApiService
         $this->logger = $logger;
     }
 
-    public function getVersion(): ?NewestVersionDto
+    public function getLatestVersion(): ?LatestVersionDto
     {
         try {
             $client = new Client([
@@ -42,16 +42,28 @@ class UpgradeApiService
             $response = $client->send($request);
 
             if ($response->getStatusCode() === Response::HTTP_OK) {
-                $responseArr = Json::decodeToArray($response->getBody()->getContents());
+                $responseBody = $response->getBody()->getContents();
+                $signatureNormal = $response->getHeader(UpgradeApi::HEADER_SIGNATURE_BODY_NORMAL_SECURITY)[0] ?? null;
 
-                $responseArr['version'];
+                if (null === $signatureNormal) {
+                    $this->logger->error('missing signature', ['$responseBody' => $responseBody]);
 
-                $versionDto = new NewestVersionDto((int) ($responseArr['version']), (string) ($responseArr['date']));
+                    return null;
+                }
+
+                if (!VerifyNormalSecurity::authenticate($responseBody, $signatureNormal)) {
+                    $this->logger->error('invalid signature', ['$responseBody' => $responseBody]);
+
+                    return null;
+                }
+
+                $responseArr = Json::decodeToArray($responseBody);
+                $versionDto = new LatestVersionDto((int) ($responseArr['version']), (string) ($responseArr['date']));
 
                 return $versionDto;
             }
         } catch (\Throwable $e) {
-            $this->logger->error('failed to get current version from server', [$e->getMessage(), $e]);
+            $this->logger->error('failed to get current version from server', LoggerException::flatten($e));
         }
 
         return null;
@@ -75,8 +87,20 @@ class UpgradeApiService
             $request->withBody(new Stream(Str::toStream(Json::jsonEncode($jsonArray))));
             $response = $client->send($request);
 
-            $content = $response->getBody()->getContents();
-            return Json::decodeToArray($content);
+            $responseBody = $response->getBody()->getContents();
+            $signatureNormal = $response->getHeader(UpgradeApi::HEADER_SIGNATURE_BODY_NORMAL_SECURITY)[0] ?? null;
+            if (null === $signatureNormal) {
+                $this->logger->error('missing signature', ['$responseBody' => $responseBody]);
+
+                return null;
+            }
+            if (!VerifyNormalSecurity::authenticate($responseBody, $signatureNormal)) {
+                $this->logger->error('invalid signature', ['$responseBody' => $responseBody]);
+
+                return null;
+            }
+
+            return Json::decodeToArray($responseBody);
         } catch (\Throwable $e) {
             $this->logger->error('failed when getting upgrade', [$e->getMessage(), $e]);
         }

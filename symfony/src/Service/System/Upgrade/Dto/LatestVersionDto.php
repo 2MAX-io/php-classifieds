@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Service\System\Upgrade\Dto;
 
-class NewestVersionDto
+class LatestVersionDto
 {
     /**
      * @var int

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller\Admin\Secondary;
 
 use App\Controller\Admin\Base\AbstractAdminController;
+use App\Exception\UserVisibleMessageException;
 use App\Service\System\Upgrade\UpgradeApiService;
 use App\Service\System\Upgrade\UpgradeService;
 use App\Version;
@@ -20,12 +21,12 @@ class UpgradeController extends AbstractAdminController
     {
         $this->denyUnlessAdmin();
 
-        $newestVersionDto = $upgradeApi->getVersion();
+        $latestVersionDto = $upgradeApi->getLatestVersion();
 
         return $this->render('admin/secondary/upgrade/upgrade.html.twig', [
-            'version' => $newestVersionDto,
-            'currentVersion' => new Version(),
-            'toUpgrade' => true,
+            'latestVersion' => $latestVersionDto,
+            'installedVersion' => new Version(),
+            'toUpgrade' => $latestVersionDto && true,
         ]);
     }
 
@@ -37,6 +38,10 @@ class UpgradeController extends AbstractAdminController
         $this->denyUnlessAdmin();
 
         $upgradeArr = $upgradeApiService->getUpgrade();
+
+        if ($upgradeArr === null) {
+            throw new UserVisibleMessageException('trans.Upgrade not started');
+        }
 
         $upgradeService->upgrade($upgradeArr);
 

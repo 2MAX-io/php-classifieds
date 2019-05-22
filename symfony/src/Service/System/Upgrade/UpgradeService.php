@@ -6,6 +6,8 @@ namespace App\Service\System\Upgrade;
 
 use App\Helper\FilePath;
 use App\Helper\LoggerException;
+use App\Helper\Random;
+use App\Helper\Str;
 use Psr\Log\LoggerInterface;
 
 class UpgradeService
@@ -42,7 +44,7 @@ class UpgradeService
         }
 
         $decodedContent = \base64_decode($content);
-        $path = FilePath::getUpgradeDir() . '/' . \basename('upgrade_' . (int) $id . '_' . \md5($decodedContent) . '.php');
+        $path = FilePath::getUpgradeDir() . '/' . \basename('upgrade_' . (int) $id . '_' . \md5($decodedContent) . '_' . date('Y_m_d__His') . '_' . Random::string(32) . '.php');
         \file_put_contents($path, $decodedContent);
 
         try {
@@ -55,7 +57,7 @@ class UpgradeService
             ]);
             throw $e;
         } finally {
-            \unlink($path);
+//            \unlink($path);
         }
     }
 }

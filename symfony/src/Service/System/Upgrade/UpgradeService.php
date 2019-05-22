@@ -19,8 +19,15 @@ class UpgradeService
                     \mkdir(FilePath::getUpgradeDir(), 0775);
                 }
 
-                $path = FilePath::getUpgradeDir() . '/upgrade.txt';
-                \file_put_contents($path, $upgradeItem['content']);
+                $path = FilePath::getUpgradeDir() . '/upgrade.php';
+                \file_put_contents($path, \base64_decode($upgradeItem['content']));
+
+                try {
+                    $run = include $path;
+                    $run();
+                } catch (\Throwable $e) {
+                    throw $e;
+                }
             }
         }
     }

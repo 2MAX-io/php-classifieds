@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace App\Service\System\Upgrade;
 
+use App\Exception\UserVisibleMessageException;
 use App\Helper\FilePath;
 use App\Helper\LoggerException;
 use App\Helper\Random;
 use App\Service\System\Signature\SignatureVerifyHighSecurity;
+use App\System\EnvironmentService;
 use Psr\Log\LoggerInterface;
 
 class UpgradeService
@@ -17,13 +19,23 @@ class UpgradeService
      */
     private $logger;
 
-    public function __construct(LoggerInterface $logger)
+    /**
+     * @var EnvironmentService
+     */
+    private $environmentService;
+
+    public function __construct(EnvironmentService $environmentService, LoggerInterface $logger)
     {
         $this->logger = $logger;
+        $this->environmentService = $environmentService;
     }
 
     public function upgrade(array $upgradeArr): void
     {
+        if ($this->environmentService->getUpgradeDisabled()) {
+            throw new UserVisibleMessageException('trans.The update option has been manually disabled in configuration. If you plan to enable it, make sure that you have not made any changes to the application code.');
+        }
+
         foreach ($upgradeArr['upgradeList'] as $upgradeItem) {
             $type = $upgradeItem['type'];
 
@@ -35,6 +47,10 @@ class UpgradeService
 
     public function runFileUpgrade(int $id, string $content, string $signature): void
     {
+        if ($this->environmentService->getUpgradeDisabled()) {
+            throw new UserVisibleMessageException('trans.The update option has been manually disabled in configuration. If you plan to enable it, make sure that you have not made any changes to the application code.');
+        }
+
         if (!SignatureVerifyHighSecurity::authenticate($content, $signature)) {
             return;
         }

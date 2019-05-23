@@ -8,6 +8,10 @@ parameters:
     locale: '%env(resolve:APP_LOCALE)%'
     env(APP_TIMEZONE): 'UTC'
     timezone: '%env(resolve:APP_TIMEZONE)%'
+    env(APP_UPGRADE_DISABLED): false
+    upgrade_disabled: '%env(resolve:APP_UPGRADE_DISABLED)%'
+    env(APP_UPGRADE_AVAILABLE_CHECK_DISABLED): false
+    upgrade_available_check_disabled: '%env(resolve:APP_UPGRADE_AVAILABLE_CHECK_DISABLED)%'
 
 services:
     # default configuration for services in *this* file

@@ -74,6 +74,10 @@ trans:
   Upgrade: 'Upgrade'
   Perform upgrade?: 'Perform upgrade?'
   Execute upgrade: 'Execute upgrade'
+  Upgrade not started: 'Upgrade not started'
+  Upgrade option has been disabled manually in configuration. Before enabling make sure there are no custom changes applied.: 'Upgrade option has been disabled manually in configuration. Before enabling make sure there are no custom changes applied.'
+  New version has been released. We recommend updating to the latest version.: 'New version has been released. We recommend updating to the latest version.'
+  New version available, you can upgrade now: 'New version available, you can upgrade now'
 
 trans.customFieldType.select: Select field
 trans.customFieldType.year_range: Field with year

@@ -505,3 +505,7 @@ trans:
   Upgrade: 'Aktualizacja'
   Perform upgrade?: 'Wykonać aktualizacje?'
   Execute upgrade?: 'Wykonaj aktualizacje'
+  The update option has been manually disabled in configuration. If you plan to enable it, make sure that you have not made any changes to the application code.: 'Opcja aktualizacji została ręcznie wyłączona w konfiguracji. Jeżeli planujesz jej włączenie, upewnij się że nie wprowadzono żadnych własnych zmian w kodzie aplikacji.'
+  New version has been released. We recommend updating to the latest version.: 'Została wydana nowa wersja. Rekomendujemy aktualizację do najnowszego wydania.'
+  New version available, you can upgrade now: 'Dostępna jest nowa wersja, możesz zaktualizować'
+  Upgrade not started: 'Aktualizacja nie została rozpoczęta'

@@ -9,7 +9,7 @@ use App\Entity\ListingView;
 use App\Entity\User;
 use App\Service\Admin\Listing\ListingActivateListService;
 use App\Service\Listing\ListingPublicDisplayService;
-use App\System\Cache\AppCacheInterface;
+use App\System\Cache\AppCacheEnum;
 use Carbon\Carbon;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\SimpleCache\CacheInterface;
@@ -82,7 +82,7 @@ class AdminStatsService
      */
     public function getAllListingsCount(): int
     {
-        $cacheName = AppCacheInterface::ADMIN_STATS_LISTINGS_COUNT;
+        $cacheName = AppCacheEnum::ADMIN_STATS_LISTINGS_COUNT;
         if ($this->cache->has($cacheName)) {
             return $this->cache->get($cacheName);
         }
@@ -98,7 +98,7 @@ class AdminStatsService
 
     public function getUserCount(): int
     {
-        $cacheName = AppCacheInterface::ADMIN_STATS_USERS_COUNT;
+        $cacheName = AppCacheEnum::ADMIN_STATS_USERS_COUNT;
         if ($this->cache->has($cacheName)) {
             return $this->cache->get($cacheName);
         }
@@ -125,7 +125,7 @@ class AdminStatsService
 
     public function getListingViewsCount(): int
     {
-        $cacheName = AppCacheInterface::ADMIN_STATS_VIEWS_COUNT;
+        $cacheName = AppCacheEnum::ADMIN_STATS_VIEWS_COUNT;
         if ($this->cache->has($cacheName)) {
             return $this->cache->get($cacheName);
         }

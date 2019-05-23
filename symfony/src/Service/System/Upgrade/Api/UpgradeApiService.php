@@ -7,6 +7,7 @@ namespace App\Service\System\Upgrade\Api;
 use App\Helper\Json;
 use App\Helper\ExceptionHelper;
 use App\Helper\Str;
+use App\Service\System\License\LicenseService;
 use App\Service\System\Signature\SignatureVerifyNormalSecurity;
 use App\Service\System\Upgrade\Base\UpgradeApi;
 use App\Service\System\Upgrade\Dto\LatestVersionDto;
@@ -32,10 +33,16 @@ class UpgradeApiService
      */
     private $arrayCache;
 
-    public function __construct(ArrayCache $arrayCache, LoggerInterface $logger)
+    /**
+     * @var LicenseService
+     */
+    private $licenseService;
+
+    public function __construct(LicenseService $licenseService, ArrayCache $arrayCache, LoggerInterface $logger)
     {
         $this->logger = $logger;
         $this->arrayCache = $arrayCache;
+        $this->licenseService = $licenseService;
     }
 
     public function getLatestVersion(): ?LatestVersionDto
@@ -96,8 +103,8 @@ class UpgradeApiService
     {
         try {
             $jsonArray = [
-                'fromVersion' => Version::getVersion(),
-                'url' => $_SERVER['HTTP_REFERER'] ?? '',
+                'forVersion' => Version::getVersion(),
+                'licenseUrl' => $this->licenseService->getCurrentUrlOfLicense(),
             ];
 
             $client = new Client([

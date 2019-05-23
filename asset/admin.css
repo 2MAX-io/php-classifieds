@@ -103,18 +103,6 @@
     text-transform: uppercase;
 }
 
-.sidebar-bottom {
-    position: absolute;
-    bottom: 2rem;
-    width: 100%;
-}
-
-@media (max-width: 992px) {
-    .sidebar-bottom {
-        position: unset;
-    }
-}
-
 .sortable-ghost, .sortable-chosen {
     background: #f2fbff;
     border: 2px dashed #b6bcbf;

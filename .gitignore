@@ -20,3 +20,4 @@
 /symfony/node_modules/
 /static/logo/
 /static/category/
+/test*.php

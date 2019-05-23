@@ -44,6 +44,6 @@ class UpgradeController extends AbstractAdminController
 
         $upgradeService->upgrade($upgradeArr);
 
-        return $this->render('admin/secondary/upgrade/upgrade.html.twig', []);
+        return $this->render('admin/secondary/upgrade/upgrade_executed.html.twig', []);
     }
 }

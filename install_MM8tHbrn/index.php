@@ -4,6 +4,11 @@ declare(strict_types=1);
 
 use App\System\Filesystem\FilesystemChecker;
 
+if (version_compare(PHP_VERSION, '7.3', '<')) {
+    echo 'This app requires PHP 7.3';
+    exit;
+}
+
 require dirname(__DIR__) . '/symfony/vendor/autoload.php';
 
 if (count(FilesystemChecker::notWritableFileList())) {
@@ -21,12 +26,17 @@ if (count(FilesystemChecker::writingFileFailedList())) {
     exit;
 }
 
-$pdo = new \PDO('mysql:host=mysql;dbname=dev_test', 'root', '', [
+$dbName = 'dev_test';
+$pdo = new \PDO("mysql:host=mysql;dbname=$dbName", 'root', '', [
     \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
     \PDO::ATTR_EMULATE_PREPARES => true,
     \PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8',
 ]);
 
+if (countTables($dbName) > 0) {
+    echo 'Database is not empty, clear it first';
+    exit;
+}
 
 $pdo->beginTransaction();
 try {
@@ -42,11 +52,21 @@ try {
 function loadSql(string $filePath) {
     global $pdo;
     $sqlFileContent = file_get_contents($filePath);
-    $sqlList = explode("\n", $sqlFileContent);
 
     $stmt = $pdo->query($sqlFileContent);
 
     while ($stmt->nextRowset()) {
         continue;
     }
+}
+
+function countTables(string $dbName): int {
+    global $pdo;
+
+    $stmt = $pdo->prepare(
+    /** @lang MySQL */ 'SELECT count(1) FROM information_schema.tables where table_schema=:dbName;'
+    );
+    $stmt->bindValue('dbName', $dbName);
+    $stmt->execute();
+    return (int) $stmt->fetch();
 }

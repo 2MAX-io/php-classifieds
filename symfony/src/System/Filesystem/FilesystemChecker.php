@@ -42,7 +42,7 @@ class FilesystemChecker
         $patchList = [
             FilePath::getProjectDir() . '/symfony/var/cache/prod_test',
             FilePath::getProjectDir() . '/symfony/var/cache/prod/test',
-            FilePath::getProjectDir() . '/symfony/var/cache/log/test',
+            FilePath::getProjectDir() . '/symfony/var/log/test',
             FilePath::getProjectDir() . '/static/cache/test',
             FilePath::getProjectDir() . '/static/cache/listing/test',
             FilePath::getProjectDir() . '/static/listing/test',
@@ -62,11 +62,11 @@ class FilesystemChecker
     {
         $return = [];
         $patchList = [
-            FilePath::getProjectDir() . '/static/cache/',
-            FilePath::getProjectDir() . '/static/category/',
-            FilePath::getProjectDir() . '/static/listing/',
+            FilePath::getProjectDir() . '/static/cache',
+            FilePath::getProjectDir() . '/static/category',
+            FilePath::getProjectDir() . '/static/listing',
             FilePath::getProjectDir() . '/static/logo/',
-            FilePath::getProjectDir() . '/static/resized/',
+            FilePath::getProjectDir() . '/static/resized',
             FilePath::getProjectDir() . '/symfony/var/cache',
             FilePath::getProjectDir() . '/symfony/var/cache/upgrade',
             FilePath::getProjectDir() . '/symfony/var/cache/prod',
@@ -96,7 +96,9 @@ class FilesystemChecker
         } catch (\Throwable $e) {
             return false;
         } finally {
-            \unlink($testFilePath);
+            if (\file_exists($testFilePath)) {
+                \unlink($testFilePath);
+            }
         }
 
         return true;
@@ -114,7 +116,9 @@ class FilesystemChecker
         } catch (\Throwable $e) {
             return false;
         } finally {
-            \rmdir($path);
+            if (\file_exists($path)) {
+                \rmdir($path);
+            }
         }
 
         return true;

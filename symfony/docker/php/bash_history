@@ -338,3 +338,9 @@ php symfony/bin/console doctrine:schema:create --dump-sql
 php symfony/bin/console doctrine:schema:create --help
 php symfony/bin/console doctrine:schema:create --dump-sql --no-debug
 php symfony/bin/console doctrine:schema:create --dump-sql 
+php symfony/bin/console doctrine:schema:create --dump-sql 
+composer require-dev -d symfony symfony/requirements-checker
+composer require -dev -d symfony symfony/requirements-checker
+composer require --help
+composer require --dev -d symfony symfony/requirements-checker
+composer remove --dev -d symfony symfony/requirements-checker

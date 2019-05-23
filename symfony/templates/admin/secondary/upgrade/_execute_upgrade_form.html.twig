@@ -1,0 +1,9 @@
+<form
+        method="post"
+        action="{{ path('app_admin_upgrade_execute') }}"
+        onclick="return confirm('{{ 'trans.Perform upgrade?' | trans }} {{ 'trans.It is recommended to create a backup before this operation' | trans }}')"
+        class="d-inline"
+>
+    <input type="hidden" name="_token" value="{{ csrf_token('adminExecuteUpgrade') }}">
+    <button class="btn btn-primary">{{ 'trans.Execute upgrade' | trans }}</button>
+</form>

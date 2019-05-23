@@ -32,11 +32,7 @@
         {% if canUpgrade %}
             <div class="alert alert-warning">{{ 'trans.It is recommended to create a backup before this operation' | trans }}</div>
 
-            <a
-                    href="{{ path('app_admin_upgrade_execute') }}"
-                    class="btn btn-primary"
-                    onclick="return confirm('{{ 'trans.Perform upgrade?' | trans }} {{ 'trans.It is recommended to create a backup before this operation' | trans }}')"
-            >{{ 'trans.Execute upgrade' | trans }}</a>
+            {{ include('admin/secondary/upgrade/_execute_upgrade_form.html.twig') }}
         {% endif %}
     </div>
 {% endblock %}

@@ -13,6 +13,7 @@ use App\System\Cache\AppCacheEnum;
 use App\System\EnvironmentService;
 use App\Version;
 use Psr\SimpleCache\CacheInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -48,10 +49,17 @@ class UpgradeController extends AbstractAdminController
     /**
      * @Route("/admin/red5/upgrade/execute", name="app_admin_upgrade_execute")
      */
-    public function upgradeExecute(UpgradeService $upgradeService, UpgradeApiService $upgradeApiService): Response
-    {
+    public function upgradeExecute(
+        Request $request,
+        UpgradeService $upgradeService,
+        UpgradeApiService $upgradeApiService
+    ): Response {
         $this->denyUnlessAdmin();
         $this->blockIfUpgradeDisabled();
+
+        if (!$this->isCsrfTokenValid('adminExecuteUpgrade', $request->request->get('_token'))) {
+            return $this->redirectToRoute('app_admin_upgrade');
+        }
 
         $upgradeArr = $upgradeApiService->getUpgradeList();
 

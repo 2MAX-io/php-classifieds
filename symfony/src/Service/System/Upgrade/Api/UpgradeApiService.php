@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Service\System\Upgrade\Api;
 
 use App\Helper\Json;
-use App\Helper\LoggerException;
+use App\Helper\ExceptionHelper;
 use App\Helper\Str;
 use App\Service\System\Signature\SignatureVerifyNormalSecurity;
 use App\Service\System\Upgrade\Base\UpgradeApi;
@@ -86,7 +86,7 @@ class UpgradeApiService
                 return $versionDto;
             }
         } catch (\Throwable $e) {
-            $this->logger->error('failed to get current version from server', LoggerException::flatten($e));
+            $this->logger->error('failed to get current version from server', ExceptionHelper::flatten($e));
         }
 
         return null;
@@ -125,7 +125,7 @@ class UpgradeApiService
 
             return Json::decodeToArray($responseBody);
         } catch (\Throwable $e) {
-            $this->logger->error('failed when getting upgrade', [$e->getMessage(), $e]);
+            $this->logger->error('failed when getting upgrade', ExceptionHelper::flatten($e));
         }
 
         return null;

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Exception\Controller;
 
 use App\Exception\UserVisibleMessageException;
+use App\Helper\ExceptionHelper;
 use App\Helper\Str;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\TwigBundle\Controller\ExceptionController as BaseExceptionController;
@@ -91,7 +92,7 @@ class ExceptionController extends BaseExceptionController
                     return $this->trans->trans($message);
                 }
             } catch (\Throwable $e) {
-                $this->logger->error($e->getMessage(), [$e]);
+                $this->logger->error($e->getMessage(), ExceptionHelper::flatten($e));
             }
 
             return $message;

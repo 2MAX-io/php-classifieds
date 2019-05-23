@@ -6,7 +6,7 @@ namespace App\Service\System\Upgrade;
 
 use App\Exception\UserVisibleMessageException;
 use App\Helper\FilePath;
-use App\Helper\LoggerException;
+use App\Helper\ExceptionHelper;
 use App\Helper\Random;
 use App\Service\System\Signature\SignatureVerifyHighSecurity;
 use App\System\EnvironmentService;
@@ -75,7 +75,7 @@ class UpgradeService
             $run = include $path;
             $run();
         } catch (\Throwable $e) {
-            $this->logger->alert('error during upgrade', LoggerException::flatten($e));
+            $this->logger->alert('error during upgrade', ExceptionHelper::flatten($e));
             $this->logger->alert('error during upgrade, content', [
                 'run_content' => $content,
             ]);

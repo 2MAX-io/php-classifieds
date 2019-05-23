@@ -132,12 +132,6 @@
                         </li>
                     </ul>
 
-                    <div class="mt-4">
-                        <a href="{{ path('app_logout') }}" class="btn btn-dark w-100">
-                            {{ 'trans.Logout' | trans }}
-                        </a>
-                    </div>
-
                     <!-- external links -->
                     <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
                         <span>{{ 'trans.External links' | trans }}</span>
@@ -160,6 +154,12 @@
                             </li>
                         {% endif %}
                     </ul>
+
+                    <div class="mt-5">
+                        <a href="{{ path('app_logout') }}" class="btn btn-dark w-100">
+                            {{ 'trans.Logout' | trans }}
+                        </a>
+                    </div>
                 </div>
             </nav>
         {% endif %}

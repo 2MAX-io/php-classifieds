@@ -509,3 +509,5 @@ trans:
   New version has been released. We recommend updating to the latest version.: 'Została wydana nowa wersja. Rekomendujemy aktualizację do najnowszego wydania.'
   New version available, you can upgrade now: 'Dostępna jest nowa wersja, możesz zaktualizować'
   Upgrade not started: 'Aktualizacja nie została rozpoczęta'
+  Latest version: 'Najnowsza wersja'
+  Installed version: 'Zainstalowana wersja'

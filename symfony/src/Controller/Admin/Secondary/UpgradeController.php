@@ -6,8 +6,9 @@ namespace App\Controller\Admin\Secondary;
 
 use App\Controller\Admin\Base\AbstractAdminController;
 use App\Exception\UserVisibleMessageException;
-use App\Service\System\Upgrade\UpgradeApiService;
+use App\Service\System\Upgrade\Api\UpgradeApiService;
 use App\Service\System\Upgrade\UpgradeService;
+use App\Service\System\Upgrade\VersionCheckService;
 use App\Version;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -17,16 +18,14 @@ class UpgradeController extends AbstractAdminController
     /**
      * @Route("/admin/red5/upgrade", name="app_admin_upgrade")
      */
-    public function upgrade(UpgradeApiService $upgradeApi): Response
+    public function upgrade(VersionCheckService $versionCheckService): Response
     {
         $this->denyUnlessAdmin();
 
-        $latestVersionDto = $upgradeApi->getLatestVersion();
-
         return $this->render('admin/secondary/upgrade/upgrade.html.twig', [
-            'latestVersion' => $latestVersionDto,
+            'latestVersion' => $versionCheckService->getLatestVersion(),
             'installedVersion' => new Version(),
-            'toUpgrade' => $latestVersionDto && true,
+            'canUpgrade' => $versionCheckService->canUpgrade(),
         ]);
     }
 
@@ -37,7 +36,7 @@ class UpgradeController extends AbstractAdminController
     {
         $this->denyUnlessAdmin();
 
-        $upgradeArr = $upgradeApiService->getUpgrade();
+        $upgradeArr = $upgradeApiService->getUpgradeList();
 
         if ($upgradeArr === null) {
             throw new UserVisibleMessageException('trans.Upgrade not started');

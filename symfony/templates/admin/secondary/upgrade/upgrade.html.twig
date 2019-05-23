@@ -6,7 +6,7 @@
     <div class="container mt-5">
         <h1>{{ 'trans.Upgrade' | trans }}</h1>
 
-        {% if toUpgrade %}
+        {% if canUpgrade %}
             <div class="alert alert-info">{{ 'trans.New version available, you can upgrade now' | trans }}</div>
         {% endif %}
 
@@ -29,7 +29,7 @@
             </tr>
         </table>
 
-        {% if toUpgrade %}
+        {% if canUpgrade %}
             <div class="alert alert-warning">{{ 'trans.It is recommended to create a backup before this operation' | trans }}</div>
 
             <a

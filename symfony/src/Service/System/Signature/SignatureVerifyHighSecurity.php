@@ -2,13 +2,18 @@
 
 declare(strict_types=1);
 
-namespace App\Service\System\Upgrade;
+namespace App\Service\System\Signature;
 
-class VerifyHighSecurity
+class SignatureVerifyHighSecurity
 {
     public static function authenticate(string $payload, string $signature): bool
     {
-        return 1 === \openssl_verify($payload, \base64_decode($signature), \trim(static::getPublicKey()), OPENSSL_ALGO_SHA256);
+        return 1 === \openssl_verify(
+                $payload,
+                \base64_decode($signature),
+                \trim(static::getPublicKey()),
+                OPENSSL_ALGO_SHA256
+            );
     }
 
     public static function getPublicKey(): string

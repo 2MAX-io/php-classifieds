@@ -2,18 +2,22 @@
 
 declare(strict_types=1);
 
-namespace App\Service\System\Upgrade;
+namespace App\Service\System\Upgrade\Api;
 
 use App\Helper\Json;
 use App\Helper\LoggerException;
 use App\Helper\Str;
+use App\Service\System\Signature\SignatureVerifyNormalSecurity;
+use App\Service\System\Upgrade\Base\UpgradeApi;
 use App\Service\System\Upgrade\Dto\LatestVersionDto;
+use App\System\Cache\RuntimeCacheEnum;
 use App\Version;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Stream;
 use GuzzleHttp\RequestOptions;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\Cache\Simple\ArrayCache;
 use Symfony\Component\HttpFoundation\Response;
 
 class UpgradeApiService
@@ -23,12 +27,31 @@ class UpgradeApiService
      */
     private $logger;
 
-    public function __construct(LoggerInterface $logger)
+    /**
+     * @var ArrayCache
+     */
+    private $arrayCache;
+
+    public function __construct(ArrayCache $arrayCache, LoggerInterface $logger)
     {
         $this->logger = $logger;
+        $this->arrayCache = $arrayCache;
     }
 
     public function getLatestVersion(): ?LatestVersionDto
+    {
+        $cacheName = RuntimeCacheEnum::LATEST_VERSION;
+        if ($this->arrayCache->has($cacheName)) {
+            return $this->arrayCache->get($cacheName);
+        }
+
+        $return = $this->getLatestVersionNoCache();
+        $this->arrayCache->set($cacheName, $return);
+
+        return $return;
+    }
+
+    public function getLatestVersionNoCache(): ?LatestVersionDto
     {
         try {
             $client = new Client([
@@ -37,7 +60,7 @@ class UpgradeApiService
                 RequestOptions::READ_TIMEOUT => 10,
             ]);
 
-            $request = new Request('GET', UpgradeApi::CURRENT_VERSION_URL);
+            $request = new Request('GET', UpgradeApi::LATEST_VERSION_URL);
 
             $response = $client->send($request);
 
@@ -51,7 +74,7 @@ class UpgradeApiService
                     return null;
                 }
 
-                if (!VerifyNormalSecurity::authenticate($responseBody, $signatureNormal)) {
+                if (!SignatureVerifyNormalSecurity::authenticate($responseBody, $signatureNormal)) {
                     $this->logger->error('invalid signature', ['$responseBody' => $responseBody]);
 
                     return null;
@@ -69,7 +92,7 @@ class UpgradeApiService
         return null;
     }
 
-    public function getUpgrade(): ?array
+    public function getUpgradeList(): ?array
     {
         try {
             $jsonArray = [
@@ -83,7 +106,7 @@ class UpgradeApiService
                 RequestOptions::READ_TIMEOUT => 30,
             ]);
 
-            $request = new Request('POST', UpgradeApi::UPGRADE_URL);
+            $request = new Request('POST', UpgradeApi::UPGRADE_LIST_URL);
             $request->withBody(new Stream(Str::toStream(Json::jsonEncode($jsonArray))));
             $response = $client->send($request);
 
@@ -94,7 +117,7 @@ class UpgradeApiService
 
                 return null;
             }
-            if (!VerifyNormalSecurity::authenticate($responseBody, $signatureNormal)) {
+            if (!SignatureVerifyNormalSecurity::authenticate($responseBody, $signatureNormal)) {
                 $this->logger->error('invalid signature', ['$responseBody' => $responseBody]);
 
                 return null;

@@ -7,7 +7,7 @@ namespace App\Service\System\Upgrade;
 use App\Helper\FilePath;
 use App\Helper\LoggerException;
 use App\Helper\Random;
-use App\Helper\Str;
+use App\Service\System\Signature\SignatureVerifyHighSecurity;
 use Psr\Log\LoggerInterface;
 
 class UpgradeService
@@ -28,14 +28,14 @@ class UpgradeService
             $type = $upgradeItem['type'];
 
             if ($type === 'file') {
-                $this->runTypeFile($upgradeItem['id'], $upgradeItem['content'], $upgradeItem['contentSignature']);
+                $this->runFileUpgrade($upgradeItem['id'], $upgradeItem['content'], $upgradeItem['contentSignature']);
             }
         }
     }
 
-    public function runTypeFile(int $id, string $content, string $signature): void
+    public function runFileUpgrade(int $id, string $content, string $signature): void
     {
-        if (!VerifyHighSecurity::authenticate($content, $signature)) {
+        if (!SignatureVerifyHighSecurity::authenticate($content, $signature)) {
             return;
         }
 
@@ -44,7 +44,15 @@ class UpgradeService
         }
 
         $decodedContent = \base64_decode($content);
-        $path = FilePath::getUpgradeDir() . '/' . \basename('upgrade_' . (int) $id . '_' . \md5($decodedContent) . '_' . date('Y_m_d__His') . '_' . Random::string(32) . '.php');
+        $filename = \basename(
+            'upgrade'
+            . '_' . (int) $id
+            . '_' . \md5($decodedContent)
+            . '_' . date('Y_m_d__His')
+            . '_' . Random::string(32)
+            . '.php'
+        );
+        $path = FilePath::getUpgradeDir() . '/' . $filename;
         \file_put_contents($path, $decodedContent);
 
         try {

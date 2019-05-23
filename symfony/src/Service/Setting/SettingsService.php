@@ -7,7 +7,7 @@ namespace App\Service\Setting;
 use App\Entity\Setting;
 use App\Helper\Str;
 use App\Repository\SettingRepository;
-use App\System\Cache\RuntimeCacheInterface;
+use App\System\Cache\RuntimeCacheEnum;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Cache\Simple\ArrayCache;
 use Symfony\Component\PropertyAccess\PropertyAccess;
@@ -81,24 +81,24 @@ class SettingsService
         }
 
         $this->em->flush();
-        $this->cache->delete(RuntimeCacheInterface::SETTINGS_CACHE);
-        $this->arrayCache->delete(RuntimeCacheInterface::SETTINGS_CACHE);
+        $this->cache->delete(RuntimeCacheEnum::SETTINGS);
+        $this->arrayCache->delete(RuntimeCacheEnum::SETTINGS);
     }
 
     public function getSettingsDto(): SettingsDto
     {
-        if ($this->arrayCache->has(RuntimeCacheInterface::SETTINGS_CACHE)) {
-            return $this->arrayCache->get(RuntimeCacheInterface::SETTINGS_CACHE);
+        if ($this->arrayCache->has(RuntimeCacheEnum::SETTINGS)) {
+            return $this->arrayCache->get(RuntimeCacheEnum::SETTINGS);
         }
 
-        if ($this->cache->has(RuntimeCacheInterface::SETTINGS_CACHE)) {
-            return $this->cache->get(RuntimeCacheInterface::SETTINGS_CACHE);
+        if ($this->cache->has(RuntimeCacheEnum::SETTINGS)) {
+            return $this->cache->get(RuntimeCacheEnum::SETTINGS);
         }
 
         $settingsDto = $this->getSettingsDtoWithoutCache();
 
-        $this->arrayCache->set(RuntimeCacheInterface::SETTINGS_CACHE, $settingsDto);
-        $this->cache->set(RuntimeCacheInterface::SETTINGS_CACHE, $settingsDto, 300);
+        $this->arrayCache->set(RuntimeCacheEnum::SETTINGS, $settingsDto);
+        $this->cache->set(RuntimeCacheEnum::SETTINGS, $settingsDto, 300);
 
         return $settingsDto;
     }

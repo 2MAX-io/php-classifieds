@@ -8,6 +8,8 @@
         <div class="float-right">
             <a href="{{ path('app_admin_page_index') }}">{{ 'trans.back to list' | trans }}</a>
 
+            <a href="{{ path('app_page', {'slug': page.slug}) }}" class="btn btn-info">{{ 'trans.Preview' | trans }}</a>
+
             {{ include('admin/page/_delete_form.html.twig') }}
         </div>
 

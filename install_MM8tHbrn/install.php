@@ -4,20 +4,35 @@ declare(strict_types=1);
 
 use App\Helper\FilePath;
 use App\Helper\Random;
+use Webmozart\PathUtil\Path;
+
+ini_set('display_errors', '1');
+error_reporting(-1);
+
+require dirname(__DIR__) . '/symfony/vendor/autoload.php';
+
+$configPath = Path::canonicalize(FilePath::getProjectDir() . '/symfony/.env.local.php');
+if (file_exists(FilePath::getProjectDir() . '/symfony/.env.local.php')) {
+    echo "It seems like app is already installed, if not remove configuration file $configPath";
+    exit;
+}
 
 if (empty($_POST)) {
     echo 'run from index.php file';
     exit;
 }
 
-require dirname(__DIR__) . '/symfony/vendor/autoload.php';
-
-$dbName = 'dev_test';
-$pdo = new \PDO("mysql:host=mysql;dbname=$dbName", 'root', '', [
-    \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
-    \PDO::ATTR_EMULATE_PREPARES => true,
-    \PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8',
-]);
+$dbName = $_POST['db_name'];
+try {
+    $pdo = new \PDO("mysql:host={$_POST['db_host']};port={$_POST['db_port']};dbname={$_POST['db_name']}", $_POST['db_user'], $_POST['db_pass'], [
+        \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
+        \PDO::ATTR_EMULATE_PREPARES => true,
+        \PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8',
+    ]);
+} catch (\Throwable $e) {
+    echo 'Can not connect to database';
+    exit;
+}
 
 if (countTables($dbName) > 0) {
     echo 'Database is not empty, clear it first';

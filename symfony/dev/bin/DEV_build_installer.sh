@@ -13,11 +13,20 @@ rm $INSTALLER_DIR/echo.php
 rm $INSTALLER_DIR/echo.html
 rm $INSTALLER_DIR/redirection_test.html
 rm $INSTALLER_DIR/.gitignore
+rm $INSTALLER_DIR/static/system/category/original_images.zip
 
 mkdir $INSTALLER_DIR/symfony/var/cache
+mkdir $INSTALLER_DIR/symfony/var/cache/upgrade
+mkdir $INSTALLER_DIR/symfony/var/cache/prod
 
-INSTALLER_ZIP=symfony/var/installer/installer_$(date +%Y-%m-%d_%H%M%S).zip
-echo $INSTALLER_ZIP
-zip -r $INSTALLER_ZIP $INSTALLER_DIR
+cd $INSTALLER_DIR
 
-rm -r $INSTALLER_DIR
+
+composer install --no-scripts --classmap-authoritative -d symfony
+
+pwd
+INSTALLER_ZIP=installer_$(date +%Y-%m-%d_%H%M%S).zip
+zip -rq9 $INSTALLER_ZIP .
+mv $INSTALLER_ZIP ../
+
+#rm -r $INSTALLER_DIR

@@ -6,6 +6,9 @@ use App\Helper\FilePath;
 use App\System\Filesystem\FilesystemChecker;
 use Webmozart\PathUtil\Path;
 
+ini_set('display_errors', '1');
+error_reporting(-1);
+
 if (version_compare(PHP_VERSION, '7.3', '<')) {
     echo 'This app requires PHP 7.3';
     exit;

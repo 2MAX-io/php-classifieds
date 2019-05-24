@@ -5,7 +5,7 @@ RUN docker-php-ext-enable xdebug
 RUN echo "xdebug.remote_enable=1" >> /usr/local/etc/php/php.ini
 
 RUN apt-get update -y
-RUN apt-get install --no-install-recommends -y git unzip libfreetype6-dev libjpeg62-turbo-dev libpng-dev zlib1g-dev libicu-dev g++
+RUN apt-get install --no-install-recommends -y git zip unzip libfreetype6-dev libjpeg62-turbo-dev libpng-dev zlib1g-dev libicu-dev g++
 RUN docker-php-ext-configure pdo_mysql --with-pdo-mysql \
 && docker-php-ext-install -j$(nproc) mysqli \
 && docker-php-ext-install -j$(nproc) pdo_mysql \

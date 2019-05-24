@@ -41,7 +41,6 @@ class FilesystemChecker
         $return = [];
         $patchList = [
             FilePath::getProjectDir() . '/static/cache/test',
-            FilePath::getProjectDir() . '/static/cache/listing/test',
             FilePath::getProjectDir() . '/static/listing/test',
             FilePath::getProjectDir() . '/static/resized/test',
             FilePath::getProjectDir() . '/symfony/var/cache/prod_test',

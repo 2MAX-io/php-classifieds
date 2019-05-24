@@ -7,3 +7,5 @@ $("form").attr('novalidate', 'novalidate');
 php symfony/bin/console assets:install asset
 
 gulp --gulpfile symfony/gulpfile.js --cwd .
+
+docker exec -it -u 1000 classifieds_php bash -c "bash symfony/dev/bin/DEV_build_installer.sh"

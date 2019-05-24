@@ -22,7 +22,7 @@ mkdir $INSTALLER_DIR/zzzz_engine/var/cache/prod
 cd $INSTALLER_DIR
 
 
-composer install --no-scripts --classmap-authoritative -d zzzz_engine
+composer install --no-scripts --classmap-authoritative --quiet --no-dev --no-interaction -d zzzz_engine
 
 pwd
 INSTALLER_ZIP=installer_$(date +%Y-%m-%d_%H%M%S).zip

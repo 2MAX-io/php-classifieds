@@ -162,3 +162,6 @@ zip -rq installer_$(date +%Y-%m-%d_%H%M%S).zip .
 php zzzz_engine/bin/console assets:install
 php zzzz_engine/bin/console assets:install asset/bundles
 php zzzz_engine/bin/console assets:install asset
+composer install -d zzzz_engine
+composer install --help
+composer install -d zzzz_engine

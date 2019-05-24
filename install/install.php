@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 use App\Helper\FilePath;
 use App\Helper\Random;
+use App\Service\User\RoleInterface;
+use Symfony\Component\Security\Core\Encoder\Argon2iPasswordEncoder;
 use Webmozart\PathUtil\Path;
 
 ini_set('display_errors', '1');
@@ -45,18 +47,21 @@ try {
     loadSql(__DIR__ . '/data/_required_data.sql');
     loadSql(__DIR__ . '/data/settings.sql');
     loadSql(__DIR__ . '/data/example/categories.sql');
+
+    $dbPass = empty($_POST['db_pass']) ? '' : ':' . $_POST['db_pass'];
+    dumpConfig([
+        'DATABASE_URL' => "mysql://{$_POST['db_user']}{$dbPass}@{$_POST['db_host']}:{$_POST['db_port']}/{$_POST['db_name']}",
+        'MAILER_URL' => "smtp://{$_POST['smtp_host']}:{$_POST['smtp_port']}?encryption=ssl&auth_mode=plain&username={$_POST['smtp_username']}&password={$_POST['smtp_password']}",
+        'APP_TIMEZONE' => $_POST['app_timezone'],
+    ]);
+
+    insertAdmin($_POST['admin_email'], $_POST['admin_password']);
 } catch (\Throwable $e) {
     $pdo->rollBack();
     throw $e;
 }
 
-$pass = empty($_POST['db_pass']) ? '' : ':' . $_POST['db_pass'];
 
-dumpConfig([
-    'DATABASE_URL' => "mysql://{$_POST['db_user']}{$pass}@{$_POST['db_host']}:{$_POST['db_port']}/{$_POST['db_name']}",
-    'MAILER_URL' => "smtp://{$_POST['smtp_host']}:{$_POST['smtp_port']}?encryption=ssl&auth_mode=plain&username={$_POST['smtp_username']}&password={$_POST['smtp_password']}",
-    'APP_TIMEZONE' => $_POST['app_timezone'],
-]);
 
 echo "success, remove install directory";
 
@@ -106,5 +111,34 @@ return $configPhpString;
 EOF;
 
     file_put_contents(FilePath::getProjectDir() . '/zz_engine/.env.local.php', $vars, LOCK_EX);
+
+}
+
+function insertAdmin(string $email, string $password) {
+    global $pdo;
+
+    try {
+        $sql = <<<'EOF'
+    INSERT INTO admin 
+    SET
+        email = :email,
+        password = :password,
+        roles = :roles,
+        enabled = 1
+;
+
+EOF;
+
+        $argon2iPasswordEncoder = new Argon2iPasswordEncoder();
+
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindValue('email', $email);
+        $stmt->bindValue('password', $argon2iPasswordEncoder->encodePassword($password, ''));
+        $stmt->bindValue('roles', json_encode([RoleInterface::ROLE_ADMIN]));
+        $stmt->execute();
+    } catch (\Throwable $e) {
+        echo 'Error while creating admin user';
+        exit;
+    }
 
 }

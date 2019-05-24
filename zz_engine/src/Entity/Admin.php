@@ -27,6 +27,8 @@ class Admin implements UserInterface, RoleInterface, EnablableInterface
     private $email;
 
     /**
+     * When modifying, change installation script
+     *
      * @ORM\Column(type="json")
      */
     private $roles = [];

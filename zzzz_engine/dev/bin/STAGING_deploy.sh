@@ -21,14 +21,14 @@ mysql lpodnogl_ogl -e "SET FOREIGN_KEY_CHECKS = 0; DROP TABLE zzzz_listing_polic
 mysql lpodnogl_ogl -e "SET FOREIGN_KEY_CHECKS = 0; DROP TABLE zzzz_token"
 mysql lpodnogl_ogl -e "SET FOREIGN_KEY_CHECKS = 0; DROP TABLE zzzz_token_field"
 
-mysql lpodnogl_ogl < $(ls -t symfony/var/ogl_*.sql | head -1)
+mysql lpodnogl_ogl < $(ls -t zzzz_engine/var/ogl_*.sql | head -1)
 
 
 
 git pull
-/usr/local/php73/bin/php /home/lpodnogl/domains/oglnew-hjk1.lpodolski.com/composer.phar install -d /home/lpodnogl/domains/oglnew-hjk1.lpodolski.com/public_html/symfony
-rm -r /home/lpodnogl/domains/oglnew-hjk1.lpodolski.com/public_html/symfony/var/cache/prod/
-/usr/local/php73/bin/php symfony/bin/console d:schema:update --force
-/usr/local/php73/bin/php /home/lpodnogl/domains/oglnew-hjk1.lpodolski.com/composer.phar dump-env prod -d /home/lpodnogl/domains/oglnew-hjk1.lpodolski.com/public_html/symfony
-/usr/local/php73/bin/php /home/lpodnogl/domains/oglnew-hjk1.lpodolski.com/composer.phar dump-autoload --optimize -d /home/lpodnogl/domains/oglnew-hjk1.lpodolski.com/public_html/symfony
-/usr/local/php73/bin/php /home/lpodnogl/domains/oglnew-hjk1.lpodolski.com/public_html/symfony/bin/console app:cron:main
+/usr/local/php73/bin/php /home/lpodnogl/domains/oglnew-hjk1.lpodolski.com/composer.phar install -d /home/lpodnogl/domains/oglnew-hjk1.lpodolski.com/public_html/zzzz_engine
+rm -r /home/lpodnogl/domains/oglnew-hjk1.lpodolski.com/public_html/zzzz_engine/var/cache/prod/
+/usr/local/php73/bin/php zzzz_engine/bin/console d:schema:update --force
+/usr/local/php73/bin/php /home/lpodnogl/domains/oglnew-hjk1.lpodolski.com/composer.phar dump-env prod -d /home/lpodnogl/domains/oglnew-hjk1.lpodolski.com/public_html/zzzz_engine
+/usr/local/php73/bin/php /home/lpodnogl/domains/oglnew-hjk1.lpodolski.com/composer.phar dump-autoload --optimize -d /home/lpodnogl/domains/oglnew-hjk1.lpodolski.com/public_html/zzzz_engine
+/usr/local/php73/bin/php /home/lpodnogl/domains/oglnew-hjk1.lpodolski.com/public_html/zzzz_engine/bin/console app:cron:main

@@ -6,10 +6,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
 
-require __DIR__ . '/symfony/config/bootstrap.php';
+require __DIR__ . '/zzzz_engine/config/bootstrap.php';
 
 define('PUBLIC_DIR_LOCATION', __DIR__);
-define('SYMFONY_LOCATION', __DIR__ . '/symfony');
+define('SYMFONY_LOCATION', __DIR__ . '/zzzz_engine');
 
 $loader = new \Twig\Loader\FilesystemLoader(SYMFONY_LOCATION . '/templates');
 $twig = new \Twig\Environment($loader, [

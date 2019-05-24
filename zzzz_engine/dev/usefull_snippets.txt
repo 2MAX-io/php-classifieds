@@ -4,8 +4,8 @@ die(\App\Helper\Sql::replaceParams($selectSql, $params));
 
 $("form").attr('novalidate', 'novalidate');
 
-php symfony/bin/console assets:install asset
+php zzzz_engine/bin/console assets:install asset
 
-gulp --gulpfile symfony/gulpfile.js --cwd .
+gulp --gulpfile zzzz_engine/gulpfile.js --cwd .
 
-docker exec -it -u 1000 classifieds_php bash -c "bash symfony/dev/bin/DEV_build_installer.sh"
+docker exec -it -u 1000 classifieds_php bash -c "bash zzzz_engine/dev/bin/DEV_build_installer.sh"

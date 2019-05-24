@@ -4,4 +4,4 @@ chmod -R 775 static/
 chown -R 1000:www-data static/
 
 # for xdbug profiling to work
-chown -R 1000:www-data symfony/docker/php/xdebug_out
+chown -R 1000:www-data zzzz_engine/docker/php/xdebug_out

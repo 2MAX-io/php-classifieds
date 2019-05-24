@@ -1,24 +1,21 @@
 
-###> symfony/framework-bundle ###
-/.env.local
-/.env.local.php
-/.env.*.local
+###> zzzz_engine/framework-bundle ###
+/zzzz_engine/.env.local
+/zzzz_engine/.env.local.php
+/zzzz_engine/.env.*.local
 /public/bundles/
-/symfony/var/
-/symfony/vendor/
-###< symfony/framework-bundle ###
+/zzzz_engine/var/
+/zzzz_engine/vendor/
+###< zzzz_engine/framework-bundle ###
 
-/symfony/docker/mysql/data/
-/static/user/listing/
-/symfony/src/Controller/TestController.php
+/zzzz_engine/docker/mysql/data/
+/zzzz_engine/docker/mysql/sql/
+/zzzz_engine/docker/php/xdebug_out/
+/zzzz_engine/node_modules/
+/zzzz_engine/src/Controller/TestController.php
 /static/cache/
-/symfony/docker/mysql/sql/
 /static/resized/
-/symfony/docker/php/xdebug_out/
 /static/listing/
-/symfony/.env.local.php
-/symfony/node_modules/
 /static/logo/
 /static/category/
 /test*.php
-/symfony/.env.local

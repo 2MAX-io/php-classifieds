@@ -14,9 +14,9 @@ if (version_compare(PHP_VERSION, '7.3', '<')) {
     exit;
 }
 
-require dirname(__DIR__) . '/symfony/vendor/autoload.php';
+require dirname(__DIR__) . '/zzzz_engine/vendor/autoload.php';
 
-$configPath = Path::canonicalize(FilePath::getProjectDir() . '/symfony/.env.local.php');
+$configPath = Path::canonicalize(FilePath::getProjectDir() . '/zzzz_engine/.env.local.php');
 if (file_exists($configPath)) {
     echo "It seems like app is already installed, if not remove configuration file $configPath";
     exit;

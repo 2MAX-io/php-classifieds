@@ -25,17 +25,17 @@ class FilePath
 
     public static function getLogDir(): string
     {
-        return self::getPath(__DIR__ . '/../../../symfony/var/log');
+        return self::getPath(__DIR__ . '/../../../zzzz_engine/var/log');
     }
 
     public static function getCacheDir(): string
     {
-        return self::getPath(__DIR__ . '/../../../symfony/var/cache');
+        return self::getPath(__DIR__ . '/../../../zzzz_engine/var/cache');
     }
 
     public static function getUpgradeDir(): string
     {
-        return self::getPath(__DIR__ . '/../../../symfony/var/cache/upgrade');
+        return self::getPath(__DIR__ . '/../../../zzzz_engine/var/cache/upgrade');
     }
 
     public static function getProjectDir(): string

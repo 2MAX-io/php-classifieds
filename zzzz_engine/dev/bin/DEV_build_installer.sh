@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+PROJECT_DIR=$DIR/../../..
+
 INSTALLER_DIR=zzzz_engine/var/installer/installer_$(date +%Y-%m-%d_%H%M%S)
-echo $INSTALLER_DIR
-git checkout-index -a -f --prefix=$INSTALLER_DIR/
+git checkout-index -a -f --prefix=${INSTALLER_DIR}/
 
 rm -r $INSTALLER_DIR/.idea
 rm -r $INSTALLER_DIR/zzzz_engine/dev
@@ -19,14 +21,13 @@ mkdir $INSTALLER_DIR/zzzz_engine/var/cache
 mkdir $INSTALLER_DIR/zzzz_engine/var/cache/upgrade
 mkdir $INSTALLER_DIR/zzzz_engine/var/cache/prod
 
-cd $INSTALLER_DIR
-
-
 composer install --no-scripts --classmap-authoritative --quiet --no-dev --no-interaction -d zzzz_engine
 
-pwd
 INSTALLER_ZIP=installer_$(date +%Y-%m-%d_%H%M%S).zip
+cd $INSTALLER_DIR
 zip -rq9 $INSTALLER_ZIP .
-mv $INSTALLER_ZIP ../
 
-#rm -r $INSTALLER_DIR
+echo $PROJECT_DIR/zzzz_engine/var/installer
+
+mv $INSTALLER_ZIP ${PROJECT_DIR}/zzzz_engine/var/installer
+rm -r ${PROJECT_DIR}/${INSTALLER_DIR}

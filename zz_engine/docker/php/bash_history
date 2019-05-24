@@ -147,8 +147,8 @@ php zz_engine/bin/console doctrine:ensure-production-settings --env=prod
 php zz_engine/bin/console doctrine:database:create --help
 php zz_engine/bin/console doctrine:schema:create --help
 php zz_engine/bin/console doctrine:schema:create --dump-sql
-php zz_engine/bin/console doctrine:schema:create --dump-sql > install_MM8tHbrn/_schema.sql
-php zz_engine/bin/console doctrine:schema:create --dump-sql > install_MM8tHbrn/data/_schema.sql
+php zz_engine/bin/console doctrine:schema:create --dump-sql > install/_schema.sql
+php zz_engine/bin/console doctrine:schema:create --dump-sql > install/data/_schema.sql
 php zz_engine/bin/console doctrine:schema:create --dump-sql
 php zz_engine/bin/console doctrine:schema:create --dump-sql --no-debug
 composer require-dev -d zz_engine symfony/requirements-checker

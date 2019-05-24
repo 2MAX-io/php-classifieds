@@ -56,7 +56,7 @@ dumpConfig([
     'DATABASE_URL' => "mysql://{$_POST['db_user']}{$pass}@{$_POST['db_host']}:{$_POST['db_port']}/{$_POST['db_name']}",
 ]);
 
-echo "success, remove install directory: install_MM8tHbrn";
+echo "success, remove install directory";
 
 function loadSql(string $filePath) {
     global $pdo;

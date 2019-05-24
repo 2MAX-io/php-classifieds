@@ -49,10 +49,10 @@ function cssBottom() {
 function js() {
   return src([
     'asset/jquery.js',
+    'asset/bundles/fosjsrouting/js/router.js',
+    'asset/bundles/bazingajstranslation/js/translator.min.js',
     'asset/lib/fancybox/jquery.fancybox.js',
-    'bundles/fosjsrouting/js/router.min.js',
     'asset/lib/cleave/cleave.js',
-    'bundles/bazingajstranslation/js/translator.min.js',
     'asset/bootstrap.bundle.js',
     'asset/main.js',
   ])

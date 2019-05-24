@@ -3,3 +3,7 @@ die(\App\Helper\Sql::replaceParams($selectSql, $params));
 
 
 $("form").attr('novalidate', 'novalidate');
+
+php symfony/bin/console assets:install asset
+
+gulp --gulpfile symfony/gulpfile.js --cwd .

@@ -348,3 +348,9 @@ composer install --help
 cd symfony/var/installer/
 zip -rq installer_$(date +%Y-%m-%d_%H%M%S).zip .
 ls
+php symfony/bin/console assets:install 
+php symfony/bin/console assets:install 
+php symfony/bin/console assets:install 
+php symfony/bin/console assets:install asset/bundles
+php symfony/bin/console assets:install asset/bundles
+php symfony/bin/console assets:install asset

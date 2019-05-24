@@ -1,12 +1,37 @@
-<title>Install</title>
+<?php
 
-<form action="install.php" method="post">
-    <label for="">Db host</label>
-    <input name="db_host" type="text" placeholder="db host">
-    <input name="db_port" value="3306" type="text" placeholder="db port">
-    <input name="db_name" type="text" placeholder="db name">
-    <input name="db_user" type="text" placeholder="db user">
-    <input name="db_pass" type="text" placeholder="db pass">
+declare(strict_types=1);
 
-    <button type="submit">Install</button>
-</form>
+use App\Helper\FilePath;
+use App\System\Filesystem\FilesystemChecker;
+use Webmozart\PathUtil\Path;
+
+if (version_compare(PHP_VERSION, '7.3', '<')) {
+    echo 'This app requires PHP 7.3';
+    exit;
+}
+
+require dirname(__DIR__) . '/symfony/vendor/autoload.php';
+
+$configPath = Path::canonicalize(FilePath::getProjectDir() . '/symfony/.env.local.php');
+if (file_exists($configPath)) {
+    echo "It seems like app is already installed, if not remove configuration file $configPath";
+    exit;
+}
+
+if (count(FilesystemChecker::notWritableFileList())) {
+    echo 'Some files are not writable';
+    exit;
+}
+
+if (count(FilesystemChecker::creatingDirFailedList())) {
+    echo 'some dirs can not be created';
+    exit;
+}
+
+if (count(FilesystemChecker::writingFileFailedList())) {
+    echo 'Writing test file to some dirs failed';
+    exit;
+}
+
+include 'view/installForm.php';

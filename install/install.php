@@ -9,10 +9,10 @@ use Webmozart\PathUtil\Path;
 ini_set('display_errors', '1');
 error_reporting(-1);
 
-require dirname(__DIR__) . '/zzzz_engine/vendor/autoload.php';
+require dirname(__DIR__) . '/zz_engine/vendor/autoload.php';
 
-$configPath = Path::canonicalize(FilePath::getProjectDir() . '/zzzz_engine/.env.local.php');
-if (file_exists(FilePath::getProjectDir() . '/zzzz_engine/.env.local.php')) {
+$configPath = Path::canonicalize(FilePath::getProjectDir() . '/zz_engine/.env.local.php');
+if (file_exists(FilePath::getProjectDir() . '/zz_engine/.env.local.php')) {
     echo "It seems like app is already installed, if not remove configuration file $configPath";
     exit;
 }
@@ -103,6 +103,6 @@ return $configPhpString;
 
 EOF;
 
-    file_put_contents(FilePath::getProjectDir() . '/zzzz_engine/.env.local.php', $vars, LOCK_EX);
+    file_put_contents(FilePath::getProjectDir() . '/zz_engine/.env.local.php', $vars, LOCK_EX);
 
 }

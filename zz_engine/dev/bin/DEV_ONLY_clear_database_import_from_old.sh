@@ -7,8 +7,8 @@ time docker exec classifieds_mysql bash -c "mysql admin_ogloszenia < /sql/admin_
 docker exec classifieds_mysql mysql admin_ogloszenia -e "UPDATE o_ogloszenia SET opis_d = SUBSTR(opis_d, 1, 9900) WHERE LENGTH(opis_d) > 10000;"
 #time docker exec classifieds_mysql mysql admin_ogloszenia -e "alter table o_ogloszenia modify opis_d varchar(11000) not null, ALGORITHM=COPY;"
 
-docker exec classifieds_php bash -c "php zzzz_engine/bin/importer_export_from_old.php /var/www/html/zzzz_engine/docker/mysql/sql/importer_export_from_old.csv"
-docker exec classifieds_php bash -c "php zzzz_engine/bin/importer_import_to_new.php /var/www/html/zzzz_engine/docker/mysql/sql/importer_export_from_old.csv /var/www/html/zzzz_engine/docker/mysql/sql/importer_import_to_new.sql"
+docker exec classifieds_php bash -c "php zz_engine/bin/importer_export_from_old.php /var/www/html/zz_engine/docker/mysql/sql/importer_export_from_old.csv"
+docker exec classifieds_php bash -c "php zz_engine/bin/importer_import_to_new.php /var/www/html/zz_engine/docker/mysql/sql/importer_export_from_old.csv /var/www/html/zz_engine/docker/mysql/sql/importer_import_to_new.sql"
 
 docker exec classifieds_mysql mysql classifieds -e "SET FOREIGN_KEY_CHECKS = 0; DROP TABLE listing_file"
 docker exec classifieds_mysql mysql classifieds -e "SET FOREIGN_KEY_CHECKS = 0; DROP TABLE listing_view"
@@ -20,7 +20,7 @@ docker exec classifieds_mysql mysql classifieds -e "SET FOREIGN_KEY_CHECKS = 0; 
 docker exec classifieds_mysql mysql classifieds -e "SET FOREIGN_KEY_CHECKS = 0; DROP TABLE payment"
 docker exec classifieds_mysql mysql classifieds -e "SET FOREIGN_KEY_CHECKS = 0; DROP TABLE payment_for_balance_top_up"
 
-docker exec classifieds_php php zzzz_engine/bin/console doctrine:schema:update --force
+docker exec classifieds_php php zz_engine/bin/console doctrine:schema:update --force
 
 #docker exec classifieds_mysql mysql classifieds -e "SET FOREIGN_KEY_CHECKS = 0; DROP TABLE admin"
 #docker exec classifieds_mysql mysql classifieds -e "SET FOREIGN_KEY_CHECKS = 0; DROP TABLE category"
@@ -47,8 +47,8 @@ docker exec classifieds_php php zzzz_engine/bin/console doctrine:schema:update -
 
 time docker exec classifieds_mysql bash -c "mysql --max_allowed_packet=1G classifieds < /sql/importer_import_to_new.sql"
 
-docker exec classifieds_php php zzzz_engine/bin/console app:cron:main
+docker exec classifieds_php php zz_engine/bin/console app:cron:main
 
 docker exec classifieds_mysql bash -c "mysqldump classifieds > /sql/ogl_$(date +%Y-%m-%d_%H%M%S)_new.sql"
 
-bash /home/u/PhpstormProjects/classifieds/zzzz_engine/bin/DEV_pull_images.sh
+bash /home/u/PhpstormProjects/classifieds/zz_engine/bin/DEV_pull_images.sh

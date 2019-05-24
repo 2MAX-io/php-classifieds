@@ -1,0 +1,11 @@
+
+die(\App\Helper\Sql::replaceParams($selectSql, $params));
+
+
+$("form").attr('novalidate', 'novalidate');
+
+php zz_engine/bin/console assets:install asset
+
+gulp --gulpfile zz_engine/gulpfile.js --cwd .
+
+docker exec -it -u 1000 classifieds_php bash -c "bash zz_engine/dev/bin/DEV_build_installer.sh"

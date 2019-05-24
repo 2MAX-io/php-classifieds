@@ -1,0 +1,167 @@
+cd zz_engine/
+php bin/console make:entity
+php bin/console list
+php bin/console generate:controller
+php zz_engine/bin/console make:entity
+php zz_engine/bin/console list
+php zz_engine/bin/console doctrine:schema:update --force
+php zz_engine/bin/console make:crud Listing
+php zz_engine/bin/console make:crud
+php zz_engine/bin/console make:entity --regenerate "App\Entity"
+chmod -R 775 asset/user/listing
+chown -R 1000:www-data asset/user/listing
+php zz_engine/bin/console make:user
+php zz_engine/bin/console make:auth
+chown -R 1000:www-data zz_engine/config/
+php zz_engine/bin/console help
+php zz_engine/bin/console security:encode-password
+chown -R 1000:www-data *.php *.js
+chown -R 1000:www-data ./*.php ./*.js
+chown -R 1000:www-data *.php
+chown -R 1000:www-data zz_engine/src/Entity/TokenField.php
+find . ! -name "content" | xargs -I {} echo {}
+find . ! -name ".git" | xargs -I {} echo {}
+find . -not -path "*/zz_engine/docker/mysql*" -type f -exec echo {} \;
+find . -not -path "*/zz_engine/docker/mysql*" -type f -exec echo {} \; | grep mysql
+chown -R 1000:www-data zz_engine/src/Entity/*.php
+chmod -R 775 static/
+chown -R 1000:www-data static/
+ls /var/www/html/static/user/listing/zzzz/2019/
+php zz_engine/bin/old_generate_csv.php
+php zz_engine/bin/importer_import_to_new.php
+chown -R 1000:www-data old_classifieds_export.csv importer_import_to_new.sql
+php zz_engine/bin/importer_export_from_old.php
+mysqldump --help
+mysqldump
+ls -l static/user/listing/0000_legacy/images/galeria/0/10957/
+[A
+chown -R 1000:www-data importer_export_from_old.csv importer_import_to_new.sql
+sudo
+su www-data
+su -i www-data
+php zz_engine/bin/importer_export_from_old.php /var/www/html/zz_engine/docker/mysql/sql/importer_export_from_old.csv
+cat zz_engine/bin/importer_export_from_old.php
+php zz_engine/bin/importer_import_to_new.php /var/www/html/zz_engine/docker/mysql/sql/importer_export_from_old.csv /var/www/html/zz_engine/docker/mysql/sql/importer_import_to_new.sql
+su
+grep "0000-" /var/www/html/zz_engine/docker/mysql/sql/importer_export_from_old.csv
+grep "0000-00" /var/www/html/zz_engine/docker/mysql/sql/importer_export_from_old.csv
+head -1 /var/www/html/zz_engine/docker/mysql/sql/importer_export_from_old.csv
+grep "0000-00" -C5 /var/www/html/zz_engine/docker/mysql/sql/importer_export_from_old.csv
+grep "0000-00" -C2 /var/www/html/zz_engine/docker/mysql/sql/importer_export_from_old.csv
+rm static/user/listing/0000_legacy/images/galeria/0/9083/sdb3b8fb0db792343f42bf3535a10d385.jpg
+rm static/user/listing/0000_legacy/images/galeria/0/9083/size_list_sdb3b8fb0db792343f42bf3535a10d385.jpg
+ls -l static/user/*/size
+rm static/user/*/size_*.jpg
+rm -R static/user/*/size_*.jpg
+cat user/listing/0000_legacy/images/galeria/0/31419/s10649644ab0f7395930022cfba94412d.jpg
+cat static/user/listing/0000_legacy/images/galeria/0/31419/s10649644ab0f7395930022cfba94412d.jpg
+exit
+ls /var/www/html/static/cache/user/listing/0000_legacy/images/galeria/0/31419/s10649644ab0f7395930022cfba94412d.jpg/769e883b630928e10466e75e0e8c631c
+ls zz
+chown -R 1000:www-data static
+chown -R www-data:www-data static
+ls /tmp/xdebug_out
+ls -la
+ls -l /tmp/xdebug_out
+composer dump-autoload --optimize
+composer ==help
+composer --help
+composer dump-autoload --optimize -d zz_engine
+chown -R www-data:www-data /var/www/html/
+chown -R 1000:www-data /var/www/html/
+pgrep php
+pgrep apache
+pgrep -fa apache
+pa aux
+ps
+ps aux
+id -u www-data
+chown -R 1000:1000 /var/www/html/
+less /etc/passwd
+cat /etc/passwd
+ls /var/www/.composer/
+ls -l /var/www/
+ls
+ls- la
+ls -la /var/www
+mkdir .composer
+mkdir /var/www/.composer
+php zz_engine/bin/importer_export_from_old.php /var/www/html/zz_engine/docker/mysql/sql/importer_export_from_old.csv > out.txt
+history
+php zz_engine/bin/console doctrine:schema:update --help
+php zz_engine/bin/console doctrine:schema:update --dump-sql
+php zz_engine/bin/console make:command
+php zz_engine/bin/console app:cron:search-text-regenerate
+composer install install
+composer install hautelook/phpass
+composer require -w zz_engine hautelook/phpass
+cd zz_engine
+cd ..
+composer require -d zz_engine hautelook/phpass
+composer install -d zz_engine
+composer require -d zz_engine zendframework/zend-feed
+composer require -d zz_engine symfony/property-info
+php zz_engine/bin/console app:cron:main
+php zz_engine/bin/console doctrine:schema:validate
+composer require -d zz_engine willdurand/js-translation-bundle
+php zz_engine/bin/console assets:install --symlink web
+php zz_engine/bin/console assets:install --symlink public
+php zz_engine/bin/console assets:install --symlink bundles
+composer require -d zz_engine paypal/rest-api-sdk-php
+composer require -d zz_engine giggsey/libphonenumber-for-php
+php zz_engine/bin/console container:debug
+php zz_engine/bin/console list | grep container
+php zz_engine/bin/console debug:container
+php zz_engine/bin/console debug:container | grep array
+php zz_engine/bin/convert_insert_set_to_values.php
+php zz_engine/bin/convert_insert_set_to_values.php /var/www/html/zz_engine/docker/mysql/sql/importer_import_to_new.sql /var/www/html/zz_engine/docker/mysql/sql/importer_import_to_new_values.sql
+composer require -d easycorp/easy-log-handler
+composer require -d zz_engine easycorp/easy-log-handler
+composer remove -d zz_engine easycorp/easy-log-handler
+composer remove -d zz_engine update
+composer remove -d zz_engine upgrade
+composer -d zz_engine update
+composer update -d zz_engine
+composer require -d zz_engine monolog/monolog
+composer remove -d zz_engine monolog/monolog
+composer remove -d zz_engine monolog/monolog-bundle
+composer require -d zz_engine monolog/monolog-bundle
+composer require -d zz_engine monolog/
+composer require -d zz_engine monolog
+composer remove -d zz_engine monolog
+composer dump-env dev
+composer dump-env dev -d zz_engine
+composer require -d zz_engine minwork/array
+php zz_engine/bin/console translation:update --dump-messages --force en AppBundle
+php zz_engine/bin/console translation:update --dump-messages --force en App
+php zz_engine/bin/console translation:update --dump-messages --force en
+composer require -d zz_engine symfony/lock
+httpd -M | grep expires
+apache2 " grep expires
+apache2 | grep expires
+a2enmod expires
+composer dump-autoload -a -d zz_engine
+php zz_engine/bin/console list doctrine
+php zz_engine/bin/console
+php zz_engine/bin/console doctrine:ensure-production-settings --env=prod
+php zz_engine/bin/console doctrine:database:create --help
+php zz_engine/bin/console doctrine:schema:create --help
+php zz_engine/bin/console doctrine:schema:create --dump-sql
+php zz_engine/bin/console doctrine:schema:create --dump-sql > install_MM8tHbrn/_schema.sql
+php zz_engine/bin/console doctrine:schema:create --dump-sql > install_MM8tHbrn/data/_schema.sql
+php zz_engine/bin/console doctrine:schema:create --dump-sql
+php zz_engine/bin/console doctrine:schema:create --dump-sql --no-debug
+composer require-dev -d zz_engine symfony/requirements-checker
+composer require -dev -d zz_engine symfony/requirements-checker
+composer require --help
+composer require --dev -d zz_engine symfony/requirements-checker
+composer remove --dev -d zz_engine symfony/requirements-checker
+composer install --help
+cd zz_engine/var/installer/
+zip -rq installer_$(date +%Y-%m-%d_%H%M%S).zip .
+php zz_engine/bin/console assets:install
+php zz_engine/bin/console assets:install asset/bundles
+php zz_engine/bin/console assets:install asset
+composer install -d zz_engine
+composer install --help
+composer install -d zz_engine

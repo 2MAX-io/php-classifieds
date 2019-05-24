@@ -7,9 +7,9 @@ use Symfony\Component\Debug\Debug;
 use Symfony\Component\HttpFoundation\Request;
 
 ini_set('log_errors', 'On');
-ini_set('error_log', 'zzzz_engine/var/log/PHP_native_error_'.date('Y-m-d').'.log');
+ini_set('error_log', 'zz_engine/var/log/PHP_native_error_'.date('Y-m-d').'.log');
 
-require __DIR__ . '/zzzz_engine/config/bootstrap.php';
+require __DIR__ . '/zz_engine/config/bootstrap.php';
 
 //$_SERVER['APP_DEBUG'] = false;
 

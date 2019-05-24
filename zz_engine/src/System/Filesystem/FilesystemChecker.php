@@ -17,7 +17,7 @@ class FilesystemChecker
         $finder->in(FilePath::getProjectDir());
         $finder->exclude([
             'static',
-            'zzzz_engine/docker/mysql/data/',
+            'zz_engine/docker/mysql/data/',
         ]);
 
         $files = $finder->files()->getIterator();
@@ -43,9 +43,9 @@ class FilesystemChecker
             FilePath::getProjectDir() . '/static/cache/test',
             FilePath::getProjectDir() . '/static/listing/test',
             FilePath::getProjectDir() . '/static/resized/test',
-            FilePath::getProjectDir() . '/zzzz_engine/var/cache/prod_test',
-            FilePath::getProjectDir() . '/zzzz_engine/var/cache/prod/test',
-            FilePath::getProjectDir() . '/zzzz_engine/var/log/test',
+            FilePath::getProjectDir() . '/zz_engine/var/cache/prod_test',
+            FilePath::getProjectDir() . '/zz_engine/var/cache/prod/test',
+            FilePath::getProjectDir() . '/zz_engine/var/log/test',
         ];
 
         foreach ($patchList as $patch) {
@@ -66,10 +66,10 @@ class FilesystemChecker
             FilePath::getProjectDir() . '/static/listing',
             FilePath::getProjectDir() . '/static/logo/',
             FilePath::getProjectDir() . '/static/resized',
-            FilePath::getProjectDir() . '/zzzz_engine/var/cache',
-            FilePath::getProjectDir() . '/zzzz_engine/var/cache/upgrade',
-            FilePath::getProjectDir() . '/zzzz_engine/var/cache/prod',
-            FilePath::getProjectDir() . '/zzzz_engine/var/log',
+            FilePath::getProjectDir() . '/zz_engine/var/cache',
+            FilePath::getProjectDir() . '/zz_engine/var/cache/upgrade',
+            FilePath::getProjectDir() . '/zz_engine/var/cache/prod',
+            FilePath::getProjectDir() . '/zz_engine/var/log',
         ];
 
         foreach ($patchList as $patch) {

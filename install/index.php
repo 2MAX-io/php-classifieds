@@ -62,7 +62,7 @@ if (!empty($_POST)) {
             throw $e;
         }
 
-        echo "success, remove install directory";
+        include "view/success.php";
         exit;
     }
 }
@@ -92,7 +92,7 @@ if (!canWriteToPhpFile()) {
     exit;
 }
 
-include 'view/installForm.php';
+include 'view/install_form.php';
 
 function canWriteToPhpFile(): bool {
     try {

@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Helper\FilePath;
+use App\Helper\Str;
 use App\System\Filesystem\FilesystemChecker;
 use Webmozart\PathUtil\Path;
 
@@ -22,11 +23,6 @@ if (file_exists($configPath)) {
     exit;
 }
 
-if (count(FilesystemChecker::notWritableFileList())) {
-    echo 'Some files are not writable';
-    exit;
-}
-
 if (count(FilesystemChecker::creatingDirFailedList())) {
     echo 'some dirs can not be created';
     exit;
@@ -37,4 +33,36 @@ if (count(FilesystemChecker::writingFileFailedList())) {
     exit;
 }
 
+if (count(FilesystemChecker::notWritableFileList())) {
+    echo 'Some files are not writable';
+    exit;
+}
+
+if (!canWriteToPhpFile()) {
+    echo 'Could not change php file install/data/test.php, check permissions for all files';
+    exit;
+}
+
 include 'view/installForm.php';
+
+function canWriteToPhpFile(): bool {
+    try {
+        $filePath = Path::canonicalize(FilePath::getPublicDir() . '/install/data/test.php');
+        $content = file_get_contents($filePath);
+        $successText = '!!success!!';
+        $content = str_replace("{{!REPLACE_THIS!}}", $successText, $content);
+        $result = file_put_contents($filePath, $content);
+
+        if (!Str::contains(file_get_contents($filePath), $successText)) {
+            return false;
+        }
+
+        if (false !== $result && $result > 0) {
+            return true;
+        }
+
+        return false;
+    } catch (\Throwable $e) {
+        return false;
+    }
+}

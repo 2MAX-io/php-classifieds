@@ -30,7 +30,7 @@ if (!empty($_POST)) {
     try {
         $pdo = new \PDO("mysql:host={$_POST['db_host']};port={$_POST['db_port']};dbname={$_POST['db_name']}", $_POST['db_user'], $_POST['db_pass'], [
             \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
-            \PDO::ATTR_EMULATE_PREPARES => true,
+            \PDO::ATTR_EMULATE_PREPARES => false,
             \PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8',
         ]);
     } catch (\Throwable $e) {
@@ -49,14 +49,9 @@ if (!empty($_POST)) {
             loadSql(__DIR__ . '/data/settings.sql');
             loadSql(__DIR__ . '/data/example/categories.sql');
 
-            $dbPass = empty($_POST['db_pass']) ? '' : ':' . $_POST['db_pass'];
-            dumpConfig([
-                'DATABASE_URL' => "mysql://{$_POST['db_user']}{$dbPass}@{$_POST['db_host']}:{$_POST['db_port']}/{$_POST['db_name']}",
-                'MAILER_URL' => "smtp://{$_POST['smtp_host']}:{$_POST['smtp_port']}?encryption=ssl&auth_mode=plain&username={$_POST['smtp_username']}&password={$_POST['smtp_password']}",
-                'APP_TIMEZONE' => $_POST['app_timezone'],
-            ]);
-
             insertAdmin($_POST['admin_email'], $_POST['admin_password']);
+
+            saveConfig();
 
             $pdo->commit();
         } catch (\Throwable $e) {
@@ -120,12 +115,15 @@ function canWriteToPhpFile(): bool {
 
 function loadSql(string $filePath) {
     global $pdo;
-    $sqlFileContent = file_get_contents($filePath);
+    $currentQuery = '';
 
-    $stmt = $pdo->query($sqlFileContent);
-
-    while ($stmt->nextRowset()) {
-        continue;
+    $handle = fopen($filePath, 'r');
+    while ($line = fgets($handle)) {
+        $currentQuery .= $line;
+        if (preg_match('~;$~', $line)) {
+            $pdo->query($currentQuery);
+            $currentQuery = '';
+        }
     }
 }
 
@@ -198,4 +196,13 @@ EOF;
 
 function escape(string $string): string {
     return htmlspecialchars($string, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+}
+
+function saveConfig() {
+    $dbPass = empty($_POST['db_pass']) ? '' : ':' . $_POST['db_pass'];
+    dumpConfig([
+        'DATABASE_URL' => "mysql://{$_POST['db_user']}{$dbPass}@{$_POST['db_host']}:{$_POST['db_port']}/{$_POST['db_name']}",
+        'MAILER_URL' => "smtp://{$_POST['smtp_host']}:{$_POST['smtp_port']}?encryption=ssl&auth_mode=plain&username={$_POST['smtp_username']}&password={$_POST['smtp_password']}",
+        'APP_TIMEZONE' => $_POST['app_timezone'],
+    ]);
 }

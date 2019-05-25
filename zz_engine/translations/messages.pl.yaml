@@ -519,6 +519,6 @@ trans:
   'put your code inside: <style type="text/css"></style>': 'umieść Twój kod w: <style type="text/css"></style>'
   'Allow payments': 'Akceptuj płatności'
   'turning off will disable all monetization, featuring ads, top up of account': 'wyłączenie zablokuje całą monetyzację, wyróżnianie ogłoszeń, doładowanie konta'
-  'Payments have been disabled': 'Płatności zostały wyłączone
+  'Payments have been disabled': 'Płatności zostały wyłączone'
   'ALERT! security can not be checked, required file not found: %file%': 'ALARM! zabezpieczenia nie mogą być sprawdzone, wymagany plik nie został znaleziony: %file%'
   'ALERT! security alert, not allowed file is publicly accessible %url%': 'ALERT! alarm bezpieczeństwa, niedozwolony plik jest dostępny publicznie %url%'

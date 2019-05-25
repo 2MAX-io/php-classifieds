@@ -23,9 +23,14 @@ class ExecutedUpgrade
     private $name;
 
     /**
+     * @ORM\Column(type="integer")
+     */
+    private $upgradeId;
+
+    /**
      * @ORM\Column(type="datetime")
      */
-    private $datetime;
+    private $executedAt;
 
     public function getId(): ?int
     {
@@ -44,14 +49,26 @@ class ExecutedUpgrade
         return $this;
     }
 
-    public function getDatetime(): ?\DateTimeInterface
+    public function getExecutedAt(): ?\DateTimeInterface
     {
-        return $this->datetime;
+        return $this->executedAt;
     }
 
-    public function setDatetime(\DateTimeInterface $datetime): self
+    public function setExecutedAt(\DateTimeInterface $executedAt): self
     {
-        $this->datetime = $datetime;
+        $this->executedAt = $executedAt;
+
+        return $this;
+    }
+
+    public function getUpgradeId(): ?int
+    {
+        return $this->upgradeId;
+    }
+
+    public function setUpgradeId(int $upgradeId): self
+    {
+        $this->upgradeId = $upgradeId;
 
         return $this;
     }

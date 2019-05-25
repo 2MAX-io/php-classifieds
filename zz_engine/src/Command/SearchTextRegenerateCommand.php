@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Command\Cron;
+namespace App\Command;
 
 use App\Service\Cron\RegenerateSearchTextCron;
 use Symfony\Component\Console\Command\Command;
@@ -10,9 +10,9 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-class CronSearchTextRegenerateCommand extends Command
+class SearchTextRegenerateCommand extends Command
 {
-    protected static $defaultName = 'app:cron:search-text-regenerate';
+    protected static $defaultName = 'app:search-text-regenerate';
 
     /**
      * @var RegenerateSearchTextCron

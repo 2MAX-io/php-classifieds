@@ -1,3 +1,7 @@
+
+{# @var settings \App\Service\Setting\SettingsDto #}
+{%- set settings = settings() -%}
+
 <div class="card">
     <div class="card-header">{{ 'trans.User Dashboard' | trans }}</div>
 
@@ -18,9 +22,11 @@
             <i class="fas fa-envelope"></i>
             <span>{{ 'trans.Change Email' | trans }}</span>
         </a>
-        <a href="{{ path('app_user_balance_top_up') }}" class="link-list-item text-dark">
-            <i class="fas fa-money-check-alt"></i>
-            <span>{{ 'trans.Top up account' | trans }}</span>
-        </a>
+        {% if settings.paymentAllowed %}
+            <a href="{{ path('app_user_balance_top_up') }}" class="link-list-item text-dark">
+                <i class="fas fa-money-check-alt"></i>
+                <span>{{ 'trans.Top up account' | trans }}</span>
+            </a>
+        {% endif %}
     </div>
 </div>

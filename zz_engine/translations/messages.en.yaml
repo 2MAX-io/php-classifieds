@@ -81,6 +81,14 @@ trans:
   Latest version: 'Latest version'
   Installed version: 'Installed version'
   Install directory has not been removed: 'Install directory has not been removed'
+  Custom javascript - bottom of page: 'Custom javascript - bottom of page'
+  Custom javascript - top of page in HEAD: 'Custom javascript - top of page in HEAD'
+  Custom CSS: 'Custom CSS'
+  'put your code inside: <script type="text/javascript"></script>': 'put your code inside: <script type="text/javascript"></script>'
+  'put your code inside: <style type="text/css"></style>': 'put your code inside: <style type="text/css"></style>'
+  'Allow payments': 'Allow payments'
+  'turning off will disable all monetization, featuring ads, top up of account': 'turning off will disable all monetization, featuring ads, top up of account'
+  'Payments have been disabled': 'Payments have been disabled'
 
 trans.customFieldType.select: Select field
 trans.customFieldType.year_range: Field with year

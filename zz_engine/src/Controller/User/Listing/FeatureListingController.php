@@ -7,11 +7,13 @@ namespace App\Controller\User\Listing;
 use App\Controller\User\Base\AbstractUserController;
 use App\Entity\FeaturedPackage;
 use App\Entity\Listing;
+use App\Exception\UserVisibleMessageException;
 use App\Security\CurrentUserService;
 use App\Service\Listing\Featured\FeaturedListingService;
 use App\Service\Listing\Featured\FeaturedPackageService;
 use App\Service\Money\UserBalanceService;
 use App\Service\Payment\PaymentService;
+use App\Service\Setting\SettingsService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -74,6 +76,7 @@ class FeatureListingController extends AbstractUserController
         FeaturedListingService $featuredListingService,
         PaymentService $paymentService,
         TranslatorInterface $trans,
+        SettingsService $settingsService,
         Request $request
     ): Response {
         $this->dennyUnlessCurrentUserAllowed($listing);
@@ -89,6 +92,10 @@ class FeatureListingController extends AbstractUserController
                 ]));
                 $em->flush();
             } else {
+                if (!$settingsService->getSettingsDto()->isPaymentAllowed()) {
+                    throw new UserVisibleMessageException('trans.Payments have been disabled');
+                }
+
                 $paymentDto = $paymentService->createPaymentForFeaturedPackage($listing, $featuredPackage);
                 $em->flush();
 

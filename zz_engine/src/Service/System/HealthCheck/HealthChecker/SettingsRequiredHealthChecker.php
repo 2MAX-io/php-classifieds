@@ -101,6 +101,9 @@ class SettingsRequiredHealthChecker implements HealthCheckerInterface
             'getLogoPath',
             'getLinkContact',
             'getLinkAdvertisement',
+            'getCustomJavascriptInHead',
+            'getCustomJavascriptBottom',
+            'getCustomCss',
         ];
     }
 

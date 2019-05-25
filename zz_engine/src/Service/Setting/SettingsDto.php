@@ -134,6 +134,11 @@ class SettingsDto
     private $requireListingAdminActivation;
 
     /**
+     * @var boolean
+     */
+    private $paymentAllowed;
+
+    /**
      * @var string|null
      */
     private $paymentPayPalMode;
@@ -162,6 +167,21 @@ class SettingsDto
      * @var string|null
      */
     private $logoPath;
+
+    /**
+     * @var string|null
+     */
+    private $customJavascriptBottom;
+
+    /**
+     * @var string|null
+     */
+    private $customJavascriptInHead;
+
+    /**
+     * @var string|null
+     */
+    private $customCss;
 
     public function getIndexPageTitle(): ?string
     {
@@ -471,5 +491,45 @@ class SettingsDto
     public function setLinkAdvertisement(?string $linkAdvertisement): void
     {
         $this->linkAdvertisement = $linkAdvertisement;
+    }
+
+    public function getCustomJavascriptBottom(): ?string
+    {
+        return $this->customJavascriptBottom;
+    }
+
+    public function setCustomJavascriptBottom(?string $customJavascriptBottom): void
+    {
+        $this->customJavascriptBottom = $customJavascriptBottom;
+    }
+
+    public function getCustomJavascriptInHead(): ?string
+    {
+        return $this->customJavascriptInHead;
+    }
+
+    public function setCustomJavascriptInHead(?string $customJavascriptInHead): void
+    {
+        $this->customJavascriptInHead = $customJavascriptInHead;
+    }
+
+    public function getCustomCss(): ?string
+    {
+        return $this->customCss;
+    }
+
+    public function setCustomCss(?string $customCss): void
+    {
+        $this->customCss = $customCss;
+    }
+
+    public function isPaymentAllowed(): bool
+    {
+        return $this->paymentAllowed ?? false;
+    }
+
+    public function setPaymentAllowed(bool $paymentAllowed): void
+    {
+        $this->paymentAllowed = $paymentAllowed;
     }
 }

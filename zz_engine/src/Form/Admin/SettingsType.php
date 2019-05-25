@@ -232,6 +232,14 @@ class SettingsType extends AbstractType
                 new Length(['min'=> 2]),
             ],
         ]);
+        $builder->add('paymentAllowed', BoolRequiredType::class, [
+            'label' => 'trans.Allow payments',
+            'help' => 'trans.turning off will disable all monetization, featuring ads, top up of account',
+            'required' => true,
+            'constraints' => [
+                new NotBlank(),
+            ],
+        ]);
         $builder->add('paymentGatewayPaymentDescription', TextType::class, [
             'label' => 'trans.Payment gateway - payment description',
             'help' => 'trans.used in payment gateway as description of what has been bought, ie on receipt',
@@ -255,16 +263,25 @@ class SettingsType extends AbstractType
         $builder->add('paymentPayPalClientId', TextType::class, [
             'label' => 'trans.Payments - PayPal Client ID',
             'required' => true,
-            'constraints' => [
-                new NotBlank(),
-            ],
         ]);
         $builder->add('paymentPayPalClientSecret', TextType::class, [
             'label' => 'trans.Payments - PayPal Client secret',
             'required' => true,
-            'constraints' => [
-                new NotBlank(),
-            ],
+        ]);
+        $builder->add('customJavascriptBottom', TextareaType::class, [
+            'label' => 'trans.Custom javascript - bottom of page',
+            'help' => 'trans.put your code inside: <script type="text/javascript"></script>',
+            'required' => true,
+        ]);
+        $builder->add('customJavascriptInHead', TextareaType::class, [
+            'label' => 'trans.Custom javascript - top of page in HEAD',
+            'help' => 'trans.put your code inside: <script type="text/javascript"></script>',
+            'required' => true,
+        ]);
+        $builder->add('customCss', TextareaType::class, [
+            'label' => 'trans.Custom CSS',
+            'help' => 'trans.put your code inside: <style type="text/css"></style>',
+            'required' => true,
         ]);
     }
 

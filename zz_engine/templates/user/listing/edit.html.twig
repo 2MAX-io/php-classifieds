@@ -2,6 +2,9 @@
 
 {% import "user/_macro/_user_macro.html.twig" as userMacro %}
 
+{# @var settings \App\Service\Setting\SettingsDto #}
+{%- set settings = settings() -%}
+
 {% block title %}{{ 'trans.Edit listing' | trans }}{% endblock %}
 
 {% block body %}
@@ -31,7 +34,7 @@
                             </a>
                         {% endif %}
 
-                        {% if listing.status in [constant('\App\\Entity\\Listing::STATUS_ACTIVE'), constant('\App\\Entity\\Listing::STATUS_ACTIVE_FEATURED')] %}
+                        {% if settings.paymentAllowed and listing.status in [constant('\App\\Entity\\Listing::STATUS_ACTIVE'), constant('\App\\Entity\\Listing::STATUS_ACTIVE_FEATURED')] %}
                             <a
                                     href="{{ path('app_user_feature_listing', {"id": listing.id}) }}"
                                     class="btn btn-dark mb-1"

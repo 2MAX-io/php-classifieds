@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace App\Controller\User\Payment;
 
+use App\Exception\UserVisibleMessageException;
 use App\Service\Listing\Featured\FeaturedListingService;
 use App\Service\Money\UserBalanceService;
 use App\Service\Payment\ConfirmPaymentDto;
 use App\Service\Payment\PaymentService;
+use App\Service\Setting\SettingsService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,9 +27,14 @@ class PaymentController extends AbstractController
         PaymentService $paymentService,
         UserBalanceService $userBalanceService,
         FeaturedListingService $featuredListingService,
+        SettingsService $settingsService,
         EntityManagerInterface $em,
         TranslatorInterface $trans
     ): Response {
+        if (!$settingsService->getSettingsDto()->isPaymentAllowed()) {
+            throw new UserVisibleMessageException('trans.Payments have been disabled');
+        }
+
         $em->beginTransaction();
 
         try {

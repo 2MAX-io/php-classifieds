@@ -165,3 +165,8 @@ php zz_engine/bin/console assets:install asset
 composer install -d zz_engine
 composer install --help
 composer install -d zz_engine
+php zz_engine/bin/console doctrine:migrations:migrate
+php zz_engine/bin/console doctrine:migrations:dump-schema
+php zz_engine/bin/console doctrine:migrations:migrate
+php zz_engine/bin/console doctrine:migrations:migrate
+php zz_engine/bin/console make:entity

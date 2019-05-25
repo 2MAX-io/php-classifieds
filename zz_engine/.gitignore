@@ -1,0 +1,14 @@
+###> symfony/framework-bundle ###
+/.env.local
+/.env.local.php*
+/.env.*.local
+/public/bundles/
+/var/
+/vendor/
+###< symfony/framework-bundle ###
+
+/docker/mysql/data/
+/docker/mysql/sql/
+/docker/php/xdebug_out/
+/node_modules/
+/src/Controller/TestController.php

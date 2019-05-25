@@ -1,18 +1,3 @@
-
-###> zz_engine/framework-bundle ###
-/zz_engine/.env.local
-/zz_engine/.env.local.php
-/zz_engine/.env.*.local
-/public/bundles/
-/zz_engine/var/
-/zz_engine/vendor/
-###< zz_engine/framework-bundle ###
-
-/zz_engine/docker/mysql/data/
-/zz_engine/docker/mysql/sql/
-/zz_engine/docker/php/xdebug_out/
-/zz_engine/node_modules/
-/zz_engine/src/Controller/TestController.php
 /static/cache/
 /static/resized/
 /static/listing/

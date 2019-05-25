@@ -18,4 +18,6 @@
         Set up cron
     </div>
 
+    <a href="../admin/red5" class="btn btn-primary">Go to admin page</a>
+
 </div>

@@ -511,3 +511,4 @@ trans:
   Upgrade not started: 'Aktualizacja nie została rozpoczęta'
   Latest version: 'Najnowsza wersja'
   Installed version: 'Zainstalowana wersja'
+  Install directory has not been removed: 'Folder instalacyjny "install" nie został usunięty'

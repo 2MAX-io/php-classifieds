@@ -80,6 +80,7 @@ trans:
   New version available, you can upgrade now: 'New version available, you can upgrade now'
   Latest version: 'Latest version'
   Installed version: 'Installed version'
+  Install directory has not been removed: 'Install directory has not been removed'
 
 trans.customFieldType.select: Select field
 trans.customFieldType.year_range: Field with year

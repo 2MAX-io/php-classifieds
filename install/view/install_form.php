@@ -43,19 +43,6 @@
         </div>
 
         <div class="mb-4">
-            <h3>Other settings</h3>
-
-            <div class="form-group">
-                <label>Timezone</label>
-                <select name="app_timezone" type="text" class="form-control">
-                    <?php foreach (\DateTimeZone::listIdentifiers() as $timezone): ?>
-                    <option <?php echo $timezone === ($_POST['app_timezone'] ?? 'UTC') ? 'selected' : '' ?> value="<?php echo $timezone ?>"><?php echo $timezone ?></option>
-                    <?php endforeach; ?>
-                </select>
-            </div>
-        </div>
-
-        <div class="mb-4">
             <h3>Sending Emails using SMTP</h3>
 
             <div class="form-group">
@@ -76,6 +63,19 @@
             <div class="form-group">
                 <label>SMTP password</label>
                 <input name="smtp_password" value="<?php echo escape($_POST['smtp_password'] ?? '') ?>" type="text" placeholder="password" class="form-control" required>
+            </div>
+        </div>
+
+        <div class="mb-4">
+            <h3>Other settings</h3>
+
+            <div class="form-group">
+                <label>Timezone</label>
+                <select name="app_timezone" type="text" class="form-control">
+                    <?php foreach (\DateTimeZone::listIdentifiers() as $timezone): ?>
+                        <option <?php echo $timezone === ($_POST['app_timezone'] ?? 'UTC') ? 'selected' : '' ?> value="<?php echo $timezone ?>"><?php echo $timezone ?></option>
+                    <?php endforeach; ?>
+                </select>
             </div>
         </div>
 

@@ -18,6 +18,10 @@
         Set up cron
     </div>
 
+    <div class="alert alert-info">
+        Check if emails are send correctly by registering an user
+    </div>
+
     <a href="../admin/red5" class="btn btn-primary">Go to admin page</a>
 
 </div>

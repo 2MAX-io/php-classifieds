@@ -14,4 +14,8 @@
         Remove installation directory
     </div>
 
+    <div class="alert alert-info">
+        Set up cron
+    </div>
+
 </div>

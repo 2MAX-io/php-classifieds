@@ -8,7 +8,10 @@ use App\Entity\SystemLog;
 use App\Service\System\SystemLog\SystemLogService;
 use App\System\Lock\AppLockInterface;
 use Doctrine\ORM\EntityManagerInterface;
+use GuzzleHttp\Client;
+use GuzzleHttp\RequestOptions;
 use Symfony\Component\Lock\Factory;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class CronService
 {
@@ -27,11 +30,17 @@ class CronService
      */
     private $lockFactory;
 
-    public function __construct(EntityManagerInterface $em, SystemLogService $systemLogService, Factory $lockFactory)
+    /**
+     * @var UrlGeneratorInterface
+     */
+    private $urlGenerator;
+
+    public function __construct(EntityManagerInterface $em, UrlGeneratorInterface $urlGenerator, SystemLogService $systemLogService, Factory $lockFactory)
     {
         $this->em = $em;
         $this->systemLogService = $systemLogService;
         $this->lockFactory = $lockFactory;
+        $this->urlGenerator = $urlGenerator;
     }
 
     public function run(): void
@@ -45,6 +54,7 @@ class CronService
         try {
             $this->updateFeatured();
             $this->setMainImage();
+            $this->openIndexPage();
 
             $this->systemLogService->addSystemLog(SystemLog::CRON_RUN_TYPE, "cron executed");
         } finally {
@@ -74,5 +84,17 @@ UPDATE listing JOIN (
 SET listing.main_image = listing_file.path WHERE 1;
 ');
         $query->execute();
+    }
+
+    private function openIndexPage(): void
+    {
+        $client = new Client([
+            RequestOptions::TIMEOUT => 30,
+            RequestOptions::CONNECT_TIMEOUT => 30,
+            RequestOptions::READ_TIMEOUT => 30,
+            'verify' => false,
+        ]);
+
+        $client->get($this->urlGenerator->generate('app_index', [], UrlGeneratorInterface::ABSOLUTE_URL));
     }
 }

@@ -92,7 +92,7 @@ SET listing.main_image = listing_file.path WHERE 1;
             RequestOptions::TIMEOUT => 30,
             RequestOptions::CONNECT_TIMEOUT => 30,
             RequestOptions::READ_TIMEOUT => 30,
-            'verify' => false,
+            RequestOptions::VERIFY => false,
         ]);
 
         $client->get($this->urlGenerator->generate('app_index', [], UrlGeneratorInterface::ABSOLUTE_URL));

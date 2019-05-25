@@ -48,6 +48,11 @@ class FilePath
         return self::getPath(__DIR__ . '/../../../');
     }
 
+    public static function getEngineDir(): string
+    {
+        return self::getPath(__DIR__ . '/../../../zz_engine/');
+    }
+
     public static function getCategoryPicturePath()
     {
         return self::getPath(__DIR__ . '/../../../static/category');

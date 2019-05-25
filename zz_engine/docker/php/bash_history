@@ -177,3 +177,5 @@ php zz_engine/bin/console make:entity --regenerate "App\Entity"
 php zz_engine/bin/console doctrine:schema:create --dump-sql > install/data/_schema.sql
 php zz_engine/bin/console doctrine:migrations:dump-schema --help
 php zz_engine/bin/console doctrine:schema:update --force
+php zz_engine/bin/console debug:container | grep assets._default_package
+php zz_engine/bin/console debug:container | grep assets._default_package

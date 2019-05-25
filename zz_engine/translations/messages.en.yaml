@@ -89,6 +89,8 @@ trans:
   'Allow payments': 'Allow payments'
   'turning off will disable all monetization, featuring ads, top up of account': 'turning off will disable all monetization, featuring ads, top up of account'
   'Payments have been disabled': 'Payments have been disabled'
+  'ALERT! security can not be checked, required file not found: %file%': 'ALERT! security can not be checked, required file not found: %file%'
+  'ALERT! security alert, not allowed file is publicly accessible %url%': 'ALERT! security alert, not allowed file is publicly accessible %url%'
 
 trans.customFieldType.select: Select field
 trans.customFieldType.year_range: Field with year

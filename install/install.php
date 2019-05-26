@@ -12,6 +12,7 @@ use Webmozart\PathUtil\Path;
 include 'include/bootstrap.php';
 
 $errors = [];
+$projectRootPath = getProjectRootPath();
 
 if (!empty($_POST)) {
     $pdo = null;

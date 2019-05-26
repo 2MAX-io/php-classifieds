@@ -55,15 +55,6 @@ if (count($errors) < 1) {
 $projectRootPath = getProjectRootPath();
 include 'view/filesystem_problems.php';
 
-function getProjectRootPath(): string {
-    $projectRootPath = Path::canonicalize(__DIR__ . '/../');
-    if (!file_exists($projectRootPath . '/zzzz_2max_io_classified_ads_project_root.txt')) {
-        throw new UserVisibleMessageException('Can not find project root');
-    }
-
-    return $projectRootPath;
-}
-
 function canWriteToPhpFile(): bool {
     try {
         $filePath = Path::canonicalize(FilePath::getPublicDir() . '/install/data/test.php');

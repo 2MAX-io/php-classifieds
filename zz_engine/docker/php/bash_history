@@ -182,3 +182,5 @@ php zz_engine/bin/console debug:container | grep assets._default_package
 composer update -d zz_engine
 composer dump-autoload --optimize -d zz_engine
 composer install -d zz_engine
+php /var/www/html/zz_engine/bin/console app:cron:secondary
+/var/www/html/zz_engine/bin/console app:cron:secondary

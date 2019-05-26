@@ -16,6 +16,11 @@
 
     <div class="alert alert-info">
         Set up cron
+
+        <textarea class="w-100 form-text">
+* * * * * <?php echo $projectRootPath ?>/zz_engine/bin/console app:cron:main >/dev/null 2>&1
+* * * * * <?php echo $projectRootPath ?>/zz_engine/bin/console app:cron:secondary >/dev/null 2>&1
+        </textarea>
     </div>
 
     <div class="alert alert-info">

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 use App\Helper\FilePath;
 use App\Helper\Random;
-use App\Helper\Str;
 use App\Service\User\RoleInterface;
 use App\System\Filesystem\FilesystemChecker;
 use Symfony\Component\Security\Core\Encoder\Argon2iPasswordEncoder;
@@ -60,7 +59,7 @@ if (file_exists($configPath)) {
 }
 
 if (count(FilesystemChecker::readingFileFailedList())) {
-    $errors[] = 'some dirs can not be created';
+    $errors[] = 'some files can not be read';
     exit;
 }
 
@@ -70,12 +69,17 @@ if (count(FilesystemChecker::creatingDirFailedList())) {
 }
 
 if (count(FilesystemChecker::writingFileFailedList())) {
-    $errors[] = 'Writing test file to some dirs failed';
+    $errors[] = 'can not write to some files';
+    exit;
+}
+
+if (count(FilesystemChecker::incorrectDirPermissionList())) {
+    $errors[] = 'some dirs have incorrect permissions';
     exit;
 }
 
 if (count(FilesystemChecker::incorrectFilePermissionList())) {
-    $errors[] = 'Some files are not writable';
+    $errors[] = 'some files have incorrect permissions';
     exit;
 }
 

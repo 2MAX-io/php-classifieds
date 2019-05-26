@@ -10,6 +10,8 @@ use Webmozart\PathUtil\Path;
 
 include 'include/bootstrap.php';
 
+$errors = [];
+
 $incorrectFilePermissionList = FilesystemChecker::incorrectFilePermissionList();
 if (count($incorrectFilePermissionList)) {
     $errors[] = 'Some files have incorrect permissions';
@@ -41,7 +43,8 @@ if (!$canWriteToPhpFile) {
 }
 
 if (count($errors) < 1) {
-    header('Redirect: ');
+    header('Location: install.php');
+    exit;
 }
 
 $projectRootPath = getProjectRootPath();

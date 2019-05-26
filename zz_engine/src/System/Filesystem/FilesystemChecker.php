@@ -9,7 +9,7 @@ use Symfony\Component\Finder\Finder;
 
 class FilesystemChecker
 {
-    public static function notWritableFileList(): array
+    public static function incorrectFilePermissionList(): array
     {
         $return = [];
 
@@ -28,7 +28,34 @@ class FilesystemChecker
                 break;
             }
 
-            if (!is_writable($file->getPath())) {
+            if (!is_writable($file->getPath()) || !\is_readable($file->getPath())) {
+                $return[] = $file->getPath();
+            }
+        }
+
+        return $return;
+    }
+
+    public static function incorrectDirPermissionList(): array
+    {
+        $return = [];
+
+        $finder = new Finder();
+        $finder->in(FilePath::getProjectDir());
+        $finder->exclude([
+            'static',
+            'zz_engine/docker/mysql/data/',
+        ]);
+
+        $files = $finder->directories()->getIterator();
+        $i = 0;
+        foreach ($files as $file) {
+            ++$i;
+            if ($i > 1000) {
+                break;
+            }
+
+            if (!is_writable($file->getPath()) || !\is_readable($file->getPath())) {
                 $return[] = $file->getPath();
             }
         }
@@ -74,6 +101,33 @@ class FilesystemChecker
 
         foreach ($patchList as $patch) {
             if (!FilesystemChecker::canWriteFile($patch)) {
+                $return[] = $patch;
+            }
+        }
+
+        return $return;
+    }
+
+    public static function readingFileFailedList(): array
+    {
+        $return = [];
+        $patchList = [
+            FilePath::getProjectDir() . '/static/system/logo_default.png',
+            FilePath::getProjectDir() . '/index.php',
+            FilePath::getProjectDir() . '/asset/main.js',
+            FilePath::getProjectDir() . '/static/cache/.gitkeep',
+            FilePath::getProjectDir() . '/static/category/.gitkeep',
+            FilePath::getProjectDir() . '/static/listing/.gitkeep',
+            FilePath::getProjectDir() . '/static/logo/.gitkeep',
+            FilePath::getProjectDir() . '/static/resized/.gitkeep',
+            FilePath::getProjectDir() . '/static/.htaccess',
+            FilePath::getProjectDir() . '/zz_engine/.htaccess',
+            FilePath::getProjectDir() . '/zz_engine/var/.gitkeep',
+        ];
+
+        foreach ($patchList as $patch) {
+            $content = \file_get_contents($patch);
+            if (false === $content) {
                 $return[] = $patch;
             }
         }

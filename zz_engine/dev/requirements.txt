@@ -7,3 +7,12 @@ crontab
 empty database
 
 database mysql 5.6 with fulltext search
+
+
+apt install php7.3-mysqlnd
+
+apt install php7.3-xml
+
+
+disabled:
+sql_mode=only_full_group_by

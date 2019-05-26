@@ -24,7 +24,7 @@ if (!empty($_POST)) {
             \PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8',
         ]);
     } catch (\Throwable $e) {
-        $errors[] = 'Can not connect to database';
+        $errors[] = 'Can not connect to database, error: ' . $e->getMessage();
     }
 
     if ($pdo && countTables($dbName) > 0) {

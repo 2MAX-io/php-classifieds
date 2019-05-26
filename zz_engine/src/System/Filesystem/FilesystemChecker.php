@@ -139,9 +139,9 @@ class FilesystemChecker
     {
         try {
             $testFilePath = $path . '/' . 'test_safe_to_delete.txt';
-            $result = \file_put_contents($testFilePath, 'test, can safely delete');
+            $result = @\file_put_contents($testFilePath, 'test, can safely delete');
 
-            $deleteResult = \unlink($testFilePath);
+            $deleteResult = @\unlink($testFilePath);
 
             if (false === $result || $deleteResult === false) {
                 return false;
@@ -160,8 +160,8 @@ class FilesystemChecker
     public static function canCreateDir(string $path): bool
     {
         try {
-            $result = \mkdir($path);
-            $deleteResult = \rmdir($path);
+            $result = @\mkdir($path);
+            $deleteResult = @\rmdir($path);
 
             if (false === $result || $deleteResult === false) {
                 return false;

@@ -18,7 +18,7 @@ INSERT INTO setting (name, value, last_update_date) VALUES ( 'requireListingAdmi
 INSERT INTO setting (name, value, last_update_date) VALUES ( 'paymentPayPalMode', 'sandbox', '2019-05-22 04:45:01');
 INSERT INTO setting (name, value, last_update_date) VALUES ( 'paymentGatewayPaymentDescription', 'example.com - featuring of Classifieds Ads', '2019-05-22 04:45:01');
 INSERT INTO setting (name, value, last_update_date) VALUES ( 'wordsToRemoveFromTitle', 'to sell
-selling', '2019-05-2245:01');
+selling', '2019-05-22 04:45:01');
 INSERT INTO setting (name, value, last_update_date) VALUES ( 'footerSiteCopyright', '2018-%year% 2MAX.io Classifieds Ads', '2019-05-22 04:45:01');
 INSERT INTO setting (name, value, last_update_date) VALUES ( 'itemsPerPageMax', '10', '2019-05-22 04:45:01');
 INSERT INTO setting (name, value, last_update_date) VALUES ( 'emailFromName', '2MAX.io Classifieds Ads', '2019-05-22 04:45:01');

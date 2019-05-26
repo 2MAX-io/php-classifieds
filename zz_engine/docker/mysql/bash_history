@@ -27,3 +27,8 @@ time mysql classifieds  < /sql/test.sql
 time mysql  --max_allowed_packet=1G classifieds  < /sql/test.sql 
 time mysql classifieds  -e "CREATE DATABASE dev_test"
 time mysql classifieds  < /sql/ogl_2019-05-22_051610_new.sql
+mysql
+cat /etc/mysql/mysql.conf.d/mysqld.cnf 
+cat /etc/mysql/my.cnf
+cat /etc/mysql/conf.d/mysql.cnf 
+cat /etc/mysql/conf.d/my.cnf 

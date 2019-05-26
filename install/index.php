@@ -12,6 +12,11 @@ include 'include/bootstrap.php';
 
 $errors = [];
 
+if (\file_exists(Path::canonicalize(FilePath::getProjectDir() . '/zz_engine/.env.local.php'))) {
+    include 'view/already_installed.php';
+    exit;
+}
+
 $incorrectFilePermissionList = FilesystemChecker::incorrectFilePermissionList();
 if (count($incorrectFilePermissionList)) {
     $errors[] = 'Some files have incorrect permissions';

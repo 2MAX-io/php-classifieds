@@ -53,9 +53,9 @@ if (!empty($_POST)) {
     }
 }
 
-$configPath = Path::canonicalize(FilePath::getProjectDir() . '/zz_engine/.env.local.php');
-if (file_exists($configPath)) {
-    $errors[] = "It seems like app is already installed, if not remove configuration file $configPath";
+if (file_exists(Path::canonicalize(FilePath::getProjectDir() . '/zz_engine/.env.local.php'))) {
+    include 'view/already_installed.php';
+    exit;
 }
 
 if (count(FilesystemChecker::readingFileFailedList())) {
@@ -164,10 +164,6 @@ EOF;
         exit;
     }
 
-}
-
-function escape(string $string): string {
-    return htmlspecialchars($string, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
 }
 
 function saveConfig() {

@@ -20,17 +20,26 @@ class FilesystemChecker
             'zz_engine/docker/mysql/data/',
         ]);
 
-        $files = $finder->files()->getIterator();
+        $fileIterator = $finder->files()->getIterator();
         $i = 0;
-        foreach ($files as $file) {
-            ++$i;
-            if ($i > 1000) {
-                break;
+        $fileIterator->rewind();
+        while ($fileIterator->valid()) {
+            try {
+
+                $fileIterator->next();
+                $file = $fileIterator->current();
+
+                if (!is_writable($file->getPath()) || !\is_readable($file->getPath()) || false === @\file_get_contents($file->getPath(), false, null, 0, 1)) {
+                    ++$i;
+                    if ($i > 1000) {
+                        break;
+                    }
+                    $return[] = $file->getPath();
+                }
+            } catch (\Throwable $e) {
+                $return[] = $e->getMessage();
             }
 
-            if (!is_writable($file->getPath()) || !\is_readable($file->getPath())) {
-                $return[] = $file->getPath();
-            }
         }
 
         return $return;
@@ -47,17 +56,26 @@ class FilesystemChecker
             'zz_engine/docker/mysql/data/',
         ]);
 
-        $files = $finder->directories()->getIterator();
+        $dirIterator = $finder->directories()->getIterator();
+
         $i = 0;
-        foreach ($files as $file) {
-            ++$i;
-            if ($i > 1000) {
-                break;
+        $dirIterator->rewind();
+        while ($dirIterator->valid()) {
+            try {
+                $dirIterator->next();
+                $dir = $dirIterator->current();
+
+                if (!is_writable($dir->getPath()) || !\is_readable($dir->getPath())) {
+                    ++$i;
+                    if ($i > 1000) {
+                        break;
+                    }
+                    $return[] = $dir->getPath();
+                }
+            } catch (\Throwable $e) {
+                $return[] = $e->getMessage();
             }
 
-            if (!is_writable($file->getPath()) || !\is_readable($file->getPath())) {
-                $return[] = $file->getPath();
-            }
         }
 
         return $return;
@@ -112,21 +130,27 @@ class FilesystemChecker
     {
         $return = [];
         $patchList = [
-            FilePath::getProjectDir() . '/static/system/logo_default.png',
-            FilePath::getProjectDir() . '/index.php',
             FilePath::getProjectDir() . '/asset/main.js',
             FilePath::getProjectDir() . '/static/cache/.gitkeep',
             FilePath::getProjectDir() . '/static/category/.gitkeep',
             FilePath::getProjectDir() . '/static/listing/.gitkeep',
             FilePath::getProjectDir() . '/static/logo/.gitkeep',
             FilePath::getProjectDir() . '/static/resized/.gitkeep',
+            FilePath::getProjectDir() . '/static/system/logo_default.png',
             FilePath::getProjectDir() . '/static/.htaccess',
+            FilePath::getProjectDir() . '/static/index.php',
+            FilePath::getProjectDir() . '/static/zzzz_2max_io_classified_ads_static_root.txt',
+            FilePath::getProjectDir() . '/index.php',
             FilePath::getProjectDir() . '/zz_engine/.htaccess',
+            FilePath::getProjectDir() . '/zz_engine/.htaccess',
+            FilePath::getProjectDir() . '/zz_engine/src/Kernel.php',
             FilePath::getProjectDir() . '/zz_engine/var/.gitkeep',
+            FilePath::getProjectDir() . '/zz_engine/var/log/.gitkeep',
+            FilePath::getProjectDir() . '/zz_engine/src/Controller/Pub/IndexController.php',
         ];
 
         foreach ($patchList as $patch) {
-            $content = \file_get_contents($patch);
+            $content = @\file_get_contents($patch);
             if (false === $content) {
                 $return[] = $patch;
             }

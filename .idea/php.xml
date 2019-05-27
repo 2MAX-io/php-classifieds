@@ -27,7 +27,7 @@
       <path value="$PROJECT_DIR$/vendor/symfony/console" />
     </include_path>
   </component>
-  <component name="PhpProjectSharedConfiguration" php_language_level="7.1" />
+  <component name="PhpProjectSharedConfiguration" php_language_level="7.3" />
   <component name="TwigDebugConfiguration">
     <cachePath>$PROJECT_DIR$/symfony/var/cache/dev/twig</cachePath>
   </component>

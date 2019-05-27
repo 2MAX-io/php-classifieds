@@ -14,6 +14,31 @@ include 'include/bootstrap.php';
 $errors = [];
 $projectRootPath = getProjectRootPath();
 
+if (file_exists(Path::canonicalize(FilePath::getProjectDir() . '/zz_engine/.env.local.php'))) {
+    include 'view/already_installed.php';
+    exit;
+}
+
+if (count(FilesystemChecker::readingFileFailedList())) {
+    $errors[] = 'some files can not be read';
+}
+
+if (count(FilesystemChecker::creatingDirFailedList())) {
+    $errors[] = 'some dirs can not be created';
+}
+
+if (count(FilesystemChecker::writingFileFailedList())) {
+    $errors[] = 'can not write to some files';
+}
+
+if (count(FilesystemChecker::incorrectDirPermissionList())) {
+    $errors[] = 'some dirs have incorrect permissions';
+}
+
+if (count(FilesystemChecker::incorrectFilePermissionList())) {
+    $errors[] = 'some files have incorrect permissions';
+}
+
 if (!empty($_POST)) {
     $pdo = null;
     $dbName = $_POST['db_name'];
@@ -52,36 +77,6 @@ if (!empty($_POST)) {
         include "view/success.php";
         exit;
     }
-}
-
-if (file_exists(Path::canonicalize(FilePath::getProjectDir() . '/zz_engine/.env.local.php'))) {
-    include 'view/already_installed.php';
-    exit;
-}
-
-if (count(FilesystemChecker::readingFileFailedList())) {
-    $errors[] = 'some files can not be read';
-    exit;
-}
-
-if (count(FilesystemChecker::creatingDirFailedList())) {
-    $errors[] = 'some dirs can not be created';
-    exit;
-}
-
-if (count(FilesystemChecker::writingFileFailedList())) {
-    $errors[] = 'can not write to some files';
-    exit;
-}
-
-if (count(FilesystemChecker::incorrectDirPermissionList())) {
-    $errors[] = 'some dirs have incorrect permissions';
-    exit;
-}
-
-if (count(FilesystemChecker::incorrectFilePermissionList())) {
-    $errors[] = 'some files have incorrect permissions';
-    exit;
 }
 
 include 'view/install_form.php';

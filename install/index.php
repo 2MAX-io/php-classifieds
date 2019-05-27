@@ -57,22 +57,22 @@ include 'view/filesystem_problems.php';
 function canWriteToPhpFile(): bool {
     try {
         $filePath = Path::canonicalize(FilePath::getPublicDir() . '/install/data/test.php');
-        $originalContent = file_get_contents($filePath);
+        $originalContent = @file_get_contents($filePath);
         $successText = '!!success!!';
         $newContent = str_replace("{{!REPLACE_THIS!}}", $successText, $originalContent);
         $result = @file_put_contents($filePath, $newContent);
 
-        if (!Str::contains(file_get_contents($filePath), $successText)) {
-			@file_put_contents($filePath, $originalContent);
+        if (!Str::contains(@file_get_contents($filePath), $successText)) {
+			@file_put_contents($filePath, $originalContent); // restore original content
             return false;
         }
 
         if (false !== $result && $result > 0) {
-			@file_put_contents($filePath, $originalContent);
+			@file_put_contents($filePath, $originalContent); // restore original content
             return true;
         }
 
-		@file_put_contents($filePath, $originalContent);
+		@file_put_contents($filePath, $originalContent); // restore original content
         return false;
     } catch (\Throwable $e) {
         return false;

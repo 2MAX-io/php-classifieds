@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\System\Filesystem;
 
 use App\Helper\FilePath;
+use DirectoryIterator;
 use Symfony\Component\Finder\Finder;
 
 class FilesystemChecker
@@ -15,31 +16,22 @@ class FilesystemChecker
 
         $finder = new Finder();
         $finder->in(FilePath::getProjectDir());
+        $finder->ignoreUnreadableDirs();
         $finder->exclude([
             'static',
-            'zz_engine/docker/mysql/data/',
+            'zz_engine/docker/',
         ]);
 
         $fileIterator = $finder->files()->getIterator();
         $i = 0;
-        $fileIterator->rewind();
-        while ($fileIterator->valid()) {
-            try {
-
-                $fileIterator->next();
-                $file = $fileIterator->current();
-
-                if (!is_writable($file->getPath()) || !\is_readable($file->getPath()) || false === @\file_get_contents($file->getPath(), false, null, 0, 1)) {
-                    ++$i;
-                    if ($i > 1000) {
-                        break;
-                    }
-                    $return[] = $file->getPath();
+        foreach ($fileIterator as $file) {
+            if (!is_writable($file->getPathname()) || !\is_readable($file->getPathname()) || false === @\file_get_contents($file->getPathname(), false, null, 0, 1)) {
+                ++$i;
+                if ($i > 5000) {
+                    break;
                 }
-            } catch (\Throwable $e) {
-                $return[] = $e->getMessage();
+                $return[] = $file->getPathname();
             }
-
         }
 
         return $return;
@@ -50,32 +42,28 @@ class FilesystemChecker
         $return = [];
 
         $finder = new Finder();
-        $finder->in(FilePath::getProjectDir());
+        $finder->in(FilePath::getProjectDir() . '/zz_engine/src');
+        $finder->ignoreUnreadableDirs();
         $finder->exclude([
             'static',
-            'zz_engine/docker/mysql/data/',
+            'zz_engine/docker/',
         ]);
 
         $dirIterator = $finder->directories()->getIterator();
 
         $i = 0;
         $dirIterator->rewind();
-        while ($dirIterator->valid()) {
-            try {
-                $dirIterator->next();
-                $dir = $dirIterator->current();
+        while($dirIterator->valid()) {
+            $dir = $dirIterator->current();
+            $dirIterator->next();
 
-                if (!is_writable($dir->getPath()) || !\is_readable($dir->getPath())) {
-                    ++$i;
-                    if ($i > 1000) {
-                        break;
-                    }
-                    $return[] = $dir->getPath();
+            if (!is_writable($dir->getPathname()) || !\is_readable($dir->getPathname())) {
+                ++$i;
+                if ($i > 5000) {
+                    break;
                 }
-            } catch (\Throwable $e) {
-                $return[] = $e->getMessage();
+                $return[] = $dir->getPathname();
             }
-
         }
 
         return $return;

@@ -1,80 +1,23 @@
-<?php
+<?php /** @noinspection PhpMissingStrictTypesDeclarationInspection */
 
-declare(strict_types=1);
+ini_set('display_errors', '1');
+error_reporting(-1);
 
-use App\Helper\FilePath;
-use App\Helper\Str;
-use App\System\Filesystem\FilesystemChecker;
-use Webmozart\PathUtil\Path;
+$errors = array();
 
-include 'include/bootstrap.php';
-
-$errors = [];
-
-if (\file_exists(Path::canonicalize(FilePath::getProjectDir() . '/zz_engine/.env.local.php'))) {
-    include 'view/already_installed.php';
+if (version_compare(PHP_VERSION, '7.3', '<')) {
+    $phpVersion = PHP_VERSION;
+    $errors[] = "This app requires at least: PHP 7.3, current PHP version is: $phpVersion";
+    $errors[] = "Most hosts support current PHP versions, but not by default. Consult with hosting documentation or hosting support to set PHP to at least 7.3 for this app.";
+    include 'view/php_requirements.php';
     exit;
 }
 
-$incorrectFilePermissionList = FilesystemChecker::incorrectFilePermissionList();
-if (count($incorrectFilePermissionList)) {
-    $errors[] = 'Some files have incorrect permissions';
-}
-
-$incorrectDirPermissionList = FilesystemChecker::incorrectDirPermissionList();
-if (count($incorrectDirPermissionList)) {
-    $errors[] = 'Some directories have incorrect permissions';
-}
-
-$creatingDirFailedList = FilesystemChecker::creatingDirFailedList();
-if (count($creatingDirFailedList)) {
-    $errors[] = 'Could not create some test directories';
-}
-
-$readingFileFailedList = FilesystemChecker::readingFileFailedList();
-if (count($readingFileFailedList)) {
-    $errors[] = 'Could not read from some files';
-}
-
-$writingFileFailedList = FilesystemChecker::writingFileFailedList();
-if (count($writingFileFailedList)) {
-    $errors[] = 'Could not write from some files';
-}
-
-$canWriteToPhpFile = canWriteToPhpFile();
-if (!$canWriteToPhpFile) {
-    $errors[] = 'Could not change php file install/data/test.php, check permissions for all files';
-}
-
-if (count($errors) < 1) {
-    header('Location: install.php');
+if (count($errors) === 0) {
+    header('Location: filesystem.php');
     exit;
 }
 
-$projectRootPath = getProjectRootPath();
-include 'view/filesystem_problems.php';
-
-function canWriteToPhpFile(): bool {
-    try {
-        $filePath = Path::canonicalize(FilePath::getPublicDir() . '/install/data/test.php');
-        $originalContent = @file_get_contents($filePath);
-        $successText = '!!success!!';
-        $newContent = str_replace("{{!REPLACE_THIS!}}", $successText, $originalContent);
-        $result = @file_put_contents($filePath, $newContent);
-
-        if (!Str::contains(@file_get_contents($filePath), $successText)) {
-			@file_put_contents($filePath, $originalContent); // restore original content
-            return false;
-        }
-
-        if (false !== $result && $result > 0) {
-			@file_put_contents($filePath, $originalContent); // restore original content
-            return true;
-        }
-
-		@file_put_contents($filePath, $originalContent); // restore original content
-        return false;
-    } catch (\Throwable $e) {
-        return false;
-    }
+function escape($string) {
+    return htmlspecialchars($string, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
 }

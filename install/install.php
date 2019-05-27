@@ -19,25 +19,25 @@ if (file_exists(Path::canonicalize(FilePath::getProjectDir() . '/zz_engine/.env.
     exit;
 }
 
-if (count(FilesystemChecker::readingFileFailedList())) {
-    $errors[] = 'some files can not be read';
-}
-
-if (count(FilesystemChecker::creatingDirFailedList())) {
-    $errors[] = 'some dirs can not be created';
-}
-
-if (count(FilesystemChecker::writingFileFailedList())) {
-    $errors[] = 'can not write to some files';
-}
-
-if (count(FilesystemChecker::incorrectDirPermissionList())) {
-    $errors[] = 'some dirs have incorrect permissions';
-}
-
-if (count(FilesystemChecker::incorrectFilePermissionList())) {
-    $errors[] = 'some files have incorrect permissions';
-}
+//if (count(FilesystemChecker::readingFileFailedList())) {
+//    $errors[] = 'some files can not be read';
+//}
+//
+//if (count(FilesystemChecker::creatingDirFailedList())) {
+//    $errors[] = 'some dirs can not be created';
+//}
+//
+//if (count(FilesystemChecker::writingFileFailedList())) {
+//    $errors[] = 'can not write to some files';
+//}
+//
+//if (count(FilesystemChecker::incorrectDirPermissionList())) {
+//    $errors[] = 'some dirs have incorrect permissions';
+//}
+//
+//if (count(FilesystemChecker::incorrectFilePermissionList())) {
+//    $errors[] = 'some files have incorrect permissions';
+//}
 
 if (!empty($_POST)) {
     $pdo = null;

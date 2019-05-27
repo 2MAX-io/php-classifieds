@@ -127,4 +127,5 @@ chown -R www-data:www-data <?php echo $projectRootPath ?>;
         <?php endif; ?>
     </div>
 
+    <a href="" class="btn btn-primary">Refresh</a>
 </div>

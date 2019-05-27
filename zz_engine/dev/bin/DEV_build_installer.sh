@@ -15,7 +15,6 @@ rm $INSTALLER_DIR/echo.php
 rm $INSTALLER_DIR/echo.html
 rm $INSTALLER_DIR/redirection_test.html
 rm $INSTALLER_DIR/.gitignore
-rm $INSTALLER_DIR/static/system/category/original_images.zip
 
 mkdir $INSTALLER_DIR/zz_engine/var/cache
 mkdir $INSTALLER_DIR/zz_engine/var/cache/upgrade
@@ -28,8 +27,6 @@ composer install --no-scripts --classmap-authoritative --quiet --no-dev --no-int
 INSTALLER_ZIP=installer_$(date +%Y-%m-%d_%H%M%S).zip
 
 zip -rq9 $INSTALLER_ZIP .
-
-echo $PROJECT_DIR/zz_engine/var/installer
 
 mv $INSTALLER_ZIP ${PROJECT_DIR}/zz_engine/var/installer
 rm -r ${PROJECT_DIR}/${INSTALLER_DIR}

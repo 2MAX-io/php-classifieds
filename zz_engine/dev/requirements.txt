@@ -30,3 +30,10 @@ php7.3 php7.3-cli php7.3-common
 php7.3-gd
 
 php7.3-mbstring
+
+
+____
+
+Warning: Unsupported declare 'strict_types' in /home/maxio/classified-cpanel-test.2max.io/index.php on line 3
+
+Parse error: syntax error, unexpected '?' in /home/maxio/classified-cpanel-test.2max.io/index.php on line 22

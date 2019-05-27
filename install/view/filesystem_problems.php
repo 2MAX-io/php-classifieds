@@ -16,7 +16,7 @@ find <?php echo $projectRootPath ?> -type d -exec chmod 750 {} \;
 find <?php echo $projectRootPath ?> -type f -exec chmod 640 {} \;
         </textarea>
 
-        <p>If above command would not work on it's own. Other potential issue may be incorrect <b>chown</b> settings.</p>
+        <p>If above commands would not work on it's own. Other potential issue may be incorrect <b>chown</b> settings.</p>
         <p>All project files should be readable and writable both by your current server's user and by webserver process (most common webserver users are www-data, www, apache, nobody or your current server user in shared environments)</p>
         <p>In most cases running one of commands bellow would fix problems, but do not run them if you do not know what exactly are you doing</p>
 

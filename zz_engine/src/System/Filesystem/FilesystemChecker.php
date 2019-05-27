@@ -130,7 +130,6 @@ class FilesystemChecker
             FilePath::getProjectDir() . '/static/zzzz_2max_io_classified_ads_static_root.txt',
             FilePath::getProjectDir() . '/index.php',
             FilePath::getProjectDir() . '/zz_engine/.htaccess',
-            FilePath::getProjectDir() . '/zz_engine/.htaccess',
             FilePath::getProjectDir() . '/zz_engine/src/Kernel.php',
             FilePath::getProjectDir() . '/zz_engine/var/.gitkeep',
             FilePath::getProjectDir() . '/zz_engine/var/log/.gitkeep',

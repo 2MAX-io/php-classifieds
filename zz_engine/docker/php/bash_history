@@ -192,3 +192,9 @@ cat /usr/local/etc/php/php.ini
 ls -la zz_engine/src/Controller/
 chmod -R 000 zz_engine/src/Controller/
 chmod -R 000 zz_engine/src/Service
+chmod -R 000 zz_engine/src/Repository/CustomFieldRepository.php
+stat zz_engine/src/System/Localization/AppNumberFormatter.php
+stat zz_engine/src/System/Localization
+find /var/www/html -type d -exec chmod 750 {} \;
+find /var/www/html -type d -exec chmod 750 {} \;
+find /var/www/html -type d -exec chmod 775 {} \;

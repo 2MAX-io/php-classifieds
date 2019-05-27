@@ -42,7 +42,7 @@ class FilesystemChecker
         $return = [];
 
         $finder = new Finder();
-        $finder->in(FilePath::getProjectDir() . '/zz_engine/src');
+        $finder->in(FilePath::getProjectDir());
         $finder->ignoreUnreadableDirs();
         $finder->exclude([
             'static',

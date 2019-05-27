@@ -37,3 +37,15 @@ ____
 Warning: Unsupported declare 'strict_types' in /home/maxio/classified-cpanel-test.2max.io/index.php on line 3
 
 Parse error: syntax error, unexpected '?' in /home/maxio/classified-cpanel-test.2max.io/index.php on line 22
+
+
+in your hosting panel:
+- set PHP to 7.3 or newer
+- if you can enable opcache
+- if you can increase memory limit to max possible value
+- enable nd_pdo_mysql
+
+
+
+Can not connect to database, error: Undefined class constant 'MYSQL_ATTR_INIT_COMMAND'
+- better documentaiton, enabling nd_pdo_mysql

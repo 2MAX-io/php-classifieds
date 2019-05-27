@@ -38,7 +38,7 @@
 
             <div class="form-group">
                 <label>DB password</label>
-                <input name="db_pass" value="<?php echo escape($_POST['db_pass'] ?? '') ?>" type="text" placeholder="password" class="form-control">
+                <input name="db_pass" value="<?php echo escape($_POST['db_pass'] ?? '') ?>" type="text" class="form-control">
             </div>
         </div>
 
@@ -62,7 +62,7 @@
 
             <div class="form-group">
                 <label>SMTP password</label>
-                <input name="smtp_password" value="<?php echo escape($_POST['smtp_password'] ?? '') ?>" type="text" placeholder="password" class="form-control" required>
+                <input name="smtp_password" value="<?php echo escape($_POST['smtp_password'] ?? '') ?>" type="text" class="form-control" required>
             </div>
         </div>
 

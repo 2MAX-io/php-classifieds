@@ -56,6 +56,11 @@ if (!empty($_POST)) {
         $errors[] = 'Database is not empty, clear it first';
     }
 
+    $mysqlVersion = $pdo->query('SELECT @@innodb_version')->fetchColumn();
+    if ($pdo && version_compare($mysqlVersion, '5.6', '<') ) {
+        $errors[] = "Mysql version should be at least 5.6, current MYSQL version is $mysqlVersion (innodb_version)";
+    }
+
     if (count($errors) === 0) {
         $pdo->beginTransaction();
         try {

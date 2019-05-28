@@ -11,9 +11,7 @@
     <meta name="theme-color" content="#DD080C">
 
     {% block stylesheets %}
-        <link rel="stylesheet" href="{{ asset('asset/bootstrap.css') }}">
-        <link rel="stylesheet" href="{{ asset('asset/style.css') }}">
-        <link rel="stylesheet" href="{{ asset('asset/admin.css') }}">
+        <link rel="stylesheet" href="{{ asset('asset/build/admin.css') }}">
     {% endblock %}
 </head>
 <body>
@@ -182,14 +180,10 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,400i,700,700i">
 
 {% block javascripts %}
-    <script src="{{ asset('asset/jquery.js') }}"></script>
-    <script src="{{ asset('asset/bootstrap.bundle.js') }}"></script>
-    <script src="{{ asset('bundles/fosjsrouting/js/router.min.js') }}"></script>
-    <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
-    <script src="{{ asset('bundles/bazingajstranslation/js/translator.min.js') }}"></script>
+    <script src="{{ asset('asset/build/admin.js') }}"></script>
+
     <script src="{{ path('bazinga_jstranslation_js') }}"></script>
-    <script src="{{ asset('asset/lib/sortable_js/Sortable.min.js') }}"></script>
-    <script src="{{ asset('asset/lib/sortable_js/jquery-sortable.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
 {% endblock %}
 {% block js %}{% endblock %}
 

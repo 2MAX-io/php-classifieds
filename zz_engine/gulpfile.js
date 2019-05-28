@@ -27,6 +27,27 @@ function css() {
     .pipe(dest('asset/build'))
 }
 
+function adminCss() {
+  return src([
+      'asset/bootstrap.css',
+      'asset/style.css',
+      'asset/admin.css',
+    ])
+    .pipe(concat('admin.css'))
+    .pipe(cleanCSS({level: {1: {specialComments: false}}}))
+    .pipe(cssnano())
+    // .pipe(rev())
+    // .pipe(dest('asset/build'))
+    // .pipe(rename({
+    //   dirname: "asset/build" // rename dir in manifest
+    // }))
+    // .pipe(rev.manifest('asset/build/rev-manifest.json', {
+    //   base: 'asset/build',
+    //   merge: true
+    // }))
+    .pipe(dest('asset/build'))
+}
+
 function cssBottom() {
   return src([
       'asset/lib/fancybox/jquery.fancybox.css',
@@ -72,7 +93,36 @@ function js() {
     .pipe(dest('asset/build'))
 }
 
+function adminJs() {
+  return src([
+    'asset/jquery.js',
+    'asset/bundles/fosjsrouting/js/router.js',
+    'asset/bundles/bazingajstranslation/js/translator.min.js',
+    'asset/lib/sortable_js/Sortable.min.js',
+    'asset/lib/sortable_js/jquery-sortable.js',
+    'asset/lib/cleave/cleave.js',
+    'asset/bootstrap.bundle.js',
+    'asset/main.js',
+  ])
+    .pipe(sourcemaps.init())
+    .pipe(concat('admin.js'))
+    .pipe(uglify())
+    .pipe(sourcemaps.write('sourcemaps'))
+    // .pipe(rev())
+    // .pipe(dest('asset/build'))
+    // .pipe(rename({
+    //   dirname: "asset/build" // rename dir in manifest
+    // }))
+    // .pipe(rev.manifest('asset/build/rev-manifest.json', {
+    //   base: 'asset/build',
+    //   merge: true
+    // }))
+    .pipe(dest('asset/build'))
+}
+
 exports.js = js;
 exports.css = css;
 exports.cssBottom = cssBottom;
-exports.default = parallel(css, cssBottom, js);
+exports.adminCss = adminCss;
+exports.adminJs = adminJs;
+exports.default = parallel(css, cssBottom, js, adminCss, adminJs);

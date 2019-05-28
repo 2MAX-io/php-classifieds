@@ -201,3 +201,7 @@ find /var/www/html -type d -exec chmod 775 {} \;
 chmod -R 000 zz_engine/src/Repository/CustomFieldRepository.php
 chmod -R 655 zz_engine/src/Repository/CustomFieldRepository.php
 chmod -R 660 zz_engine/src/Repository/CustomFieldRepository.php
+composer install -d zz_engine
+exit
+composer install -d zz_engine
+composer update -d zz_engine

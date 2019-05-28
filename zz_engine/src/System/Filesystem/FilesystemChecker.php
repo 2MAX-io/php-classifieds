@@ -71,6 +71,10 @@ class FilesystemChecker
 
     public static function creatingDirFailedList(): array
     {
+        if (!\file_exists(FilePath::getProjectDir() . '/zz_engine/var/cache/prod')) {
+            \mkdir(FilePath::getProjectDir() . '/zz_engine/var/cache/prod', 0750);
+        }
+
         $return = [];
         $patchList = [
             FilePath::getProjectDir() . '/static/cache/test',

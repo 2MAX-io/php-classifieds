@@ -5,7 +5,6 @@ declare(strict_types=1);
 use App\Helper\FilePath;
 use App\Helper\Random;
 use App\Service\User\RoleInterface;
-use App\System\Filesystem\FilesystemChecker;
 use Symfony\Component\Security\Core\Encoder\Argon2iPasswordEncoder;
 use Webmozart\PathUtil\Path;
 
@@ -18,26 +17,6 @@ if (file_exists(Path::canonicalize(FilePath::getProjectDir() . '/zz_engine/.env.
     include 'view/already_installed.php';
     exit;
 }
-
-//if (count(FilesystemChecker::readingFileFailedList())) {
-//    $errors[] = 'some files can not be read';
-//}
-//
-//if (count(FilesystemChecker::creatingDirFailedList())) {
-//    $errors[] = 'some dirs can not be created';
-//}
-//
-//if (count(FilesystemChecker::writingFileFailedList())) {
-//    $errors[] = 'can not write to some files';
-//}
-//
-//if (count(FilesystemChecker::incorrectDirPermissionList())) {
-//    $errors[] = 'some dirs have incorrect permissions';
-//}
-//
-//if (count(FilesystemChecker::incorrectFilePermissionList())) {
-//    $errors[] = 'some files have incorrect permissions';
-//}
 
 if (!empty($_POST)) {
     $pdo = null;
@@ -70,6 +49,7 @@ if (!empty($_POST)) {
             loadSql(__DIR__ . '/data/example/categories.sql');
 
             insertAdmin($_POST['admin_email'], $_POST['admin_password']);
+            setEmailSettings($_POST['email_from_address']);
 
             saveConfig();
 
@@ -174,4 +154,33 @@ function saveConfig() {
         'MAILER_URL' => "smtp://{$_POST['smtp_host']}:{$_POST['smtp_port']}?encryption=ssl&auth_mode=plain&username={$_POST['smtp_username']}&password={$_POST['smtp_password']}",
         'APP_TIMEZONE' => $_POST['app_timezone'],
     ]);
+}
+
+function setEmailSettings(string $emailFromAddress) {
+    setSetting('emailFromAddress', $emailFromAddress);
+    setSetting('emailReplyTo', $emailFromAddress);
+}
+
+function setSetting(string $name, string $value) {
+    global $pdo;
+
+    try {
+        $sql = <<<'EOF'
+    UPDATE setting 
+    SET
+        value = :value
+    WHERE
+        name = :name
+;
+
+EOF;
+
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindValue('name', $name);
+        $stmt->bindValue('value', $value);
+        $stmt->execute();
+    } catch (\Throwable $e) {
+        echo "Error while saving the setting with name: $name";
+        exit;
+    }
 }

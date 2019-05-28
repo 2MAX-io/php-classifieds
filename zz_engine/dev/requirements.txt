@@ -49,3 +49,6 @@ in your hosting panel:
 
 Can not connect to database, error: Undefined class constant 'MYSQL_ATTR_INIT_COMMAND'
 - better documentaiton, enabling nd_pdo_mysql
+
+
+documentation info on changing db, timezone, mailer_url in documentation

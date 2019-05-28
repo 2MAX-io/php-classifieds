@@ -14,7 +14,7 @@ INSERT INTO setting (name, value, last_update_date) VALUES ( 'masterSiteAnchorTe
 INSERT INTO setting (name, value, last_update_date) VALUES ( 'masterSiteLinkShow', '1', '2019-05-22 04:45:01');
 INSERT INTO setting (name, value, last_update_date) VALUES ( 'linkPrivacyPolicy', '', '2019-05-22 04:45:01');
 INSERT INTO setting (name, value, last_update_date) VALUES ( 'linkRejectionReason', '', '2019-05-22 04:45:01');
-INSERT INTO setting (name, value, last_update_date) VALUES ( 'requireListingAdminActivation', '1', '2019-05-22 04:45:01');
+INSERT INTO setting (name, value, last_update_date) VALUES ( 'requireListingAdminActivation', '0', '2019-05-22 04:45:01');
 INSERT INTO setting (name, value, last_update_date) VALUES ( 'paymentPayPalMode', 'sandbox', '2019-05-22 04:45:01');
 INSERT INTO setting (name, value, last_update_date) VALUES ( 'paymentGatewayPaymentDescription', 'example.com - featuring of Classifieds Ads', '2019-05-22 04:45:01');
 INSERT INTO setting (name, value, last_update_date) VALUES ( 'wordsToRemoveFromTitle', 'to sell

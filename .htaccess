@@ -22,6 +22,12 @@ DirectoryIndex index.php
     RewriteRule "^(.*)$" - [R=404,L]
 </FilesMatch>
 
+# CUSTOM HTACCESS START - do not remove this line
+
+# put custom htaccess HERE - you can delete this line
+
+# CUSTOM HTACCESS END - do not remove this line
+
 <IfModule mod_rewrite.c>
     RewriteEngine On
 

@@ -24,10 +24,10 @@ INSERT INTO category (id, parent_id, name, slug, sort, lft, rgt, lvl, picture) V
 INSERT INTO category (id, parent_id, name, slug, sort, lft, rgt, lvl, picture) VALUES (24, 17, 'For Swap', 'real-estates-for-swap', 123, 243, 244, 2, null);
 INSERT INTO category (id, parent_id, name, slug, sort, lft, rgt, lvl, picture) VALUES (25, 17, 'Property Wanted', 'property-wanted', 124, 235, 236, 2, null);
 INSERT INTO category (id, parent_id, name, slug, sort, lft, rgt, lvl, picture) VALUES (26, 1, 'Renovation, Construction', 'renovation-construction', 125, 222, 233, 1, 'static/system/category/renovation_construction.jpg');
-INSERT INTO category (id, parent_id, name, slug, sort, lft, rgt, lvl, picture) VALUES (27, 26, 'Construction services', 'construction-services', 126, 231, 232, 2, null);
+INSERT INTO category (id, parent_id, name, slug, sort, lft, rgt, lvl, picture) VALUES (27, 26, 'Construction Services', 'construction-services', 126, 231, 232, 2, null);
 INSERT INTO category (id, parent_id, name, slug, sort, lft, rgt, lvl, picture) VALUES (28, 26, 'Renovation Services', 'renovation-services', 127, 229, 230, 2, null);
 INSERT INTO category (id, parent_id, name, slug, sort, lft, rgt, lvl, picture) VALUES (29, 26, 'Tradesmen Services', 'services-tradesmen', 128, 223, 224, 2, null);
-INSERT INTO category (id, parent_id, name, slug, sort, lft, rgt, lvl, picture) VALUES (30, 26, 'Construction materials', 'construction-materials', 129, 227, 228, 2, null);
+INSERT INTO category (id, parent_id, name, slug, sort, lft, rgt, lvl, picture) VALUES (30, 26, 'Construction Materials', 'construction-materials', 129, 227, 228, 2, null);
 INSERT INTO category (id, parent_id, name, slug, sort, lft, rgt, lvl, picture) VALUES (31, 26, 'Construction machines and devices', 'machines-devices-construction', 130, 225, 226, 2, null);
 INSERT INTO category (id, parent_id, name, slug, sort, lft, rgt, lvl, picture) VALUES (32, 1, 'Home, Furniture, Garden', 'home-furniture-garden', 131, 204, 221, 1, 'static/system/category/home_furniture_garden.jpg');
 INSERT INTO category (id, parent_id, name, slug, sort, lft, rgt, lvl, picture) VALUES (33, 32, 'Furniture', 'furniture', 132, 219, 220, 2, null);

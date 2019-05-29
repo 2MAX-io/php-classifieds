@@ -1,3 +1,4 @@
+INSERT INTO category (id, parent_id, name, slug, sort, lft, rgt, lvl, picture) VALUES (1, null, 'Main Category', 'main-category', 0, 1, 282, 0, '');
 INSERT INTO category (id, parent_id, name, slug, sort, lft, rgt, lvl, picture) VALUES (2, 1, 'Automotive', 'automotive', 101, 262, 281, 1, 'static/system/category/cars.jpg');
 INSERT INTO category (id, parent_id, name, slug, sort, lft, rgt, lvl, picture) VALUES (3, 2, 'Cars', 'cars', 102, 279, 280, 2, null);
 INSERT INTO category (id, parent_id, name, slug, sort, lft, rgt, lvl, picture) VALUES (4, 1, 'Jobs', 'jobs', 111, 252, 261, 1, 'static/system/category/jobs.jpg');
@@ -34,10 +35,10 @@ INSERT INTO category (id, parent_id, name, slug, sort, lft, rgt, lvl, picture) V
 INSERT INTO category (id, parent_id, name, slug, sort, lft, rgt, lvl, picture) VALUES (37, 7, 'Toys', 'toys', 137, 211, 212, 2, null);
 INSERT INTO category (id, parent_id, name, slug, sort, lft, rgt, lvl, picture) VALUES (38, 7, 'House', 'house-applicances', 133, 209, 210, 2, null);
 INSERT INTO category (id, parent_id, name, slug, sort, lft, rgt, lvl, picture) VALUES (39, 7, 'Other', 'other', 139, 207, 208, 2, null);
-INSERT INTO category (id, parent_id, name, slug, sort, lft, rgt, lvl, picture) VALUES (40, 8, 'Other', 'services-other', 150, 201, 202, 2, null);
+INSERT INTO category (id, parent_id, name, slug, sort, lft, rgt, lvl, picture) VALUES (40, 8, 'Other', 'services-other', 151, 201, 202, 2, null);
 INSERT INTO category (id, parent_id, name, slug, sort, lft, rgt, lvl, picture) VALUES (41, 8, 'Private lessons, Tuition and Classes', 'private-lessons-tuition-and-classes', 143, 199, 200, 2, null);
 INSERT INTO category (id, parent_id, name, slug, sort, lft, rgt, lvl, picture) VALUES (42, 8, 'Courses and Training', 'courses-training', 144, 197, 198, 2, null);
-INSERT INTO category (id, parent_id, name, slug, sort, lft, rgt, lvl, picture) VALUES (43, 8, 'Looking for', 'looking-for-services', 151, 195, 196, 2, null);
+INSERT INTO category (id, parent_id, name, slug, sort, lft, rgt, lvl, picture) VALUES (43, 8, 'Looking for', 'looking-for-services', 150, 195, 196, 2, null);
 INSERT INTO category (id, parent_id, name, slug, sort, lft, rgt, lvl, picture) VALUES (44, 9, 'Loans', 'loans', 153, 177, 178, 2, null);
 INSERT INTO category (id, parent_id, name, slug, sort, lft, rgt, lvl, picture) VALUES (45, 9, 'Financial services', 'financial-services', 154, 175, 176, 2, null);
 INSERT INTO category (id, parent_id, name, slug, sort, lft, rgt, lvl, picture) VALUES (47, 9, 'Other', 'other-financial-services', 159, 173, 174, 2, null);

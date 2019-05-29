@@ -6,6 +6,8 @@
 
     <h1>Installation - Server and PHP requirements</h1>
 
+    <div class="alert alert-info">You can find more information about requirements in <a href="https://documentation.2max.io/display/CLAS/Requirements">documentation</a></div>
+
     <?php foreach ($errors as $error): ?>
         <div class="alert alert-danger">
             <?php echo escape($error) ?>

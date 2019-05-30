@@ -7,7 +7,14 @@
     <div class="row mb-2">
         <div class="col-md-8">
             <h1>{{ 'trans.Option for custom field' | trans }}</h1>
-            <h5>{{ 'trans.for custom field' | trans }}: <strong>{{ customFieldOption.customField.name }}</strong></h5>
+            <h5>{{ 'trans.for custom field' | trans }}:
+                <strong>
+                    {{ customFieldOption.customField.name }}
+                    {% if customFieldOption.customField.nameForAdmin %}
+                        ( {{ customFieldOption.customField.nameForAdmin }} )
+                    {% endif %}
+                </strong>
+            </h5>
         </div>
         <div class="col-md-4 text-md-right">
             <a href="{{ path('app_admin_custom_field_edit', {'id': customFieldOption.customField.id}) }}" class="mb-1">{{ 'trans.back to list' | trans }}</a>

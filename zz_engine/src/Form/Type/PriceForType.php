@@ -13,8 +13,8 @@ class PriceForType extends AbstractType
 {
     public function configureOptions(OptionsResolver $resolver)
     {
+        $resolver->setDefault('placeholder', 'not required');
         $resolver->setDefault('choices', [
-            'trans.priceFor.not required' => null,
             'trans.priceFor.PRICE_FOR_WHOLE' => Listing::PRICE_FOR_WHOLE,
             'trans.priceFor.PRICE_FOR_IN_DESCRIPTION' => Listing::PRICE_FOR_IN_DESCRIPTION,
             'trans.priceFor.PRICE_FOR_NETTO' => Listing::PRICE_FOR_NETTO,

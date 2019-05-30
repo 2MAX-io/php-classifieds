@@ -80,9 +80,9 @@
 
                             {% if listing.priceNegotiable is not null %}
                                 {% if listing.priceNegotiable %}
-                                    <span class="badge badge-success">{{ 'trans.to negotiate' | trans }}</span>
+                                    <span class="badge badge-success">{{ 'trans.negotiable' | trans }}</span>
                                 {% else %}
-                                    <span class="badge badge-danger">{{ 'trans.is NOT negotiable' | trans }}</span>
+                                    <span class="badge badge-danger">{{ 'trans.NOT negotiable' | trans }}</span>
                                 {% endif %}
                             {% endif %}
                         </div>

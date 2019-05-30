@@ -46,7 +46,8 @@ if (!empty($_POST)) {
             loadSql(__DIR__ . '/data/_schema.sql');
             loadSql(__DIR__ . '/data/_required_data.sql');
             loadSql(__DIR__ . '/data/settings.sql');
-            loadSql(__DIR__ . '/data/example/categories.sql');
+            loadSql(__DIR__ . '/data/example/category.sql');
+            loadSql(__DIR__ . '/data/example/custom_field.sql');
 
             insertAdmin($_POST['admin_email'], $_POST['admin_password']);
             setEmailSettings($_POST['email_from_address']);

@@ -59,6 +59,10 @@ if (!empty($_POST)) {
             throw $e;
         }
 
+        $crontabText =<<<EOT
+* * * * * $projectRootPath/zz_engine/bin/console app:cron:main >/dev/null 2>&1
+* * * * * $projectRootPath/zz_engine/bin/console app:cron:secondary >/dev/null 2>&1
+EOT;
         include "view/success.php";
         exit;
     }

@@ -91,6 +91,8 @@ trans:
   'Payments have been disabled': 'Payments have been disabled'
   'ALERT! security can not be checked, required file not found: %file%': 'ALERT! security can not be checked, required file not found: %file%'
   'ALERT! security alert, not allowed file is publicly accessible %url%': 'ALERT! security alert, not allowed file is publicly accessible %url%'
+  'Name for Admin only': 'Name for Admin only'
+  'optional, hint for Admin, when having many custom fields with same name, not visible for users': 'optional, hint for Admin, when having many custom fields with same name, not visible for users'
 
 trans.customFieldType.select: Select field
 trans.customFieldType.year_range: Field with year

@@ -23,6 +23,11 @@ class CustomFieldType extends AbstractType
                 new NotBlank(),
             ],
         ]);
+        $builder->add('nameForAdmin', TextType::class, [
+            'label' => 'trans.Name for Admin only',
+            'help' => 'trans.optional, hint for Admin, when having many custom fields with same name, not visible for users',
+            'required' => false,
+        ]);
         $builder->add('type', ChoiceType::class, [
             'label' => 'trans.Type',
             'placeholder' => 'trans.Select',

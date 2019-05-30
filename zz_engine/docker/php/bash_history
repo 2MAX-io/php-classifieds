@@ -205,3 +205,14 @@ composer install -d zz_engine
 exit
 composer install -d zz_engine
 composer update -d zz_engine
+php zz_engine/bin/console make:entity --regenerate "App\Entity"
+composer install -d zz_engine
+php zz_engine/bin/console make:entity --regenerate "App\Entity"
+composer install -d zz_engine
+php zz_engine/bin/console make:entity --regenerate "App\Entity"
+composer dump-autoload --optimize -d zz_engine
+php zz_engine/bin/console make:entity --regenerate "App\Entity"
+php zz_engine/bin/console make:entity --regenerate "App\Entity"
+php zz_engine/bin/console doctrine:schema:update --force
+php zz_engine/bin/console make:entity --regenerate "App\Entity"
+php zz_engine/bin/console doctrine:schema:update --force

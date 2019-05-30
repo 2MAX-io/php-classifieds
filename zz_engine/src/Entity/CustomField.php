@@ -32,6 +32,13 @@ class CustomField
     private $name;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(type="string", length=100, nullable=true)
+     */
+    private $nameForAdmin;
+
+    /**
      * @ORM\Column(type="string", length=50)
      */
     private $type;
@@ -269,6 +276,18 @@ class CustomField
     public function setSort(int $sort): self
     {
         $this->sort = $sort;
+
+        return $this;
+    }
+
+    public function getNameForAdmin(): ?string
+    {
+        return $this->nameForAdmin;
+    }
+
+    public function setNameForAdmin(?string $nameForAdmin): self
+    {
+        $this->nameForAdmin = $nameForAdmin;
 
         return $this;
     }

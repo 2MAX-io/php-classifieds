@@ -31,7 +31,12 @@
         {% for custom_field in custom_fields %}
             <tr data-id="{{ custom_field.id }}">
                 <td><i class="fas fa-arrows-alt sortableHandle"></i></td>
-                <td>{{ custom_field.name }}</td>
+                <td>
+                    <div>{{ custom_field.name }}</div>
+                    {% if custom_field.nameForAdmin %}
+                        <div class="text-muted">{{ custom_field.nameForAdmin }}</div>
+                    {% endif %}
+                </td>
                 <td>{{ ('trans.customFieldType.'~custom_field.type) | trans }}</td>
                 <td>
                     <span class="{{ custom_field.required | boolGreenRedClass }}">

@@ -1,4 +1,3 @@
-INSERT INTO category (id, parent_id, name, slug, sort, lft, rgt, lvl, picture) VALUES (1, null, 'Main Category', 'main-category', 0, 1, 282, 0, '');
 INSERT INTO category (id, parent_id, name, slug, sort, lft, rgt, lvl, picture) VALUES (2, 1, 'Automotive', 'automotive', 101, 262, 281, 1, 'static/system/category/cars.jpg');
 INSERT INTO category (id, parent_id, name, slug, sort, lft, rgt, lvl, picture) VALUES (3, 2, 'Cars', 'cars', 102, 279, 280, 2, null);
 INSERT INTO category (id, parent_id, name, slug, sort, lft, rgt, lvl, picture) VALUES (4, 2, 'Motorbikes', 'motorbikes', 103, 277, 278, 2, null);

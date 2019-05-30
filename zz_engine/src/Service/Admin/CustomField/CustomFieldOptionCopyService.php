@@ -27,18 +27,19 @@ class CustomFieldOptionCopyService
         CustomFieldOptionCopyDto $customFieldOptionCopyDto,
         CustomField $targetCustomField
     ): void {
-        $options = $this->getOptionsIndexedByValue($targetCustomField);
+        $currentOptions = $this->getOptionsIndexedByValue($targetCustomField);
         $sort = $targetCustomField->getCustomFieldOptions()->count() ? $targetCustomField->getCustomFieldOptions()->last()->getSort(): SortService::START_REORDER_FROM;
 
         foreach ($customFieldOptionCopyDto->getSourceCustomField()->getCustomFieldOptions() as $sourceCustomFieldOption) {
+            $sort++;
             $newValue = $sourceCustomFieldOption->getValue();
-            if (isset($options[$newValue])) {
+            if (isset($currentOptions[$newValue])) {
                 continue;
             }
 
             $newCustomFieldOption= clone $sourceCustomFieldOption;
             $newCustomFieldOption->setCustomField($targetCustomField);
-            $newCustomFieldOption->setSort($sort + 1);
+            $newCustomFieldOption->setSort($sort);
             $targetCustomField->addCustomFieldOption($newCustomFieldOption);
             $this->em->persist($newCustomFieldOption);
         }

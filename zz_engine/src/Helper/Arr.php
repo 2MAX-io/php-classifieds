@@ -39,6 +39,9 @@ class Arr
         return $results;
     }
 
+    /**
+     * @param callable $callback returns [key => value]
+     */
     public static function indexBy(array $array, callable $callback): array
     {
         $return = [];

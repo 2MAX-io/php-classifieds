@@ -526,3 +526,7 @@ trans:
   'optional, hint for Admin, when having many custom fields with same name, not visible for users': 'opcjonalna, podpowiedź dla Admina, gdy jest wiele niestandardowych pól o tej samej nazwie, nie widoczna dla użytkowników'
   Sort Alphabetically: 'Sortuj alfabetycznie'
   Save and Add: 'Zapisz i Dodaj'
+  Copy options from other custom field: 'Kopiuj opcje z innego pola niestandarowego'
+  Copy custom field options: 'Kopiuj opcje pola niestandarowego'
+  to custom field: 'do pola niestandarowego'
+  From custom field: 'Z pola niestandarowego'

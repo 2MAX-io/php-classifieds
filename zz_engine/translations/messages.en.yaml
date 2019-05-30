@@ -95,6 +95,10 @@ trans:
   'optional, hint for Admin, when having many custom fields with same name, not visible for users': 'optional, hint for Admin, when having many custom fields with same name, not visible for users'
   Sort Alphabetically: 'Sort Alphabetically'
   Save and Add: 'Save and Add'
+  Copy options from other custom field: 'Copy options from other custom field'
+  Copy custom field options: 'Copy custom field options'
+  to custom field: 'to custom field'
+  From custom field: 'From custom field'
 
 trans.customFieldType.select: Select field
 trans.customFieldType.year_range: Field with year

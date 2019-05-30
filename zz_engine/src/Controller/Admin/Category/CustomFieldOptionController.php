@@ -12,6 +12,7 @@ use App\Helper\Json;
 use App\Service\Admin\CustomField\CustomFieldOptionService;
 use App\Service\System\Sort\SortService;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -21,7 +22,7 @@ class CustomFieldOptionController extends AbstractAdminController
     /**
      * @Route(
      *     "/admin/red5/custom-field/{id}/add-option",
-     *     name="app_admin_custom_field_add_option",
+     *     name="app_admin_custom_field_option_add",
      *     methods={"GET","POST"}
      * )
      */
@@ -36,6 +37,9 @@ class CustomFieldOptionController extends AbstractAdminController
         $customFieldOption->setCustomField($customField);
         $customFieldOption->setSort(SortService::LAST_VALUE);
         $form = $this->createForm(CustomFieldOptionType::class, $customFieldOption);
+        $form->add(CustomFieldOptionType::SAVE_AND_ADD, SubmitType::class, [
+            'label' => 'trans.Save and Add',
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -45,7 +49,13 @@ class CustomFieldOptionController extends AbstractAdminController
 
             $customFieldOptionService->reorder();
 
-            return $this->redirectToRoute('app_admin_custom_field_edit_option', [
+            if ($form->getClickedButton() && CustomFieldOptionType::SAVE_AND_ADD === $form->getClickedButton()->getName()) {
+                return $this->redirectToRoute('app_admin_custom_field_option_add', [
+                    'id' => $customField->getId(),
+                ]);
+            }
+
+            return $this->redirectToRoute('app_admin_custom_field_option_edit', [
                 'id' => $customFieldOption->getId(),
             ]);
         }
@@ -59,7 +69,7 @@ class CustomFieldOptionController extends AbstractAdminController
     /**
      * @Route(
      *     "/admin/red5/custom-field/option/{id}/edit-option",
-     *     name="app_admin_custom_field_edit_option",
+     *     name="app_admin_custom_field_option_edit",
      *     methods={"GET","POST"}
      * )
      */
@@ -72,6 +82,9 @@ class CustomFieldOptionController extends AbstractAdminController
 
         $oldCustomField = clone $customFieldOption;
         $form = $this->createForm(CustomFieldOptionType::class, $customFieldOption);
+        $form->add(CustomFieldOptionType::SAVE_AND_ADD, SubmitType::class, [
+            'label' => 'trans.Save and Add',
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -86,7 +99,13 @@ class CustomFieldOptionController extends AbstractAdminController
                 $customFieldOption->getValue()
             );
 
-            return $this->redirectToRoute('app_admin_custom_field_edit_option', [
+            if ($form->getClickedButton() && CustomFieldOptionType::SAVE_AND_ADD === $form->getClickedButton()->getName()) {
+                return $this->redirectToRoute('app_admin_custom_field_option_add', [
+                    'id' => $customFieldOption->getCustomField()->getId(),
+                ]);
+            }
+
+            return $this->redirectToRoute('app_admin_custom_field_option_edit', [
                 'id' => $customFieldOption->getId(),
             ]);
         }

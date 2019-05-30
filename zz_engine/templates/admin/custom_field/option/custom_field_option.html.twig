@@ -19,8 +19,6 @@
         <div class="col-md-4 text-md-right">
             <a href="{{ path('app_admin_custom_field_edit', {'id': customFieldOption.customField.id}) }}" class="mb-1">{{ 'trans.back to list' | trans }}</a>
 
-            <a href="{{ path('app_admin_custom_field_add_option', {'id': customFieldOption.customField.id}) }}" class="btn btn-success mb-1">{{ 'trans.Add option' | trans }}</a>
-
             {% if customFieldOption.id %}
                 {{ include('admin/custom_field/option/_delete_form.html.twig') }}
             {% endif %}
@@ -28,8 +26,11 @@
     </div>
 
     {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn btn-primary">{{ button_label|default('trans.Save') | trans }}</button>
+    {{ form_row(form.name) }}
+    {{ form_row(form.value) }}
+    {{ form_row(form.sort) }}
+    <button class="btn btn-primary mr-3">{{ button_label|default('trans.Save') | trans }}</button>
+    {{ form_widget(form.saveAndAdd) }}
     {{ form_end(form) }}
 
 </div>

@@ -19,6 +19,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 class CustomFieldOptionType extends AbstractType
 {
     const VALUE_FIELD = 'value';
+    const SAVE_AND_ADD = 'saveAndAdd';
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {

@@ -525,3 +525,4 @@ trans:
   'Name for Admin only': 'Nazwa tylko dla Admina'
   'optional, hint for Admin, when having many custom fields with same name, not visible for users': 'opcjonalna, podpowiedź dla Admina, gdy jest wiele niestandardowych pól o tej samej nazwie, nie widoczna dla użytkowników'
   Sort Alphabetically: 'Sortuj alfabetycznie'
+  Save and Add: 'Zapisz i Dodaj'

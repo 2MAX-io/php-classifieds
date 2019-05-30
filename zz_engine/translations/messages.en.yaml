@@ -94,6 +94,7 @@ trans:
   'Name for Admin only': 'Name for Admin only'
   'optional, hint for Admin, when having many custom fields with same name, not visible for users': 'optional, hint for Admin, when having many custom fields with same name, not visible for users'
   Sort Alphabetically: 'Sort Alphabetically'
+  Save and Add: 'Save and Add'
 
 trans.customFieldType.select: Select field
 trans.customFieldType.year_range: Field with year

@@ -35,9 +35,9 @@
                 </div>
             </div>
 
-            <div class="list-group sortable">
+            <div class="list-group sortable mb-2">
                 {% for customFieldOption in custom_field.customFieldOptions %}
-                    <div class="list-group-item"  data-id="{{ customFieldOption.id }}">
+                    <div class="list-group-item sortAlphabeticallyElement"  data-id="{{ customFieldOption.id }}" data-name="{{ customFieldOption.name }}">
                         <i class="fas fa-arrows-alt sortableHandle"></i>
                         {{ customFieldOption.name }}
 
@@ -49,6 +49,10 @@
                         </div>
                     </div>
                 {% endfor %}
+            </div>
+
+            <div class="mb-2">
+                <button class="btn btn-secondary sortAlphabetically">{{ 'trans.Sort Alphabetically' | trans }}</button>
             </div>
         </div>
     {% endif %}
@@ -79,6 +83,22 @@
                     })
                 }
             );
+        });
+
+        $('.sortAlphabetically').click(function () {
+            let sortElementList = [];
+            $('.sortAlphabeticallyElement').each(function (k, el) {
+                sortElementList.push({
+                    id: $(el).data('id'),
+                    name: $(el).data('name'),
+                });
+            });
+            sortElementList.sort((a, b) => (a.name > b.name) ? 1 : -1);
+
+            let sort = sortElementList.map(function (el) {
+                return el.id;
+            });
+            $('.sortable').sortable('widget').sort(sort);
         });
     </script>
 {% endblock %}

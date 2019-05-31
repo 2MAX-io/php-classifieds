@@ -24,6 +24,10 @@ DirectoryIndex index.php
 
 # CUSTOM HTACCESS START - do not remove this line
 
+# force https
+#RewriteCond %{HTTPS} off
+#RewriteRule .* https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
 # put custom htaccess HERE - you can delete this line
 
 # CUSTOM HTACCESS END - do not remove this line

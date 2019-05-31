@@ -100,6 +100,7 @@ trans:
   to custom field: 'to custom field'
   From custom field: 'From custom field'
   Unknown error during security audit: 'Unknown error during security audit'
+  'enter here, all characters specific to your language, except for standard characters A-Z, 0-9, for example: ąĄßöИ, if needed': 'enter here, all characters specific to your language, except for standard characters A-Z, 0-9, for example: ąĄßöИ, if needed'
 
 trans.customFieldType.select: Select field
 trans.customFieldType.year_range: Field with year
@@ -408,7 +409,7 @@ trans.Roles: Roles
 trans.Activated: Activated
 trans.Language: Language
 trans.Currency: Currency
-'trans.Allowed characters': 'Allowed characters'
+'trans.Allowed non standard characters in listing': 'Allowed non standard characters in listing'
 'trans.Search examples': 'Search examples'
 'trans.You have canceled payment. If you want to feature listing, try again and complete payment': 'You have canceled payment. If you want to feature listing, try again and complete payment'
 'trans.You have canceled payment. If you want to top up account, try again and complete payment': 'You have canceled payment. If you want to top up account, try again and complete payment'

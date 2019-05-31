@@ -192,7 +192,8 @@ class SettingsType extends AbstractType
             ],
         ]);
         $builder->add('allowedCharacters', TextType::class, [
-            'label' => 'trans.Allowed characters',
+            'label' => 'trans.Allowed non standard characters in listing',
+            'help' => 'trans.enter here, all characters specific to your language, except for standard characters A-Z, 0-9, for example: ąĄßöИ, if needed',
             'required' => true,
             'constraints' => [
             ],

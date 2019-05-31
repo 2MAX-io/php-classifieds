@@ -99,6 +99,7 @@ trans:
   Copy custom field options: 'Copy custom field options'
   to custom field: 'to custom field'
   From custom field: 'From custom field'
+  Unknown error during security audit: 'Unknown error during security audit'
 
 trans.customFieldType.select: Select field
 trans.customFieldType.year_range: Field with year

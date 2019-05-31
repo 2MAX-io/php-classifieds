@@ -56,7 +56,10 @@ class ExecuteActionType extends AbstractType
             'placeholder' => 'trans.Select',
             'class' => CustomFieldOption::class,
             'choice_label' => function (CustomFieldOption $customFieldOption) {
-                return $customFieldOption->getCustomField()->getName() . ' - ' . $customFieldOption->getName();
+                $customField = $customFieldOption->getCustomField();
+                $hint = $customField->getNameForAdmin() ? " ( {$customField->getNameForAdmin()} )" : '';
+
+                return $customField->getName() . $hint . ' ⇾ ' . $customFieldOption->getName();
             },
             'query_builder' => function () {
                 $qb = $this->em->getRepository(CustomFieldOption::class)->createQueryBuilder('customFieldOption');

@@ -233,9 +233,11 @@
 
             {% include 'base/_pagination.html.twig' %}
 
-            <div>
-                <a href="{{ path('app_admin_listing_execute_on_filtered', app.request.query.all) }}" class="btn btn-danger">{{ 'trans.Execute action on filtered listings' | trans }}</a>
-            </div>
+            {% if listings is not empty %}
+                <div>
+                    <a href="{{ path('app_admin_listing_execute_on_filtered', app.request.query.all) }}" class="btn btn-danger">{{ 'trans.Execute action on filtered listings' | trans }}</a>
+                </div>
+            {% endif %}
 
         </div>
     </div>

@@ -12,7 +12,6 @@ use App\Service\Admin\Listing\AdminListingSearchService;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
-use http\Exception\UnexpectedValueException;
 
 class ExecuteActionOnFilteredService
 {
@@ -128,7 +127,7 @@ $selectSql
 
         $allListingsCount = (int) $this->em->getRepository(Listing::class)->count([]);
         if ($allListingsCount < 1) {
-            throw new UnexpectedValueException('there should be some listings');
+            throw new \UnexpectedValueException('there should be some listings');
         }
         $percentage = $filteredCount / $allListingsCount;
 

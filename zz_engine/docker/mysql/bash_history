@@ -32,3 +32,5 @@ cat /etc/mysql/mysql.conf.d/mysqld.cnf
 cat /etc/mysql/my.cnf
 cat /etc/mysql/conf.d/mysql.cnf 
 cat /etc/mysql/conf.d/my.cnf 
+mysql 116.203.65.178 -u root
+mysql -h 116.203.65.178 -u root

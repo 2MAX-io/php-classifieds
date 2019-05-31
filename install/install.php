@@ -27,17 +27,17 @@ if (!empty($_POST)) {
             \PDO::ATTR_EMULATE_PREPARES => false,
             \PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8',
         ]);
+
+        if (countTables($dbName) > 0) {
+            $errors[] = 'Database is not empty, clear it first';
+        }
+
+        $mysqlVersion = $pdo->query('SELECT @@innodb_version')->fetchColumn();
+        if ($pdo && version_compare($mysqlVersion, '5.6', '<') ) {
+            $errors[] = "Mysql version should be at least 5.6, current MYSQL version is $mysqlVersion (innodb_version)";
+        }
     } catch (\Throwable $e) {
         $errors[] = 'Can not connect to database, error: ' . $e->getMessage();
-    }
-
-    if ($pdo && countTables($dbName) > 0) {
-        $errors[] = 'Database is not empty, clear it first';
-    }
-
-    $mysqlVersion = $pdo->query('SELECT @@innodb_version')->fetchColumn();
-    if ($pdo && version_compare($mysqlVersion, '5.6', '<') ) {
-        $errors[] = "Mysql version should be at least 5.6, current MYSQL version is $mysqlVersion (innodb_version)";
     }
 
     if (count($errors) === 0) {

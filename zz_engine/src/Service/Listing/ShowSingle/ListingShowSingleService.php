@@ -58,6 +58,7 @@ class ListingShowSingleService
         $qb->setParameter(':listingId', $listingId);
 
         $qb->addOrderBy('categoryJoin.sort', 'ASC');
+        $qb->addOrderBy('customFieldOption.sort', 'ASC');
 
         return ListingShowDto::fromDoctrineResult($qb->getQuery()->getOneOrNullResult());
     }

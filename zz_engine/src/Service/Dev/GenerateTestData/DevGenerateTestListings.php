@@ -45,6 +45,8 @@ class DevGenerateTestListings
             $listing->setFirstCreatedDate(new \DateTime());
             $listing->setLastEditDate(new \DateTime());
             $listing->setOrderByDate(new \DateTime());
+            $listing->setEmail('user@example.com');
+            $listing->setPhone('12345555555');
             $listing->setSlug('test');
             $listing->setSearchText($listing->getTitle() . ' ' . $listing->getDescription());
             $listing->setValidUntilDate(Carbon::now()->addDays(7));

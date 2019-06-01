@@ -15,6 +15,7 @@ rm $INSTALLER_DIR/echo.php
 rm $INSTALLER_DIR/echo.html
 rm $INSTALLER_DIR/redirection_test.html
 rm $INSTALLER_DIR/.gitignore
+rm $INSTALLER_DIR/LICENSE_LICENCJA_UnRsurDMXRqbXu3XeNPys.txt
 
 mkdir $INSTALLER_DIR/zz_engine/var/cache
 mkdir $INSTALLER_DIR/zz_engine/var/cache/upgrade
@@ -24,7 +25,7 @@ cd $INSTALLER_DIR
 
 composer install --no-scripts --classmap-authoritative --quiet --no-dev --no-interaction -d zz_engine
 
-INSTALLER_ZIP=installer_$(date +%Y-%m-%d_%H%M%S).zip
+INSTALLER_ZIP=installer_$(date +%Y-%m-%d_%H%M%S)_$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 7 | head -n 1).zip
 
 zip -rq9 $INSTALLER_ZIP .
 

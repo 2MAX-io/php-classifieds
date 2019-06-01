@@ -218,3 +218,53 @@ php zz_engine/bin/console make:entity --regenerate "App\Entity"
 php zz_engine/bin/console doctrine:schema:update --force
 php zz_engine/bin/console doctrine:schema:create --dump-sql 
 php zz_engine/bin/console doctrine:schema:update --dump-sql 
+php zz_engine/bin/console doctrine:schema:update --dump-sql 
+php zz_engine/bin/console doctrine:schema:update --f
+php zz_engine/bin/console doctrine:schema:update -f
+php zz_engine/bin/console make:command
+php zz_engine/bin/console make:command
+composer require --dev -d zz_engine fzaninotto/faker
+/var/www/html/zz_engine/bin/console app:dev:generate-test-listings
+/var/www/html/zz_engine/bin/console app:dev:generate-test-listings
+/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 100
+/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 100
+/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 100
+/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 100
+/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 100
+/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 100
+/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 100
+/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 100
+/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 100
+/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 100
+php zz_engine/bin/console doctrine:schema:update -f
+php zz_engine/bin/console doctrine:schema:update -f
+php zz_engine/bin/console doctrine:schema:update -f
+php zz_engine/bin/console doctrine:schema:update -f
+/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 100
+/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 100
+/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 100
+/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 100
+/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 100
+/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 100
+/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 100
+/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 100
+/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 100
+/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 100
+/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 100
+/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 100
+/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 100
+/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 100
+/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 100
+/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 100
+/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 100
+/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 100
+/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 100000
+/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 100000
+/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 100000
+/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 100000
+/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 100000
+/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 100000
+/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 100000
+/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 10000
+/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 100000
+/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 100000

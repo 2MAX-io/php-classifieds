@@ -83,6 +83,7 @@ class Listing
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="listings")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $category;
 

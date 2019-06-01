@@ -108,6 +108,9 @@
             "config/routes/fos_js_routing.yaml"
         ]
     },
+    "fzaninotto/faker": {
+        "version": "v1.8.0"
+    },
     "giggsey/libphonenumber-for-php": {
         "version": "8.10.11"
     },

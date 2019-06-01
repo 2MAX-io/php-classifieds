@@ -17,4 +17,9 @@ class Random
 
         return $token;
     }
+
+    public static function bool(): bool
+    {
+        return (bool) \random_int(0, 1);
+    }
 }

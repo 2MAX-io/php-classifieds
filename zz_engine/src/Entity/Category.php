@@ -334,7 +334,7 @@ class Category
     }
 
     /**
-     * @return Collection|CustomField
+     * @return Collection|CustomField[]
      */
     public function getCustomFields(): Collection
     {

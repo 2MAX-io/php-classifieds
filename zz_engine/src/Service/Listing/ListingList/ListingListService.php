@@ -13,6 +13,7 @@ use App\Helper\Str;
 use App\Service\Listing\ListingPublicDisplayService;
 use App\Service\System\Pagination\PaginationService;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Query\Expr\Join;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 class ListingListService
@@ -53,88 +54,12 @@ class ListingListService
     {
         $request = $this->requestStack->getMasterRequest();
         $qb = $this->em->getRepository(Listing::class)->createQueryBuilder('listing');
-        $customFieldForCategoryList = Arr::indexBy($listingListDto->getCustomFieldForCategoryList(), function(CustomField $customField) {
-            return [$customField->getId() => $customField];
-        });
-
-        if ($request->get('form_custom_field', false)) {
-            $sqlParamId = 0;
-            $usedCustomFieldIdList = [];
-            foreach ($request->get('form_custom_field') as $customFieldId => $customFieldFormValueArray) {
-                $sqlParamId++;
-                /** @var CustomField $customField */
-                if (!isset($customFieldForCategoryList[$customFieldId])) {
-                    continue;
-                }
-                $customField = $customFieldForCategoryList[$customFieldId];
-
-                if (isset($customFieldFormValueArray['range'])) {
-                    $rangeCondition = $qb->expr()->andX();
-
-                    if (!empty($customFieldFormValueArray['range']['min'])) {
-                        $rangeCondition->add($qb->expr()->gte('listingCustomFieldValue.value', ':customFieldValueMin_' . ((int) $sqlParamId)));
-                        $qb->setParameter(
-                            ':customFieldValueMin_' . ((int)$sqlParamId),
-                            $customFieldFormValueArray['range']['min'],
-                            \Doctrine\DBAL\Types\Type::INTEGER
-                        );
-                    }
-
-                    if (!empty($customFieldFormValueArray['range']['max'])) {
-                        $rangeCondition->add($qb->expr()->lte('listingCustomFieldValue.value', ':customFieldValueMax_' . ((int) $sqlParamId)));
-                        $qb->setParameter(
-                            ':customFieldValueMax_' . ((int)$sqlParamId),
-                            $customFieldFormValueArray['range']['max'],
-                            \Doctrine\DBAL\Types\Type::INTEGER
-                        );
-                    }
-
-                    if ($rangeCondition->count() > 0) {
-                        $qb->orWhere($rangeCondition);
-
-                        $rangeCondition->add($qb->expr()->eq('listingCustomFieldValue.customField', ':customFieldId_' . ((int) $sqlParamId)));
-                        $qb->setParameter(':customFieldId_' . ((int) $sqlParamId), $customFieldId);
-
-                        $usedCustomFieldIdList[] = $customFieldId;
-                    }
-                }
-
-                if (isset($customFieldFormValueArray['values'])) {
-                    foreach ($customFieldFormValueArray['values'] as $valueItem) {
-                        if (Str::emptyTrim($valueItem)) {
-                            continue;
-                        }
-
-                        $sqlParamId++;
-                        $qb->orWhere($qb->expr()->andX(
-                            $qb->expr()->eq('listingCustomFieldValue.customField', ':customFieldId_' . ((int) $sqlParamId)),
-                            $qb->expr()->eq('listingCustomFieldValue.value', ':customFieldValue_' . ((int) $sqlParamId))
-                        ));
-                        $qb->setParameter(':customFieldId_' . ((int) $sqlParamId), $customFieldId);
-                        $qb->setParameter(':customFieldValue_' . ((int) $sqlParamId), $valueItem);
-
-                        if ($customField->getType() === CustomField::TYPE_CHECKBOX_MULTIPLE) {
-                            $usedCustomFieldIdList[] = $customFieldId . "_$valueItem";
-                        } else {
-                            $usedCustomFieldIdList[] = $customFieldId;
-                        }
-                    }
-                }
-            }
-
-            $customFieldsCount = count(array_unique($usedCustomFieldIdList));
-            if ($customFieldsCount > 0) {
-                $qb->innerJoin('listing.listingCustomFieldValues', 'listingCustomFieldValue');
-                $qb->innerJoin('listingCustomFieldValue.customField', 'customField');
-
-                $qb->andHaving($qb->expr()->eq($qb->expr()->countDistinct('listingCustomFieldValue.id'), ':uniqueCustomFieldsCount'));
-                $qb->setParameter(':uniqueCustomFieldsCount', $customFieldsCount);
-            }
-        }
 
         if ($listingListDto->getCategory()) {
-            $qb->join('listing.category', 'category');
-            $qb->andWhere(
+            $qb->join(
+                'listing.category',
+                'category',
+                Join::WITH,
                 $qb->expr()->andX(
                     $qb->expr()->gte('category.lft', ':requestedCategoryLft'),
                     $qb->expr()->lte('category.rgt', ':requestedCategoryRgt')
@@ -165,6 +90,86 @@ class ListingListService
         }
 
         $this->listingPublicDisplayService->applyPublicDisplayConditions($qb);
+
+        if ($request->get('form_custom_field', false)) {
+            $customFieldForCategoryList = Arr::indexBy($listingListDto->getCustomFieldForCategoryList(), function(CustomField $customField) {
+                return [$customField->getId() => $customField];
+            });
+
+            $sqlParamId = 0;
+            $usedCustomFieldIdList = [];
+            $customFieldConditionList = $qb->expr()->orX();
+            foreach ($request->get('form_custom_field') as $customFieldId => $customFieldFormValueArray) {
+                $sqlParamId++;
+                /** @var CustomField $customField */
+                if (!isset($customFieldForCategoryList[$customFieldId])) {
+                    continue;
+                }
+                $customField = $customFieldForCategoryList[$customFieldId];
+
+                if (isset($customFieldFormValueArray['range'])) {
+                    $rangeCondition = $qb->expr()->andX();
+
+                    if (!empty($customFieldFormValueArray['range']['min'])) {
+                        $rangeCondition->add($qb->expr()->gte('listingCustomFieldValue.value', ':customFieldValueMin_' . ((int) $sqlParamId)));
+                        $qb->setParameter(
+                            ':customFieldValueMin_' . ((int)$sqlParamId),
+                            $customFieldFormValueArray['range']['min'],
+                            \Doctrine\DBAL\Types\Type::INTEGER
+                        );
+                    }
+
+                    if (!empty($customFieldFormValueArray['range']['max'])) {
+                        $rangeCondition->add($qb->expr()->lte('listingCustomFieldValue.value', ':customFieldValueMax_' . ((int) $sqlParamId)));
+                        $qb->setParameter(
+                            ':customFieldValueMax_' . ((int)$sqlParamId),
+                            $customFieldFormValueArray['range']['max'],
+                            \Doctrine\DBAL\Types\Type::INTEGER
+                        );
+                    }
+
+                    if ($rangeCondition->count() > 0) {
+                        $customFieldConditionList->add($rangeCondition);
+
+                        $rangeCondition->add($qb->expr()->eq('listingCustomFieldValue.customField', ':customFieldId_' . ((int) $sqlParamId)));
+                        $qb->setParameter(':customFieldId_' . ((int) $sqlParamId), $customFieldId);
+
+                        $usedCustomFieldIdList[] = $customFieldId;
+                    }
+                }
+
+                if (isset($customFieldFormValueArray['values'])) {
+                    foreach ($customFieldFormValueArray['values'] as $valueItem) {
+                        if (Str::emptyTrim($valueItem)) {
+                            continue;
+                        }
+
+                        $sqlParamId++;
+                        $customFieldConditionList->add($qb->expr()->andX(
+                            $qb->expr()->eq('listingCustomFieldValue.customField', ':customFieldId_' . ((int) $sqlParamId)),
+                            $qb->expr()->eq('listingCustomFieldValue.value', ':customFieldValue_' . ((int) $sqlParamId))
+                        ));
+                        $qb->setParameter(':customFieldId_' . ((int) $sqlParamId), $customFieldId);
+                        $qb->setParameter(':customFieldValue_' . ((int) $sqlParamId), $valueItem);
+
+                        if ($customField->getType() === CustomField::TYPE_CHECKBOX_MULTIPLE) {
+                            $usedCustomFieldIdList[] = $customFieldId . "_$valueItem";
+                        } else {
+                            $usedCustomFieldIdList[] = $customFieldId;
+                        }
+                    }
+                }
+            }
+
+            $customFieldsCount = count(array_unique($usedCustomFieldIdList));
+            if ($customFieldsCount > 0) {
+                $qb->join('listing.listingCustomFieldValues', 'listingCustomFieldValue');
+                $qb->andWhere($customFieldConditionList);
+
+                $qb->andHaving($qb->expr()->eq($qb->expr()->countDistinct('listingCustomFieldValue.id'), ':uniqueCustomFieldsCount'));
+                $qb->setParameter(':uniqueCustomFieldsCount', $customFieldsCount);
+            }
+        }
 
         $qb->addOrderBy('listing.featured', 'DESC');
         $qb->addOrderBy('listing.featuredWeight', 'DESC');

@@ -271,3 +271,8 @@ php zz_engine/bin/console doctrine:schema:update -f
 /var/www/html/zz_engine/bin/console app:dev:generate-test-listings 10000
 /var/www/html/zz_engine/bin/console app:dev:generate-test-listings 10000
 /var/www/html/zz_engine/bin/console app:dev:generate-test-listings 10000
+php zz_engine/bin/console doctrine:schema:update --force
+php zz_engine/bin/console doctrine:schema:update --force
+php zz_engine/bin/console doctrine:schema:update --force
+git stash
+git stash

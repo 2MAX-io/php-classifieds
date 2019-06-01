@@ -5,14 +5,18 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\Index;
 use Doctrine\ORM\Mapping\UniqueConstraint;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ListingCustomFieldValueRepository")
  * @ORM\Table(
  *      uniqueConstraints={
- *          @UniqueConstraint(name="unique_custom_field_value_in_listing", columns={"listing_id", "custom_field_id", "value", "custom_field_option_id"}),
- *      }
+ *         @UniqueConstraint(name="unique_custom_field_value_in_listing", columns={"listing_id", "custom_field_id", "value", "custom_field_option_id"}),
+ *      },
+ *      indexes={
+ *          @Index(columns={"listing_id", "custom_field_id", "value"}, name="IDX_filter"),
+ *      },
  * )
  */
 class ListingCustomFieldValue

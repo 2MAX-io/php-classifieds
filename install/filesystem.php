@@ -11,7 +11,8 @@ include 'include/bootstrap.php';
 
 $errors = [];
 
-if (\file_exists(Path::canonicalize(FilePath::getProjectDir() . '/zz_engine/.env.local.php'))) {
+$configFilePath = Path::canonicalize(FilePath::getProjectDir() . '/zz_engine/.env.local.php');
+if (\file_exists($configFilePath)) {
     include 'view/already_installed.php';
     exit;
 }

@@ -1,3 +1,5 @@
+IndexIgnore *
+
 <FilesMatch "\.php[\d]*$">
     RewriteRule "^(.*)$" - [R=404,L]
 </FilesMatch>

@@ -17,7 +17,7 @@ trans:
 
   priceFor.PRICE_FOR_NETTO: 'netto'
   priceFor.PRICE_FOR_BRUTTO: 'brutto'
-  priceFor.PRICE_FOR_IN_DESCRIPTION: 'w opisie ogłoszenia'
+  priceFor.PRICE_FOR_SEE_DESCRIPTION: 'zobacz opis'
   priceFor.PRICE_FOR_WHOLE: 'za całość'
   priceFor.PRICE_FOR_ITEM: 'za sztukę'
   priceFor.PRICE_FOR_MINUTE: 'za minutę'

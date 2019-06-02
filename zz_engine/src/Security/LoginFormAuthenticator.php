@@ -26,18 +26,18 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
 {
     use TargetPathTrait;
 
-    private $entityManager;
+    private $em;
     private $urlGenerator;
     private $csrfTokenManager;
     private $passwordEncoder;
 
     public function __construct(
-        EntityManagerInterface $entityManager,
+        EntityManagerInterface $em,
         UrlGeneratorInterface $urlGenerator,
         CsrfTokenManagerInterface $csrfTokenManager,
         UserPasswordEncoderInterface $passwordEncoder
     ) {
-        $this->entityManager = $entityManager;
+        $this->em = $em;
         $this->urlGenerator = $urlGenerator;
         $this->csrfTokenManager = $csrfTokenManager;
         $this->passwordEncoder = $passwordEncoder;
@@ -72,9 +72,9 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
         }
 
         if (Str::contains($credentials['email'], '@')) {
-            $user = $this->entityManager->getRepository(User::class)->findOneBy(['email' => $credentials['email']]);
+            $user = $this->em->getRepository(User::class)->findOneBy(['email' => $credentials['email']]);
         } else {
-            $user = $this->entityManager->getRepository(User::class)->findOneBy(['username' => $credentials['email']]);
+            $user = $this->em->getRepository(User::class)->findOneBy(['username' => $credentials['email']]);
         }
 
         if (!$user) {

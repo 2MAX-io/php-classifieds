@@ -41,9 +41,9 @@ class FeaturedPackageController extends AbstractAdminController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($featuredPackage);
-            $entityManager->flush();
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($featuredPackage);
+            $em->flush();
 
             return $this->redirectToRoute('app_admin_featured_package_edit', [
                 'id' => $featuredPackage->getId(),
@@ -103,9 +103,9 @@ class FeaturedPackageController extends AbstractAdminController
         $this->denyUnlessAdmin();
 
         if ($this->isCsrfTokenValid('delete'.$featuredPackage->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($featuredPackage);
-            $entityManager->flush();
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($featuredPackage);
+            $em->flush();
         }
 
         return $this->redirectToRoute('app_admin_featured_package_edit', [

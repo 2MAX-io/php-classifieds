@@ -39,9 +39,9 @@ class PageController extends AbstractAdminController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($page);
-            $entityManager->flush();
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($page);
+            $em->flush();
 
             return $this->redirectToRoute('app_admin_page_edit', [
                 'id' => $page->getId(),
@@ -86,9 +86,9 @@ class PageController extends AbstractAdminController
         $this->denyUnlessAdmin();
 
         if ($this->isCsrfTokenValid('delete'.$page->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($page);
-            $entityManager->flush();
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($page);
+            $em->flush();
         }
 
         return $this->redirectToRoute('app_admin_page_index');

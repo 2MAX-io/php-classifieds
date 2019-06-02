@@ -16,7 +16,7 @@ class BalanceHistoryController extends AbstractUserController
     /**
      * @Route("/user/balance/history", name="app_user_balance_history")
      */
-    public function balanceTopUp(
+    public function balanceHistory(
         CurrentUserService $currentUserService,
         UserBalanceService $userBalanceService,
         UserBalanceHistoryService $userBalanceHistoryService
@@ -24,6 +24,7 @@ class BalanceHistoryController extends AbstractUserController
         $this->dennyUnlessUser();
 
         $currentUser = $currentUserService->getUser();
+
         return $this->render(
             'user/balance/balance_history.html.twig',
             [

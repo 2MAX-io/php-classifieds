@@ -6,6 +6,7 @@ namespace App\Controller\Admin\Base;
 
 use App\Entity\Admin;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 
 abstract class AbstractAdminController extends AbstractController
 {
@@ -16,10 +17,7 @@ abstract class AbstractAdminController extends AbstractController
         $this->denyAccessUnlessGranted(Admin::ROLE_ADMIN, $user);
 
         if (!$user instanceof Admin) {
-            $exception = $this->createAccessDeniedException('Access Denied.');
-            $exception->setSubject($user);
-
-            throw $exception;
+            throw new UnauthorizedHttpException('only logged in admin is allowed here');
         }
     }
 }

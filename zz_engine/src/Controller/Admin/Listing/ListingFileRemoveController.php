@@ -24,10 +24,10 @@ class ListingFileRemoveController extends AbstractAdminController
         $this->denyUnlessAdmin();
 
         if ($this->isCsrfTokenValid('adminRemoveFile'.$listingFile->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
+            $em = $this->getDoctrine()->getManager();
             $listingFile->setUserRemoved(true);
             $fileModificationEventService->onFileModification($listingFile);
-            $entityManager->flush();
+            $em->flush();
         }
 
         return $this->redirectToRoute('app_admin_listing_edit', [

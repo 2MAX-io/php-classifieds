@@ -124,9 +124,9 @@ class CustomFieldController extends AbstractAdminController
 
         if ($this->isCsrfTokenValid('delete'.$customField->getId(), $request->request->get('_token'))) {
             try {
-                $entityManager = $this->getDoctrine()->getManager();
-                $entityManager->remove($customField);
-                $entityManager->flush();
+                $em = $this->getDoctrine()->getManager();
+                $em->remove($customField);
+                $em->flush();
             } /** @noinspection PhpRedundantCatchClauseInspection */ catch (ForeignKeyConstraintViolationException $e) {
                 $logger->notice('constraint error during deletion', ExceptionHelper::flatten($e, [$e->getMessage()]));
                 throw new UserVisibleMessageException(

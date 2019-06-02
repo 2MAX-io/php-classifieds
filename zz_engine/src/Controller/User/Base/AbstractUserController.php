@@ -18,8 +18,11 @@ abstract class AbstractUserController extends AbstractController
     public function dennyUnlessCurrentUserAllowed(Listing $listing, bool $ignoreAdminDeleted = false): void
     {
         $user = $this->get('security.token_storage')->getToken()->getUser();
+
+        $this->denyAccessUnlessGranted(Admin::ROLE_USER, $user);
+
         if (!$user instanceof User) {
-            $this->denyAccessUnlessGranted(Admin::ROLE_USER, $user);
+            throw new UnauthorizedHttpException('only logged in user is allowed here');
         }
 
         if ($user !== $listing->getUser()) {
@@ -35,7 +38,7 @@ abstract class AbstractUserController extends AbstractController
     {
         $user = $this->get('security.token_storage')->getToken()->getUser();
         if (!$user instanceof User) {
-            $this->denyAccessUnlessGranted(Admin::ROLE_USER, $user);
+            throw new UnauthorizedHttpException('only logged in user is allowed here');
         }
     }
 }

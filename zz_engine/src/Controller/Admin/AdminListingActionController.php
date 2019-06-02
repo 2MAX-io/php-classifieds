@@ -37,9 +37,9 @@ class AdminListingActionController extends AbstractAdminController
         $this->denyUnlessAdmin();
 
         if ($this->isCsrfTokenValid('adminRemove'.$listing->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
+            $em = $this->getDoctrine()->getManager();
             $listing->setAdminRemoved(true);
-            $entityManager->flush();
+            $em->flush();
         }
 
         return $this->redirect($request->headers->get('referer'));
@@ -53,9 +53,9 @@ class AdminListingActionController extends AbstractAdminController
         $this->denyUnlessAdmin();
 
         if ($this->isCsrfTokenValid('adminRaise'.$listing->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
+            $em = $this->getDoctrine()->getManager();
             $listing->setOrderByDate(new \DateTime());
-            $entityManager->flush();
+            $em->flush();
         }
 
         return $this->redirect($request->headers->get('referer'));
@@ -69,11 +69,11 @@ class AdminListingActionController extends AbstractAdminController
         $this->denyUnlessAdmin();
 
         if ($this->isCsrfTokenValid('adminFeatureForWeek'.$listing->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
+            $em = $this->getDoctrine()->getManager();
             $listing->setOrderByDate(new \DateTime());
             $listing->setFeatured(true);
             $listing->setFeaturedUntilDate(Carbon::now()->addDays(7));
-            $entityManager->flush();
+            $em->flush();
         }
 
         return $this->redirect($request->headers->get('referer'));

@@ -39,9 +39,9 @@ class ValidityExtendController extends AbstractUserController
                 $listing->setOrderByDate(new \DateTime());
             }
 
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($listing);
-            $entityManager->flush();
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($listing);
+            $em->flush();
 
             return $this->redirectToRoute('app_user_validity_extend', ['id' => $listing->getId()]);
         }

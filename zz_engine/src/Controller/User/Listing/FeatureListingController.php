@@ -50,9 +50,9 @@ class FeatureListingController extends AbstractUserController
         $this->dennyUnlessCurrentUserAllowed($listing);
 
         if ($this->isCsrfTokenValid('featureAsDemo'.$listing->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
+            $em = $this->getDoctrine()->getManager();
             $featuredListingService->makeFeaturedAsDemo($listing);
-            $entityManager->flush();
+            $em->flush();
 
             return $this->redirectToRoute(
                 'app_user_feature_listing',

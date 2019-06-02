@@ -78,15 +78,18 @@ class UserListingController extends AbstractUserController
         if ($form->isSubmitted() && $form->isValid()) {
             $listingCustomFieldsService->saveCustomFieldsToListing(
                 $listing,
-                Arr::getNestedElement($request->request->all(), [ListingType::LISTING_FIELD, ListingCustomFieldListType::CUSTOM_FIELD_LIST_FIELD]) ?? [] // listing[customFieldList]
+                Arr::getNestedElement(
+                    $request->request->all(),
+                    [ListingType::LISTING_FIELD, ListingCustomFieldListType::CUSTOM_FIELD_LIST_FIELD]
+                ) ?? [] // listing[customFieldList]
             );
 
             $listing->setUser($currentUserService->getUser());
             $createListingService->setFormDependent($listing, $form);
 
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($listing);
-            $entityManager->flush();
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($listing);
+            $em->flush();
 
             if ($form->get('file')->getData()) {
                 $listingFileUploadService->addMultipleFilesFromUpload(
@@ -103,7 +106,7 @@ class UserListingController extends AbstractUserController
             }
 
             $logIpService->saveLog($listing);
-            $entityManager->flush();
+            $em->flush();
 
             return $this->redirectToRoute('app_listing_edit', ['id' => $listing->getId()]);
         }
@@ -152,7 +155,10 @@ class UserListingController extends AbstractUserController
             }
             $listingCustomFieldsService->saveCustomFieldsToListing(
                 $listing,
-                Arr::getNestedElement($request->request->all(), [ListingType::LISTING_FIELD, ListingCustomFieldListType::CUSTOM_FIELD_LIST_FIELD]) ?? [] // listing[customFieldList]
+                Arr::getNestedElement(
+                    $request->request->all(),
+                    [ListingType::LISTING_FIELD, ListingCustomFieldListType::CUSTOM_FIELD_LIST_FIELD]
+                ) ?? [] // listing[customFieldList]
             );
 
             $createListingService->setFormDependent($listing, $form);
@@ -189,10 +195,10 @@ class UserListingController extends AbstractUserController
         $this->dennyUnlessCurrentUserAllowed($listing, true);
 
         if ($this->isCsrfTokenValid('remove' . $listing->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
+            $em = $this->getDoctrine()->getManager();
             $listing->setUserRemoved(true);
             $fileModificationEventService->onFileModificationByListing($listing);
-            $entityManager->flush();
+            $em->flush();
         }
 
         return $this->redirect($request->headers->get('referer'));
@@ -206,9 +212,9 @@ class UserListingController extends AbstractUserController
         $this->dennyUnlessCurrentUserAllowed($listing);
 
         if ($this->isCsrfTokenValid('deactivate' . $listing->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
+            $em = $this->getDoctrine()->getManager();
             $listing->setUserDeactivated(true);
-            $entityManager->flush();
+            $em->flush();
         }
 
         return $this->redirect($request->headers->get('referer'));
@@ -222,9 +228,9 @@ class UserListingController extends AbstractUserController
         $this->dennyUnlessCurrentUserAllowed($listing);
 
         if ($this->isCsrfTokenValid('activate' . $listing->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
+            $em = $this->getDoctrine()->getManager();
             $listing->setUserDeactivated(false);
-            $entityManager->flush();
+            $em->flush();
         }
 
         return $this->redirect($request->headers->get('referer'));

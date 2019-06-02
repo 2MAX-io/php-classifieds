@@ -25,9 +25,9 @@ class ListingFileRemoveController extends AbstractUserController
         $listingFile->setUserRemoved(true);
         $fileModificationEventService->onFileModification($listingFile);
 
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->persist($listingFile);
-        $entityManager->flush();
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($listingFile);
+        $em->flush();
 
         return $this->json([]);
     }

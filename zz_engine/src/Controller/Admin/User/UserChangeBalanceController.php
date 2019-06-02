@@ -63,8 +63,8 @@ class UserChangeBalanceController extends AbstractAdminController
                 );
             }
 
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->flush();
+            $em = $this->getDoctrine()->getManager();
+            $em->flush();
 
             return $this->redirectToRoute('app_admin_user_change_balance', ['id' => $user->getId()]);
         }

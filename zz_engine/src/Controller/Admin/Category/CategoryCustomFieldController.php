@@ -97,9 +97,9 @@ class CategoryCustomFieldController extends AbstractAdminController
         $this->denyUnlessAdmin();
 
         if ($this->isCsrfTokenValid('deleteCustomFieldFromCategory'.$customFieldJoinCategory->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($customFieldJoinCategory);
-            $entityManager->flush();
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($customFieldJoinCategory);
+            $em->flush();
 
             $customFieldForCategoryService->reorder();
         }

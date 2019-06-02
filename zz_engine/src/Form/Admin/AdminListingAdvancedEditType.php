@@ -7,6 +7,7 @@ namespace App\Form\Admin;
 use App\Entity\Listing;
 use App\Form\Type\AppDateTimeType;
 use App\Form\Type\BoolRequiredType;
+use App\Validator\Constraints\Slug;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -78,6 +79,13 @@ class AdminListingAdvancedEditType extends AbstractType
             'label' => 'trans.Is listing deactivated by user?',
             'constraints' => [
                 new NotBlank(),
+            ],
+        ]);
+        $builder->add('slug', TextType::class, [
+            'label' => 'trans.Slug',
+            'constraints' => [
+                new NotBlank(),
+                new Slug(),
             ],
         ]);
     }

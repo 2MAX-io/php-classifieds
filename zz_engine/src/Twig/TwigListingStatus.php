@@ -35,7 +35,7 @@ class TwigListingStatus implements RuntimeExtensionInterface
             return $this->translator->trans(
                 "trans.listing.status.$status",
                 [
-                    '%featuredUntilDate%' => $listing->getValidUntilDate()->format(
+                    '%featuredUntilDate%' => $listing->getFeaturedUntilDate()->format(
                         $this->environmentService->getTwigDateFormatShort()
                     ),
                 ]

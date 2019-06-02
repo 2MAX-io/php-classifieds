@@ -17,8 +17,10 @@ class ListingExecuteActionOnFilteredController extends AbstractAdminController
     /**
      * @Route("/admin/red5/listing/execute-action-on-filtered", name="app_admin_listing_execute_on_filtered")
      */
-    public function executeActionOnFiltered(Request $request, ExecuteActionOnFilteredService $executeActionOnFilteredService): Response
-    {
+    public function executeActionOnFiltered(
+        Request $request,
+        ExecuteActionOnFilteredService $executeActionOnFilteredService
+    ): Response {
         $this->denyUnlessAdmin();
 
         $executeActionDto = new ExecuteActionDto();

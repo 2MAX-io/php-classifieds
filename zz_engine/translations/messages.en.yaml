@@ -101,6 +101,7 @@ trans:
   From custom field: 'From custom field'
   Unknown error during security audit: 'Unknown error during security audit'
   'enter here, all characters specific to your language, except for standard characters A-Z, 0-9, for example: ąĄßöИ, if needed': 'enter here, all characters specific to your language, except for standard characters A-Z, 0-9, for example: ąĄßöИ, if needed'
+  Feature for week: 'Feature for week'
 
 trans.customFieldType.select: Select field
 trans.customFieldType.year_range: Field with year

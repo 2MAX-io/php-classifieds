@@ -49,8 +49,8 @@ class AdminCategoryController extends AbstractAdminController
 
         $category = new Category();
         $category->setLvl(0);
-        $category->setRgt(0);
         $category->setLft(0);
+        $category->setRgt(0);
         $category->setSort(SortService::LAST_VALUE);
         if ($parentCategory) {
             $category->setParent($parentCategory);

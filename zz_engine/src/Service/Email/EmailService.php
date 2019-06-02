@@ -6,7 +6,6 @@ namespace App\Service\Email;
 
 use App\Entity\User;
 use App\Service\Setting\SettingsService;
-use App\System\EnvironmentService;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Environment as Twig;
 
@@ -16,6 +15,7 @@ class EmailService
      * @var \Swift_Mailer
      */
     private $mailer;
+
     /**
      * @var Twig
      */
@@ -88,7 +88,7 @@ class EmailService
 
     public function sendEmailChangeNotificationToNewEmail(User $user, string $newEmail, string $token): void
     {
-        $message = (new \Swift_Message($this->trans->trans('trans.Confirmation of email address change')))
+        $message = (new \Swift_Message($this->trans->trans('trans.Verification of the correctness of the new email address')))
             ->setReplyTo($this->getEmailReplyTo())
             ->setFrom($this->getEmailFromAddress(), $this->getEmailFromName())
             ->setTo($newEmail)

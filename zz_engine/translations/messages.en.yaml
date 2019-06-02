@@ -102,6 +102,7 @@ trans:
   Unknown error during security audit: 'Unknown error during security audit'
   'enter here, all characters specific to your language, except for standard characters A-Z, 0-9, for example: ąĄßöИ, if needed': 'enter here, all characters specific to your language, except for standard characters A-Z, 0-9, for example: ąĄßöИ, if needed'
   Feature for week: 'Feature for week'
+  Verification of the correctness of the new email address: 'Verification of the correctness of the new email address'
 
 trans.customFieldType.select: Select field
 trans.customFieldType.year_range: Field with year

@@ -8,12 +8,14 @@ use App\Controller\Admin\Base\AbstractAdminController;
 use App\Entity\Category;
 use App\Exception\UserVisibleMessageException;
 use App\Form\Admin\AdminCategorySaveType;
+use App\Helper\ExceptionHelper;
 use App\Helper\Json;
 use App\Service\Admin\Category\AdminCategoryService;
 use App\Service\Admin\Category\CategoryPictureUploadService;
 use App\Service\Category\TreeService;
 use App\Service\System\Sort\SortService;
 use Doctrine\DBAL\Exception\ForeignKeyConstraintViolationException;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -116,8 +118,12 @@ class AdminCategoryController extends AbstractAdminController
     /**
      * @Route("/admin/red5/category/{id}", name="app_admin_category_delete", methods={"DELETE"})
      */
-    public function delete(Request $request, Category $category, TreeService $treeService): Response
-    {
+    public function delete(
+        Request $request,
+        Category $category,
+        TreeService $treeService,
+        LoggerInterface $logger
+    ): Response {
         $this->denyUnlessAdmin();
 
         if ($this->isCsrfTokenValid('delete'.$category->getId(), $request->request->get('_token'))) {
@@ -128,7 +134,8 @@ class AdminCategoryController extends AbstractAdminController
 
                 $treeService->rebuild();
                 $em->flush();
-            } catch (ForeignKeyConstraintViolationException $e) {
+            } /** @noinspection PhpRedundantCatchClauseInspection */ catch (ForeignKeyConstraintViolationException $e) {
+                $logger->notice('constraint error during deletion', ExceptionHelper::flatten($e, [$e->getMessage()]));
                 throw new UserVisibleMessageException(
                     'trans.To delete category, you must first delete or move all dependencies like: category listings, subcategories, assigned custom fields, featured packages',
                     [],

@@ -72,7 +72,7 @@ class UpgradeController extends AbstractAdminController
         return $this->render('admin/secondary/upgrade/upgrade_executed.html.twig', []);
     }
 
-    public function blockIfUpgradeDisabled(): void
+    private function blockIfUpgradeDisabled(): void
     {
         if ($this->environmentService->getUpgradeDisabled()) {
             throw new UserVisibleMessageException('trans.The update option has been manually disabled in configuration. If you plan to enable it, make sure that you have not made any changes to the application code.');

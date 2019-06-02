@@ -9,6 +9,7 @@ use App\Entity\Category;
 use App\Entity\CustomField;
 use App\Exception\UserVisibleMessageException;
 use App\Form\Admin\CustomFieldType;
+use App\Helper\ExceptionHelper;
 use App\Helper\Json;
 use App\Repository\CustomFieldRepository;
 use App\Service\Admin\CustomField\CategorySelection\CustomFieldCategorySelectionService;
@@ -16,6 +17,7 @@ use App\Service\Admin\CustomField\CustomFieldForCategoryService;
 use App\Service\Admin\CustomField\CustomFieldService;
 use App\Service\System\Sort\SortService;
 use Doctrine\DBAL\Exception\ForeignKeyConstraintViolationException;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -116,7 +118,7 @@ class CustomFieldController extends AbstractAdminController
     /**
      * @Route("/admin/red5/custom-field/{id}", name="app_admin_custom_field_delete", methods={"DELETE"})
      */
-    public function delete(Request $request, CustomField $customField): Response
+    public function delete(Request $request, CustomField $customField, LoggerInterface $logger): Response
     {
         $this->denyUnlessAdmin();
 
@@ -125,7 +127,8 @@ class CustomFieldController extends AbstractAdminController
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->remove($customField);
                 $entityManager->flush();
-            } catch (ForeignKeyConstraintViolationException $e) {
+            } /** @noinspection PhpRedundantCatchClauseInspection */ catch (ForeignKeyConstraintViolationException $e) {
+                $logger->notice('constraint error during deletion', ExceptionHelper::flatten($e, [$e->getMessage()]));
                 throw new UserVisibleMessageException(
                     'trans.To delete custom field, you must first delete all dependencies like: custom fields assigned to categories, custom field options',
                     [],

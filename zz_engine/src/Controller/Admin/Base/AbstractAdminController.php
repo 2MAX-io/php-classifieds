@@ -13,7 +13,12 @@ abstract class AbstractAdminController extends AbstractController
     {
         $user = $this->get('security.token_storage')->getToken()->getUser();
         if (!$user instanceof Admin) {
-            $this->denyAccessUnlessGranted(Admin::ROLE_ADMIN, $user);
+            $exception = $this->createAccessDeniedException('Access Denied.');
+            $exception->setSubject($user);
+
+            throw $exception;
         }
+
+        $this->denyAccessUnlessGranted(Admin::ROLE_ADMIN, $user);
     }
 }

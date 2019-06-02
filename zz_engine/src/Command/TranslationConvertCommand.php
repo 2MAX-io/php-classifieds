@@ -19,7 +19,7 @@ class TranslationConvertCommand extends Command
 {
     protected static $defaultName = 'app:translation:convert';
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setDescription('translation convert')
@@ -27,7 +27,7 @@ class TranslationConvertCommand extends Command
         ;
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): void
     {
         $io = new SymfonyStyle($input, $output);
         $sourceFile = $input->getArgument('sourceFile');

@@ -33,12 +33,12 @@ class CronCommand extends Command
         $this->em = $em;
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this->setDescription('Main cron');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): void
     {
         $io = new SymfonyStyle($input, $output);
 

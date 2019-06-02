@@ -17,7 +17,7 @@ class TranslationGenerateToEnCommand extends Command
 {
     protected static $defaultName = 'app:translation:generate-to-en';
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setDescription('Generate base, en translation from other language')
@@ -25,7 +25,7 @@ class TranslationGenerateToEnCommand extends Command
         ;
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): void
     {
         $io = new SymfonyStyle($input, $output);
         $sourceFile = $input->getArgument('sourceFile');

@@ -31,12 +31,12 @@ class DevGenerateTestListingsCommand extends Command
     protected function configure()
     {
         $this
-            ->setDescription('Add a short description for your command')
+            ->setDescription('generates and saves random listings, dev only')
             ->addArgument('count', InputArgument::REQUIRED, 'count')
         ;
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): void
     {
         ini_set('memory_limit', (string) Megabyte::toByes(1024));
         $io = new SymfonyStyle($input, $output);

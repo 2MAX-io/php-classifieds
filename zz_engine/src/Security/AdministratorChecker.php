@@ -25,7 +25,7 @@ class AdministratorChecker implements UserCheckerInterface
         }
     }
 
-    public function checkPostAuth(UserInterface $user)
+    public function checkPostAuth(UserInterface $user): void
     {
     }
 }

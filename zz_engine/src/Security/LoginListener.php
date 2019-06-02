@@ -25,7 +25,7 @@ class LoginListener
         $this->userPasswordEncoder = $userPasswordEncoder;
     }
 
-    public function onSecurityInteractiveLogin(InteractiveLoginEvent $event)
+    public function onSecurityInteractiveLogin(InteractiveLoginEvent $event): void
     {
         $userInterface = $event->getAuthenticationToken()->getUser();
 
@@ -37,13 +37,13 @@ class LoginListener
         $this->em->flush();
     }
 
-    private function updateLastLoginOfUser(User $user)
+    private function updateLastLoginOfUser(User $user): void
     {
         $user->setLastLogin(new \DateTime());
         $this->em->persist($user);
     }
 
-    private function migrateLegacyPassword(User $user, InteractiveLoginEvent $event)
+    private function migrateLegacyPassword(User $user, InteractiveLoginEvent $event): void
     {
         if ($user->getEncoderName() === null) {
             return;

@@ -17,7 +17,7 @@ class ChangePasswordType extends AbstractType
     public const FORM_CURRENT_PASSWORD = 'currentPassword';
     public const FORM_NEW_PASSWORD = 'newPassword';
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add(static::FORM_CURRENT_PASSWORD, PasswordType::class, [
             'label' => 'trans.Current password',

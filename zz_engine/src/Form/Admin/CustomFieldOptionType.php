@@ -21,7 +21,7 @@ class CustomFieldOptionType extends AbstractType
     const VALUE_FIELD = 'value';
     const SAVE_AND_ADD = 'saveAndAdd';
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add('name', TextType::class, [
             'label' => 'trans.Name',
@@ -51,7 +51,7 @@ class CustomFieldOptionType extends AbstractType
         ]);
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => CustomFieldOption::class,

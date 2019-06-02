@@ -27,7 +27,7 @@ class TopUpBalanceType extends AbstractType
         $this->settingsService = $settingsService;
     }
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add(
             self::TOP_UP_AMOUNT,
@@ -59,7 +59,7 @@ class TopUpBalanceType extends AbstractType
         );
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults(
             [

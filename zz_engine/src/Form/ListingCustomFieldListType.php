@@ -126,7 +126,7 @@ class ListingCustomFieldListType extends AbstractType
         }
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults(
             [
@@ -147,7 +147,7 @@ class ListingCustomFieldListType extends AbstractType
         return $options['listingEntity'] ?? null;
     }
 
-    private function getChoices(CustomField $customField)
+    private function getChoices(CustomField $customField): array
     {
         $return = [];
         foreach ($customField->getCustomFieldOptions() as $customFieldOption) {

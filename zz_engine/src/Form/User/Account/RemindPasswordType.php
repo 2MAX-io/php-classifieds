@@ -16,7 +16,7 @@ class RemindPasswordType extends AbstractType
 {
     public const EMAIL_FIELD = 'email';
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add(static::EMAIL_FIELD, EmailType::class, [
             'label' => 'trans.Enter your email address',

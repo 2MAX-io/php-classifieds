@@ -18,7 +18,7 @@ class ChangeEmailType extends AbstractType
 {
     public const FORM_NEW_EMAIL = 'newEmail';
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add('currentPassword', PasswordType::class, [
             'label' => 'trans.Enter current password to confirm email change',

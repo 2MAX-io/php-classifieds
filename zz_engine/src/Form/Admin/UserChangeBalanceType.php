@@ -17,7 +17,7 @@ class UserChangeBalanceType extends AbstractType
     const NEW_BALANCE = 'newBalance';
     const CHANGE_REASON = 'changeReason';
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add(
             self::NEW_BALANCE, AppMoneyType::class, [
@@ -36,7 +36,7 @@ class UserChangeBalanceType extends AbstractType
         ]);
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults(
             [

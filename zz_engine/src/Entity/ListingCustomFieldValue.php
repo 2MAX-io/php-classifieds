@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping\UniqueConstraint;
  * @ORM\Entity(repositoryClass="App\Repository\ListingCustomFieldValueRepository")
  * @ORM\Table(
  *      uniqueConstraints={
- *         @UniqueConstraint(columns={"listing_id", "custom_field_id", "value", "custom_field_option_id", name="unique_custom_field_value_in_listing"}),
+ *         @UniqueConstraint(columns={"listing_id", "custom_field_id", "value", "custom_field_option_id"}, name="unique_custom_field_value_in_listing"),
  *      },
  *      indexes={
  *          @Index(columns={"listing_id", "custom_field_id", "value"}, name="IDX_filter"),

@@ -74,7 +74,7 @@ class User implements UserInterface, RoleInterface, EnablableInterface, EncoderA
     private $lastLogin;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Listing", mappedBy="user", nullable=false)
+     * @ORM\OneToMany(targetEntity="App\Entity\Listing", mappedBy="user")
      */
     private $listings;
 

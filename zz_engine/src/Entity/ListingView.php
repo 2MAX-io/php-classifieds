@@ -25,12 +25,12 @@ class ListingView
     private $listing;
 
     /**
-     * @ORM\Column(type="smallint")
+     * @ORM\Column(type="smallint", nullable=false)
      */
     private $viewCount;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=false)
      */
     private $datetime;
 

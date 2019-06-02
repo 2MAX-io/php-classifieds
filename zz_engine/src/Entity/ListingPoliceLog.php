@@ -20,22 +20,22 @@ class ListingPoliceLog
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="string", length=50, nullable=false)
      */
     private $sourceIp;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="string", length=50, nullable=false)
      */
     private $destinationIp;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=false)
      */
     private $text;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=false)
      */
     private $datetime;
 

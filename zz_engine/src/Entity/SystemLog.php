@@ -22,12 +22,12 @@ class SystemLog
     private $id;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=false)
      */
     private $date;
 
     /**
-     * @ORM\Column(type="string", length=70)
+     * @ORM\Column(type="string", length=70, nullable=false)
      */
     private $type;
 

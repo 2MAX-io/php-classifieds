@@ -20,17 +20,17 @@ class ExecutedUpgrade
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=150)
+     * @ORM\Column(type="string", length=150, nullable=false)
      */
     private $name;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=false)
      */
     private $upgradeId;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=false)
      */
     private $executedAt;
 

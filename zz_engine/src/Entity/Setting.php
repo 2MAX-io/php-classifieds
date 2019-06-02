@@ -19,17 +19,17 @@ class Setting
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=60)
+     * @ORM\Column(type="string", length=60, nullable=false)
      */
     private $name;
 
     /**
-     * @ORM\Column(type="string", length=5000)
+     * @ORM\Column(type="string", length=5000, nullable=false)
      */
     private $value;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=false)
      */
     private $lastUpdateDate;
 

@@ -23,7 +23,7 @@ use Doctrine\ORM\Mapping\Index;
  *     @Index(columns={"first_created_date"}, name="IDX_first_created_date"),
  *     @Index(columns={"user_id", "user_removed", "last_edit_date"}, name="IDX_user_listings"),
  *     @Index(columns={"search_text"}, flags={"fulltext"}, name="IDX_fulltext_search"),
- *     @Index(columns={"search_text", "email", "phone", "rejection_reason"}, flags={"fulltext"}, name="IDX_fulltext_search_admin")
+ *     @Index(columns={"search_text", "email", "phone", "rejection_reason"}, flags={"fulltext"}, name="IDX_fulltext_search_admin"),
  * })
  */
 class Listing
@@ -71,7 +71,7 @@ class Listing
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="string", length=50, nullable=false)
      */
     private $title;
 
@@ -88,7 +88,7 @@ class Listing
     private $category;
 
     /**
-     * @ORM\Column(type="string", length=10100)
+     * @ORM\Column(type="string", length=10100, nullable=false)
      */
     private $description;
 
@@ -128,18 +128,6 @@ class Listing
     private $city;
 
     /**
-     * @var ListingCustomFieldValue[]
-     *
-     * @ORM\OneToMany(targetEntity="App\Entity\ListingCustomFieldValue", mappedBy="listing")
-     */
-    private $listingCustomFieldValues;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\ListingFile", mappedBy="listing")
-     */
-    private $listingFiles;
-
-    /**
      * @ORM\Column(type="string", length=100, nullable=true)
      */
     private $mainImage;
@@ -155,32 +143,32 @@ class Listing
     private $validUntilDate;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", nullable=false)
      */
     private $adminActivated = false;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", nullable=false)
      */
     private $adminRemoved = false;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", nullable=false)
      */
     private $userRemoved = false;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", nullable=false)
      */
     private $userDeactivated = false;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", nullable=false)
      */
     private $featured = false;
 
     /**
-     * @ORM\Column(type="smallint")
+     * @ORM\Column(type="smallint", nullable=false)
      */
     private $featuredWeight = 0;
 
@@ -207,7 +195,7 @@ class Listing
     private $adminLastActivationDate;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", nullable=false)
      */
     private $adminRejected = false;
 
@@ -222,7 +210,7 @@ class Listing
     private $slug;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=false)
      */
     private $searchText;
 
@@ -231,11 +219,96 @@ class Listing
      */
     private $paymentFeaturedPackage;
 
+    /**
+     * @var ListingCustomFieldValue[]
+     *
+     * @ORM\OneToMany(targetEntity="App\Entity\ListingCustomFieldValue", mappedBy="listing")
+     */
+    private $listingCustomFieldValues;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\ListingFile", mappedBy="listing")
+     */
+    private $listingFiles;
+
     public function __construct()
     {
         $this->listingCustomFieldValues = new ArrayCollection();
         $this->listingFiles = new ArrayCollection();
         $this->paymentFeaturedPackage = new ArrayCollection();
+    }
+
+    /**
+     * @return ArrayCollection|ListingFile[]
+     */
+    public function getListingFiles(): Collection
+    {
+        return $this->listingFiles->matching(
+            Criteria::create()
+                ->orderBy(['sort' => 'asc'])
+                ->where(Criteria::expr()->eq("userRemoved", false))
+        );
+    }
+
+    public function getMainImageNoCache(): ?ListingFile
+    {
+        return $this->getListingFiles()->first() ?? null;
+    }
+
+    public function getStatus(): string
+    {
+        if ($this->getAdminRemoved()) {
+            return static::STATUS_ADMIN_REMOVED;
+        }
+
+        if ($this->getAdminRejected()) {
+            return static::STATUS_REJECTED;
+        }
+
+        if ($this->getUserRemoved()) {
+            return static::STATUS_USER_REMOVED;
+        }
+
+        if ($this->getUserDeactivated()) {
+            return static::STATUS_DEACTIVATED;
+        }
+
+        if ($this->getValidUntilDate() <= new \DateTime()) {
+            return static::STATUS_EXPIRED;
+        }
+
+        if (false === $this->getAdminActivated() && ContainerHelper::getSettings()->getRequireListingAdminActivation()) {
+            return static::STATUS_PENDING;
+        }
+
+        if ($this->getFeatured() && $this->getFeaturedUntilDate() >= new \DateTime()) {
+            return self::STATUS_ACTIVE_FEATURED;
+        }
+
+        return self::STATUS_ACTIVE;
+    }
+
+    public function isFeaturedActive(): bool
+    {
+        return $this->getFeaturedUntilDate() > new \DateTime();
+    }
+
+    public function getMainImage(string $type = null): ?string
+    {
+        if ($this->mainImage === null) {
+            return null;
+        }
+
+        if ($type !== null) {
+            return ImageResizePath::forType($type, $this->mainImage);
+        }
+
+        return $this->mainImage;
+    }
+
+    public function getMainImageInListSize(): ?string
+    {
+        return $this->getMainImage(ImageResizePath::LIST);
     }
 
     public function getId(): ?int
@@ -356,19 +429,6 @@ class Listing
         }
 
         return $this;
-    }
-
-    /**
-     * @return ArrayCollection|ListingFile[]
-     */
-    public function getListingFiles(): Collection
-    {
-        return $this->listingFiles->matching(Criteria::create()->orderBy(['sort' => 'asc'])->where(Criteria::expr()->eq("userRemoved", false)));
-    }
-
-    public function getMainImageNoCache(): ?ListingFile
-    {
-        return $this->getListingFiles()->first() ?? null;
     }
 
     public function addListingFile(ListingFile $listingFile): self
@@ -586,39 +646,6 @@ class Listing
         return $this;
     }
 
-    public function getStatus(): string
-    {
-        if ($this->getAdminRemoved()) {
-            return static::STATUS_ADMIN_REMOVED;
-        }
-
-        if ($this->getAdminRejected()) {
-            return static::STATUS_REJECTED;
-        }
-
-        if ($this->getUserRemoved()) {
-            return static::STATUS_USER_REMOVED;
-        }
-
-        if ($this->getUserDeactivated()) {
-            return static::STATUS_DEACTIVATED;
-        }
-
-        if ($this->getValidUntilDate() <= new \DateTime()) {
-            return static::STATUS_EXPIRED;
-        }
-
-        if (false === $this->getAdminActivated() && ContainerHelper::getSettings()->getRequireListingAdminActivation()) {
-            return static::STATUS_PENDING;
-        }
-
-        if ($this->getFeatured() && $this->getFeaturedUntilDate() >= new \DateTime()) {
-            return self::STATUS_ACTIVE_FEATURED;
-        }
-
-        return self::STATUS_ACTIVE;
-    }
-
     public function getSlug(): ?string
     {
         return $this->slug;
@@ -641,24 +668,6 @@ class Listing
         $this->emailShow = $emailShow;
 
         return $this;
-    }
-
-    public function getMainImage(string $type = null): ?string
-    {
-        if ($this->mainImage === null) {
-            return null;
-        }
-
-        if ($type !== null) {
-            return ImageResizePath::forType($type, $this->mainImage);
-        }
-
-        return $this->mainImage;
-    }
-
-    public function getMainImageInListSize(): ?string
-    {
-        return $this->getMainImage(ImageResizePath::LIST);
     }
 
     public function setMainImage(?string $mainImage): self
@@ -690,11 +699,6 @@ class Listing
         $this->priceNegotiable = $priceNegotiable;
 
         return $this;
-    }
-
-    public function isFeaturedActive(): bool
-    {
-        return $this->getFeaturedUntilDate() > new \DateTime();
     }
 
     /**

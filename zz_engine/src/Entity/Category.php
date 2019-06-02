@@ -98,6 +98,34 @@ class Category
         $this->featuredPackages = new ArrayCollection();
     }
 
+    /**
+     * @return Collection|CustomField[]
+     */
+    public function getCustomFields(): Collection
+    {
+        return $this->getCustomFieldsJoin()->map(function(CustomFieldJoinCategory $el) {
+            return $el->getCustomField();
+        });
+    }
+
+    /**
+     * make sure hydrator do not have make additional queries when using this
+     *
+     * @return Category[]
+     */
+    public function getPath(): array
+    {
+        $path = [];
+
+        $category = $this;
+        while ($category->getParent()) {
+            $path[] = $category;
+            $category = $category->getParent();
+        }
+
+        return \array_reverse($path);
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -219,24 +247,6 @@ class Category
     }
 
     /**
-     * make sure hydrator do not have make additional queries when using this
-     *
-     * @return Category[]
-     */
-    public function getPath(): array
-    {
-        $path = [];
-
-        $category = $this;
-        while ($category->getParent()) {
-            $path[] = $category;
-            $category = $category->getParent();
-        }
-
-        return array_reverse($path);
-    }
-
-    /**
      * @return Collection|Category[]
      */
     public function getChildren(): Collection
@@ -331,16 +341,6 @@ class Category
         }
 
         return $this;
-    }
-
-    /**
-     * @return Collection|CustomField[]
-     */
-    public function getCustomFields(): Collection
-    {
-        return $this->getCustomFieldsJoin()->map(function(CustomFieldJoinCategory $el) {
-            return $el->getCustomField();
-        });
     }
 
     /**

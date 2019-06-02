@@ -23,12 +23,12 @@ class FeaturedPackage
     /**
      * @ORM\Column(type="string", length=100, nullable=false)
      */
-    private $adminName;
+    private $name;
 
     /**
      * @ORM\Column(type="string", length=100, nullable=false)
      */
-    private $name;
+    private $adminName;
 
     /**
      * @ORM\Column(type="string", length=10000, nullable=true)

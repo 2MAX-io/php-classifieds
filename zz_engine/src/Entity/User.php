@@ -74,7 +74,7 @@ class User implements UserInterface, RoleInterface, EnablableInterface, EncoderA
     private $lastLogin;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Listing", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="App\Entity\Listing", mappedBy="user", nullable=false)
      */
     private $listings;
 
@@ -116,16 +116,6 @@ class User implements UserInterface, RoleInterface, EnablableInterface, EncoderA
         $this->plainPassword = null;
     }
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
-
-    public function getEmail(): ?string
-    {
-        return $this->email;
-    }
-
     public function setEmail(string $email): self
     {
         $this->email = $email;
@@ -135,6 +125,33 @@ class User implements UserInterface, RoleInterface, EnablableInterface, EncoderA
         }
 
         return $this;
+    }
+
+    /**
+     * Gets the name of the encoder used to encode the password.
+     *
+     * If the method returns null, the standard way to retrieve the encoder
+     * will be used instead.
+     *
+     * @return string
+     */
+    public function getEncoderName()
+    {
+        if (Str::beginsWith($this->getPassword(), '$2a$')) {
+            return 'legacy_phpass'; // security.yaml
+        }
+
+        return null; // use the default encoder
+    }
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
     }
 
     /**
@@ -271,23 +288,6 @@ class User implements UserInterface, RoleInterface, EnablableInterface, EncoderA
         $this->enabled = $enabled;
 
         return $this;
-    }
-
-    /**
-     * Gets the name of the encoder used to encode the password.
-     *
-     * If the method returns null, the standard way to retrieve the encoder
-     * will be used instead.
-     *
-     * @return string
-     */
-    public function getEncoderName()
-    {
-        if (Str::beginsWith($this->getPassword(), '$2a$')) {
-            return 'legacy_phpass'; // security.yaml
-        }
-
-        return null; // use the default encoder
     }
 
     /**

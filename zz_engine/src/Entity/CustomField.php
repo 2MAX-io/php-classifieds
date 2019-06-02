@@ -27,7 +27,7 @@ class CustomField
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=40)
+     * @ORM\Column(type="string", length=40, nullable=false)
      */
     private $name;
 
@@ -39,17 +39,17 @@ class CustomField
     private $nameForAdmin;
 
     /**
-     * @ORM\Column(type="string", length=40)
+     * @ORM\Column(type="string", length=40, nullable=false)
      */
     private $type;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", nullable=false)
      */
     private $required;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", nullable=false)
      */
     private $searchable;
 
@@ -86,6 +86,18 @@ class CustomField
         $this->customFieldOptions = new ArrayCollection();
         $this->listingCustomFieldValues = new ArrayCollection();
         $this->categoriesJoin = new ArrayCollection();
+    }
+
+    /**
+     * @return ListingCustomFieldValue|null
+     */
+    public function getListingCustomFieldValueFirst(): ?ListingCustomFieldValue
+    {
+        if ($this->getListingCustomFieldValues()->first()) {
+            return $this->getListingCustomFieldValues()->first();
+        }
+
+        return null;
     }
 
     public function getId(): ?int
@@ -190,18 +202,6 @@ class CustomField
     public function getListingCustomFieldValues(): Collection
     {
         return $this->listingCustomFieldValues;
-    }
-
-    /**
-     * @return ListingCustomFieldValue|null
-     */
-    public function getListingCustomFieldValueFirst(): ?ListingCustomFieldValue
-    {
-        if ($this->getListingCustomFieldValues()->first()) {
-            return $this->getListingCustomFieldValues()->first();
-        }
-
-        return null;
     }
 
     /**

@@ -52,19 +52,9 @@ class ListingFile
     private $sizeBytes;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", nullable=false)
      */
     private $userRemoved = false;
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
-
-    public function getPath(): string
-    {
-        return $this->path;
-    }
 
     public function getPathInListSize(): ?string
     {
@@ -74,6 +64,16 @@ class ListingFile
     public function getPathInNormalSize(): ?string
     {
         return ImageResizePath::forType(ImageResizePath::NORMAL, $this->getPath());
+    }
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getPath(): string
+    {
+        return $this->path;
     }
 
     public function setPath(string $path): self

@@ -8,11 +8,11 @@
 
     <div class="alert alert-danger">
         It seems like app is already installed.
-        If everyting is fine please remove installation directory.
+        If everything is fine, please remove installation directory.
     </div>
 
     <div class="alert alert-info">
-        To rerun install you need to remove configuration file <?php echo $configFilePath ?> and clear app database.
+        To rerun install, you need to remove configuration file <?php echo $configFilePath ?> and clear app database.
     </div>
 
 </div>

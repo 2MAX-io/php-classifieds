@@ -9,6 +9,8 @@ ini_set('display_errors', '1');
 error_reporting(-1);
 set_time_limit(600);
 ini_set('memory_limit', '-1');
+ini_set('log_errors', 'On');
+ini_set('error_log', 'data/PHP_native_error_'.date('Y-m-d').'.log');
 
 if (version_compare(PHP_VERSION, '7.3', '<')) {
     echo 'This app requires PHP 7.3';

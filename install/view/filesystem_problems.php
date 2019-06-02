@@ -6,6 +6,8 @@
     <h1>Installation - 2max.io Classified Ads</h1>
     <h2>Filesystem problems</h2>
 
+    <div class="float-right"><a href="https://documentation.2max.io/display/CLAS/Requirements" class="btn btn-info">documentation</a></div>
+
     <div class="alert alert-danger">
         <h4 class="text-danger">Invalid permissions, before installation begins, you need to apply correct permissions.</h4>
         <p>One way to do that, is to use commands from textarea bellow in root path of this app.</p>

@@ -8,7 +8,7 @@ docker exec classifieds_mysql mysql admin_ogloszenia -e "UPDATE o_ogloszenia SET
 #time docker exec classifieds_mysql mysql admin_ogloszenia -e "alter table o_ogloszenia modify opis_d varchar(11000) not null, ALGORITHM=COPY;"
 
 docker exec classifieds_php bash -c "php zz_engine/bin/importer_export_from_old.php /var/www/html/zz_engine/docker/mysql/sql/importer_export_from_old.csv"
-docker exec classifieds_php bash -c "php zz_engine/bin/importer_import_to_new.php /var/www/html/zz_engine/docker/mysql/sql/importer_export_from_old.csv /var/www/html/zz_engine/docker/mysql/sql/importer_import_to_new.sql"
+docker exec classifieds_php bash -c "php zz_engine/bin/importer_create_sql_for_new_classified.php /var/www/html/zz_engine/docker/mysql/sql/importer_export_from_old.csv /var/www/html/zz_engine/docker/mysql/sql/importer_import_to_new.sql"
 
 docker exec classifieds_mysql mysql classifieds -e "SET FOREIGN_KEY_CHECKS = 0; DROP TABLE listing_file"
 docker exec classifieds_mysql mysql classifieds -e "SET FOREIGN_KEY_CHECKS = 0; DROP TABLE listing_view"

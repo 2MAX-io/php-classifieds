@@ -51,7 +51,7 @@ class AdministratorType extends AbstractType
                 'constraints' => [
                     new Length(
                         [
-                            'min' => 4,
+                            'min' => 8,
                         ]
                     ),
                 ],

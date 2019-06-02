@@ -20,14 +20,14 @@ class FeaturedPackageType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder->add('adminName', TextType::class, [
-            'label' => 'trans.Name for admin',
+        $builder->add('name', TextType::class, [
+            'label' => 'trans.Name',
             'constraints' => [
                 new NotBlank(),
             ],
         ]);
-        $builder->add('name', TextType::class, [
-            'label' => 'trans.Name',
+        $builder->add('adminName', TextType::class, [
+            'label' => 'trans.Name for admin',
             'constraints' => [
                 new NotBlank(),
             ],

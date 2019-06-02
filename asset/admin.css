@@ -4,7 +4,7 @@
     position: relative;
 }
 
-.tile_count .tile_stats_count, ul.quick-list li {
+.tile_count .tile_stats_count {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;

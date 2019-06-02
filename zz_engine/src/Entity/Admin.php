@@ -7,10 +7,12 @@ namespace App\Entity;
 use App\Security\Base\EnablableInterface;
 use App\Service\User\RoleInterface;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\AdminRepository")
+ * @UniqueEntity(fields={"email"})
  */
 class Admin implements UserInterface, RoleInterface, EnablableInterface
 {

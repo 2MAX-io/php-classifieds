@@ -8,12 +8,12 @@ class Search
 {
     public static function optimizeMatch(string $search): string
     {
-        if (\preg_match('#^\S+@\S+\.\S+$#', trim($search))) {
-            return '"'. trim($search) .'"';
+        if (\preg_match('#^\S+@\S+\.\S+$#', \trim($search))) {
+            return '"'. \trim($search) .'"';
         }
 
-        if (\preg_match('#^[\d\s]+$#', trim($search))) {
-            return '"'. trim($search) .'"' . '' . Str::replace($search, [' '], '');
+        if (\preg_match('#^[\d\s]+$#', \trim($search))) {
+            return '"'. \trim($search) .'"' . '' . Str::replace($search, [' '], '');
         }
 
         $search = Str::replace($search, ['@'], '?');

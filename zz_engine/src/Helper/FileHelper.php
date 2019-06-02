@@ -34,7 +34,7 @@ class FileHelper
 
     public static function throwExceptionIfUnsafeExtension(UploadedFile $uploadedFile): void
     {
-        $fileExtension = strtolower($uploadedFile->getClientOriginalExtension());
+        $fileExtension = \mb_strtolower($uploadedFile->getClientOriginalExtension());
         if (!Arr::inArray(
             $fileExtension,
             [

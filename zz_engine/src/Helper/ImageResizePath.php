@@ -11,8 +11,8 @@ class ImageResizePath
 
     public static function forType(string $type, string $path): string
     {
-        $type = basename($type);
+        $type = \basename($type);
 
-        return str_replace('static/', "static/resized/$type/", $path);
+        return \str_replace('static/', "static/resized/$type/", $path);
     }
 }

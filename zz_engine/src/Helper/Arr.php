@@ -6,7 +6,7 @@ namespace App\Helper;
 
 class Arr
 {
-    public static function inArray($needle, array $haystack)
+    public static function inArray($needle, array $haystack): bool
     {
         return \in_array($needle, $haystack, true);
     }
@@ -22,15 +22,15 @@ class Arr
             throw new \UnexpectedValueException('count should be more than 0');
         }
 
-        if (count($array) < 1) {
+        if (\count($array) < 1) {
             throw new \UnexpectedValueException('array is empty');
         }
 
         if (1 === $count) {
-            return $array[array_rand($array)];
+            return $array[\array_rand($array)];
         }
 
-        $keys = array_rand($array, $count);
+        $keys = \array_rand($array, $count);
         $results = [];
         foreach ((array) $keys as $key) {
             $results[] = $array[$key];

@@ -1,9 +1,9 @@
 security:
     encoders:
       App\Entity\User:
-        algorithm: auto
+        algorithm: argon2i
       App\Entity\Admin:
-        algorithm: auto # change install script when changing this
+        algorithm: argon2i # change install script when changing this
       legacy_phpass:
         id: 'App\Security\Encoder\PhpassPasswordEncoder'
 

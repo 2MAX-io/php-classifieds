@@ -118,6 +118,6 @@ class PaymentController extends AbstractController
             throw $e;
         }
 
-        return new Response('ok');
+        throw new UserVisibleMessageException('trans.Could not process payment, if you have been charged and did not receive service, please contact us');
     }
 }

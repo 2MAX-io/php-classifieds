@@ -40,7 +40,7 @@ class CustomFieldOptionType extends AbstractType
         ->addEventListener(FormEvents::PRE_SUBMIT, function(FormEvent $formEvent) {
             $data = $formEvent->getData();
             $data[self::VALUE_FIELD] = \mb_strtolower($data[self::VALUE_FIELD]);
-            $data[self::VALUE_FIELD] = Str::replace($data[self::VALUE_FIELD], [' '], '_');
+            $data[self::VALUE_FIELD] = Str::replace($data[self::VALUE_FIELD], [' '], '-');
 
             $formEvent->setData($data);
         });

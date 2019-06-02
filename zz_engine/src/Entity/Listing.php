@@ -113,7 +113,7 @@ class Listing
     private $phone;
 
     /**
-     * @ORM\Column(type="string", length=100, nullable=true)
+     * @ORM\Column(type="string", length=70, nullable=true)
      */
     private $email;
 

@@ -26,8 +26,6 @@ class RemindPasswordController extends AbstractUserController
         RemindPasswordService $remindPasswordService,
         FlashService $flashService
     ): Response {
-        $this->dennyUnlessUser();
-
         $form = $this->createForm(RemindPasswordType::class, []);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {

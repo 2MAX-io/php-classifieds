@@ -31,12 +31,12 @@ class User implements UserInterface, RoleInterface, EnablableInterface, EncoderA
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=180, unique=true)
+     * @ORM\Column(type="string", length=70, unique=true)
      */
     protected $username;
 
     /**
-     * @ORM\Column(type="string", length=180, unique=true)
+     * @ORM\Column(type="string", length=70, unique=true)
      */
     private $email;
 

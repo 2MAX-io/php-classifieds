@@ -22,7 +22,7 @@ class Admin implements UserInterface, RoleInterface, EnablableInterface
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=180, unique=true)
+     * @ORM\Column(type="string", length=70, unique=true)
      */
     private $email;
 

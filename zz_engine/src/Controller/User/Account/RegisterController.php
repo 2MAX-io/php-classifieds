@@ -27,8 +27,6 @@ class RegisterController extends AbstractUserController
         CreateUserService $createUserService,
         FlashService $flashService
     ): Response {
-        $this->dennyUnlessUser();
-
         $form = $this->createForm(RegisterType::class, []);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {

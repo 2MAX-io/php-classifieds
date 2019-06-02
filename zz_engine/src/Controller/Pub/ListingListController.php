@@ -82,6 +82,7 @@ class ListingListController extends AbstractController
                 Response::HTTP_TEMPORARY_REDIRECT
             );
         }
+
         return $this->render(
             'listing_list.html.twig',
             [

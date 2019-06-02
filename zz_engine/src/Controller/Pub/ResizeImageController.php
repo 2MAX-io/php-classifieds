@@ -22,17 +22,9 @@ class ResizeImageController
      */
     public function index(Request $request, string $path, string $type, string $file): Response
     {
-        ini_set('memory_limit','256M'); // todo: check if can reduce it
+        \ini_set('memory_limit','256M'); // todo: check if can reduce it
 
-        if (!FileHelper::isImage($file)) {
-            throw new NotFoundHttpException();
-        }
-
-        $requestUriWithoutGet = strtok($request->getRequestUri(), '?');
-
-        if (!FileHelper::isImage($requestUriWithoutGet)) {
-            throw new NotFoundHttpException();
-        }
+        $requestUriWithoutGet = \strtok($request->getRequestUri(), '?');
 
         $sourcePath = $path . '/' . $file;
         $targetPath = Path::canonicalize(FilePath::getProjectDir() . $requestUriWithoutGet);
@@ -40,40 +32,27 @@ class ResizeImageController
         return $this->getResponse($request, $type, $sourcePath, $targetPath);
     }
 
-    private function getParams(string $type): array
-    {
-        if ('list' === $type) {
-            return ['w' => 260, 'h' => 200, 'fit' => 'max',];
-        }
-
-        if ('normal' === $type) {
-            return ['w' => 1920, 'h' => 1080, 'fit' => 'max',];
-        }
-
-        throw new NotFoundHttpException();
-    }
-
     private function getResponse(Request $request, string $type, string $sourcePath, string $targetPath): Response
     {
-        if (!FileHelper::isImage($targetPath)) {
-            throw new NotFoundHttpException();
-        }
-
-        if (Path::getLongestCommonBasePath([FilePath::getStaticPath(), $targetPath]) !== FilePath::getStaticPath()) {
-            // path not inside expected directory
-            throw new NotFoundHttpException();
-        }
-
         if (!FileHelper::isImage($sourcePath)) {
             throw new NotFoundHttpException();
         }
 
-        if (Path::getLongestCommonBasePath([FilePath::getStaticPath(), FilePath::getStaticPath().'/'.$sourcePath]) !== FilePath::getStaticPath()) {
+        if (!FileHelper::isImage($targetPath)) {
+            throw new NotFoundHttpException();
+        }
+
+        if (!$this->isInsideStaticDir($targetPath)) {
             // path not inside expected directory
             throw new NotFoundHttpException();
         }
 
-        if (!file_exists(FilePath::getStaticPath() . '/' . $sourcePath)) {
+        if (!$this->isInsideStaticDir(FilePath::getStaticPath().'/'.$sourcePath)) {
+            // path not inside expected directory
+            throw new NotFoundHttpException();
+        }
+
+        if (!\file_exists(FilePath::getStaticPath() . '/' . $sourcePath)) {
             return new RedirectResponse('/static/system/empty.png');
         }
 
@@ -90,7 +69,7 @@ class ResizeImageController
                 'response' => new SymfonyResponseFactory($request)
             ]
         );
-        $cachedPath = $server->makeImage($sourcePath, $this->getParams($type));
+        $cachedPath = $server->makeImage($sourcePath, $this->getMakeImageParams($type));
 
         $server->getSource()->rename(
             $cachedPath,
@@ -101,5 +80,25 @@ class ResizeImageController
             $server->getCache(),
             Path::makeRelative($targetPath, FilePath::getStaticPath())
         );
+    }
+
+    private function getMakeImageParams(string $type): array
+    {
+        if ('list' === $type) {
+            return ['w' => 260, 'h' => 200, 'fit' => 'max',];
+        }
+
+        if ('normal' === $type) {
+            return ['w' => 1920, 'h' => 1080, 'fit' => 'max',];
+        }
+
+        throw new NotFoundHttpException();
+    }
+
+    private function isInsideStaticDir(string $path): bool
+    {
+        return Path::getLongestCommonBasePath(
+                [FilePath::getStaticPath(), Path::canonicalize($path)]
+            ) === FilePath::getStaticPath();
     }
 }

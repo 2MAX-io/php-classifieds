@@ -9,14 +9,17 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class UsedTechServicesController extends AbstractController
+/**
+ * Page that mentions used free pictures, open source tech etc.
+ */
+class CreditsForContributorsController extends AbstractController
 {
     /**
-     * @Route("/used-technologies-and-services", name="app_used_tech_serivces")
+     * @Route("/credits-for-contributors", name="app_credits")
      */
-    public function usedTechAndServices(PageRepository $pageRepository): Response {
+    public function credits(PageRepository $pageRepository): Response {
 
-        return $this->render('secondary/used_tech_services.html.twig', [
+        return $this->render('secondary/credits_for_contributors.html.twig', [
             'relatedPages' => $pageRepository->getRelatedPages(),
         ]);
     }

@@ -70,7 +70,7 @@ trans:
   1 month: 'month'
 
   It is recommended to create a backup before this operation: 'It is recommended to create a backup before this operation'
-  Used technologies and Services: 'Used technologies and Services'
+  Credits: 'Credits'
   Upgrade: 'Upgrade'
   Perform upgrade?: 'Perform upgrade?'
   Execute upgrade: 'Execute upgrade'

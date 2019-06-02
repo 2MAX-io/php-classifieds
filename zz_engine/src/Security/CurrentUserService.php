@@ -126,7 +126,7 @@ class CurrentUserService
             return false;
         }
 
-        if (!in_array(RoleInterface::ROLE_ADMIN, $admin->getRoles(), true)) {
+        if (!\in_array(RoleInterface::ROLE_ADMIN, $admin->getRoles(), true)) {
             return false;
         }
 

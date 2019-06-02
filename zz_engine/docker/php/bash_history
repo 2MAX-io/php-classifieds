@@ -284,3 +284,16 @@ php zz_engine/bin/console doctrine:schema:create --dump-sql > install/data/_sche
 php zz_engine/bin/console doctrine:schema:update --force
 php zz_engine/bin/console doctrine:schema:update --force
 php zz_engine/bin/console doctrine:schema:create --dump-sql > install/data/_schema.sql
+composer update -d zz_engine
+composer update -d zz_engine
+composer update "symfony/*" --with-all-dependencies -d zz_engine
+composer update symfony/symfony --with-all-dependencies -d zz_engine
+composer update "symfony/*" --with-all-dependencies -d zz_engine
+composer update "symfony/*" --with-all-dependencies -d zz_engine
+composer update -d zz_engine
+composer update -d zz_engine
+composer install -d zz_engine
+composer install -d zz_engine
+composer require psr/simple-cache -d zz_engine
+composer update -d zz_engine
+composer require psr/simple-cache -d zz_engine

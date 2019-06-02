@@ -11,7 +11,7 @@ use App\Form\ListingType;
 use App\Security\CurrentUserService;
 use App\Service\Category\CategoryListService;
 use App\Service\Event\FileModificationEventService;
-use App\Service\Listing\CustomField\CustomFieldsForListingFormService;
+use App\Service\Listing\CustomField\ListingCustomFieldsService;
 use App\Service\Listing\Save\SaveListingService;
 use App\Service\Listing\Save\ListingFileUploadService;
 use App\Service\Log\PoliceLogIpService;
@@ -60,7 +60,7 @@ class UserListingController extends AbstractUserController
         ListingFileUploadService $listingFileUploadService,
         CurrentUserService $currentUserService,
         SaveListingService $createListingService,
-        CustomFieldsForListingFormService $customFieldsForListingFormService,
+        ListingCustomFieldsService $listingCustomFieldsService,
         PoliceLogIpService $logIpService,
         CategoryListService $categoryListService
     ): Response {
@@ -74,7 +74,7 @@ class UserListingController extends AbstractUserController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $customFieldsForListingFormService->saveCustomFieldsToListing(
+            $listingCustomFieldsService->saveCustomFieldsToListing(
                 $listing,
                 Arr::getNestedElement($request->request->all(), [ListingType::LISTING_FIELD, ListingCustomFieldListType::CUSTOM_FIELD_LIST_FIELD]) ?? [] // listing[customFieldList]
             );
@@ -122,7 +122,7 @@ class UserListingController extends AbstractUserController
     public function edit(
         Request $request,
         Listing $listing,
-        CustomFieldsForListingFormService $customFieldsForListingFormService,
+        ListingCustomFieldsService $listingCustomFieldsService,
         ListingFileUploadService $listingFileUploadService,
         SaveListingService $createListingService,
         PoliceLogIpService $logIpService,
@@ -148,7 +148,7 @@ class UserListingController extends AbstractUserController
                     \json_decode($request->request->get('fileuploader-list-file'), true)
                 );
             }
-            $customFieldsForListingFormService->saveCustomFieldsToListing(
+            $listingCustomFieldsService->saveCustomFieldsToListing(
                 $listing,
                 Arr::getNestedElement($request->request->all(), [ListingType::LISTING_FIELD, ListingCustomFieldListType::CUSTOM_FIELD_LIST_FIELD]) ?? [] // listing[customFieldList]
             );

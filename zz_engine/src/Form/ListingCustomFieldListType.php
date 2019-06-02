@@ -10,7 +10,7 @@ use App\Entity\Listing;
 use App\Entity\ListingCustomFieldValue;
 use App\Form\Type\YearType;
 use App\Repository\CategoryRepository;
-use App\Service\Listing\CustomField\CustomFieldsForListingFormService;
+use App\Service\Listing\CustomField\ListingCustomFieldsService;
 use Minwork\Helper\Arr;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -31,9 +31,9 @@ class ListingCustomFieldListType extends AbstractType
     private $requestStack;
 
     /**
-     * @var CustomFieldsForListingFormService
+     * @var ListingCustomFieldsService
      */
-    private $customFieldsForListingFormService;
+    private $listingCustomFieldsService;
 
     /**
      * @var CategoryRepository
@@ -47,12 +47,12 @@ class ListingCustomFieldListType extends AbstractType
 
     public function __construct(
         RequestStack $requestStack,
-        CustomFieldsForListingFormService $customFieldsForListingFormService,
+        ListingCustomFieldsService $listingCustomFieldsService,
         CategoryRepository $categoryRepository,
         TranslatorInterface $trans
     ) {
         $this->requestStack = $requestStack;
-        $this->customFieldsForListingFormService = $customFieldsForListingFormService;
+        $this->listingCustomFieldsService = $listingCustomFieldsService;
         $this->categoryRepository = $categoryRepository;
         $this->trans = $trans;
     }
@@ -66,7 +66,7 @@ class ListingCustomFieldListType extends AbstractType
             return;
         }
 
-        foreach ($this->customFieldsForListingFormService->getFields($category->getId(), $listingId) as $customField) {
+        foreach ($this->listingCustomFieldsService->getFields($category->getId(), $listingId) as $customField) {
 
             if (\in_array($customField->getType(), [CustomField::TYPE_SELECT_SINGLE, CustomField::TYPE_SELECT])) {
                 $choices = $this->getChoices($customField);

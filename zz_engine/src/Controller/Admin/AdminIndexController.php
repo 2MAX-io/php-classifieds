@@ -13,10 +13,10 @@ use Symfony\Component\Routing\Annotation\Route;
 class AdminIndexController extends AbstractAdminController
 {
     /**
-     * @Route("/admin/red5/index", name="app_admin_index")
+     * @Route("/admin/red5/dashboard", name="app_admin_index")
      * @Route("/admin/red5/")
      */
-    public function adminIndex(AdminStatsService $adminStatsService, HealthCheckService $healthCheckService): Response
+    public function adminIndexDashboard(AdminStatsService $adminStatsService, HealthCheckService $healthCheckService): Response
     {
         $this->denyUnlessAdmin();
 

@@ -14,7 +14,7 @@ use App\Security\CurrentUserService;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr\Join;
 
-class CustomFieldsForListingFormService
+class ListingCustomFieldsService
 {
     /**
      * @var EntityManagerInterface

@@ -9,7 +9,7 @@ use App\Entity\Listing;
 use App\Form\Admin\AdminListingEditType;
 use App\Form\ListingCustomFieldListType;
 use App\Form\ListingType;
-use App\Service\Listing\CustomField\CustomFieldsForListingFormService;
+use App\Service\Listing\CustomField\ListingCustomFieldsService;
 use App\Service\Listing\Save\SaveListingService;
 use Minwork\Helper\Arr;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,7 +24,7 @@ class AdminListingEditController extends AbstractAdminController
     public function adminListingEdit(
         Request $request,
         Listing $listing,
-        CustomFieldsForListingFormService $customFieldsForListingFormService,
+        ListingCustomFieldsService $listingCustomFieldsService,
         SaveListingService $createListingService
     ): Response {
         $this->denyUnlessAdmin();
@@ -32,7 +32,7 @@ class AdminListingEditController extends AbstractAdminController
         $form = $this->createForm(AdminListingEditType::class, $listing);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $customFieldsForListingFormService->saveCustomFieldsToListing(
+            $listingCustomFieldsService->saveCustomFieldsToListing(
                 $listing,
                 Arr::getNestedElement(
                     $request->request->all(),

@@ -41,6 +41,8 @@ class UserListingController extends AbstractUserController
         Request $request,
         UserListingListService $userListingListService
     ): Response {
+        $this->dennyUnlessUser();
+
         $userListingListDto = $userListingListService->getList((int)$request->get('page', 1));
 
         return $this->render(

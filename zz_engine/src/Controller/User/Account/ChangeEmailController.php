@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller\User\Account;
 
+use App\Controller\User\Base\AbstractUserController;
 use App\Entity\Token;
 use App\Entity\TokenField;
 use App\Form\User\Account\ChangeEmailType;
@@ -11,12 +12,11 @@ use App\Security\CurrentUserService;
 use App\Service\FlashBag\FlashService;
 use App\Service\System\Token\TokenService;
 use App\Service\User\Account\ChangeEmailService;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class ChangeEmailController extends AbstractController
+class ChangeEmailController extends AbstractUserController
 {
     /**
      * @Route("/user/account/changeEmail", name="app_user_change_email")
@@ -27,6 +27,8 @@ class ChangeEmailController extends AbstractController
         ChangeEmailService $changeEmailService,
         FlashService $flashService
     ): Response {
+        $this->dennyUnlessUser();
+
         $form = $this->createForm(ChangeEmailType::class, []);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {

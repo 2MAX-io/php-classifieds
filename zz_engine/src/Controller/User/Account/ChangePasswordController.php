@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller\User\Account;
 
+use App\Controller\User\Base\AbstractUserController;
 use App\Entity\Token;
 use App\Entity\TokenField;
 use App\Form\User\Account\ChangePasswordType;
@@ -11,12 +12,11 @@ use App\Security\CurrentUserService;
 use App\Service\FlashBag\FlashService;
 use App\Service\System\Token\TokenService;
 use App\Service\User\Account\ChangePasswordService;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class ChangePasswordController extends AbstractController
+class ChangePasswordController extends AbstractUserController
 {
     /**
      * @Route("/user/account/changePassword", name="app_user_change_password")
@@ -27,6 +27,8 @@ class ChangePasswordController extends AbstractController
         CurrentUserService $currentUserService,
         FlashService $flashService
     ): Response {
+        $this->dennyUnlessUser();
+
         $form = $this->createForm(ChangePasswordType::class, []);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {

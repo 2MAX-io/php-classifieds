@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller\User\Account;
 
+use App\Controller\User\Base\AbstractUserController;
 use App\Entity\Token;
 use App\Entity\TokenField;
 use App\Entity\User;
@@ -11,12 +12,11 @@ use App\Form\User\Account\RemindPasswordType;
 use App\Service\FlashBag\FlashService;
 use App\Service\System\Token\TokenService;
 use App\Service\User\Account\RemindPasswordService;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class RemindPasswordController extends AbstractController
+class RemindPasswordController extends AbstractUserController
 {
     /**
      * @Route("/remind-password", name="app_remind_password")
@@ -26,6 +26,8 @@ class RemindPasswordController extends AbstractController
         RemindPasswordService $remindPasswordService,
         FlashService $flashService
     ): Response {
+        $this->dennyUnlessUser();
+
         $form = $this->createForm(RemindPasswordType::class, []);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {

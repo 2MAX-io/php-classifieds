@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller\User\Account;
 
+use App\Controller\User\Base\AbstractUserController;
 use App\Entity\Token;
 use App\Entity\TokenField;
 use App\Form\User\Account\RegisterType;
@@ -12,12 +13,11 @@ use App\Service\FlashBag\FlashService;
 use App\Service\System\Token\TokenService;
 use App\Service\User\Account\RegisterConfirmService;
 use App\Service\User\Account\CreateUserService;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class RegisterController extends AbstractController
+class RegisterController extends AbstractUserController
 {
     /**
      * @Route("/register", name="app_register")
@@ -27,6 +27,8 @@ class RegisterController extends AbstractController
         CreateUserService $createUserService,
         FlashService $flashService
     ): Response {
+        $this->dennyUnlessUser();
+
         $form = $this->createForm(RegisterType::class, []);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {

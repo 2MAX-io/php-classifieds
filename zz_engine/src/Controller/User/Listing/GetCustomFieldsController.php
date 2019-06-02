@@ -12,6 +12,7 @@ use App\Form\ListingType;
 use App\Security\CurrentUserService;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -19,25 +20,38 @@ use Symfony\Component\Routing\Annotation\Route;
 class GetCustomFieldsController extends AbstractUserController
 {
     /**
+     * @var CurrentUserService
+     */
+    private $currentUserService;
+
+    /**
+     * @var FormFactoryInterface
+     */
+    private $formFactory;
+
+    public function __construct(CurrentUserService $currentUserService, FormFactoryInterface $formFactory)
+    {
+        $this->currentUserService = $currentUserService;
+        $this->formFactory = $formFactory;
+    }
+
+    /**
      * @Route("/listing/get-custom-fields", name="app_listing_get_custom_fields", options={"expose"=true})
      */
-    public function getCustomFields(
-        Request $request,
-        CurrentUserService $currentUserService,
-        FormFactoryInterface $formFactory
-    ): Response {
-        $listing = null;
+    public function getCustomFields(Request $request): Response {
         $listingId = $request->query->get('listingId', null);
-        if ($listingId) {
+        $customFieldsForNewListing = $listingId < 1;
+        if ($customFieldsForNewListing) {
+            $listing = new Listing();
+        } else {
             $listing = $this->getDoctrine()->getRepository(Listing::class)->find($listingId);
 
-            if (!$currentUserService->lowSecurityCheckIsAdminInPublic()) {
-                $this->dennyUnlessCurrentUserAllowed($listing);
+            if (null === $listing) {
+                throw new \UnexpectedValueException('listing not found by ID');
             }
         }
-        if (empty($listing)) {
-            $listing = new Listing();
-        }
+
+        $this->dennyIfNotAllowed($listing);
 
         $categoryId = $request->query->get('categoryId', null);
         $category = $this->getDoctrine()->getRepository(Category::class)->find($categoryId);
@@ -45,7 +59,33 @@ class GetCustomFieldsController extends AbstractUserController
             $listing->setCategory($category);
         }
 
-        $formBuilder = $formFactory->createNamedBuilder(
+        return $this->render(
+            'user/listing/other/get_custom_fields.html.twig',
+            [
+                'form' => $this->getForm( $listing)->createView(),
+            ]
+        );
+    }
+
+    private function dennyIfNotAllowed(?Listing $listing): void
+    {
+        if ($this->currentUserService->lowSecurityCheckIsAdminInPublic()) {
+            return; // skip checking admin
+        }
+
+        $new = null === $listing->getId();
+
+        if ($new) {
+            $this->dennyUnlessUser();
+        } else {
+            $this->dennyUnlessCurrentUserAllowed($listing);
+        }
+    }
+
+
+    private function getForm(Listing $listing): FormInterface
+    {
+        $formBuilder = $this->formFactory->createNamedBuilder(
             ListingType::LISTING_FIELD,
             FormType::class,
             null,
@@ -62,12 +102,7 @@ class GetCustomFieldsController extends AbstractUserController
             ]
         );
 
-        return $this->render(
-            'user/listing/other/get_custom_fields.html.twig',
-            [
-                'form' => $formBuilder->getForm()->createView(),
-            ]
-        );
+        return $formBuilder->getForm();
     }
 }
 

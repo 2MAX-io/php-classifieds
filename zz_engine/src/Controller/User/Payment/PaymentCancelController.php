@@ -24,7 +24,6 @@ class PaymentCancelController extends AbstractController
     ): Response {
         $gatewayToken = $request->get('token');
         $paymentEntity = $em->getRepository(Payment::class)->findOneBy(['gatewayToken' => $gatewayToken]);
-
         if (!$paymentEntity) {
             throw $this->createNotFoundException();
         }

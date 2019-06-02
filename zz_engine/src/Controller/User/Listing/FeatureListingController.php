@@ -66,7 +66,7 @@ class FeatureListingController extends AbstractUserController
     /**
      * @Route(
      *     "/user/feature/make-featured/package/{featuredPackage}/listing/{id}",
-     *     name="app_user_feature_listing_by_balance",
+     *     name="app_user_feature_listing_action",
      *     methods={"PATCH"},
      * )
      */

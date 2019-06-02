@@ -18,6 +18,7 @@ class UserVisibleMessageException extends \Exception implements HttpExceptionInt
 
         $this->setUserSafeMessage($message, $messageData);
     }
+
     /**
      * @var string
      */

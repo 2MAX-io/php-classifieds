@@ -7,7 +7,6 @@ namespace App\Controller\User\Listing;
 use App\Controller\User\Base\AbstractUserController;
 use App\Entity\Listing;
 use App\Form\ValidityExtendType;
-use App\Helper\Date;
 use App\Service\Listing\ValidityExtend\ValidUntilSetService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -33,11 +32,7 @@ class ValidityExtendController extends AbstractUserController
                 $listing,
                 (int) $form->get('validityTimeDays')->getData()
             );
-            $listing->setUserDeactivated(false);
-
-            if (Date::olderThanDays(10, $listing->getOrderByDate())) {
-                $listing->setOrderByDate(new \DateTime());
-            }
+            $validUntilSetService->validityExtendedByUser($listing);
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($listing);

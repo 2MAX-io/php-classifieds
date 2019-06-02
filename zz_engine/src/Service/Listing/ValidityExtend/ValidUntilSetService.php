@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Service\Listing\ValidityExtend;
 
 use App\Entity\Listing;
+use App\Helper\Date;
 use Carbon\Carbon;
 use Carbon\CarbonInterval;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -33,6 +34,15 @@ class ValidUntilSetService
 
         $listing->setValidUntilDate($newValidUntilDate);
         $this->em->persist($listing);
+    }
+
+    public function validityExtendedByUser(Listing $listing): void
+    {
+        $listing->setUserDeactivated(false);
+
+        if (Date::olderThanDays(10, $listing->getOrderByDate())) {
+            $listing->setOrderByDate(new \DateTime());
+        }
     }
 
     public function addValidityDaysWithoutRestrictions(Listing $listing, int $validityTimeDays): void

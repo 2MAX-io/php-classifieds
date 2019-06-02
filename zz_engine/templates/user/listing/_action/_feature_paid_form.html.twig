@@ -1,6 +1,6 @@
 <form
         method="post"
-        action="{{ path('app_user_feature_listing_by_balance', {'id': listing.id, 'featuredPackage': package.id}) }}"
+        action="{{ path('app_user_feature_listing_action', {'id': listing.id, 'featuredPackage': package.id}) }}"
         onsubmit="return confirm('{{ 'trans.Feature for %featuredDays% days for %price%: %listing%?' | trans({'%listing%': listing.title, '%featuredDays%': package.daysFeaturedExpire, '%price%': package.price | moneyPrecise}) }}');"
         class="d-inline"
 >

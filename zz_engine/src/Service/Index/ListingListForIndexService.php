@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App\Service\Listing\Helper;
+namespace App\Service\Index;
 
 use App\Entity\Listing;
 use App\Service\Listing\ListingPublicDisplayService;
 use Doctrine\ORM\EntityManagerInterface;
 
-class ListingHelperService
+class ListingListForIndexService
 {
     /**
      * @var EntityManagerInterface
@@ -32,12 +32,9 @@ class ListingHelperService
     public function getLatestListings(int $count): array
     {
         $qb = $this->em->getRepository(Listing::class)->createQueryBuilder('listing');
-        $qb->addSelect('listingFile');
-        $qb->leftJoin('listing.listingFiles', 'listingFile');
         $this->listingPublicDisplayService->applyPublicDisplayConditions($qb);
 
         $qb->orderBy('listing.id', 'DESC');
-        $qb->groupBy('listing.id');
         $qb->setMaxResults($count);
 
         return $qb->getQuery()->getResult();
@@ -49,8 +46,6 @@ class ListingHelperService
     public function getRecommendedListings(int $maxResultsCount): array
     {
         $qb = $this->em->getRepository(Listing::class)->createQueryBuilder('listing');
-        $qb->addSelect('listingFile');
-        $qb->leftJoin('listing.listingFiles', 'listingFile');
         $qb->andWhere($qb->expr()->eq('listing.featured', 1));
         $this->listingPublicDisplayService->applyPublicDisplayConditions($qb);
 
@@ -59,13 +54,12 @@ class ListingHelperService
         $count = (int) $qbCount->getQuery()->getSingleScalarResult();
 
         $maxResultToGetFromDb = $maxResultsCount * 5;
-        $qb->setFirstResult(random_int(0, max($count-($maxResultToGetFromDb), 0)));
+        $qb->setFirstResult(\random_int(0, \max($count-($maxResultToGetFromDb), 0)));
         $qb->setMaxResults($maxResultToGetFromDb);
-        $qb->groupBy('listing.id');
 
         $results = $qb->getQuery()->getResult();
-        shuffle($results);
-        $results = array_slice($results, 0, $maxResultsCount);
+        \shuffle($results);
+        $results = \array_slice($results, 0, $maxResultsCount);
 
         return $results;
     }

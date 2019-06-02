@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller\Pub\Secondary;
 
-use App\Service\Listing\Helper\ListingHelperService;
+use App\Service\Index\ListingListForIndexService;
 use App\Service\Setting\SettingsService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,7 +19,7 @@ class RssController extends AbstractController
      * @Route("/rss", name="app_rss")
      */
     public function index(
-        ListingHelperService $listingHelperService,
+        ListingListForIndexService $listingListForIndexService,
         UrlGeneratorInterface $urlGenerator,
         SettingsService $settingsService
     ): Response {
@@ -30,7 +30,7 @@ class RssController extends AbstractController
         $feed->setDescription($settingsDto->getRssDescription());
         $feed->setLink($urlGenerator->generate('app_index'));
 
-        foreach ($listingHelperService->getLatestListings(100) as $listing) {
+        foreach ($listingListForIndexService->getLatestListings(100) as $listing) {
             $link = $urlGenerator->generate(
                 'app_listing_show',
                 ['id' => $listing->getId(), 'slug' => $listing->getSlug()],

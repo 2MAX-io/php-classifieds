@@ -22,7 +22,7 @@ class CategoryListService
     /**
      * @return Category[]
      */
-    public function getCategoryList()
+    public function getCategoryList(): array
     {
         $qb = $this->em->getRepository(Category::class)->createQueryBuilder('category');
         $qb->andWhere($qb->expr()->eq('category.lvl', 1));

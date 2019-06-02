@@ -22,11 +22,13 @@ class CustomFieldForCategoryService
 
     public function saveOrder(array $orderedCustomFieldJoinCategoryIdList): void
     {
-        $customFields = $this->em->getRepository(CustomFieldJoinCategory::class)->getFromIds($orderedCustomFieldJoinCategoryIdList);
+        $customFieldJoinCategoryList = $this->em->getRepository(CustomFieldJoinCategory::class)->getFromIds(
+            $orderedCustomFieldJoinCategoryIdList
+        );
 
-        $sort = 1;
+        $sort = SortService::START_REORDER_FROM;
         foreach ($orderedCustomFieldJoinCategoryIdList as $customFieldJoinCategoryId) {
-            $customFieldJoinCategory = $customFields[$customFieldJoinCategoryId];
+            $customFieldJoinCategory = $customFieldJoinCategoryList[$customFieldJoinCategoryId];
             $customFieldJoinCategory->setSort($sort);
             $this->em->persist($customFieldJoinCategory);
             $sort++;

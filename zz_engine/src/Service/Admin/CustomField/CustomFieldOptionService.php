@@ -24,11 +24,11 @@ class CustomFieldOptionService
 
     public function saveOrderOfOptions(array $orderedCustomFieldOptionIdList): void
     {
-        $customFields = $this->em->getRepository(CustomFieldOption::class)->getFromIds($orderedCustomFieldOptionIdList);
+        $customFieldOptions = $this->em->getRepository(CustomFieldOption::class)->getFromIds($orderedCustomFieldOptionIdList);
 
-        $sort = 1;
+        $sort = SortService::START_REORDER_FROM;
         foreach ($orderedCustomFieldOptionIdList as $customFieldOptionId) {
-            $customFieldOption = $customFields[$customFieldOptionId];
+            $customFieldOption = $customFieldOptions[$customFieldOptionId];
             $customFieldOption->setSort($sort);
             $this->em->persist($customFieldOption);
             $sort++;
@@ -68,7 +68,6 @@ class CustomFieldOptionService
         $qb->setParameter('value', $replaceTo);
 
         $newValuesUsed = $qb->getQuery()->getSingleScalarResult();
-
         if ($newValuesUsed > 0) {
             throw new UserVisibleMessageException('Can not change option value, because target value already exist');
         }

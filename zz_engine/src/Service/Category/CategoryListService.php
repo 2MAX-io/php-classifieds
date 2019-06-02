@@ -100,7 +100,7 @@ class CategoryListService
             }
         }
 
-        return array_reverse($result);
+        return \array_reverse($result);
     }
 
     /**

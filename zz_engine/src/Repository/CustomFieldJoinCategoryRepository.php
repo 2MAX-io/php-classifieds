@@ -23,7 +23,7 @@ class CustomFieldJoinCategoryRepository extends ServiceEntityRepository
     }
 
     /**
-     * @return Category[]
+     * @return CustomFieldJoinCategory[]
      */
     public function getFromIds(array $customFieldJoinCategoryIds): array
     {

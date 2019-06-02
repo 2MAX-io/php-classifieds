@@ -135,7 +135,7 @@ class AdminListingSearchService
 
         $return = [];
         foreach ($categories as $category) {
-            $path = array_map(
+            $path = \array_map(
                 function (Category $category) {
                     if ($category->getLvl() < 1) {
                         return false;

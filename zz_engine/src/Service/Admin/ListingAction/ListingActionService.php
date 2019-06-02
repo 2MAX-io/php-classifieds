@@ -19,7 +19,7 @@ class ListingActionService
         $this->em = $em;
     }
 
-    public function activate(array $listingIds)
+    public function activate(array $listingIds): void
     {
         $listings = $this->em->getRepository(Listing::class)->getFromIds($listingIds);
 
@@ -32,13 +32,13 @@ class ListingActionService
         }
     }
 
-    public function reject(array $listingIds)
+    public function reject(array $listingIds): void
     {
         $listings = $this->em->getRepository(Listing::class)->getFromIds($listingIds);
 
         foreach ($listings as $listing) {
             $listing->setAdminRejected(true);
-            $listing->setRejectionReason('');
+            $listing->setRejectionReason(null);
             $this->em->persist($listing);
         }
     }

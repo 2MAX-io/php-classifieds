@@ -29,7 +29,7 @@ class DevGenerateTestListings
 
     public function generate(int $count): void
     {
-        gc_enable();
+        \gc_enable();
         $this->em->getConnection()->getConfiguration()->setSQLLogger(null);
 
         $faker = Factory::create();
@@ -62,7 +62,7 @@ class DevGenerateTestListings
             if ($persistCount++ > 1000) {
                 $this->em->flush();
                 $this->em->clear();
-                gc_collect_cycles();
+                \gc_collect_cycles();
 
                 $persistCount = 0;
             }
@@ -123,7 +123,7 @@ class DevGenerateTestListings
         return $customFieldValue;
     }
 
-    private function setYearRange(Listing $listing, CustomField $customField)
+    private function setYearRange(Listing $listing, CustomField $customField): void
     {
         if ($customField->getType() !== CustomField::TYPE_YEAR_RANGE) {
             return;
@@ -142,7 +142,7 @@ class DevGenerateTestListings
         $this->em->persist($customFieldValue);
     }
 
-    private function setIntegerRange(Listing $listing, CustomField $customField)
+    private function setIntegerRange(Listing $listing, CustomField $customField): void
     {
         if ($customField->getType() !== CustomField::TYPE_INTEGER_RANGE) {
             return;

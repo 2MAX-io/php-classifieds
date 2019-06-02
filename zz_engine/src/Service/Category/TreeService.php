@@ -27,7 +27,7 @@ class TreeService
         $this->adminCategoryService = $adminCategoryService;
     }
 
-    public function rebuild()
+    public function rebuild(): void
     {
         $tree = new NestedSet([
             'tableName' => 'category',

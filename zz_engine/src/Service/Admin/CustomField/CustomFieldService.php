@@ -24,7 +24,7 @@ class CustomFieldService
     {
         $customFields = $this->em->getRepository(CustomField::class)->getFromIds($orderedCustomFieldIds);
 
-        $sort = 1;
+        $sort = SortService::START_REORDER_FROM;
         foreach ($orderedCustomFieldIds as $id) {
             $customField = $customFields[$id];
             $customField->setSort($sort);

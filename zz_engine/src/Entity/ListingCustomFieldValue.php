@@ -47,7 +47,7 @@ class ListingCustomFieldValue
     private $customFieldOption;
 
     /**
-     * @ORM\Column(type="string", length=150)
+     * @ORM\Column(type="string", length=70)
      */
     private $value;
 

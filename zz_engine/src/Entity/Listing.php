@@ -98,7 +98,7 @@ class Listing
     private $price;
 
     /**
-     * @ORM\Column(type="string", length=60, nullable=true)
+     * @ORM\Column(type="string", length=40, nullable=true)
      */
     private $priceFor;
 
@@ -108,7 +108,7 @@ class Listing
     private $priceNegotiable;
 
     /**
-     * @ORM\Column(type="string", length=50, nullable=true)
+     * @ORM\Column(type="string", length=20, nullable=true)
      */
     private $phone;
 
@@ -123,7 +123,7 @@ class Listing
     private $emailShow;
 
     /**
-     * @ORM\Column(type="string", length=50, nullable=true)
+     * @ORM\Column(type="string", length=30, nullable=true)
      */
     private $city;
 

@@ -27,19 +27,19 @@ class CustomField
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=100)
+     * @ORM\Column(type="string", length=40)
      */
     private $name;
 
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=100, nullable=true)
+     * @ORM\Column(type="string", length=50, nullable=true)
      */
     private $nameForAdmin;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="string", length=40)
      */
     private $type;
 

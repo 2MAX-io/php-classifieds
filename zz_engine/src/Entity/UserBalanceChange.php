@@ -20,6 +20,7 @@ class UserBalanceChange
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="userBalanceChanges")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $user;
 

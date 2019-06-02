@@ -20,6 +20,7 @@ class ListingView
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Listing")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $listing;
 

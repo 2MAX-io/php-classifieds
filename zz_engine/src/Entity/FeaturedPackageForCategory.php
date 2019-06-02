@@ -20,11 +20,13 @@ class FeaturedPackageForCategory
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\FeaturedPackage", inversedBy="featuredPackageForCategories")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $featuredPackage;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="featuredPackages")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $category;
 

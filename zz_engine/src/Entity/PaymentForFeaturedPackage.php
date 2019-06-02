@@ -20,16 +20,19 @@ class PaymentForFeaturedPackage
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\Payment", inversedBy="paymentForFeaturedPackage")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $payment;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\FeaturedPackage", inversedBy="paymentFeaturedPackage")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $featuredPackage;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Listing", inversedBy="paymentFeaturedPackage")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $listing;
 

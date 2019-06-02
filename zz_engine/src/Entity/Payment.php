@@ -85,7 +85,7 @@ class Payment
      * @var User|null
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="payments")
-     * @ORM\JoinColumn(nullable=true)
+     * @ORM\JoinColumn(nullable=false)
      */
     private $user;
 

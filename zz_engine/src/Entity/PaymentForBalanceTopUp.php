@@ -18,6 +18,7 @@ class PaymentForBalanceTopUp
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\Payment", inversedBy="paymentForBalanceTopUp")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $payment;
 
@@ -25,6 +26,7 @@ class PaymentForBalanceTopUp
      * @var User
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="paymentForBalanceTopUpList")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $user;
 

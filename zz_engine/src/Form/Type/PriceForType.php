@@ -11,7 +11,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class PriceForType extends AbstractType
 {
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefault('placeholder', 'trans.not required');
         $resolver->setDefault('choices', [
@@ -45,7 +45,7 @@ class PriceForType extends AbstractType
         $resolver->setDefault('label', 'trans.Amount per');
     }
 
-    public function getParent()
+    public function getParent(): string
     {
         return ChoiceType::class;
     }

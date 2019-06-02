@@ -12,7 +12,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class AdminCategoryType extends AbstractType
 {
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'class' => Category::class,
@@ -43,7 +43,7 @@ class AdminCategoryType extends AbstractType
         ]);
     }
 
-    public function getParent()
+    public function getParent(): string
     {
         return EntityType::class;
     }

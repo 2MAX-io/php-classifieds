@@ -35,7 +35,7 @@ class ExecuteActionType extends AbstractType
         $this->em = $em;
     }
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add(static::ACTION, ChoiceType::class, [
             'label' => 'trans.Execute action',

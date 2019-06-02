@@ -21,7 +21,7 @@ class PageType extends AbstractType
 {
     const SLUG = 'slug';
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add('title', TextType::class, [
             'label' => 'trans.Title',

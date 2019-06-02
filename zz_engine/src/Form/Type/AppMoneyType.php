@@ -21,7 +21,7 @@ class AppMoneyType extends AbstractType
         $this->settingsService = $settingsService;
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefault('currency', $this->settingsService->getCurrency());
         $resolver->setDefault('grouping', true);
@@ -30,7 +30,7 @@ class AppMoneyType extends AbstractType
         ]);
     }
 
-    public function getParent()
+    public function getParent(): string
     {
         return MoneyType::class;
     }

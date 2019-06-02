@@ -21,7 +21,7 @@ class PageType extends AbstractType
         $this->pageRepository = $pageRepository;
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'placeholder' => 'trans.not required',
@@ -31,14 +31,14 @@ class PageType extends AbstractType
         ]);
     }
 
-    public function getParent()
+    public function getParent(): string
     {
         return ChoiceType::class;
     }
 
-    private function getPages()
+    private function getPages(): array
     {
-        $pages = $this->pageRepository->findAll();
+        $pages = $this->pageRepository->findBy(['enabled' => true]);
 
         $returnList = [];
         foreach ($pages as $page) {

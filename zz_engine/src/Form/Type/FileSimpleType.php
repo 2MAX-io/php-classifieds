@@ -9,7 +9,7 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
 
 class FileSimpleType extends AbstractType
 {
-    public function getParent()
+    public function getParent(): string
     {
         return FileType::class;
     }
@@ -17,7 +17,7 @@ class FileSimpleType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'file_simple';
     }

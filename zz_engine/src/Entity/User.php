@@ -31,17 +31,17 @@ class User implements UserInterface, RoleInterface, EnablableInterface, EncoderA
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=70, unique=true)
+     * @ORM\Column(type="string", length=70, unique=true, nullable=false)
      */
     protected $username;
 
     /**
-     * @ORM\Column(type="string", length=70, unique=true)
+     * @ORM\Column(type="string", length=70, unique=true, nullable=false)
      */
     private $email;
 
     /**
-     * @ORM\Column(type="json")
+     * @ORM\Column(type="json", nullable=false)
      */
     private $roles = [];
 
@@ -54,7 +54,7 @@ class User implements UserInterface, RoleInterface, EnablableInterface, EncoderA
 
     /**
      * @var string The hashed password
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=false)
      */
     private $password;
 
@@ -154,7 +154,7 @@ class User implements UserInterface, RoleInterface, EnablableInterface, EncoderA
     {
         $roles = $this->roles;
         // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
+        $roles[] = RoleInterface::ROLE_USER;
 
         return array_unique($roles);
     }
@@ -184,7 +184,7 @@ class User implements UserInterface, RoleInterface, EnablableInterface, EncoderA
     /**
      * @see UserInterface
      */
-    public function getSalt()
+    public function getSalt(): void
     {
         // not needed when using the "bcrypt" algorithm in security.yaml
     }

@@ -6,12 +6,12 @@ namespace App\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Intl\Intl;
+use Symfony\Component\Intl\Countries;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class LanguageTwoLettersType extends AbstractType
 {
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefault('choices', $this->getLanguagesList());
         $resolver->setDefault('placeholder', 'trans.Select');
@@ -20,11 +20,12 @@ class LanguageTwoLettersType extends AbstractType
 
     public function getLanguagesList(): array
     {
-        $countryNames = \array_flip(Intl::getRegionBundle()->getCountryNames());
+        $countryNames = \array_flip(Countries::getNames());
+
         return \array_combine($countryNames, $countryNames);
     }
 
-    public function getParent()
+    public function getParent(): string
     {
         return ChoiceType::class;
     }

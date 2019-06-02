@@ -55,9 +55,12 @@ class ListingShowController extends AbstractController
             ]);
         }
 
-        $eventDispatcher->addListener(KernelEvents::TERMINATE, function() use ($listingShowSingleService, $listingShowDto) {
-            $listingShowSingleService->saveView($listingShowDto->getListing());
-        });
+        $eventDispatcher->addListener(
+            KernelEvents::TERMINATE,
+            function () use ($listingShowSingleService, $listingShowDto) {
+                $listingShowSingleService->saveView($listingShowDto->getListing());
+            }
+        );
 
         return $this->render(
             'listing_show.html.twig',

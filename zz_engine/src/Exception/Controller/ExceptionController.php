@@ -43,7 +43,7 @@ class ExceptionController extends BaseExceptionController
     /**
      * @inheritDoc
      */
-    public function showAction(Request $request, FlattenException $exception, DebugLoggerInterface $logger = null)
+    public function showAction(Request $request, FlattenException $exception, DebugLoggerInterface $logger = null): Response
     {
         $currentContent = $this->getAndCleanOutputBuffering($request->headers->get('X-Php-Ob-Level', -1));
         $showException = $request->attributes->get('showException', $this->debug); // As opposed to an additional parameter, this maintains BC
@@ -75,7 +75,6 @@ class ExceptionController extends BaseExceptionController
         $exceptionTrace .= "\r\n" . ' | HTTP_CF_CONNECTING_IP ' . $request->server->get('HTTP_CF_CONNECTING_IP', '');
         $exceptionTrace .= "\r\n" . ' | HTTP_REFERER ' . $request->server->get('HTTP_REFERER', '');
         $exceptionTrace .= "\r\n" . ' | REQUEST_URI ' . $request->server->get('REQUEST_URI', '');
-        $exceptionTrace .= "\r\n" . ' | HTTP_REFERER ' . $request->server->get('HTTP_REFERER', '');
         $exceptionTrace .= "\r\n" . ' | SERVER_ADDR ' . $request->server->get('SERVER_ADDR', '');
         $exceptionTrace .= "\r\n" . ' | SERVER_PORT ' . $request->server->get('SERVER_PORT', '');
 

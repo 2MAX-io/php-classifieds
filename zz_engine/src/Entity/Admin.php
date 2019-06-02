@@ -24,14 +24,18 @@ class Admin implements UserInterface, RoleInterface, EnablableInterface
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=70, unique=true)
+     * @var string
+     *
+     * @ORM\Column(type="string", length=70, unique=true, nullable=false)
      */
     private $email;
 
     /**
      * When modifying, change installation script
      *
-     * @ORM\Column(type="json")
+     * @var array
+     *
+     * @ORM\Column(type="json", nullable=false)
      */
     private $roles = [];
 
@@ -44,7 +48,8 @@ class Admin implements UserInterface, RoleInterface, EnablableInterface
 
     /**
      * @var string The hashed password
-     * @ORM\Column(type="string")
+     *
+     * @ORM\Column(type="string", nullable=false)
      */
     private $password;
 
@@ -95,7 +100,7 @@ class Admin implements UserInterface, RoleInterface, EnablableInterface
     {
         $roles = $this->roles;
         // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
+        $roles[] = RoleInterface::ROLE_USER;
 
         return array_unique($roles);
     }
@@ -125,7 +130,7 @@ class Admin implements UserInterface, RoleInterface, EnablableInterface
     /**
      * @see UserInterface
      */
-    public function getSalt()
+    public function getSalt(): void
     {
         // not needed when using the "bcrypt" algorithm in security.yaml
     }

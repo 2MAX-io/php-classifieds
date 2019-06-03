@@ -85,7 +85,6 @@ class ValueExistValidator extends ConstraintValidator
         /* @var $class ClassMetadata */
 
         $criteria = [];
-        $hasNullValue = false;
 
         foreach ($fields as $fieldName) {
             if (!$class->hasField($fieldName) && !$class->hasAssociation($fieldName)) {
@@ -101,11 +100,6 @@ class ValueExistValidator extends ConstraintValidator
                  */
                 $em->initializeObject($criteria[$fieldName]);
             }
-        }
-
-        // validation doesn't fail if one of the fields is null and if null values should be ignored
-        if ($hasNullValue && $constraint->ignoreNull) {
-            return;
         }
 
         // skip validation if there are no criteria (this can happen when the

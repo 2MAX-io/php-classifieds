@@ -43,7 +43,7 @@ class CustomFieldCategorySelectionService
             $customFieldCategorySelectionItemDto->setCategory($category);
             $selectedInRequest = $this->requestStack->getMasterRequest()->get('selectedCategories', []);
             $customFieldCategorySelectionItemDto->setSelected(
-                \count($selectedInRequest) ?
+                $this->requestStack->getCurrentRequest()->request->count() ?
                     Arr::inArray((string) $category->getId(), $selectedInRequest)
                     :
                     $this->categoryHasCustomField($category, $customField)

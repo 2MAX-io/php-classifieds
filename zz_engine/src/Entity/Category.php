@@ -305,7 +305,7 @@ class Category
         return $this->sort;
     }
 
-    public function setSort(int $sort): self
+    public function setSort(?int $sort): self
     {
         $this->sort = $sort;
 

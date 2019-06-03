@@ -42,7 +42,7 @@ class FeaturedPackageCategorySelectionService
             $categorySelectionDto->setCategory($category);
             $selectedInRequest = $this->requestStack->getMasterRequest()->get('selectedCategories', []);
             $categorySelectionDto->setSelected(
-                \count($selectedInRequest) ?
+                $this->requestStack->getCurrentRequest()->request->count() ?
                     Arr::inArray((string) $category->getId(), $selectedInRequest)
                     :
                     $this->isFeaturePackageSelectedInCategory($category, $featuredPackage)

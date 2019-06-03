@@ -7,7 +7,6 @@ namespace App\Service\System\HealthCheck\HealthChecker;
 use App\Helper\ExceptionHelper;
 use App\Helper\FilePath;
 use App\Helper\Str;
-use App\Helper\UrlHelper;
 use App\Service\System\HealthCheck\Base\HealthCheckerInterface;
 use App\Service\System\HealthCheck\HealthCheckResultDto;
 use App\System\Cache\AppCacheEnum;
@@ -15,6 +14,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\RequestOptions;
 use Psr\Log\LoggerInterface;
 use Psr\SimpleCache\CacheInterface;
+use Symfony\Component\HttpFoundation\UrlHelper;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Webmozart\PathUtil\Path;
@@ -41,12 +41,23 @@ class SecurityHealthChecker implements HealthCheckerInterface
      */
     private $logger;
 
-    public function __construct(TranslatorInterface $trans, UrlGeneratorInterface $urlGenerator, CacheInterface $cache, LoggerInterface $logger)
-    {
+    /**
+     * @var UrlHelper
+     */
+    private $urlHelper;
+
+    public function __construct(
+        TranslatorInterface $trans,
+        UrlGeneratorInterface $urlGenerator,
+        UrlHelper $urlHelper,
+        CacheInterface $cache,
+        LoggerInterface $logger
+    ) {
         $this->trans = $trans;
         $this->urlGenerator = $urlGenerator;
         $this->cache = $cache;
         $this->logger = $logger;
+        $this->urlHelper = $urlHelper;
     }
 
     public function checkHealth(): HealthCheckResultDto
@@ -91,8 +102,7 @@ class SecurityHealthChecker implements HealthCheckerInterface
                 RequestOptions::HTTP_ERRORS => false,
             ]);
 
-            $baseUrl = UrlHelper::getBaseAbsoluteUrl($this->urlGenerator);
-            $testedUrl = $baseUrl . '/' . Path::makeRelative($testFilePath, FilePath::getPublicDir());
+            $testedUrl = $this->urlHelper->getAbsoluteUrl(Path::makeRelative($testFilePath, FilePath::getPublicDir()));
             $response = $client->get($testedUrl);
 
             if (Str::containsOneOf($response->getBody()->getContents(), ['zbD2vXzqDyiFqE2iqFPPM', 'SecurityHealthChecker'])) {
@@ -120,8 +130,7 @@ class SecurityHealthChecker implements HealthCheckerInterface
                 RequestOptions::HTTP_ERRORS => false,
             ]);
 
-            $baseUrl = UrlHelper::getBaseAbsoluteUrl($this->urlGenerator);
-            $testedUrl = $baseUrl . '/.git/HEAD';
+            $testedUrl = $this->urlHelper->getAbsoluteUrl('/.git/HEAD');
             $response = $client->get($testedUrl);
 
             if (Str::containsOneOf($response->getBody()->getContents(), ['ref:'])) {

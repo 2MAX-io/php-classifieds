@@ -44,7 +44,7 @@ class PayPalPaymentMethod implements PaymentMethodInterface
         $this->settingsService = $settingsService;
     }
 
-    public function createPayment(PaymentDto $paymentDto)
+    public function createPayment(PaymentDto $paymentDto): void
     {
         $payer = new Payer();
         $payer->setPaymentMethod("paypal");
@@ -89,7 +89,6 @@ class PayPalPaymentMethod implements PaymentMethodInterface
         } catch (\Exception $ex) {
             throw new UserVisibleMessageException('trans.Failed to create payment, please try again later', [], 0, $ex);
         }
-
     }
 
     public function confirmPayment(Request $request, ConfirmPaymentDto $confirmPaymentDto): ConfirmPaymentDto
@@ -121,28 +120,12 @@ class PayPalPaymentMethod implements PaymentMethodInterface
     {
         // todo: make this method production worthy
 
-        // #### SDK configuration
-        // Register the sdk_config.ini file in current directory
-        // as the configuration source.
-        /*
-        if(!defined("PP_CONFIG_PATH")) {
-            define("PP_CONFIG_PATH", __DIR__);
-        }
-        */
-        // ### Api context
-        // Use an ApiContext object to authenticate
-        // API calls. The clientId and clientSecret for the
-        // OAuthTokenCredential class can be retrieved from
-        // developer.paypal.com
         $apiContext = new ApiContext(
             new OAuthTokenCredential(
                 $this->settingsService->getSettingsDto()->getPaymentPayPalClientId(),
                 $this->settingsService->getSettingsDto()->getPaymentPayPalClientSecret()
             )
         );
-        // Comment this line out and uncomment the PP_CONFIG_PATH
-        // 'define' block if you want to use static file
-        // based configuration
         $apiContext->setConfig(
             array(
                 'mode' => $this->settingsService->getSettingsDto()->getPaymentPayPalMode() ?? 'sandbox',

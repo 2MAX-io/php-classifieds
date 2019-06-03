@@ -112,13 +112,13 @@ class PaymentService
 
         $paymentEntity = new Payment();
         $paymentEntity->setCanceled(false);
+        $paymentEntity->setBalanceUpdated(false);
         $paymentEntity->setDatetime(new \DateTime());
         $paymentEntity->setAmount($paymentDto->getAmount());
         $paymentEntity->setGatewayPaymentId($paymentDto->getGatewayPaymentId());
         $paymentEntity->setGatewayToken($paymentDto->getGatewayToken());
         $paymentEntity->setGatewayStatus($paymentDto->getGatewayStatus());
         $paymentEntity->setUser($paymentDto->getUser());
-        $paymentEntity->setBalanceUpdated(false);
         $this->em->persist($paymentEntity);
 
         $paymentDto->setPaymentEntity($paymentEntity);

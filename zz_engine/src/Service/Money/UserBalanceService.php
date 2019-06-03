@@ -124,10 +124,10 @@ class UserBalanceService
         $qb->select('SUM(userBalanceChange.balanceChange) balanceChangeSum');
         $qb->andWhere($qb->expr()->eq('userBalanceChange.user', ':user'));
         $qb->setParameter(':user', $user);
-        $qb->orderBy('userBalanceChange.id', 'DESC');
         $qb->setMaxResults(1);
 
         $sum = $qb->getQuery()->getSingleScalarResult();
+
         return (int) ($sum ?? 0);
     }
 }

@@ -55,11 +55,12 @@ class SettingsService
         $this->cache = $cache;
     }
 
-    public function save(SettingsDto $settingsDto)
+    public function save(SettingsDto $settingsDto): void
     {
         $properties = $this->propertyInfoExtractor->getProperties($settingsDto);
         $propertyAccessor = PropertyAccess::createPropertyAccessor();
         $settingList = $this->getSettingsIndexedByName();
+        $currentDate = new \DateTime();
 
         foreach ($properties as $property) {
             $setting = null;
@@ -75,8 +76,7 @@ class SettingsService
                 $setting->setName($property);
                 $setting->setValue(Str::toString($propertyAccessor->getValue($settingsDto, $property)));
             }
-
-            $setting->setLastUpdateDate(new \DateTime());
+            $setting->setLastUpdateDate($currentDate);
             $this->em->persist($setting);
         }
 

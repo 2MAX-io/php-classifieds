@@ -535,3 +535,6 @@ trans:
   Feature for week: 'Wyróżnij na tydzień'
   Verification of the correctness of the new email address: 'Weryfikacja poprawności nowego adresu email'
   Could not process payment, if you have been charged and did not receive service, please contact us: 'Nie można było obsłużyć płatności, jeżeli zapłaciłeś i nie otrzymałeś usługi, prosimy o kontakt z nami'
+  'Failed to get information about latest version. Try again later': 'Nie udało się pobrać informacji o najnowszej wersji. Spróbuj ponownie później.'
+  Upgrade has been executed: 'Aktualizacja została wykonana'
+  Documentation: 'Dokumentacja'

@@ -300,3 +300,7 @@ composer require psr/simple-cache -d zz_engine
 php zz_engine/bin/console doctrine:schema:update --force
 php zz_engine/bin/console doctrine:schema:update --force
 composer update -d zz_engine
+composer --help
+composer help list
+composer list
+composer help check-platform-reqs

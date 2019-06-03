@@ -77,9 +77,8 @@
         });
 
         $('.saveOrder').click(function () {
-            var orderedIdList = [];
+            let orderedIdList = [];
             $('.nested-sortable').each(function (i, el) {
-                console.log($(el).sortable('widget').toArray());
                 orderedIdList = orderedIdList.concat($(el).sortable('widget').toArray());
             });
 

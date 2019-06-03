@@ -1,6 +1,6 @@
 
 function copyTextToClipboard(text) {
-    var textArea = document.createElement("textarea");
+    let textArea = document.createElement("textarea");
 
     //
     // *** This styling is an extra step which is likely not required. ***
@@ -46,7 +46,7 @@ function copyTextToClipboard(text) {
     textArea.select();
 
     try {
-        var successful = document.execCommand('copy');
+        document.execCommand('copy');
     } catch (err) {
         console.log('unable to copy to clipboard');
     }

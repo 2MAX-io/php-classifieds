@@ -104,6 +104,9 @@ trans:
   Feature for week: 'Feature for week'
   Verification of the correctness of the new email address: 'Verification of the correctness of the new email address'
   Could not process payment, if you have been charged and did not receive service, please contact us: 'Could not process payment, if you have been charged and did not receive service, please contact us'
+  'Failed to get information about latest version. Try again later.': 'Failed to get information about latest version. Try again later.'
+  Upgrade has been executed: 'Upgrade has been executed'
+  Documentation: 'Documentation'
 
 trans.customFieldType.select: Select field
 trans.customFieldType.year_range: Field with year

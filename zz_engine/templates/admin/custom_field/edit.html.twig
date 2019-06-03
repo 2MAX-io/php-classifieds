@@ -74,7 +74,7 @@
         });
 
         $('.saveOrder').click(function () {
-            var orderedIdList = $('.sortable').sortable('widget').toArray();
+            let orderedIdList = $('.sortable').sortable('widget').toArray();
 
             $.ajax(Routing.generate('app_admin_custom_field_options_save_order', []), {
                     type: 'POST',

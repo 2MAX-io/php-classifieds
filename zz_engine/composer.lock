@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "716fea2818d89a6c9b4a6c93a5769d8c",
+    "content-hash": "47ddaab2655842d386e52a2b9a5921f9",
     "packages": [
         {
             "name": "ausi/slug-generator",
@@ -7239,7 +7239,7 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": "^7.1.3",
+        "php": "^7.3",
         "ext-ctype": "*",
         "ext-iconv": "*"
     },

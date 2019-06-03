@@ -298,3 +298,5 @@ composer require psr/simple-cache -d zz_engine
 composer update -d zz_engine
 composer require psr/simple-cache -d zz_engine
 php zz_engine/bin/console doctrine:schema:update --force
+php zz_engine/bin/console doctrine:schema:update --force
+composer update -d zz_engine

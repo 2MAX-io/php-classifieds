@@ -24,10 +24,8 @@ class ValidUntilSetService
 
     public function setValidityDaysFromNow(Listing $listing, int $validityTimeDays): void
     {
-        $validityTimeDays = min($validityTimeDays, $this->getMaxValidityTimeDays());
-
+        $validityTimeDays = \min($validityTimeDays, $this->getMaxValidityTimeDays());
         $newValidUntilDate = Carbon::now()->add(CarbonInterval::days($validityTimeDays));
-
         if ($newValidUntilDate < $listing->getValidUntilDate()) {
             return;
         }
@@ -64,6 +62,6 @@ class ValidUntilSetService
 
     public function getMaxValidityTimeDays(): int
     {
-        return max($this->getValidityTimeDaysChoices());
+        return \max($this->getValidityTimeDaysChoices());
     }
 }

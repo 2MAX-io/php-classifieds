@@ -72,7 +72,7 @@ class ListingShowSingleService
                 datetime=:datetime
         ');
         $query->bindValue(':listingId', $listing->getId());
-        $query->bindValue(':datetime', date('Y-m-d H:i:s'));
+        $query->bindValue(':datetime', \date('Y-m-d H:i:s'));
         $query->execute();
     }
 }

@@ -35,7 +35,7 @@ class CategoryType extends AbstractType
             'choice_label' => function (Category $category) {
                 $path = $category->getPath();
 
-                $path = array_map(
+                $path = \array_map(
                     function (Category $category) {
                         if ($category->getLvl() < 1) {
                             return false;
@@ -46,7 +46,7 @@ class CategoryType extends AbstractType
                     $path
                 );
 
-                return join(' ⇾ ', $path);
+                return \join(' ⇾ ', $path);
             },
             'query_builder' => function () {
                 $qb = $this->em->getRepository(Category::class)->createQueryBuilder('category');

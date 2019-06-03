@@ -16,6 +16,7 @@ use App\Service\Category\TreeService;
 use App\Service\System\Sort\SortService;
 use Doctrine\DBAL\Exception\ForeignKeyConstraintViolationException;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -57,6 +58,9 @@ class AdminCategoryController extends AbstractAdminController
         }
 
         $form = $this->createForm(AdminCategorySaveType::class, $category);
+        $form->add(AdminCategorySaveType::SAVE_AND_ADD, SubmitType::class, [
+            'label' => 'trans.Save and Add',
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -68,6 +72,12 @@ class AdminCategoryController extends AbstractAdminController
 
             $treeService->rebuild();
             $em->flush();
+
+            if ($form->getClickedButton() && AdminCategorySaveType::SAVE_AND_ADD === $form->getClickedButton()->getName()) {
+                return $this->redirectToRoute('app_admin_category_new', [
+                    'parentCategory' => $category->getParent()->getId(),
+                ]);
+            }
 
             return $this->redirectToRoute('app_admin_category_edit', [
                 'id' => $category->getId(),
@@ -92,6 +102,9 @@ class AdminCategoryController extends AbstractAdminController
         $this->denyUnlessAdmin();
 
         $form = $this->createForm(AdminCategorySaveType::class, $category);
+        $form->add(AdminCategorySaveType::SAVE_AND_ADD, SubmitType::class, [
+            'label' => 'trans.Save and Add',
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -103,6 +116,12 @@ class AdminCategoryController extends AbstractAdminController
 
             $treeService->rebuild();
             $em->flush();
+
+            if ($form->getClickedButton() && AdminCategorySaveType::SAVE_AND_ADD === $form->getClickedButton()->getName()) {
+                return $this->redirectToRoute('app_admin_category_new', [
+                    'parentCategory' => $category->getParent()->getId(),
+                ]);
+            }
 
             return $this->redirectToRoute('app_admin_category_edit', [
                 'id' => $category->getId(),

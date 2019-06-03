@@ -21,7 +21,8 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 class AdminCategorySaveType extends AbstractType
 {
-    const SLUG = 'slug';
+    public const SLUG = 'slug';
+    public const SAVE_AND_ADD = 'saveAndAdd';
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {

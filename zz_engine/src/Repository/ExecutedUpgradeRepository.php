@@ -18,33 +18,4 @@ class ExecutedUpgradeRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, ExecutedUpgrade::class);
     }
-
-    // /**
-    //  * @return ExecutedUpgrade[] Returns an array of ExecutedUpgrade objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('e')
-            ->andWhere('e.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('e.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?ExecutedUpgrade
-    {
-        return $this->createQueryBuilder('e')
-            ->andWhere('e.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

@@ -22,7 +22,7 @@ class ValueExist extends Constraint
         self::NOT_UNIQUE_ERROR => 'NOT_UNIQUE_ERROR',
     ];
 
-    public function getRequiredOptions()
+    public function getRequiredOptions(): array
     {
         return ['fields'];
     }
@@ -32,7 +32,7 @@ class ValueExist extends Constraint
      *
      * @return string
      */
-    public function validatedBy()
+    public function validatedBy(): string
     {
         return ValueExistValidator::class;
     }
@@ -40,12 +40,12 @@ class ValueExist extends Constraint
     /**
      * {@inheritdoc}
      */
-    public function getTargets()
+    public function getTargets(): string
     {
         return self::CLASS_CONSTRAINT;
     }
 
-    public function getDefaultOption()
+    public function getDefaultOption(): string
     {
         return 'fields';
     }

@@ -59,7 +59,7 @@ class PaymentDto
      */
     public $user;
 
-    public function setPaymentExecuteUrl(string $paymentExecuteUrl)
+    public function setPaymentExecuteUrl(string $paymentExecuteUrl): void
     {
         $this->paymentExecuteUrl = $paymentExecuteUrl;
     }

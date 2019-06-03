@@ -114,7 +114,7 @@ class AdminCategoryService
 //        $pdo->query('UPDATE `category` SET sort = parent_id*1000 + @count:= @count + 1 WHERE 1 ORDER BY lft ASC, sort ASC;');
     }
 
-    private function reorderCategoryAndChildren(Category $parentCategory, int $baseSort = null)
+    private function reorderCategoryAndChildren(Category $parentCategory, int $baseSort = null): void
     {
         static $sort;
         if ($baseSort !== null) {

@@ -12,6 +12,8 @@ use Doctrine\ORM\Mapping as ORM;
 class UserBalanceChange
 {
     /**
+     * @var int
+     *
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer", options={"unsigned"=true})

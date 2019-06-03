@@ -61,7 +61,7 @@ class Admin implements UserInterface, RoleInterface, EnablableInterface
     /**
      * @see UserInterface
      */
-    public function eraseCredentials()
+    public function eraseCredentials(): void
     {
         $this->plainPassword = null;
     }

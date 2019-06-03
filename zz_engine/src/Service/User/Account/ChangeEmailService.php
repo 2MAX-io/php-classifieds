@@ -36,7 +36,7 @@ class ChangeEmailService
         $this->tokenService = $tokenService;
     }
 
-    public function sendConfirmation(User $user, string $newEmail)
+    public function sendConfirmation(User $user, string $newEmail): void
     {
         $token = $this->tokenService->getTokenBuilder(
             Token::USER_EMAIL_CHANGE_TYPE,

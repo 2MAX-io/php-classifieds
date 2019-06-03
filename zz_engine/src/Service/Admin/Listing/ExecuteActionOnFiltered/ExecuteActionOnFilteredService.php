@@ -35,14 +35,14 @@ class ExecuteActionOnFilteredService
     {
         $qb = $this->getQuery();
 
-        $qb->addSelect("listingCustomFieldValueExceptChanged.id");
-        $qb->addSelect("listing.id");
+        $qb->addSelect('listingCustomFieldValueExceptChanged.id');
+        $qb->addSelect('listing.id');
 
-        if (!\in_array('category', $qb->getAllAliases())) {
+        if (!\in_array('category', $qb->getAllAliases(), true)) {
             $qb->join('listing.category', 'category');
         }
 
-        if (!\in_array('categoryCustomFieldJoin', $qb->getAllAliases())) {
+        if (!\in_array('categoryCustomFieldJoin', $qb->getAllAliases(), true)) {
             $qb->join('category.customFieldsJoin', 'categoryCustomFieldJoin');
         }
 
@@ -71,10 +71,12 @@ $selectSql
         $stmt->execute(Sql::getParametersFromQb($qb));
 
         $pdo = $this->em->getConnection();
-        $stmt = $pdo->prepare("
+        $stmt = $pdo->prepare(
+            '
 REPLACE INTO listing_custom_field_value (id, listing_id, custom_field_id, custom_field_option_id, value)
 SELECT id, listing_id, :customField, :customFieldOption, :val FROM filtered_id_list
-");
+'
+        );
         $stmt->bindValue(':customField', $customFieldOption->getCustomField()->getId());
         $stmt->bindValue(':customFieldOption', $customFieldOption->getId());
         $stmt->bindValue(':val', $customFieldOption->getValue());
@@ -86,11 +88,11 @@ SELECT id, listing_id, :customField, :customFieldOption, :val FROM filtered_id_l
         $this->createTempTableWithFiltered();
 
         $pdo = $this->em->getConnection();
-        $stmt = $pdo->prepare(
-            /** @lang MySQL */ "
+        $stmt = $pdo->prepare('
 UPDATE listing JOIN filtered_id_list ON listing.id = filtered_id_list.id
 SET category_id = :category_id 
-");
+'
+        );
         $stmt->bindValue(':category_id', $category->getId());
         $stmt->execute();
     }
@@ -102,7 +104,7 @@ SET category_id = :category_id
         $stmt->execute();
 
         $qb = $this->getQuery();
-        $qb->addSelect("listing.id");
+        $qb->addSelect('listing.id');
         $selectSql = $qb->getQuery()->getSQL();
 
         $stmt = $pdo->prepare("
@@ -129,9 +131,8 @@ $selectSql
         if ($allListingsCount < 1) {
             throw new \UnexpectedValueException('there should be some listings');
         }
-        $percentage = $filteredCount / $allListingsCount;
 
-        return $percentage;
+        return $filteredCount / $allListingsCount;
     }
 
     public function getAffectedCount(): int

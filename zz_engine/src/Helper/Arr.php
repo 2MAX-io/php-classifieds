@@ -6,6 +6,9 @@ namespace App\Helper;
 
 class Arr
 {
+    /**
+     * @param mixed $needle
+     */
     public static function inArray($needle, array $haystack): bool
     {
         return \in_array($needle, $haystack, true);
@@ -16,6 +19,9 @@ class Arr
         return \array_map('intval', $array);
     }
 
+    /**
+     * @return array|string|int|mixed
+     */
     public static function random(array $array, int $count = 1)
     {
         if ($count < 1) {

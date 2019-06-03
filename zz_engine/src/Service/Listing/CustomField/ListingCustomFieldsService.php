@@ -10,7 +10,6 @@ use App\Entity\Listing;
 use App\Entity\ListingCustomFieldValue;
 use App\Helper\Arr;
 use App\Helper\Str;
-use App\Security\CurrentUserService;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr\Join;
 
@@ -20,15 +19,10 @@ class ListingCustomFieldsService
      * @var EntityManagerInterface
      */
     private $em;
-    /**
-     * @var CurrentUserService
-     */
-    private $currentUserService;
 
-    public function __construct(EntityManagerInterface $em, CurrentUserService $currentUserService)
+    public function __construct(EntityManagerInterface $em)
     {
         $this->em = $em;
-        $this->currentUserService = $currentUserService;
     }
 
     /**
@@ -101,23 +95,24 @@ class ListingCustomFieldsService
     }
 
     public function saveField(
-        $customFieldId,
-        $customFieldValue,
-        $listingCustomFieldValues,
-        &$listingCustomFieldValuesToRemove,
+        int $customFieldId,
+        string $customFieldValue,
+        array $listingCustomFieldValues,
+        array &$listingCustomFieldValuesToRemove,
         bool $multiple = false
     ): ListingCustomFieldValue {
         $option = null;
         if (Str::beginsWith($customFieldValue, '__form_custom_field_option_id_')) {
-            $optionId = (int) (\str_replace('__form_custom_field_option_id_', '', $customFieldValue));
+            $optionId = (int) \str_replace('__form_custom_field_option_id_', '', $customFieldValue);
             $option = $this->em->getRepository(CustomFieldOption::class)->find((int) $optionId);
             $customFieldValue = $option->getValue();
         }
 
         if ($multiple) {
-            if (isset($listingCustomFieldValues[$customFieldId . '_' . $customFieldValue])) {
-                $listingCustomFieldValue = $listingCustomFieldValues[$customFieldId . '_' . $customFieldValue];
-                unset($listingCustomFieldValuesToRemove[$customFieldId . '_' . $customFieldValue]);
+            $idValueConcat = $customFieldId . '_' . $customFieldValue;
+            if (isset($listingCustomFieldValues[$idValueConcat])) {
+                $listingCustomFieldValue = $listingCustomFieldValues[$idValueConcat];
+                unset($listingCustomFieldValuesToRemove[$idValueConcat]);
             } else {
                 $listingCustomFieldValue = new ListingCustomFieldValue();
             }
@@ -145,7 +140,7 @@ class ListingCustomFieldsService
      */
     private function getListingCustomFieldValues(Listing $listing): array
     {
-        return Arr::indexBy($listing->getListingCustomFieldValues()->toArray(), function(ListingCustomFieldValue $customFieldValue) {
+        return Arr::indexBy($listing->getListingCustomFieldValues()->toArray(), static function(ListingCustomFieldValue $customFieldValue) {
             if ($customFieldValue->getCustomField()->getType() === CustomField::TYPE_CHECKBOX_MULTIPLE) {
                 return [$customFieldValue->getCustomField()->getId() . '_' . $customFieldValue->getValue() => $customFieldValue];
             }

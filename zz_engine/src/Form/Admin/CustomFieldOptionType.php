@@ -37,7 +37,7 @@ class CustomFieldOptionType extends AbstractType
                 new OptionValue(),
             ]
         ])
-        ->addEventListener(FormEvents::PRE_SUBMIT, function(FormEvent $formEvent) {
+        ->addEventListener(FormEvents::PRE_SUBMIT, static function(FormEvent $formEvent): void {
             $data = $formEvent->getData();
             $data[self::VALUE_FIELD] = Str::softSlug($data[self::VALUE_FIELD]);
 

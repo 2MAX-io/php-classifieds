@@ -6,6 +6,9 @@ namespace App\Helper;
 
 class BoolHelper
 {
+    /**
+     * @param mixed $value
+     */
     public static function isTrue($value, bool $castToBool = false): bool
     {
         if ($value === true) {

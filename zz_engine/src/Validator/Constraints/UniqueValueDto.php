@@ -13,6 +13,9 @@ class UniqueValueDto
 
     private $value;
 
+    /**
+     * @param mixed $value
+     */
     public function __construct(string $name, $value)
     {
         $this->name = $name;
@@ -24,6 +27,9 @@ class UniqueValueDto
         return $this->name;
     }
 
+    /**
+     * @return mixed
+     */
     public function getValue()
     {
         return $this->value;

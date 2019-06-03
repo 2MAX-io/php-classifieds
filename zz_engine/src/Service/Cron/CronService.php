@@ -69,7 +69,7 @@ class CronService
             $this->setMainImage();
             $this->openIndexPage();
 
-            $this->systemLogService->addSystemLog(SystemLog::CRON_RUN_TYPE, "cron executed");
+            $this->systemLogService->addSystemLog(SystemLog::CRON_RUN_TYPE, 'cron executed');
         } finally {
             $lock->release();
         }
@@ -102,10 +102,15 @@ UPDATE listing SET featured=0 WHERE featured_until_date <= :now OR featured_unti
         $pdo = $this->em->getConnection();
         $query = $pdo->prepare(
         /** @lang MySQL */ '
-UPDATE listing JOIN (
-    SELECT path, listing_id FROM listing_file GROUP BY listing_file.id ORDER BY sort ASC
-) listing_file ON listing_file.listing_id = listing.id
-SET listing.main_image = listing_file.path WHERE 1;
+UPDATE listing
+    JOIN listing_file
+    ON listing.id = listing_file.listing_id
+    JOIN (
+        SELECT listing_id, MIN(sort) minSort, path FROM listing_file GROUP BY listing_id
+    ) minSortJoin
+    ON minSortJoin.listing_id = listing_file.listing_id && listing_file.sort = minSortJoin.minSort
+SET listing.main_image = listing_file.path
+WHERE 1
 '
         );
         $query->execute();

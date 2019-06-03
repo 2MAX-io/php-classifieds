@@ -54,7 +54,7 @@ class PoliceLogIpService
         return $output;
     }
 
-    public function saveLog(Listing $listing)
+    public function saveLog(Listing $listing): void
     {
         $log = new ListingPoliceLog();
         $log->setSourceIp($_SERVER['REMOTE_ADDR']);

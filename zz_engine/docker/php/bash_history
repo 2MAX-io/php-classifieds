@@ -304,3 +304,7 @@ composer --help
 composer help list
 composer list
 composer help check-platform-reqs
+composer slevomat/coding-standard -d zz_engine
+composer require slevomat/coding-standard -d zz_engine
+composer require --dev -d zz_engine the "contrib" repository, which is open to community contributions.
+composer require --dev -d zz_engine slevomat/coding-standard

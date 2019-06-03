@@ -32,7 +32,7 @@ class FeaturedPackageCategorySelectionService
     /**
      * @return FeaturedPackageCategorySelectionDto[]
      */
-    public function getCategorySelectionList(FeaturedPackage $featuredPackage, Category $preselectedCategory = null) : array
+    public function getCategorySelectionList(FeaturedPackage $featuredPackage, Category $preselectedCategory = null): array
     {
         $categories = $this->getCategoriesWihJoinedFeaturedPackages();
 

@@ -177,6 +177,9 @@ class UniqueValueValidator extends ConstraintValidator
             ->addViolation();
     }
 
+    /**
+     * @inheritDoc
+     */
     private function formatWithIdentifiers(ObjectManager $em, ClassMetadata $class, $value): string
     {
         if (!\is_object($value) || $value instanceof \DateTimeInterface) {
@@ -204,7 +207,7 @@ class UniqueValueValidator extends ConstraintValidator
             return \sprintf('object("%s")', $idClass);
         }
 
-        \array_walk($identifiers, function (&$id, $field) {
+        \array_walk($identifiers, function (&$id, $field): void {
             if (!\is_object($id) || $id instanceof \DateTimeInterface) {
                 $idAsString = $this->formatValue($id, self::PRETTY_DATE);
             } else {

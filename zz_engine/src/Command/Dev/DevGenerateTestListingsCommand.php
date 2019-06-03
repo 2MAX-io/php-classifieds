@@ -28,7 +28,7 @@ class DevGenerateTestListingsCommand extends Command
         $this->devGenerateTestListings = $devGenerateTestListings;
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setDescription('generates and saves random listings, dev only')

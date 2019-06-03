@@ -11,7 +11,6 @@ use App\Form\Type\AppMoneyType;
 use App\Form\Type\FileSimpleType;
 use App\Form\Type\PriceForType;
 use App\Service\Listing\ValidityExtend\ValidUntilSetService;
-use App\Service\Setting\SettingsService;
 use App\Validator\Constraints\Phone;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -40,15 +39,9 @@ class ListingType extends AbstractType
      */
     private $validUntilSetService;
 
-    /**
-     * @var SettingsService
-     */
-    private $settingsService;
-
-    public function __construct(ValidUntilSetService $validUntilSetService, SettingsService $settingsService)
+    public function __construct(ValidUntilSetService $validUntilSetService)
     {
         $this->validUntilSetService = $validUntilSetService;
-        $this->settingsService = $settingsService;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -156,7 +149,7 @@ class ListingType extends AbstractType
             [
                 'data_class' => Listing::class,
                 'constraints' => [
-                    new Callback(['callback' => function (Listing $listing, ExecutionContextInterface $context) {
+                    new Callback(['callback' => static function (Listing $listing, ExecutionContextInterface $context): void {
                         if (empty($listing->getPhone()) && (empty($listing->getEmail()) || !$listing->getEmailShow())) {
                             $context->buildViolation('Enter email or phone, both can not be empty')
                                 ->atPath('phone')

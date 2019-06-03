@@ -9,7 +9,6 @@ use libphonenumber\NumberParseException;
 use libphonenumber\PhoneNumberUtil;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
-use Symfony\Component\Validator\Exception\ConstraintDefinitionException;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 class PhoneValidator extends ConstraintValidator
@@ -31,11 +30,7 @@ class PhoneValidator extends ConstraintValidator
     }
 
     /**
-     * @param object     $entity
-     * @param Constraint $constraint
-     *
-     * @throws UnexpectedTypeException
-     * @throws ConstraintDefinitionException
+     * @inheritDoc
      */
     public function validate($value, Constraint $constraint): void
     {
@@ -63,7 +58,7 @@ class PhoneValidator extends ConstraintValidator
         }
     }
 
-    private function addViolation($value, Constraint $constraint): void
+    private function addViolation(string $value, Constraint $constraint): void
     {
         $this->context->buildViolation($constraint->message)
             ->setParameter('{{ string }}', $value)

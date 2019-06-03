@@ -28,7 +28,7 @@ class RegenerateSearchTextCron
         $this->createListingService = $createListingService;
     }
 
-    public function regenerate()
+    public function regenerate(): void
     {
         $qb = $this->em->getRepository(Listing::class)->createQueryBuilder('listing');
 

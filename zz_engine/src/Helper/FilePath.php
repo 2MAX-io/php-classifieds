@@ -53,12 +53,12 @@ class FilePath
         return self::getPath(__DIR__ . '/../../../zz_engine/');
     }
 
-    public static function getCategoryPicturePath()
+    public static function getCategoryPicturePath(): string
     {
         return self::getPath(__DIR__ . '/../../../static/category');
     }
 
-    public static function getLogoPath()
+    public static function getLogoPath(): string
     {
         return self::getPath(__DIR__ . '/../../../static/logo');
     }

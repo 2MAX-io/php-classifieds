@@ -135,7 +135,7 @@ class User implements UserInterface, RoleInterface, EnablableInterface, EncoderA
      *
      * @return string
      */
-    public function getEncoderName()
+    public function getEncoderName(): ?string
     {
         if (Str::beginsWith($this->getPassword(), '$2a$')) {
             return 'legacy_phpass'; // security.yaml

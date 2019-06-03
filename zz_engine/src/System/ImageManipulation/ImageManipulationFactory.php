@@ -22,7 +22,7 @@ class ImageManipulationFactory extends ServerFactory
     {
         return array_filter(
             parent::getManipulators(),
-            function ($element) {
+            static function ($element) {
                 if ($element instanceof Orientation) {
                     return false; // removing orientation because it uses EXIF
                 }
@@ -33,11 +33,9 @@ class ImageManipulationFactory extends ServerFactory
     }
 
     /**
-     * Create configured server.
-     * @param  array  $config Configuration parameters.
-     * @return Server Configured server.
+     * @inheritDoc
      */
-    public static function create(array $config = [])
+    public static function create(array $config = []): Server
     {
         return (new self($config))->getServer();
     }

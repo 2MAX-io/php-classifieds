@@ -25,6 +25,9 @@ class TwigNoDependencies implements RuntimeExtensionInterface
         return $date <= new \DateTime();
     }
 
+    /**
+     * @param mixed $value
+     */
     public function boolText($value): string
     {
         if ($value === true) {

@@ -37,7 +37,7 @@ class ListingShowController extends AbstractController
 
         if ($slug !== $listingShowDto->getListing()->getSlug()) {
             return $this->redirectToRoute($request->get('_route'), [
-                'id' => (int) $id,
+                'id' => $id,
                 'slug' => $listingShowDto->getListing()->getSlug(),
             ]);
         }
@@ -57,7 +57,7 @@ class ListingShowController extends AbstractController
 
         $eventDispatcher->addListener(
             KernelEvents::TERMINATE,
-            function () use ($listingShowSingleService, $listingShowDto) {
+            static function () use ($listingShowSingleService, $listingShowDto): void {
                 $listingShowSingleService->saveView($listingShowDto->getListing());
             }
         );

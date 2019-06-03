@@ -13,7 +13,7 @@ use Symfony\Component\VarDumper\Cloner\Data;
 
 class Sql
 {
-    public static function replaceParams($query, $parameters)
+    public static function replaceParams(string $query, array $parameters): string
     {
         if ($parameters instanceof Data) {
             $parameters = $parameters->getValue(true);

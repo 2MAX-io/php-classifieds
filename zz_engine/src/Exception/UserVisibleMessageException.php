@@ -35,18 +35,18 @@ class UserVisibleMessageException extends \Exception implements HttpExceptionInt
      * @param string $messageKey  The message or message key
      * @param array  $messageData Data to be passed into the translator
      */
-    public function setUserSafeMessage($messageKey, array $messageData = [])
+    public function setUserSafeMessage(string $messageKey, array $messageData = []): void
     {
         $this->messageKey = $messageKey;
         $this->messageData = $messageData;
     }
 
-    public function getUserSafeMessageKey()
+    public function getUserSafeMessageKey(): string
     {
         return $this->messageKey;
     }
 
-    public function getUserSafeMessageData()
+    public function getUserSafeMessageData(): array
     {
         return $this->messageData;
     }

@@ -11,7 +11,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class AdministratorChecker implements UserCheckerInterface
 {
-    public function checkPreAuth(UserInterface $admin)
+    public function checkPreAuth(UserInterface $admin): void
     {
         if (!$admin instanceof EnablableInterface) {
             return;

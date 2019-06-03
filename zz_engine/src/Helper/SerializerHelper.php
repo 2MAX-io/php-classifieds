@@ -8,12 +8,15 @@ class SerializerHelper
 {
     /**
      * @see \Symfony\Component\Security\Http\Firewall\ContextListener::safelyUnserialize
+     *
+     * @return mixed
      */
-    public static function safelyUnserialize($serializedToken)
+    public static function safelyUnserialize(string $serializedToken)
     {
         $e = $token = null;
         $prevUnserializeHandler = ini_set('unserialize_callback_func', __CLASS__.'::handleUnserializeCallback');
-        $prevErrorHandler = set_error_handler(function ($type, $msg, $file, $line, $context = []) use (&$prevErrorHandler) {
+        $prevErrorHandler = set_error_handler(
+            static function ($type, $msg, $file, $line, $context = []) use (&$prevErrorHandler) {
             if (__FILE__ === $file) {
                 throw new \ErrorException($msg, 0x37313bc, $type, $file, $line);
             }
@@ -22,7 +25,8 @@ class SerializerHelper
         });
 
         try {
-            $token = unserialize($serializedToken);
+            /** @noinspection UnserializeExploitsInspection */
+            $token = \unserialize($serializedToken);
         } catch (\Throwable $e) {
         }
         restore_error_handler();

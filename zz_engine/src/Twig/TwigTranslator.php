@@ -19,6 +19,9 @@ class TwigTranslator implements RuntimeExtensionInterface
         $this->translator = $translator;
     }
 
+    /**
+     * @param mixed $value
+     */
     public function defaultTrans($value, string $default = ''): string
     {
         if (\twig_test_empty($value)) {

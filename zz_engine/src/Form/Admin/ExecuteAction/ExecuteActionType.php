@@ -91,7 +91,7 @@ class ExecuteActionType extends AbstractType
             'required' => false,
             'data_class' => ExecuteActionDto::class,
             'constraints' => [
-                new Callback(['callback' => function (ExecuteActionDto $executeActionDto, ExecutionContextInterface $context) {
+                new Callback(['callback' => function (ExecuteActionDto $executeActionDto, ExecutionContextInterface $context): void {
                     $action = $executeActionDto->getAction();
 
                     if ($action === static::ACTION_SET_CUSTOM_FIELD_OPTION) {

@@ -66,6 +66,9 @@ class Str
         return $matches;
     }
 
+    /**
+     * @param mixed $value
+     */
     public static function emptyTrim($value): bool
     {
         if ($value === '0') {
@@ -83,6 +86,9 @@ class Str
         return empty($value) || empty(\trim($value));
     }
 
+    /**
+     * @param mixed $value
+     */
     public static function toString($value): string
     {
         if (false === $value) {
@@ -111,9 +117,12 @@ class Str
         return $value;
     }
 
+    /**
+     * @return bool|resource
+     */
     public static function toStream(string $string)
     {
-        $stream = \fopen('php://memory','r+');
+        $stream = \fopen('php://memory','rb+');
         \fwrite($stream, $string);
         \rewind($stream);
 

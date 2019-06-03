@@ -19,7 +19,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 class PageType extends AbstractType
 {
-    const SLUG = 'slug';
+    public const SLUG = 'slug';
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -37,7 +37,7 @@ class PageType extends AbstractType
                 new Slug(),
             ],
         ])
-        ->addEventListener(FormEvents::PRE_SUBMIT, function(FormEvent $formEvent) {
+        ->addEventListener(FormEvents::PRE_SUBMIT, static function(FormEvent $formEvent): void {
             $data = $formEvent->getData();
             $data[self::SLUG] = Str::softSlug($data[self::SLUG]);
 

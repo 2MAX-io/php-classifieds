@@ -66,9 +66,7 @@ class UpgradeApiService
                 RequestOptions::CONNECT_TIMEOUT => 10,
                 RequestOptions::READ_TIMEOUT => 10,
             ]);
-
             $request = new Request('GET', UpgradeApi::LATEST_VERSION_URL);
-
             $response = $client->send($request);
 
             if ($response->getStatusCode() === Response::HTTP_OK) {

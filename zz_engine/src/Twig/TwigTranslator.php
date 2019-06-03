@@ -19,9 +19,9 @@ class TwigTranslator implements RuntimeExtensionInterface
         $this->translator = $translator;
     }
 
-    public function defaultTrans($value, $default = '')
+    public function defaultTrans($value, string $default = ''): string
     {
-        if (twig_test_empty($value)) {
+        if (\twig_test_empty($value)) {
             return $this->translator->trans($default);
         }
 

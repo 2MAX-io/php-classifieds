@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\System\Doctrine\Type;
 
-use DateTimeZone;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\ConversionException;
 use Doctrine\DBAL\Types\DateTimeType;
@@ -31,7 +30,7 @@ class UTCDateTimeType extends DateTimeType
         $converted = \DateTime::createFromFormat(
             $platform->getDateTimeFormatString(),
             $value,
-            self::$utc ? self::$utc : self::$utc = new \DateTimeZone('UTC')
+            self::$utc ? self::$utc : self::$utc = self::getUtc()
         );
 
         if (! $converted) {
@@ -45,9 +44,9 @@ class UTCDateTimeType extends DateTimeType
         return $converted;
     }
 
-    private static function getUtc(): DateTimeZone
+    private static function getUtc(): \DateTimeZone
     {
-        return new DateTimeZone('UTC');
+        return new \DateTimeZone('UTC');
     }
 
     /**

@@ -52,11 +52,13 @@ class UpgradeService
         }
 
         if (!SignatureVerifyHighSecurity::authenticate($content, $signature)) {
+            $this->logger->error('could not verify high security signature during upgrade');
+
             return;
         }
 
         if (!\file_exists(FilePath::getUpgradeDir())) {
-            \mkdir(FilePath::getUpgradeDir(), 0775);
+            \mkdir(FilePath::getUpgradeDir(), 0770);
         }
 
         $decodedContent = \base64_decode($content);
@@ -65,7 +67,7 @@ class UpgradeService
             . '_' . (int) $id
             . '_' . \md5($decodedContent)
             . '_' . date('Y_m_d__His')
-            . '_' . Random::string(32)
+            . '_' . Random::string(8)
             . '.php'
         );
         $path = FilePath::getUpgradeDir() . '/' . $filename;
@@ -75,10 +77,10 @@ class UpgradeService
             $run = include $path;
             $run();
         } catch (\Throwable $e) {
-            $this->logger->alert('error during upgrade', ExceptionHelper::flatten($e));
             $this->logger->alert('error during upgrade, content', [
                 'run_content' => $content,
             ]);
+            $this->logger->alert('error during upgrade', ExceptionHelper::flatten($e));
             throw $e;
         } finally {
 //            \unlink($path);

@@ -45,7 +45,7 @@ class ChangePasswordService
         $this->emailService = $emailService;
     }
 
-    public function sendConfirmation(User $user, string $newPassword)
+    public function sendConfirmation(User $user, string $newPassword): void
     {
         $hashedPassword = $this->encodePasswordService->getEncodedPassword($user, $newPassword);
 
@@ -63,14 +63,14 @@ class ChangePasswordService
         $this->em->persist($token->getTokenEntity());
     }
 
-    public function setHashedPassword(User $user, string $newPasswordHash)
+    public function setHashedPassword(User $user, string $newPasswordHash): void
     {
         $user->setPassword($newPasswordHash);
 
         $this->em->persist($user);
     }
 
-    public function changePassword(User $user, string $newPassword)
+    public function changePassword(User $user, string $newPassword): void
     {
         $user->setPlainPassword($newPassword);
         $this->encodePasswordService->setEncodedPassword($user, $newPassword);

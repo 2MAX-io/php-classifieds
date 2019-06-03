@@ -2,15 +2,6 @@
 
 declare(strict_types=1);
 
-/*
- * This file is part of the Symfony package.
- *
- * (c) Fabien Potencier <fabien@symfony.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace App\Validator\Constraints;
 
 use Doctrine\Common\Persistence\ManagerRegistry;
@@ -23,9 +14,7 @@ use Symfony\Component\Validator\Exception\ConstraintDefinitionException;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 /**
- * Unique Entity Validator checks if one or a set of fields contain unique values.
- *
- * @author Benjamin Eberlei <kontakt@beberlei.de>
+ * based on @see UniqueValueValidator
  */
 class UniqueValueValidator extends ConstraintValidator
 {
@@ -37,13 +26,9 @@ class UniqueValueValidator extends ConstraintValidator
     }
 
     /**
-     * @param object     $entity
-     * @param Constraint $constraint
-     *
-     * @throws UnexpectedTypeException
-     * @throws ConstraintDefinitionException
+     * @inheritDoc
      */
-    public function validate($fieldValue, Constraint $constraint)
+    public function validate($fieldValue, Constraint $constraint): void
     {
         if (!$constraint instanceof UniqueValue) {
             throw new UnexpectedTypeException($constraint, __NAMESPACE__.'\UniqueValue');
@@ -71,13 +56,13 @@ class UniqueValueValidator extends ConstraintValidator
             $em = $this->registry->getManager($constraint->em);
 
             if (!$em) {
-                throw new ConstraintDefinitionException(sprintf('Object manager "%s" does not exist.', $constraint->em));
+                throw new ConstraintDefinitionException(\sprintf('Object manager "%s" does not exist.', $constraint->em));
             }
         } else {
             $em = $this->registry->getManagerForClass($constraint->entityClass);
 
             if (!$em) {
-                throw new ConstraintDefinitionException(sprintf('Unable to find the object manager associated with an entity of class "%s".', \get_class($constraint->entityClass)));
+                throw new ConstraintDefinitionException(\sprintf('Unable to find the object manager associated with an entity of class "%s".', \get_class($constraint->entityClass)));
             }
         }
 
@@ -90,7 +75,6 @@ class UniqueValueValidator extends ConstraintValidator
         foreach ($fields as $field) {
             if ($field instanceof UniqueValueDto) {
                 $fieldName = $field->getName();
-                $criteria[$field->getName()] = $field->getValue();
             } else {
                 $fieldName = $field;
             }
@@ -99,29 +83,19 @@ class UniqueValueValidator extends ConstraintValidator
                 throw new ConstraintDefinitionException(sprintf('The field "%s" is not mapped by Doctrine, so it cannot be validated for uniqueness.', $fieldName));
             }
 
-//            $fieldValue = $class->reflFields[$fieldName]->getValue(new $constraint->entityClass);
-//
-//            if (null === $fieldValue) {
-//                $hasNullValue = true;
-//            }
-//
-//            if ($constraint->ignoreNull && null === $fieldValue) {
-//                continue;
-//            }
-
             if ($field instanceof UniqueValueDto) {
                 $criteria[$field->getName()] = $field->getValue();
             } else {
                 $criteria[$fieldName] = $fieldValue;
             }
 
-//            if (null !== $criteria[$fieldName] && $class->hasAssociation($fieldName)) {
-//                /* Ensure the Proxy is initialized before using reflection to
-//                 * read its identifiers. This is necessary because the wrapped
-//                 * getter methods in the Proxy are being bypassed.
-//                 */
-//                $em->initializeObject($criteria[$fieldName]);
-//            }
+            if (null !== $criteria[$fieldName] && $class->hasAssociation($fieldName)) {
+                /* Ensure the Proxy is initialized before using reflection to
+                 * read its identifiers. This is necessary because the wrapped
+                 * getter methods in the Proxy are being bypassed.
+                 */
+                $em->initializeObject($criteria[$fieldName]);
+            }
         }
 
         // validation doesn't fail if one of the fields is null and if null values should be ignored
@@ -177,7 +151,7 @@ class UniqueValueValidator extends ConstraintValidator
                 $result = null === $result ? [] : [$result];
             }
         } elseif (\is_array($result)) {
-            reset($result);
+            \reset($result);
         } else {
             $result = null === $result ? [] : [$result];
         }
@@ -193,7 +167,7 @@ class UniqueValueValidator extends ConstraintValidator
         /**
          * do not make error for current value when updating
          */
-        if ($constraint->excludeCurrent !== null && \count($result) === 1 && current($result) === $constraint->excludeCurrent) {
+        if ($constraint->excludeCurrent !== null && \count($result) === 1 && \current($result) === $constraint->excludeCurrent) {
             return;
         }
 
@@ -209,7 +183,7 @@ class UniqueValueValidator extends ConstraintValidator
             ->addViolation();
     }
 
-    private function formatWithIdentifiers(ObjectManager $em, ClassMetadata $class, $value)
+    private function formatWithIdentifiers(ObjectManager $em, ClassMetadata $class, $value): string
     {
         if (!\is_object($value) || $value instanceof \DateTimeInterface) {
             return $this->formatValue($value, self::PRETTY_DATE);
@@ -233,19 +207,19 @@ class UniqueValueValidator extends ConstraintValidator
         }
 
         if (!$identifiers) {
-            return sprintf('object("%s")', $idClass);
+            return \sprintf('object("%s")', $idClass);
         }
 
-        array_walk($identifiers, function (&$id, $field) {
+        \array_walk($identifiers, function (&$id, $field) {
             if (!\is_object($id) || $id instanceof \DateTimeInterface) {
                 $idAsString = $this->formatValue($id, self::PRETTY_DATE);
             } else {
-                $idAsString = sprintf('object("%s")', \get_class($id));
+                $idAsString = \sprintf('object("%s")', \get_class($id));
             }
 
-            $id = sprintf('%s => %s', $field, $idAsString);
+            $id = \sprintf('%s => %s', $field, $idAsString);
         });
 
-        return sprintf('object("%s") identified by (%s)', $idClass, implode(', ', $identifiers));
+        return \sprintf('object("%s") identified by (%s)', $idClass, \implode(', ', $identifiers));
     }
 }

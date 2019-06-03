@@ -6,7 +6,7 @@ namespace App\Form\Admin;
 
 use App\Entity\CustomFieldOption;
 use App\Helper\Str;
-use App\Validator\Constraints\Value;
+use App\Validator\Constraints\OptionValue;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -34,7 +34,7 @@ class CustomFieldOptionType extends AbstractType
             'label' => 'trans.Value',
             'constraints' => [
                 new NotBlank(),
-                new Value(),
+                new OptionValue(),
             ]
         ])
         ->addEventListener(FormEvents::PRE_SUBMIT, function(FormEvent $formEvent) {

@@ -23,7 +23,7 @@ class UniqueValue extends Constraint
         self::NOT_UNIQUE_ERROR => 'NOT_UNIQUE_ERROR',
     ];
 
-    public function getRequiredOptions()
+    public function getRequiredOptions(): array
     {
         return ['fields'];
     }
@@ -33,7 +33,7 @@ class UniqueValue extends Constraint
      *
      * @return string
      */
-    public function validatedBy()
+    public function validatedBy(): string
     {
         return UniqueValueValidator::class;
     }
@@ -41,12 +41,12 @@ class UniqueValue extends Constraint
     /**
      * {@inheritdoc}
      */
-    public function getTargets()
+    public function getTargets(): string
     {
         return self::CLASS_CONSTRAINT;
     }
 
-    public function getDefaultOption()
+    public function getDefaultOption(): string
     {
         return 'fields';
     }

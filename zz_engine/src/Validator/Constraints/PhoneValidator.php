@@ -12,7 +12,6 @@ use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\ConstraintDefinitionException;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
-
 class PhoneValidator extends ConstraintValidator
 {
     /**
@@ -38,7 +37,7 @@ class PhoneValidator extends ConstraintValidator
      * @throws UnexpectedTypeException
      * @throws ConstraintDefinitionException
      */
-    public function validate($value, Constraint $constraint)
+    public function validate($value, Constraint $constraint): void
     {
         if (!$constraint instanceof Phone) {
             throw new UnexpectedTypeException($constraint, __NAMESPACE__.'\Phone');
@@ -49,9 +48,8 @@ class PhoneValidator extends ConstraintValidator
         }
 
         $phoneUtil = $this->phoneNumberUtil;
-
         try {
-            $phoneNumber = $this->phoneNumberUtil->parse($value, $this->settingsService->getLanguageTwoLetters());
+            $phoneNumber = $phoneUtil->parse($value, $this->settingsService->getLanguageTwoLetters());
         } catch (NumberParseException $e) {
             $this->addViolation($value, $constraint);
 
@@ -60,11 +58,12 @@ class PhoneValidator extends ConstraintValidator
 
         if (false === $phoneUtil->isValidNumber($phoneNumber)) {
             $this->addViolation($value, $constraint);
+
             return;
         }
     }
 
-    private function addViolation($value, Constraint $constraint)
+    private function addViolation($value, Constraint $constraint): void
     {
         $this->context->buildViolation($constraint->message)
             ->setParameter('{{ string }}', $value)

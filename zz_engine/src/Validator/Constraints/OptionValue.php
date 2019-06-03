@@ -7,7 +7,7 @@ namespace App\Validator\Constraints;
 use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Validator\Constraints\RegexValidator;
 
-class Value extends Regex
+class OptionValue extends Regex
 {
     public $message = 'Contains not allowed characters. Allowed characters: plain letters, numbers, minus character, underscore character';
     public $pattern = '#^[a-zA-Z0-9\-_]*$#';

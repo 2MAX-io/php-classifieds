@@ -15,7 +15,6 @@ class HealthCheckService
 
     public function __construct(iterable $healthCheckerList)
     {
-
         $this->healthCheckerList = $healthCheckerList;
     }
 

@@ -81,7 +81,7 @@ class TextService
             return \trim($element);
         }, $wordsToRemove);
 
-        return trim(Str::replaceIgnoreCase($string, $wordsToRemove, ''));
+        return \trim(Str::replaceIgnoreCase($string, $wordsToRemove, ''));
     }
 
     private function calculateUpperCaseScore(string $text): float

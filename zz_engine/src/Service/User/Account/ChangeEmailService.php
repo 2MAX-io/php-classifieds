@@ -51,7 +51,7 @@ class ChangeEmailService
         $this->em->persist($token->getTokenEntity());
     }
 
-    public function changeEmail(User $user, string $newEmail)
+    public function changeEmail(User $user, string $newEmail): void
     {
         $user->setEmail($newEmail);
 

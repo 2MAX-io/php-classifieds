@@ -74,7 +74,7 @@ class TokenService
         return $this->em->getRepository(User::class)->find($userId);
     }
 
-    public function markTokenUsed(Token $token)
+    public function markTokenUsed(Token $token): void
     {
         $token->setUsed(true);
         $this->em->persist($token);

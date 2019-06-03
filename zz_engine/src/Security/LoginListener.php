@@ -53,7 +53,7 @@ class LoginListener
             return;
         }
 
-        $user->setPassword('removed ' . Random::string(20));
+        $user->setPassword('removed ' . Random::string(20)); // safe guard for empty passwords
         $user->setPassword(
             $this->userPasswordEncoder->encodePassword(
                 $user,

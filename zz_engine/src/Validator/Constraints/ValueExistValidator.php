@@ -43,7 +43,7 @@ class ValueExistValidator extends ConstraintValidator
      * @throws UnexpectedTypeException
      * @throws ConstraintDefinitionException
      */
-    public function validate($fieldValue, Constraint $constraint)
+    public function validate($fieldValue, Constraint $constraint): void
     {
         if (!$constraint instanceof ValueExist) {
             throw new UnexpectedTypeException($constraint, __NAMESPACE__.'\ValueExist');
@@ -71,13 +71,13 @@ class ValueExistValidator extends ConstraintValidator
             $em = $this->registry->getManager($constraint->em);
 
             if (!$em) {
-                throw new ConstraintDefinitionException(sprintf('Object manager "%s" does not exist.', $constraint->em));
+                throw new ConstraintDefinitionException(\sprintf('Object manager "%s" does not exist.', $constraint->em));
             }
         } else {
             $em = $this->registry->getManagerForClass($constraint->entityClass);
 
             if (!$em) {
-                throw new ConstraintDefinitionException(sprintf('Unable to find the object manager associated with an entity of class "%s".', $constraint->entityClass));
+                throw new ConstraintDefinitionException(\sprintf('Unable to find the object manager associated with an entity of class "%s".', $constraint->entityClass));
             }
         }
 
@@ -89,28 +89,18 @@ class ValueExistValidator extends ConstraintValidator
 
         foreach ($fields as $fieldName) {
             if (!$class->hasField($fieldName) && !$class->hasAssociation($fieldName)) {
-                throw new ConstraintDefinitionException(sprintf('The field "%s" is not mapped by Doctrine, so it cannot be validated for uniqueness.', $fieldName));
+                throw new ConstraintDefinitionException(\sprintf('The field "%s" is not mapped by Doctrine, so it cannot be validated for uniqueness.', $fieldName));
             }
-
-//            $fieldValue = $class->reflFields[$fieldName]->getValue(new $constraint->entityClass);
-//
-//            if (null === $fieldValue) {
-//                $hasNullValue = true;
-//            }
-//
-//            if ($constraint->ignoreNull && null === $fieldValue) {
-//                continue;
-//            }
 
             $criteria[$fieldName] = $fieldValue;
 
-//            if (null !== $criteria[$fieldName] && $class->hasAssociation($fieldName)) {
-//                /* Ensure the Proxy is initialized before using reflection to
-//                 * read its identifiers. This is necessary because the wrapped
-//                 * getter methods in the Proxy are being bypassed.
-//                 */
-//                $em->initializeObject($criteria[$fieldName]);
-//            }
+            if (null !== $criteria[$fieldName] && $class->hasAssociation($fieldName)) {
+                /* Ensure the Proxy is initialized before using reflection to
+                 * read its identifiers. This is necessary because the wrapped
+                 * getter methods in the Proxy are being bypassed.
+                 */
+                $em->initializeObject($criteria[$fieldName]);
+            }
         }
 
         // validation doesn't fail if one of the fields is null and if null values should be ignored
@@ -133,7 +123,7 @@ class ValueExistValidator extends ConstraintValidator
             $supportedClass = $repository->getClassName();
 
             if ($constraint->entityClass !== $supportedClass) {
-                throw new ConstraintDefinitionException(sprintf('The "%s" entity repository does not support the "%s" entity. The entity should be an instance of or extend "%s".', $constraint->entityClass, $class->getName(), $supportedClass));
+                throw new ConstraintDefinitionException(\sprintf('The "%s" entity repository does not support the "%s" entity. The entity should be an instance of or extend "%s".', $constraint->entityClass, $class->getName(), $supportedClass));
             }
         } else {
             throw new ConstraintDefinitionException(
@@ -166,7 +156,7 @@ class ValueExistValidator extends ConstraintValidator
                 $result = null === $result ? [] : [$result];
             }
         } elseif (\is_array($result)) {
-            reset($result);
+            \reset($result);
         } else {
             $result = null === $result ? [] : [$result];
         }
@@ -191,7 +181,7 @@ class ValueExistValidator extends ConstraintValidator
             ->addViolation();
     }
 
-    private function formatWithIdentifiers(ObjectManager $em, ClassMetadata $class, $value)
+    private function formatWithIdentifiers(ObjectManager $em, ClassMetadata $class, $value): string
     {
         if (!\is_object($value) || $value instanceof \DateTimeInterface) {
             return $this->formatValue($value, self::PRETTY_DATE);
@@ -215,19 +205,19 @@ class ValueExistValidator extends ConstraintValidator
         }
 
         if (!$identifiers) {
-            return sprintf('object("%s")', $idClass);
+            return \sprintf('object("%s")', $idClass);
         }
 
-        array_walk($identifiers, function (&$id, $field) {
+        \array_walk($identifiers, function (&$id, $field) {
             if (!\is_object($id) || $id instanceof \DateTimeInterface) {
                 $idAsString = $this->formatValue($id, self::PRETTY_DATE);
             } else {
-                $idAsString = sprintf('object("%s")', \get_class($id));
+                $idAsString = \sprintf('object("%s")', \get_class($id));
             }
 
-            $id = sprintf('%s => %s', $field, $idAsString);
+            $id = \sprintf('%s => %s', $field, $idAsString);
         });
 
-        return sprintf('object("%s") identified by (%s)', $idClass, implode(', ', $identifiers));
+        return \sprintf('object("%s") identified by (%s)', $idClass, \implode(', ', $identifiers));
     }
 }

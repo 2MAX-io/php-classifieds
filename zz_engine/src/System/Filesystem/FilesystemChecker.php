@@ -25,7 +25,10 @@ class FilesystemChecker
         $fileIterator = $finder->files()->getIterator();
         $i = 0;
         foreach ($fileIterator as $file) {
-            if (!is_writable($file->getPathname()) || !\is_readable($file->getPathname()) || false === @\file_get_contents($file->getPathname(), false, null, 0, 1)) {
+            if (!is_writable($file->getPathname())
+                || !\is_readable($file->getPathname())
+                || false === @\file_get_contents($file->getPathname(), false, null, 0, 1)
+            ) {
                 ++$i;
                 if ($i > 5000) {
                     break;
@@ -50,13 +53,8 @@ class FilesystemChecker
         ]);
 
         $dirIterator = $finder->directories()->getIterator();
-
         $i = 0;
-        $dirIterator->rewind();
-        while($dirIterator->valid()) {
-            $dir = $dirIterator->current();
-            $dirIterator->next();
-
+        foreach($dirIterator as $dir) {
             if (!is_writable($dir->getPathname()) || !\is_readable($dir->getPathname())) {
                 ++$i;
                 if ($i > 5000) {
@@ -155,7 +153,6 @@ class FilesystemChecker
         try {
             $testFilePath = $path . '/' . 'test_safe_to_delete.txt';
             $result = @\file_put_contents($testFilePath, 'test, can safely delete');
-
             $deleteResult = @\unlink($testFilePath);
 
             if (false === $result || $deleteResult === false) {

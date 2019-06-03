@@ -9,7 +9,7 @@ use Hackzilla\PasswordGenerator\RandomGenerator\Php7RandomGenerator;
 
 class PasswordGenerateService
 {
-    public function generatePassword(int $length = 15)
+    public function generatePassword(int $length = 15): string
     {
         $generator = new ComputerPasswordGenerator();
 

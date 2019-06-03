@@ -34,8 +34,12 @@ class UpgradeHealthChecker implements HealthCheckerInterface
      */
     private $environmentService;
 
-    public function __construct(VersionCheckService $versionCheckService, EnvironmentService $environmentService, CacheInterface $cache, TranslatorInterface $trans)
-    {
+    public function __construct(
+        VersionCheckService $versionCheckService,
+        EnvironmentService $environmentService,
+        CacheInterface $cache,
+        TranslatorInterface $trans
+    ) {
         $this->trans = $trans;
         $this->versionCheckService = $versionCheckService;
         $this->cache = $cache;

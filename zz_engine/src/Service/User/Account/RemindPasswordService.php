@@ -52,7 +52,7 @@ class RemindPasswordService
         $this->passwordGenerateService = $passwordGenerateService;
     }
 
-    public function sendRemindConfirmation(string $email)
+    public function sendRemindConfirmation(string $email): void
     {
         $newPassword = $this->passwordGenerateService->generatePassword();
         $user = $this->em->getRepository(User::class)->findOneBy(['email' => $email]);
@@ -72,7 +72,7 @@ class RemindPasswordService
         $this->emailService->remindPasswordConfirmation($user, $tokenDto->getTokenEntity()->getTokenString());
     }
 
-    public function setHashedPassword(User $user, string $newPasswordHash)
+    public function setHashedPassword(User $user, string $newPasswordHash): void
     {
         $user->setPassword($newPasswordHash);
 

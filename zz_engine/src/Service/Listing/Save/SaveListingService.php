@@ -5,13 +5,17 @@ declare(strict_types=1);
 namespace App\Service\Listing\Save;
 
 use App\Entity\Listing;
+use App\Form\ListingCustomFieldListType;
+use App\Form\ListingType;
+use App\Helper\SlugHelper;
+use App\Helper\Str;
+use App\Security\CurrentUserService;
 use App\Service\Listing\ValidityExtend\ValidUntilSetService;
 use App\Service\System\Text\TextService;
-use Ausi\SlugGenerator\SlugGenerator;
-use Ausi\SlugGenerator\SlugOptions;
-use DateTime;
+use Minwork\Helper\Arr;
 use Symfony\Component\Asset\Packages;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 class SaveListingService
 {
@@ -30,37 +34,56 @@ class SaveListingService
      */
     private $textService;
 
+    /**
+     * @var CurrentUserService
+     */
+    private $currentUserService;
+
     public function __construct(
         ValidUntilSetService $validUntilSetService,
         Packages $packages,
-        TextService $textService
+        TextService $textService,
+        CurrentUserService $currentUserService
     ) {
         $this->validUntilSetService = $validUntilSetService;
         $this->packages = $packages;
         $this->textService = $textService;
+        $this->currentUserService = $currentUserService;
     }
 
-    public function create(): Listing
+    public function createListingForForm(): Listing
     {
+        $currentDate = new \DateTime();
+
         $listing = new Listing();
-        $listing->setFirstCreatedDate(new DateTime());
-        $listing->setLastEditDate(new DateTime());
-        $listing->setOrderByDate(new DateTime());
+        $listing->setFirstCreatedDate($currentDate);
+        $listing->setLastEditDate($currentDate);
+        $listing->setOrderByDate($currentDate);
         $listing->setEmailShow(true);
+
+        if ($this->currentUserService->getUser()) {
+            $listing->setEmail($this->currentUserService->getUser()->getEmail());
+        }
 
         return $listing;
     }
 
-    public function setFormDependent(Listing $listing, FormInterface $form): void
+    public function setListingProperties(Listing $listing, FormInterface $form): void
     {
         if ($form->has('validityTimeDays')) {
-            $this->validUntilSetService->setValidityDaysFromNow($listing, (int) $form->get('validityTimeDays')->getData());
+            $this->validUntilSetService->setValidityDaysFromNow(
+                $listing,
+                (int) $form->get('validityTimeDays')->getData()
+            );
         }
-
         $listing->setAdminActivated(false);
         $listing->setAdminRejected(false);
         $this->updateSlug($listing);
         $this->saveSearchText($listing);
+
+        if (!$listing->getUser()) { // set user when creating, if not set
+            $listing->setUser($this->currentUserService->getUser());
+        }
 
         $listing->setDescription(
             $this->textService->normalizeUserInput($listing->getDescription())
@@ -76,7 +99,7 @@ class SaveListingService
 
         if ($listing->getCity()) {
             $listing->setCity(
-                ucwords(
+                \ucwords(
                     $this->textService->normalizeUserInput($listing->getCity())
                 )
             );
@@ -101,7 +124,7 @@ class SaveListingService
         return $returnFiles;
     }
 
-    public function saveSearchText(Listing $listing)
+    public function saveSearchText(Listing $listing): void
     {
         $searchText = ' ';
 
@@ -143,12 +166,6 @@ class SaveListingService
 
     public function updateSlug(Listing $listing): void
     {
-        $generator = new SlugGenerator(
-            (new SlugOptions)
-                ->setValidChars('a-z0-9')
-                ->setDelimiter('-')
-        );
-
         $slugSourceText = '';
         $slugSourceText .= $listing->getTitle();
         $slugSourceText .= ' ';
@@ -158,12 +175,26 @@ class SaveListingService
         $slugSourceText .= ' ';
 
         foreach ($listing->getListingCustomFieldValues() as $listingCustomFieldValue) {
-            $slugSourceText .= $listingCustomFieldValue->getValue();
+            if (!$listingCustomFieldValue->getCustomFieldOption()) {
+                continue;
+            }
+            $slugSourceText .= $listingCustomFieldValue->getCustomFieldOption()->getName();
             $slugSourceText .= ' ';
         }
 
-        $slugSourceText = mb_substr($slugSourceText, 0, 60);
-        $slug = $generator->generate(trim($slugSourceText));
-        $listing->setSlug($slug);
+        $slugSourceText = Str::substrWords($slugSourceText, 60);
+        $listing->setSlug(SlugHelper::getSlug($slugSourceText));
+    }
+
+    /**
+     * from listing[customFieldList]
+     */
+    public function getCustomFieldValueListArrayFromRequest(Request $request): array
+    {
+        $customFieldListArray = Arr::getNestedElement(
+            $request->request->all(),
+            [ListingType::LISTING_FIELD, ListingCustomFieldListType::CUSTOM_FIELD_LIST_FIELD] // listing[customFieldList]
+        );
+        return $customFieldListArray ?? [];
     }
 }

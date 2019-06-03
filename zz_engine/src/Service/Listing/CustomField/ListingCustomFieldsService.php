@@ -106,7 +106,7 @@ class ListingCustomFieldsService
     ): ListingCustomFieldValue {
         $option = null;
         if (Str::beginsWith($customFieldValue, '__form_custom_field_option_id_')) {
-            $optionId = (int) (str_replace('__form_custom_field_option_id_', '', $customFieldValue));
+            $optionId = (int) (\str_replace('__form_custom_field_option_id_', '', $customFieldValue));
             $option = $this->em->getRepository(CustomFieldOption::class)->find((int) $optionId);
             $customFieldValue = $option->getValue();
         }

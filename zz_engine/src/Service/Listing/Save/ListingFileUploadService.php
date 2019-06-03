@@ -10,8 +10,6 @@ use App\Helper\FileHelper;
 use App\Helper\FilePath;
 use App\Service\Event\FileModificationEventService;
 use App\Service\System\Sort\SortService;
-use Ausi\SlugGenerator\SlugGenerator;
-use Ausi\SlugGenerator\SlugOptions;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -42,22 +40,14 @@ class ListingFileUploadService
     public function addMultipleFilesFromUpload(Listing $listing, array $uploadedFileList): void
     {
         foreach ($uploadedFileList as $uploadedFile) {
-            $destinationFilepath = $this->getDestinationFilepath($listing);
-            $destinationFilename = $this->getDestinationFilename(
-                $uploadedFile->getClientOriginalName(),
-                $uploadedFile->getClientOriginalExtension()
-            );
-            $movedFile = $this->uploadFile(
-                $uploadedFile,
-                $destinationFilepath,
-                \basename($destinationFilename)
-            );
+            $movedFile = $this->moveFile($uploadedFile, $listing);
+
             $listingFile = new ListingFile();
             $listingFile->setPath(Path::makeRelative($movedFile->getRealPath(), FilePath::getProjectDir()));
             $listingFile->setListing($listing);
-            $listingFile->setFilename(basename($listingFile->getPath()));
-            $listingFile->setMimeType(mime_content_type($listingFile->getPath()));
-            $listingFile->setSizeBytes(filesize($listingFile->getPath()));
+            $listingFile->setFilename(\basename($listingFile->getPath()));
+            $listingFile->setMimeType(\mime_content_type($listingFile->getPath()));
+            $listingFile->setSizeBytes(\filesize($listingFile->getPath()));
             $listingFile->setSort(SortService::LAST_VALUE);
             $this->em->persist($listingFile);
 
@@ -69,14 +59,14 @@ class ListingFileUploadService
     {
         $filenameIndex = [];
         foreach ($fileUploaderList as $fileUploaderListElement) {
-            $fileName = \preg_replace('#(\?.+)$#', '', basename($fileUploaderListElement['file']));
+            $fileName = \preg_replace('#(\?.+)$#', '', \basename($fileUploaderListElement['file']));
             $filenameIndex[$fileName] = $fileUploaderListElement['index'];
         }
 
         foreach ($listing->getListingFiles() as $listingFile) {
             $sort = SortService::LAST_VALUE;
-            if (isset($filenameIndex[basename($listingFile->getPath())])) {
-                $sort = $filenameIndex[basename($listingFile->getPath())];
+            if (isset($filenameIndex[\basename($listingFile->getPath())])) {
+                $sort = $filenameIndex[\basename($listingFile->getPath())];
             }
             $listingFile->setSort((int) $sort);
             $this->em->persist($listingFile);
@@ -85,40 +75,32 @@ class ListingFileUploadService
         $this->fileModificationEventService->updateListingMainImage($listing);
     }
 
-    public function uploadFile(UploadedFile $uploadedFile, string $destinationFilepath, string $destinationFilename): File
+    private function moveFile(UploadedFile $uploadedFile, Listing $listing): File
     {
         FileHelper::throwExceptionIfUnsafeExtension($uploadedFile);
 
         return $uploadedFile->move(
-            $destinationFilepath,
-            $destinationFilename
+            $this->getDestinationDirectory($listing),
+            $this->getDestinationFilename($uploadedFile)
         );
     }
 
-    private function getDestinationFilepath(Listing $listing): string
+    private function getDestinationDirectory(Listing $listing): string
     {
-        $userDivider = floor($listing->getUser()->getId() / 10000) + 1;
+        $userDivider = \floor($listing->getUser()->getId() / 10000) + 1;
 
-        return FilePath::getListingFilePath() . '/' . $userDivider . '/' . 'user_' . $listing->getUser()->getId() . '/' . 'listing_' . $listing->getId();
+        return FilePath::getListingFilePath()
+            . '/' . $userDivider
+            . '/'
+            . 'user_'
+            . $listing->getUser()->getId()
+            . '/'
+            . 'listing_' . $listing->getId();
     }
 
-    private function getDestinationFilename(string $originalName, string $originalExtension)
+    private function getDestinationFilename(UploadedFile $uploadedFile): string
     {
-        $fileBasename = $this->getSlug(
-            pathinfo($originalName, PATHINFO_FILENAME)
-        );
-
-        return $fileBasename . '.' . $originalExtension;
-    }
-
-    private function getSlug(string $string): string
-    {
-        $generator = new SlugGenerator(
-            (new SlugOptions)
-                ->setValidChars('a-zA-Z0-9')
-                ->setDelimiter('_')
-        );
-
-        return $generator->generate($string);
+        return FileHelper::getFilenameValidCharacters($uploadedFile->getClientOriginalName())
+            . '.' . $uploadedFile->getClientOriginalExtension();
     }
 }

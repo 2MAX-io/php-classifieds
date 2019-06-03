@@ -6,9 +6,8 @@ namespace App\Controller\User;
 
 use App\Controller\User\Base\AbstractUserController;
 use App\Entity\Listing;
-use App\Form\ListingCustomFieldListType;
 use App\Form\ListingType;
-use App\Security\CurrentUserService;
+use App\Helper\Json;
 use App\Service\Category\CategoryListService;
 use App\Service\Event\FileModificationEventService;
 use App\Service\Listing\CustomField\ListingCustomFieldsService;
@@ -16,7 +15,7 @@ use App\Service\Listing\Save\SaveListingService;
 use App\Service\Listing\Save\ListingFileUploadService;
 use App\Service\Log\PoliceLogIpService;
 use App\Service\User\Listing\UserListingListService;
-use Minwork\Helper\Arr;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -60,34 +59,25 @@ class UserListingController extends AbstractUserController
     public function new(
         Request $request,
         ListingFileUploadService $listingFileUploadService,
-        CurrentUserService $currentUserService,
         SaveListingService $createListingService,
         ListingCustomFieldsService $listingCustomFieldsService,
         PoliceLogIpService $logIpService,
-        CategoryListService $categoryListService
+        CategoryListService $categoryListService,
+        EntityManagerInterface $em
     ): Response {
         $this->dennyUnlessUser();
 
-        $listing = $createListingService->create();
-        if ($currentUserService->getUser()) {
-            $listing->setEmail($currentUserService->getUser()->getEmail());
-        }
+        $listing = $createListingService->createListingForForm();
         $form = $this->createForm(ListingType::class, $listing);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $listingCustomFieldsService->saveCustomFieldsToListing(
                 $listing,
-                Arr::getNestedElement(
-                    $request->request->all(),
-                    [ListingType::LISTING_FIELD, ListingCustomFieldListType::CUSTOM_FIELD_LIST_FIELD]
-                ) ?? [] // listing[customFieldList]
+                $createListingService->getCustomFieldValueListArrayFromRequest($request)
             );
+            $createListingService->setListingProperties($listing, $form);
 
-            $listing->setUser($currentUserService->getUser());
-            $createListingService->setFormDependent($listing, $form);
-
-            $em = $this->getDoctrine()->getManager();
             $em->persist($listing);
             $em->flush();
 
@@ -97,7 +87,6 @@ class UserListingController extends AbstractUserController
                     $form->get('file')->getData()
                 );
             }
-
             if ($request->request->get('fileuploader-list-file')) {
                 $listingFileUploadService->updateSort(
                     $listing,
@@ -131,7 +120,8 @@ class UserListingController extends AbstractUserController
         ListingFileUploadService $listingFileUploadService,
         SaveListingService $createListingService,
         PoliceLogIpService $logIpService,
-        CategoryListService $categoryListService
+        CategoryListService $categoryListService,
+        EntityManagerInterface $em
     ): Response {
         $this->dennyUnlessCurrentUserAllowed($listing);
 
@@ -146,24 +136,20 @@ class UserListingController extends AbstractUserController
                     $form->get('file')->getData()
                 );
             }
-
             if ($request->request->get('fileuploader-list-file')) {
                 $listingFileUploadService->updateSort(
                     $listing,
-                    \json_decode($request->request->get('fileuploader-list-file'), true)
+                    Json::decodeToArray($request->request->get('fileuploader-list-file'))
                 );
             }
             $listingCustomFieldsService->saveCustomFieldsToListing(
                 $listing,
-                Arr::getNestedElement(
-                    $request->request->all(),
-                    [ListingType::LISTING_FIELD, ListingCustomFieldListType::CUSTOM_FIELD_LIST_FIELD]
-                ) ?? [] // listing[customFieldList]
+                $createListingService->getCustomFieldValueListArrayFromRequest($request)
             );
-
-            $createListingService->setFormDependent($listing, $form);
+            $createListingService->setListingProperties($listing, $form);
             $logIpService->saveLog($listing);
-            $this->getDoctrine()->getManager()->flush();
+
+            $em->flush();
 
             return $this->redirectToRoute(
                 'app_listing_edit',

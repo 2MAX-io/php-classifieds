@@ -119,4 +119,11 @@ class Str
 
         return $stream;
     }
+
+    public static function substrWords(string $string, int $maxLength): string
+    {
+        $forcedSubstring = \mb_substr($string, 0, $maxLength+1);
+
+        return  \mb_substr($forcedSubstring, 0, \strrpos($forcedSubstring, ' '));
+    }
 }

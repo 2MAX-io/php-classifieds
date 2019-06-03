@@ -161,7 +161,7 @@ class ListingListService
                 }
             }
 
-            $customFieldsCount = count(array_unique($usedCustomFieldIdList));
+            $customFieldsCount = \count(\array_unique($usedCustomFieldIdList));
             if ($customFieldsCount > 0) {
                 $qb->join('listing.listingCustomFieldValues', 'listingCustomFieldValue');
                 $qb->andWhere($customFieldConditionList);

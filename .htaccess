@@ -48,6 +48,7 @@ IndexIgnore *
     RewriteEngine On
 
     RedirectMatch 404 /\.git
+    RedirectMatch 404 /zz_engine
     RewriteRule Readme.md - [R=404,L]
 
     #________________________________________________________________________________________________________________

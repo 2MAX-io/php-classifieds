@@ -1,5 +1,7 @@
 {% extends 'admin/base.html.twig' %}
 
+{% import "admin/_macro/_admin_macro.html.twig" as adminMacro %}
+
 {% block title %}{{ 'trans.Advanced listing edit' | trans }}{% endblock %}
 
 {% block body %}
@@ -49,5 +51,9 @@
 
         <button class="btn btn-primary">{{ button_label|default('trans.Save' | trans) }}</button>
         {{ form_end(form) }}
+
+        <div class="row mt-4">
+            {{ adminMacro.listingInfo(listing) }}
+        </div>
     </div>
 {% endblock %}

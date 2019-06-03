@@ -9,14 +9,14 @@
         <div class="alert alert-warning">
             <h3 class="text-danger">{{ 'trans.IMPORTANT!' | trans }}</h3>
 
-            <div>{{ 'trans.It is recommended that before running this action, to create restolable backup of database' | trans }}</div>
+            <div>{{ 'trans.It is recommended that before running this action, to create restorable backup of database' | trans }}</div>
             <div>{{ 'trans.Also it is recommended to run this action on test environment, that is copy of live service, before running it on live service' | trans }}</div>
             <div>{{ 'trans.There is no way of undoing changes made by this action, except of restoring backup' | trans }}</div>
             <div>{{ 'trans.Make sure you execute action on correctly filtered listings' | trans }}</div>
         </div>
 
         <div class="alert alert-danger">
-            {{ 'trans.Numer of listings changed by this action would be:' | trans }}
+            {{ 'trans.Number of listings changed by this action would be:' | trans }}
             {{ affectedCount | thousandsSeparate }}
 
             {% if affectedPercentage > 1 %}
@@ -24,7 +24,7 @@
             {% endif %}
 
             {% if affectedPercentage > 80 %}
-                <h1 class="text-danger">{{ 'trans.This action will be executed on %percentage%% of listings (almost every listing), are you REALY sure you want to execute it?' | trans({'%percentage%': affectedPercentage}) }}</h1>
+                <h1 class="text-danger">{{ 'trans.This action will be executed on %percentage%% of listings (almost every listing), are you REALLY sure you want to execute it?' | trans({'%percentage%': affectedPercentage}) }}</h1>
             {% endif %}
         </div>
 

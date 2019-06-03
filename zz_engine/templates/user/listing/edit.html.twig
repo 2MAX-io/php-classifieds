@@ -30,7 +30,7 @@
                         <span class="{{ getListingStatusClass(listing) }}">{{ getListingStatus(listing) }}</span>
                         {% if listing.status in [constant('\App\\Entity\\Listing::STATUS_REJECTED')] and listing.rejectionReason is empty and settings.linkRejectionReason is not empty %}
                             <a href="{{ path('app_page', {'slug': settings.linkRejectionReason}) }}">
-                                {{ 'trans.more informations' | trans }}
+                                {{ 'trans.more information' | trans }}
                             </a>
                         {% endif %}
 

@@ -6,7 +6,6 @@ namespace App\Form\Admin;
 
 use App\Entity\CustomField;
 use App\Entity\CustomFieldJoinCategory;
-use App\Repository\CustomFieldRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -32,7 +31,14 @@ class CategoryAddCustomFieldType extends AbstractType
         $builder->add('customField', EntityType::class, [
             'class' => CustomField::class,
             'placeholder' => 'trans.Select',
-            'choice_label' => 'name',
+            'choice_label' => static function (CustomField $customField) {
+                $hint = '';
+                if ($customField->getNameForAdmin()) {
+                    $hint = ' (' . $customField->getNameForAdmin() . ')';
+                }
+
+                return $customField->getName() . $hint;
+            },
             'label' => 'trans.Custom field',
             'query_builder' => function () {
                 $qb = $this->em->getRepository(CustomField::class)->createQueryBuilder('customField');

@@ -57,7 +57,10 @@
             <tr data-id="{{ customFieldJoinCategory.id }}">
                 <td><i class="fas fa-arrows-alt sortableHandle"></i></td>
                 <td>
-                    {{ customField.name }}
+                    <div>{{ customField.name }}</div>
+                    {% if customField.nameForAdmin %}
+                        <div class="text-muted">{{ customField.nameForAdmin }}</div>
+                    {% endif %}
                 </td>
                 <td>
                     {{ ('trans.customFieldType.'~customField.type) | trans }}

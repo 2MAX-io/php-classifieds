@@ -15,7 +15,7 @@ class UTCDateTimeType extends DateTimeType
     /**
      * @inheritDoc
      */
-    public function convertToDatabaseValue($value, AbstractPlatform $platform): string
+    public function convertToDatabaseValue($value, AbstractPlatform $platform): ?string
     {
         if ($value instanceof \DateTime) {
             $value->setTimezone(self::getUtc());

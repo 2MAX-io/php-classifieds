@@ -308,3 +308,13 @@ composer slevomat/coding-standard -d zz_engine
 composer require slevomat/coding-standard -d zz_engine
 composer require --dev -d zz_engine the "contrib" repository, which is open to community contributions.
 composer require --dev -d zz_engine slevomat/coding-standard
+php zz_engine/bin/console list
+php zz_engine/bin/console router:match
+php zz_engine/bin/console debug:router
+php zz_engine/bin/console debug:router
+php zz_engine/bin/console debug:router
+composer install -d zz_engine
+composer install -d zz_engine
+php zz_engine/bin/console debug:router
+php zz_engine/bin/console debug:router
+php zz_engine/bin/console debug:router > /var/www/html/out.txt

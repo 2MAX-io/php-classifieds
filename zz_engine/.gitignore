@@ -12,3 +12,8 @@
 /docker/php/xdebug_out/
 /node_modules/
 /src/Controller/TestController.php
+
+###> squizlabs/php_codesniffer ###
+/.phpcs-cache
+/phpcs.xml
+###< squizlabs/php_codesniffer ###

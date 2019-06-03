@@ -8,9 +8,9 @@ use App\Entity\Category;
 use App\Entity\CustomField;
 use App\Entity\CustomFieldJoinCategory;
 use App\Helper\Arr;
-use App\Repository\CategoryRepository;
 use App\Service\System\Sort\SortService;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 class CustomFieldCategorySelectionService
 {
@@ -20,14 +20,14 @@ class CustomFieldCategorySelectionService
     private $em;
 
     /**
-     * @var CategoryRepository
+     * @var RequestStack
      */
-    private $categoryRepository;
+    private $requestStack;
 
-    public function __construct(EntityManagerInterface $em, CategoryRepository $categoryRepository)
+    public function __construct(RequestStack $requestStack, EntityManagerInterface $em)
     {
         $this->em = $em;
-        $this->categoryRepository = $categoryRepository;
+        $this->requestStack = $requestStack;
     }
 
     /**
@@ -41,8 +41,12 @@ class CustomFieldCategorySelectionService
         foreach ($categories as $category) {
             $customFieldCategorySelectionItemDto = new CustomFieldCategorySelectionItemDto();
             $customFieldCategorySelectionItemDto->setCategory($category);
+            $selectedInRequest = $this->requestStack->getMasterRequest()->get('selectedCategories', []);
             $customFieldCategorySelectionItemDto->setSelected(
-                $this->categoryHasCustomField($category, $customField)
+                \count($selectedInRequest) ?
+                    Arr::inArray((string) $category->getId(), $selectedInRequest)
+                    :
+                    $this->categoryHasCustomField($category, $customField)
             );
 
             if ($preselectedCategory && $preselectedCategory->getId() === $category->getId()) {
@@ -87,7 +91,7 @@ class CustomFieldCategorySelectionService
 
     private function categoryHasCustomField(Category $category, CustomField $customField): bool
     {
-        $catCustomFields = $category->getCustomFieldsJoin()->map(function(CustomFieldJoinCategory $customFieldJoinCategory) {
+        $catCustomFields = $category->getCustomFieldsJoin()->map(static function(CustomFieldJoinCategory $customFieldJoinCategory) {
             return $customFieldJoinCategory->getCustomField();
         });
 

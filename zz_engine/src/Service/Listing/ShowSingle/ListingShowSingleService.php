@@ -6,7 +6,6 @@ namespace App\Service\Listing\ShowSingle;
 
 use App\Entity\Listing;
 use App\Entity\ListingView;
-use App\Service\Listing\ListingPublicDisplayService;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr\Join;
 
@@ -17,15 +16,9 @@ class ListingShowSingleService
      */
     private $em;
 
-    /**
-     * @var ListingPublicDisplayService
-     */
-    private $listingPublicDisplayService;
-
-    public function __construct(EntityManagerInterface $em, ListingPublicDisplayService $listingPublicDisplayService)
+    public function __construct(EntityManagerInterface $em)
     {
         $this->em = $em;
-        $this->listingPublicDisplayService = $listingPublicDisplayService;
     }
 
     public function getSingle(int $listingId): ?ListingShowDto

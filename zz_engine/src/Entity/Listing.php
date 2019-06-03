@@ -135,11 +135,6 @@ class Listing
     /**
      * @ORM\Column(type="datetime", nullable=false)
      */
-    private $firstCreatedDate;
-
-    /**
-     * @ORM\Column(type="datetime", nullable=false)
-     */
     private $validUntilDate;
 
     /**
@@ -165,7 +160,22 @@ class Listing
     /**
      * @ORM\Column(type="boolean", nullable=false)
      */
+    private $adminRejected = false;
+
+    /**
+     * @ORM\Column(type="string", length=1000, nullable=true)
+     */
+    private $rejectionReason;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=false)
+     */
     private $featured = false;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $featuredUntilDate;
 
     /**
      * @ORM\Column(type="smallint", nullable=false)
@@ -173,9 +183,9 @@ class Listing
     private $featuredWeight = 0;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
+     * @ORM\Column(type="datetime", nullable=false)
      */
-    private $featuredUntilDate;
+    private $firstCreatedDate;
 
     /**
      * @ORM\Column(type="datetime", nullable=false)
@@ -193,16 +203,6 @@ class Listing
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $adminLastActivationDate;
-
-    /**
-     * @ORM\Column(type="boolean", nullable=false)
-     */
-    private $adminRejected = false;
-
-    /**
-     * @ORM\Column(type="string", length=1000, nullable=true)
-     */
-    private $rejectionReason;
 
     /**
      * @ORM\Column(type="string", length=100, nullable=false, unique=false)

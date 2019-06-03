@@ -35,6 +35,13 @@ class ListingShowController extends AbstractController
             throw $this->createNotFoundException();
         }
 
+        if ($slug !== $listingShowDto->getListing()->getSlug()) {
+            return $this->redirectToRoute($request->get('_route'), [
+                'id' => (int) $id,
+                'slug' => $listingShowDto->getListing()->getSlug(),
+            ]);
+        }
+
         if (!$listingPublicDisplayService->canDisplay($listingShowDto->getListing())) {
             return $this->render(
                 'listing_show_when_removed.html.twig',
@@ -46,13 +53,6 @@ class ListingShowController extends AbstractController
                     ),
                 ]
             );
-        }
-
-        if ($slug !== $listingShowDto->getListing()->getSlug()) {
-            return $this->redirectToRoute($request->get('_route'), [
-                'id' => (int) $id,
-                'slug' => $listingShowDto->getListing()->getSlug(),
-            ]);
         }
 
         $eventDispatcher->addListener(

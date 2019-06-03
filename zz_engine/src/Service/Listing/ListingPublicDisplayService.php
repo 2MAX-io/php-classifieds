@@ -27,7 +27,7 @@ class ListingPublicDisplayService
         $this->settingsService = $settingsService;
     }
 
-    public function applyPublicDisplayConditions(QueryBuilder $qb)
+    public function applyPublicDisplayConditions(QueryBuilder $qb): void
     {
         $qb->andWhere($qb->expr()->gte('listing.validUntilDate', ':todayDayStart'));
         $qb->setParameter(':todayDayStart', date('Y-m-d 00:00:00'));
@@ -53,6 +53,16 @@ class ListingPublicDisplayService
             return true;
         }
 
-        return ($listing->getAdminActivated() || !$this->settingsService->getSettingsDto()->getRequireListingAdminActivation()) && !$listing->getAdminRemoved() && !$listing->getAdminRejected();
+        /**
+         * no need to check if:
+         * - userDeactivated
+         * - userRemoved
+         *
+         * when this happen listing is displayed as expired
+         */
+        return ($listing->getAdminActivated() || !$this->settingsService->getSettingsDto()->getRequireListingAdminActivation())
+            && !$listing->getAdminRemoved()
+            && !$listing->getAdminRejected()
+        ;
     }
 }

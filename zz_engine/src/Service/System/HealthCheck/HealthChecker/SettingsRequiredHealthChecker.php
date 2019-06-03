@@ -121,6 +121,9 @@ class SettingsRequiredHealthChecker implements HealthCheckerInterface
             'logoPath',
             'linkContact',
             'linkAdvertisement',
+            'customJavascriptBottom',
+            'customJavascriptInHead',
+            'customCss',
         ];
     }
 }

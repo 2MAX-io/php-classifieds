@@ -17,7 +17,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class AdministratorController extends AbstractAdminController
 {
     /**
-     * @Route("/admin/red5/administrator-user", name="admin_administrator_index", methods={"GET"})
+     * @Route("/admin/red5/administrator-user", name="app_admin_administrator_index", methods={"GET"})
      */
     public function index(
         Request $request,
@@ -34,7 +34,7 @@ class AdministratorController extends AbstractAdminController
     }
 
     /**
-     * @Route("/admin/red5/administrator-user/new", name="admin_administrator_new", methods={"GET","POST"})
+     * @Route("/admin/red5/administrator-user/new", name="app_admin_administrator_new", methods={"GET","POST"})
      */
     public function new(Request $request, UserPasswordEncoderInterface $userPasswordEncoder): Response
     {
@@ -54,7 +54,7 @@ class AdministratorController extends AbstractAdminController
             $this->getDoctrine()->getManager()->persist($admin);
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('admin_administrator_edit', [
+            return $this->redirectToRoute('app_admin_administrator_edit', [
                 'id' => $admin->getId(),
             ]);
         }
@@ -65,7 +65,7 @@ class AdministratorController extends AbstractAdminController
     }
 
     /**
-     * @Route("/admin/red5/administrator-user/{id}/edit", name="admin_administrator_edit", methods={"GET","POST"})
+     * @Route("/admin/red5/administrator-user/{id}/edit", name="app_admin_administrator_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Admin $admin, UserPasswordEncoderInterface $userPasswordEncoder): Response
     {
@@ -81,7 +81,7 @@ class AdministratorController extends AbstractAdminController
 
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('admin_administrator_edit', [
+            return $this->redirectToRoute('app_admin_administrator_edit', [
                 'id' => $admin->getId(),
             ]);
         }

@@ -17,7 +17,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class UserController extends AbstractAdminController
 {
     /**
-     * @Route("/admin/red5/user", name="admin_user_index", methods={"GET"})
+     * @Route("/admin/red5/user", name="app_admin_user_index", methods={"GET"})
      */
     public function index(
         Request $request,
@@ -34,7 +34,7 @@ class UserController extends AbstractAdminController
     }
 
     /**
-     * @Route("/admin/red5/user/{id}/edit", name="admin_user_edit", methods={"GET","POST"})
+     * @Route("/admin/red5/user/{id}/edit", name="app_admin_user_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, User $user, EncodePasswordService $encodePasswordService): Response
     {
@@ -50,7 +50,7 @@ class UserController extends AbstractAdminController
 
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('admin_user_edit', [
+            return $this->redirectToRoute('app_admin_user_edit', [
                 'id' => $user->getId(),
             ]);
         }

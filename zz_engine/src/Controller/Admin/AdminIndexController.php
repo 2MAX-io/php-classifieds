@@ -16,8 +16,10 @@ class AdminIndexController extends AbstractAdminController
      * @Route("/admin/red5/dashboard", name="app_admin_index")
      * @Route("/admin/red5/")
      */
-    public function adminIndexDashboard(AdminStatsService $adminStatsService, HealthCheckService $healthCheckService): Response
-    {
+    public function adminIndexDashboard(
+        AdminStatsService $adminStatsService,
+        HealthCheckService $healthCheckService
+    ): Response {
         $this->denyUnlessAdmin();
 
         return $this->render('admin/index.html.twig', [

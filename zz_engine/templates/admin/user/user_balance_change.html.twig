@@ -6,7 +6,7 @@
     <div class="container mt-5">
         <h3>
             {{ 'trans.Change balance of user' | trans }}:
-            <a href="{{ path('admin_user_edit', {'id': user.id}) }}">{{ user.username }}</a>
+            <a href="{{ path('app_admin_user_edit', {'id': user.id}) }}">{{ user.username }}</a>
         </h3>
 
         <div>
@@ -24,7 +24,7 @@
     <div class="container mt-2 mt-md-5">
         <h3>
             {{ 'trans.Balance history for user' | trans }}:
-            <a href="{{ path('admin_user_edit', {'id': user.id}) }}">{{ user.username }}</a>
+            <a href="{{ path('app_admin_user_edit', {'id': user.id}) }}">{{ user.username }}</a>
         </h3>
 
         <table class="table table-responsive-sm">

@@ -318,3 +318,7 @@ composer install -d zz_engine
 php zz_engine/bin/console debug:router
 php zz_engine/bin/console debug:router
 php zz_engine/bin/console debug:router > /var/www/html/out.txt
+php zz_engine/bin/console debug:router > /var/www/html/out.txt
+php zz_engine/bin/console debug:router --help
+php zz_engine/bin/console debug:router --raw > /var/www/html/out.txt
+php zz_engine/bin/console debug:router > /var/www/html/out.txt

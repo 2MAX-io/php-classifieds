@@ -380,7 +380,7 @@
             hash: false,
         });
 
-        var showContactInformation = function (listingId) {
+        let showContactInformation = function (listingId) {
             $.post(
                 Routing.generate('app_listing_contact_data', {}),
                 {
@@ -394,9 +394,10 @@
                 $showContactInformation.remove();
             });
         };
-        
-        if ($('.listing-show-top-image').width() < 300 && $('.listing-show-top-image').height() < 300) {
-            $('.listing-show-top-image').parents('.zoom-wrapper').find('.zoom').remove();
+
+        let $topImage = $('.listing-show-top-image');
+        if ($topImage.width() < 300 && $topImage.height() < 300) {
+            $topImage.parents('.zoom-wrapper').find('.zoom').remove();
         }
     </script>
 {% endblock %}

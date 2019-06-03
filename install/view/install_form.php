@@ -110,7 +110,7 @@
             </div>
         </div>
 
-        <button type="submit" class="btn btn-primary" onclick="return confirm('Is entered configuration correct? Start installation?')" >Install</button>
+        <button type="submit" class="btn btn-primary" onclick="return confirm('Is entered configuration correct? Start the installation?')" >Install</button>
     </form>
 
 </div>

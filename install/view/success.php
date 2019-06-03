@@ -8,6 +8,7 @@
 
     <div class="alert alert-success">
         Installation has been successful.
+        Steps to take after installation can be found in <a href="https://documentation.2max.io/display/CLAS/Installation">documentation</a>
     </div>
 
     <div class="alert alert-info">

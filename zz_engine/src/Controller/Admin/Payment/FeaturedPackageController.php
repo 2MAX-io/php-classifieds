@@ -43,6 +43,11 @@ class FeaturedPackageController extends AbstractAdminController
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($featuredPackage);
+
+            $featuredPackageCategorySelectionService->saveSelection(
+                $featuredPackage,
+                $request->get('selectedCategories', [])
+            );
             $em->flush();
 
             return $this->redirectToRoute('app_admin_featured_package_edit', [
@@ -54,7 +59,6 @@ class FeaturedPackageController extends AbstractAdminController
             'featured_package' => $featuredPackage,
             'categorySelectionList' => $featuredPackageCategorySelectionService->getCategorySelectionList(
                 $featuredPackage,
-                $category ?? null
             ),
             'form' => $form->createView(),
         ]);

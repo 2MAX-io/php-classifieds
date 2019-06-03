@@ -8,8 +8,8 @@ use App\Entity\Category;
 use App\Entity\FeaturedPackage;
 use App\Entity\FeaturedPackageForCategory;
 use App\Helper\Arr;
-use App\Repository\CategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 class FeaturedPackageCategorySelectionService
 {
@@ -19,14 +19,14 @@ class FeaturedPackageCategorySelectionService
     private $em;
 
     /**
-     * @var CategoryRepository
+     * @var RequestStack
      */
-    private $categoryRepository;
+    private $requestStack;
 
-    public function __construct(EntityManagerInterface $em, CategoryRepository $categoryRepository)
+    public function __construct(RequestStack $requestStack, EntityManagerInterface $em)
     {
         $this->em = $em;
-        $this->categoryRepository = $categoryRepository;
+        $this->requestStack = $requestStack;
     }
 
     /**
@@ -40,8 +40,12 @@ class FeaturedPackageCategorySelectionService
         foreach ($categories as $category) {
             $categorySelectionDto = new FeaturedPackageCategorySelectionDto();
             $categorySelectionDto->setCategory($category);
+            $selectedInRequest = $this->requestStack->getMasterRequest()->get('selectedCategories', []);
             $categorySelectionDto->setSelected(
-                $this->isFeaturePackageSelectedInCategory($category, $featuredPackage)
+                \count($selectedInRequest) ?
+                    Arr::inArray((string) $category->getId(), $selectedInRequest)
+                    :
+                    $this->isFeaturePackageSelectedInCategory($category, $featuredPackage)
             );
 
             if ($preselectedCategory && $preselectedCategory->getId() === $category->getId()) {
@@ -86,7 +90,7 @@ class FeaturedPackageCategorySelectionService
 
     private function isFeaturePackageSelectedInCategory(Category $category, FeaturedPackage $featuredPackage): bool
     {
-        $catFeaturedPackages = $category->getFeaturedPackages()->map(function(FeaturedPackageForCategory $featuredPackageForCategory) {
+        $catFeaturedPackages = $category->getFeaturedPackages()->map(static function(FeaturedPackageForCategory $featuredPackageForCategory) {
             return $featuredPackageForCategory->getFeaturedPackage();
         });
 

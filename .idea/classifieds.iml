@@ -4,6 +4,8 @@
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/tests" isTestSource="true" packagePrefix="App\Tests\" />
       <sourceFolder url="file://$MODULE_DIR$/zz_engine/src" isTestSource="false" packagePrefix="App\" />
+      <excludeFolder url="file://$MODULE_DIR$/asset/build" />
+      <excludeFolder url="file://$MODULE_DIR$/asset/build/sourcemaps" />
       <excludeFolder url="file://$MODULE_DIR$/static" />
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/docker/mysql/data" />
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/var" />

@@ -53,7 +53,7 @@ class CustomFieldOption
         return $this->name;
     }
 
-    public function setName(string $name): self
+    public function setName(?string $name): self
     {
         $this->name = $name;
 
@@ -65,9 +65,11 @@ class CustomFieldOption
         return $this->value;
     }
 
-    public function setValue(string $value): self
+    public function setValue(?string $value): self
     {
-        $this->value = \mb_strtolower($value);
+        if (\is_string($value)) {
+            $this->value = \mb_strtolower($value);
+        }
 
         return $this;
     }
@@ -89,7 +91,7 @@ class CustomFieldOption
         return $this->sort;
     }
 
-    public function setSort(int $sort): self
+    public function setSort(?int $sort): self
     {
         $this->sort = $sort;
 

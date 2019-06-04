@@ -40,11 +40,7 @@ class ChangePasswordType extends AbstractType
                 'type' => PasswordType::class,
                 'constraints' => [
                     new NotBlank(),
-                    new Length(
-                        [
-                            'min' => 8,
-                        ]
-                    ),
+                    new Length(['min' => 8, 'max' => 100,]),
                 ],
             ]
         );

@@ -26,7 +26,7 @@ class CategoryViewAllService
     {
         $qb = $this->em->getRepository(Category::class)->createQueryBuilder('category');
         $qb->addSelect('categoryChild');
-        $qb->leftJoin('category.children', 'categoryChild');
+        $qb->join('category.children', 'categoryChild');
         $qb->andWhere($qb->expr()->eq('category.lvl', 1));
         $qb->orderBy('category.sort', 'ASC');
 

@@ -110,6 +110,21 @@
             </div>
         </div>
 
+        <div class="mb-4">
+            <div>
+                <input type="checkbox" name="load_categories" id="load-categories" class="custom-checkbox" value="1">
+                <label for="load-categories">Load example categories</label>
+            </div>
+            <div>
+                <input type="checkbox" name="load_custom_fields" id="load-custom-fields" class="custom-checkbox" value="1">
+                <label for="load-custom-fields">Load example custom fields</label>
+            </div>
+            <div>
+                <input type="checkbox" name="load_listings" id="load-listings" class="custom-checkbox" value="1">
+                <label for="load-listings">Load example listings</label>
+            </div>
+        </div>
+
         <button type="submit" class="btn btn-primary" onclick="return confirm('Is entered configuration correct? Start the installation?')" >Install</button>
     </form>
 

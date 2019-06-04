@@ -47,8 +47,15 @@ if (!empty($_POST)) {
             loadSql(__DIR__ . '/data/_schema.sql');
             loadSql(__DIR__ . '/data/_required_data.sql');
             loadSql(__DIR__ . '/data/settings.sql');
-            loadSql(__DIR__ . '/data/example/category.sql');
-            loadSql(__DIR__ . '/data/example/custom_field.sql');
+            $pdo->exec("UPDATE setting SET last_update_date = '2010-01-01 00:00:00'");
+
+            if ($_POST['load_categories'] ?? null === '1') {
+                loadSql(__DIR__ . '/data/example/category.sql');
+
+                if ($_POST['load_custom_fields'] ?? null === '1') {
+                    loadSql(__DIR__ . '/data/example/custom_field.sql');
+                }
+            }
 
             insertAdmin($_POST['admin_email'], $_POST['admin_password']);
             setEmailSettings($_POST['email_from_address']);

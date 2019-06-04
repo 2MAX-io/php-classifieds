@@ -15,6 +15,27 @@ DirectoryIndex index.php
     RewriteEngine On
 </IfModule>
 
+# CUSTOM HTACCESS START - do not remove this line
+
+#     force https - START
+#        RewriteCond %{HTTPS} off
+#        RewriteRule .* https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+#     force https - END
+
+#     set php version for cPanel with litespeed server - START
+#        <FilesMatch "\.php$">
+#        SetHandler application/x-lsphp73
+#        </FilesMatch>
+#     set php version for cPanel with litespeed server - END
+
+#     set php version for DirectAdmin - START
+#        AddHandler application/x-httpd-php73 php
+#     set php version for DirectAdmin - END
+
+#     put custom htaccess HERE - you can delete this line
+
+# CUSTOM HTACCESS END - do not remove this line
+
 <IfModule !mod_rewrite.c>
     <IfModule mod_alias.c>
         # When mod_rewrite is not available, we instruct a temporary redirect of

@@ -10,7 +10,14 @@ class FilePath
 {
     public static function getPath(string $relativePath): string
     {
-        return Path::canonicalize($relativePath); // todo: #12 add path validation, make path absolute
+        $absolute = Path::canonicalize($relativePath);
+        $projectDir = Path::canonicalize(__DIR__ . '/../../../');
+
+        if (Path::getLongestCommonBasePath([$absolute, $projectDir]) !== $projectDir) {
+            throw new \UnexpectedValueException('path is outside of project');
+        }
+
+        return $absolute;
     }
 
     public static function getListingFilePath(): string

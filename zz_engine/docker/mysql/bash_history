@@ -34,3 +34,20 @@ cat /etc/mysql/conf.d/mysql.cnf
 cat /etc/mysql/conf.d/my.cnf 
 mysql 116.203.65.178 -u root
 mysql -h 116.203.65.178 -u root
+time mysqldump dev_test listing listing_custom_field_value listing_file > /sql/listings.sql
+time mysqldump dev_test listing listing_custom_field_value listing_file > /sql/listings.sql
+time mysqldump dev_test listing listing_custom_field_value listing_file > /sql/listing.sql
+time mysqldump dev_test listing listing_custom_field_value listing_file > /sql/listing.sql
+time mysqldump dev_test listing listing_custom_field_value listing_file INSERT INTO user (id, username, email, roles, enabled, password, registration_date, last_login) VALUES (1, 'user-demo@2max.io', 'user-demo@2max.io', '["ROLE_USER"]', 1, '$argon2i$v=19$m=1024,t=2,p=2$ZWRUakVHMThvNUZoRUw5NA$yzGPYAlaypAhlrXCd4rqppj744zKpnNplQozSXB2I50', '2010-01-01 00:00:00', null); > /sql/listing.sql
+time mysqldump dev_test listing listing_custom_field_value listing_file --no-create-info > /sql/listing.large.sql
+time mysqldump dev_test listing listing_custom_field_value listing_file --no-create-info > /sql/listing.large.sql
+time mysqldump dev_test listing listing_custom_field_value listing_file --no-create-info --skip-add-drop-table --skip-add-locks --skip-disable-keys --skip-set-charset > /sql/listing.large.sql
+time mysqldump dev_test listing listing_custom_field_value listing_file --no-create-info --skip-add-drop-table --skip-add-locks --skip-disable-keys --skip-set-charset > /sql/listing.large.sql
+time mysqldump dev_test listing listing_custom_field_value listing_file --no-create-info --skip-add-drop-table --skip-add-locks --skip-disable-keys --skip-set-charset --compact > /sql/listing.large.sql
+time mysqldump dev_test listing listing_custom_field_value listing_file --no-create-info --skip-add-drop-table --skip-add-locks --skip-disable-keys --skip-set-charset --compact --extended-insert=FALSE  > /sql/listing.large.sql
+time mysqldump dev_test listing listing_custom_field_value listing_file --no-create-info --skip-add-drop-table --skip-add-locks --skip-disable-keys --skip-set-charset  --extended-insert=FALSE  > /sql/listing.large.sql
+time mysqldump dev_test listing listing_custom_field_value listing_file --no-create-info --skip-add-drop-table --skip-add-locks --skip-disable-keys --skip-set-charset --compact --skip-extended-insert  > /sql/listing.large.sql
+time mysqldump dev_test listing listing_custom_field_value listing_file --no-create-info --skip-add-drop-table --skip-add-locks --skip-disable-keys --skip-set-charset --compact --skip-extended-insert --skip-opt  > /sql/listing.large.sql
+time mysqldump dev_test listing listing_custom_field_value listing_file --no-create-info  --skip-extended-insert --skip-opt  > /sql/listing.large.sql
+time mysqldump dev_test listing listing_custom_field_value listing_file --no-create-info --skip-add-drop-table --skip-add-locks --skip-disable-keys --skip-set-charset --compact --skip-extended-insert --skip-opt  > /sql/listing.large.sql
+time mysqldump dev_test listing listing_custom_field_value listing_file --no-create-info --skip-add-drop-table --skip-add-locks --skip-disable-keys --skip-set-charset --compact --skip-extended-insert --skip-opt  > /sql/listing.large.sql

@@ -111,6 +111,8 @@
         </div>
 
         <div class="mb-4">
+            <h3>Load example data</h3>
+
             <div>
                 <input type="checkbox" name="load_categories" id="load-categories" class="custom-checkbox" value="1">
                 <label for="load-categories">Load example categories</label>

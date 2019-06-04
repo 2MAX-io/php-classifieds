@@ -17,6 +17,7 @@ use Carbon\Carbon;
 use Doctrine\ORM\EntityManagerInterface;
 use Faker\Factory;
 use Symfony\Contracts\Cache\CacheInterface;
+use Symfony\Contracts\Cache\ItemInterface;
 
 class DevGenerateTestListings
 {
@@ -38,6 +39,9 @@ class DevGenerateTestListings
 
     public function generate(int $count): void
     {
+        $this->cache->delete('devGenerateListingsUser');
+        $this->cache->delete('devGenerateListingsCategories');
+
         \gc_enable();
         $this->em->getConnection()->getConfiguration()->setSQLLogger(null);
 
@@ -48,7 +52,7 @@ class DevGenerateTestListings
             $listing = new Listing();
             $listing->setTitle($faker->text(30));
             $listing->setDescription($faker->sentence(30));
-            $listing->setUser($this->em->getReference(User::class, 1));
+            $listing->setUser($this->getUser());
             $listing->setCategory($this->getRandomCategory());
             $listing->setEmailShow(true);
             $listing->setFirstCreatedDate(new \DateTime());
@@ -200,5 +204,24 @@ class DevGenerateTestListings
 
             $this->em->persist($listingFile);
         }
+    }
+
+    private function getUser(): User
+    {
+        /** @var User $user */
+        $user = $this->cache->get(
+            'devGenerateListingsUser',
+            function (ItemInterface $item) {
+                $user = $this->em->getRepository(User::class)->findOneBy(['email' => 'user-demo@2max.io']);
+
+                if (!$user) {
+                    throw new \UnexpectedValueException('user: user-demo@2max.io not found');
+                }
+
+                return $user;
+            }
+        );
+
+        return $this->em->merge($user);
     }
 }

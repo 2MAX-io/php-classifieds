@@ -54,6 +54,11 @@ if (!empty($_POST)) {
 
                 if ($_POST['load_custom_fields'] ?? null === '1') {
                     loadSql(__DIR__ . '/data/example/custom_field.sql');
+
+                    if ($_POST['load_listings'] ?? null === '1') {
+                        loadSql(__DIR__ . '/data/example/listing_demo_user.sql');
+                        loadSql(__DIR__ . '/data/example/listing.large.sql');
+                    }
                 }
             }
 

@@ -1,0 +1,1 @@
+INSERT INTO user (id, username, email, roles, enabled, password, registration_date, last_login) VALUES (1, 'user-demo@2max.io', 'user-demo@2max.io', '["ROLE_USER"]', 1, '$argon2i$v=19$m=1024,t=2,p=2$aENNTWIxV3FKRUhFUHNuSg$nPUukajH4qDMREbHbFWIfRnznXgc3SOiXkUXhuKRUIA', '2010-01-01 00:00:00', null);

@@ -6,30 +6,23 @@
     <div class="container mt-3">
         <h1>
             {{ 'trans.Police log for listing' | trans }}:
-            <a
-                    href="{{ path('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}"
-                    target="_blank"
-            >
+            <a href="{{ path('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}">
                 {{ listing.title }}
             </a>
         </h1>
 
-        <button id="policeLogCopyToClipboard" type="button" class="btn btn-primary">
+        <button type="button" class="btn btn-primary mb-4" id="policeLogCopyToClipboard">
             {{ 'trans.Copy to clipboard' | trans }}
         </button>
 
-        <br>
-        <br>
-
-        <textarea id="policeLogTextarea" style="width: 100%; height: fit-content; min-height: 40rem;">{{- policeLogText -}}</textarea>
+        <textarea style="width: 100%; height: fit-content; min-height: 40rem;">{{- policeLogText -}}</textarea>
     </div>
 {% endblock %}
 
 {% block js %}
     <script>
         $('#policeLogCopyToClipboard').click(function() {
-            $('#policeLogTextarea').select();
-            document.execCommand("copy");
+            copyTextToClipboard(({{ policeLogText | json_encode | raw }}));
         });
     </script>
 {% endblock js %}

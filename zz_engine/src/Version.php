@@ -6,8 +6,8 @@ namespace App;
 
 class Version
 {
-    const VERSION = 1;
-    const DATE = '2019-04-06';
+    public const VERSION = 1;
+    public const DATE = '2019-04-06';
 
     public static function getVersion(): int
     {

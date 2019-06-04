@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class SystemLog
 {
-    const CRON_RUN_TYPE = 'CRON_RUN_TYPE';
+    public const CRON_RUN_TYPE = 'CRON_RUN_TYPE';
 
     /**
      * @ORM\Id()

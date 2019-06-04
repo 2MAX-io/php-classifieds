@@ -14,8 +14,8 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 class UserChangeBalanceType extends AbstractType
 {
-    const NEW_BALANCE = 'newBalance';
-    const CHANGE_REASON = 'changeReason';
+    public const NEW_BALANCE = 'newBalance';
+    public const CHANGE_REASON = 'changeReason';
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {

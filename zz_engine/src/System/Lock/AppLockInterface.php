@@ -6,5 +6,5 @@ namespace App\System\Lock;
 
 class AppLockInterface
 {
-    const CRON = 'CRON';
+    public const CRON = 'CRON';
 }

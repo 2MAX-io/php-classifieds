@@ -17,7 +17,7 @@ class ListingActivateController extends AbstractAdminController
     public const REJECT_ACTION = 'REJECT_ACTION';
 
     /**
-     * @Route("/admin/red5/listing/activate", name="app_admin_listing_activate_list")
+     * @Route("/admin/red5/listing/activate/list", name="app_admin_listing_activate_list")
      */
     public function listingActivateList(
         Request $request,
@@ -36,7 +36,7 @@ class ListingActivateController extends AbstractAdminController
     }
 
     /**
-     * @Route("/admin/red5/listing/activate/action-for-selected", name="app_admin_listing_activate_action_for_selected")
+     * @Route("/admin/red5/listing/activate/list/action-on-selected", name="app_admin_listing_activate_action_on_selected")
      */
     public function actionForSelected(Request $request, ListingActionService $listingActionService): Response
     {

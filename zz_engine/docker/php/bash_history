@@ -323,3 +323,17 @@ php zz_engine/bin/console debug:router --help
 php zz_engine/bin/console debug:router --raw > /var/www/html/out.txt
 php zz_engine/bin/console debug:router > /var/www/html/out.txt
 php zz_engine/bin/console debug:router > /var/www/html/out.txt
+/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 10000
+/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 10000
+php zz_engine/bin/console debug:container | grep cache
+php zz_engine/bin/console debug:container | grep cache
+php zz_engine/bin/console debug:container | grep Psr16Cache
+php zz_engine/bin/console debug:container | grep Psr16Cache
+php zz_engine/bin/console debug:container | grep Psr16Cache
+php zz_engine/bin/console debug:container | grep cache.app.simple
+/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 10000
+/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 10000
+/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 1
+/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 1
+/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 1
+/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 10000

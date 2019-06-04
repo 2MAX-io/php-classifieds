@@ -342,7 +342,11 @@ class Listing
 
     public function getPrice(): ?float
     {
-        return $this->price;
+        if ($this->price === null) {
+            return null;
+        }
+
+        return (float) $this->price;
     }
 
     public function setPrice(float $price): self

@@ -14,6 +14,8 @@ use App\Helper\Arr;
 use Carbon\Carbon;
 use Doctrine\ORM\EntityManagerInterface;
 use Faker\Factory;
+use Symfony\Contracts\Cache\CacheInterface;
+use Symfony\Contracts\Cache\ItemInterface;
 
 class DevGenerateTestListings
 {
@@ -22,9 +24,15 @@ class DevGenerateTestListings
      */
     private $em;
 
-    public function __construct(EntityManagerInterface $em)
+    /**
+     * @var CacheInterface
+     */
+    private $cache;
+
+    public function __construct(EntityManagerInterface $em, CacheInterface $cache)
     {
         $this->em = $em;
+        $this->cache = $cache;
     }
 
     public function generate(int $count): void
@@ -40,7 +48,7 @@ class DevGenerateTestListings
             $listing->setTitle($faker->text(30));
             $listing->setDescription($faker->sentence(30));
             $listing->setUser($this->em->getReference(User::class, 1));
-            $listing->setCategory($this->em->getReference(Category::class, 3));
+            $listing->setCategory($this->getRandomCategory());
             $listing->setEmailShow(true);
             $listing->setFirstCreatedDate(new \DateTime());
             $listing->setLastEditDate(new \DateTime());
@@ -159,5 +167,18 @@ class DevGenerateTestListings
         $customFieldValue->setListing($listing);
         $customFieldValue->setValue((string) \random_int(1, 300000));
         $this->em->persist($customFieldValue);
+    }
+
+    private function getRandomCategory(): Category
+    {
+        $categoryList = $this->cache->get('devGenerateListingsCategories', function() {
+            return $this->em->getRepository(Category::class)->findBy(['lvl' => 2]);
+        });
+
+        /** @var Category $category */
+        $category = Arr::random($categoryList);
+        $category = $this->em->merge($category);
+
+        return $category;
     }
 }

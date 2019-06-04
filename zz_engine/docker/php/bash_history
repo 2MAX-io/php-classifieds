@@ -337,3 +337,10 @@ php zz_engine/bin/console debug:container | grep cache.app.simple
 /var/www/html/zz_engine/bin/console app:dev:generate-test-listings 1
 /var/www/html/zz_engine/bin/console app:dev:generate-test-listings 1
 /var/www/html/zz_engine/bin/console app:dev:generate-test-listings 10000
+/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 100
+/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 100
+/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 100
+/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 100
+composer install -d zz_engine --optimize
+composer install --help
+composer install -d zz_engine --optimize-autoloader

@@ -9,13 +9,14 @@ use App\Entity\CustomField;
 use App\Entity\CustomFieldOption;
 use App\Entity\Listing;
 use App\Entity\ListingCustomFieldValue;
+use App\Entity\ListingFile;
 use App\Entity\User;
 use App\Helper\Arr;
+use App\Service\System\Sort\SortService;
 use Carbon\Carbon;
 use Doctrine\ORM\EntityManagerInterface;
 use Faker\Factory;
 use Symfony\Contracts\Cache\CacheInterface;
-use Symfony\Contracts\Cache\ItemInterface;
 
 class DevGenerateTestListings
 {
@@ -64,8 +65,9 @@ class DevGenerateTestListings
             }
 
             $this->setCustomFields($listing);
-
             $this->em->persist($listing);
+
+            $this->addFiles($listing);
 
             if ($persistCount++ > 1000) {
                 $this->em->flush();
@@ -180,5 +182,23 @@ class DevGenerateTestListings
         $category = $this->em->merge($category);
 
         return $category;
+    }
+
+    private function addFiles(Listing $listing): void
+    {
+        $count = Arr::random([0, \random_int(1,3)]);
+        $sort = SortService::FIRST_VALUE;
+        for ($i=0; $i<$count; ++$i) {
+            $sort++;
+            $listingFile = new ListingFile();
+            $listingFile->setPath(Arr::random(['static/system/1920x1080.png', 'static/system/1080x1920.png']));
+            $listingFile->setSort($sort);
+            $listingFile->setSizeBytes(1);
+            $listingFile->setMimeType('image/jpeg');
+            $listingFile->setFilename(\basename($listingFile->getPath()));
+            $listing->addListingFile($listingFile);
+
+            $this->em->persist($listingFile);
+        }
     }
 }

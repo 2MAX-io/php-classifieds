@@ -13,6 +13,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class UserType extends AbstractType
 {
@@ -29,7 +30,9 @@ class UserType extends AbstractType
                     'label' => 'trans.Repeat new email',
                 ],
                 'type' => TextType::class,
+                'invalid_message' => 'Repeated value does note match',
                 'constraints' => [
+                    new NotBlank(),
                     new Email([
                         'mode' => Email::VALIDATION_MODE_STRICT
                     ]),
@@ -49,7 +52,9 @@ class UserType extends AbstractType
                     'label' => 'trans.Repeat new email',
                 ],
                 'type' => TextType::class,
+                'invalid_message' => 'Repeated value does note match',
                 'constraints' => [
+                    new NotBlank(),
                     new Length([
                         'min' => 2,
                     ]),
@@ -68,7 +73,9 @@ class UserType extends AbstractType
                     'label' => 'trans.Repeat new password',
                 ],
                 'type' => PasswordType::class,
+                'invalid_message' => 'Repeated value does note match',
                 'constraints' => [
+                    new NotBlank(),
                     new Length(
                         [
                             'min' => 8,

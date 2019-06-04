@@ -53,7 +53,7 @@
                 </td>
                 <td>{{ user.registrationDate ? user.registrationDate|date : '' }}</td>
                 <td>{{ user.lastLogin ? user.lastLogin|date : '' }}</td>
-                <td>
+                <td class="text-right">
                     <a href="{{ path('app_admin_user_edit', {'id': user.id}) }}" class="btn btn-primary">
                         {{ 'trans.Edit' | trans }}
                     </a>

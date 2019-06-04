@@ -116,7 +116,7 @@ class User implements UserInterface, RoleInterface, EnablableInterface, EncoderA
         $this->plainPassword = null;
     }
 
-    public function setEmail(string $email): self
+    public function setEmail(?string $email): self
     {
         $this->email = $email;
 
@@ -154,12 +154,19 @@ class User implements UserInterface, RoleInterface, EnablableInterface, EncoderA
         return $this->email;
     }
 
+    public function setUsername(?string $username): self
+    {
+        $this->username = $username;
+
+        return $this;
+    }
+
     /**
      * A visual identifier that represents this user.
      *
      * @see UserInterface
      */
-    public function getUsername(): string
+    public function getUsername(): ?string
     {
         return $this->username;
     }
@@ -267,13 +274,6 @@ class User implements UserInterface, RoleInterface, EnablableInterface, EncoderA
     public function setLastLogin(?\DateTimeInterface $lastLogin): self
     {
         $this->lastLogin = $lastLogin;
-
-        return $this;
-    }
-
-    public function setUsername(string $username): self
-    {
-        $this->username = $username;
 
         return $this;
     }

@@ -1,11 +1,14 @@
 {% extends 'base.html.twig' %}
 
+{# @var settings \App\Service\Setting\SettingsDto #}
+{% set settings = settings() %}
+
 {% block title %}{{ 'trans.Extend validity' | trans }}{% endblock %}
 
 {% block body %}
-    <div class="container mt-5">
+    <div class="container mt-2 mt-md-4">
         <div class="row">
-            <div class="col-md-4 col-lg-3 mb-5">
+            <div class="col-md-4 col-lg-3 mb-4">
                 {% include 'user/listing/_part/user_navigation_card.html.twig' %}
             </div>
 
@@ -26,7 +29,7 @@
                         </div>
                     {% endif %}
 
-                    {% if not listing.adminActivated %}
+                    {% if not listing.adminActivated and settings.requireListingAdminActivation %}
                         <div>
                             {{ 'trans.Listing awaits activation, you can extend listing duration, but listing would only appear to the public after acceptation' | trans }}
                         </div>

@@ -18,16 +18,12 @@ class ImageManipulationFactory extends ServerFactory
     /**
      * @inheritDoc
      */
-    public function getManipulators()
+    public function getManipulators(): array
     {
-        return array_filter(
+        return \array_filter(
             parent::getManipulators(),
             static function ($element) {
-                if ($element instanceof Orientation) {
-                    return false; // removing orientation because it uses EXIF
-                }
-
-                return true;
+                return !$element instanceof Orientation; // removing orientation because it uses EXIF
             }
         );
     }

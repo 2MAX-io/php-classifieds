@@ -357,3 +357,6 @@ php zz_engine/bin/console app:cron:main
 /var/www/html/zz_engine/bin/console app:dev:generate-test-listings 5000
 /var/www/html/zz_engine/bin/console app:dev:generate-test-listings 5000
 php zz_engine/bin/console app:cron:main
+php zz_engine/bin/console doctrine:schema:update --force
+php zz_engine/bin/console doctrine:schema:update --force
+php zz_engine/bin/console doctrine:schema:create --dump-sql > install/data/_schema.sql

@@ -71,7 +71,7 @@ class Listing
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=50, nullable=false)
+     * @ORM\Column(type="string", length=70, nullable=false)
      */
     private $title;
 

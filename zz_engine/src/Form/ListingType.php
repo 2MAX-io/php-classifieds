@@ -53,11 +53,15 @@ class ListingType extends AbstractType
                     new NotBlank(),
                     new Length(['min' => 5]),
                 ],
+                'attr' => [
+                    'maxlength' => 70,
+                ]
             ]);
         $builder->add('description', TextareaType::class, [
             'label' => 'trans.Description',
             'attr' => [
-                'class' => 'form-listing-description-textarea'
+                'class' => 'form-listing-description-textarea',
+                'maxlength' => 10000,
             ],
             'constraints' => [
                 new NotBlank(),
@@ -95,6 +99,9 @@ class ListingType extends AbstractType
         $builder->add('email', EmailType::class, [
             'label' => 'trans.Email',
             'required' => false,
+            'attr' => [
+                'maxlength' => 100,
+            ],
         ]);
         $builder->add('emailShow', CheckboxType::class, [
             'label' => 'trans.Show email?',
@@ -119,15 +126,21 @@ class ListingType extends AbstractType
         $builder->add('city', TextType::class, [
             'label' => 'trans.City',
             'required' => false,
-        ]);
-        $builder->add(
-            ListingCustomFieldListType::CUSTOM_FIELD_LIST_FIELD, ListingCustomFieldListType::class, [
-            'listingEntity' => $options['data'],
-            'mapped' => false,
             'attr' => [
-                'class' => 'formCustomFieldList'
+                'maxlength' => 30,
             ],
         ]);
+        $builder->add(
+            ListingCustomFieldListType::CUSTOM_FIELD_LIST_FIELD,
+            ListingCustomFieldListType::class,
+            [
+                'listingEntity' => $options['data'],
+                'mapped' => false,
+                'attr' => [
+                    'class' => 'formCustomFieldList',
+                ],
+            ]
+        );
         $builder->add('file', FileSimpleType::class, [
             'mapped' => false,
             'required' => false,

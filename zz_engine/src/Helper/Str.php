@@ -133,6 +133,6 @@ class Str
     {
         $forcedSubstring = \mb_substr($string, 0, $maxLength+1);
 
-        return  \mb_substr($forcedSubstring, 0, \strrpos($forcedSubstring, ' '));
+        return  \mb_substr($forcedSubstring, 0, \strrpos($forcedSubstring, ' ') ?: null);
     }
 }

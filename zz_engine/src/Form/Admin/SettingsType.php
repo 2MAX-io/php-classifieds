@@ -241,14 +241,6 @@ class SettingsType extends AbstractType
                 new NotBlank(),
             ],
         ]);
-        $builder->add('paymentGatewayPaymentDescription', TextType::class, [
-            'label' => 'trans.Payment gateway - payment description',
-            'help' => 'trans.used in payment gateway as description of what has been bought, ie on receipt',
-            'required' => true,
-            'constraints' => [
-                new NotBlank(),
-            ],
-        ]);
         $builder->add('paymentPayPalMode', ChoiceType::class, [
             'label' => 'trans.Payments - PayPal mode',
             'required' => true,
@@ -268,6 +260,14 @@ class SettingsType extends AbstractType
         $builder->add('paymentPayPalClientSecret', TextType::class, [
             'label' => 'trans.Payments - PayPal Client secret',
             'required' => true,
+        ]);
+        $builder->add('paymentGatewayPaymentDescription', TextType::class, [
+            'label' => 'trans.Payment gateway - payment description',
+            'help' => 'trans.used in payment gateway as description of what has been bought, ie on receipt',
+            'required' => true,
+            'constraints' => [
+                new NotBlank(),
+            ],
         ]);
         $builder->add('customJavascriptBottom', TextareaType::class, [
             'label' => 'trans.Custom javascript - bottom of page',

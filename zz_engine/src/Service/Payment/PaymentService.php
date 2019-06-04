@@ -15,7 +15,6 @@ use App\Service\Payment\Method\PayPalPaymentMethod;
 use App\Service\Setting\SettingsService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class PaymentService
@@ -36,11 +35,6 @@ class PaymentService
     private $settingsService;
 
     /**
-     * @var UrlGeneratorInterface
-     */
-    private $urlGenerator;
-
-    /**
      * @var CurrentUserService
      */
     private $currentUserService;
@@ -55,13 +49,11 @@ class PaymentService
         EntityManagerInterface $em,
         SettingsService $settingsService,
         CurrentUserService $currentUserService,
-        TranslatorInterface $trans,
-        UrlGeneratorInterface $urlGenerator
+        TranslatorInterface $trans
     ) {
         $this->payPalPaymentMethod = $payPalPaymentMethod;
         $this->em = $em;
         $this->settingsService = $settingsService;
-        $this->urlGenerator = $urlGenerator;
         $this->currentUserService = $currentUserService;
         $this->trans = $trans;
     }
@@ -140,9 +132,9 @@ class PaymentService
         return $this->getPaymentEntity($confirmPaymentDto)->getBalanceUpdated();
     }
 
-    public function confirmPayment(Request $request, ConfirmPaymentDto $confirmPaymentDto): ConfirmPaymentDto
+    public function confirmPayment(Request $request): ConfirmPaymentDto
     {
-        $confirmPaymentDto = $this->payPalPaymentMethod->confirmPayment($request, $confirmPaymentDto);
+        $confirmPaymentDto = $this->payPalPaymentMethod->confirmPayment($request);
 
         $paymentEntity = $this->getPaymentEntity($confirmPaymentDto);
         $paymentEntity->setGatewayTransactionId($confirmPaymentDto->getGatewayTransactionId());
@@ -152,7 +144,7 @@ class PaymentService
         return $confirmPaymentDto;
     }
 
-    public function getPaymentEntity(ConfirmPaymentDto $confirmPaymentDto): ?Payment
+    public function getPaymentEntity(ConfirmPaymentDto $confirmPaymentDto): Payment
     {
         return $this->em->getRepository(Payment::class)->findOneBy(
             ['gatewayPaymentId' => $confirmPaymentDto->getGatewayPaymentId()]

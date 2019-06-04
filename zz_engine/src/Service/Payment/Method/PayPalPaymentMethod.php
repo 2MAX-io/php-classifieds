@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Service\Payment\Method;
 
 use App\Exception\UserVisibleMessageException;
+use App\Helper\ExceptionHelper;
 use App\Helper\FilePath;
 use App\Helper\Integer;
 use App\Service\Payment\Base\PaymentMethodInterface;
@@ -22,6 +23,7 @@ use PayPal\Api\RedirectUrls;
 use PayPal\Api\Transaction;
 use PayPal\Auth\OAuthTokenCredential;
 use PayPal\Rest\ApiContext;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class PayPalPaymentMethod implements PaymentMethodInterface
@@ -36,18 +38,25 @@ class PayPalPaymentMethod implements PaymentMethodInterface
      */
     private $settingsService;
 
+    /**
+     * @var LoggerInterface
+     */
+    private $logger;
+
     public function __construct(
         PaymentHelperService $paymentHelperService,
-        SettingsService $settingsService
+        SettingsService $settingsService,
+        LoggerInterface $logger
     ) {
         $this->paymentHelperService = $paymentHelperService;
         $this->settingsService = $settingsService;
+        $this->logger = $logger;
     }
 
     public function createPayment(PaymentDto $paymentDto): void
     {
         $payer = new Payer();
-        $payer->setPaymentMethod("paypal");
+        $payer->setPaymentMethod('paypal');
 
         $redirectUrls = new RedirectUrls();
         $redirectUrls->setReturnUrl($this->paymentHelperService->getSuccessUrl());
@@ -91,14 +100,15 @@ class PayPalPaymentMethod implements PaymentMethodInterface
         }
     }
 
-    public function confirmPayment(Request $request, ConfirmPaymentDto $confirmPaymentDto): ConfirmPaymentDto
+    public function confirmPayment(Request $request): ConfirmPaymentDto
     {
-        $paymentId = $request->get('paymentId'); // todo: pass this in dto
+        $confirmPaymentDto = new ConfirmPaymentDto();
+        $paymentId = $request->get('paymentId');
         $apiContext = $this->getApiContext();
         $payment = Payment::get($paymentId, $apiContext);
 
         $execution = new PaymentExecution();
-        $execution->setPayerId($request->get('PayerID')); // todo: pass this in dto
+        $execution->setPayerId($request->get('PayerID'));
 
         try {
             $payment = $payment->execute($execution, $apiContext);
@@ -112,13 +122,16 @@ class PayPalPaymentMethod implements PaymentMethodInterface
             return $confirmPaymentDto;
 
         } catch (\Throwable $e) {
+            $this->logger->critical('failed to confirm PayPal payment', ExceptionHelper::flatten($e));
+
             throw $e;
         }
     }
 
     public function getApiContext(): ApiContext
     {
-        // todo: make this method production worthy
+        // client id: AYSq3RDGsmBLJE-otTkBtM-jBRd1TCQwFf9RGfwddNXWz0uFU9ztymylOhRS
+        // client secret: EGnHDxD_qRPdaLdZz8iCr8N7_MzF-YHPTkjs6NKYQvQSBngp4PTTVWkPZRbL
 
         $apiContext = new ApiContext(
             new OAuthTokenCredential(
@@ -134,7 +147,7 @@ class PayPalPaymentMethod implements PaymentMethodInterface
                 'log.LogLevel' => 'INFO', // PLEASE USE `INFO` LEVEL FOR LOGGING IN LIVE ENVIRONMENTS, DEBUG in dev only
                 'cache.enabled' => true,
                 'cache.FileName' => FilePath::getCacheDir() . '/payPalCache.php', // for determining paypal cache directory
-                'http.CURLOPT_CONNECTTIMEOUT' => 30,
+                'http.CURLOPT_CONNECTTIMEOUT' => 20,
                 // 'http.headers.PayPal-Partner-Attribution-Id' => '123123123'
                 //'log.AdapterFactory' => '\PayPal\Log\DefaultLogFactory' // Factory class implementing \PayPal\Log\PayPalLogFactory
             )

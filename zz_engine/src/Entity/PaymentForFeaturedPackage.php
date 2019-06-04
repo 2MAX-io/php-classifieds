@@ -41,36 +41,36 @@ class PaymentForFeaturedPackage
         return $this->id;
     }
 
-    public function getPayment(): ?Payment
+    public function getPayment(): Payment
     {
         return $this->payment;
     }
 
-    public function setPayment(?Payment $payment): self
+    public function setPayment(Payment $payment): self
     {
         $this->payment = $payment;
 
         return $this;
     }
 
-    public function getFeaturedPackage(): ?FeaturedPackage
+    public function getFeaturedPackage(): FeaturedPackage
     {
         return $this->featuredPackage;
     }
 
-    public function setFeaturedPackage(?FeaturedPackage $featuredPackage): self
+    public function setFeaturedPackage(FeaturedPackage $featuredPackage): self
     {
         $this->featuredPackage = $featuredPackage;
 
         return $this;
     }
 
-    public function getListing(): ?Listing
+    public function getListing(): Listing
     {
         return $this->listing;
     }
 
-    public function setListing(?Listing $listing): self
+    public function setListing(Listing $listing): self
     {
         $this->listing = $listing;
 

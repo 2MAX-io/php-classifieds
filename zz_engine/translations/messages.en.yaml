@@ -107,6 +107,7 @@ trans:
   'Failed to get information about latest version. Try again later.': 'Failed to get information about latest version. Try again later.'
   Upgrade has been executed: 'Upgrade has been executed'
   Documentation: 'Documentation'
+  'To delete feature package, you must first delete or move all dependencies like: feature package categories': 'To delete feature package, you must first delete or move all dependencies like: feature package categories'
 
 trans.customFieldType.select: Select field
 trans.customFieldType.year_range: Field with year

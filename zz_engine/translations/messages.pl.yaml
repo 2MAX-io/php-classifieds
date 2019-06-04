@@ -538,3 +538,4 @@ trans:
   'Failed to get information about latest version. Try again later': 'Nie udało się pobrać informacji o najnowszej wersji. Spróbuj ponownie później.'
   Upgrade has been executed: 'Aktualizacja została wykonana'
   Documentation: 'Dokumentacja'
+  'To delete feature package, you must first delete or move all dependencies like: feature package categories': 'To delete feature package, you must first delete or move all dependencies like: feature package categories'

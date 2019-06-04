@@ -6,9 +6,13 @@ namespace App\Controller\Admin\Payment;
 
 use App\Controller\Admin\Base\AbstractAdminController;
 use App\Entity\FeaturedPackage;
+use App\Exception\UserVisibleMessageException;
 use App\Form\Admin\FeaturedPackageType;
+use App\Helper\ExceptionHelper;
 use App\Repository\FeaturedPackageRepository;
 use App\Service\Admin\FeaturedPackage\CategorySelection\FeaturedPackageCategorySelectionService;
+use Doctrine\DBAL\Exception\ForeignKeyConstraintViolationException;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -93,7 +97,6 @@ class FeaturedPackageController extends AbstractAdminController
             'featured_package' => $featuredPackage,
             'categorySelectionList' => $featuredPackageCategorySelectionService->getCategorySelectionList(
                 $featuredPackage,
-                $category ?? null
             ),
             'form' => $form->createView(),
         ]);
@@ -102,18 +105,26 @@ class FeaturedPackageController extends AbstractAdminController
     /**
      * @Route("/admin/red5/featured-package/{id}", name="app_admin_featured_package_delete", methods={"DELETE"})
      */
-    public function delete(Request $request, FeaturedPackage $featuredPackage): Response
+    public function delete(Request $request, FeaturedPackage $featuredPackage, LoggerInterface $logger): Response
     {
         $this->denyUnlessAdmin();
 
         if ($this->isCsrfTokenValid('delete'.$featuredPackage->getId(), $request->request->get('_token'))) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($featuredPackage);
-            $em->flush();
+            try {
+                $em = $this->getDoctrine()->getManager();
+                $em->remove($featuredPackage);
+                $em->flush();
+            } /** @noinspection PhpRedundantCatchClauseInspection */ catch (ForeignKeyConstraintViolationException $e) {
+                $logger->notice('constraint error during deletion', ExceptionHelper::flatten($e, [$e->getMessage()]));
+                throw new UserVisibleMessageException(
+                    'trans.To delete feature package, you must first delete or move all dependencies like: feature package categories',
+                    [],
+                    0,
+                    $e
+                );
+            }
         }
 
-        return $this->redirectToRoute('app_admin_featured_package_edit', [
-            'id' => $featuredPackage->getId(),
-        ]);
+        return $this->redirectToRoute('app_admin_featured_package_index');
     }
 }

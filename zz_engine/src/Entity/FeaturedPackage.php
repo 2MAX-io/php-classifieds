@@ -81,7 +81,7 @@ class FeaturedPackage
         return $this->adminName;
     }
 
-    public function setAdminName(string $adminName): self
+    public function setAdminName(?string $adminName): self
     {
         $this->adminName = $adminName;
 
@@ -93,7 +93,7 @@ class FeaturedPackage
         return $this->name;
     }
 
-    public function setName(string $name): self
+    public function setName(?string $name): self
     {
         $this->name = $name;
 
@@ -105,7 +105,7 @@ class FeaturedPackage
         return $this->price;
     }
 
-    public function setPrice(int $price): self
+    public function setPrice(?int $price): self
     {
         $this->price = $price;
 
@@ -117,7 +117,7 @@ class FeaturedPackage
         return $this->price / 100;
     }
 
-    public function setPriceFloat(float $price): self
+    public function setPriceFloat(?float $price): self
     {
         $this->price = $price * 100;
 
@@ -129,7 +129,7 @@ class FeaturedPackage
         return $this->daysFeaturedExpire;
     }
 
-    public function setDaysFeaturedExpire(int $daysFeaturedExpire): self
+    public function setDaysFeaturedExpire(?int $daysFeaturedExpire): self
     {
         $this->daysFeaturedExpire = $daysFeaturedExpire;
 
@@ -141,7 +141,7 @@ class FeaturedPackage
         return $this->daysListingExpire;
     }
 
-    public function setDaysListingExpire(int $daysListingExpire): self
+    public function setDaysListingExpire(?int $daysListingExpire): self
     {
         $this->daysListingExpire = $daysListingExpire;
 

@@ -27,7 +27,7 @@ class ListingListController extends AbstractController
     }
 
     /**
-     * @Route("/listing/list", name="app_listing_list")
+     * @Route("/listing/search", name="app_listing_search")
      * @Route("/last-added", name="app_last_added")
      * @Route("/listings-of-user", name="app_user_listings")
      * @Route("/c/{categorySlug}", name="app_category")
@@ -108,7 +108,7 @@ class ListingListController extends AbstractController
     {
         $route = $listingListDto->getRoute();
         $map = [
-            'app_listing_list' => $this->trans->trans('trans.Search Engine'),
+            'app_listing_search' => $this->trans->trans('trans.Search Engine'),
             'app_last_added' => $this->trans->trans('trans.Last added'),
             'app_user_listings' => $this->trans->trans('trans.Listings of user'),
             'app_category' => function() use ($listingListDto) {
@@ -131,7 +131,7 @@ class ListingListController extends AbstractController
     {
         $route = $listingListDto->getRoute();
         $map = [
-            'app_listing_list' => $this->trans->trans('trans.Search Engine'),
+            'app_listing_search' => $this->trans->trans('trans.Search Engine'),
             'app_last_added' => $this->trans->trans('trans.Last added'),
             'app_user_listings' => $this->trans->trans('trans.Listings of user'),
         ];

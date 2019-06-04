@@ -28,7 +28,8 @@ class RssController extends AbstractController
         $feed = new Feed;
         $feed->setTitle($settingsDto->getRssTitle());
         $feed->setDescription($settingsDto->getRssDescription());
-        $feed->setLink($urlGenerator->generate('app_index'));
+        $feed->setLink($urlGenerator->generate('app_index', [], UrlGeneratorInterface::ABSOLUTE_URL));
+        $feed->setGenerator('2MAX.io Classified Ads');
 
         foreach ($listingListForIndexService->getLatestListings(100) as $listing) {
             $link = $urlGenerator->generate(

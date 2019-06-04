@@ -18,14 +18,14 @@ $pdo = new \PDO(
 ]
 );
 
-$csvHandle = fopen($argv[1], "r");
-$sqlHandle = fopen($argv[2], "w");
+$csvHandle = fopen($argv[1], 'rb');
+$sqlHandle = fopen($argv[2], 'wb');
 saveSql( /** @lang MySQL */ 'SET NAMES utf8;', $sqlHandle);
 saveSql( /** @lang MySQL */ 'SET AUTOCOMMIT = 0;', $sqlHandle);
 
-$header = fgetcsv($csvHandle, 0,  ",", '"', "\0");
+$header = fgetcsv($csvHandle, 0, ',', '"', "\0");
 $currentOldListingId = null;
-while (($csvRow = fgetcsv($csvHandle, 0, ",", '"', "\0")) !== FALSE) {
+while (($csvRow = fgetcsv($csvHandle, 0, ',', '"', "\0")) !== FALSE) {
     $csvRow = array_combine($header, $csvRow);
 
     if ($currentOldListingId !== $csvRow['listing_id']) {
@@ -88,7 +88,7 @@ function arrayToSqlSetStringSingleElement($column, $value) {
         'user.email',
     ];
 
-    if (in_array($column, $notNull)) {
+    if (\in_array($column, $notNull, true)) {
         return " $column = '$value', ";
     }
 
@@ -189,7 +189,7 @@ function saveListingFile(array $csvRow, $sqlHandle) {
 
 function saveListing(array $csvRow, $sqlHandle) {
 
-    $csvRow['listing_user_id'] = 1; // todo: make production
+//    $csvRow['listing_user_id'] = 1; // force user id, to have all listings on single account
     $csvRow['listing_search_text'] = $csvRow['listing_title'] . ' ' . $csvRow['listing_description']; // default value, should be regenerated
 
     saveSql( /** @lang MySQL */ 'INSERT INTO listing SET '.arrayToSetStringListing($csvRow).';', $sqlHandle);

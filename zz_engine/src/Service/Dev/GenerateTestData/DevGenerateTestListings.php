@@ -46,6 +46,7 @@ class DevGenerateTestListings
         $this->em->getConnection()->getConfiguration()->setSQLLogger(null);
 
         $faker = Factory::create();
+        $currentDate = new \DateTime();
 
         $persistCount = 0;
         for ($i=0; $i<$count; $i++) {
@@ -55,9 +56,9 @@ class DevGenerateTestListings
             $listing->setUser($this->getUser());
             $listing->setCategory($this->getRandomCategory());
             $listing->setEmailShow(true);
-            $listing->setFirstCreatedDate(new \DateTime());
-            $listing->setLastEditDate(new \DateTime());
-            $listing->setOrderByDate(new \DateTime());
+            $listing->setFirstCreatedDate($currentDate);
+            $listing->setLastEditDate($currentDate);
+            $listing->setOrderByDate($currentDate);
             $listing->setEmail('user@example.com');
             $listing->setPhone('12345555555');
             $listing->setSlug('test');

@@ -76,7 +76,7 @@ class Admin implements UserInterface, RoleInterface, EnablableInterface
         return $this->email;
     }
 
-    public function setEmail(string $email): self
+    public function setEmail(?string $email): self
     {
         $this->email = $email;
 

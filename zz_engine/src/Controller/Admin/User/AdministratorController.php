@@ -6,7 +6,8 @@ namespace App\Controller\Admin\User;
 
 use App\Controller\Admin\Base\AbstractAdminController;
 use App\Entity\Admin;
-use App\Form\Admin\AdministratorType;
+use App\Form\Admin\AdministratorEditType;
+use App\Form\Admin\AdministratorNewType;
 use App\Helper\Str;
 use App\Service\Admin\User\AdministratorListService;
 use Symfony\Component\HttpFoundation\Request;
@@ -43,7 +44,7 @@ class AdministratorController extends AbstractAdminController
         $admin = new Admin();
         $admin->setEnabled(true);
         $admin->setRoles([Admin::ROLE_ADMIN]);
-        $form = $this->createForm(AdministratorType::class, $admin);
+        $form = $this->createForm(AdministratorNewType::class, $admin);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -71,7 +72,7 @@ class AdministratorController extends AbstractAdminController
     {
         $this->denyUnlessAdmin();
 
-        $form = $this->createForm(AdministratorType::class, $admin);
+        $form = $this->createForm(AdministratorEditType::class, $admin);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

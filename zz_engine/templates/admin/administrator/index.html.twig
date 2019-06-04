@@ -34,7 +34,7 @@
         <tr>
             <th>{{ 'trans.Email' | trans }}</th>
             <th>{{ 'trans.Enabled' | trans }}</th>
-            <th>
+            <th class="text-right">
                 <a href="{{ path('app_admin_administrator_new') }}" class="btn btn-primary">{{ 'trans.Add Administrator' | trans }}</a>
             </th>
         </tr>
@@ -51,7 +51,7 @@
                             {{ user.enabled | boolText | trans }}
                         </span>
                 </td>
-                <td>
+                <td class="text-right">
                     <a href="{{ path('app_admin_administrator_edit', {'id': user.id}) }}" class="btn btn-primary">
                         {{ 'trans.Edit' | trans }}
                     </a>

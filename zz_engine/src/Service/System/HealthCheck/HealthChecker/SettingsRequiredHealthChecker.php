@@ -90,7 +90,6 @@ class SettingsRequiredHealthChecker implements HealthCheckerInterface
     private function getExcludedMethods(): array
     {
         return [
-            'getEmailConfigUrl',
             'getLinkTermsConditions',
             'getAllowedCharacters',
             'getMasterSiteUrl',
@@ -117,7 +116,6 @@ class SettingsRequiredHealthChecker implements HealthCheckerInterface
             'masterSiteLinkShow',
             'linkPrivacyPolicy',
             'linkRejectionReason',
-            'emailConfigUrl',
             'logoPath',
             'linkContact',
             'linkAdvertisement',

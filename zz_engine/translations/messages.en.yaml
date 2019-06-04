@@ -564,7 +564,6 @@ trans.listings: listings
 'trans.Name used before email address, in from field of email message': 'Name used before email address, in from field of email message'
 'trans.Email used when user replies to emails from this application': 'Email used when user replies to emails from this application'
 'trans.Email address used in from field of email message': 'Email address used in from field of email message'
-'trans.Configuration url for sending emails': 'Configuration url for sending emails'
 'trans.Must match email from which you send messages': 'Must match email from which you send messages'
 'trans.examples: smtp://mail.host.com:465?encryption=ssl&auth_mode=plain&username=login@mail.com&password=password': 'examples: smtp://mail.host.com:465?encryption=ssl&auth_mode=plain&username=login@mail.com&password=password'
 'trans.Set all application settings. Missing settings: %missing%': 'Set all application settings. Missing settings: %missing%'

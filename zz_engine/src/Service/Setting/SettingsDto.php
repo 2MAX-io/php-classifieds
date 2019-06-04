@@ -59,11 +59,6 @@ class SettingsDto
     /**
      * @var string|null
      */
-    private $emailConfigUrl;
-
-    /**
-     * @var string|null
-     */
     private $linkTermsConditions;
 
     /**
@@ -451,16 +446,6 @@ class SettingsDto
     public function setEmailFromAddress(?string $emailFromAddress): void
     {
         $this->emailFromAddress = $emailFromAddress;
-    }
-
-    public function getEmailConfigUrl(): ?string
-    {
-        return $this->emailConfigUrl;
-    }
-
-    public function setEmailConfigUrl(?string $emailConfigUrl): void
-    {
-        $this->emailConfigUrl = $emailConfigUrl;
     }
 
     public function getLogoPath(): ?string

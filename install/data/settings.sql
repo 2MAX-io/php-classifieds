@@ -24,7 +24,6 @@ INSERT INTO setting (name, value, last_update_date) VALUES ( 'itemsPerPageMax', 
 INSERT INTO setting (name, value, last_update_date) VALUES ( 'emailFromName', '2MAX.io Classifieds Ads', '2010-01-01 00:00:00');
 INSERT INTO setting (name, value, last_update_date) VALUES ( 'emailReplyTo', 'classifieds@example.com', '2010-01-01 00:00:00');
 INSERT INTO setting (name, value, last_update_date) VALUES ( 'emailFromAddress', 'classifieds@example.com', '2010-01-01 00:00:00');
-INSERT INTO setting (name, value, last_update_date) VALUES ( 'emailConfigUrl', '', '2010-01-01 00:00:00');
 INSERT INTO setting (name, value, last_update_date) VALUES ( 'logoPath', '', '2010-01-01 00:00:00');
 INSERT INTO setting (name, value, last_update_date) VALUES ( 'linkContact', '', '2010-01-01 00:00:00');
 INSERT INTO setting (name, value, last_update_date) VALUES ( 'linkAdvertisement', '', '2010-01-01 00:00:00');

@@ -3,7 +3,7 @@
 {% block title %}{{ 'trans.Subpages' | trans }}{% endblock %}
 
 {% block body %}
-    <div class="container mt-5">
+    <div class="container mt-3">
         <h1>{{ 'trans.Subpages' | trans }}</h1>
 
         <table class="table">
@@ -11,7 +11,7 @@
             <tr>
                 <th>{{ 'trans.Title' | trans }}</th>
                 <th>{{ 'trans.Enabled' | trans }}</th>
-                <th>
+                <th class="text-right">
                     <a href="{{ path('app_admin_page_new') }}" class="btn btn-primary">
                         {{ 'trans.Create new' | trans }}
                     </a>
@@ -31,7 +31,7 @@
                             {{ page.enabled | boolText | trans }}
                         </span>
                     </td>
-                    <td>
+                    <td class="text-right">
                         <a href="{{ path('app_admin_page_edit', {'id': page.id}) }}" class="btn btn-primary">
                             {{ 'trans.edit' | trans }}
                         </a>

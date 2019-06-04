@@ -6,7 +6,7 @@ namespace App\Service\System\Upgrade\Base;
 
 interface UpgradeApi
 {
-    const LATEST_VERSION_URL = 'https://classified-upgrade-prod.2max.io/latest-version.json';
-    const UPGRADE_LIST_URL = 'https://classified-upgrade-prod.2max.io/upgrade-list.json';
-    const HEADER_SIGNATURE_BODY_NORMAL_SECURITY = 'X-Signature-Body-Normal-Security';
+    public const LATEST_VERSION_URL = 'https://classified-upgrade-prod.2max.io/latest-version.json';
+    public const UPGRADE_LIST_URL = 'https://classified-upgrade-prod.2max.io/upgrade-list.json';
+    public const HEADER_SIGNATURE_BODY_NORMAL_SECURITY = 'X-Signature-Body-Normal-Security';
 }

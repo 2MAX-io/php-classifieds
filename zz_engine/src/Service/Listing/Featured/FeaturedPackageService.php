@@ -41,6 +41,7 @@ class FeaturedPackageService
         $qb->andWhere($qb->expr()->eq('featuredPackageForCategory.category', ':category'));
         $qb->setParameter(':category', $listing->getCategory());
         $qb->andWhere($qb->expr()->eq('featuredPackage.defaultPackage', 0));
+        $qb->andWhere($qb->expr()->eq('featuredPackage.removed', 0));
         $qb->orderBy('featuredPackage.price', 'ASC');
 
         return $qb->getQuery()->getResult();
@@ -50,6 +51,7 @@ class FeaturedPackageService
     {
         $qb = $this->em->getRepository(FeaturedPackage::class)->createQueryBuilder('featuredPackage');
         $qb->andWhere($qb->expr()->eq('featuredPackage.defaultPackage', 1));
+        $qb->andWhere($qb->expr()->eq('featuredPackage.removed', 0));
         $qb->orderBy('featuredPackage.price', 'ASC');
 
         return $qb->getQuery()->getResult();

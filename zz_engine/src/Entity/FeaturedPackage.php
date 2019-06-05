@@ -56,6 +56,11 @@ class FeaturedPackage
     private $defaultPackage;
 
     /**
+     * @ORM\Column(type="boolean", nullable=false)
+     */
+    private $removed = false;
+
+    /**
      * @ORM\OneToMany(targetEntity="App\Entity\FeaturedPackageForCategory", mappedBy="featuredPackage")
      */
     private $featuredPackageForCategories;
@@ -230,6 +235,18 @@ class FeaturedPackage
     public function setDescription(?string $description): self
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    public function getRemoved(): ?bool
+    {
+        return $this->removed;
+    }
+
+    public function setRemoved(bool $removed): self
+    {
+        $this->removed = $removed;
 
         return $this;
     }

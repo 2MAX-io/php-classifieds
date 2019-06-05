@@ -4,11 +4,22 @@ declare(strict_types=1);
 
 namespace App\Service\Payment;
 
+use App\Entity\FeaturedPackage;
 use App\Entity\Payment;
 use App\Entity\User;
 
 class PaymentDto
 {
+    /**
+     * @var string
+     */
+    private $paymentType;
+
+    /**
+     * @var string
+     */
+    private $paymentDescription;
+
     /**
      * @var string
      */
@@ -157,5 +168,25 @@ class PaymentDto
     public function setGatewayPaymentDescription(?string $gatewayPaymentDescription): void
     {
         $this->gatewayPaymentDescription = $gatewayPaymentDescription;
+    }
+
+    public function getPaymentType(): string
+    {
+        return $this->paymentType;
+    }
+
+    public function setPaymentType(string $paymentType): void
+    {
+        $this->paymentType = $paymentType;
+    }
+
+    public function getPaymentDescription(): string
+    {
+        return $this->paymentDescription;
+    }
+
+    public function setPaymentDescription(string $paymentDescription): void
+    {
+        $this->paymentDescription = $paymentDescription;
     }
 }

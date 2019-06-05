@@ -360,3 +360,14 @@ php zz_engine/bin/console app:cron:main
 php zz_engine/bin/console doctrine:schema:update --force
 php zz_engine/bin/console doctrine:schema:update --force
 php zz_engine/bin/console doctrine:schema:create --dump-sql > install/data/_schema.sql
+php zz_engine/bin/console make:entity --regenerate "App\Entity"
+php zz_engine/bin/console make:entity --regenerate "App\Entity"
+php zz_engine/bin/console doctrine:schema:create --dump-sql > install/data/_schema.sql
+php zz_engine/bin/console doctrine:schema:update --force
+php zz_engine/bin/console doctrine:schema:create --dump-sql > install/data/_schema.sql
+php zz_engine/bin/console make:entity --regenerate "App\Entity"
+php zz_engine/bin/console make:entity --regenerate "App\Entity"
+php zz_engine/bin/console make:entity --regenerate "App\Entity"
+php zz_engine/bin/console doctrine:schema:update --force
+php zz_engine/bin/console doctrine:schema:update --force
+php zz_engine/bin/console doctrine:schema:create --dump-sql > install/data/_schema.sql

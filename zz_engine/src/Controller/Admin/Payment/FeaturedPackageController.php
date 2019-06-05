@@ -6,12 +6,9 @@ namespace App\Controller\Admin\Payment;
 
 use App\Controller\Admin\Base\AbstractAdminController;
 use App\Entity\FeaturedPackage;
-use App\Exception\UserVisibleMessageException;
 use App\Form\Admin\FeaturedPackageType;
-use App\Helper\ExceptionHelper;
 use App\Repository\FeaturedPackageRepository;
 use App\Service\Admin\FeaturedPackage\CategorySelection\FeaturedPackageCategorySelectionService;
-use Doctrine\DBAL\Exception\ForeignKeyConstraintViolationException;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -27,7 +24,7 @@ class FeaturedPackageController extends AbstractAdminController
         $this->denyUnlessAdmin();
 
         return $this->render('admin/featured_package/index.html.twig', [
-            'featured_packages' => $featuredPackageRepository->findAll(),
+            'featured_packages' => $featuredPackageRepository->findBy(['removed' => false,]),
         ]);
     }
 
@@ -110,19 +107,10 @@ class FeaturedPackageController extends AbstractAdminController
         $this->denyUnlessAdmin();
 
         if ($this->isCsrfTokenValid('delete'.$featuredPackage->getId(), $request->request->get('_token'))) {
-            try {
-                $em = $this->getDoctrine()->getManager();
-                $em->remove($featuredPackage);
-                $em->flush();
-            } /** @noinspection PhpRedundantCatchClauseInspection */ catch (ForeignKeyConstraintViolationException $e) {
-                $logger->notice('constraint error during deletion', ExceptionHelper::flatten($e, [$e->getMessage()]));
-                throw new UserVisibleMessageException(
-                    'trans.To delete feature package, you must first delete or move all dependencies like: feature package categories',
-                    [],
-                    0,
-                    $e
-                );
-            }
+            $em = $this->getDoctrine()->getManager();
+            $featuredPackage->setRemoved(true);
+            $em->persist($featuredPackage);
+            $em->flush();
         }
 
         return $this->redirectToRoute('app_admin_featured_package_index');

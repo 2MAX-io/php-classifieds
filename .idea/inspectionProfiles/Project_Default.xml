@@ -816,7 +816,7 @@
     <inspection_tool class="SubStrShortHandUsageInspection" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="SubStrUsedAsArrayAccessInspection" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="SubStrUsedAsStrPosInspection" enabled="true" level="WEAK WARNING" enabled_by_default="true" />
-    <inspection_tool class="SummerTimeUnsafeTimeManipulationInspection" enabled="true" level="ERROR" enabled_by_default="true" />
+    <inspection_tool class="SummerTimeUnsafeTimeManipulationInspection" enabled="false" level="ERROR" enabled_by_default="false" />
     <inspection_tool class="SuspiciousAssignmentsInspection" enabled="true" level="ERROR" enabled_by_default="true" />
     <inspection_tool class="SuspiciousBinaryOperationInspection" enabled="true" level="ERROR" enabled_by_default="true" />
     <inspection_tool class="SuspiciousLoopInspection" enabled="true" level="ERROR" enabled_by_default="true" />

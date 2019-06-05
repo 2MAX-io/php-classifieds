@@ -107,7 +107,10 @@ trans:
   'Failed to get information about latest version. Try again later.': 'Failed to get information about latest version. Try again later.'
   Upgrade has been executed: 'Upgrade has been executed'
   Documentation: 'Documentation'
-  'To delete feature package, you must first delete or move all dependencies like: feature package categories': 'To delete feature package, you must first delete or move all dependencies like: feature package categories'
+  Featured package: 'Featured package'
+  'Payment for featured listing: %listingInfo%, featured package: %featurePackageName%, price: %price%, featured days: %featuredDays%': 'Payment for featured listing: %listingInfo%, featured package: %featurePackageName%, price: %price%, featured days: %featuredDays%'
+  Payment type: 'Payment type'
+  'Payment for balance top up, amount: %amount%': 'Payment for balance top up, amount: %amount%'
 
 trans.customFieldType.select: Select field
 trans.customFieldType.year_range: Field with year
@@ -124,6 +127,9 @@ trans.listing.status.STATUS_ADMIN_REMOVED: 'Removed by Administrator'
 trans.listing.status.STATUS_EXPIRED: 'Expired'
 trans.listing.status.STATUS_USER_REMOVED: 'Removed by user'
 trans.listing.status.STATUS_DEACTIVATED: 'Deactivated'
+
+trans.paymentType.FOR_FEATURED_PACKAGE_TYPE: 'For featured package'
+trans.paymentType.BALANCE_TOP_UP_TYPE: 'Balance top up'
 
 Year: Year
 Month: Month

@@ -95,6 +95,9 @@ class FeatureListingController extends AbstractUserController
                 if (!$settingsService->getSettingsDto()->isPaymentAllowed()) {
                     throw new UserVisibleMessageException('trans.Payments have been disabled');
                 }
+                if ($featuredPackage->getRemoved()) {
+                    throw new UserVisibleMessageException('Featured package has been removed');
+                }
 
                 $paymentDto = $paymentService->createPaymentForFeaturedPackage($listing, $featuredPackage);
                 $em->flush();

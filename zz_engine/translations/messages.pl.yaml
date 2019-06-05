@@ -4,6 +4,9 @@ Day: Dzień
 Hour: Godzina
 Minute: Minuta
 
+trans.paymentType.FOR_FEATURED_PACKAGE_TYPE: 'Za pakiet wyróżnienia'
+trans.paymentType.BALANCE_TOP_UP_TYPE: 'Doładowanie konta'
+
 trans:
   listing.status.STATUS_PENDING: 'Oczekuje na aktywacje'
   listing.status.STATUS_ACTIVE: 'Aktywne do: %activeUntilDate%'
@@ -538,3 +541,7 @@ trans:
   Upgrade has been executed: 'Aktualizacja została wykonana'
   Documentation: 'Dokumentacja'
   'To delete feature package, you must first delete or move all dependencies like: feature package categories': 'To delete feature package, you must first delete or move all dependencies like: feature package categories'
+  Featured package: 'Pakiet wyróżnienia'
+  'Payment for featured listing: %listingInfo%, featured package: %featurePackageName%, price: %price%, featured days: %featuredDays%': 'Płatność za wyróżnienie ogłoszenia: %listingInfo%, pakiet wyróżnenia: %featurePackageName%, cena: %price%, dni wyróżnienia: %featuredDays%'
+  Payment type: 'Typ płatności'
+  'Payment for balance top up, amount: %amount%': 'Płatność za doładowanie konta, kwota: %amount%'

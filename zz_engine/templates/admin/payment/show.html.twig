@@ -8,8 +8,12 @@
     <table class="table table-responsive-sm">
         <tbody>
             <tr>
-                <th>ID</th>
-                <td>{{ payment.id }}</td>
+                <th>{{ 'trans.Payment type' | trans }}</th>
+                <td>{{ ('trans.paymentType.'~payment.type) | trans }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'trans.Description' | trans }}</th>
+                <td>{{ payment.description }}</td>
             </tr>
             <tr>
                 <th>{{ 'trans.Amount' | trans }}</th>
@@ -45,6 +49,15 @@
                 <th>GatewayPaymentId</th>
                 <td>{{ payment.gatewayPaymentId }}</td>
             </tr>
+            {% if payment.paymentForFeaturedPackage %}
+                <tr>
+                    <th>{{ 'trans.Featured package' | trans }}</th>
+                    <td>
+                        <div><a href="{{ path('app_admin_featured_package_edit', {'id': payment.paymentForFeaturedPackage.featuredPackage.id}) }}">{{ payment.paymentForFeaturedPackage.featuredPackage.name }}</a></div>
+                        <div class="text-muted">{{ payment.paymentForFeaturedPackage.featuredPackage.adminName }}</div>
+                    </td>
+                </tr>
+            {% endif %}
             <tr>
                 <th>{{ 'trans.User' | trans }}</th>
                 <td>

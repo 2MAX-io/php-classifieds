@@ -13,12 +13,33 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Payment
 {
+    public const FOR_FEATURED_PACKAGE_TYPE = 'FOR_FEATURED_PACKAGE_TYPE';
+    public const BALANCE_TOP_UP_TYPE = 'BALANCE_TOP_UP_TYPE';
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer", options={"unsigned"=true})
      */
     private $id;
+
+    /**
+     * @ORM\Column(type="string", nullable=false)
+     */
+    private $type;
+
+    /**
+     * @ORM\Column(type="string", nullable=false, length=256)
+     */
+    private $description;
+
+    /**
+     * @var User|null
+     *
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="payments")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user;
 
     /**
      * @ORM\Column(type="integer", nullable=false)
@@ -80,14 +101,6 @@ class Payment
      * @ORM\OneToMany(targetEntity="App\Entity\UserBalanceChange", mappedBy="payment", fetch="EXTRA_LAZY")
      */
     private $userBalanceChanges;
-
-    /**
-     * @var User|null
-     *
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="payments")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $user;
 
     public function __construct()
     {
@@ -270,6 +283,30 @@ class Payment
     public function setGatewayPaymentId(string $gatewayPaymentId): self
     {
         $this->gatewayPaymentId = $gatewayPaymentId;
+
+        return $this;
+    }
+
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    public function setType(string $type): self
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(string $description): self
+    {
+        $this->description = $description;
 
         return $this;
     }

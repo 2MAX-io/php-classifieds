@@ -61,9 +61,27 @@ class PaymentService
     public function createPaymentForFeaturedPackage(Listing $listing, FeaturedPackage $featuredPackage): PaymentDto
     {
         $paymentDto = new PaymentDto();
+        $paymentDto->setPaymentType(Payment::FOR_FEATURED_PACKAGE_TYPE);
+        $paymentDto->setPaymentDescription(
+            $this->trans->trans(
+                'trans.Payment for featured listing: %listingInfo%, featured package: %featurePackageName%, price: %price%, featured days: %featuredDays%',
+                [
+                    '%featurePackageName%' => "{$featuredPackage->getName()} ( {$featuredPackage->getAdminName()} ) [id:{$featuredPackage->getId()}]",
+                    '%price%' => $featuredPackage->getPriceFloat(),
+                    '%listingInfo%' => "{$listing->getTitle()} [id: {$listing->getId()}]",
+                    '%featuredDays%' => $featuredPackage->getDaysFeaturedExpire(),
+                ]
+            )
+        );
         $paymentDto->setCurrency($this->settingsService->getCurrency());
         $paymentDto->setAmount($featuredPackage->getPrice());
         $paymentDto->setUser($this->currentUserService->getUser());
+        if ($this->settingsService->getSettingsDto()->getPaymentGatewayPaymentDescription()) {
+            $paymentDto->setGatewayPaymentDescription($this->settingsService->getSettingsDto()->getPaymentGatewayPaymentDescription());
+        } else {
+            $paymentDto->setGatewayPaymentDescription($this->trans->trans('trans.Promotion of listings'));
+        }
+
         $paymentDto = $this->createPayment($paymentDto);
 
         $paymentFeaturedPackage = new PaymentForFeaturedPackage();
@@ -78,9 +96,23 @@ class PaymentService
     public function createPaymentForTopUp(User $user, int $amount): PaymentDto
     {
         $paymentDto = new PaymentDto();
+        $paymentDto->setPaymentType(Payment::BALANCE_TOP_UP_TYPE);
+        $paymentDto->setPaymentDescription(
+            $this->trans->trans(
+                'trans.Payment for balance top up, amount: %amount%',
+                [
+                    '%amount%' => $amount / 100,
+                ]
+            )
+        );
         $paymentDto->setCurrency($this->settingsService->getCurrency());
         $paymentDto->setAmount($amount);
         $paymentDto->setUser($this->currentUserService->getUser());
+        if ($this->settingsService->getSettingsDto()->getPaymentGatewayPaymentDescription()) {
+            $paymentDto->setGatewayPaymentDescription($this->settingsService->getSettingsDto()->getPaymentGatewayPaymentDescription());
+        } else {
+            $paymentDto->setGatewayPaymentDescription($this->trans->trans('trans.Promotion of listings'));
+        }
 
         $paymentDto = $this->createPayment($paymentDto);
 
@@ -94,12 +126,6 @@ class PaymentService
 
     public function createPayment(PaymentDto $paymentDto): PaymentDto
     {
-        if ($this->settingsService->getSettingsDto()->getPaymentGatewayPaymentDescription()) {
-            $paymentDto->setGatewayPaymentDescription($this->settingsService->getSettingsDto()->getPaymentGatewayPaymentDescription());
-        } else {
-            $paymentDto->setGatewayPaymentDescription($this->trans->trans('trans.Promotion of listings'));
-        }
-
         $this->payPalPaymentMethod->createPayment($paymentDto);
 
         $paymentEntity = new Payment();
@@ -111,6 +137,9 @@ class PaymentService
         $paymentEntity->setGatewayToken($paymentDto->getGatewayToken());
         $paymentEntity->setGatewayStatus($paymentDto->getGatewayStatus());
         $paymentEntity->setUser($paymentDto->getUser());
+        $paymentEntity->setType($paymentDto->getPaymentType());
+        $paymentEntity->setDescription($paymentDto->getPaymentDescription());
+
         $this->em->persist($paymentEntity);
 
         $paymentDto->setPaymentEntity($paymentEntity);

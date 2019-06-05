@@ -13,7 +13,6 @@ use App\Service\Listing\ValidityExtend\ValidUntilSetService;
 use App\Service\Money\UserBalanceService;
 use Carbon\Carbon;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
 class FeaturedListingService
 {
@@ -37,23 +36,16 @@ class FeaturedListingService
      */
     private $validUntilSetService;
 
-    /**
-     * @var TranslatorInterface
-     */
-    private $trans;
-
     public function __construct(
         EntityManagerInterface $em,
         UserBalanceService $userBalanceService,
         CurrentUserService $currentUserService,
-        ValidUntilSetService $validUntilSetService,
-        TranslatorInterface $trans
+        ValidUntilSetService $validUntilSetService
     ) {
         $this->em = $em;
         $this->userBalanceService = $userBalanceService;
         $this->currentUserService = $currentUserService;
         $this->validUntilSetService = $validUntilSetService;
-        $this->trans = $trans;
     }
 
     public function makeFeatured(Listing $listing, int $featuredTimeSeconds): void
@@ -83,12 +75,12 @@ class FeaturedListingService
         }
     }
 
-    public function makeFeaturedByBalance(Listing $listing, FeaturedPackage $featuredPackage, Payment $payment = null): ?UserBalanceChange
+    public function makeFeaturedByBalance(Listing $listing, FeaturedPackage $featuredPackage, Payment $payment = null): UserBalanceChange
     {
         $this->em->beginTransaction();
 
         if ($listing->getUser() !== $this->currentUserService->getUser()) {
-            throw new \Exception('listing of different user');
+            throw new \RuntimeException('listing of different user');
         }
 
         try {

@@ -12,6 +12,7 @@ use App\Entity\ListingCustomFieldValue;
 use App\Entity\ListingFile;
 use App\Entity\User;
 use App\Helper\Arr;
+use App\Helper\SlugHelper;
 use App\Service\System\Sort\SortService;
 use Carbon\Carbon;
 use Doctrine\ORM\EntityManagerInterface;
@@ -61,7 +62,7 @@ class DevGenerateTestListings
             $listing->setOrderByDate($currentDate);
             $listing->setEmail('user@example.com');
             $listing->setPhone('12345555555');
-            $listing->setSlug('test');
+            $listing->setSlug(SlugHelper::getSlug($listing->getTitle()));
             $listing->setSearchText($listing->getTitle() . ' ' . $listing->getDescription());
             $listing->setValidUntilDate(Carbon::now()->addDays(7));
 

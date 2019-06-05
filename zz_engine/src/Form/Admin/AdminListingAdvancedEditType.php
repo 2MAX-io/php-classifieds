@@ -47,6 +47,22 @@ class AdminListingAdvancedEditType extends AbstractType
                 new NotBlank(),
             ],
         ]);
+        $builder->add('firstCreatedDate', AppDateTimeType::class, [
+            'label' => 'trans.Date added',
+            'constraints' => [
+                new NotBlank(),
+            ],
+        ]);
+        $builder->add('lastEditDate', AppDateTimeType::class, [
+            'label' => 'trans.Last edit',
+            'constraints' => [
+                new NotBlank(),
+            ],
+        ]);
+        $builder->add('adminLastActivationDate', AppDateTimeType::class, [
+            'required' => false,
+            'label' => 'trans.Admin last activation',
+        ]);
         $builder->add('adminActivated', BoolRequiredType::class, [
             'label' => 'trans.Activated by Admin?',
             'constraints' => [
@@ -79,13 +95,6 @@ class AdminListingAdvancedEditType extends AbstractType
             'label' => 'trans.Is listing deactivated by user?',
             'constraints' => [
                 new NotBlank(),
-            ],
-        ]);
-        $builder->add('slug', TextType::class, [
-            'label' => 'trans.Slug',
-            'constraints' => [
-                new NotBlank(),
-                new Slug(),
             ],
         ]);
     }

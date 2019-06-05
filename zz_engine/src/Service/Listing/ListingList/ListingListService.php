@@ -174,6 +174,7 @@ class ListingListService
         $qb->addOrderBy('listing.featured', 'DESC');
         $qb->addOrderBy('listing.featuredWeight', 'DESC');
         $qb->addOrderBy('listing.orderByDate', 'DESC');
+        $qb->addOrderBy('listing.id', 'DESC');
 
         if ($listingListDto->isLastAddedListFlag()) {
             $qb->orderBy('listing.orderByDate', 'DESC');

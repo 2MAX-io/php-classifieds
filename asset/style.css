@@ -9,7 +9,6 @@ input,
 select,
 textarea {
     color: #333;
-    font-family: 'Lato', sans-serif;
 }
 
 @media (min-width: 1200px) {

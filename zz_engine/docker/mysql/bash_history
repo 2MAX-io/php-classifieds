@@ -54,3 +54,5 @@ time mysqldump dev_test listing listing_custom_field_value listing_file --no-cre
 mysqldump --help
 time mysqldump dev_test listing listing_custom_field_value listing_file --no-create-info --skip-add-drop-table --skip-add-locks --skip-disable-keys --skip-set-charset --compact --skip-extended-insert --skip-opt --complete-insert  > /sql/listing.large.sql
 time mysqldump dev_test listing listing_custom_field_value listing_file --no-create-info --skip-add-drop-table --skip-add-locks --skip-disable-keys --skip-set-charset --compact --skip-extended-insert --skip-opt --complete-insert  > /sql/listing.large.sql
+time mysqldump dev_test listing listing_custom_field_value listing_file --no-create-info --skip-add-drop-table --skip-add-locks --skip-disable-keys --skip-set-charset --compact --skip-extended-insert --skip-opt --complete-insert  > /sql/listing.large.sql
+time mysqldump dev_test listing listing_custom_field_value listing_file --no-create-info --skip-add-drop-table --skip-add-locks --skip-disable-keys --skip-set-charset --compact --skip-extended-insert --skip-opt --complete-insert  > /sql/listing.large.sql

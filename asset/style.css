@@ -48,6 +48,9 @@ a.use-visited-color:visited {
     text-rendering: auto;
     line-height: 1;
 }
+.fa:before, .fab:before, .fal:before, .far:before, .fas:before {
+    content: " ";
+}
 .fa, .fas {
     font-weight: 900;
 }

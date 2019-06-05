@@ -19,8 +19,6 @@
     <meta name='keywords' content='{{- settings.metaKeywords }}'/>
 
     {% block stylesheets %}
-{#        <link rel="stylesheet" href="{{ asset('asset/bootstrap.css') }}">#}
-{#        <link rel="stylesheet" href="{{ asset('asset/style.css') }}">#}
         <link rel="stylesheet" href="{{ asset('asset/build/app.css') }}">
 
         <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('static/system/favicon/apple-touch-icon.png') }}">
@@ -42,15 +40,7 @@
                 <img src="{{ asset(settings.logoPath | default('static/system/logo_default.png')) }}" alt="{{ 'trans.Classifieds' | trans }}" width="200"/>
             </a>
 
-            <button
-                    class="navbar-toggler"
-                    type="button"
-                    data-toggle="collapse"
-                    data-target="#navbarPageTop"
-                    aria-controls="navbarPageTop"
-                    aria-expanded="false"
-                    aria-label="Toggle navigation"
-            >
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarPageTop" aria-controls="navbarPageTop" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
@@ -73,11 +63,8 @@
 
                     {% if lowSecurityCheckIsAdminInPublic() %}
                         <li class="nav-item">
-                            <a
-                                    class="nav-link btn btn-outline-danger"
-                                    href="{{ path('app_admin_index') }}"
-                            >
-                                {{ 'trans.Admin panel' | trans }}
+                            <a class="nav-link btn btn-outline-danger" href="{{ path('app_admin_index') }}">
+                                {{- 'trans.Admin panel' | trans -}}
                             </a>
                         </li>
                     {% endif %}
@@ -92,22 +79,12 @@
                                     <div class="input-group-text"><i class="fas fa-search"></i></div>
                                 </div>
 
-                                <input
-                                        type="text"
-                                        class="form-control"
-                                        name="query"
-                                        id="query"
-                                        placeholder="{{ settings.searchPlaceholder }}"
-                                        value="{{ app.request.get('query') | default }}"
-                                >
+                                <input type="text" class="form-control" name="query" id="query" placeholder="{{ settings.searchPlaceholder }}" value="{{ app.request.get('query') | default }}">
                             </div>
                         </div>
                         <div class="col-md-4 container-remove-padding">
-                            <button
-                                    type="submit"
-                                    class="btn btn-primary btn-block mb-2"
-                            >
-                                {{ 'trans.Search' | trans }}
+                            <button type="submit" class="btn btn-primary btn-block mb-2">
+                                {{- 'trans.Search' | trans -}}
                             </button>
                         </div>
                     </form>
@@ -125,12 +102,8 @@
                             </li>
 
                             <li class="list-inline-item">
-                                <a
-                                        href="{{ path('app_listing_new') }}"
-                                        class="btn btn-primary"
-                                >
-                                    {{ 'trans.Add listing' | trans }}
-                                    <i class="fas fa-plus mr-1"></i>
+                                <a href="{{ path('app_listing_new') }}" class="btn btn-primary">
+                                    {{- 'trans.Add listing' | trans }} <i class="fas fa-plus mr-1"></i>
                                 </a>
                             </li>
                         </ul>
@@ -145,15 +118,7 @@
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark d-none d-md-block">
     <div class="container">
-        <button
-                class="navbar-toggler"
-                type="button"
-                data-toggle="collapse"
-                data-target="#main-navbar"
-                aria-controls="main-navbar"
-                aria-expanded="false"
-                aria-label="Toggle navigation"
-        >
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 
@@ -176,11 +141,8 @@
 
                 {% if lowSecurityCheckIsAdminInPublic() %}
                     <li class="nav-item">
-                        <a
-                                class="nav-link btn btn-outline-danger"
-                                href="{{ path('app_admin_index') }}"
-                        >
-                            {{ 'trans.Admin panel' | trans }}
+                        <a class="nav-link btn btn-outline-danger" href="{{ path('app_admin_index') }}">
+                            {{- 'trans.Admin panel' | trans -}}
                         </a>
                     </li>
                 {% endif %}
@@ -196,16 +158,13 @@
 
             {% if settings.linkPrivacyPolicy %}
                 <a href="{{ path('app_page', {'slug': settings.linkPrivacyPolicy}) }}">
-                    {{ 'trans.privacy policy' | trans }}
+                    {{- 'trans.privacy policy' | trans -}}
                 </a>
             {% else %}
                 {{ 'trans.privacy policy' | trans }}
             {% endif %}
 
-            <button
-                    class="btn btn-dark btn-sm"
-                    onclick="document.getElementById('gdpr').remove(); document.cookie = 'gdpr=1; expires='+ new Date(new Date().getTime()+315360000000).toUTCString()+'; path=/'"
-            >
+            <button class="btn btn-dark btn-sm" onclick="document.getElementById('gdpr').remove(); document.cookie = 'gdpr=1; expires='+ new Date(new Date().getTime()+315360000000).toUTCString()+'; path=/'">
                 {{ 'trans.I accept' | trans }}
             </button>
         </div>
@@ -237,11 +196,8 @@
                     {% endif %}
                     {% if settings.linkTermsConditions %}
                         <li>
-                            <a
-                                    class="text-muted mobile-link"
-                                    href="{{ path('app_page', {'slug': settings.linkTermsConditions}) }}"
-                            >
-                                {{ 'trans.Terms and conditions' | trans }}
+                            <a class="text-muted mobile-link" href="{{ path('app_page', {'slug': settings.linkTermsConditions}) }}">
+                                {{- 'trans.Terms and conditions' | trans -}}
                             </a>
                         </li>
                     {% endif %}
@@ -265,12 +221,6 @@
 {{ settings.customCss | raw }}
 
 {% block javascripts %}
-{#    <script src="{{ asset('asset/jquery.js') }}"></script>#}
-{#    <script src="{{ asset('asset/lib/fancybox/jquery.fancybox.js') }}"></script>#}
-{#    <script src="{{ asset('bundles/fosjsrouting/js/router.min.js') }}"></script>#}
-{#    <script src="{{ asset('asset/lib/cleave/cleave.js') }}"></script>#}
-{#    <script src="{{ asset('bundles/bazingajstranslation/js/translator.min.js') }}"></script>#}
-{#    <script src="{{ asset('asset/main.js') }}"></script>#}
     <script src="{{ asset('asset/build/app.js') }}"></script>
     <script src="{{ asset('asset/lib/cleave/addons/cleave-phone.'~ settings.languageTwoLetters | lower ~'.js') }}"></script>
     <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
@@ -279,6 +229,5 @@
     {{ settings.customJavascriptBottom | raw }}
 {% endblock %}
 {% block js %}{% endblock %}
-
 </body>
 </html>

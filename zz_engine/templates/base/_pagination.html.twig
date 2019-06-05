@@ -1,31 +1,10 @@
 {% if pager.haveToPaginate %}
     <ul class="pagination">
         <li class="d-none d-sm-block">
-            <select
-                    class="paginationMaxPerPage form-control d-inline-block mr-2"
-                    style="width: 10rem"
-                    onchange="self.location=this.options[this.selectedIndex].value"
-            >
-                <option
-                        {% if app.request.get('perPage') == 10 %}selected{% endif %}
-                        value="{{ path(app.request.get('_route'), (pager_route_params | default([])) | merge(app.request.query) | merge({'perPage': 10}) | merge({'page': 1})) }}"
-                >
-                    10 {{ 'trans.per page' | trans }}
-                </option>
-
-                <option
-                        {% if app.request.get('perPage') == 50 %}selected{% endif %}
-                        value="{{ path(app.request.get('_route'), (pager_route_params | default([])) | merge(app.request.query) | merge({'perPage': 50}) | merge({'page': 1})) }}"
-                >
-                    50 {{ 'trans.per page' | trans }}
-                </option>
-
-                <option
-                        {% if app.request.get('perPage') == 100 %}selected{% endif %}
-                        value="{{ path(app.request.get('_route'), (pager_route_params | default([])) | merge(app.request.query) | merge({'perPage': 100}) | merge({'page': 1})) }}"
-                >
-                    100 {{ 'trans.per page' | trans }}
-                </option>
+            <select class="paginationMaxPerPage form-control d-inline-block mr-2" style="width: 10rem" onchange="self.location=this.options[this.selectedIndex].value">
+                <option {% if app.request.get('perPage') == 10 %}selected{% endif %}value="{{ path(app.request.get('_route'), (pager_route_params | default([])) | merge(app.request.query) | merge({'perPage': 10}) | merge({'page': 1})) }}">10 {{ 'trans.per page' | trans }}</option>
+                <option {% if app.request.get('perPage') == 50 %}selected{% endif %}value="{{ path(app.request.get('_route'), (pager_route_params | default([])) | merge(app.request.query) | merge({'perPage': 50}) | merge({'page': 1})) }}">50 {{ 'trans.per page' | trans }}</option>
+                <option {% if app.request.get('perPage') == 100 %}selected{% endif %} value="{{ path(app.request.get('_route'), (pager_route_params | default([])) | merge(app.request.query) | merge({'perPage': 100}) | merge({'page': 1})) }}">100 {{ 'trans.per page' | trans }}</option>
             </select>
         </li>
         <li class="page-item prev {% if not pager.hasPreviousPage %}disabled{% endif %}">

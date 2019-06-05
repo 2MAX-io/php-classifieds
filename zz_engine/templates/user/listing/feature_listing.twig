@@ -88,8 +88,8 @@
                 {% else %}
                     <div class="alert alert-danger">
                         {{ 'trans.You can not feature listing that is deactivated. Current listings status' | trans }}:
+                        <span class="{{ getListingStatusClass(listing) }}">{{ getListingStatus(listing) }}</span>
                     </div>
-                    <span class="{{ getListingStatusClass(listing) }}">{{ getListingStatus(listing) }}</span>
                 {% endif %}
 
                 <a href="{{ path('app_user_balance_history') }}">{{ 'trans.History of listings featuring' | trans }}</a>

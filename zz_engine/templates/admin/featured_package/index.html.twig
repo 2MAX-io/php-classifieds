@@ -16,7 +16,6 @@
     <table class="table table-responsive-sm">
         <thead>
             <tr>
-                <th>{{ 'trans.Name for admin' | trans }}</th>
                 <th>{{ 'trans.Name' | trans }}</th>
                 <th>{{ 'trans.Price' | trans }}</th>
                 <th>{{ 'trans.Days of featured' | trans }}</th>
@@ -28,8 +27,10 @@
         <tbody>
         {% for featured_package in featured_packages %}
             <tr>
-                <td>{{ featured_package.adminName }}</td>
-                <td>{{ featured_package.name }}</td>
+                <td>
+                    <div>{{ featured_package.name }}</div>
+                    <div class="text-muted">{{ featured_package.adminName }}</div>
+                </td>
                 <td>{{ featured_package.price | moneyPrecise }}</td>
                 <td>{{ featured_package.daysFeaturedExpire }}</td>
                 <td>{{ featured_package.daysListingExpire }}</td>

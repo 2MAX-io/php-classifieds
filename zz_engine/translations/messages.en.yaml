@@ -84,7 +84,7 @@ trans:
   Custom javascript - bottom of page: 'Custom javascript - bottom of page'
   Custom javascript - top of page in HEAD: 'Custom javascript - top of page in HEAD'
   Custom CSS: 'Custom CSS'
-  'put your code inside: <script type="text/javascript"></script>': 'put your code inside: <script type="text/javascript"></script>'
+  'put your code inside: <script></script>': 'put your code inside: <script></script>'
   'put your code inside: <style type="text/css"></style>': 'put your code inside: <style type="text/css"></style>'
   'Allow payments': 'Allow payments'
   'turning off will disable all monetization, featuring ads, top up of account': 'turning off will disable all monetization, featuring ads, top up of account'

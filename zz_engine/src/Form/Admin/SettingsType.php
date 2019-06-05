@@ -260,12 +260,12 @@ class SettingsType extends AbstractType
         ]);
         $builder->add('customJavascriptBottom', TextareaType::class, [
             'label' => 'trans.Custom javascript - bottom of page',
-            'help' => 'trans.put your code inside: <script type="text/javascript"></script>',
+            'help' => 'trans.put your code inside: <script></script>',
             'required' => true,
         ]);
         $builder->add('customJavascriptInHead', TextareaType::class, [
             'label' => 'trans.Custom javascript - top of page in HEAD',
-            'help' => 'trans.put your code inside: <script type="text/javascript"></script>',
+            'help' => 'trans.put your code inside: <script></script>',
             'required' => true,
         ]);
         $builder->add('customCss', TextareaType::class, [

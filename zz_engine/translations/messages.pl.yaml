@@ -518,7 +518,7 @@ trans:
   Custom javascript - bottom of page: 'Własny javascript - na dole strony'
   Custom javascript - top of page in HEAD: 'Własny javascript - na górze strony w HEAD'
   Custom CSS: 'Własny CSS'
-  'put your code inside: <script type="text/javascript"></script>': 'umieść Twój kod w: <script type="text/javascript"></script>'
+  'put your code inside: <script></script>': 'umieść Twój kod w: <script></script>'
   'put your code inside: <style type="text/css"></style>': 'umieść Twój kod w: <style type="text/css"></style>'
   'Allow payments': 'Akceptuj płatności'
   'turning off will disable all monetization, featuring ads, top up of account': 'wyłączenie zablokuje całą monetyzację, wyróżnianie ogłoszeń, doładowanie konta'

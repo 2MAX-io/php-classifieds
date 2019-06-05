@@ -9,6 +9,7 @@ use App\Service\System\RunEvery\RunEveryService;
 use App\Service\System\SystemLog\SystemLogService;
 use App\System\Cache\AppCacheEnum;
 use App\System\Lock\AppLockInterface;
+use Carbon\Carbon;
 use Doctrine\ORM\EntityManagerInterface;
 use GuzzleHttp\Client;
 use GuzzleHttp\RequestOptions;
@@ -65,7 +66,8 @@ class CronService
         }
 
         try {
-            $this->updateFeatured();
+            $this->removeFeaturedWhenExpired();
+            $this->deactivateExpired();
             $this->setMainImage();
             $this->openIndexPage();
 
@@ -75,9 +77,9 @@ class CronService
         }
     }
 
-    private function updateFeatured(): void
+    private function removeFeaturedWhenExpired(): void
     {
-        if (!$this->runEveryService->canRunAgain(AppCacheEnum::CRON_UPDATE_FEATURED, 60*20)) {
+        if (!$this->runEveryService->canRunAgain(AppCacheEnum::CRON_EXPIRE_FEATURED, 60*20)) {
             return;
         }
 
@@ -89,6 +91,23 @@ UPDATE listing SET featured=0 WHERE featured_until_date <= :now OR featured_unti
 '
         );
         $query->bindValue(':now', date('Y-m-d 00:00:00'));
+        $query->execute();
+    }
+
+    private function deactivateExpired(): void
+    {
+        if (!$this->runEveryService->canRunAgain(AppCacheEnum::CRON_DEACTIVATE_EXPIRED, 60*23)) {
+            return;
+        }
+
+        /** @var \PDO $pdo */
+        $pdo = $this->em->getConnection();
+        $query = $pdo->prepare(
+        /** @lang MySQL */ '
+UPDATE listing SET user_deactivated=1 WHERE valid_until_date <= :olderThan
+'
+        );
+        $query->bindValue(':olderThan', Carbon::now()->subDays(90));
         $query->execute();
     }
 

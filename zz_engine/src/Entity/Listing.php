@@ -15,11 +15,11 @@ use Doctrine\ORM\Mapping\Index;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ListingRepository")
  * @ORM\Table(indexes={
- *     @Index(columns={"valid_until_date", "user_deactivated", "user_removed", "admin_activated", "admin_rejected", "admin_removed", "featured", "featured_weight", "order_by_date", "id"}, name="IDX_public_listings"),
+ *     @Index(columns={"user_deactivated", "valid_until_date", "user_removed", "admin_activated", "admin_rejected", "admin_removed", "featured", "featured_weight", "order_by_date", "id"}, name="IDX_public_listings"),
  *     @Index(columns={"admin_activated", "admin_removed", "user_removed", "user_deactivated", "admin_rejected"}, name="IDX_activated"),
- *     @Index(columns={"featured", "valid_until_date", "user_deactivated", "user_removed", "admin_activated", "admin_removed"}, name="IDX_featured"),
- *     @Index(columns={"category_id", "valid_until_date", "user_removed", "user_deactivated", "admin_activated", "admin_removed", "featured", "featured_weight", "order_by_date", "id"}, name="IDX_public_listings_cat"),
- *     @Index(columns={"valid_until_date", "user_removed", "user_deactivated", "admin_activated", "admin_removed", "first_created_date"}, name="IDX_latest_listings"),
+ *     @Index(columns={"featured", "user_deactivated", "valid_until_date", "user_removed", "admin_activated", "admin_removed"}, name="IDX_featured"),
+ *     @Index(columns={"category_id", "user_deactivated", "valid_until_date", "user_removed", "admin_activated", "admin_removed", "featured", "featured_weight", "order_by_date", "id"}, name="IDX_public_listings_cat"),
+ *     @Index(columns={"user_deactivated", "valid_until_date", "user_removed", "admin_activated", "admin_removed", "first_created_date"}, name="IDX_latest_listings"),
  *     @Index(columns={"first_created_date"}, name="IDX_first_created_date"),
  *     @Index(columns={"user_id", "user_removed", "last_edit_date"}, name="IDX_user_listings"),
  *     @Index(columns={"search_text"}, flags={"fulltext"}, name="IDX_fulltext_search"),
@@ -624,7 +624,7 @@ class Listing
         return $this->adminLastActivationDate;
     }
 
-    public function setAdminLastActivationDate(\DateTimeInterface $adminLastActivationDate): self
+    public function setAdminLastActivationDate(?\DateTimeInterface $adminLastActivationDate): self
     {
         $this->adminLastActivationDate = $adminLastActivationDate;
 

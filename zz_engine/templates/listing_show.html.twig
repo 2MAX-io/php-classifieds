@@ -23,7 +23,7 @@
     <div class="container mt-3 listing-show">
         <div class="row">
             <div class="col-md-7">
-                {% if displayAsExpired(listing) %}
+                {% if displayAsExpiredForEveryone(listing) %}
                     <div class="alert alert-danger">
                         <h1>{{ 'trans.Listing has expired' | trans }}</h1>
                         <div>
@@ -57,6 +57,10 @@
                     >
                         {{ 'trans.Edit listing as Admin' | trans }}
                     </a>
+                {% endif %}
+
+                {% if userOrAdmin(listing) %}
+                    <span class="{{ getListingStatusClass(listing) }} d-md-none">{{ getListingStatus(listing) }}</span>
                 {% endif %}
 
                 {% if listing.listingFiles is not empty %}
@@ -167,6 +171,7 @@
 
             <!-- Sidebar -->
             <div class="col-md-5">
+
                 {% if isCurrentUserListing(listing) %}
                     <a
                             href="{{ path('app_listing_edit', {'id': listing.id}) }}"
@@ -181,6 +186,10 @@
                     >
                         {{ 'trans.Edit listing as Admin' | trans }}
                     </a>
+                {% endif %}
+
+                {% if userOrAdmin(listing) %}
+                    <span class="{{ getListingStatusClass(listing) }}">{{ getListingStatus(listing) }}</span>
                 {% endif %}
 
                 {% if listing.price is not empty %}
@@ -215,7 +224,7 @@
 
                     <div class="card-body">
                         {% if displayAsExpired(listing) %}
-                            <div class="btn btn-success w-100 disabled">
+                            <div class="btn btn-outline-secondary w-100 disabled">
                                 {{ 'trans.Listing has expired' | trans }}
                             </div>
                         {% else %}

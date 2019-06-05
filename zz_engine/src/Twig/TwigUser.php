@@ -37,17 +37,27 @@ class TwigUser implements RuntimeExtensionInterface
         return $this->currentUserService->getUser() === $listing->getUser();
     }
 
+    public function userOrAdmin(Listing $listing): bool
+    {
+        return $this->currentUserService->getUser() === $listing->getUser() || $this->currentUserService->lowSecurityCheckIsAdminInPublic();
+    }
+
     public function displayAsExpired(Listing $listing): bool
     {
         if ($this->currentUserService->getUser() === $listing->getUser() || $this->currentUserService->lowSecurityCheckIsAdminInPublic()) {
             return false;
         }
 
+        return $this->displayAsExpiredForEveryone($listing);
+    }
+
+    public function displayAsExpiredForEveryone(Listing $listing): bool
+    {
         return $listing->getUserRemoved()
             || $listing->getUserDeactivated()
             || $listing->getAdminRemoved()
             || $listing->getAdminRejected()
             || (!$listing->getAdminActivated() && $this->settingsService->getSettingsDto()->getRequireListingAdminActivation())
-            || $listing->getValidUntilDate() < new \DateTime();
+            || $listing->isExpired();
     }
 }

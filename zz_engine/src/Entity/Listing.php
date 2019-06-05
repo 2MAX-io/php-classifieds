@@ -311,6 +311,11 @@ class Listing
         return $this->getMainImage(ImageResizePath::LIST);
     }
 
+    public function isExpired(): bool
+    {
+        return $this->getValidUntilDate() < new \DateTime();
+    }
+
     public function getId(): ?int
     {
         return $this->id;

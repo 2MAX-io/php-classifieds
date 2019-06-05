@@ -94,6 +94,7 @@ class ListingType extends AbstractType
             ],
             'attr' => [
                 'class' => 'input-phone',
+                'maxlength' => 20,
             ],
         ]);
         $builder->add('email', EmailType::class, [

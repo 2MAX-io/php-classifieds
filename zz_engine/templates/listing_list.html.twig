@@ -28,8 +28,12 @@
         <div class="row">
             <!-- filters -->
             <div class="col-12 d-md-none">
-                <div class="btn btn-secondary btn-sm mb-2 w-100 cursor-pointer" data-toggle="collapse" data-target="#filters">
-                    {{- 'trans.Show filters' | trans -}}
+                <div
+                        class="btn btn-secondary btn-sm mb-2 w-100 cursor-pointer"
+                        data-toggle="collapse"
+                        data-target="#filters"
+                >
+                    {{ 'trans.Show filters' | trans }}
                 </div>
             </div>
 
@@ -40,11 +44,12 @@
                             <strong>{{ 'trans.Category' | trans }}</strong>
                         </div>
                         <div>
-                            {%- for category in categoryList -%}
-                                <a href="{{ path('app_category', {'categorySlug': category.slug} | merge(queryParameters)) }}" class="link-list-item category-link {% if listingListDto.category and category.slug == listingListDto.category.slug  %}active{% endif %}">
-                                    {{- category.name -}}
-                                </a>
-                            {%- endfor -%}
+                            {% for category in categoryList %}
+                                <a
+                                        href="{{ path('app_category', {'categorySlug': category.slug} | merge(queryParameters)) }}"
+                                        class="link-list-item category-link {% if listingListDto.category and category.slug == listingListDto.category.slug  %}active{% endif %}"
+                                >{{- category.name -}}</a>
+                            {% endfor %}
                         </div>
                     </div>
                 {% endif %}
@@ -61,14 +66,28 @@
                                     <div class="input-group-prepend">
                                         <div class="input-group-text"><i class="fas fa-search"></i></div>
                                     </div>
-                                    <input type="text" class="form-control" name="query" placeholder="{{ 'trans.keyword'|trans }}" value="{{ app.request.get('query') | default }}">
+
+                                    <input
+                                            type="text"
+                                            class="form-control"
+                                            name="query"
+                                            placeholder="{{ 'trans.keyword'|trans }}"
+                                            value="{{ app.request.get('query') | default }}"
+                                    >
                                 </div>
                             </div>
 
                             {% if app.request.get('user') is not empty %}
                                 <div class="mb-3">
                                         <div class="custom-control custom-checkbox">
-                                            <input name="user" value="{{ app.request.get('user') }}" checked type="checkbox" id="option_user" class="custom-control-input">
+                                            <input
+                                                    name="user"
+                                                    value="{{ app.request.get('user') }}"
+                                                    checked
+                                                    type="checkbox"
+                                                    id="option_user"
+                                                    class="custom-control-input"
+                                            >
                                             <label class="custom-control-label" for="option_user">{{ 'trans.User listings' | trans }}</label>
                                         </div>
                                 </div>
@@ -78,25 +97,56 @@
                             <label>{{ 'trans.Amount or price' | trans }}</label>
                             <div class="form-row mb-3">
                                 <div class="col-6">
-                                    <input type="number" id="min_price" class="form-control" name="min_price" value="{{ app.request.get('min_price') | default }}" placeholder="{{ 'trans.min' | trans }}">
+                                    <input
+                                            type="number"
+                                            id="min_price"
+                                            class="form-control"
+                                            name="min_price"
+                                            value="{{ app.request.get('min_price') | default }}"
+                                            placeholder="{{ 'trans.min' | trans }}"
+                                    >
                                 </div>
+
                                 <div class="col-6">
-                                    <input type="number" id="max_price" class="form-control" name="max_price" value="{{ app.request.get('max_price') | default }}" placeholder="{{ 'trans.max' | trans }}">
+                                    <input
+                                            type="number"
+                                            id="max_price"
+                                            class="form-control"
+                                            name="max_price"
+                                            value="{{ app.request.get('max_price') | default }}"
+                                            placeholder="{{ 'trans.max' | trans }}"
+                                    >
                                 </div>
                             </div>
 
                             {# @var customField \App\Entity\CustomField #}
+                            {% spaceless %}
                             {% for customField in customFieldList %}
 
                                 {% if customField.type == constant('\App\\Entity\\CustomField::TYPE_SELECT') and customField.customFieldOptions is not empty %}
                                     <div class="mb-3">
                                         <label>{{ customField.name }}</label>
-                                        {%- for customFieldOption in customField.customFieldOptions -%}
+
+                                        {% for customFieldOption in customField.customFieldOptions %}
                                             <div class="custom-control custom-checkbox">
-                                                <input name="form_custom_field[{{ customField.id }}][values][]" value="{{ customFieldOption.value }}" {% if customFieldOption.value in app.request.get('form_custom_field')[customField.id]['values'] | default([]) %}{{- 'checked' -}}{% endif %}type="checkbox" id="option_{{ customFieldOption.id }}" class="custom-control-input">
-                                                <label class="custom-control-label" for="option_{{ customFieldOption.id }}">{{ customFieldOption.name }}</label>
+                                                <input
+                                                    name="form_custom_field[{{ customField.id }}][values][]"
+                                                    value="{{ customFieldOption.value }}"
+                                                    {% if customFieldOption.value in app.request.get('form_custom_field')[customField.id]['values'] | default([]) %}
+                                                        {{- 'checked' -}}
+                                                    {% endif %}
+                                                    type="checkbox"
+                                                    id="option_{{ customFieldOption.id }}"
+                                                    class="custom-control-input"
+                                                >
+                                                <label
+                                                        class="custom-control-label"
+                                                        for="option_{{ customFieldOption.id }}"
+                                                >
+                                                    {{ customFieldOption.name }}
+                                                </label>
                                             </div>
-                                        {%- endfor -%}
+                                        {% endfor %}
                                     </div>
                                 {% endif %}
 
@@ -107,9 +157,16 @@
                                         <div>
                                             <select name="form_custom_field[{{ customField.id }}][values][]" class="custom-select">
                                                 <option value="">{{ 'trans.Select' | trans }}</option>
-                                                {%- for customFieldOption in customField.customFieldOptions -%}
-                                                    <option value="{{ customFieldOption.value }}"{% if customFieldOption.value in app.request.get('form_custom_field')[customField.id]['values'] | default([]) %}{{- 'selected' -}}{% endif %}>{{- customFieldOption.name -}}</option>
-                                                {%- endfor -%}
+                                                {% for customFieldOption in customField.customFieldOptions %}
+                                                    <option
+                                                            value="{{ customFieldOption.value }}"
+                                                            {% if customFieldOption.value in app.request.get('form_custom_field')[customField.id]['values'] | default([]) %}
+                                                                {{- 'selected' -}}
+                                                            {% endif %}
+                                                    >
+                                                        {{- customFieldOption.name -}}
+                                                    </option>
+                                                {% endfor %}
                                             </select>
                                         </div>
                                     </div>
@@ -121,9 +178,21 @@
 
                                         {% for customFieldOption in customField.customFieldOptions %}
                                             <div class="custom-control custom-checkbox">
-                                                <input name="form_custom_field[{{ customField.id }}][values][]" value="{{ customFieldOption.value }}" {% if customFieldOption.value in app.request.get('form_custom_field')[customField.id]['values'] | default([]) %}{{- 'checked' -}}{% endif %}type="checkbox" id="option_{{ customFieldOption.id }}" class="custom-control-input">
-                                                <label class="custom-control-label" for="option_{{ customFieldOption.id }}">
-                                                    {{- customFieldOption.name -}}
+                                                <input
+                                                    name="form_custom_field[{{ customField.id }}][values][]"
+                                                    value="{{ customFieldOption.value }}"
+                                                    {% if customFieldOption.value in app.request.get('form_custom_field')[customField.id]['values'] | default([]) %}
+                                                        {{- 'checked' -}}
+                                                    {% endif %}
+                                                    type="checkbox"
+                                                    id="option_{{ customFieldOption.id }}"
+                                                    class="custom-control-input"
+                                                >
+                                                <label
+                                                        class="custom-control-label"
+                                                        for="option_{{ customFieldOption.id }}"
+                                                >
+                                                    {{ customFieldOption.name }}
                                                 </label>
                                             </div>
                                         {% endfor %}
@@ -137,11 +206,22 @@
                                     <label>{{ customField.name }} {%- if customField.unit is not empty %} [{{ customField.unit }}]{% endif -%}</label>
                                     <div class="form-row mb-3">
                                         <div class="col-6">
-                                            <input name="form_custom_field[{{ customField.id }}][range][min]" value="{{ app.request.get('form_custom_field')[customField.id]['range']['min'] | default }}" type="number" placeholder="{{ 'trans.min' | trans }}" class="form-control">
+                                            <input
+                                                name="form_custom_field[{{ customField.id }}][range][min]"
+                                                value="{{ app.request.get('form_custom_field')[customField.id]['range']['min'] | default }}"
+                                                type="number"
+                                                placeholder="{{ 'trans.min' | trans }}"
+                                                class="form-control">
                                         </div>
 
                                         <div class="col-6">
-                                            <input name="form_custom_field[{{ customField.id }}][range][max]" value="{{ app.request.get('form_custom_field')[customField.id]['range']['max'] | default }}" type="number" placeholder="{{ 'trans.max' | trans }}" class="form-control">
+                                            <input
+                                                name="form_custom_field[{{ customField.id }}][range][max]"
+                                                value="{{ app.request.get('form_custom_field')[customField.id]['range']['max'] | default }}"
+                                                type="number"
+                                                placeholder="{{ 'trans.max' | trans }}"
+                                                class="form-control"
+                                            >
                                         </div>
                                     </div>
                                 {% endif %}
@@ -176,6 +256,7 @@
                                     </div>
                                 {%- endif -%}
                             {%- endfor -%}
+                            {% endspaceless %}
 
                             <button class="btn btn-primary w-100">{{ 'trans.Filter' | trans }}</button>
                         </form>

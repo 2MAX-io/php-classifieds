@@ -6,6 +6,8 @@ namespace App\Controller\Pub;
 
 use App\Helper\FileHelper;
 use App\Helper\FilePath;
+use App\Helper\IniHelper;
+use App\Helper\Megabyte;
 use App\System\ImageManipulation\ImageManipulationFactory;
 use League\Glide\Responses\SymfonyResponseFactory;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -22,7 +24,9 @@ class ResizeImageController
      */
     public function index(Request $request, string $path, string $type, string $file): Response
     {
-        \ini_set('memory_limit','256M'); // todo: check if can reduce it
+        if (IniHelper::returnBytes(\ini_get('memory_limit')) < Megabyte::toByes(256)) {
+            \ini_set('memory_limit','256M'); // required to handle big images
+        }
 
         $requestUriWithoutGet = \strtok($request->getRequestUri(), '?');
 

@@ -23,10 +23,9 @@ if (!empty($_POST)) {
     $pdo = null;
     $dbName = $_POST['db_name'];
     try {
-        $pdo = new \PDO("mysql:host={$_POST['db_host']};port={$_POST['db_port']};dbname={$_POST['db_name']}", $_POST['db_user'], $_POST['db_pass'], [
+        $pdo = new \PDO("mysql:host={$_POST['db_host']};port={$_POST['db_port']};dbname={$_POST['db_name']};charset=utf8mb4", $_POST['db_user'], $_POST['db_pass'], [
             \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
             \PDO::ATTR_EMULATE_PREPARES => false,
-            \PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8, sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));",
         ]);
 
         if (countTables($dbName) > 0) {
@@ -35,7 +34,13 @@ if (!empty($_POST)) {
 
         $mysqlVersion = $pdo->query('SELECT @@innodb_version')->fetchColumn();
         if ($pdo && version_compare($mysqlVersion, '5.6', '<') ) {
-            $errors[] = "Mysql version should be at least 5.6, current MYSQL version is $mysqlVersion (innodb_version)";
+            $errors[] = "MYSQL version should be at least 5.6, current MYSQL version is $mysqlVersion (innodb_version)";
+        }
+
+        $sqlMode = $pdo->query('SELECT @@sql_mode')->fetchColumn();
+        if ($pdo && false !== \strpos($sqlMode, 'ONLY_FULL_GROUP_BY')) {
+            $errors[] = 'MYSQL: disable sql_mode: ONLY_FULL_GROUP_BY';
+            $errors[] = "current sql_mode = $sqlMode";
         }
     } catch (\Throwable $e) {
         $errors[] = 'Can not connect to database, error: ' . $e->getMessage();

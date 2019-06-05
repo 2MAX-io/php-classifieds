@@ -8,7 +8,7 @@
         <h1>Installation</h1>
 
         <?php foreach ($errors as $error): ?>
-            <div class="alert alert-danger">
+            <div class="alert alert-danger text-break">
                 <?php echo escape($error) ?>
             </div>
         <?php endforeach; ?>

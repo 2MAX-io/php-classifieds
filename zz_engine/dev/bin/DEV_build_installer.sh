@@ -15,7 +15,10 @@ rm $INSTALLER_DIR/echo.php
 rm $INSTALLER_DIR/echo.html
 rm $INSTALLER_DIR/redirection_test.html
 rm $INSTALLER_DIR/.gitignore
+rm $INSTALLER_DIR/.gitattributes
 rm $INSTALLER_DIR/LICENSE_LICENCJA_UnRsurDMXRqbXu3XeNPys.txt
+
+cp ${PROJECT_DIR}/install/data/example/listing.large.sql $INSTALLER_DIR/install/data/example/listing.large.sql
 
 mkdir $INSTALLER_DIR/zz_engine/var/cache
 mkdir $INSTALLER_DIR/zz_engine/var/cache/upgrade

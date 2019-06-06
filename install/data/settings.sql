@@ -1,8 +1,8 @@
-INSERT INTO setting (name, value, last_update_date) VALUES ('indexPageTitle', '2MAX.io Classifieds Ads', '2010-01-01 00:00:00');
-INSERT INTO setting (name, value, last_update_date) VALUES ('pageTitleSuffix', '- 2MAX.io Classifieds Ads', '2010-01-01 00:00:00');
-INSERT INTO setting (name, value, last_update_date) VALUES ('rssTitle', '2MAX.io Classifieds Ads', '2010-01-01 00:00:00');
-INSERT INTO setting (name, value, last_update_date) VALUES ('rssDescription', '2MAX.io Classifieds Ads', '2010-01-01 00:00:00');
-INSERT INTO setting (name, value, last_update_date) VALUES ('metaDescription', '2MAX.io Classifieds Ads', '2010-01-01 00:00:00');
+INSERT INTO setting (name, value, last_update_date) VALUES ('indexPageTitle', '2MAX.io Classified Ads', '2010-01-01 00:00:00');
+INSERT INTO setting (name, value, last_update_date) VALUES ('pageTitleSuffix', '- 2MAX.io Classified Ads', '2010-01-01 00:00:00');
+INSERT INTO setting (name, value, last_update_date) VALUES ('rssTitle', '2MAX.io Classified Ads', '2010-01-01 00:00:00');
+INSERT INTO setting (name, value, last_update_date) VALUES ('rssDescription', '2MAX.io Classified Ads', '2010-01-01 00:00:00');
+INSERT INTO setting (name, value, last_update_date) VALUES ('metaDescription', '2MAX.io Classified Ads', '2010-01-01 00:00:00');
 INSERT INTO setting (name, value, last_update_date) VALUES ('metaKeywords', 'classifieds, listings, ads', '2010-01-01 00:00:00');
 INSERT INTO setting (name, value, last_update_date) VALUES ('linkTermsConditions', '', '2010-01-01 00:00:00');
 INSERT INTO setting (name, value, last_update_date) VALUES ('languageTwoLetters', 'US', '2010-01-01 00:00:00');
@@ -16,12 +16,12 @@ INSERT INTO setting (name, value, last_update_date) VALUES ( 'linkPrivacyPolicy'
 INSERT INTO setting (name, value, last_update_date) VALUES ( 'linkRejectionReason', '', '2010-01-01 00:00:00');
 INSERT INTO setting (name, value, last_update_date) VALUES ( 'requireListingAdminActivation', '0', '2010-01-01 00:00:00');
 INSERT INTO setting (name, value, last_update_date) VALUES ( 'paymentPayPalMode', 'sandbox', '2010-01-01 00:00:00');
-INSERT INTO setting (name, value, last_update_date) VALUES ( 'paymentGatewayPaymentDescription', 'example.com - featuring of Classifieds Ads', '2010-01-01 00:00:00');
+INSERT INTO setting (name, value, last_update_date) VALUES ( 'paymentGatewayPaymentDescription', 'example.com - featuring of Classified Ads', '2010-01-01 00:00:00');
 INSERT INTO setting (name, value, last_update_date) VALUES ( 'wordsToRemoveFromTitle', 'to sell
 selling', '2010-01-01 00:00:00');
-INSERT INTO setting (name, value, last_update_date) VALUES ( 'footerSiteCopyright', '2018-%year% - 2MAX.io Classifieds Ads', '2010-01-01 00:00:00');
+INSERT INTO setting (name, value, last_update_date) VALUES ( 'footerSiteCopyright', '2018-%year% - 2MAX.io Classified Ads', '2010-01-01 00:00:00');
 INSERT INTO setting (name, value, last_update_date) VALUES ( 'itemsPerPageMax', '10', '2010-01-01 00:00:00');
-INSERT INTO setting (name, value, last_update_date) VALUES ( 'emailFromName', '2MAX.io Classifieds Ads', '2010-01-01 00:00:00');
+INSERT INTO setting (name, value, last_update_date) VALUES ( 'emailFromName', '2MAX.io Classified Ads', '2010-01-01 00:00:00');
 INSERT INTO setting (name, value, last_update_date) VALUES ( 'emailReplyTo', 'classifieds@example.com', '2010-01-01 00:00:00');
 INSERT INTO setting (name, value, last_update_date) VALUES ( 'emailFromAddress', 'classifieds@example.com', '2010-01-01 00:00:00');
 INSERT INTO setting (name, value, last_update_date) VALUES ( 'logoPath', '', '2010-01-01 00:00:00');

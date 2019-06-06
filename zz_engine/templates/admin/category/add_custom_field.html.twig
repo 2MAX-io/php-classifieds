@@ -10,7 +10,7 @@
             <h5>{{ 'trans.for category' | trans }}: {{ customFieldJoinCategory.category.parent.name }} ⇾ {{ customFieldJoinCategory.category.name }}</h5>
         </div>
         <div class="col-md-6 text-md-right">
-            <a href="{{ path('app_admin_category') }}">{{ 'trans.back to list' | trans }}</a>
+            <a href="{{ path('app_admin_category_edit', {'id':customFieldJoinCategory.category.id}) }}">{{ 'trans.back to list' | trans }}</a>
         </div>
     </div>
 

@@ -136,7 +136,7 @@ class AdminListingSearchService
         $return = [];
         foreach ($categories as $category) {
             $path = \array_map(
-                function (Category $category) {
+                static function (Category $category) {
                     if ($category->getLvl() < 1) {
                         return false;
                     }
@@ -145,7 +145,7 @@ class AdminListingSearchService
                 },
                 $category->getPath()
             );
-            $return[$category->getId()] = join(' ⇾ ', $path);
+            $return[$category->getId()] = \implode(' ⇾ ', $path);
         }
 
         return $return;

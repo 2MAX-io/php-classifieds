@@ -46,7 +46,7 @@ class CategoryType extends AbstractType
                     $path
                 );
 
-                return \join(' ⇾ ', $path);
+                return \implode(' ⇾ ', $path);
             },
             'query_builder' => function () {
                 $qb = $this->em->getRepository(Category::class)->createQueryBuilder('category');

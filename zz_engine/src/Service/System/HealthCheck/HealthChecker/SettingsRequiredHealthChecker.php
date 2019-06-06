@@ -80,7 +80,7 @@ class SettingsRequiredHealthChecker implements HealthCheckerInterface
 
         if ($failed) {
             return new HealthCheckResultDto(true, $this->trans->trans('trans.Set all application settings. Missing settings: %missing%', [
-                '%missing%' => \join(', ', $missingSettings)
+                '%missing%' => \implode(', ', $missingSettings)
             ]));
         }
 

@@ -63,7 +63,7 @@ chown -R www-data:www-data <?php echo $projectRootPath ?>;
                 </div>
 
                 <textarea class="w-100 form-control" style="height: 10em;">
-<?php echo join("\n", $creatingDirFailedList); ?>
+<?php echo implode("\n", $creatingDirFailedList); ?>
 		        </textarea>
             </div>
         <?php endif; ?>
@@ -79,7 +79,7 @@ chown -R www-data:www-data <?php echo $projectRootPath ?>;
                 </div>
 
                 <textarea class="w-100 form-control" style="height: 10em;">
-<?php echo join("\n", $readingFileFailedList); ?>
+<?php echo implode("\n", $readingFileFailedList); ?>
                 </textarea>
             </div>
         <?php endif; ?>
@@ -95,7 +95,7 @@ chown -R www-data:www-data <?php echo $projectRootPath ?>;
                 </div>
 
                 <textarea class="w-100 form-control" style="height: 10em;">
-<?php echo join("\n", $writingFileFailedList); ?>
+<?php echo implode("\n", $writingFileFailedList); ?>
                 </textarea>
             </div>
         <?php endif; ?>
@@ -109,7 +109,7 @@ chown -R www-data:www-data <?php echo $projectRootPath ?>;
                 </div>
 
                 <textarea class="w-100 form-control" style="height: 10em;">
-<?php echo join("\n", $incorrectFilePermissionList); ?>
+<?php echo implode("\n", $incorrectFilePermissionList); ?>
                 </textarea>
             </div>
         <?php endif; ?>
@@ -123,7 +123,7 @@ chown -R www-data:www-data <?php echo $projectRootPath ?>;
                 </div>
 
                 <textarea class="w-100 form-control" style="height: 10em;">
-<?php echo join("\n", $incorrectDirPermissionList); ?>
+<?php echo implode("\n", $incorrectDirPermissionList); ?>
                 </textarea>
             </div>
         <?php endif; ?>

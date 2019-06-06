@@ -6,322 +6,380 @@
 {% block title %}{{ pageTitle }}{% endblock %}
 
 {% block body %}
-<div class="container mt-3 mb-3">
-  {% if settings.masterSiteLinkShow %}
-    <a href="{{ settings.masterSiteUrl }}">{{ settings.masterSiteAnchorText }}</a>
-    >
-  {% endif %}
 
-  <a href="{{ path('app_index') }}">{{ 'trans.Classifieds' | trans }}</a>
+    <div class="container mt-3 mb-3">
+        {% if settings.masterSiteLinkShow %}
+            <a href="{{ settings.masterSiteUrl }}">{{ settings.masterSiteAnchorText }}</a>
+            >
+        {% endif %}
 
-  {% for category in categoryBreadcrumbs %}
-    &gt; <a href="{{ path('app_category', {'categorySlug': category.slug}) }}">{{ category.name }}</a>
-  {% endfor %}
+        <a href="{{ path('app_index') }}">{{ 'trans.Classifieds' | trans }}</a>
 
-  {% if breadcrumbLast is not empty %}
-    &gt; {{ breadcrumbLast }}
-  {% endif %}
-</div>
+        {%- for category in categoryBreadcrumbs -%}
+            &gt; <a href="{{ path('app_category', {'categorySlug': category.slug}) }}">{{ category.name }}</a>
+        {%- endfor -%}
 
-<div class="container mt-md-3">
-  <div class="row">
-    <!-- filters -->
-    <div class="col-12 d-md-none">
-      <div
-          class="btn btn-secondary btn-sm mb-2 w-100 cursor-pointer"
-          data-toggle="collapse"
-          data-target="#filters"
-      >
-        {{ 'trans.Show filters' | trans }}
-      </div>
+        {% if breadcrumbLast is not empty %}
+            &gt; {{ breadcrumbLast }}
+        {% endif %}
     </div>
 
-    <div class="col-md-3 d-none-soft d-md-block collapse" id="filters">
-      {% if categoryList is not empty %}
-        <div class="card mb-3">
-          <div class="card-header">
-            <strong>{{ 'trans.Category' | trans }}</strong>
-          </div>
-          <div>
-            {% for category in categoryList %}
-              <a
-                  href="{{ path('app_category', {'categorySlug': category.slug} | merge(queryParameters)) }}"
-                  class="link-list-item category-link {% if listingListDto.category and category.slug == listingListDto.category.slug  %}active{% endif %}"
-              >{{- category.name -}}</a>
-            {% endfor %}
-          </div>
-        </div>
-      {% endif %}
-
-      <div class="card mb-3">
-        <div class="card-header">
-          <strong>{{ 'trans.Filters' | trans }}</strong>
-        </div>
-
-        <div class="card-body">
-          <form method="get" action="">
-            <div class="mb-3">
-              <div class="input-group mb-2 mr-2">
-                <div class="input-group-prepend">
-                  <div class="input-group-text"><i class="fas fa-search"></i></div>
-                </div>
-
-                <input
-                    type="text"
-                    class="form-control"
-                    name="query"
-                    placeholder="{{ 'trans.keyword'|trans }}"
-                    value="{{ app.request.get('query') | default }}"
+    <div class="container mt-md-3">
+        <div class="row">
+            <div class="col-12 d-md-none">
+                <div
+                        class="btn btn-secondary btn-sm mb-2 w-100 cursor-pointer"
+                        data-toggle="collapse"
+                        data-target="#filters"
                 >
-              </div>
+                    {{ 'trans.Show filters' | trans }}
+                </div>
             </div>
 
-            {% if app.request.get('user') is not empty %}
-              <div class="mb-3">
-                  <div class="custom-control custom-checkbox">
-                    <input
-                        name="user"
-                        value="{{ app.request.get('user') }}"
-                        checked
-                        type="checkbox"
-                        id="option_user"
-                        class="custom-control-input"
-                    >
-                    <label class="custom-control-label" for="option_user">{{ 'trans.User listings' | trans }}</label>
-                  </div>
-              </div>
-            {% endif %}
+            <!-- filters -->
+            <div class="col-md-3 d-none-soft d-md-block collapse" id="filters">
+                {% if categoryList is not empty %}
+                    <div class="card mb-3">
+                        <div class="card-header">
+                            <strong>{{ 'trans.Category' | trans }}</strong>
+                        </div>
+                        <div>
+                            {%- apply normalizeWhitespace -%}
+                            {%- for category in categoryList -%}
+                                <a
+                                        href="{{ path('app_category', {'categorySlug': category.slug} | merge(queryParameters)) }}"
+                                        class="link-list-item category-link {% if listingListDto.category and category.slug == listingListDto.category.slug  %}active{% endif %}"
+                                >{{- category.name -}}</a>
+                            {%- endfor -%}
+                            {%- endapply -%}
+                        </div>
+                    </div>
+                {% endif %}
 
-            <!-- price -->
-            <label>{{ 'trans.Amount or price' | trans }}</label>
-            <div class="form-row mb-3">
-              <div class="col-6">
-                <input
-                    type="number"
-                    id="min_price"
-                    class="form-control"
-                    name="min_price"
-                    value="{{ app.request.get('min_price') | default }}"
-                    placeholder="{{ 'trans.min' | trans }}"
-                >
-              </div>
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <strong>{{ 'trans.Filters' | trans }}</strong>
+                    </div>
 
-              <div class="col-6">
-                <input
-                    type="number"
-                    id="max_price"
-                    class="form-control"
-                    name="max_price"
-                    value="{{ app.request.get('max_price') | default }}"
-                    placeholder="{{ 'trans.max' | trans }}"
-                >
-              </div>
+                    <div class="card-body">
+                        <form method="get" action="">
+                            <div class="mb-3">
+                                <div class="input-group mb-2 mr-2">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text"><i class="fas fa-search"></i></div>
+                                    </div>
+
+                                    <input
+                                            type="text"
+                                            class="form-control"
+                                            name="query"
+                                            placeholder="{{ 'trans.keyword'|trans }}"
+                                            value="{{ app.request.get('query') | default }}"
+                                    >
+                                </div>
+                            </div>
+
+                            {% if- app.request.get('user') is not empty -%}
+                                <div class="mb-3">
+                                        <div class="custom-control custom-checkbox">
+                                            {%- apply normalizeWhitespace -%}
+                                            <input
+                                                    name="user"
+                                                    value="{{ app.request.get('user') }}"
+                                                    checked
+                                                    type="checkbox"
+                                                    id="option_user"
+                                                    class="custom-control-input"
+                                            >
+                                            {%- endapply -%}
+                                            <label class="custom-control-label" for="option_user">{{ 'trans.User listings' | trans }}</label>
+                                        </div>
+                                </div>
+                            {%- endif -%}
+
+                            <!-- price -->
+                            <label>{{ 'trans.Amount or price' | trans }}</label>
+                            <div class="form-row mb-3">
+                                <div class="col-6">
+                                    {%- apply normalizeWhitespace -%}
+                                    <input
+                                            type="number"
+                                            id="min_price"
+                                            class="form-control"
+                                            name="min_price"
+                                            value="{{ app.request.get('min_price') | default }}"
+                                            placeholder="{{ 'trans.min' | trans }}"
+                                    >
+                                    {%- endapply -%}
+                                </div>
+
+                                <div class="col-6">
+                                    {%- apply normalizeWhitespace -%}
+                                    <input
+                                            type="number"
+                                            id="max_price"
+                                            class="form-control"
+                                            name="max_price"
+                                            value="{{ app.request.get('max_price') | default }}"
+                                            placeholder="{{ 'trans.max' | trans }}"
+                                    >
+                                    {%- endapply -%}
+                                </div>
+                            </div>
+
+                            {# @var customField \App\Entity\CustomField #}
+                            {%- spaceless -%}
+                            {%- for customField in customFieldList -%}
+
+                                {%- if customField.type == constant('\App\\Entity\\CustomField::TYPE_SELECT') and customField.customFieldOptions is not empty -%}
+                                    <div class="mb-3">
+                                        <label>{{ customField.name }}</label>
+                                        {%- spaceless -%}
+                                        {%- for customFieldOption in customField.customFieldOptions -%}
+                                            <div class="custom-control custom-checkbox">
+                                                {%- apply normalizeWhitespace -%}
+                                                <input
+                                                    name="form_custom_field[{{ customField.id }}][values][]"
+                                                    value="{{ customFieldOption.value }}"
+                                                    {% if customFieldOption.value in app.request.get('form_custom_field')[customField.id]['values'] | default([]) %}
+                                                        {{- 'checked' -}}
+                                                    {% endif %}
+                                                    type="checkbox"
+                                                    id="option_{{ customFieldOption.id }}"
+                                                    class="custom-control-input"
+                                                >
+                                                <label
+                                                        class="custom-control-label"
+                                                        for="option_{{ customFieldOption.id }}"
+                                                >
+                                                    {{ customFieldOption.name }}
+                                                </label>
+                                                {%- endapply -%}
+                                            </div>
+                                        {%- endfor -%}
+                                        {%- endspaceless -%}
+                                    </div>
+                                {% endif %}
+
+                                {%- if customField.type == constant('\App\\Entity\\CustomField::TYPE_SELECT_SINGLE') and customField.customFieldOptions is not empty -%}
+                                    <div class="mb-3">
+                                        <label>{{ customField.name }}</label>
+
+                                        <div>
+                                            <select name="form_custom_field[{{ customField.id }}][values][]" class="custom-select">
+                                                {%- spaceless -%}
+                                                <option value="">{{ 'trans.Select' | trans }}</option>
+                                                {%- for customFieldOption in customField.customFieldOptions -%}
+                                                    {%- apply normalizeWhitespace -%}
+                                                    <option
+                                                            value="{{ customFieldOption.value }}"
+                                                            {% if customFieldOption.value in app.request.get('form_custom_field')[customField.id]['values'] | default([]) %}
+                                                                {{- 'selected' -}}
+                                                            {% endif %}
+                                                    >
+                                                        {{- customFieldOption.name -}}
+                                                    </option>
+                                                    {%- endapply -%}
+                                                {%- endfor -%}
+                                                {%- endspaceless -%}
+                                            </select>
+                                        </div>
+                                    </div>
+                                {%- endif -%}
+
+                                {%- if customField.type == constant('\App\\Entity\\CustomField::TYPE_CHECKBOX_MULTIPLE') and customField.customFieldOptions is not empty -%}
+                                    <div class="mb-3">
+                                        <label>{{ customField.name }}</label>
+
+                                        {%- spaceless -%}
+                                        {%- for customFieldOption in customField.customFieldOptions -%}
+                                            <div class="custom-control custom-checkbox">
+                                                {%- apply normalizeWhitespace -%}
+                                                <input
+                                                    name="form_custom_field[{{ customField.id }}][values][]"
+                                                    value="{{ customFieldOption.value }}"
+                                                    {% if customFieldOption.value in app.request.get('form_custom_field')[customField.id]['values'] | default([]) %}
+                                                        {{- 'checked' -}}
+                                                    {% endif %}
+                                                    type="checkbox"
+                                                    id="option_{{ customFieldOption.id }}"
+                                                    class="custom-control-input"
+                                                >
+                                                <label
+                                                        class="custom-control-label"
+                                                        for="option_{{ customFieldOption.id }}"
+                                                >
+                                                    {{ customFieldOption.name }}
+                                                </label>
+                                                {%- endapply -%}
+                                            </div>
+                                        {%- endfor -%}
+                                        {%- endspaceless -%}
+                                    </div>
+                                {% endif %}
+
+                                {% if customField.type in [
+                                        constant('\App\\Entity\\CustomField::TYPE_INTEGER_RANGE'),
+                                    ]
+                                %}
+                                    <label>{{ customField.name }} {%- if customField.unit is not empty %} [{{ customField.unit }}]{% endif -%}</label>
+                                    <div class="form-row mb-3">
+                                        <div class="col-6">
+                                            {%- apply normalizeWhitespace -%}
+                                            <input
+                                                name="form_custom_field[{{ customField.id }}][range][min]"
+                                                value="{{ app.request.get('form_custom_field')[customField.id]['range']['min'] | default }}"
+                                                type="number"
+                                                placeholder="{{ 'trans.min' | trans }}"
+                                                class="form-control">
+                                            {%- endapply -%}
+                                        </div>
+
+                                        <div class="col-6">
+                                            {%- apply normalizeWhitespace -%}
+                                            <input
+                                                name="form_custom_field[{{ customField.id }}][range][max]"
+                                                value="{{ app.request.get('form_custom_field')[customField.id]['range']['max'] | default }}"
+                                                type="number"
+                                                placeholder="{{ 'trans.max' | trans }}"
+                                                class="form-control"
+                                            >
+                                            {%- endapply -%}
+                                        </div>
+                                    </div>
+                                {% endif %}
+
+                                {% if customField.type in [
+                                        constant('\App\\Entity\\CustomField::TYPE_YEAR_RANGE'),
+                                    ]
+                                %}
+                                    <label>{{ customField.name }}</label>
+                                    <div class="form-row mb-3">
+                                        <div class="col-6">
+                                            {%- apply normalizeWhitespace -%}
+                                            <select
+                                                name="form_custom_field[{{ customField.id }}][range][min]"
+                                                class="form-control">
+
+                                                <option value=''>{{ 'trans.min' | trans }}</option>
+
+                                                {%- set startYear = date().format('Y') -%}
+                                                {%- for year in startYear..1980 -%}
+                                                    <option
+                                                            value="{{- year -}}"
+                                                            {% if year == app.request.get('form_custom_field')[customField.id]['range']['min'] | default %}selected{% endif %}
+                                                    >
+                                                        {{ year }}
+                                                    </option>
+                                                {%- endfor -%}
+                                            </select>
+                                            {%- endapply -%}
+                                        </div>
+
+                                        <div class="col-6">
+                                            {%- apply normalizeWhitespace -%}
+                                            <select
+                                                name="form_custom_field[{{ customField.id }}][range][max]"
+                                                class="form-control"
+                                            >
+                                                <option value=''>{{ 'trans.max' | trans }}</option>
+
+                                                {%- set startYear = date().format('Y') -%}
+                                                {%- for year in startYear..1980 -%}
+                                                    <option
+                                                            value="{{- year -}}"
+                                                            {% if year == app.request.get('form_custom_field')[customField.id]['range']['max'] | default %}selected{% endif %}
+                                                    >
+                                                        {{ year }}
+                                                    </option>
+                                                {%- endfor -%}
+                                            </select>
+                                            {%- endapply -%}
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            {%- endfor -%}
+                            {%- endspaceless -%}
+
+                            <button class="btn btn-primary w-100">{{ 'trans.Filter' | trans }}</button>
+                        </form>
+                    </div>
+                </div>
             </div>
+            <!-- filters end -->
 
-            {# @var customField \App\Entity\CustomField #}
-            {% spaceless %}
-            {% for customField in customFieldList %}
 
-              {% if customField.type == constant('\App\\Entity\\CustomField::TYPE_SELECT') and customField.customFieldOptions is not empty %}
-                <div class="mb-3">
-                  <label>{{ customField.name }}</label>
+            <!-- listing list -->
+            <div class="col-md-9">
+                <!-- listing -->
+                <div class="listing-list">
+                    {%- spaceless -%}
+                    {%- for listing in listingList -%}
+                        <div id="listing-{{ listing.id }}" class="card shadow-level-1 mb-3 {% if listing.featured %}listing-recommended{% endif %}">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-12 col-md-3 pt-3 pb-md-3">
+                                        <a title="{{ listing.title }}" href="{{ path('app_listing_show', {id: listing.id, 'slug': listing.slug}) }}">
+                                            <img class="rounded listing-list-img" alt="{{ listing.title }}" src="{{ asset(listing.mainImageInListSize | default('static/system/blank.png')) }}">
+                                        </a>
+                                    </div>
 
-                  {% for customFieldOption in customField.customFieldOptions %}
-                    <div class="custom-control custom-checkbox">
-                      <input
-                        name="form_custom_field[{{ customField.id }}][values][]"
-                        value="{{ customFieldOption.value }}"
-                        {% if customFieldOption.value in app.request.get('form_custom_field')[customField.id]['values'] | default([]) %}
-                          {{- 'checked' -}}
-                        {% endif %}
-                        type="checkbox"
-                        id="option_{{ customFieldOption.id }}"
-                        class="custom-control-input"
-                      >
-                      <label
-                          class="custom-control-label"
-                          for="option_{{ customFieldOption.id }}"
-                      >
-                        {{ customFieldOption.name }}
-                      </label>
-                    </div>
-                  {% endfor %}
+                                    <div class="card-text col-12 col-md-9 pb-3 pt-sm-3">
+                                        {% if listing.featured %}
+                                            <div class="pt-3 pt-sm-0 float-right">
+                                                <span class="badge badge-pill badge-warning">{{ 'trans.Recommended' | trans }}</span>
+                                            </div>
+                                        {% endif %}
+
+                                        <h5 class="pt-3 pt-sm-0">
+                                            <strong>
+                                                <a href="{{ path('app_listing_show', {id: listing.id, 'slug': listing.slug}) }}" class="use-visited-color">
+                                                    {{ listing.title }}
+                                                </a>
+                                            </strong>
+                                        </h5>
+
+                                        <div>
+                                            {% if listing.city is not empty %}
+                                                <span class="mr-1">
+                                                    <i class="fas fa-map-marker-alt text-danger"></i>
+                                                    {{ listing.city }}
+                                                </span>
+                                            {% endif %}
+
+                                            <span class="mr-1">
+                                                <i class="fas fa-calendar text-black-50"></i>
+                                                {{ listing.orderByDate | date }}
+                                            </span>
+                                        </div>
+
+                                        {% if listing.price is not empty %}
+                                            <div class="mt-1">
+                                                <span class="btn btn-dark btn-sm price">
+                                                    {{ 'trans.Price' | trans }}:
+                                                    {{ listing.price | money }}
+                                                </span>
+
+                                                {% if listing.priceFor %}
+                                                    <span>{{ ('trans.priceFor.'~listing.priceFor) | trans }}</span>
+                                                {% endif %}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="alert alert-info w-100">
+                            {{ 'trans.No classified ads matching criteria were found' | trans }}
+                        </div>
+                    {%- endfor -%}
+                    {%- endspaceless -%}
                 </div>
-              {% endif %}
 
-              {% if customField.type == constant('\App\\Entity\\CustomField::TYPE_SELECT_SINGLE') and customField.customFieldOptions is not empty %}
-                <div class="mb-3">
-                  <label>{{ customField.name }}</label>
-
-                  <div>
-                    <select name="form_custom_field[{{ customField.id }}][values][]" class="custom-select">
-                      <option value="">{{ 'trans.Select' | trans }}</option>
-                      {% for customFieldOption in customField.customFieldOptions %}
-                        <option
-                            value="{{ customFieldOption.value }}"
-                            {% if customFieldOption.value in app.request.get('form_custom_field')[customField.id]['values'] | default([]) %}
-                              {{- 'selected' -}}
-                            {% endif %}
-                        >
-                          {{- customFieldOption.name -}}
-                        </option>
-                      {% endfor %}
-                    </select>
-                  </div>
-                </div>
-              {% endif %}
-
-              {% if customField.type == constant('\App\\Entity\\CustomField::TYPE_CHECKBOX_MULTIPLE') and customField.customFieldOptions is not empty %}
-                <div class="mb-3">
-                  <label>{{ customField.name }}</label>
-
-                  {% for customFieldOption in customField.customFieldOptions %}
-                    <div class="custom-control custom-checkbox">
-                      <input
-                        name="form_custom_field[{{ customField.id }}][values][]"
-                        value="{{ customFieldOption.value }}"
-                        {% if customFieldOption.value in app.request.get('form_custom_field')[customField.id]['values'] | default([]) %}
-                          {{- 'checked' -}}
-                        {% endif %}
-                        type="checkbox"
-                        id="option_{{ customFieldOption.id }}"
-                        class="custom-control-input"
-                      >
-                      <label
-                          class="custom-control-label"
-                          for="option_{{ customFieldOption.id }}"
-                      >
-                        {{ customFieldOption.name }}
-                      </label>
-                    </div>
-                  {% endfor %}
-                </div>
-              {% endif %}
-
-              {% if customField.type in [
-                  constant('\App\\Entity\\CustomField::TYPE_INTEGER_RANGE'),
-                ]
-              %}
-                <label>{{ customField.name }} {%- if customField.unit is not empty %} [{{ customField.unit }}]{% endif -%}</label>
-                <div class="form-row mb-3">
-                  <div class="col-6">
-                    <input
-                      name="form_custom_field[{{ customField.id }}][range][min]"
-                      value="{{ app.request.get('form_custom_field')[customField.id]['range']['min'] | default }}"
-                      type="number"
-                      placeholder="{{ 'trans.min' | trans }}"
-                      class="form-control">
-                  </div>
-
-                  <div class="col-6">
-                    <input
-                      name="form_custom_field[{{ customField.id }}][range][max]"
-                      value="{{ app.request.get('form_custom_field')[customField.id]['range']['max'] | default }}"
-                      type="number"
-                      placeholder="{{ 'trans.max' | trans }}"
-                      class="form-control"
-                    >
-                  </div>
-                </div>
-              {% endif %}
-
-              {% if customField.type in [
-                  constant('\App\\Entity\\CustomField::TYPE_YEAR_RANGE'),
-                ]
-              %}
-                <label>{{ customField.name }}</label>
-                <div class="form-row mb-3">
-                  <div class="col-6">
-                    <select name="form_custom_field[{{ customField.id }}][range][min]" class="form-control">
-                      <option value=''>{{ 'trans.min' | trans }}</option>
-
-                      {% set startYear = date().format('Y') %}
-                      {%- for year in startYear..1980 -%}
-                        <option value="{{- year -}}" {% if year == app.request.get('form_custom_field')[customField.id]['range']['min'] | default %}selected{% endif %}>{{ year }}</option>
-                      {%- endfor -%}
-                    </select>
-                  </div>
-
-                  <div class="col-6">
-                    <select name="form_custom_field[{{ customField.id }}][range][max]" class="form-control">
-                      <option value=''>{{ 'trans.max' | trans }}</option>
-
-                      {% set startYear = date().format('Y') %}
-                      {%- for year in startYear..1980 -%}
-                        <option value="{{- year -}}" {% if year == app.request.get('form_custom_field')[customField.id]['range']['max'] | default %}selected{% endif %}>{{ year }}</option>
-                      {%- endfor -%}
-                    </select>
-                  </div>
-                </div>
-              {%- endif -%}
-            {%- endfor -%}
-            {% endspaceless %}
-
-            <button class="btn btn-primary w-100">{{ 'trans.Filter' | trans }}</button>
-          </form>
+                {% include 'base/_pagination.html.twig' %}
+            </div>
         </div>
-      </div>
     </div>
-    <!-- filters end -->
 
-    <!-- listing list -->
-    <div class="col-md-9">
-      <!-- listing -->
-      <div class="listing-list">
-        {% spaceless %}
-        {% for listing in listingList %}
-          <div id="listing-{{ listing.id }}" class="card shadow-level-1 mb-3 {% if listing.featured %}listing-recommended{% endif %}">
-            <div class="container-fluid">
-              <div class="row">
-                <div class="col-12 col-md-3 pt-3 pb-md-3">
-                  <a title="{{ listing.title }}" href="{{ path('app_listing_show', {id: listing.id, 'slug': listing.slug}) }}">
-                    <img class="rounded listing-list-img" alt="{{ listing.title }}" src="{{ asset(listing.mainImageInListSize | default('static/system/blank.png')) }}">
-                  </a>
-                </div>
-                <div class="card-text col-12 col-md-9 pb-3 pt-sm-3">
-                  {% if listing.featured %}
-                    <div class="pt-3 pt-sm-0 float-right">
-                      <span class="badge badge-pill badge-warning">{{ 'trans.Recommended' | trans }}</span>
-                    </div>
-                  {% endif %}
-                  <h5 class="pt-3 pt-sm-0">
-                    <strong>
-                      <a href="{{ path('app_listing_show', {id: listing.id, 'slug': listing.slug}) }}" class="use-visited-color">{{- listing.title -}}</a>
-                    </strong>
-                  </h5>
-                  <div>
-                    {% if listing.city is not empty %}
-                      <span class="mr-1">
-                        <i class="fas fa-map-marker-alt text-danger"></i> {{ listing.city -}}
-                      </span>
-                    {% endif %}
-                    <span class="mr-1">
-                      <i class="fas fa-calendar text-black-50"></i> {{ listing.orderByDate | date -}}
-                    </span>
-                  </div>
-                  {% if listing.price is not empty %}
-                    <div class="mt-1">
-                      <span class="btn btn-dark btn-sm price">{{- 'trans.Price' | trans -}}: {{ listing.price | money -}}</span>
-
-                      {% if listing.priceFor %}
-                        <span>{{ ('trans.priceFor.'~listing.priceFor) | trans }}</span>
-                      {% endif %}
-                    </div>
-                  {% endif %}
-                </div>
-              </div>
-            </div>
-          </div>
-        {% else %}
-          <div class="alert alert-info w-100">
-            {{ 'trans.No classified ads matching criteria were found' | trans }}
-          </div>
-        {% endfor %}
-        {% endspaceless %}
-      </div>
-
-      {% include 'base/_pagination.html.twig' %}
-    </div>
-  </div>
-</div>
 {% endblock body %}

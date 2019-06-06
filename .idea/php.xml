@@ -105,6 +105,6 @@
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="7.3" />
   <component name="TwigDebugConfiguration">
-    <cachePath>$PROJECT_DIR$/symfony/var/cache/dev/twig</cachePath>
+    <cachePath>$PROJECT_DIR$/zz_engine/var/cache/dev/twig</cachePath>
   </component>
 </project>

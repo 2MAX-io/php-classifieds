@@ -107,4 +107,9 @@ class TwigNoDependencies implements RuntimeExtensionInterface
             'numeralDecimalMark' => AppNumberFormatter::getDecimalSeparator(),
         ];
     }
+
+    public function normalizeWhitespace(string $string): string
+    {
+        return \trim(\preg_replace('/\s+/u', ' ', $string));
+    }
 }

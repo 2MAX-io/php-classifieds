@@ -1,24 +1,32 @@
 <script>
     let customFields = {};
     customFields.loadedCategory = null;
-    customFields.values = [];
+    customFields.formArray = [];
 
     customFields.loadFromBackend = function() {
         let listingId = null | {{ listing.id | default('null') }};
         let categoryId = parseInt($('.formCategory').val());
         customFields.loadedCategory = categoryId;
         $.get(Routing.generate('app_listing_get_custom_fields', {listingId: listingId, categoryId: categoryId}), function (html) {
-            $('.formCustomFieldList').html(html);
-
-            $('.formCustomFieldList').find('[name^="listing[customFieldList]"]').each(function(){
+            let $formCustomFieldList = $('.formCustomFieldList');
+            $formCustomFieldList.html(html);
+            $formCustomFieldList.find('[name^="listing[customFieldList]"]').each(function(){
                 let $input = $(this);
-
-                // todo: restore when bug fixed, bug is when changing cat selection to empty, and then to previous cat it fails (with checkbox custom field)
-                // if (customFields.values[$input.attr('name')] && customFields.values[$input.attr('name')].trim() !== '')  {
-                //     $input.val(customFields.values[$input.attr('name')]);
-                // }
+                let formSerializedElement = customFields.formArray[$input.attr('name')];
+                if (formSerializedElement && formSerializedElement.value.trim() !== '')  {
+                    $input.val(formSerializedElement.value);
+                }
             });
         });
+    };
+
+    customFields.getFormArray = function () {
+        let result = [];
+        $('.formCategory').parents('form').serializeArray().forEach(function (el) {
+            result[el.name] = el;
+        });
+
+        return result;
     };
 
     $('.formCategory').on('change', function () {
@@ -26,16 +34,7 @@
             return;
         }
 
-        $('.formCustomFieldList').find('[name^="listing[customFieldList]"]').each(function(){
-            let $input = $(this);
-
-            if ($input.val().trim() === ''){
-                return;
-            }
-
-            customFields.values[$input.attr('name')] = $input.val();
-        });
-
+        customFields.formArray = Object.assign({}, customFields.formArray, customFields.getFormArray());
         customFields.loadFromBackend();
     });
     

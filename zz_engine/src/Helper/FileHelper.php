@@ -34,14 +34,12 @@ class FileHelper
 
     public static function throwExceptionIfUnsafeExtensionFromUploadedFile(UploadedFile $uploadedFile): void
     {
-        $fileExtension = \mb_strtolower($uploadedFile->getClientOriginalExtension());
-        static::throwExceptionIfUnsafeExtensionFromUploadedFile($fileExtension);
+        static::throwExceptionIfUnsafeExtension($uploadedFile->getClientOriginalExtension());
     }
 
     public static function throwExceptionIfUnsafeFilename(string $filename): void
     {
-        $fileExtension = \mb_strtolower(pathinfo($filename, PATHINFO_EXTENSION));
-        static::throwExceptionIfUnsafeExtension($fileExtension);
+        static::throwExceptionIfUnsafeExtension(pathinfo($filename, PATHINFO_EXTENSION));
     }
 
     public static function throwExceptionIfUnsafePath(string $path, string $mustBeInsideDir = null): void
@@ -53,8 +51,7 @@ class FileHelper
             );
         }
 
-        $fileExtension = \mb_strtolower(pathinfo($path, PATHINFO_EXTENSION));
-        static::throwExceptionIfUnsafeExtension($fileExtension);
+        static::throwExceptionIfUnsafeExtension(pathinfo($path, PATHINFO_EXTENSION));
     }
 
     public static function throwExceptionIfUnsafeExtension(string $extension): void

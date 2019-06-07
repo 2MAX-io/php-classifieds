@@ -11,7 +11,6 @@ use App\Helper\FilePath;
 use App\Service\Event\FileModificationEventService;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\HttpFoundation\File\File;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Webmozart\PathUtil\Path;
 
 class ListingFileService
@@ -46,20 +45,11 @@ class ListingFileService
             if (!\file_exists($fileUploadDto->getSourceFilePath())) {
                 continue;
             }
+            FileHelper::throwExceptionIfUnsafePath($fileUploadDto->getSourceFilePath(), FilePath::getTempFileUpload());
             $tmpFile = new File($fileUploadDto->getSourceFilePath());
-            FileHelper::throwExceptionIfUnsafeExtension($tmpFile->getExtension());
-            $destinationFileName = FileHelper::getFilenameValidCharacters($fileUploadDto->getOriginalFilename())
-                . '.'
-                . $tmpFile->getExtension();
-            FileHelper::throwExceptionIfUnsafeFilename($destinationFileName);
-            $destinationDirectory = $this->getDestinationDirectory($listing);
-            FileHelper::throwExceptionIfUnsafePath(
-                $destinationDirectory
-                . '/'
-                . \basename($destinationFileName),
-                FilePath::getListingFilePath()
-            );
-            $newFile = $tmpFile->move($destinationDirectory, \basename($destinationFileName));
+            $destinationPath = $this->getDestinationPath($listing, $fileUploadDto);
+            FileHelper::throwExceptionIfUnsafePath($destinationPath, FilePath::getListingFilePath());
+            $newFile = $tmpFile->move(\dirname($destinationPath), \basename($destinationPath));
 
             $listingFile = new ListingFile();
             $listingFile->setPath(Path::makeRelative($newFile->getRealPath(), FilePath::getPublicDir()));
@@ -83,16 +73,35 @@ class ListingFileService
         $this->fileModificationEventService->updateListingMainImage($listing);
     }
 
+    private function getDestinationPath(Listing $listing, ListingFileUploadDto $fileUploadDto): string
+    {
+        $destinationPath = $this->getDestinationDirectory($listing)
+            . '/'
+            . \basename($this->getDestinationFileName($fileUploadDto));
+
+
+        FileHelper::throwExceptionIfUnsafePath($destinationPath, FilePath::getListingFilePath());
+
+        return Path::canonicalize($destinationPath);
+    }
+
     private function getDestinationDirectory(Listing $listing): string
     {
         $userDivider = \floor($listing->getUser()->getId() / 10000) + 1;
 
         return FilePath::getListingFilePath()
-            . '/' . $userDivider
             . '/'
-            . 'user_'
-            . $listing->getUser()->getId()
+            . $userDivider
+            . '/'
+            . 'user_' . $listing->getUser()->getId()
             . '/'
             . 'listing_' . $listing->getId();
+    }
+
+    private function getDestinationFileName(ListingFileUploadDto $fileUploadDto): string
+    {
+        return FileHelper::getFilenameValidCharacters($fileUploadDto->getOriginalFilename())
+        . '.'
+        . \pathinfo($fileUploadDto->getOriginalFilename(), PATHINFO_EXTENSION);
     }
 }

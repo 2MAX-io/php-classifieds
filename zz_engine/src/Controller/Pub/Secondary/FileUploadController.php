@@ -20,7 +20,7 @@ class FileUploadController extends AbstractController
     {
         $tmpUploadDir = FilePath::getTempFileUpload() . '/' . date('Y') . '/' . date('m') . '/' . date('d') . '/';
         $filesystem->mkdir($tmpUploadDir, 0770);
-        $FileUploader = new FileUploader(
+        $fileUploader = new FileUploader(
             'files', [
                 'uploadDir' => $tmpUploadDir,
                 'extensions' => ['jpg', 'jpeg', 'png'],
@@ -28,7 +28,7 @@ class FileUploadController extends AbstractController
                 'title' => ['zz_file_upload_' . date('Ymd_His') . '_{random}.{extension}', 32]
             ]
         );
-        $response = $FileUploader->upload();
+        $response = $fileUploader->upload();
 
         return $this->json($response);
     }

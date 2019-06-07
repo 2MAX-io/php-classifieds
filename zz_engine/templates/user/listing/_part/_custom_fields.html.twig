@@ -34,7 +34,7 @@
             return;
         }
 
-        customFields.formArray = Object.assign({}, customFields.formArray, customFields.getFormArray());
+        customFields.formArray = $.extend({}, customFields.formArray, customFields.getFormArray());
         customFields.loadFromBackend();
     });
     

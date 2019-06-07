@@ -380,3 +380,8 @@ php zz_engine/bin/console doctrine:schema:update --force
 php zz_engine/bin/console doctrine:schema:create --dump-sql > install/data/_schema.sql
 php zz_engine/bin/console app:cron:main
 composer install -d zz_engine --optimize-autoloader
+composer install -d zz_engine --optimize-autoloader
+composer update -d zz_engine
+composer update --help
+composer update -d zz_engine --optimize-autoloader
+composer install -d zz_engine --optimize-autoloader

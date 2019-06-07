@@ -19,20 +19,9 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
 class UserListingController extends AbstractUserController
 {
-    /**
-     * @var TranslatorInterface
-     */
-    private $trans;
-
-    public function __construct(TranslatorInterface $trans)
-    {
-        $this->trans = $trans;
-    }
-
     /**
      * @Route("/user/listing/", name="app_user_listing_index", methods={"GET"})
      */

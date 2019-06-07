@@ -12,7 +12,7 @@ use App\Service\Category\CategoryListService;
 use App\Service\Event\FileModificationEventService;
 use App\Service\Listing\CustomField\ListingCustomFieldsService;
 use App\Service\Listing\Save\SaveListingService;
-use App\Service\Listing\Save\ListingFileUploadService;
+use App\Service\Listing\Save\ListingFileService;
 use App\Service\Log\PoliceLogIpService;
 use App\Service\User\Listing\UserListingListService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -58,7 +58,7 @@ class UserListingController extends AbstractUserController
      */
     public function new(
         Request $request,
-        ListingFileUploadService $listingFileUploadService,
+        ListingFileService $listingFileService,
         SaveListingService $createListingService,
         ListingCustomFieldsService $listingCustomFieldsService,
         PoliceLogIpService $logIpService,
@@ -80,20 +80,9 @@ class UserListingController extends AbstractUserController
 
             $em->persist($listing);
             $em->flush();
-
-            if ($form->get('file')->getData()) {
-                $listingFileUploadService->addMultipleFilesFromUpload(
-                    $listing,
-                    $form->get('file')->getData()
-                );
-            }
             if ($request->request->get('fileuploader-list-files')) {
                 $fileUploaderList = Json::decodeToArray($request->request->get('fileuploader-list-files'));
-                $listingFileUploadService->upload(
-                    $listing,
-                    $fileUploaderList ?? []
-                );
-                $listingFileUploadService->updateSort(
+                $listingFileService->processListingFiles(
                     $listing,
                     $fileUploaderList ?? []
                 );
@@ -123,7 +112,7 @@ class UserListingController extends AbstractUserController
         Request $request,
         Listing $listing,
         ListingCustomFieldsService $listingCustomFieldsService,
-        ListingFileUploadService $listingFileUploadService,
+        ListingFileService $listingFileService,
         SaveListingService $createListingService,
         PoliceLogIpService $logIpService,
         CategoryListService $categoryListService,
@@ -136,19 +125,9 @@ class UserListingController extends AbstractUserController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            if ($form->get('file')->getData()) {
-                $listingFileUploadService->addMultipleFilesFromUpload(
-                    $listing,
-                    $form->get('file')->getData()
-                );
-            }
             if ($request->request->get('fileuploader-list-files')) {
                 $fileUploaderList = Json::decodeToArray($request->request->get('fileuploader-list-files'));
-                $listingFileUploadService->upload(
-                    $listing,
-                    $fileUploaderList ?? []
-                );
-                $listingFileUploadService->updateSort(
+                $listingFileService->processListingFiles(
                     $listing,
                     $fileUploaderList ?? []
                 );

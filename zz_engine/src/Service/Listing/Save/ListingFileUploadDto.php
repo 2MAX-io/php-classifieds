@@ -16,10 +16,16 @@ class ListingFileUploadDto
      */
     private $originalFilename;
 
-    public function __construct(string $path, string $originalFilename)
+    /**
+     * @var int
+     */
+    private $sort;
+
+    public function __construct(string $path, string $originalFilename, int $sort)
     {
         $this->path = $path;
         $this->originalFilename = $originalFilename;
+        $this->sort = $sort;
     }
 
     public function getPath(): string
@@ -40,5 +46,15 @@ class ListingFileUploadDto
     public function setOriginalFilename(string $originalFilename): void
     {
         $this->originalFilename = $originalFilename;
+    }
+
+    public function getSort(): int
+    {
+        return $this->sort;
+    }
+
+    public function setSort(int $sort): void
+    {
+        $this->sort = $sort;
     }
 }

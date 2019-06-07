@@ -8,7 +8,6 @@ use App\Entity\Listing;
 use App\Form\Type\BoolType;
 use App\Form\Type\CategoryType;
 use App\Form\Type\AppMoneyType;
-use App\Form\Type\FileSimpleType;
 use App\Form\Type\PriceForType;
 use App\Service\Listing\ValidityExtend\ValidUntilSetService;
 use App\Validator\Constraints\Phone;
@@ -20,11 +19,9 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\All;
 use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\Choice;
 use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
-use Symfony\Component\Validator\Constraints\Image;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
@@ -142,19 +139,6 @@ class ListingType extends AbstractType
                 ],
             ]
         );
-        $builder->add('file', FileSimpleType::class, [
-            'mapped' => false,
-            'required' => false,
-            'multiple' => true,
-            'constraints' => [
-                new All(
-                    new Image()
-                ),
-            ],
-            'attr' => ['hidden' => 'hidden'],
-            'label' => 'trans.Pictures',
-            'block_name' => 'simple',
-        ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

@@ -3,7 +3,7 @@
 <script src="{{ asset('asset/lib/fileuploader/jquery.fileuploader.min.js') }}"></script>
 
 <script>
-    $('#listing_file2').fileuploader({
+    $('#listing_file').fileuploader({
         addMore: true,
         upload: {
             url: '{{ path('app_file_upload') }}',
@@ -84,7 +84,6 @@
                 el.type = fileList[i].type;
                 el.size = fileList[i].size;
                 el.data = fileList[i].data;
-                el.tmpFilePath = el.data.tmpFilePath;
             });
 
             return list;

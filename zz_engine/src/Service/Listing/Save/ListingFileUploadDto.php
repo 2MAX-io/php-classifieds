@@ -4,12 +4,15 @@ declare(strict_types=1);
 
 namespace App\Service\Listing\Save;
 
+use App\Helper\FileHelper;
+use App\Helper\FilePath;
+
 class ListingFileUploadDto
 {
     /**
      * @var string
      */
-    private $path;
+    private $sourcePath;
 
     /**
      * @var string
@@ -21,21 +24,34 @@ class ListingFileUploadDto
      */
     private $sort;
 
+    public static function fromFileUploaderListElement(array $fileUploaderListElement): self
+    {
+        $sourceFilePath = FilePath::getPublicDir() . '/' . $fileUploaderListElement['data']['tmpFilePath'];
+        FileHelper::throwExceptionIfUnsafePath($sourceFilePath, FilePath::getTempFileUpload());
+        FileHelper::throwExceptionIfUnsafeFilename($fileUploaderListElement['name']);
+
+        return new ListingFileUploadDto(
+            $sourceFilePath,
+            \preg_replace('#(\?.+)$#', '', \basename($fileUploaderListElement['name'])),
+            (int) $fileUploaderListElement['index']
+        );
+    }
+
     public function __construct(string $path, string $originalFilename, int $sort)
     {
-        $this->path = $path;
+        $this->sourcePath = $path;
         $this->originalFilename = $originalFilename;
         $this->sort = $sort;
     }
 
-    public function getPath(): string
+    public function getSourceFilePath(): string
     {
-        return $this->path;
+        return $this->sourcePath;
     }
 
-    public function setPath(string $path): void
+    public function setSourcePath(string $sourcePath): void
     {
-        $this->path = $path;
+        $this->sourcePath = $sourcePath;
     }
 
     public function getOriginalFilename(): string

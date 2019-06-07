@@ -42,23 +42,24 @@ class ListingFileService
                 continue;
             }
 
-            $fileUploadDto = new ListingFileUploadDto(
-                $fileUploaderListElement['tmpFilePath'],
-                \preg_replace('#(\?.+)$#', '', \basename($fileUploaderListElement['name'])),
-                (int) $fileUploaderListElement['index']
-                );
-            $filePath = FilePath::getPublicDir() . '/' . $fileUploadDto->getPath();
-            if (!\file_exists($filePath)) {
+            $fileUploadDto = ListingFileUploadDto::fromFileUploaderListElement($fileUploaderListElement);
+            if (!\file_exists($fileUploadDto->getSourceFilePath())) {
                 continue;
             }
-            $tmpFile = new File($filePath);
+            $tmpFile = new File($fileUploadDto->getSourceFilePath());
             FileHelper::throwExceptionIfUnsafeExtension($tmpFile->getExtension());
             $destinationFileName = FileHelper::getFilenameValidCharacters($fileUploadDto->getOriginalFilename())
                 . '.'
                 . $tmpFile->getExtension();
-            $destinationDir = $this->getDestinationDirectory($listing);
             FileHelper::throwExceptionIfUnsafeFilename($destinationFileName);
-            $newFile = $tmpFile->move($destinationDir, \basename($destinationFileName));
+            $destinationDirectory = $this->getDestinationDirectory($listing);
+            FileHelper::throwExceptionIfUnsafePath(
+                $destinationDirectory
+                . '/'
+                . \basename($destinationFileName),
+                FilePath::getListingFilePath()
+            );
+            $newFile = $tmpFile->move($destinationDirectory, \basename($destinationFileName));
 
             $listingFile = new ListingFile();
             $listingFile->setPath(Path::makeRelative($newFile->getRealPath(), FilePath::getPublicDir()));
@@ -93,11 +94,5 @@ class ListingFileService
             . $listing->getUser()->getId()
             . '/'
             . 'listing_' . $listing->getId();
-    }
-
-    private function getDestinationFilename(UploadedFile $uploadedFile): string
-    {
-        return FileHelper::getFilenameValidCharacters($uploadedFile->getClientOriginalName())
-            . '.' . $uploadedFile->getClientOriginalExtension();
     }
 }

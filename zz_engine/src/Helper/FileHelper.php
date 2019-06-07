@@ -44,6 +44,19 @@ class FileHelper
         static::throwExceptionIfUnsafeExtension($fileExtension);
     }
 
+    public static function throwExceptionIfUnsafePath(string $path, string $mustBeInsideDir = null): void
+    {
+        $mustBeInsideDir = $mustBeInsideDir ?? FilePath::getStaticPath();
+        if (Path::getLongestCommonBasePath([Path::canonicalize($path), $mustBeInsideDir]) !== $mustBeInsideDir) {
+            throw new UserVisibleMessageException(
+                'detected file path change'
+            );
+        }
+
+        $fileExtension = \mb_strtolower(pathinfo($path, PATHINFO_EXTENSION));
+        static::throwExceptionIfUnsafeExtension($fileExtension);
+    }
+
     public static function throwExceptionIfUnsafeExtension(string $extension): void
     {
         $fileExtension = \mb_strtolower($extension);

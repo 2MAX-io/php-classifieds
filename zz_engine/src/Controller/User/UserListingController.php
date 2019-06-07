@@ -70,10 +70,9 @@ class UserListingController extends AbstractUserController
             $em->persist($listing);
             $em->flush();
             if ($request->request->get('fileuploader-list-files')) {
-                $fileUploaderList = Json::decodeToArray($request->request->get('fileuploader-list-files'));
                 $listingFileService->processListingFiles(
                     $listing,
-                    $fileUploaderList ?? []
+                    Json::decodeToArray($request->request->get('fileuploader-list-files')) ?? []
                 );
             }
 
@@ -115,10 +114,9 @@ class UserListingController extends AbstractUserController
 
         if ($form->isSubmitted() && $form->isValid()) {
             if ($request->request->get('fileuploader-list-files')) {
-                $fileUploaderList = Json::decodeToArray($request->request->get('fileuploader-list-files'));
                 $listingFileService->processListingFiles(
                     $listing,
-                    $fileUploaderList ?? []
+                    Json::decodeToArray($request->request->get('fileuploader-list-files')) ?? []
                 );
             }
             $listingCustomFieldsService->saveCustomFieldsToListing(

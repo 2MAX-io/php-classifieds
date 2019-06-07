@@ -38,6 +38,12 @@ class FileHelper
         static::throwExceptionIfUnsafeExtensionFromUploadedFile($fileExtension);
     }
 
+    public static function throwExceptionIfUnsafeFilename(string $filename): void
+    {
+        $fileExtension = \mb_strtolower(pathinfo($filename, PATHINFO_EXTENSION));
+        static::throwExceptionIfUnsafeExtension($fileExtension);
+    }
+
     public static function throwExceptionIfUnsafeExtension(string $extension): void
     {
         $fileExtension = \mb_strtolower($extension);

@@ -57,7 +57,8 @@ class ListingFileService
                 . '.'
                 . $tmpFile->getExtension();
             $destinationDir = $this->getDestinationDirectory($listing);
-            $newFile = $tmpFile->move($destinationDir, $destinationFileName);
+            FileHelper::throwExceptionIfUnsafeFilename($destinationFileName);
+            $newFile = $tmpFile->move($destinationDir, \basename($destinationFileName));
 
             $listingFile = new ListingFile();
             $listingFile->setPath(Path::makeRelative($newFile->getRealPath(), FilePath::getPublicDir()));

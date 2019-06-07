@@ -69,4 +69,9 @@ class FilePath
     {
         return self::getPath(__DIR__ . '/../../../static/logo');
     }
+
+    public static function getTempFileUpload(): string
+    {
+        return self::getPath(__DIR__ . '/../../../static/tmp/file_upload');
+    }
 }

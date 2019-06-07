@@ -87,10 +87,15 @@ class UserListingController extends AbstractUserController
                     $form->get('file')->getData()
                 );
             }
-            if ($request->request->get('fileuploader-list-file')) {
+            if ($request->request->get('fileuploader-list-files')) {
+                $fileUploaderList = Json::decodeToArray($request->request->get('fileuploader-list-files'));
+                $listingFileUploadService->upload(
+                    $listing,
+                    $fileUploaderList ?? []
+                );
                 $listingFileUploadService->updateSort(
                     $listing,
-                    \json_decode($request->request->get('fileuploader-list-file'), true)
+                    $fileUploaderList ?? []
                 );
             }
 
@@ -104,8 +109,9 @@ class UserListingController extends AbstractUserController
             'user/listing/new.html.twig',
             [
                 'listing' => $listing,
-                'formCategorySelectList' => $categoryListService->getFormCategorySelectList(),
                 'form' => $form->createView(),
+                'formCategorySelectList' => $categoryListService->getFormCategorySelectList(),
+                'listingFilesForJavascript' => $createListingService->getListingFilesForJavascript($listing),
             ]
         );
     }
@@ -136,10 +142,15 @@ class UserListingController extends AbstractUserController
                     $form->get('file')->getData()
                 );
             }
-            if ($request->request->get('fileuploader-list-file')) {
+            if ($request->request->get('fileuploader-list-files')) {
+                $fileUploaderList = Json::decodeToArray($request->request->get('fileuploader-list-files'));
+                $listingFileUploadService->upload(
+                    $listing,
+                    $fileUploaderList ?? []
+                );
                 $listingFileUploadService->updateSort(
                     $listing,
-                    Json::decodeToArray($request->request->get('fileuploader-list-file'))
+                    $fileUploaderList ?? []
                 );
             }
             $listingCustomFieldsService->saveCustomFieldsToListing(
@@ -164,8 +175,8 @@ class UserListingController extends AbstractUserController
             [
                 'listing' => $listing,
                 'form' => $form->createView(),
-                'listingFilesForJavascript' => $createListingService->getListingFilesForJavascript($listing),
                 'formCategorySelectList' => $categoryListService->getFormCategorySelectList(),
+                'listingFilesForJavascript' => $createListingService->getListingFilesForJavascript($listing),
             ]
         );
     }

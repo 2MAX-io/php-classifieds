@@ -7,6 +7,7 @@ namespace App\Service\Listing\Save;
 use App\Entity\Listing;
 use App\Form\ListingCustomFieldListType;
 use App\Form\ListingType;
+use App\Helper\Json;
 use App\Helper\SlugHelper;
 use App\Helper\Str;
 use App\Security\CurrentUserService;
@@ -16,6 +17,7 @@ use Minwork\Helper\Arr;
 use Symfony\Component\Asset\Packages;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 class SaveListingService
 {
@@ -39,16 +41,23 @@ class SaveListingService
      */
     private $currentUserService;
 
+    /**
+     * @var RequestStack
+     */
+    private $requestStack;
+
     public function __construct(
         ValidUntilSetService $validUntilSetService,
         Packages $packages,
         TextService $textService,
-        CurrentUserService $currentUserService
+        CurrentUserService $currentUserService,
+        RequestStack $requestStack
     ) {
         $this->validUntilSetService = $validUntilSetService;
         $this->packages = $packages;
         $this->textService = $textService;
         $this->currentUserService = $currentUserService;
+        $this->requestStack = $requestStack;
     }
 
     public function createListingForForm(): Listing
@@ -108,6 +117,21 @@ class SaveListingService
 
     public function getListingFilesForJavascript(Listing $listing): array
     {
+        $fileUploaderListFilesFromRequest = $this->requestStack->getMasterRequest()->request->get('fileuploader-list-files', false);
+        if ($fileUploaderListFilesFromRequest) {
+            $files = Json::decodeToArray($fileUploaderListFilesFromRequest);
+            $files = \array_map(function($file): array {
+                if (Str::beginsWith($file['file'], '0:/')) {
+                    $file['file'] = $this->packages->getUrl($file['tmpFilePath']);
+                    $file['data']['tmpFilePath'] = $file['tmpFilePath'];
+                }
+
+                return $file;
+            }, $files);
+
+            return $files;
+        }
+
         $returnFiles = [];
         foreach ($listing->getListingFiles() as $listingFile) {
             $returnFiles[] = [
@@ -117,6 +141,7 @@ class SaveListingService
                 'file' => $this->packages->getUrl($listingFile->getPathInListSize()),
                 'data' => [
                     'listingFileId' => $listingFile->getId(),
+                    'filePath' => $this->packages->getUrl($listingFile->getPath()),
                 ],
             ];
         }

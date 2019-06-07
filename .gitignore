@@ -3,4 +3,5 @@
 /static/listing/
 /static/logo/
 /static/category/
+/static/tmp/
 /test*.php

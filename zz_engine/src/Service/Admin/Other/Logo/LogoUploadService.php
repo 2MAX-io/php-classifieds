@@ -24,13 +24,13 @@ class LogoUploadService
 
     public function saveLogo(UploadedFile $uploadedFile): void
     {
-        FileHelper::throwExceptionIfUnsafeExtension($uploadedFile);
+        FileHelper::throwExceptionIfUnsafeExtensionFromUploadedFile($uploadedFile);
 
         $destinationFilename = $this->getDestinationFilename($uploadedFile);
 
         if (!FileHelper::isImage($destinationFilename)) {
             throw new \UnexpectedValueException(
-                "file is not image"
+                'file is not image'
             );
         }
 

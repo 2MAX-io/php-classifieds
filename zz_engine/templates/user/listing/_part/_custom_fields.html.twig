@@ -13,9 +13,10 @@
             $('.formCustomFieldList').find('[name^="listing[customFieldList]"]').each(function(){
                 let $input = $(this);
 
-                if (customFields.values[$input.attr('name')] && customFields.values[$input.attr('name')].trim() !== '')  {
-                    $input.val(customFields.values[$input.attr('name')]);
-                }
+                // todo: restore when bug fixed, bug is when changing cat selection to empty, and then to previous cat it fails (with checkbox custom field)
+                // if (customFields.values[$input.attr('name')] && customFields.values[$input.attr('name')].trim() !== '')  {
+                //     $input.val(customFields.values[$input.attr('name')]);
+                // }
             });
         });
     };

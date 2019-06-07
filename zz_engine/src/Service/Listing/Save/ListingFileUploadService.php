@@ -77,7 +77,7 @@ class ListingFileUploadService
 
     private function moveFile(UploadedFile $uploadedFile, Listing $listing): File
     {
-        FileHelper::throwExceptionIfUnsafeExtension($uploadedFile);
+        FileHelper::throwExceptionIfUnsafeExtensionFromUploadedFile($uploadedFile);
 
         return $uploadedFile->move(
             $this->getDestinationDirectory($listing),
@@ -102,5 +102,41 @@ class ListingFileUploadService
     {
         return FileHelper::getFilenameValidCharacters($uploadedFile->getClientOriginalName())
             . '.' . $uploadedFile->getClientOriginalExtension();
+    }
+
+    public function upload(Listing $listing, array $fileUploaderList): void
+    {
+        foreach ($fileUploaderList as $fileUploaderListElement) {
+            if (!isset($fileUploaderListElement['tmpFilePath'])) {
+                continue;
+            }
+
+            $fileUploadDto = new ListingFileUploadDto(
+            $fileUploaderListElement['tmpFilePath'],
+                \preg_replace('#(\?.+)$#', '', \basename($fileUploaderListElement['name'])),
+            );
+            $filePath = FilePath::getPublicDir() . '/' . $fileUploadDto->getPath();
+            if (!\file_exists($filePath)) {
+                continue;
+            }
+            $tmpFile = new File($filePath);
+            FileHelper::throwExceptionIfUnsafeExtension($tmpFile->getExtension());
+            $fileName = FileHelper::getFilenameValidCharacters($fileUploadDto->getOriginalFilename())
+                . '.'
+                . $tmpFile->getExtension();
+            $destinationDir = $this->getDestinationDirectory($listing);
+
+            $newFile = $tmpFile->move($destinationDir, $fileName);
+
+            $listingFile = new ListingFile();
+            $listingFile->setPath(Path::makeRelative($newFile->getRealPath(), FilePath::getPublicDir()));
+            $listingFile->setFilename(\basename($listingFile->getPath()));
+            $listingFile->setMimeType(\mime_content_type($listingFile->getPath()));
+            $listingFile->setSizeBytes(\filesize($listingFile->getPath()));
+            $listingFile->setSort(SortService::LAST_VALUE);
+            $this->em->persist($listingFile);
+
+            $listing->addListingFile($listingFile);
+        }
     }
 }

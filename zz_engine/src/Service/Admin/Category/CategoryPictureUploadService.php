@@ -14,7 +14,7 @@ class CategoryPictureUploadService
 {
     public function savePicture(Category $category, UploadedFile $uploadedFile): void
     {
-        FileHelper::throwExceptionIfUnsafeExtension($uploadedFile);
+        FileHelper::throwExceptionIfUnsafeExtensionFromUploadedFile($uploadedFile);
 
         $destinationFilename = $this->getDestinationFilename($uploadedFile);
 

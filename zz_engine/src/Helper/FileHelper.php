@@ -32,9 +32,15 @@ class FileHelper
         return $generator->generate(pathinfo($filename, PATHINFO_FILENAME));
     }
 
-    public static function throwExceptionIfUnsafeExtension(UploadedFile $uploadedFile): void
+    public static function throwExceptionIfUnsafeExtensionFromUploadedFile(UploadedFile $uploadedFile): void
     {
         $fileExtension = \mb_strtolower($uploadedFile->getClientOriginalExtension());
+        static::throwExceptionIfUnsafeExtensionFromUploadedFile($fileExtension);
+    }
+
+    public static function throwExceptionIfUnsafeExtension(string $extension): void
+    {
+        $fileExtension = \mb_strtolower($extension);
         if (!Arr::inArray(
             $fileExtension,
             [

@@ -68,7 +68,7 @@ class ListingCustomFieldListType extends AbstractType
 
         foreach ($this->listingCustomFieldsService->getFields($category->getId(), $listingId) as $customField) {
 
-            if (\in_array($customField->getType(), [CustomField::TYPE_SELECT_SINGLE, CustomField::TYPE_SELECT])) {
+            if (\in_array($customField->getType(), [CustomField::TYPE_SELECT_SINGLE, CustomField::TYPE_SELECT], true)) {
                 $choices = $this->getChoices($customField);
                 if (!$choices) {
                     continue;
@@ -85,7 +85,7 @@ class ListingCustomFieldListType extends AbstractType
                 ]);
             }
 
-            if (\in_array($customField->getType(), [CustomField::TYPE_CHECKBOX_MULTIPLE])) {
+            if (\in_array($customField->getType(), [CustomField::TYPE_CHECKBOX_MULTIPLE], true)) {
                 $choices = $this->getChoices($customField);
                 if (!$choices) {
                     continue;
@@ -103,7 +103,7 @@ class ListingCustomFieldListType extends AbstractType
                 ]);
             }
 
-            if (\in_array($customField->getType(), [CustomField::TYPE_INTEGER_RANGE])) {
+            if (\in_array($customField->getType(), [CustomField::TYPE_INTEGER_RANGE], true)) {
                 $builder->add($customField->getId(), IntegerType::class, [
                     'label' => $customField->getName(),
                     'translation_domain' => false,
@@ -113,7 +113,7 @@ class ListingCustomFieldListType extends AbstractType
                 ]);
             }
 
-            if (\in_array($customField->getType(), [CustomField::TYPE_YEAR_RANGE])) {
+            if (\in_array($customField->getType(), [CustomField::TYPE_YEAR_RANGE], true)) {
                 $builder->add($customField->getId(), YearType::class, [
                     'label' => $customField->getName(),
                     'placeholder' => $this->trans->trans('trans.Select'),
@@ -177,11 +177,11 @@ class ListingCustomFieldListType extends AbstractType
             return null;
         }
 
-        if (\in_array($customField->getType(), [CustomField::TYPE_SELECT_SINGLE, CustomField::TYPE_SELECT])) {
+        if (\in_array($customField->getType(), [CustomField::TYPE_SELECT_SINGLE, CustomField::TYPE_SELECT], true)) {
             return '__form_custom_field_option_id_' . $customField->getListingCustomFieldValueFirst()->getCustomFieldOption()->getId();
         }
 
-        if (\in_array($customField->getType(), [CustomField::TYPE_INTEGER_RANGE, CustomField::TYPE_YEAR_RANGE])) {
+        if (\in_array($customField->getType(), [CustomField::TYPE_INTEGER_RANGE, CustomField::TYPE_YEAR_RANGE], true)) {
             return $customField->getListingCustomFieldValueFirst()->getValue();
         }
 

@@ -9,6 +9,7 @@ use App\Helper\Search;
 use App\Service\System\Pagination\PaginationDto;
 use App\Service\System\Pagination\PaginationService;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 class AdministratorListService
@@ -40,6 +41,7 @@ class AdministratorListService
 
     public function getAdminList(int $page): PaginationDto
     {
+        /** @var Request $request */
         $request = $this->requestStack->getMasterRequest();
 
         $qb = $this->em->getRepository(Admin::class)->createQueryBuilder('user');
@@ -54,8 +56,6 @@ class AdministratorListService
         $pager->setMaxPerPage($this->paginationService->getMaxPerPage());
         $pager->setCurrentPage($page);
 
-        $paginationDto = new PaginationDto($pager->getCurrentPageResults(), $pager);
-
-        return $paginationDto;
+        return new PaginationDto($pager->getCurrentPageResults(), $pager);
     }
 }

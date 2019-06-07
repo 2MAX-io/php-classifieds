@@ -15,7 +15,6 @@ use GuzzleHttp\RequestOptions;
 use Psr\Log\LoggerInterface;
 use Psr\SimpleCache\CacheInterface;
 use Symfony\Component\HttpFoundation\UrlHelper;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Webmozart\PathUtil\Path;
 
@@ -25,11 +24,6 @@ class SecurityHealthChecker implements HealthCheckerInterface
      * @var TranslatorInterface
      */
     private $trans;
-
-    /**
-     * @var UrlGeneratorInterface
-     */
-    private $urlGenerator;
 
     /**
      * @var CacheInterface
@@ -48,13 +42,11 @@ class SecurityHealthChecker implements HealthCheckerInterface
 
     public function __construct(
         TranslatorInterface $trans,
-        UrlGeneratorInterface $urlGenerator,
         UrlHelper $urlHelper,
         CacheInterface $cache,
         LoggerInterface $logger
     ) {
         $this->trans = $trans;
-        $this->urlGenerator = $urlGenerator;
         $this->cache = $cache;
         $this->logger = $logger;
         $this->urlHelper = $urlHelper;

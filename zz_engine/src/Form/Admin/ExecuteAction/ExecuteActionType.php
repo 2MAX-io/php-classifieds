@@ -55,7 +55,7 @@ class ExecuteActionType extends AbstractType
             'label' => 'trans.Custom field option',
             'placeholder' => 'trans.Select',
             'class' => CustomFieldOption::class,
-            'choice_label' => function (CustomFieldOption $customFieldOption) {
+            'choice_label' => static function (CustomFieldOption $customFieldOption) {
                 $customField = $customFieldOption->getCustomField();
                 $hint = $customField->getNameForAdmin() ? " ( {$customField->getNameForAdmin()} )" : '';
 
@@ -91,23 +91,19 @@ class ExecuteActionType extends AbstractType
             'required' => false,
             'data_class' => ExecuteActionDto::class,
             'constraints' => [
-                new Callback(['callback' => function (ExecuteActionDto $executeActionDto, ExecutionContextInterface $context): void {
+                new Callback(['callback' => static function (ExecuteActionDto $executeActionDto, ExecutionContextInterface $context): void {
                     $action = $executeActionDto->getAction();
 
-                    if ($action === static::ACTION_SET_CUSTOM_FIELD_OPTION) {
-                        if (empty($executeActionDto->getCustomFieldOption())) {
-                            $context->buildViolation('This value should not be blank.')
-                                ->atPath(static::CUSTOM_FIELD_OPTION_FIELD)
-                                ->addViolation();
-                        }
+                    if ($action === static::ACTION_SET_CUSTOM_FIELD_OPTION && null === $executeActionDto->getCustomFieldOption()) {
+                        $context->buildViolation('This value should not be blank.')
+                            ->atPath(static::CUSTOM_FIELD_OPTION_FIELD)
+                            ->addViolation();
                     }
 
-                    if ($action === static::ACTION_SET_CATEGORY) {
-                        if (empty($executeActionDto->getCategory())) {
-                            $context->buildViolation('This value should not be blank.')
-                                ->atPath(static::CATEGORY_FIELD)
-                                ->addViolation();
-                        }
+                    if ($action === static::ACTION_SET_CATEGORY && null === $executeActionDto->getCategory()) {
+                        $context->buildViolation('This value should not be blank.')
+                            ->atPath(static::CATEGORY_FIELD)
+                            ->addViolation();
                     }
                 }])
             ],

@@ -36,8 +36,6 @@ class PaymentHistoryService
         $pager->setMaxPerPage($this->paginationService->getMaxPerPage());
         $pager->setCurrentPage($page);
 
-        $paginationDto = new PaginationDto($pager->getCurrentPageResults(), $pager);
-
-        return $paginationDto;
+        return new PaginationDto($pager->getCurrentPageResults(), $pager);
     }
 }

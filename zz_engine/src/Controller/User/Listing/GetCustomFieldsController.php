@@ -39,7 +39,7 @@ class GetCustomFieldsController extends AbstractUserController
      * @Route("/listing/get-custom-fields", name="app_listing_get_custom_fields", options={"expose"=true})
      */
     public function getCustomFields(Request $request): Response {
-        $listingId = $request->query->get('listingId', null);
+        $listingId = $request->query->get('listingId');
         $customFieldsForNewListing = $listingId < 1;
         if ($customFieldsForNewListing) {
             $listing = new Listing();
@@ -53,7 +53,7 @@ class GetCustomFieldsController extends AbstractUserController
 
         $this->dennyIfNotAllowed($listing);
 
-        $categoryId = $request->query->get('categoryId', null);
+        $categoryId = $request->query->get('categoryId');
         $category = $this->getDoctrine()->getRepository(Category::class)->find($categoryId);
         if ($category) {
             $listing->setCategory($category);
@@ -67,7 +67,7 @@ class GetCustomFieldsController extends AbstractUserController
         );
     }
 
-    private function dennyIfNotAllowed(?Listing $listing): void
+    private function dennyIfNotAllowed(Listing $listing): void
     {
         if ($this->currentUserService->lowSecurityCheckIsAdminInPublic()) {
             return; // skip checking admin

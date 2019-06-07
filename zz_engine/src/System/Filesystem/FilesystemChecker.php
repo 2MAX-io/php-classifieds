@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\System\Filesystem;
 
 use App\Helper\FilePath;
-use DirectoryIterator;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 
 class FilesystemChecker
@@ -69,8 +69,9 @@ class FilesystemChecker
 
     public static function creatingDirFailedList(): array
     {
+        $filesystem = new Filesystem();
         if (!\file_exists(FilePath::getProjectDir() . '/zz_engine/var/cache/prod')) {
-            \mkdir(FilePath::getProjectDir() . '/zz_engine/var/cache/prod', 0750);
+            $filesystem->mkdir(FilePath::getProjectDir() . '/zz_engine/var/cache/prod', 0750);
         }
 
         $return = [];
@@ -85,7 +86,7 @@ class FilesystemChecker
         ];
 
         foreach ($patchList as $patch) {
-            if (!FilesystemChecker::canCreateDir($patch)) {
+            if (!static::canCreateDir($patch)) {
                 $return[] = $patch;
             }
         }
@@ -110,7 +111,7 @@ class FilesystemChecker
         ];
 
         foreach ($patchList as $patch) {
-            if (!FilesystemChecker::canWriteFile($patch)) {
+            if (!static::canWriteFile($patch)) {
                 $return[] = $patch;
             }
         }

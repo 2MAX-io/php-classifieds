@@ -65,7 +65,7 @@ class RemindPasswordService
             Carbon::now()->add('day', 7)
         );
         $tokenDto->addField(TokenField::USER_ID_FIELD, (string) $user->getId());
-        $tokenDto->addField(TokenField::REMINDED_HASHED_PASSWORD, (string) $hashedPassword);
+        $tokenDto->addField(TokenField::REMINDED_HASHED_PASSWORD, $hashedPassword);
 
         $this->em->persist($tokenDto->getTokenEntity());
 

@@ -10,6 +10,7 @@ use App\Helper\Search;
 use App\Service\System\Pagination\PaginationService;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 class AdminListingSearchService
@@ -58,6 +59,7 @@ class AdminListingSearchService
     public function getQuery(): QueryBuilder
     {
         $qb = $this->em->getRepository(Listing::class)->createQueryBuilder('listing');
+        /** @var Request $request */
         $request = $this->requestStack->getMasterRequest();
 
         if ($request->get('query', false)) {

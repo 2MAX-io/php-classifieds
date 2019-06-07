@@ -195,7 +195,7 @@ class User implements UserInterface, RoleInterface, EnablableInterface, EncoderA
      */
     public function getPassword(): string
     {
-        return (string) $this->password;
+        return $this->password;
     }
 
     public function setPassword(string $password): self

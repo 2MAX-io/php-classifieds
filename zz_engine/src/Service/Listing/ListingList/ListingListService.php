@@ -14,6 +14,7 @@ use App\Service\Listing\ListingPublicDisplayService;
 use App\Service\System\Pagination\PaginationService;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr\Join;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 class ListingListService
@@ -52,6 +53,7 @@ class ListingListService
 
     public function getListings(ListingListDto $listingListDto): ListingListDto
     {
+        /** @var Request $request */
         $request = $this->requestStack->getMasterRequest();
         $qb = $this->em->getRepository(Listing::class)->createQueryBuilder('listing');
 
@@ -92,9 +94,12 @@ class ListingListService
         $this->listingPublicDisplayService->applyPublicDisplayConditions($qb);
 
         if ($request->get('form_custom_field', false)) {
-            $customFieldForCategoryList = Arr::indexBy($listingListDto->getCustomFieldForCategoryList(), function(CustomField $customField) {
-                return [$customField->getId() => $customField];
-            });
+            $customFieldForCategoryList = Arr::indexBy(
+                $listingListDto->getCustomFieldForCategoryList(),
+                static function (CustomField $customField) {
+                    return [$customField->getId() => $customField];
+                }
+            );
 
             $sqlParamId = 0;
             $usedCustomFieldIdList = [];

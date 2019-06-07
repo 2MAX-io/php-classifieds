@@ -24,7 +24,7 @@ class ListingShowDto
             return null;
         }
 
-        $listingShowDto = new ListingShowDto();
+        $listingShowDto = new self();
         $listingShowDto->setListing($result[0]);
         $listingShowDto->setViewsCount((int) $result['viewsCount']);
 

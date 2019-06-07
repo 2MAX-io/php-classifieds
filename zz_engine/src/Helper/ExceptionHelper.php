@@ -14,7 +14,7 @@ class ExceptionHelper
                 'file' => $e->getFile() . ':' . $e->getLine(),
                 'trace' => "\n" . \mb_substr($e->getTraceAsString(), 0, 1000) . "\n",
                 'previous' => \array_map(
-                    function (\Throwable $e) {
+                    static function (\Throwable $e) {
                         return static::flatten($e);
                     },
                     static::getAllPrevious($e)

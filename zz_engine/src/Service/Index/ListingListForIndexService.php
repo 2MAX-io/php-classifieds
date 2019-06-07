@@ -54,7 +54,7 @@ class ListingListForIndexService
         $count = (int) $qbCount->getQuery()->getSingleScalarResult();
 
         $maxResultToGetFromDb = $maxResultsCount * 5;
-        $qb->setFirstResult(\random_int(0, \max($count-($maxResultToGetFromDb), 0)));
+        $qb->setFirstResult(\random_int(0, \max($count-$maxResultToGetFromDb, 0)));
         $qb->setMaxResults($maxResultToGetFromDb);
 
         $results = $qb->getQuery()->getResult();

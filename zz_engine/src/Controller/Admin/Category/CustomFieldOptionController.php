@@ -13,6 +13,7 @@ use App\Service\Admin\CustomField\CustomFieldOptionService;
 use App\Service\System\Sort\SortService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -36,6 +37,7 @@ class CustomFieldOptionController extends AbstractAdminController
         $customFieldOption = new CustomFieldOption();
         $customFieldOption->setCustomField($customField);
         $customFieldOption->setSort(SortService::LAST_VALUE);
+        /** @var Form $form */
         $form = $this->createForm(CustomFieldOptionType::class, $customFieldOption);
         $form->add(CustomFieldOptionType::SAVE_AND_ADD, SubmitType::class, [
             'label' => 'trans.Save and Add',

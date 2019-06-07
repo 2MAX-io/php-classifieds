@@ -11,6 +11,7 @@ use App\Helper\Random;
 use App\Service\System\Signature\SignatureVerifyHighSecurity;
 use App\System\EnvironmentService;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\Filesystem\Filesystem;
 
 class UpgradeService
 {
@@ -24,10 +25,16 @@ class UpgradeService
      */
     private $environmentService;
 
-    public function __construct(EnvironmentService $environmentService, LoggerInterface $logger)
+    /**
+     * @var Filesystem
+     */
+    private $filesystem;
+
+    public function __construct(EnvironmentService $environmentService, Filesystem $filesystem, LoggerInterface $logger)
     {
         $this->logger = $logger;
         $this->environmentService = $environmentService;
+        $this->filesystem = $filesystem;
     }
 
     public function upgrade(array $upgradeArr): void
@@ -58,13 +65,13 @@ class UpgradeService
         }
 
         if (!\file_exists(FilePath::getUpgradeDir())) {
-            \mkdir(FilePath::getUpgradeDir(), 0770);
+            $this->filesystem->mkdir(FilePath::getUpgradeDir(), 0770);
         }
 
         $decodedContent = \base64_decode($content);
         $filename = \basename(
             'upgrade'
-            . '_' . (int) $id
+            . '_' . $id
             . '_' . \md5($decodedContent)
             . '_' . date('Y_m_d__His')
             . '_' . Random::string(8)
@@ -74,16 +81,18 @@ class UpgradeService
         \file_put_contents($path, $decodedContent);
 
         try {
+            /** @noinspection PhpIncludeInspection */
             $run = include $path;
             $run();
         } catch (\Throwable $e) {
-            $this->logger->alert('error during upgrade, content', [
-                'run_content' => $content,
-            ]);
+            $this->logger->alert(
+                'error during upgrade, content',
+                [
+                    'run_content' => $content,
+                ]
+            );
             $this->logger->alert('error during upgrade', ExceptionHelper::flatten($e));
             throw $e;
-        } finally {
-//            \unlink($path);
         }
     }
 }

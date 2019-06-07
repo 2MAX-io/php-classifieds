@@ -37,9 +37,7 @@ class TokenService
         $token->setCreatedDate(new \DateTime());
         $token->setValidUntilDate($validUntil);
 
-        $tokenDto = new TokenDto($token);
-
-        return $tokenDto;
+        return new TokenDto($token);
     }
 
     public function getToken(string $tokenString, string $tokenType): ?Token

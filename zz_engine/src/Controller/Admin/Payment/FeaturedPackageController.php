@@ -9,7 +9,6 @@ use App\Entity\FeaturedPackage;
 use App\Form\Admin\FeaturedPackageType;
 use App\Repository\FeaturedPackageRepository;
 use App\Service\Admin\FeaturedPackage\CategorySelection\FeaturedPackageCategorySelectionService;
-use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -102,7 +101,7 @@ class FeaturedPackageController extends AbstractAdminController
     /**
      * @Route("/admin/red5/featured-package/{id}", name="app_admin_featured_package_delete", methods={"DELETE"})
      */
-    public function delete(Request $request, FeaturedPackage $featuredPackage, LoggerInterface $logger): Response
+    public function delete(Request $request, FeaturedPackage $featuredPackage): Response
     {
         $this->denyUnlessAdmin();
 

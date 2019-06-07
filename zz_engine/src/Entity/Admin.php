@@ -90,7 +90,7 @@ class Admin implements UserInterface, RoleInterface, EnablableInterface
      */
     public function getUsername(): string
     {
-        return (string) $this->email;
+        return $this->email;
     }
 
     /**
@@ -117,7 +117,7 @@ class Admin implements UserInterface, RoleInterface, EnablableInterface
      */
     public function getPassword(): string
     {
-        return (string) $this->password;
+        return $this->password;
     }
 
     public function setPassword(string $password): self

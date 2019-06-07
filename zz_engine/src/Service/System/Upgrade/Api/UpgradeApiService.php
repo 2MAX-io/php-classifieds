@@ -86,7 +86,7 @@ class UpgradeApiService
                 }
 
                 $responseArr = Json::decodeToArray($responseBody);
-                $versionDto = new LatestVersionDto((int) ($responseArr['version']), (string) ($responseArr['date']));
+                $versionDto = new LatestVersionDto((int) $responseArr['version'], (string) $responseArr['date']);
 
                 return $versionDto;
             }

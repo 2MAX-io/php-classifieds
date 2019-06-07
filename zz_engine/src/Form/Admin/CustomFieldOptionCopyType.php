@@ -33,7 +33,7 @@ class CustomFieldOptionCopyType extends AbstractType
             'constraints' => [
                 new NotBlank(),
             ],
-            'choice_label' => function (CustomField $customField) {
+            'choice_label' => static function (CustomField $customField) {
                 $hint = '';
                 if ($customField->getNameForAdmin()) {
                     $hint = ' (' . $customField->getNameForAdmin() . ')';

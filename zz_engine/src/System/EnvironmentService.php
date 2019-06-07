@@ -37,14 +37,17 @@ class EnvironmentService
     public function getUpgradeDisabled(): bool
     {
         return $this->parameterBag->get('upgrade_disabled')
-            || isset($_ENV['APP_UPGRADE_DISABLED'])
-            && BoolHelper::isTrue($_ENV['APP_UPGRADE_DISABLED']);
+            || (isset($_ENV['APP_UPGRADE_DISABLED']) && BoolHelper::isTrue($_ENV['APP_UPGRADE_DISABLED']));
     }
 
     public function getUpgradeAvailableCheckDisabled(): bool
     {
         return $this->parameterBag->get('upgrade_available_check_disabled')
-            || isset($_ENV['APP_UPGRADE_AVAILABLE_CHECK_DISABLED'])
-            && BoolHelper::isTrue($_ENV['APP_UPGRADE_AVAILABLE_CHECK_DISABLED']);
+            || (
+                isset($_ENV['APP_UPGRADE_AVAILABLE_CHECK_DISABLED'])
+                && BoolHelper::isTrue(
+                    $_ENV['APP_UPGRADE_AVAILABLE_CHECK_DISABLED']
+                )
+            );
     }
 }

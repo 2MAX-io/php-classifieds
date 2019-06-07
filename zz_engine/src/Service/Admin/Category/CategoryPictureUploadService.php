@@ -20,7 +20,7 @@ class CategoryPictureUploadService
 
         if (!FileHelper::isImage($destinationFilename)) {
             throw new \UnexpectedValueException(
-                "file is not image"
+                'file is not image'
             );
         }
 

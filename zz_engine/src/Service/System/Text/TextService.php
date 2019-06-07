@@ -51,7 +51,7 @@ class TextService
         $allowedCharacters .= $this->settingsService->getAllowedCharacters();
         $allowedCharacters .= \mb_strtoupper($this->settingsService->getAllowedCharacters());
 
-        return \preg_replace('#[^'.\preg_quote($allowedCharacters).']+#', '', $text);
+        return \preg_replace('~[^'.\preg_quote($allowedCharacters, '~').']+~', '', $text);
     }
 
     public function removeTooManyNewLines(string $text, int $threshold = 2): string
@@ -73,7 +73,7 @@ class TextService
     public function removeWordsFromTitle(string $string): string
     {
         $wordsToRemove = \explode("\n", $this->settingsService->getSettingsDto()->getWordsToRemoveFromTitle());
-        $wordsToRemove = \array_map(function(string $element) {
+        $wordsToRemove = \array_map(static function(string $element) {
             if (\mb_strlen($element) < 2) {
                 return false;
             }
@@ -94,7 +94,7 @@ class TextService
             return 0;
         }
 
-        $textWithoutWhiteChars = \preg_replace('#['.\preg_quote(" \r\n~'!@#$%^&*_+-=?[]{}()<>.,:;|/\\\"").']#', '', $text);
+        $textWithoutWhiteChars = \preg_replace('~['.\preg_quote(" \r\n~'!@#$%^&*_+-=?[]{}()<>.,:;|/\\\"", '~').']~', '', $text);
         $lettersCount = \mb_strlen($textWithoutWhiteChars);
 
         return $uppercaseCount / $lettersCount;

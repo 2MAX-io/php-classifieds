@@ -11,6 +11,7 @@ use App\Service\System\Pagination\PaginationService;
 use Doctrine\ORM\EntityManagerInterface;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
 use Pagerfanta\Pagerfanta;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 class UserListingListService
@@ -51,6 +52,7 @@ class UserListingListService
      */
     public function getList(int $page = 1): UserListingListDto
     {
+        /** @var Request $request */
         $request = $this->requestStack->getMasterRequest();
 
         $qb = $this->em->getRepository(Listing::class)->createQueryBuilder('listing');

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Command;
 
-use App\Helper\FilePath;
 use Minwork\Helper\Arr;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -34,7 +33,7 @@ class TranslationGenerateToEnCommand extends Command
         $translations = Arr::unpack($translations);
 
         $translationKeys = \array_keys($translations);
-        $translationValues = \array_map(function(string $element) {
+        $translationValues = \array_map(static function(string $element) {
             return \preg_replace('`^trans.(.*)`', '$1', $element);
         }, $translationKeys);
 

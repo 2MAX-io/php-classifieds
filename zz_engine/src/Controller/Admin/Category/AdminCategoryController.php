@@ -17,6 +17,7 @@ use App\Service\System\Sort\SortService;
 use Doctrine\DBAL\Exception\ForeignKeyConstraintViolationException;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -57,6 +58,7 @@ class AdminCategoryController extends AbstractAdminController
             $category->setParent($parentCategory);
         }
 
+        /** @var Form $form */
         $form = $this->createForm(AdminCategorySaveType::class, $category);
         $form->add(AdminCategorySaveType::SAVE_AND_ADD, SubmitType::class, [
             'label' => 'trans.Save and Add',
@@ -101,6 +103,7 @@ class AdminCategoryController extends AbstractAdminController
     ): Response {
         $this->denyUnlessAdmin();
 
+        /** @var Form $form */
         $form = $this->createForm(AdminCategorySaveType::class, $category);
         $form->add(AdminCategorySaveType::SAVE_AND_ADD, SubmitType::class, [
             'label' => 'trans.Save and Add',

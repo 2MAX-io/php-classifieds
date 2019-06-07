@@ -26,7 +26,7 @@ class PhpassPasswordEncoder extends BasePasswordEncoder implements SelfSaltingEn
     /**
      * {@inheritdoc}
      */
-    public function isPasswordValid($encoded, $raw, $salt)
+    public function isPasswordValid($encoded, $raw, $salt): bool
     {
         return !$this->isPasswordTooLong($raw) && $this->getEncoder()->CheckPassword($raw, $encoded);
     }

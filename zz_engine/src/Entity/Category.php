@@ -103,7 +103,7 @@ class Category
      */
     public function getCustomFields(): Collection
     {
-        return $this->getCustomFieldsJoin()->map(function(CustomFieldJoinCategory $el) {
+        return $this->getCustomFieldsJoin()->map(static function(CustomFieldJoinCategory $el) {
             return $el->getCustomField();
         });
     }

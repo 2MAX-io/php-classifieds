@@ -56,7 +56,7 @@ class Str
         $result = \preg_match_all($pattern, $subject, $matches);
 
         if ($result === false) {
-            throw new \Exception('preg_match error' . \preg_last_error());
+            throw new \UnexpectedValueException('preg_match error' . \preg_last_error());
         }
 
         if ($result !== 1) {
@@ -112,7 +112,7 @@ class Str
         }
 
         $value = \mb_strtolower($value);
-        $value = Str::replace($value, [' '], '-');
+        $value = static::replace($value, [' '], '-');
 
         return $value;
     }

@@ -209,7 +209,7 @@ class CustomField
      */
     public function getListingCustomFieldValuesArray(): array
     {
-        return $this->getListingCustomFieldValues()->map(function (ListingCustomFieldValue $value) {
+        return $this->getListingCustomFieldValues()->map(static function (ListingCustomFieldValue $value) {
             return $value->getValue();
         })->toArray();
     }

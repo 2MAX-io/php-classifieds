@@ -30,8 +30,8 @@ class Search
 
         if ($hasWildcard) {
             return $return;
-        } else {
-            return '%' . $return . '%';
         }
+
+        return '%' . $return . '%';
     }
 }

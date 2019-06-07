@@ -44,7 +44,7 @@ class DevGenerateTestListings
         $this->cache->delete('devGenerateListingsCategories');
 
         \gc_enable();
-        $this->em->getConnection()->getConfiguration()->setSQLLogger(null);
+        $this->em->getConnection()->getConfiguration()->setSQLLogger();
 
         $faker = Factory::create();
         $currentDate = new \DateTime();
@@ -145,10 +145,8 @@ class DevGenerateTestListings
             return;
         }
 
-        if (!$customField->getRequired()) {
-            if (\random_int(1,100) < 10) {
-                return;
-            }
+        if (!$customField->getRequired() && \random_int(1,100) < 10) {
+            return;
         }
 
         $customFieldValue = new ListingCustomFieldValue();
@@ -164,10 +162,8 @@ class DevGenerateTestListings
             return;
         }
 
-        if (!$customField->getRequired()) {
-            if (\random_int(1,100) < 10) {
-                return;
-            }
+        if (!$customField->getRequired() && \random_int(1,100) < 10) {
+            return;
         }
 
         $customFieldValue = new ListingCustomFieldValue();
@@ -224,6 +220,8 @@ class DevGenerateTestListings
             }
         );
 
-        return $this->em->merge($user);
+        $user = $this->em->merge($user);
+
+        return $user;
     }
 }

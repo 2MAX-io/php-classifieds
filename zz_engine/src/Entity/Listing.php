@@ -246,13 +246,13 @@ class Listing
         return $this->listingFiles->matching(
             Criteria::create()
                 ->orderBy(['sort' => 'asc'])
-                ->where(Criteria::expr()->eq("userRemoved", false))
+                ->where(Criteria::expr()->eq('userRemoved', false))
         );
     }
 
     public function getMainImageNoCache(): ?ListingFile
     {
-        return $this->getListingFiles()->first() ?? null;
+        return $this->getListingFiles()->first();
     }
 
     public function getStatus(): string

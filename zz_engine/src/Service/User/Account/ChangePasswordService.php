@@ -50,7 +50,6 @@ class ChangePasswordService
         $hashedPassword = $this->encodePasswordService->getEncodedPassword($user, $newPassword);
 
         $user->setPlainPassword($newPassword);
-        unset($newPassword);
 
         $token = $this->tokenService->getTokenBuilder(
             Token::USER_PASSWORD_CHANGE_TYPE,

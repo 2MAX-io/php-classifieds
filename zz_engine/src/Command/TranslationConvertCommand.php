@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Command;
 
-use App\Helper\FilePath;
 use Minwork\Helper\Arr;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -37,12 +36,11 @@ class TranslationConvertCommand extends Command
 
         $xliffFileDumper = new XliffFileDumper();
         $messageCatalogue = new MessageCatalogue('pl');
-        $messageCatalogue->add($translations, 'messages');
-        $output = $xliffFileDumper->formatCatalogue($messageCatalogue, 'messages');
+        $messageCatalogue->add($translations);
 
         \file_put_contents(
             \dirname($sourceFile) . '/' . date('Y-m-d H:i:s_') . \basename($sourceFile),
-            $output
+            $xliffFileDumper->formatCatalogue($messageCatalogue, 'messages')
         );
 
         $io->success('done');

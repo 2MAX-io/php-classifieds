@@ -9,8 +9,7 @@ use App\Helper\Search;
 use App\Service\System\Pagination\PaginationDto;
 use App\Service\System\Pagination\PaginationService;
 use Doctrine\ORM\EntityManagerInterface;
-use Pagerfanta\Adapter\DoctrineORMAdapter;
-use Pagerfanta\Pagerfanta;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 class UserListService
@@ -42,6 +41,7 @@ class UserListService
 
     public function getUserList(int $page): PaginationDto
     {
+        /** @var Request $request */
         $request = $this->requestStack->getMasterRequest();
 
         $qb = $this->em->getRepository(User::class)->createQueryBuilder('user');
@@ -59,8 +59,6 @@ class UserListService
         $pager->setMaxPerPage($this->paginationService->getMaxPerPage());
         $pager->setCurrentPage($page);
 
-        $paginationDto = new PaginationDto($pager->getCurrentPageResults(), $pager);
-
-        return $paginationDto;
+        return new PaginationDto($pager->getCurrentPageResults(), $pager);
     }
 }

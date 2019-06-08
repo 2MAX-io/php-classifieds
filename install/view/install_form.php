@@ -4,7 +4,7 @@
 
 <div class="container">
 
-    <form action="" method="post">
+    <form method="post">
         <h1>Installation</h1>
 
         <?php foreach ($errors as $error): ?>

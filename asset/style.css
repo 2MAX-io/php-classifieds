@@ -375,3 +375,7 @@ input.form-control, textarea.form-control, select.form-control {
     text-overflow: ellipsis;
     min-width: 0; /* flex fix */
 }
+
+.fileuploader-items .fileuploader-item .fileuploader-action.fileuploader-action-download {
+    display: none;
+}

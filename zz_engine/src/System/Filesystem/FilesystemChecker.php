@@ -69,17 +69,20 @@ class FilesystemChecker
 
     public static function creatingDirFailedList(): array
     {
+        $return = [];
         $filesystem = new Filesystem();
         if (!\file_exists(FilePath::getProjectDir() . '/zz_engine/var/cache/prod')) {
             $filesystem->mkdir(FilePath::getProjectDir() . '/zz_engine/var/cache/prod', 0750);
         }
 
-        $return = [];
+        /**
+         * creates directory in exact path, so path must be to non existent test directory, like /test
+         */
         $patchList = [
             FilePath::getProjectDir() . '/static/cache/test',
             FilePath::getProjectDir() . '/static/listing/test',
             FilePath::getProjectDir() . '/static/resized/test',
-            FilePath::getProjectDir() . '/static/tmp/file_upload',
+            FilePath::getProjectDir() . '/static/tmp/file_upload/test',
             FilePath::getProjectDir() . '/zz_engine/var/cache/prod_test',
             FilePath::getProjectDir() . '/zz_engine/var/cache/prod/test',
             FilePath::getProjectDir() . '/zz_engine/var/log/test',

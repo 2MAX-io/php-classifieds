@@ -47,6 +47,11 @@ if (!$canWriteToPhpFile) {
     $errors[] = 'Could not change php file install/data/test.php, check permissions for all files';
 }
 
+$canExecuteConsole = canExecuteConsole();
+if (!$canExecuteConsole) {
+    $errors[] = 'Could not execute zz_engine/bin/console, add execution permissions for this file using chmod +x';
+}
+
 if (count($errors) < 1) {
     header('Location: install.php');
     exit;
@@ -60,7 +65,7 @@ function canWriteToPhpFile(): bool {
         $filePath = Path::canonicalize(FilePath::getPublicDir() . '/install/data/test.php');
         $originalContent = @file_get_contents($filePath);
         $successText = '!!success!!';
-        $newContent = str_replace("{{!REPLACE_THIS!}}", $successText, $originalContent);
+        $newContent = str_replace('{{!REPLACE_THIS!}}', $successText, $originalContent);
         $result = @file_put_contents($filePath, $newContent);
 
         if (!Str::contains(@file_get_contents($filePath), $successText)) {
@@ -78,4 +83,9 @@ function canWriteToPhpFile(): bool {
     } catch (\Throwable $e) {
         return false;
     }
+}
+
+
+function canExecuteConsole(): bool {
+    return is_executable(FilePath::getProjectDir() . '/zz_engine/bin/console');
 }

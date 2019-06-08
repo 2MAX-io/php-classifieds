@@ -5,12 +5,15 @@
 <div class="container">
 
     <form method="post">
+        <div class="float-right mt-2"><a href="https://documentation.2max.io/display/CLAS/Installation" class="btn btn-info" target="_blank">documentation</a></div>
         <h1>Installation</h1>
 
         <?php foreach ($errors as $error): ?>
             <div class="alert alert-danger text-break">
                 <?php echo escape($error) ?>
             </div>
+
+            <div><a href="https://documentation.2max.io/display/CLAS/Installation" class="btn btn-info mb-2" target="_blank">to find help with errors check documentation</a></div>
         <?php endforeach; ?>
 
         <div class="mb-4">
@@ -114,15 +117,15 @@
             <h3>Load example data</h3>
 
             <div>
-                <input type="checkbox" name="load_categories" id="load-categories" class="custom-checkbox" value="1">
+                <input type="checkbox" name="load_categories" id="load-categories" class="custom-checkbox" value="1" <?php echo empty($_POST['load_categories']) ?: 'checked' ?>>
                 <label for="load-categories">Load example categories</label>
             </div>
             <div>
-                <input type="checkbox" name="load_custom_fields" id="load-custom-fields" class="custom-checkbox" value="1">
+                <input type="checkbox" name="load_custom_fields" id="load-custom-fields" class="custom-checkbox" value="1" <?php echo empty($_POST['load_custom_fields']) ?: 'checked' ?>>
                 <label for="load-custom-fields">Load example custom fields</label>
             </div>
             <div>
-                <input type="checkbox" name="load_listings" id="load-listings" class="custom-checkbox" value="1">
+                <input type="checkbox" name="load_listings" id="load-listings" class="custom-checkbox" value="1" <?php echo empty($_POST['load_listings']) ?: 'checked' ?>>
                 <label for="load-listings">Load example listings</label>
             </div>
         </div>

@@ -13,7 +13,8 @@
         <p>One way to do that, is to use commands from textarea bellow in root path of this app.</p>
         <p>Root path of this app is directory with file: zzzz_2max_io_classified_ads_project_root.txt</p>
 
-        <textarea class="w-100 form-control" style="height: 5em;">
+        <textarea class="w-100 form-control" style="height: 7em;">
+chmod +x <?php echo $projectRootPath ?>/zz_engine/bin/console
 find <?php echo $projectRootPath ?> -type d -exec chmod 750 {} \;
 find <?php echo $projectRootPath ?> -type f -exec chmod 640 {} \;
         </textarea>

@@ -334,31 +334,20 @@
                         </div>
 
                         <div class="card-body">
-                            <div
-                                    class="mb-2"
-                                    data-href="{{ url('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}"
-                            >
-                                <a
-                                        target="_blank"
-                                        href="https://www.facebook.com/sharer/sharer.php?u={{ url('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}"
-                                >
-                                    {{ 'trans.Share on Facebook' | trans }}
+                            <div class="mb-2" data-href="{{ url('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}">
+                                <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{ url('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}">
+                                    {{- 'trans.Share on Facebook' | trans -}}
                                 </a>
                             </div>
 
                             <div class="mb-2">
-                                <a
-                                        href="https://twitter.com/intent/tweet?url={{ url('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}&text={{ listing.title }}"
-                                >
-                                    {{ 'trans.Share on Twitter' | trans }}
+                                <a href="https://twitter.com/intent/tweet?url={{ url('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}&text={{ listing.title | url_encode }}">
+                                    {{- 'trans.Share on Twitter' | trans -}}
                                 </a>
                             </div>
 
-                            <button
-                                    onclick="copyTextToClipboard('{{ url('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}')"
-                                    class="btn btn-sm btn-secondary d-block mb-2"
-                            >
-                                {{ 'trans.Copy link to this listing' | trans }}
+                            <button onclick="copyTextToClipboard('{{ url('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}')" class="btn btn-sm btn-secondary d-block mb-2">
+                                {{- 'trans.Copy link to this listing' | trans -}}
                             </button>
                         </div>
                     </div>

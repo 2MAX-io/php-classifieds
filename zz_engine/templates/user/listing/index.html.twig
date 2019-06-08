@@ -89,7 +89,10 @@
                                 {{ listing.lastEditDate | date('d.m.Y') }}
                             </td>
                             <td>
-                                <span class="{{ getListingStatusClass(listing) }}">{{ getListingStatus(listing) }}</span>
+                                <div class="{{ getListingStatusClass(listing) }}">{{ getListingStatus(listing) }}</div>
+                                {%- if listing.status == constant('\App\\Entity\\Listing::STATUS_ACTIVE') -%}
+                                    <div>{{ 'trans.until' | trans }}: {{ listing.validUntilDate | date(dateFormatShort) }}</div>
+                                {%- endif -%}
                                 {% if listing.status in [constant('\App\\Entity\\Listing::STATUS_REJECTED')] and listing.rejectionReason is empty and settings.linkRejectionReason is not empty %}
                                     <a href="{{ path('app_page', {'slug': settings.linkRejectionReason}) }}" class="d-inline-block">
                                         {{ 'trans.more information' | trans }}

@@ -545,3 +545,4 @@ trans:
   'Payment for featured listing: %listingInfo%, featured package: %featurePackageName%, price: %price%, featured days: %featuredDays%': 'Płatność za wyróżnienie ogłoszenia: %listingInfo%, pakiet wyróżnenia: %featurePackageName%, cena: %price%, dni wyróżnienia: %featuredDays%'
   Payment type: 'Typ płatności'
   'Payment for balance top up, amount: %amount%': 'Płatność za doładowanie konta, kwota: %amount%'
+  until: do

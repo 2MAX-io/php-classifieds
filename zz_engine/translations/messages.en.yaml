@@ -111,6 +111,7 @@ trans:
   'Payment for featured listing: %listingInfo%, featured package: %featurePackageName%, price: %price%, featured days: %featuredDays%': 'Payment for featured listing: %listingInfo%, featured package: %featurePackageName%, price: %price%, featured days: %featuredDays%'
   Payment type: 'Payment type'
   'Payment for balance top up, amount: %amount%': 'Payment for balance top up, amount: %amount%'
+  until: 'until'
 
 trans.customFieldType.select: Select field
 trans.customFieldType.year_range: Field with year

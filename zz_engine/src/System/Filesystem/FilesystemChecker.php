@@ -166,7 +166,7 @@ class FilesystemChecker
             return false;
         } finally {
             if (\file_exists($testFilePath)) {
-                \unlink($testFilePath);
+                @\unlink($testFilePath);
             }
         }
 
@@ -186,7 +186,7 @@ class FilesystemChecker
             return false;
         } finally {
             if (\file_exists($path)) {
-                \rmdir($path);
+                @\rmdir($path);
             }
         }
 

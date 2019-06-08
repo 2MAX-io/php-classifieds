@@ -1,28 +1,28 @@
 {% macro listingButtons(listing) %}
+    {# @var settings \App\Service\Setting\SettingsDto #}
+    {% set settings = settings() %}
+
     {# @var listing \App\Entity\Listing #}
 
-    {% if not listing.adminRemoved %}
+    {%- if not listing.adminRemoved -%}
 
-        {% if (listing.adminActivated and not listing.adminRejected and not listing.userDeactivated) or listing.status == constant('\App\\Entity\\Listing::STATUS_EXPIRED') %}
-            <a
-                    href="{{ path('app_user_validity_extend', {'id': listing.id}) }}"
-                    class="btn btn-outline-success mb-1"
-            >
-                {{ 'trans.Extend' | trans }}
+        {%- if ((listing.adminActivated or not settings.requireListingAdminActivation) and not listing.adminRejected and not listing.userDeactivated) or listing.status == constant('\App\\Entity\\Listing::STATUS_EXPIRED') -%}
+            <a href="{{ path('app_user_validity_extend', {'id': listing.id}) }}" class="btn btn-outline-success mb-1">
+                {{- 'trans.Extend' | trans -}}
             </a>
         {% endif %}
 
-        {% if not listing.adminRejected and listing.status != constant('\App\\Entity\\Listing::STATUS_EXPIRED') %}
+        {%- if not listing.adminRejected and listing.status != constant('\App\\Entity\\Listing::STATUS_EXPIRED') -%}
             {% if listing.userDeactivated %}
-                {{ include('user/listing/_action/_activate_form.html.twig') }}
+                {{- include('user/listing/_action/_activate_form.html.twig') -}}
             {% else %}
-                {{ include('user/listing/_action/_deactivate_form.html.twig') }}
+                {{- include('user/listing/_action/_deactivate_form.html.twig') -}}
             {% endif %}
         {% endif %}
 
     {% endif %}
 
-    {% if listing.userDeactivated or listing.adminRemoved or listing.adminRejected or listing.status == constant('\App\\Entity\\Listing::STATUS_EXPIRED') %}
+    {%- if listing.userDeactivated or listing.adminRemoved or listing.adminRejected or listing.status == constant('\App\\Entity\\Listing::STATUS_EXPIRED') -%}
         {{ include('user/listing/_action/_delete_form.html.twig') }}
-    {% endif %}
+    {%- endif -%}
 {% endmacro %}

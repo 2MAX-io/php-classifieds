@@ -33,3 +33,4 @@ INSERT INTO setting (name, value, last_update_date) VALUES ('customJavascriptBot
 INSERT INTO setting (name, value, last_update_date) VALUES ('customJavascriptInHead', '', '2010-01-01 00:00:00');
 INSERT INTO setting (name, value, last_update_date) VALUES ('customCss', '', '2010-01-01 00:00:00');
 INSERT INTO setting (name, value, last_update_date) VALUES ('paymentAllowed', '0', '2010-01-01 00:00:00');
+INSERT INTO setting (name, value, last_update_date) VALUES ('license', '', '2010-01-01 00:00:00');

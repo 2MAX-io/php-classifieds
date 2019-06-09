@@ -67,11 +67,13 @@ class UpgradeApiService
                 RequestOptions::READ_TIMEOUT => 10,
             ]);
             $request = new Request('GET', UpgradeApi::LATEST_VERSION_URL);
+            $request->withAddedHeader('X-license', $this->licenseService->getLicenseText());
+            $request->withAddedHeader('X-license-url', $this->licenseService->getCurrentUrlOfLicense());
             $response = $client->send($request);
 
             if ($response->getStatusCode() === Response::HTTP_OK) {
                 $responseBody = $response->getBody()->getContents();
-                $signatureNormal = $response->getHeader(UpgradeApi::HEADER_SIGNATURE_BODY_NORMAL_SECURITY)[0] ?? null;
+                $signatureNormal = $response->getHeader(UpgradeApi::HEADER_SIGNATURE_NORMAL_SECURITY)[0] ?? null;
 
                 if (null === $signatureNormal) {
                     $this->logger->error('missing signature', ['$responseBody' => $responseBody]);
@@ -116,7 +118,7 @@ class UpgradeApiService
             $response = $client->send($request);
 
             $responseBody = $response->getBody()->getContents();
-            $signatureNormal = $response->getHeader(UpgradeApi::HEADER_SIGNATURE_BODY_NORMAL_SECURITY)[0] ?? null;
+            $signatureNormal = $response->getHeader(UpgradeApi::HEADER_SIGNATURE_NORMAL_SECURITY)[0] ?? null;
             if (null === $signatureNormal) {
                 $this->logger->error('missing signature', ['$responseBody' => $responseBody]);
 

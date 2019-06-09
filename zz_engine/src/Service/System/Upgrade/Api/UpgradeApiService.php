@@ -6,7 +6,6 @@ namespace App\Service\System\Upgrade\Api;
 
 use App\Helper\Json;
 use App\Helper\ExceptionHelper;
-use App\Helper\Str;
 use App\Service\System\License\LicenseService;
 use App\Service\System\Signature\SignatureVerifyNormalSecurity;
 use App\Service\System\Upgrade\Base\UpgradeApi;
@@ -15,7 +14,6 @@ use App\System\Cache\RuntimeCacheEnum;
 use App\Version;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Request;
-use GuzzleHttp\Psr7\Stream;
 use GuzzleHttp\RequestOptions;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Cache\Simple\ArrayCache;
@@ -66,9 +64,13 @@ class UpgradeApiService
                 RequestOptions::CONNECT_TIMEOUT => 10,
                 RequestOptions::READ_TIMEOUT => 10,
             ]);
-            $request = new Request('GET', UpgradeApi::LATEST_VERSION_URL);
-            $request->withAddedHeader('X-license', $this->licenseService->getLicenseText());
-            $request->withAddedHeader('X-license-url', $this->licenseService->getCurrentUrlOfLicense());
+            $request = new Request(
+                'GET', UpgradeApi::LATEST_VERSION_URL,
+                [
+                    'x-license' => \base64_encode($this->licenseService->getLicenseText()),
+                    'x-license-url' => $this->licenseService->getCurrentUrlOfLicense(),
+                ]
+            );
             $response = $client->send($request);
 
             if ($response->getStatusCode() === Response::HTTP_OK) {
@@ -104,7 +106,6 @@ class UpgradeApiService
         try {
             $jsonArray = [
                 'forVersion' => Version::getVersion(),
-                'licenseUrl' => $this->licenseService->getCurrentUrlOfLicense(),
             ];
 
             $client = new Client([
@@ -113,8 +114,13 @@ class UpgradeApiService
                 RequestOptions::READ_TIMEOUT => 30,
             ]);
 
-            $request = new Request('POST', UpgradeApi::UPGRADE_LIST_URL);
-            $request->withBody(new Stream(Str::toStream(Json::jsonEncode($jsonArray))));
+            $request = new Request(
+                'POST', UpgradeApi::UPGRADE_LIST_URL,
+                [
+                    'x-license' => \base64_encode($this->licenseService->getLicenseText()),
+                    'x-license-url' => $this->licenseService->getCurrentUrlOfLicense(),
+                ], Json::jsonEncode($jsonArray)
+            );
             $response = $client->send($request);
 
             $responseBody = $response->getBody()->getContents();

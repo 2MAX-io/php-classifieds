@@ -1,4 +1,8 @@
+Options -Indexes
+IndexIgnore *
+
 <FilesMatch "\.php[\d]*$">
+    SetHandler None
     RewriteRule "^(.*)$" - [R=404,L]
 </FilesMatch>
 

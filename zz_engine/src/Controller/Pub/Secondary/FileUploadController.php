@@ -6,7 +6,7 @@ namespace App\Controller\Pub\Secondary;
 
 use App\Helper\FileHelper;
 use App\Helper\FilePath;
-use App\Service\System\FileUpload\FileUploader;
+use App\System\FileUpload\FileUploader;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Response;

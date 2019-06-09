@@ -76,6 +76,16 @@ class FileHelper
             $fileExtension,
             [
                 'php',
+                'php3',
+                'php4',
+                'php5',
+                'php7',
+                'php71',
+                'php72',
+                'php73',
+                'php74',
+                'php75',
+                'phtml',
                 'js',
                 'css',
                 'exe',
@@ -83,8 +93,15 @@ class FileHelper
                 'bat',
                 'sh',
                 'cgi',
+                'htaccess',
             ]
         )) {
+            throw new UserVisibleMessageException(
+                "file extension $fileExtension is not allowed"
+            );
+        }
+
+        if (\preg_match('~^php\d+~', $fileExtension)) {
             throw new UserVisibleMessageException(
                 "file extension $fileExtension is not allowed"
             );

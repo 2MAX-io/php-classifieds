@@ -4,23 +4,23 @@
 
 <script>
     $('#listing_file').fileuploader({
+        fileMaxSize: 1.95,
+        extensions: ['jpg', 'jpeg', 'png', 'gif'],
+        thumbnails: {
+            onItemShow: function(item) {
+                // add sorter button to the item html
+                item.html.find('.fileuploader-action-remove').before('<a class="fileuploader-action fileuploader-action-sort" title="Sort"><i></i></a>');
+            }
+        },
+        sorter: {
+            selectorExclude: null,
+            placeholder: null,
+            scrollContainer: window,
+            onSort: function(list, listEl, parentEl, newInputEl, inputEl) {}
+        },
+        files: {{ listingFilesForJavascript | default([]) | json_encode | raw }},
         addMore: true,
         upload: {
-            fileMaxSize: 1.95,
-            extensions: ['jpg', 'jpeg', 'png', 'gif'],
-            thumbnails: {
-                onItemShow: function(item) {
-                    // add sorter button to the item html
-                    item.html.find('.fileuploader-action-remove').before('<a class="fileuploader-action fileuploader-action-sort" title="Sort"><i></i></a>');
-                }
-            },
-            sorter: {
-                selectorExclude: null,
-                placeholder: null,
-                scrollContainer: window,
-                onSort: function(list, listEl, parentEl, newInputEl, inputEl) {}
-            },
-            files: {{ listingFilesForJavascript | default([]) | json_encode | raw }},
             url: '{{ path('app_file_upload') }}',
             data: null,
             type: 'POST',

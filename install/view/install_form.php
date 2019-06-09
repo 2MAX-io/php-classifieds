@@ -12,9 +12,9 @@
             <div class="alert alert-danger text-break">
                 <?php echo escape($error) ?>
             </div>
-
-            <div><a href="https://documentation.2max.io/display/CLAS/Installation" class="btn btn-info mb-2" target="_blank">to find help with errors check documentation</a></div>
         <?php endforeach; ?>
+
+        <div><a href="https://documentation.2max.io/display/CLAS/Installation" class="btn btn-info mb-2" target="_blank">to find help with errors check documentation</a></div>
 
         <div class="mb-4">
             <h3>Database:</h3>
@@ -114,6 +114,18 @@
         </div>
 
         <div class="mb-4">
+            <h3>License</h3>
+
+            <div class="form-group">
+                <label>Copy content of license file into textarea bellow</label>
+                <div class="mb-2">
+                    <a href="https://documentation.2max.io/display/CLAS/Get+license+file+for+installation" target="_blank">instruction: how to get license file?</a>
+                </div>
+                <textarea name="license" class="form-control" style="height: 15em;"><?php echo escape($_POST['license'] ?? '') ?></textarea>
+            </div>
+        </div>
+
+        <div class="mb-4">
             <h3>Load example data</h3>
 
             <div>
@@ -127,6 +139,10 @@
             <div>
                 <input type="checkbox" name="load_listings" id="load-listings" class="custom-checkbox" value="1" <?php echo empty($_POST['load_listings']) ?: 'checked' ?>>
                 <label for="load-listings">Load example listings</label>
+            </div>
+            <div>
+                <input type="checkbox" name="load_pages" id="load-pages" class="custom-checkbox" value="1" <?php echo empty($_POST['load_pages']) ?: 'checked' ?>>
+                <label for="load-pages">Load pages</label>
             </div>
         </div>
 

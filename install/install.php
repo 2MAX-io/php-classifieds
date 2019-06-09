@@ -46,6 +46,10 @@ if (!empty($_POST)) {
         $errors[] = 'Can not connect to database, error: ' . $e->getMessage();
     }
 
+    if (!preg_match("~(\w{8})-((\w{4})-){3}(\w{12})~m", $_POST['license'] ?? '')) {
+        $errors[] = 'Please enter valid license, current license is not valid';
+    }
+
     if (count($errors) === 0) {
         $pdo->beginTransaction();
         try {
@@ -67,8 +71,13 @@ if (!empty($_POST)) {
                 }
             }
 
+            if ($_POST['load_pages'] ?? null === '1') {
+                loadSql(__DIR__ . '/data/example/page.sql');
+            }
+
             insertAdmin($_POST['admin_email'], $_POST['admin_password']);
             setEmailSettings($_POST['email_from_address']);
+            setLicense($_POST['license']);
 
             saveConfig();
 
@@ -182,6 +191,10 @@ EOF;
 function setEmailSettings(string $emailFromAddress): void {
     setSetting('emailFromAddress', $emailFromAddress);
     setSetting('emailReplyTo', $emailFromAddress);
+}
+
+function setLicense(string $license): void {
+    setSetting('license', $license);
 }
 
 function setSetting(string $name, string $value): void {

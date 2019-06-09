@@ -178,6 +178,11 @@ class SettingsDto
      */
     private $customCss;
 
+    /**
+     * @var string|null
+     */
+    private $license;
+
     public function getIndexPageTitle(): ?string
     {
         return $this->indexPageTitle;
@@ -516,5 +521,15 @@ class SettingsDto
     public function setPaymentAllowed(bool $paymentAllowed): void
     {
         $this->paymentAllowed = $paymentAllowed;
+    }
+
+    public function getLicense(): ?string
+    {
+        return $this->license;
+    }
+
+    public function setLicense(?string $license): void
+    {
+        $this->license = $license;
     }
 }

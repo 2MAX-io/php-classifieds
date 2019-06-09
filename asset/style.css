@@ -384,3 +384,9 @@ input.form-control, textarea.form-control, select.form-control {
     margin-top: 0;
     padding-top: 0;
 }
+
+@media (max-width: 576px) {
+    .navbar.navbar-top {
+        padding: 0;
+    }
+}

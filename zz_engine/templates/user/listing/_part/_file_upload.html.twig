@@ -6,6 +6,21 @@
     $('#listing_file').fileuploader({
         addMore: true,
         upload: {
+            fileMaxSize: 1.95,
+            extensions: ['jpg', 'jpeg', 'png', 'gif'],
+            thumbnails: {
+                onItemShow: function(item) {
+                    // add sorter button to the item html
+                    item.html.find('.fileuploader-action-remove').before('<a class="fileuploader-action fileuploader-action-sort" title="Sort"><i></i></a>');
+                }
+            },
+            sorter: {
+                selectorExclude: null,
+                placeholder: null,
+                scrollContainer: window,
+                onSort: function(list, listEl, parentEl, newInputEl, inputEl) {}
+            },
+            files: {{ listingFilesForJavascript | default([]) | json_encode | raw }},
             url: '{{ path('app_file_upload') }}',
             data: null,
             type: 'POST',
@@ -63,20 +78,6 @@
             },
             onComplete: null,
         },
-        fileMaxSize: 1.95,
-        extensions: ['jpg', 'jpeg', 'png', 'gif'],
-        thumbnails: {
-            onItemShow: function(item) {
-                // add sorter button to the item html
-                item.html.find('.fileuploader-action-remove').before('<a class="fileuploader-action fileuploader-action-sort" title="Sort"><i></i></a>');
-            }
-        },
-        sorter: {
-            selectorExclude: null,
-            placeholder: null,
-            scrollContainer: window,
-            onSort: function(list, listEl, parentEl, newInputEl, inputEl) {}
-        },
         onListInput: function(list, fileList, listInputEl, listEl, parentEl, newInputEl, inputEl) {
             list.forEach(function (el, i) {
                 el.name = fileList[i].name;
@@ -96,7 +97,6 @@
 
             return true;
         },
-        files: {{ listingFilesForJavascript | default([]) | json_encode | raw }},
         captions: {
             button: function(options) { return Translator.trans('trans.Browse') + ' ' + (options.limit == 1 ? Translator.trans('trans.file') : Translator.trans('trans.files')); },
             feedback: function(options) { return Translator.trans('trans.Chose') + ' ' + (options.limit == 1 ? Translator.trans('trans.file') : Translator.trans('trans.files')) + ' ' + Translator.trans('trans.to upload'); },

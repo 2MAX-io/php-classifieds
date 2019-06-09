@@ -31,6 +31,12 @@
 
         {% if canUpgrade %}
             <div class="alert alert-warning">{{ 'trans.It is recommended to create a backup before this operation' | trans }}</div>
+            <div class="alert alert-warning">
+                {{ 'trans.Upgrade mechanism works under assumption it operates on umodified version of 2MAX.io Classied Ads.' | trans }}
+                {{ 'trans.If you have made custom changes, running auto upgrade may break things.' | trans }}
+                {{ 'trans.If you have made custom changes. It is recommended to upgrade on copy of app first, outside of production. Test it and fix issues if they arise. And only then upgrade.' | trans }}
+                {{ 'trans.To disable auto upgrade check documentation:' | trans }} <a href="https://documentation.2max.io/display/CLAS/Disable+auto+upgraes">{{ 'trans.Disable auto upgrades' | trans }}</a>
+            </div>
 
             {{ include('admin/secondary/upgrade/_execute_upgrade_form.html.twig') }}
         {% endif %}

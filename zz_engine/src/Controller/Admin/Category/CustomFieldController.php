@@ -52,6 +52,7 @@ class CustomFieldController extends AbstractAdminController
         }
 
         $customField = new CustomField();
+        $customField->setSearchable(true);
         $customField->setSort(SortService::LAST_VALUE);
         $form = $this->createForm(CustomFieldType::class, $customField);
         $form->handleRequest($request);

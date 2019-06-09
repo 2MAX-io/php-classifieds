@@ -45,3 +45,18 @@
     {{- form_help(form) -}}
     </{{ element|default('div') }}>
 {%- endblock form_row %}
+
+{% block _listing_widget -%}
+    {%- if form is rootform -%}
+        {{ form_errors(form) }}
+    {%- endif -%}
+    {% if form.customFieldList.children is not empty %}
+        {% for child in form|filter(child => not child.rendered) %}
+            {{- form_widget(child) -}}
+        {% endfor %}
+    {% else %}
+        {% do form.customFieldList.setRendered %}
+        <div class="formCustomFieldList"></div>
+    {% endif %}
+    {{- form_rest(form) -}}
+{%- endblock _listing_widget %}

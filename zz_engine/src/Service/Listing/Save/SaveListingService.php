@@ -121,9 +121,7 @@ class SaveListingService
         if ($fileUploaderListFilesFromRequest) {
             $files = Json::decodeToArray($fileUploaderListFilesFromRequest);
             $files = \array_map(function($file): array {
-                if (Str::beginsWith($file['file'], '0:/')) {
-                    $file['file'] = $this->packages->getUrl($file['data']['tmpFilePath']);
-                }
+                $file['file'] = $this->packages->getUrl($file['data']['tmpFilePath']);
 
                 return $file;
             }, $files);

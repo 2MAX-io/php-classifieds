@@ -13,7 +13,7 @@
                     </div>
 
                     <div class="card-body">
-                        <form method="post">
+                        <form method="post" class="formAdminLogin">
                             {% if error %}
                                 <div class="alert alert-danger">
                                     {{ error.messageKey|trans(error.messageData, 'security') }}

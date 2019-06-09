@@ -546,7 +546,7 @@ trans:
   Payment type: 'Typ płatności'
   'Payment for balance top up, amount: %amount%': 'Płatność za doładowanie konta, kwota: %amount%'
   until: do
-  'Upgrade mechanism works under assumption it operates on umodified version of 2MAX.io Classied Ads.': 'Mechanizm aktualizacji działa przy założeniu że operuje na niezmodyfikowanej wersji 2MAX.io Classified Ads'
+  'Upgrade mechanism works under assumption it operates on unmodified version of 2MAX.io Classified Ads.': 'Mechanizm aktualizacji działa przy założeniu że operuje na niezmodyfikowanej wersji 2MAX.io Classified Ads'
   'If you have made custom changes, running auto upgrade may break things.': 'Jeżeli dokonałeś własnych modyfikacji, uruchomienie automatycznej aktualizacji może popsuć aplikację'
   'If you have made custom changes. It is recommended to upgrade on copy of app first, outside of production. Test it and fix issues if they arise. And only then upgrade.': 'Jeżeli dokonałeś własnych modyfikacji. Jest rekomendowanym by najpierw uruchomić aktualizację na kopi apliacji, poza produkcją. Przetestować i poprawić problemy jeżeli się pojawią. I dopiero wtedy zaktualizować.'
   'To disable auto upgrade check documentation:': 'By wyłączyć automatyczną aktualizację sprawdź dokumentację:'

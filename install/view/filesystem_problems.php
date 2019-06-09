@@ -14,9 +14,9 @@
         <p>Root path of this app is directory with file: zzzz_2max_io_classified_ads_project_root.txt</p>
 
         <textarea class="w-100 form-control" style="height: 7em;">
-chmod +x <?php echo $projectRootPath ?>/zz_engine/bin/console
 find <?php echo $projectRootPath ?> -type d -exec chmod 750 {} \;
 find <?php echo $projectRootPath ?> -type f -exec chmod 640 {} \;
+chmod +x <?php echo $projectRootPath ?>/zz_engine/bin/console;
         </textarea>
 
         <p>If above commands would not work on it's own. Other potential issue may be incorrect <b>chown</b> settings.</p>
@@ -46,6 +46,16 @@ chown -R www-data:www-data <?php echo $projectRootPath ?>;
                 <div class="alert alert-info">
                     <div>This app would need to modify some php files. For example: install/data/test.php</div>
                     <div>List of all files with incorrect permissions can be found in other sections.</div>
+                </div>
+            </div>
+        <?php endif; ?>
+
+        <?php if(!$canExecuteConsole): ?>
+            <div class="mb-3">
+                <h3>Could not execute zz_engine/bin/console, add execution permissions for this file using chmod +x</h3>
+
+                <div class="alert alert-info">
+                    <div>required so that cron could be executed</div>
                 </div>
             </div>
         <?php endif; ?>

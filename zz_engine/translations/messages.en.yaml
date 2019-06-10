@@ -117,6 +117,9 @@ trans:
   'If you have made custom changes. It is recommended to upgrade on copy of app first, outside of production. Test it and fix issues if they arise. And only then upgrade.': 'If you have made custom changes. It is recommended to upgrade on copy of app first, outside of production. Test it and fix issues if they arise. And only then upgrade.'
   'To disable auto upgrade check documentation:': 'To disable auto upgrade check documentation:'
   'Disable auto upgrades': 'Disable auto upgrades'
+  Current status: 'Current status'
+  Click to preview how listing would look after activation: 'Click to preview how listing would look after activation'
+  Show as visible to public: 'Show as visible to public'
 
 trans.customFieldType.select: Select field
 trans.customFieldType.year_range: Field with year

@@ -94,7 +94,7 @@ class ListingShowController extends AbstractController
             throw $this->createNotFoundException();
         }
 
-        if (!$listingPublicDisplayService->canDisplay($listingShowDto->getListing())) {
+        if (!$listingPublicDisplayService->canDisplay($listingShowDto->getListing(), true)) {
             throw $this->createAccessDeniedException();
         }
 

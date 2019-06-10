@@ -551,3 +551,6 @@ trans:
   'If you have made custom changes. It is recommended to upgrade on copy of app first, outside of production. Test it and fix issues if they arise. And only then upgrade.': 'Jeżeli dokonałeś własnych modyfikacji. Jest rekomendowanym by najpierw uruchomić aktualizację na kopi apliacji, poza produkcją. Przetestować i poprawić problemy jeżeli się pojawią. I dopiero wtedy zaktualizować.'
   'To disable auto upgrade check documentation:': 'By wyłączyć automatyczną aktualizację sprawdź dokumentację:'
   'Disable auto upgrades': 'Wyłącz automatyczne aktualizacje'
+  Current status: 'Aktualny status'
+  Click to preview how listing would look after activation: 'Kliknij aby zobaczyć jak wyglądało by ogłoszenie po aktywacji'
+  Show as visible to public: 'Pokaż jak wygląda publicznie'

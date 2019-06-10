@@ -8,6 +8,7 @@ use App\Entity\Listing;
 use App\Security\CurrentUserService;
 use App\Service\Setting\SettingsService;
 use Doctrine\ORM\QueryBuilder;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 class ListingPublicDisplayService
 {
@@ -21,10 +22,19 @@ class ListingPublicDisplayService
      */
     private $settingsService;
 
-    public function __construct(CurrentUserService $currentUserService, SettingsService $settingsService)
-    {
+    /**
+     * @var RequestStack
+     */
+    private $requestStack;
+
+    public function __construct(
+        CurrentUserService $currentUserService,
+        SettingsService $settingsService,
+        RequestStack $requestStack
+    ) {
         $this->currentUserService = $currentUserService;
         $this->settingsService = $settingsService;
+        $this->requestStack = $requestStack;
     }
 
     public function applyPublicDisplayConditions(QueryBuilder $qb): void
@@ -43,13 +53,14 @@ class ListingPublicDisplayService
         $qb->andWhere('listing.adminRemoved = 0');
     }
 
-    public function canDisplay(Listing $listing): bool
+    public function canDisplay(Listing $listing, bool $showPreviewForOwner = false): bool
     {
-        if ($this->currentUserService->isCurrentUser($listing->getUser())) {
+        $showPreviewForOwner = $this->requestStack->getMasterRequest()->query->get('showPreviewForOwner', $showPreviewForOwner);
+        if ($showPreviewForOwner && $this->currentUserService->isCurrentUser($listing->getUser())) {
             return true;
         }
 
-        if ($this->currentUserService->lowSecurityCheckIsAdminInPublic()) {
+        if ($showPreviewForOwner && $this->currentUserService->lowSecurityCheckIsAdminInPublic()) {
             return true;
         }
 

@@ -26,6 +26,12 @@
     <div class="container mt-3 listing-show">
         <div class="row">
             <div class="col-md-7">
+                {% if isCurrentUserListing(listing) %}
+                    <a href="{{ path('app_listing_show', {'id': listing.id, 'slug': listing.slug, 'showPreviewForOwner': 1}) }}" class="btn btn-primary w-100 mb-2">
+                        <div>{{- 'trans.Current status' | trans -}}: <span class="{{ getListingStatusClass(listing) }}">{{ getListingStatus(listing) }}</span>.</div>
+                        <div>{{- 'trans.Click to preview how listing would look after activation' | trans -}}</div>
+                    </a>
+                {% endif %}
                 <div class="alert alert-danger">
                     {% if listing.adminRemoved %}
                         <h1>{{ 'trans.Listing has been deleted' | trans }}</h1>
@@ -55,7 +61,7 @@
             <!-- sidebar -->
             <div class="col-md-5">
                 {% if isCurrentUserListing(listing) %}
-                    <a href="{{ path('app_listing_edit', {'id': listing.id}) }}" class="btn btn-primary mb-1">
+                    <a href="{{ path('app_listing_edit', {'id': listing.id}) }}" class="btn btn-primary mb-2">
                         {{ 'trans.Edit listing' | trans }}
                     </a>
                 {% endif %}
@@ -63,10 +69,14 @@
                 {% if lowSecurityCheckIsAdminInPublic() %}
                     <a
                             href="{{ path('app_admin_listing_edit', {'id': listing.id}) }}"
-                            class="btn btn-outline-danger mb-1"
+                            class="btn btn-outline-danger mb-2"
                     >
                         {{ 'trans.Edit listing as Admin' | trans }}
                     </a>
+                {% endif %}
+
+                {% if userOrAdmin(listing) %}
+                    <span class="{{ getListingStatusClass(listing) }}">{{ getListingStatus(listing) }}</span>
                 {% endif %}
 
                 {% if listing.price is not empty %}

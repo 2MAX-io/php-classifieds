@@ -145,6 +145,16 @@ class Listing
     /**
      * @ORM\Column(type="boolean", nullable=false)
      */
+    private $adminRejected = false;
+
+    /**
+     * @ORM\Column(type="string", length=1000, nullable=true)
+     */
+    private $rejectionReason;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=false)
+     */
     private $adminRemoved = false;
 
     /**
@@ -156,16 +166,6 @@ class Listing
      * @ORM\Column(type="boolean", nullable=false)
      */
     private $userDeactivated = false;
-
-    /**
-     * @ORM\Column(type="boolean", nullable=false)
-     */
-    private $adminRejected = false;
-
-    /**
-     * @ORM\Column(type="string", length=1000, nullable=true)
-     */
-    private $rejectionReason;
 
     /**
      * @ORM\Column(type="boolean", nullable=false)

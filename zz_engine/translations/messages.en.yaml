@@ -127,8 +127,8 @@ trans.customFieldType.integer_range: Field with integer
 trans.customFieldType.checkbox_multiple: Field with multiple checkboxes
 trans.customFieldType.select_single: Select field, single
 
-trans.listing.status.STATUS_PENDING: Pending
-trans.listing.status.STATUS_ACTIVE: Active
+trans.listing.status.STATUS_PENDING: 'Pending'
+trans.listing.status.STATUS_ACTIVE: 'Active'
 trans.listing.status.STATUS_ACTIVE_FEATURED: 'Featured until: %featuredUntilDate%'
 trans.listing.status.STATUS_REJECTED.withReason: 'Rejected: %rejectionReason%'
 trans.listing.status.STATUS_REJECTED: 'Rejected'

@@ -9,7 +9,7 @@ trans.paymentType.BALANCE_TOP_UP_TYPE: 'Doładowanie konta'
 
 trans:
   listing.status.STATUS_PENDING: 'Oczekuje na aktywacje'
-  listing.status.STATUS_ACTIVE: 'Aktywne do: %activeUntilDate%'
+  listing.status.STATUS_ACTIVE: 'Aktywne'
   listing.status.STATUS_ACTIVE_FEATURED: 'Wyróżnione do: %featuredUntilDate%'
   listing.status.STATUS_REJECTED.withReason: 'Odrzucone: %rejectionReason%'
   listing.status.STATUS_REJECTED: 'Odrzucone'

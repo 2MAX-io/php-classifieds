@@ -12,6 +12,7 @@ use App\Helper\SlugHelper;
 use App\Helper\Str;
 use App\Security\CurrentUserService;
 use App\Service\Listing\ValidityExtend\ValidUntilSetService;
+use App\Service\Setting\SettingsService;
 use App\Service\System\Text\TextService;
 use Minwork\Helper\Arr;
 use Symfony\Component\Asset\Packages;
@@ -46,11 +47,17 @@ class SaveListingService
      */
     private $requestStack;
 
+    /**
+     * @var SettingsService
+     */
+    private $settingsService;
+
     public function __construct(
         ValidUntilSetService $validUntilSetService,
         Packages $packages,
         TextService $textService,
         CurrentUserService $currentUserService,
+        SettingsService $settingsService,
         RequestStack $requestStack
     ) {
         $this->validUntilSetService = $validUntilSetService;
@@ -58,6 +65,7 @@ class SaveListingService
         $this->textService = $textService;
         $this->currentUserService = $currentUserService;
         $this->requestStack = $requestStack;
+        $this->settingsService = $settingsService;
     }
 
     public function createListingForForm(): Listing
@@ -86,7 +94,9 @@ class SaveListingService
             );
         }
         $listing->setAdminActivated(false);
-        $listing->setAdminRejected(false);
+        if ($this->settingsService->getSettingsDto()->getRequireListingAdminActivation()) {
+            $listing->setAdminRejected(false);
+        }
         $this->updateSlug($listing);
         $this->saveSearchText($listing);
 

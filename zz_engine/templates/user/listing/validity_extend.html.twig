@@ -29,7 +29,7 @@
                         </div>
                     {% endif %}
 
-                    {% if not listing.adminActivated and settings.requireListingAdminActivation %}
+                    {% if listing.status in [constant('\App\\Entity\\Listing::STATUS_PENDING')] and settings.requireListingAdminActivation %}
                         <div>
                             {{ 'trans.Listing awaits activation, you can extend listing duration, but listing would only appear to the public after acceptation' | trans }}
                         </div>

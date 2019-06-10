@@ -25,7 +25,7 @@ class ListingView
     private $listing;
 
     /**
-     * @ORM\Column(type="smallint", nullable=false)
+     * @ORM\Column(type="integer", nullable=false)
      */
     private $viewCount;
 

@@ -151,8 +151,8 @@ class ListingListService
 
                         $sqlParamId++;
                         $customFieldConditionList->add($qb->expr()->andX(
+                            $qb->expr()->eq('listingCustomFieldValue.value', ':customFieldValue_' . ((int) $sqlParamId)),
                             $qb->expr()->eq('listingCustomFieldValue.customField', ':customFieldId_' . ((int) $sqlParamId)),
-                            $qb->expr()->eq('listingCustomFieldValue.value', ':customFieldValue_' . ((int) $sqlParamId))
                         ));
                         $qb->setParameter(':customFieldId_' . ((int) $sqlParamId), $customFieldId);
                         $qb->setParameter(':customFieldValue_' . ((int) $sqlParamId), $valueItem);

@@ -35,6 +35,11 @@ class ListingCustomFieldValue
     private $listing;
 
     /**
+     * @ORM\Column(type="string", length=70, nullable=false)
+     */
+    private $value;
+
+    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\CustomField", inversedBy="listingCustomFieldValues")
      * @ORM\JoinColumn(nullable=false)
      */
@@ -45,11 +50,6 @@ class ListingCustomFieldValue
      * @ORM\JoinColumn(nullable=true)
      */
     private $customFieldOption;
-
-    /**
-     * @ORM\Column(type="string", length=70, nullable=false)
-     */
-    private $value;
 
     public function getId(): ?int
     {

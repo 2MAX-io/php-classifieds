@@ -21,34 +21,14 @@ class FeaturedPackage
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=100, nullable=false)
+     * @ORM\Column(type="string", length=50, nullable=false)
      */
     private $name;
 
     /**
-     * @ORM\Column(type="string", length=100, nullable=false)
+     * @ORM\Column(type="string", length=70, nullable=false)
      */
     private $adminName;
-
-    /**
-     * @ORM\Column(type="string", length=10000, nullable=true)
-     */
-    private $description;
-
-    /**
-     * @ORM\Column(type="integer", nullable=false)
-     */
-    private $price;
-
-    /**
-     * @ORM\Column(type="integer", nullable=false)
-     */
-    private $daysFeaturedExpire;
-
-    /**
-     * @ORM\Column(type="integer", nullable=false)
-     */
-    private $daysListingExpire;
 
     /**
      * @ORM\Column(type="boolean", nullable=false)
@@ -56,9 +36,29 @@ class FeaturedPackage
     private $defaultPackage;
 
     /**
+     * @ORM\Column(type="integer", nullable=false)
+     */
+    private $price;
+
+    /**
+     * @ORM\Column(type="smallint", nullable=false, options={"unsigned"=true})
+     */
+    private $daysFeaturedExpire;
+
+    /**
+     * @ORM\Column(type="smallint", nullable=false, options={"unsigned"=true})
+     */
+    private $daysListingExpire;
+
+    /**
      * @ORM\Column(type="boolean", nullable=false)
      */
     private $removed = false;
+
+    /**
+     * @ORM\Column(type="string", length=10000, nullable=true)
+     */
+    private $description;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\FeaturedPackageForCategory", mappedBy="featuredPackage")

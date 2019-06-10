@@ -20,6 +20,11 @@ class ListingPoliceLog
     private $id;
 
     /**
+     * @ORM\Column(type="datetime", nullable=false)
+     */
+    private $datetime;
+
+    /**
      * @ORM\Column(type="string", length=50, nullable=false)
      */
     private $sourceIp;
@@ -35,21 +40,16 @@ class ListingPoliceLog
     private $text;
 
     /**
-     * @ORM\Column(type="datetime", nullable=false)
-     */
-    private $datetime;
-
-    /**
      * @var int
      *
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\Column(type="integer", nullable=true, options={"unsigned"=true})
      */
     private $listingId;
 
     /**
      * @var int
      *
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\Column(type="integer", nullable=true, options={"unsigned"=true})
      */
     private $userId;
 

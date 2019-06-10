@@ -27,20 +27,20 @@ class CustomFieldJoinCategory
     private $id;
 
     /**
-     * @var CustomField
-     *
-     * @ORM\ManyToOne(targetEntity="App\Entity\CustomField", inversedBy="categoriesJoin")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $customField;
-
-    /**
      * @var Category
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="customFieldsJoin")
      * @ORM\JoinColumn(nullable=false)
      */
     private $category;
+
+    /**
+     * @var CustomField
+     *
+     * @ORM\ManyToOne(targetEntity="App\Entity\CustomField", inversedBy="categoriesJoin")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $customField;
 
     /**
      * @var int

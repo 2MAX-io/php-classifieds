@@ -21,20 +21,15 @@ class ListingFile
     private $id;
 
     /**
+     * @ORM\Column(type="string", length=255, nullable=false)
+     */
+    private $path;
+
+    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Listing", inversedBy="listingFiles")
      * @ORM\JoinColumn(nullable=false)
      */
     private $listing;
-
-    /**
-     * @ORM\Column(type="smallint", nullable=false, options={"unsigned"=true})
-     */
-    private $sort = SortService::LAST_VALUE;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=false)
-     */
-    private $path;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=false)
@@ -55,6 +50,11 @@ class ListingFile
      * @ORM\Column(type="boolean", nullable=false)
      */
     private $userRemoved = false;
+
+    /**
+     * @ORM\Column(type="smallint", nullable=false, options={"unsigned"=true})
+     */
+    private $sort = SortService::LAST_VALUE;
 
     public function getPathInListSize(): ?string
     {

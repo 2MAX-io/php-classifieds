@@ -19,7 +19,7 @@ class Setting
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=60, nullable=false)
+     * @ORM\Column(type="string", length=70, nullable=false)
      */
     private $name;
 

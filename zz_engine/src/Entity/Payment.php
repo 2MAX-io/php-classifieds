@@ -29,7 +29,7 @@ class Payment
     private $type;
 
     /**
-     * @ORM\Column(type="string", nullable=false, length=256)
+     * @ORM\Column(type="string", nullable=false, length=255)
      */
     private $description;
 
@@ -52,7 +52,7 @@ class Payment
     private $datetime;
 
     /**
-     * @ORM\Column(type="string", length=70, nullable=false)
+     * @ORM\Column(type="string", length=255, nullable=false)
      */
     private $gatewayStatus;
 

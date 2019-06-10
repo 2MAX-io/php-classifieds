@@ -71,9 +71,10 @@ class Listing
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=70, nullable=false)
+     * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="listings")
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $title;
+    private $category;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="listings")
@@ -82,10 +83,76 @@ class Listing
     private $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="listings")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\Column(type="datetime", nullable=false)
      */
-    private $category;
+    private $validUntilDate;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=false)
+     */
+    private $adminActivated = false;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=false)
+     */
+    private $adminRejected = false;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=false)
+     */
+    private $adminRemoved = false;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=false)
+     */
+    private $userDeactivated = false;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=false)
+     */
+    private $userRemoved = false;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=false)
+     */
+    private $featured = false;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $featuredUntilDate;
+
+    /**
+     * @ORM\Column(type="smallint", nullable=false)
+     */
+    private $featuredWeight = 0;
+
+    /**
+     * used to sort listings
+     *
+     * @ORM\Column(type="datetime", nullable=false)
+     */
+    private $orderByDate;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=false)
+     */
+    private $firstCreatedDate;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=false)
+     */
+    private $lastEditDate;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $adminLastActivationDate;
+
+    /**
+     * @ORM\Column(type="string", length=70, nullable=false)
+     */
+    private $title;
 
     /**
      * @ORM\Column(type="string", length=10100, nullable=false)
@@ -133,78 +200,6 @@ class Listing
     private $mainImage;
 
     /**
-     * @ORM\Column(type="datetime", nullable=false)
-     */
-    private $validUntilDate;
-
-    /**
-     * @ORM\Column(type="boolean", nullable=false)
-     */
-    private $adminActivated = false;
-
-    /**
-     * @ORM\Column(type="boolean", nullable=false)
-     */
-    private $adminRejected = false;
-
-    /**
-     * @ORM\Column(type="string", length=1000, nullable=true)
-     */
-    private $rejectionReason;
-
-    /**
-     * @ORM\Column(type="boolean", nullable=false)
-     */
-    private $adminRemoved = false;
-
-    /**
-     * @ORM\Column(type="boolean", nullable=false)
-     */
-    private $userRemoved = false;
-
-    /**
-     * @ORM\Column(type="boolean", nullable=false)
-     */
-    private $userDeactivated = false;
-
-    /**
-     * @ORM\Column(type="boolean", nullable=false)
-     */
-    private $featured = false;
-
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    private $featuredUntilDate;
-
-    /**
-     * @ORM\Column(type="smallint", nullable=false)
-     */
-    private $featuredWeight = 0;
-
-    /**
-     * @ORM\Column(type="datetime", nullable=false)
-     */
-    private $firstCreatedDate;
-
-    /**
-     * @ORM\Column(type="datetime", nullable=false)
-     */
-    private $lastEditDate;
-
-    /**
-     * used to sort listings
-     *
-     * @ORM\Column(type="datetime", nullable=false)
-     */
-    private $orderByDate;
-
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    private $adminLastActivationDate;
-
-    /**
      * @ORM\Column(type="string", length=100, nullable=false, unique=false)
      */
     private $slug;
@@ -213,6 +208,11 @@ class Listing
      * @ORM\Column(type="text", nullable=false)
      */
     private $searchText;
+
+    /**
+     * @ORM\Column(type="string", length=150, nullable=true)
+     */
+    private $rejectionReason;
 
     /**
      * @ORM\OneToMany(targetEntity="PaymentForFeaturedPackage", mappedBy="listing")

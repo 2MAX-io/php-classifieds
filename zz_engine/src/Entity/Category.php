@@ -27,14 +27,30 @@ class Category
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=100, nullable=false)
+     * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="children")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $parent;
+
+    /**
+     * @ORM\Column(type="string", length=50, nullable=false)
      */
     private $name;
 
     /**
-     * @ORM\Column(type="string", length=100, unique=true, nullable=false)
+     * @ORM\Column(name="lvl", type="smallint", nullable=false, options={"unsigned"=true})
      */
-    private $slug;
+    private $lvl;
+
+    /**
+     * @ORM\Column(name="lft", type="smallint", nullable=false, options={"unsigned"=true})
+     */
+    private $lft;
+
+    /**
+     * @ORM\Column(name="rgt", type="smallint", nullable=false, options={"unsigned"=true})
+     */
+    private $rgt;
 
     /**
      * @ORM\Column(type="smallint", nullable=false, options={"unsigned"=true})
@@ -42,24 +58,14 @@ class Category
     private $sort;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="children")
+     * @ORM\Column(type="string", length=100, nullable=true)
      */
-    private $parent;
+    private $picture;
 
     /**
-     * @ORM\Column(name="lft", type="integer", nullable=false)
+     * @ORM\Column(type="string", length=100, unique=true, nullable=false)
      */
-    private $lft;
-
-    /**
-     * @ORM\Column(name="rgt", type="integer", nullable=false)
-     */
-    private $rgt;
-
-    /**
-     * @ORM\Column(name="lvl", type="integer", nullable=false)
-     */
-    private $lvl;
+    private $slug;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Category", mappedBy="parent")
@@ -79,11 +85,6 @@ class Category
      * @ORM\OrderBy({"sort" = "ASC"})
      */
     private $customFieldsJoin;
-
-    /**
-     * @ORM\Column(type="string", length=100, nullable=true)
-     */
-    private $picture;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\FeaturedPackageForCategory", mappedBy="category")

@@ -23,10 +23,30 @@
     <div class="container mt-3 listing-show">
         <div class="row">
             <div class="col-md-7">
-                {% if displayAsExpiredForEveryone(listing) %}
-                    <a href="{{ path('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}" class="btn btn-primary w-100 mb-2">
-                        {{- 'trans.Show as visible to public' | trans -}}
-                    </a>
+                {% if isCurrentUserListing(listing) %}
+                    {% if app.request.get('showPreviewForOwner', false) %}
+                        <a href="{{ path('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}" class="btn btn-primary w-100 mb-2">
+                            {{- 'trans.Show as visible to public' | trans -}}
+                        </a>
+                    {% else %}
+                        <a href="{{ path('app_listing_show', {'id': listing.id, 'slug': listing.slug, 'showPreviewForOwner': 1}) }}" class="btn btn-primary w-100 mb-2">
+                            {{- 'trans.Click to preview how listing would look after activation' | trans -}}
+                        </a>
+                    {% endif %}
+                {% endif %}
+
+                {% if displayAsExpired(listing) %}
+                    <div class="alert alert-danger">
+                        <h1>{{ 'trans.Listing has expired' | trans }}</h1>
+                        <div>
+                            {{ 'trans.See other active listings in category' | trans }}:
+                            <a href="{{ path('app_category', {'categorySlug': listing.category.slug}) }}">
+                                {{ listing.category.parent.name }}
+                                ⇾
+                                {{ listing.category.name }}
+                            </a>
+                        </div>
+                    </div>
                 {% endif %}
 
                 <div class="row mb-3">

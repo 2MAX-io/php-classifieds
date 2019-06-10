@@ -7,6 +7,7 @@ namespace App\Twig;
 use App\Entity\Listing;
 use App\Security\CurrentUserService;
 use App\Service\Setting\SettingsService;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Twig\Extension\RuntimeExtensionInterface;
 
 class TwigUser implements RuntimeExtensionInterface
@@ -21,10 +22,19 @@ class TwigUser implements RuntimeExtensionInterface
      */
     private $settingsService;
 
-    public function __construct(CurrentUserService $currentUserService, SettingsService $settingsService)
-    {
+    /**
+     * @var RequestStack
+     */
+    private $requestStack;
+
+    public function __construct(
+        CurrentUserService $currentUserService,
+        SettingsService $settingsService,
+        RequestStack $requestStack
+    ) {
         $this->currentUserService = $currentUserService;
         $this->settingsService = $settingsService;
+        $this->requestStack = $requestStack;
     }
 
     public function lowSecurityCheckIsAdminInPublic(): bool
@@ -42,18 +52,20 @@ class TwigUser implements RuntimeExtensionInterface
         return $this->currentUserService->getUser() === $listing->getUser() || $this->currentUserService->lowSecurityCheckIsAdminInPublic();
     }
 
-    public function displayAsExpired(Listing $listing): bool
+    public function displayAsExpired(Listing $listing, bool $showPreviewForOwner = false): bool
     {
+        $showPreviewForOwner = $this->requestStack->getMasterRequest()->query->get('showPreviewForOwner', $showPreviewForOwner);
+
         /** @noinspection NotOptimalIfConditionsInspection */
-        if ($this->currentUserService->getUser() === $listing->getUser() || $this->currentUserService->lowSecurityCheckIsAdminInPublic()) {
+        if ($showPreviewForOwner &&
+            (
+                $this->currentUserService->getUser() === $listing->getUser()
+                || $this->currentUserService->lowSecurityCheckIsAdminInPublic()
+            )
+        ) {
             return false;
         }
 
-        return $this->displayAsExpiredForEveryone($listing);
-    }
-
-    public function displayAsExpiredForEveryone(Listing $listing): bool
-    {
         return $listing->getUserRemoved()
             || $listing->getUserDeactivated()
             || $listing->getAdminRemoved()

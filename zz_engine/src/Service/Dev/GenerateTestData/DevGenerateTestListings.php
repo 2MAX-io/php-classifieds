@@ -47,7 +47,7 @@ class DevGenerateTestListings
         $this->em->getConnection()->getConfiguration()->setSQLLogger();
 
         $faker = Factory::create();
-        $currentDate = new \DateTime();
+        $currentDate = Carbon::now()->seconds(0);
 
         $persistCount = 0;
         for ($i=0; $i<$count; $i++) {

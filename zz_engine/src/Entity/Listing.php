@@ -273,7 +273,7 @@ class Listing
             return static::STATUS_DEACTIVATED;
         }
 
-        if ($this->getValidUntilDate() <= new \DateTime()) {
+        if ($this->isExpired()) {
             return static::STATUS_EXPIRED;
         }
 

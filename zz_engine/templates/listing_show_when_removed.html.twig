@@ -36,9 +36,7 @@
                     {% if settings.requireListingAdminActivation and (not listing.adminActivated or listing.adminRejected) %}
                         <h1>{{ 'trans.Listing awaits activation' | trans }}</h1>
                     {% else %}
-                        {% if listing.adminRemoved %}
-                            <h1>{{ 'trans.Listing has been deleted' | trans }}</h1>
-                        {% endif %}
+                        <h1>{{ 'trans.Listing has been deleted' | trans }}</h1>
                     {% endif %}
                     <div>
                         {{ 'trans.See other active listings in category' | trans }}:

@@ -17,7 +17,7 @@ class PageShowController extends AbstractController
      */
     public function index(Page $page, PageRepository $pageRepository): Response {
         if ($page->getEnabled() === false) {
-            $this->createNotFoundException();
+            throw $this->createNotFoundException();
         }
 
         return $this->render('page_show.html.twig', [

@@ -170,7 +170,7 @@ class UserListingController extends AbstractUserController
             return $this->redirectToRoute('app_user_listing_index');
         }
 
-        return $this->redirect($refererService->getSafeRefererUrl());
+        return $refererService->redirectToRefererResponse();
     }
 
     /**

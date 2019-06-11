@@ -122,6 +122,12 @@ trans:
   Show as visible to public: 'Show as visible to public'
   Listing has been rejected: 'Listing has been rejected'
   Deactivated by user: 'Deactivated by user'
+  Pagination: 'Pagination'
+  Customization: 'Customization'
+  SEO and Metadata Settings: 'SEO and Metadata Settings'
+  Link to master site: 'Link to master site'
+  Localization: 'Localization'
+  Other: 'Other'
 
 trans.customFieldType.select: Select field
 trans.customFieldType.year_range: Field with year

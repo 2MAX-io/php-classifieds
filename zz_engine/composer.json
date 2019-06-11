@@ -91,6 +91,7 @@
     "require-dev": {
         "fzaninotto/faker": "^1.8",
         "slevomat/coding-standard": "^5.0",
+        "stesie/phpcs-doctrine-annotation-rules": "^1.2",
         "symfony/maker-bundle": "^1.11",
         "symfony/profiler-pack": "^1.0"
     }

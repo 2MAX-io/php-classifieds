@@ -14,4 +14,7 @@
 
     <rule ref="../../vendor/slevomat/coding-standard/SlevomatCodingStandard/Sniffs/TypeHints/ReturnTypeHintSpacingSniff.php" />
     <rule ref="../../vendor/slevomat/coding-standard/SlevomatCodingStandard/Sniffs/Exceptions/DeadCatchSniff.php" />
+    <rule ref="../../vendor/stesie/phpcs-doctrine-annotation-rules/src/DoctrineAnnotationCodingStandard/ruleset.xml">
+        <exclude name="DoctrineAnnotationCodingStandard.Commenting.VarTag"/>
+    </rule>
 </ruleset>

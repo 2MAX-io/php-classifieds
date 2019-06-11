@@ -222,6 +222,9 @@
     "stefano/stefano-tree": {
         "version": "4.0.2"
     },
+    "stesie/phpcs-doctrine-annotation-rules": {
+        "version": "1.2.0"
+    },
     "swiftmailer/swiftmailer": {
         "version": "v6.2.0"
     },

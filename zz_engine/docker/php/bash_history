@@ -398,3 +398,5 @@ php zz_engine/bin/console doctrine:schema:update --force
 php zz_engine/bin/console doctrine:schema:create --dump-sql > install/data/_schema.sql
 php zz_engine/bin/console doctrine:schema:create --dump-sql > install/data/_schema.sql
 composer update -d zz_engine --optimize-autoloader
+composer require --dev -d zz_engine stesie/phpcs-doctrine-annotation-rules
+php zz_engine/bin/console make:entity --regenerate "App\Entity"

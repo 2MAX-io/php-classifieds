@@ -128,6 +128,8 @@ trans:
   Link to master site: 'Link to master site'
   Localization: 'Localization'
   Other: 'Other'
+  '3 letters, ISO 4217 code': '3 letters, ISO 4217 code'
+  The form contains errors. Error messages are displayed next to the fields in the form below.: 'The form contains errors. Error messages are displayed next to the fields in the form below.'
 
 trans.customFieldType.select: Select field
 trans.customFieldType.year_range: Field with year

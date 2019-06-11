@@ -10,6 +10,12 @@
 {%- block form_start -%}
     {{ parent() }}
 
+    {%- if not form.vars.valid -%}
+        <div class="alert alert-danger">
+            {{- 'trans.The form contains errors. Error messages are displayed next to the fields in the form below.' | trans -}}
+        </div>
+    {%- endif -%}
+
     {% include 'form/_flash_above_form.html.twig' %}
 {%- endblock form_start -%}
 

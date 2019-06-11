@@ -562,3 +562,5 @@ trans:
   Link to master site: 'Link do strony głównej'
   Localization: 'Lokalizacja'
   Other: 'Inne'
+  '3 letters, ISO 4217 code': '3 znaki, kod ISO_4217'
+  The form contains errors. Error messages are displayed next to the fields in the form below.: 'Formularz zawiera błędy. Komunikaty błędów są wyświetlany obok pól w formularzu poniżej.'

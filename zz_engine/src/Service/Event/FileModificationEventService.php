@@ -40,10 +40,10 @@ class FileModificationEventService
                 ->where(Criteria::expr()->eq('userRemoved', false))
         )->first();
 
-        if (null === $firstFile) {
-            $listing->setMainImage(null);
-        } else {
+        if ($firstFile instanceof ListingFile) {
             $listing->setMainImage($firstFile->getPath());
+        } else {
+            $listing->setMainImage(null);
         }
 
         $this->em->persist($listing);

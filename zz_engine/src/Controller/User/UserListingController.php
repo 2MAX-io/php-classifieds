@@ -9,7 +9,6 @@ use App\Entity\Listing;
 use App\Form\ListingType;
 use App\Helper\Json;
 use App\Service\Category\CategoryListService;
-use App\Service\Event\FileModificationEventService;
 use App\Service\Listing\CustomField\ListingCustomFieldsService;
 use App\Service\Listing\Save\SaveListingService;
 use App\Service\Listing\Save\ListingFileService;
@@ -152,15 +151,13 @@ class UserListingController extends AbstractUserController
      */
     public function remove(
         Request $request,
-        Listing $listing,
-        FileModificationEventService $fileModificationEventService
+        Listing $listing
     ): Response {
         $this->dennyUnlessCurrentUserAllowed($listing, true);
 
         if ($this->isCsrfTokenValid('remove' . $listing->getId(), $request->request->get('_token'))) {
             $em = $this->getDoctrine()->getManager();
             $listing->setUserRemoved(true);
-            $fileModificationEventService->onFileModificationByListing($listing);
             $em->flush();
         }
 

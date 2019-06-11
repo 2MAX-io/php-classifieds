@@ -101,6 +101,7 @@ function adminJs() {
     'asset/lib/sortable_js/Sortable.min.js',
     'asset/lib/sortable_js/jquery-sortable.js',
     'asset/lib/cleave/cleave.js',
+    'asset/lib/autosize/autosize.js',
     'asset/bootstrap.bundle.js',
     'asset/main.js',
   ])

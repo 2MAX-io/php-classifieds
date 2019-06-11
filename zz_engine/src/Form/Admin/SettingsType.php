@@ -122,7 +122,7 @@ class SettingsType extends AbstractType
             ],
         ]);
         $builder->add('itemsPerPageMax', IntegerType::class, [
-            'label' => 'trans.Maximum items per page',
+            'label' => 'trans.Items per page',
             'required' => true,
             'empty_data' => '',
             'constraints' => [

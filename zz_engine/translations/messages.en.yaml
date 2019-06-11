@@ -582,7 +582,7 @@ trans.listings: listings
 'trans.Words to remove from listing title, separated by new line': 'Words to remove from listing title, separated by new line'
 'trans.Site copyright in footer': 'Site copyright in footer'
 'trans.%year% would be replaced to current year': '%year% would be replaced to current year'
-'trans.Maximum items per page': 'Maximum items per page'
+'trans.Items per page': 'Items per page'
 'trans.Cron for this application is not set up, cron did not run single time': 'Cron for this application is not set up, cron did not run single time'
 'trans.Cron for this application is not set up, cron did not run after: %date%': 'Cron for this application is not set up, cron did not run after: %date%'
 'trans.Action has been confirmed before, and requested action has been completed': 'Action has been confirmed before, and requested action has been completed'

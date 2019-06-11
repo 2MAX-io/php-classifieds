@@ -45,12 +45,12 @@ class UserBalanceChange
     private $payment;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=false)
      */
     private $datetime;
 
     /**
-     * @ORM\Column(type="string", length=5000)
+     * @ORM\Column(type="string", length=5000, nullable=false)
      */
     private $description;
 

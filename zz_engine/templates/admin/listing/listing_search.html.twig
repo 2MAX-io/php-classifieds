@@ -79,9 +79,11 @@
                     <div class="col-md-4 mb-2">
                         <label for="category">{{ 'trans.Category' | trans }}</label>
                         <select name="category" class="form-control" id="category">
+                            {%- apply normalizeWhitespace -%}
                             {% for categoryId, categoryName in categories %}
                                 <option {{ optionAttr('category', categoryId) }} value="{{ categoryId }}">{{ categoryName }}</option>
                             {% endfor %}
+                            {% endapply  %}
                         </select>
                     </div>
 

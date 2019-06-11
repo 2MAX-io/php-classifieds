@@ -47,9 +47,9 @@
                     <div>{{ 'trans.Username' | trans }}: {{ user.username }}</div>
                 </td>
                 <td>
-                        <span class="{{ user.enabled | boolGreenRedClass }}">
-                            {{ user.enabled | boolText | trans }}
-                        </span>
+                    <span class="{{ user.enabled | boolGreenRedClass }}">
+                        {{ user.enabled | boolText | trans }}
+                    </span>
                 </td>
                 <td>{{ user.registrationDate ? user.registrationDate|date : '' }}</td>
                 <td>{{ user.lastLogin ? user.lastLogin|date : '' }}</td>

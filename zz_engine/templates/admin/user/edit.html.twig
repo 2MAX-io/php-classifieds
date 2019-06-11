@@ -37,7 +37,11 @@
         </tr>
         <tr>
             <th>{{ 'trans.Enabled' | trans }}</th>
-            <td>{{ (user.enabled ? 'trans.Yes' : 'trans.No') | trans }}</td>
+            <td>
+                <span class="{{ user.enabled | boolGreenRedClass }}">
+                    {{ user.enabled | boolText | trans }}
+                </span>
+            </td>
         </tr>
         <tr>
             <th>{{ 'trans.Registration date' | trans }}</th>

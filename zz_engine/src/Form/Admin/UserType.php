@@ -75,7 +75,6 @@ class UserType extends AbstractType
                 'type' => PasswordType::class,
                 'invalid_message' => 'Repeated value does note match',
                 'constraints' => [
-                    new NotBlank(),
                     new Length(
                         [
                             'min' => 8,

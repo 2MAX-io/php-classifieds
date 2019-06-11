@@ -87,6 +87,14 @@ class FeatureListingController extends AbstractUserController
         if ($this->isCsrfTokenValid('feature'.$listing->getId(), $request->request->get('_token'))) {
             $em = $this->getDoctrine()->getManager();
 
+            if ($featuredPackage->getRemoved()) {
+                throw new UserVisibleMessageException('Featured package has been removed');
+            }
+
+            if (!$featuredListingService->isPackageForListingCategory($listing, $featuredPackage)) {
+                throw new UserVisibleMessageException('trans.This featured package is not intended for the current category of this listing');
+            }
+
             if ($featuredListingService->hasAmount($listing, $featuredPackage)) {
                 $userBalanceChange = $featuredListingService->makeFeaturedByBalance($listing, $featuredPackage);
                 $userBalanceChange->setDescription($trans->trans('trans.Featuring of listing: %listingTitle%, using package: %featuredPackageName%', [
@@ -97,9 +105,6 @@ class FeatureListingController extends AbstractUserController
             } else {
                 if (!$settingsService->getSettingsDto()->isPaymentAllowed()) {
                     throw new UserVisibleMessageException('trans.Payments have been disabled');
-                }
-                if ($featuredPackage->getRemoved()) {
-                    throw new UserVisibleMessageException('Featured package has been removed');
                 }
 
                 $paymentDto = $paymentService->createPaymentForFeaturedPackage($listing, $featuredPackage);

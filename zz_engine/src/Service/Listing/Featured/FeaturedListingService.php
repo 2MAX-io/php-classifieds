@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Service\Listing\Featured;
 
 use App\Entity\FeaturedPackage;
+use App\Entity\FeaturedPackageForCategory;
 use App\Entity\Listing;
 use App\Entity\Payment;
 use App\Entity\UserBalanceChange;
@@ -12,12 +13,13 @@ use App\Security\CurrentUserService;
 use App\Service\Listing\ValidityExtend\ValidUntilSetService;
 use App\Service\Money\UserBalanceService;
 use Carbon\Carbon;
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 
 class FeaturedListingService
 {
     /**
-     * @var EntityManagerInterface
+     * @var EntityManagerInterface|EntityManager
      */
     private $em;
 
@@ -120,5 +122,37 @@ class FeaturedListingService
         $cost = $featuredPackage->getPrice();
 
         return $this->userBalanceService->hasAmount($cost, $listing->getUser());
+    }
+
+    public function isPackageForListingCategory(Listing $listing, FeaturedPackage $featuredPackage): bool
+    {
+        if ($featuredPackage->getDefaultPackage() && !$this->hasNotDefaultPackage($listing)) {
+            return true;
+        }
+
+        $qb = $this->em->getRepository(FeaturedPackageForCategory::class)->createQueryBuilder('featuredPackageForCategory');
+        $qb->select($qb->expr()->count('featuredPackageForCategory.id'));
+        $qb->join('featuredPackageForCategory.featuredPackage', 'featuredPackage');
+        $qb->andWhere($qb->expr()->eq('featuredPackageForCategory.featuredPackage', ':featuredPackage'));
+        $qb->andWhere($qb->expr()->eq('featuredPackageForCategory.category', ':category'));
+        $qb->andWhere($qb->expr()->eq('featuredPackage.defaultPackage', 0));
+        $qb->andWhere($qb->expr()->eq('featuredPackage.removed', 0));
+        $qb->setParameter(':featuredPackage', $featuredPackage);
+        $qb->setParameter(':category', $listing->getCategory());
+
+        return $qb->getQuery()->getSingleScalarResult() > 0;
+    }
+
+    private function hasNotDefaultPackage(Listing $listing): bool
+    {
+        $qb = $this->em->getRepository(FeaturedPackageForCategory::class)->createQueryBuilder('featuredPackageForCategory');
+        $qb->select($qb->expr()->count('featuredPackageForCategory.id'));
+        $qb->join('featuredPackageForCategory.featuredPackage', 'featuredPackage');
+        $qb->andWhere($qb->expr()->eq('featuredPackageForCategory.category', ':category'));
+        $qb->andWhere($qb->expr()->eq('featuredPackage.defaultPackage', 0));
+        $qb->andWhere($qb->expr()->eq('featuredPackage.removed', 0));
+        $qb->setParameter(':category', $listing->getCategory());
+
+        return $qb->getQuery()->getSingleScalarResult() > 0;
     }
 }

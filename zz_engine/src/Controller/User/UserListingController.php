@@ -110,6 +110,9 @@ class UserListingController extends AbstractUserController
 
         $form = $this->createForm(ListingType::class, $listing);
         $form->remove('validityTimeDays');
+        if ($listing->isFeaturedActive()) {
+            $form->remove('category');
+        }
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

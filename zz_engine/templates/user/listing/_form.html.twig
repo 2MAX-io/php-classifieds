@@ -3,6 +3,7 @@
 {{ form_row(form.title) }}
 {{ form_row(form.description) }}
 
+{%- if form.category is defined -%}
 <!-- category -->
 <div class="form-group">
     {{ form_label(form.category) }}
@@ -37,10 +38,11 @@
     {{ form_widget(form.category) }}
     {{- form_help(form) -}}
 </div>
+{%- endif -%}
 
-{% if form.validityTimeDays is defined %}
+{%- if form.validityTimeDays is defined -%}
     {{ form_row(form.validityTimeDays) }}
-{% endif %}
+{%- endif -%}
 
 {{ form_row(form.phone) }}
 

@@ -396,3 +396,4 @@ php zz_engine/bin/console doctrine:schema:create --dump-sql > install/data/_sche
 php zz_engine/bin/console doctrine:schema:update --force
 php zz_engine/bin/console doctrine:schema:update --force
 php zz_engine/bin/console doctrine:schema:create --dump-sql > install/data/_schema.sql
+php zz_engine/bin/console doctrine:schema:create --dump-sql > install/data/_schema.sql

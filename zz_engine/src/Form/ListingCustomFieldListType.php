@@ -18,6 +18,7 @@ use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\LessThanOrEqual;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -104,12 +105,21 @@ class ListingCustomFieldListType extends AbstractType
             }
 
             if (\in_array($customField->getType(), [CustomField::TYPE_INTEGER_RANGE], true)) {
+                $maxIntegerValue = (int) \str_repeat('9', 12);
                 $builder->add($customField->getId(), IntegerType::class, [
                     'label' => $customField->getName(),
                     'translation_domain' => false,
                     'data' => $this->getValue($customField),
-                    'constraints' => $this->getConstraints($customField),
+                    'constraints' => \array_merge(
+                        $this->getConstraints($customField),
+                        [
+                            new LessThanOrEqual(['value' => $maxIntegerValue]),
+                        ],
+                    ),
                     'required' => $customField->getRequired(),
+                    'attr' => [
+                        'max' => $maxIntegerValue,
+                    ],
                 ]);
             }
 

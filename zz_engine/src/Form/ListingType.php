@@ -10,6 +10,7 @@ use App\Form\Type\CategoryType;
 use App\Form\Type\AppMoneyType;
 use App\Form\Type\PriceForType;
 use App\Service\Listing\ValidityExtend\ValidUntilSetService;
+use App\Validator\Constraints\HasLetterNumber;
 use App\Validator\Constraints\Phone;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -21,8 +22,10 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\Choice;
+use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
 use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\LessThanOrEqual;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
@@ -49,6 +52,7 @@ class ListingType extends AbstractType
                 'constraints' => [
                     new NotBlank(),
                     new Length(['min' => 5]),
+                    new HasLetterNumber(),
                 ],
                 'attr' => [
                     'maxlength' => 70,
@@ -63,6 +67,7 @@ class ListingType extends AbstractType
             'constraints' => [
                 new NotBlank(),
                 new Length(['min' => 20, 'max' => 10000]),
+                new HasLetterNumber(),
             ],
             'empty_data' => '',
         ]);
@@ -98,7 +103,12 @@ class ListingType extends AbstractType
             'label' => 'trans.Email',
             'required' => false,
             'attr' => [
-                'maxlength' => 100,
+                'maxlength' => 70,
+            ],
+            'constraints' => [
+                new Email([
+                    'mode' => Email::VALIDATION_MODE_STRICT
+                ]),
             ],
         ]);
         $builder->add('emailShow', CheckboxType::class, [
@@ -112,6 +122,13 @@ class ListingType extends AbstractType
                 new GreaterThanOrEqual([
                     'value' => 0,
                 ]),
+                new LessThanOrEqual([
+                    'value' => (int) \str_repeat('9', 12),
+                ]),
+            ],
+            'attr' => [
+                'max' => (int) \str_repeat('9', 12),
+                'class' => 'input-money',
             ],
         ]);
         $builder->add('priceNegotiable', BoolType::class, [
@@ -126,6 +143,9 @@ class ListingType extends AbstractType
             'required' => false,
             'attr' => [
                 'maxlength' => 30,
+            ],
+            'constraints' => [
+                new HasLetterNumber(),
             ],
         ]);
         $builder->add(

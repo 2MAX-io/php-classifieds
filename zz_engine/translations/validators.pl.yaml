@@ -7,3 +7,4 @@ This custom field is already assigned to this category: 'To pole niestandardowe 
 'Contains not allowed characters. Allowed characters: plain letters, numbers, minus character': 'Zawiera niedozwolone znaki. Dozwolone znaki: zwykłe litery, liczby, znak minus'
 'Contains not allowed characters. Allowed characters: plain letters, numbers, minus character, underscore character': 'Zawiera niedozwolone znaki. Dozwolone znaki: zwykłe litery, liczby, znak minus, znak podkreślenia'
 'Repeated value does note match': 'Powtórzona wartość nie pasuje '
+'Must contain letters or numbers': 'Musi zawierać litery lub liczby'

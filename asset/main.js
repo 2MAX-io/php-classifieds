@@ -53,5 +53,3 @@ function copyTextToClipboard(text) {
 
     document.body.removeChild(textArea);
 }
-
-autosize(document.querySelectorAll('textarea'));

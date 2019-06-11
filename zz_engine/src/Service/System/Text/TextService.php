@@ -36,6 +36,15 @@ class TextService
 
     public function removeNotAllowedCharacters(string $text): string
     {
+        $allowedCharacters = static::getAllowedCharacters();
+        $allowedCharacters .= $this->settingsService->getAllowedCharacters();
+        $allowedCharacters .= \mb_strtoupper($this->settingsService->getAllowedCharacters());
+
+        return \preg_replace('~[^'.\preg_quote($allowedCharacters, '~').']+~', '', $text);
+    }
+
+    public static function getAllowedCharacters(): string
+    {
         $allowedCharacters = ' ';
         $allowedCharacters .= 'qwertyuiopasdfghjklzxcvbnm';
         $allowedCharacters .= 'QWERTYUIOPASDFGHJKLZXCVBNM';
@@ -48,10 +57,8 @@ class TextService
         $allowedCharacters .= '\\'; // character: \
         $allowedCharacters .= '/';
         $allowedCharacters .= "\n\r";
-        $allowedCharacters .= $this->settingsService->getAllowedCharacters();
-        $allowedCharacters .= \mb_strtoupper($this->settingsService->getAllowedCharacters());
 
-        return \preg_replace('~[^'.\preg_quote($allowedCharacters, '~').']+~', '', $text);
+        return $allowedCharacters;
     }
 
     public function removeTooManyNewLines(string $text, int $threshold = 2): string

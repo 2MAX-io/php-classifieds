@@ -17,6 +17,11 @@ class SlugHelper
                 ->setDelimiter('-')
         );
 
-        return $generator->generate(\trim($sting));
+        $slug = $generator->generate(\trim($sting));
+        if ($slug === '') {
+            return 'classified-ads-item';
+        }
+
+        return $slug;
     }
 }

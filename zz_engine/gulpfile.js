@@ -104,6 +104,7 @@ function adminJs() {
     'asset/lib/autosize/autosize.js',
     'asset/bootstrap.bundle.js',
     'asset/main.js',
+    'asset/main_admin.js',
   ])
     .pipe(sourcemaps.init())
     .pipe(concat('admin.js'))

@@ -23,7 +23,7 @@
     <div class="container mt-3 listing-show">
         <div class="row">
             <div class="col-md-7">
-                {% if isCurrentUserListing(listing) %}
+                {% if isCurrentUserListing(listing) and listing.status not in [constant('\App\\Entity\\Listing::STATUS_ACTIVE'), constant('\App\\Entity\\Listing::STATUS_ACTIVE_FEATURED')] %}
                     {% if app.request.get('showPreviewForOwner', false) %}
                         <a href="{{ path('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}" class="btn btn-primary w-100 mb-2">
                             {{- 'trans.Show as visible to public' | trans -}}

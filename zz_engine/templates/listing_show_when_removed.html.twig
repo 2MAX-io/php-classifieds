@@ -41,6 +41,10 @@
                         <h1>{{ 'trans.Listing has been rejected' | trans }}</h1>
                     {% endif %}
 
+                    {% if listing.status in [constant('\App\\Entity\\Listing::STATUS_DEACTIVATED')] %}
+                        <h1>{{ 'trans.Deactivated by user' | trans }}</h1>
+                    {% endif %}
+
                     {% if listing.status in [constant('\App\\Entity\\Listing::STATUS_ADMIN_REMOVED'), constant('\App\\Entity\\Listing::STATUS_USER_REMOVED')] %}
                         <h1>{{ 'trans.Listing has been deleted' | trans }}</h1>
                     {% endif %}

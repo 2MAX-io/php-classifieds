@@ -8,7 +8,7 @@ INSERT INTO setting (name, value, last_update_date) VALUES ('linkTermsConditions
 INSERT INTO setting (name, value, last_update_date) VALUES ('languageTwoLetters', 'US', '2010-01-01 00:00:00');
 INSERT INTO setting (name, value, last_update_date) VALUES ('currency', 'USD', '2010-01-01 00:00:00');
 INSERT INTO setting (name, value, last_update_date) VALUES ( 'allowedCharacters', '', '2010-01-01 00:00:00');
-INSERT INTO setting (name, value, last_update_date) VALUES ( 'searchPlaceholder', '"Audi A6"', '2010-01-01 00:00:00');
+INSERT INTO setting (name, value, last_update_date) VALUES ( 'searchPlaceholder', '"Audi A6", transpor*', '2010-01-01 00:00:00');
 INSERT INTO setting (name, value, last_update_date) VALUES ( 'masterSiteUrl', 'https://2MAX.io', '2010-01-01 00:00:00');
 INSERT INTO setting (name, value, last_update_date) VALUES ( 'masterSiteAnchorText', '2MAX.io', '2010-01-01 00:00:00');
 INSERT INTO setting (name, value, last_update_date) VALUES ( 'masterSiteLinkShow', '1', '2010-01-01 00:00:00');

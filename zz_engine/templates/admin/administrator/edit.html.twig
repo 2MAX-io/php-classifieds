@@ -15,24 +15,16 @@
     <table class="table">
         <tbody>
         <tr>
-            <th>Id</th>
-            <td>{{ user.id }}</td>
-        </tr>
-        <tr>
-            <th>{{ 'trans.Username' | trans }}</th>
-            <td>{{ user.username }}</td>
-        </tr>
-        <tr>
             <th>{{ 'trans.Email' | trans }}</th>
             <td>{{ user.email }}</td>
         </tr>
         <tr>
-            <th>{{ 'trans.Roles' | trans }}</th>
-            <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
-        </tr>
-        <tr>
             <th>{{ 'trans.Enabled' | trans }}</th>
-            <td>{{ (user.enabled ? 'trans.Yes' : 'trans.No') | trans }}</td>
+            <td>
+                <span class="{{ user.enabled | boolGreenRedClass }}">
+                    {{ user.enabled | boolText | trans }}
+                </span>
+            </td>
         </tr>
         </tbody>
     </table>

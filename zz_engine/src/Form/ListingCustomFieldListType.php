@@ -188,16 +188,31 @@ class ListingCustomFieldListType extends AbstractType
         }
 
         if (\in_array($customField->getType(), [CustomField::TYPE_SELECT_SINGLE, CustomField::TYPE_SELECT], true)) {
-            return '__form_custom_field_option_id_' . $customField->getListingCustomFieldValueFirst()->getCustomFieldOption()->getId();
+            $value = $customField->getListingCustomFieldValueFirst()->getCustomFieldOption();
+            if (null === $value) {
+                return null;
+            }
+
+            return '__form_custom_field_option_id_' . $value->getId();
         }
 
         if (\in_array($customField->getType(), [CustomField::TYPE_INTEGER_RANGE, CustomField::TYPE_YEAR_RANGE], true)) {
-            return $customField->getListingCustomFieldValueFirst()->getValue();
+            $value = $customField->getListingCustomFieldValueFirst()->getValue();
+            if (!\is_numeric($value)) {
+                return null;
+            }
+
+            return $value;
         }
 
         if (\in_array($customField->getType(), [CustomField::TYPE_CHECKBOX_MULTIPLE])) {
             return \array_map(function(ListingCustomFieldValue $customFieldValue) {
-                return '__form_custom_field_option_id_' . $customFieldValue->getCustomFieldOption()->getId();
+                $value = $customFieldValue->getCustomFieldOption();
+                if (null === $value) {
+                    return null;
+                }
+
+                return '__form_custom_field_option_id_' . $value->getId();
             }, $customField->getListingCustomFieldValues()->toArray());
         }
 

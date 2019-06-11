@@ -397,3 +397,4 @@ php zz_engine/bin/console doctrine:schema:update --force
 php zz_engine/bin/console doctrine:schema:update --force
 php zz_engine/bin/console doctrine:schema:create --dump-sql > install/data/_schema.sql
 php zz_engine/bin/console doctrine:schema:create --dump-sql > install/data/_schema.sql
+composer update -d zz_engine --optimize-autoloader

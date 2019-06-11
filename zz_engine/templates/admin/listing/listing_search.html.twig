@@ -127,15 +127,8 @@
                         <!-- img -->
                         <td>
                             <div>
-                                <a
-                                        title="{{ listing.title }}"
-                                        href="{{ path('app_listing_show', {id: listing.id, 'slug': listing.slug}) }}"
-                                >
-                                <img
-                                            class="rounded list-small-img"
-                                            alt="{{ listing.title }}"
-                                            src="{{ asset(listing.mainImageInListSize | default('static/system/blank.png')) }}"
-                                    >
+                                <a title="{{ listing.title }}" href="{{ path('app_listing_show', {id: listing.id, 'slug': listing.slug}) }}">
+                                    <img class="rounded list-small-img" alt="{{ listing.title }}" src="{{ asset(listing.mainImageInListSize | default('static/system/blank.png')) }}">
                                 </a>
                             </div>
                         </td>
@@ -188,7 +181,7 @@
                         <!-- date -->
                         <td>
                             <div class="{{ listing.validUntilDate | isExpired | displayTextWarning }}">
-                                {{ listing.validUntilDate | date }}
+                                {{- listing.validUntilDate | date -}}
                             </div>
                         </td>
 
@@ -219,7 +212,7 @@
                     <tr class="collapse" id="collapse{{ listing.id }}" data-parent="#listings">
                         <td colspan="99">
                             <div class="row">
-                                {{ adminMacro.listingInfo(listing) }}
+                                {{- adminMacro.listingInfo(listing) -}}
                             </div>
                         </td>
                     </tr>
@@ -235,11 +228,8 @@
 
             {% if listings is not empty %}
                 <div>
-                    <a
-                            href="{{ path('app_admin_listing_execute_on_filtered', app.request.query.all) }}"
-                            class="btn btn-danger"
-                    >
-                        {{ 'trans.Execute action on filtered listings' | trans }}
+                    <a href="{{ path('app_admin_listing_execute_on_filtered', app.request.query.all) }}" class="btn btn-danger">
+                        {{- 'trans.Execute action on filtered listings' | trans -}}
                     </a>
                 </div>
             {% endif %}

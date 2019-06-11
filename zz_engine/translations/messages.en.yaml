@@ -120,6 +120,7 @@ trans:
   Current status: 'Current status'
   Click to preview how listing would look after activation: 'Click to preview how listing would look after activation'
   Show as visible to public: 'Show as visible to public'
+  Listing has been rejected: 'Listing has been rejected'
 
 trans.customFieldType.select: Select field
 trans.customFieldType.year_range: Field with year

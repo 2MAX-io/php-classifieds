@@ -400,3 +400,4 @@ php zz_engine/bin/console doctrine:schema:create --dump-sql > install/data/_sche
 composer update -d zz_engine --optimize-autoloader
 composer require --dev -d zz_engine stesie/phpcs-doctrine-annotation-rules
 php zz_engine/bin/console make:entity --regenerate "App\Entity"
+composer install -d zz_engine --optimize-autoloader

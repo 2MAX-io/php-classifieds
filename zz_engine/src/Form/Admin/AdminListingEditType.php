@@ -79,6 +79,9 @@ class AdminListingEditType extends AbstractType
             'attr' => [
                 'class' => 'formCustomFieldList'
             ],
+            'form_group_attr' => [
+                'class' => 'mb-0',
+            ],
         ]);
     }
 

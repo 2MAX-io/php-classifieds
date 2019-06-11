@@ -24,6 +24,14 @@ class Payment
     private $id;
 
     /**
+     * @var User|null
+     *
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="payments")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user;
+
+    /**
      * @ORM\Column(type="string", nullable=false)
      */
     private $type;
@@ -32,14 +40,6 @@ class Payment
      * @ORM\Column(type="string", nullable=false, length=255)
      */
     private $description;
-
-    /**
-     * @var User|null
-     *
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="payments")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $user;
 
     /**
      * @ORM\Column(type="integer", nullable=false)

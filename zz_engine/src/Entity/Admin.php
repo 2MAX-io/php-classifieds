@@ -44,7 +44,7 @@ class Admin implements UserInterface, RoleInterface, EnablableInterface
      *
      * @ORM\Column(type="boolean", nullable=false)
      */
-    protected $enabled;
+    private $enabled;
 
     /**
      * @var string The hashed password

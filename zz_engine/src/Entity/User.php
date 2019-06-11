@@ -33,7 +33,7 @@ class User implements UserInterface, RoleInterface, EnablableInterface, EncoderA
      *
      * @ORM\Column(type="string", length=70, unique=true, nullable=false)
      */
-    protected $username;
+    private $username;
 
     /**
      * @ORM\Column(type="string", length=70, unique=true, nullable=false)
@@ -50,7 +50,7 @@ class User implements UserInterface, RoleInterface, EnablableInterface, EncoderA
      *
      * @ORM\Column(type="boolean", nullable=false)
      */
-    protected $enabled;
+    private $enabled;
 
     /**
      * @var string The hashed password

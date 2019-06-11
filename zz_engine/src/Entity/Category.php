@@ -58,14 +58,14 @@ class Category
     private $sort;
 
     /**
-     * @ORM\Column(type="string", length=100, nullable=true)
-     */
-    private $picture;
-
-    /**
      * @ORM\Column(type="string", length=100, unique=true, nullable=false)
      */
     private $slug;
+
+    /**
+     * @ORM\Column(type="string", length=100, nullable=true)
+     */
+    private $picture;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Category", mappedBy="parent")

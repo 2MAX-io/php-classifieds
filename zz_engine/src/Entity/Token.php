@@ -42,14 +42,14 @@ class Token
     private $createdDate;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    private $validUntilDate;
-
-    /**
      * @ORM\Column(type="boolean", nullable=false)
      */
     private $used = false;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $validUntilDate;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\TokenField", mappedBy="token", indexBy="name", cascade={"all"})

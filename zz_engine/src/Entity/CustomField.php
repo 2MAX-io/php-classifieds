@@ -54,6 +54,13 @@ class CustomField
     private $searchable;
 
     /**
+     * @var int
+     *
+     * @ORM\Column(type="smallint", nullable=false, options={"unsigned"=true})
+     */
+    private $sort;
+
+    /**
      * @ORM\Column(type="string", length=25, nullable=true)
      */
     private $unit;
@@ -73,13 +80,6 @@ class CustomField
      * @ORM\OneToMany(targetEntity="App\Entity\CustomFieldJoinCategory", mappedBy="customField")
      */
     private $categoriesJoin;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(type="smallint", nullable=false, options={"unsigned"=true})
-     */
-    private $sort;
 
     public function __construct()
     {

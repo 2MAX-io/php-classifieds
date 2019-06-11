@@ -7,6 +7,7 @@ namespace App\Controller\Admin;
 use App\Controller\Admin\Base\AbstractAdminController;
 use App\Service\Admin\Listing\ListingActivateListService;
 use App\Service\Admin\ListingAction\ListingActionService;
+use App\Service\System\Routing\RefererService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -38,8 +39,11 @@ class ListingActivateController extends AbstractAdminController
     /**
      * @Route("/admin/red5/listing/activate/list/action-on-selected", name="app_admin_listing_activate_action_on_selected")
      */
-    public function actionForSelected(Request $request, ListingActionService $listingActionService): Response
-    {
+    public function actionForSelected(
+        Request $request,
+        ListingActionService $listingActionService,
+        RefererService $refererService
+    ): Response {
         $this->denyUnlessAdmin();
 
         if (!$this->isCsrfTokenValid('activationActionForSelected', $request->get('_token'))) {
@@ -59,6 +63,6 @@ class ListingActivateController extends AbstractAdminController
 
         $this->getDoctrine()->getManager()->flush();
 
-        return $this->redirect($request->headers->get('referer'));
+        return $refererService->redirectToRefererResponse();
     }
 }

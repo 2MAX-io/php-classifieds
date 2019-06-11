@@ -14,6 +14,7 @@ use App\Service\Listing\Featured\FeaturedPackageService;
 use App\Service\Money\UserBalanceService;
 use App\Service\Payment\PaymentService;
 use App\Service\Setting\SettingsService;
+use App\Service\System\Routing\RefererService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -45,7 +46,8 @@ class FeatureListingController extends AbstractUserController
     public function makeFeaturedAsDemo(
         Request $request,
         Listing $listing,
-        FeaturedListingService $featuredListingService
+        FeaturedListingService $featuredListingService,
+        RefererService $refererService
     ): Response {
         $this->dennyUnlessCurrentUserAllowed($listing);
 
@@ -60,7 +62,7 @@ class FeatureListingController extends AbstractUserController
             );
         }
 
-        return $this->redirect($request->headers->get('referer'));
+        return $refererService->redirectToRefererResponse();
     }
 
     /**
@@ -71,13 +73,14 @@ class FeatureListingController extends AbstractUserController
      * )
      */
     public function makeFeatured(
+        Request $request,
         Listing $listing,
         FeaturedPackage $featuredPackage,
         FeaturedListingService $featuredListingService,
         PaymentService $paymentService,
         TranslatorInterface $trans,
         SettingsService $settingsService,
-        Request $request
+        RefererService $refererService
     ): Response {
         $this->dennyUnlessCurrentUserAllowed($listing);
 
@@ -111,6 +114,6 @@ class FeatureListingController extends AbstractUserController
             );
         }
 
-        return $this->redirect($request->headers->get('referer'));
+        return $refererService->redirectToRefererResponse();
     }
 }

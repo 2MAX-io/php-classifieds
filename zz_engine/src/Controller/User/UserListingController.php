@@ -13,6 +13,7 @@ use App\Service\Listing\CustomField\ListingCustomFieldsService;
 use App\Service\Listing\Save\SaveListingService;
 use App\Service\Listing\Save\ListingFileService;
 use App\Service\Log\PoliceLogIpService;
+use App\Service\System\Routing\RefererService;
 use App\Service\User\Listing\UserListingListService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -151,7 +152,8 @@ class UserListingController extends AbstractUserController
      */
     public function remove(
         Request $request,
-        Listing $listing
+        Listing $listing,
+        RefererService $refererService
     ): Response {
         $this->dennyUnlessCurrentUserAllowed($listing, true);
 
@@ -161,13 +163,17 @@ class UserListingController extends AbstractUserController
             $em->flush();
         }
 
-        return $this->redirect($request->headers->get('referer'));
+        if ($refererService->refererIsRoute('app_listing_edit')) {
+            return $this->redirectToRoute('app_user_listing_index');
+        }
+
+        return $this->redirect($refererService->getSafeRefererUrl());
     }
 
     /**
      * @Route("/user/listing/deactivate/{id}", name="app_listing_deactivate", methods={"PATCH"})
      */
-    public function deactivate(Request $request, Listing $listing): Response
+    public function deactivate(Request $request, Listing $listing, RefererService $refererService): Response
     {
         $this->dennyUnlessCurrentUserAllowed($listing);
 
@@ -177,13 +183,13 @@ class UserListingController extends AbstractUserController
             $em->flush();
         }
 
-        return $this->redirect($request->headers->get('referer'));
+        return $refererService->redirectToRefererResponse();
     }
 
     /**
      * @Route("/user/listing/activate/{id}", name="app_listing_activate", methods={"PATCH"})
      */
-    public function activate(Request $request, Listing $listing): Response
+    public function activate(Request $request, Listing $listing, RefererService $refererService): Response
     {
         $this->dennyUnlessCurrentUserAllowed($listing);
 
@@ -193,6 +199,6 @@ class UserListingController extends AbstractUserController
             $em->flush();
         }
 
-        return $this->redirect($request->headers->get('referer'));
+        return $refererService->redirectToRefererResponse();
     }
 }

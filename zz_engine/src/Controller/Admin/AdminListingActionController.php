@@ -7,6 +7,7 @@ namespace App\Controller\Admin;
 use App\Controller\Admin\Base\AbstractAdminController;
 use App\Entity\Listing;
 use App\Service\Admin\ListingAction\ListingActionService;
+use App\Service\System\Routing\RefererService;
 use Carbon\Carbon;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,8 +18,12 @@ class AdminListingActionController extends AbstractAdminController
     /**
      * @Route("/admin/red5/listing/action/activate/{id}", name="app_admin_listing_activate", methods={"PATCH"})
      */
-    public function activate(Request $request, Listing $listing, ListingActionService $listingActionService): Response
-    {
+    public function activate(
+        Request $request,
+        Listing $listing,
+        ListingActionService $listingActionService,
+        RefererService $refererService
+    ): Response {
         $this->denyUnlessAdmin();
 
         if ($this->isCsrfTokenValid('adminActivate'.$listing->getId(), $request->request->get('_token'))) {
@@ -26,13 +31,13 @@ class AdminListingActionController extends AbstractAdminController
             $this->getDoctrine()->getManager()->flush();
         }
 
-        return $this->redirect($request->headers->get('referer'));
+        return $refererService->redirectToRefererResponse();
     }
 
     /**
      * @Route("/admin/red5/listing/action/remove/{id}", name="app_admin_listing_remove", methods={"DELETE"})
      */
-    public function remove(Request $request, Listing $listing): Response
+    public function remove(Request $request, Listing $listing, RefererService $refererService): Response
     {
         $this->denyUnlessAdmin();
 
@@ -42,13 +47,13 @@ class AdminListingActionController extends AbstractAdminController
             $em->flush();
         }
 
-        return $this->redirect($request->headers->get('referer'));
+        return $refererService->redirectToRefererResponse();
     }
 
     /**
      * @Route("/admin/red5/listing/action/raise/{id}", name="app_admin_listing_raise", methods={"PATCH"})
      */
-    public function raise(Request $request, Listing $listing): Response
+    public function raise(Request $request, Listing $listing, RefererService $refererService): Response
     {
         $this->denyUnlessAdmin();
 
@@ -58,13 +63,13 @@ class AdminListingActionController extends AbstractAdminController
             $em->flush();
         }
 
-        return $this->redirect($request->headers->get('referer'));
+        return $refererService->redirectToRefererResponse();
     }
 
     /**
      * @Route("/admin/red5/listing/action/feature-for-week/{id}", name="app_admin_listing_feature_for_week", methods={"PATCH"})
      */
-    public function featureForWeek(Request $request, Listing $listing): Response
+    public function featureForWeek(Request $request, Listing $listing, RefererService $refererService): Response
     {
         $this->denyUnlessAdmin();
 
@@ -76,6 +81,6 @@ class AdminListingActionController extends AbstractAdminController
             $em->flush();
         }
 
-        return $this->redirect($request->headers->get('referer'));
+        return $refererService->redirectToRefererResponse();
     }
 }

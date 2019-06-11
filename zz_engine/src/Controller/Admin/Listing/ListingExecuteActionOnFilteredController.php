@@ -8,6 +8,7 @@ use App\Controller\Admin\Base\AbstractAdminController;
 use App\Form\Admin\ExecuteAction\ExecuteActionType;
 use App\Form\Admin\ExecuteAction\ExecuteActionDto;
 use App\Service\Admin\Listing\ExecuteActionOnFiltered\ExecuteActionOnFilteredService;
+use App\Service\System\Routing\RefererService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -19,7 +20,8 @@ class ListingExecuteActionOnFilteredController extends AbstractAdminController
      */
     public function executeActionOnFiltered(
         Request $request,
-        ExecuteActionOnFilteredService $executeActionOnFilteredService
+        ExecuteActionOnFilteredService $executeActionOnFilteredService,
+        RefererService $refererService
     ): Response {
         $this->denyUnlessAdmin();
 
@@ -38,7 +40,7 @@ class ListingExecuteActionOnFilteredController extends AbstractAdminController
                 $executeActionOnFilteredService->setCategory($executeActionDto->getCategory());
             }
 
-            return $this->redirect($request->headers->get('referer'));
+            return $refererService->redirectToRefererResponse();
         }
 
         return $this->render('admin/listing/execute_on_filtered/execute_on_filtered.html.twig', [

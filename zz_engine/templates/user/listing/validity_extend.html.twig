@@ -24,13 +24,13 @@
                     </h3>
 
                     {% if listing.userDeactivated %}
-                        <div>
+                        <div class="alert alert-info">
                             {{ 'trans.Listing is currently deactivated, extending will activate it and therefore show it to the public on page' | trans }}
                         </div>
                     {% endif %}
 
-                    {% if listing.status in [constant('\App\\Entity\\Listing::STATUS_PENDING')] and settings.requireListingAdminActivation %}
-                        <div>
+                    {% if listing.status in [constant('\App\\Entity\\Listing::STATUS_PENDING')] %}
+                        <div class="alert alert-info">
                             {{ 'trans.Listing awaits activation, you can extend listing duration, but listing would only appear to the public after acceptation' | trans }}
                         </div>
                     {% endif %}

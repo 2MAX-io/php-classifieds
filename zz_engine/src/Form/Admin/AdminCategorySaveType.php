@@ -6,7 +6,7 @@ namespace App\Form\Admin;
 
 use App\Entity\Category;
 use App\Form\Type\AdminCategoryType;
-use App\Helper\Str;
+use App\Helper\SlugHelper;
 use App\Validator\Constraints\HasLetterNumber;
 use App\Validator\Constraints\Slug;
 use Symfony\Component\Form\AbstractType;
@@ -44,7 +44,7 @@ class AdminCategorySaveType extends AbstractType
         ])
         ->addEventListener(FormEvents::PRE_SUBMIT, static function(FormEvent $formEvent): void {
             $data = $formEvent->getData();
-            $data[self::SLUG] = Str::softSlug($data[self::SLUG]);
+            $data[self::SLUG] = SlugHelper::softSlug($data[self::SLUG]);
 
             $formEvent->setData($data);
         });

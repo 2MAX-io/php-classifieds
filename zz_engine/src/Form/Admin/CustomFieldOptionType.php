@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Form\Admin;
 
 use App\Entity\CustomFieldOption;
-use App\Helper\Str;
+use App\Helper\SlugHelper;
 use App\Validator\Constraints\OptionValue;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
@@ -39,7 +39,7 @@ class CustomFieldOptionType extends AbstractType
         ])
         ->addEventListener(FormEvents::PRE_SUBMIT, static function(FormEvent $formEvent): void {
             $data = $formEvent->getData();
-            $data[self::VALUE_FIELD] = Str::softSlug($data[self::VALUE_FIELD]);
+            $data[self::VALUE_FIELD] = SlugHelper::softSlug($data[self::VALUE_FIELD]);
 
             $formEvent->setData($data);
         });

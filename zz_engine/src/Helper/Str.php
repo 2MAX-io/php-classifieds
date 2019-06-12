@@ -105,18 +105,6 @@ class Str
         return (string) $value;
     }
 
-    public static function softSlug(?string $value): ?string
-    {
-        if (null === $value) {
-            return $value;
-        }
-
-        $value = \mb_strtolower($value);
-        $value = static::replace($value, [' '], '-');
-
-        return $value;
-    }
-
     /**
      * @return bool|resource
      */

@@ -24,4 +24,16 @@ class SlugHelper
 
         return $slug;
     }
+
+    public static function softSlug(?string $value): ?string
+    {
+        if (null === $value) {
+            return $value;
+        }
+
+        $value = \mb_strtolower($value);
+        $value = Str::replace($value, [' '], '-');
+
+        return $value;
+    }
 }

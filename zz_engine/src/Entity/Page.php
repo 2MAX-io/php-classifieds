@@ -50,7 +50,7 @@ class Page
         return $this->title;
     }
 
-    public function setTitle(string $title): self
+    public function setTitle(?string $title): self
     {
         $this->title = $title;
 
@@ -62,7 +62,7 @@ class Page
         return $this->content;
     }
 
-    public function setContent(string $content): self
+    public function setContent(?string $content): self
     {
         $this->content = $content;
 
@@ -86,7 +86,7 @@ class Page
         return $this->slug;
     }
 
-    public function setSlug(string $slug): self
+    public function setSlug(?string $slug): self
     {
         $this->slug = $slug;
 

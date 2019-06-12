@@ -60,6 +60,7 @@ class PageController extends AbstractAdminController
     public function edit(Request $request, Page $page): Response
     {
         $this->denyUnlessAdmin();
+        $originalPage = clone $page;
 
         $form = $this->createForm(PageType::class, $page);
         $form->handleRequest($request);
@@ -73,7 +74,7 @@ class PageController extends AbstractAdminController
         }
 
         return $this->render('admin/page/edit.html.twig', [
-            'page' => $page,
+            'page' => $originalPage,
             'form' => $form->createView(),
         ]);
     }

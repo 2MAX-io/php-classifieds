@@ -17,12 +17,12 @@
                                 class="cascader-branch-list cascader-branch-list-{{ categoryLevel.id }} collapse"
                                 data-cascader-leaf="{{ categoryLevel.id }}"
                         >
-                            <h5 class="cascader-branch-list-header">{{ categoryLevel.name }}</h5>
+                            <h5 class="cascader-branch-list-header text-break">{{ categoryLevel.name }}</h5>
                             <div class="cascader-branch-list-elements">
                                 {% for category in categoryLevel.children %}
                                     <div
                                             onclick="cascader.select({{ category.id }}, this)"
-                                            class="cascader-branch cascader-click cascader-leaf-{{ category.id }}"
+                                            class="cascader-branch cascader-click cascader-leaf-{{ category.id }} text-break"
                                     >
                                         {{- category.name -}}
                                     </div>

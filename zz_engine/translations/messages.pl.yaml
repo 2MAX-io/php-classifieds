@@ -385,11 +385,11 @@ trans:
   Add custom field: 'Dodaj pole niestandarowe'
   Edit custom field: 'Edytuj pole niestandardowe'
   customFieldType:
-    select: 'Pole wyboru'
+    select: 'Pole wyboru, filtrowane jako pola do zaznaczenia'
+    select_single: 'Pole wyboru, filtrowane jako pojedyncze pole wyboru'
     year_range: 'Pole z rokiem'
     integer_range: 'Pole z liczbą'
     checkbox_multiple: 'Pole z wieloma zaznaczeniami'
-    select_single: 'Pole wyboru, pojedyncze'
   Custom field: 'Pole niestandarowe'
   for category: 'dla kategorii'
   Options: 'Opcje'

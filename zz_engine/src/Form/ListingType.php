@@ -61,7 +61,7 @@ class ListingType extends AbstractType
         $builder->add('description', TextareaType::class, [
             'label' => 'trans.Description',
             'attr' => [
-                'class' => 'form-listing-description-textarea',
+                'class' => 'form-listing-description-textarea textarea-autosize',
                 'maxlength' => 10000,
             ],
             'constraints' => [

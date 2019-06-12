@@ -74,6 +74,7 @@ function js() {
     'asset/bundles/bazingajstranslation/js/translator.min.js',
     'asset/lib/fancybox/jquery.fancybox.js',
     'asset/lib/cleave/cleave.js',
+    'asset/lib/autosize/autosize.js',
     'asset/bootstrap.bundle.js',
     'asset/main.js',
   ])

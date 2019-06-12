@@ -15,8 +15,9 @@
                         <a
                                 href="{{ path('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}"
                                 target="_blank"
+                                class="text-break"
                         >
-                            {{ listing.title }}
+                            {{- listing.title -}}
                         </a>
                     </h2>
                     <span class="{{ getListingStatusClass(listing) }}">{{ getListingStatus(listing) }}</span>

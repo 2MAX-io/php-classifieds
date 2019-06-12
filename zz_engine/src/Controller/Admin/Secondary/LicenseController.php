@@ -33,10 +33,12 @@ class LicenseController extends AbstractController
 
         $payloadArray = Json::decodeToArray($payload);
         $licenseShowAbsoluteUrl = $urlGenerator->generate('app_license_show', [], UrlGeneratorInterface::ABSOLUTE_URL);
-        if ($payloadArray['licenseShowAbsoluteUrl'] ?? '' !== $licenseShowAbsoluteUrl) {
+        $urlFromRequest = $payloadArray['licenseShowAbsoluteUrl'] ?? '';
+        if ($urlFromRequest !== $licenseShowAbsoluteUrl) {
             return $this->json([
                 'error' => 'payload for invalid licenseShowAbsoluteUrl',
                 'licenseShowAbsoluteUrl' => $licenseShowAbsoluteUrl,
+                'urlFromRequest' => $urlFromRequest,
             ], Response::HTTP_FORBIDDEN);
         }
 

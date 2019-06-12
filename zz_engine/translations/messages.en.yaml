@@ -416,8 +416,8 @@ trans.Users: Users
 'trans.User list': 'User list'
 trans.Username: Username
 'trans.Featured demonstration': 'Featured demonstration'
-'trans.Feature for %featuredDays% days for %price%: %listing%?': 'Feature for %featuredDays% days for %price%: %listing%?'
-'trans.Feature for %featuredDays% days for %price%': 'Feature for %featuredDays% days for %price%'
+'{1}trans.Feature for one day for %price%: %listing%?|]1,Inf[ Feature for %featuredDays% days for %price%: %listing%?': '{1}Feature for one day for %price%: %listing%?|]1,Inf[ Feature for %featuredDays% days for %price%: %listing%?'
+'{1}trans.Feature for one day for %price%|]1,Inf[ Feature for %featuredDays% days for %price%': '{1} Feature for one day for %price%|]1,Inf[ Feature for %featuredDays% days for %price%'
 'trans.Your balance is': 'Your balance is'
 'trans.that you can use to feature listings': 'that you can use to feature listings'
 'trans.Confirmation link is invalid or expired, check if confirmation link is correct': 'Confirmation link is invalid or expired, check if confirmation link is correct'

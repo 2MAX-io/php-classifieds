@@ -199,9 +199,6 @@ class SettingsType extends AbstractType
         $builder->add('searchPlaceholder', TextType::class, [
             'label' => 'trans.Search examples',
             'required' => true,
-            'constraints' => [
-                new NotBlank(),
-            ],
         ]);
         $builder->add('masterSiteLinkShow', BoolRequiredType::class, [
             'label' => 'trans.Show link to master site',

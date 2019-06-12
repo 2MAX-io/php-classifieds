@@ -7,6 +7,7 @@ namespace App\Service\Admin\Listing;
 use App\Entity\Category;
 use App\Entity\Listing;
 use App\Helper\Search;
+use App\Helper\Str;
 use App\Service\System\Pagination\PaginationService;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
@@ -62,42 +63,42 @@ class AdminListingSearchService
         /** @var Request $request */
         $request = $this->requestStack->getMasterRequest();
 
-        if ($request->get('query', false)) {
+        if (!Str::emptyTrim($request->get('query'))) {
             $qb->andWhere('MATCH (listing.searchText, listing.email, listing.phone, listing.rejectionReason) AGAINST (:query BOOLEAN) > 0');
             $qb->setParameter(':query', Search::optimizeMatch($request->get('query')));
         }
 
-        if ($request->get('adminActivated', false)) {
+        if (!Str::emptyTrim($request->get('adminActivated'))) {
             $qb->andWhere($qb->expr()->eq('listing.adminActivated', ':adminActivated'));
             $qb->setParameter(':adminActivated', $request->get('adminActivated'));
         }
 
-        if ($request->get('adminRejected', false)) {
+        if (!Str::emptyTrim($request->get('adminRejected'))) {
             $qb->andWhere($qb->expr()->eq('listing.adminRejected', ':adminRejected'));
             $qb->setParameter(':adminRejected', $request->get('adminRejected'));
         }
 
-        if ($request->get('adminRemoved', false)) {
+        if (!Str::emptyTrim($request->get('adminRemoved'))) {
             $qb->andWhere($qb->expr()->eq('listing.adminRemoved', ':adminRemoved'));
             $qb->setParameter(':adminRemoved', $request->get('adminRemoved'));
         }
 
-        if ($request->get('userDeactivated', false)) {
+        if (!Str::emptyTrim($request->get('userDeactivated'))) {
             $qb->andWhere($qb->expr()->eq('listing.userDeactivated', ':userDeactivated'));
             $qb->setParameter(':userDeactivated', $request->get('userDeactivated'));
         }
 
-        if ($request->get('userRemoved', false)) {
+        if (!Str::emptyTrim($request->get('userRemoved'))) {
             $qb->andWhere($qb->expr()->eq('listing.userRemoved', ':userRemoved'));
             $qb->setParameter(':userRemoved', $request->get('userRemoved'));
         }
 
-        if ($request->get('featured', false)) {
+        if (!Str::emptyTrim($request->get('featured'))) {
             $qb->andWhere($qb->expr()->eq('listing.featured', ':featured'));
             $qb->setParameter(':featured', $request->get('featured'));
         }
 
-        if ($request->get('category', false)) {
+        if (!Str::emptyTrim($request->get('category'))) {
             $category = $this->em->getRepository(Category::class)->find($request->get('category'));
             $qb->join('listing.category', 'category');
             $qb->andWhere(
@@ -110,7 +111,7 @@ class AdminListingSearchService
             $qb->setParameter(':requestedCategoryRgt', $category->getRgt());
         }
 
-        if (!empty($request->get('user', false))) {
+        if (!Str::emptyTrim($request->get('user'))) {
             $qb->join('listing.user', 'user');
 
             $qb->andWhere(

@@ -48,6 +48,7 @@ class SettingsType extends AbstractType
             'label' => 'trans.Meta description',
             'empty_data' => '',
             'constraints' => [
+                new NotBlank(),
                 new Length(['min' => 2]),
             ],
         ]);

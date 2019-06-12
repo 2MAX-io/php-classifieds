@@ -25,6 +25,8 @@ class LogoUploadController extends AbstractAdminController
 
         if ($form->isSubmitted() && $form->isValid()) {
              $logoUploadService->saveLogo($form->get('logo')->getData());
+
+             return $this->redirectToRoute('app_admin_logo_upload');
         }
 
         return $this->render('admin/secondary/logo_upload/logo_upload.html.twig', [

@@ -4,6 +4,10 @@ framework:
     csrf_protection: true
     #http_method_override: true
 
+    validation:
+        auto_mapping:
+            App\: []
+
     assets:
         version: 'v1'
     #        json_manifest_path: '%kernel.root_dir%/../../asset/build/rev-manifest.json'

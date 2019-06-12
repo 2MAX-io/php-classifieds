@@ -31,11 +31,11 @@ class CategoryType extends AbstractType
             'attr' => [
                 'class' => 'formCategory',
             ],
-            'choice_label' => function (Category $category) {
+            'choice_label' => static function (Category $category) {
                 $path = $category->getPath();
 
                 $path = \array_map(
-                    function (Category $category) {
+                    static function (Category $category) {
                         if ($category->getLvl() < 1) {
                             return false;
                         }

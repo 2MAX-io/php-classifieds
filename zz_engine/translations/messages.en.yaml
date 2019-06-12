@@ -423,7 +423,7 @@ trans.Username: Username
 'trans.that you can use to feature listings': 'that you can use to feature listings'
 'trans.Confirmation link is invalid or expired, check if confirmation link is correct': 'Confirmation link is invalid or expired, check if confirmation link is correct'
 'trans.Registration means acceptance of the': 'Registration means acceptance of the'
-trans.termsCondtionsLink: termsCondtionsLink
+trans.termsCondtionsLink: 'Terms and Conditions'
 'trans.Link to terms and conditions': 'Link to terms and conditions'
 'trans.Show contact information': 'Show contact information'
 'trans.More information': 'More information'

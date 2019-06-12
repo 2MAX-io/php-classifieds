@@ -70,6 +70,13 @@ class FeaturedPackage
      */
     private $paymentFeaturedPackage;
 
+    /**
+     * @var float
+     *
+     * used only for form validation
+     */
+    private $priceFloat;
+
     public function __construct()
     {
         $this->featuredPackageForCategories = new ArrayCollection();
@@ -124,7 +131,7 @@ class FeaturedPackage
 
     public function setPriceFloat(?float $price): self
     {
-        $this->price = $price * 100;
+        $this->price = (int) $price * 100;
 
         return $this;
     }

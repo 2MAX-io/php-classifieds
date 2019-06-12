@@ -22,8 +22,8 @@
                                     {% if categorySelection.selected %}checked{% endif %}
                                     class="custom-control-input"
                             >
-                            <label for="category_{{ category.id }}" class="custom-control-label">
-                                {{ category.name }}
+                            <label for="category_{{ category.id }}" class="custom-control-label text-break">
+                                {{- category.name -}}
                             </label>
                         </div>
                     {% endfor %}

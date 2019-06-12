@@ -24,10 +24,10 @@
                                         class="custom-control-input"
                                 >
                                 <label for="category_{{ category.id }}" class="custom-control-label">
-                                    {{ category.name }}
+                                    {{- category.name -}}
                                 </label>
                             {% else %}
-                                <div class="pl-2"><strong>{{ category.name }}</strong></div>
+                                <div class="pl-2 font-weight-bold text-break">{{- category.name -}}</div>
                             {% endif %}
                         </div>
                     {% endfor %}

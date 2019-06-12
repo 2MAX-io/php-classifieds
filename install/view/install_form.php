@@ -14,7 +14,11 @@
             </div>
         <?php endforeach; ?>
 
-        <div><a href="https://documentation.2max.io/display/CLAS/Installation" class="btn btn-info mb-2" target="_blank">to find help with errors check documentation</a></div>
+        <?php if(count($errors)): ?>
+            <div>
+                <a href="https://documentation.2max.io/display/CLAS/Installation" class="btn btn-info mb-2" target="_blank">to find help with errors check documentation</a>
+            </div>
+        <?php endif; ?>
 
         <div class="mb-4">
             <h3>Database:</h3>

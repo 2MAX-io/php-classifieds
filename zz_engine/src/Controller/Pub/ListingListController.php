@@ -96,6 +96,8 @@ class ListingListController extends AbstractController
                 'queryParameters' => [
                     'query' => $request->query->get('query'),
                     'user' => $request->query->get('user'),
+                    'min_price' => $request->query->get('min_price'),
+                    'max_price' => $request->query->get('max_price'),
                     'form_custom_field' => $request->query->get('form_custom_field'),
                 ],
                 'pageTitle' => $this->getPageTitleForRoute($listingListDto),

@@ -11,6 +11,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\Index;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ListingRepository")
@@ -77,12 +78,14 @@ class Listing
     private $category;
 
     /**
+     * @Assert\NotNull(groups={"zzzz"})
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="listings")
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;
 
     /**
+     * @Assert\NotNull(groups={"zzzz"})
      * @ORM\Column(type="datetime", nullable=false)
      */
     private $validUntilDate;
@@ -200,11 +203,13 @@ class Listing
     private $mainImage;
 
     /**
+     * @Assert\NotNull(groups={"zzzz"})
      * @ORM\Column(type="string", length=100, nullable=false, unique=false)
      */
     private $slug;
 
     /**
+     * @Assert\NotNull(groups={"zzzz"})
      * @ORM\Column(type="text", nullable=false)
      */
     private $searchText;

@@ -9,6 +9,7 @@ use App\Service\User\RoleInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\AdminRepository")
@@ -49,6 +50,7 @@ class Admin implements UserInterface, RoleInterface, EnablableInterface
     /**
      * @var string The hashed password
      *
+     * @Assert\NotNull(groups={"zzzz"})
      * @ORM\Column(type="string", nullable=false)
      */
     private $password;

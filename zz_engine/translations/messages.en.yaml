@@ -131,6 +131,7 @@ trans:
   '3 letters, ISO 4217 code': '3 letters, ISO 4217 code'
   The form contains errors. Error messages are displayed next to the fields in the form below.: 'The form contains errors. Error messages are displayed next to the fields in the form below.'
   This featured package is not intended for the current category of this listing: 'Ten pakiet wyróżnienia nie jest przeznaczony dla obecnej kategorii tego ogłoszenia'
+  You have the latest version of 2MAX.io Classified Ads. No action required.: 'You have the latest version of 2MAX.io Classified Ads. No action required.'
 
 trans.customFieldType.select: Select field, filter as checkboxes
 trans.customFieldType.select_single: Select field, filter as single select

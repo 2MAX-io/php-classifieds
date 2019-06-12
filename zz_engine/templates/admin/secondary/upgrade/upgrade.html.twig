@@ -6,12 +6,14 @@
     <div class="container mt-3">
         <h1>{{ 'trans.Upgrade' | trans }}</h1>
 
-        {% if canUpgrade %}
-            <div class="alert alert-info">{{ 'trans.New version available, you can upgrade now' | trans }}</div>
-        {% endif %}
-
         {% if latestVersion is empty %}
             <div class="alert alert-danger">{{ 'trans.Failed to get information about latest version. Try again later.' | trans }}</div>
+        {% else %}
+            {% if canUpgrade %}
+                <div class="alert alert-info">{{ 'trans.New version available, you can upgrade now' | trans }}</div>
+            {% else %}
+                <div class="alert alert-success">{{ 'trans.You have the latest version of 2MAX.io Classified Ads. No action required.' | trans }}</div>
+            {% endif %}
         {% endif %}
 
         <table class="table table-responsive-sm">

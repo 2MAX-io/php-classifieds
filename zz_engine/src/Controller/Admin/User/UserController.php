@@ -39,6 +39,7 @@ class UserController extends AbstractAdminController
     public function edit(Request $request, User $user, EncodePasswordService $encodePasswordService): Response
     {
         $this->denyUnlessAdmin();
+        $originalUser = clone $user;
 
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
@@ -56,7 +57,7 @@ class UserController extends AbstractAdminController
         }
 
         return $this->render('admin/user/edit.html.twig', [
-            'user' => $user,
+            'user' => $originalUser,
             'form' => $form->createView(),
         ]);
     }

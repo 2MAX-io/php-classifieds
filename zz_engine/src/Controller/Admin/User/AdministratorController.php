@@ -71,6 +71,7 @@ class AdministratorController extends AbstractAdminController
     public function edit(Request $request, Admin $admin, UserPasswordEncoderInterface $userPasswordEncoder): Response
     {
         $this->denyUnlessAdmin();
+        $originalAdmin = clone $admin;
 
         $form = $this->createForm(AdministratorEditType::class, $admin);
         $form->handleRequest($request);
@@ -88,7 +89,7 @@ class AdministratorController extends AbstractAdminController
         }
 
         return $this->render('admin/administrator/edit.html.twig', [
-            'user' => $admin,
+            'user' => $originalAdmin,
             'form' => $form->createView(),
         ]);
     }

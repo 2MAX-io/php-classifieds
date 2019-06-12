@@ -80,10 +80,10 @@
                         <label for="category">{{ 'trans.Category' | trans }}</label>
                         <select name="category" class="form-control" id="category">
                             {%- apply normalizeWhitespace -%}
-                            {% for categoryId, categoryName in categories %}
+                            {%- for categoryId, categoryName in categories -%}
                                 <option {{ optionAttr('category', categoryId) }} value="{{ categoryId }}">{{ categoryName }}</option>
-                            {% endfor %}
-                            {% endapply  %}
+                            {%- endfor -%}
+                            {%- endapply  -%}
                         </select>
                     </div>
 
@@ -124,7 +124,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                {% for listing in listings %}
+                {%- for listing in listings -%}
                     <tr>
                         <!-- img -->
                         <td>
@@ -144,12 +144,13 @@
                             </div>
 
                             <div>
-                                {% if listing.featured %}
+                                {%- if listing.featured -%}
                                     <span class="badge badge-pill badge-warning">{{ 'trans.Featured' | trans }}</span>
-                                {% endif %}
+                                    {{ ' ' }}
+                                {%- endif -%}
                                 <span class="mr-2">
-                                    {{ listing.category.parent.name }}
-                                    ⇾
+                                    {{- listing.category.parent.name -}}
+                                    {{ ' ⇾ ' }}
                                     <a href="{{ path('app_category', {'categorySlug': listing.category.slug}) }}">
                                         {{- listing.category.name -}}
                                     </a>
@@ -194,11 +195,11 @@
                                 {{- 'trans.Edit' | trans -}}
                             </a>
 
-                            {% if adminShowActivate(listing) %}
+                            {%- if adminShowActivate(listing) -%}
                                 {{ include('admin/listing/_action/_admin_activate_form.html.twig') }}
-                            {% endif %}
-
-                            {% if adminShowReject(listing) %}
+                            {%- endif -%}
+                            {{ ' ' }}
+                            {%- if adminShowReject(listing) -%}
                                 <a
                                         href="{{ path('app_admin_listing_reject', {'id': listing.id}) }}"
                                         target="_blank"
@@ -206,7 +207,7 @@
                                 >
                                     {{ 'trans.Reject' | trans }}
                                 </a>
-                            {% endif %}
+                            {%- endif -%}
                         </td>
                     </tr>
 
@@ -218,23 +219,23 @@
                             </div>
                         </td>
                     </tr>
-                {% else %}
+                {%- else -%}
                     <tr>
                         <td colspan="99">{{ 'trans.no records found' | trans }}</td>
                     </tr>
-                {% endfor %}
+                {%- endfor -%}
                 </tbody>
             </table>
 
-            {% include 'base/_pagination.html.twig' %}
+            {%- include 'base/_pagination.html.twig' -%}
 
-            {% if listings is not empty %}
+            {%- if listings is not empty -%}
                 <div>
                     <a href="{{ path('app_admin_listing_execute_on_filtered', app.request.query.all) }}" class="btn btn-danger">
                         {{- 'trans.Execute action on filtered listings' | trans -}}
                     </a>
                 </div>
-            {% endif %}
+            {%- endif -%}
 
         </div>
     </div>

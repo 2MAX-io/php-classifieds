@@ -31,8 +31,10 @@ class AdminListingEditType extends AbstractType
             'empty_data' => '',
             'constraints' => [
                 new NotBlank(),
-                new Length(['min' => 1]),
             ],
+            'attr'=> [
+                'maxlength' => 70,
+            ]
         ]);
         $builder->add('description', TextareaType::class, [
             'label' => 'trans.Description',

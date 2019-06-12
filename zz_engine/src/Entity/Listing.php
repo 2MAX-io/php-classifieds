@@ -354,7 +354,7 @@ class Listing
         return (float) $this->price;
     }
 
-    public function setPrice(float $price): self
+    public function setPrice(?float $price): self
     {
         $this->price = $price;
 

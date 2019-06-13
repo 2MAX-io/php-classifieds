@@ -13,7 +13,7 @@
             </tr>
             <tr>
                 <th>{{ 'trans.Description' | trans }}</th>
-                <td>{{ payment.description }}</td>
+                <td class="text-break">{{ payment.description }}</td>
             </tr>
             <tr>
                 <th>{{ 'trans.Amount' | trans }}</th>
@@ -53,22 +53,22 @@
                 <tr>
                     <th>{{ 'trans.Featured package' | trans }}</th>
                     <td>
-                        <div><a href="{{ path('app_admin_featured_package_edit', {'id': payment.paymentForFeaturedPackage.featuredPackage.id}) }}">{{ payment.paymentForFeaturedPackage.featuredPackage.name }}</a></div>
-                        <div class="text-muted">{{ payment.paymentForFeaturedPackage.featuredPackage.adminName }}</div>
+                        <div class="text-break"><a href="{{ path('app_admin_featured_package_edit', {'id': payment.paymentForFeaturedPackage.featuredPackage.id}) }}">{{ payment.paymentForFeaturedPackage.featuredPackage.name }}</a></div>
+                        <div class="text-muted text-break">{{ payment.paymentForFeaturedPackage.featuredPackage.adminName }}</div>
                     </td>
                 </tr>
             {% endif %}
             <tr>
                 <th>{{ 'trans.User' | trans }}</th>
                 <td>
-                    <a href="{{ path('app_admin_user_edit', {'id': payment.user.id}) }}">{{ payment.user.username }}</a>
+                    <a href="{{ path('app_admin_user_edit', {'id': payment.user.id}) }}" class="text-break">{{ payment.user.username }}</a>
                 </td>
             </tr>
             <tr>
                 <th>{{ 'trans.Listing' | trans }}</th>
                 <td>
                     {% if payment.paymentForFeaturedPackage %}
-                        <a href="{{ path('app_admin_listing_edit', {'id': payment.paymentForFeaturedPackage.listing.id}) }}">{{ payment.paymentForFeaturedPackage.listing.title }}</a>
+                        <a href="{{ path('app_admin_listing_edit', {'id': payment.paymentForFeaturedPackage.listing.id}) }}" class="text-break">{{ payment.paymentForFeaturedPackage.listing.title }}</a>
                     {% else %}
                         {{ 'trans.none' | trans }}
                     {% endif %}

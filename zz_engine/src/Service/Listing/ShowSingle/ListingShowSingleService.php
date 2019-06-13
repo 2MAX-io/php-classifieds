@@ -35,7 +35,17 @@ class ListingShowSingleService
         $qb->addSelect('customFieldOption');
         $qb->addSelect('listingFile');
         $qb->addSelect($viewsCountQuery);
-        $qb->leftJoin('listing.listingCustomFieldValues', 'listingCustomFieldValue');
+        $qb->join('listing.category', 'category');
+        $qb->leftJoin('category.customFieldsJoin', 'listingCategoryCustomFieldsJoin');
+        $qb->leftJoin(
+            'listing.listingCustomFieldValues',
+            'listingCustomFieldValue',
+            Join::WITH,
+            $qb->expr()->eq(
+                'listingCategoryCustomFieldsJoin.customField',
+                'listingCustomFieldValue.customField',
+            )
+        );
         $qb->leftJoin('listingCustomFieldValue.customFieldOption', 'customFieldOption');
         $qb->leftJoin('listingCustomFieldValue.customField', 'customField');
         $qb->leftJoin('listing.listingFiles', 'listingFile');

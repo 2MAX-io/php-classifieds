@@ -22,8 +22,8 @@
             {% for page in pages %}
                 <tr>
                     <td>
-                        <a href="{{ path('app_page', {'slug': page.slug}) }}" target="_blank">
-                            {{ page.title }}
+                        <a href="{{ path('app_page', {'slug': page.slug}) }}" class="text-break">
+                            {{- page.title -}}
                         </a>
                     </td>
                     <td>

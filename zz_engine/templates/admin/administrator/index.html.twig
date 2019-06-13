@@ -43,8 +43,8 @@
         {% for user in users %}
             <tr>
                 <td>
-                    <div>{{ 'trans.Email' | trans }}: <strong>{{ user.email }}</strong></div>
-                    <div>{{ 'trans.Username' | trans }}: {{ user.username }}</div>
+                    <div>{{ 'trans.Email' | trans }}: <strong class="text-break">{{ user.email }}</strong></div>
+                    <div class="text-break">{{ 'trans.Username' | trans }}: {{ user.username }}</div>
                 </td>
                 <td>
                         <span class="{{ user.enabled | boolGreenRedClass }}">

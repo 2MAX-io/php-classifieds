@@ -6,8 +6,8 @@
     <div class="container mt-3">
         <h1>
             {{ 'trans.Police log for listing' | trans }}:
-            <a href="{{ path('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}">
-                {{ listing.title }}
+            <a href="{{ path('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}" class="text-break">
+                {{- listing.title -}}
             </a>
         </h1>
 

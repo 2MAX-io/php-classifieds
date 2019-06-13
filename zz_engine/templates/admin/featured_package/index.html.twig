@@ -28,8 +28,8 @@
         {% for featured_package in featured_packages %}
             <tr>
                 <td>
-                    <div>{{ featured_package.name }}</div>
-                    <div class="text-muted">{{ featured_package.adminName }}</div>
+                    <div class="text-break">{{ featured_package.name }}</div>
+                    <div class="text-muted text-break">{{ featured_package.adminName }}</div>
                 </td>
                 <td>{{ featured_package.price | moneyPrecise }}</td>
                 <td>{{ featured_package.daysFeaturedExpire }}</td>

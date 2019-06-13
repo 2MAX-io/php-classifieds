@@ -7,7 +7,7 @@
 <div class="container mt-3">
 
     <div class="mb-4">
-        <h1>{{ 'trans.Edit Administrator' | trans }}: {{ user.email }}</h1>
+        <h1 class="text-break">{{ 'trans.Edit Administrator' | trans }}: {{ user.email }}</h1>
 
         <a href="{{ path('app_admin_administrator_index') }}">{{ 'trans.back to list' | trans }}</a>
     </div>
@@ -16,7 +16,7 @@
         <tbody>
         <tr>
             <th>{{ 'trans.Email' | trans }}</th>
-            <td>{{ user.email }}</td>
+            <td class="text-break">{{ user.email }}</td>
         </tr>
         <tr>
             <th>{{ 'trans.Enabled' | trans }}</th>

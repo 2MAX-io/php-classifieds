@@ -61,7 +61,7 @@
             {% set customField = customFieldJoinCategory.customField %}
             <tr data-id="{{ customFieldJoinCategory.id }}">
                 <td><i class="fas fa-arrows-alt sortableHandle"></i></td>
-                <td>
+                <td class="text-break">
                     <div>{{ customField.name }}</div>
                     {% if customField.nameForAdmin %}
                         <div class="text-muted">{{ customField.nameForAdmin }}</div>
@@ -80,7 +80,7 @@
                         {{ customField.searchable | boolText | trans }}
                     </span>
                 </td>
-                <td>
+                <td class="text-break">
                     {{ customField.unit }}
                 </td>
                 <td>

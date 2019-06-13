@@ -6,9 +6,11 @@
     <div class="container mt-3 mt-md-4">
         <div class="row">
             <div class="col-md-8 mb-3 mb-2">
-                <h2>{{ page.title }}</h2>
+                <h2 class="text-break">{{ page.title }}</h2>
 
-                {{ page.content | nl2br }}
+                <div class="text-break">
+                    {{ page.content | nl2br }}
+                </div>
             </div>
 
             <div class="col-md-4">

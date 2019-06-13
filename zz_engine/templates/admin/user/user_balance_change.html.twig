@@ -6,7 +6,7 @@
     <div class="container mt-3">
         <h3>
             {{ 'trans.Change balance of user' | trans }}:
-            <a href="{{ path('app_admin_user_edit', {'id': user.id}) }}">{{ user.username }}</a>
+            <a href="{{ path('app_admin_user_edit', {'id': user.id}) }}" class="text-break">{{ user.username }}</a>
         </h3>
 
         <div>

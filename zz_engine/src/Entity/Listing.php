@@ -296,7 +296,7 @@ class Listing
 
     public function isFeaturedActive(): bool
     {
-        return $this->getFeaturedUntilDate() > new \DateTime();
+        return $this->getFeatured() && $this->getFeaturedUntilDate() > new \DateTime();
     }
 
     public function getMainImage(string $type = null): ?string

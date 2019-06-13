@@ -6,7 +6,7 @@
 {% block title %}{{ pageTitle }}{% endblock %}
 
 {% block body %}
-    <div class="container mt-3 mb-3">
+    <div class="container mt-3 mb-3 text-break">
         {% if settings.masterSiteLinkShow %}
             <a href="{{ settings.masterSiteUrl }}">{{ settings.masterSiteAnchorText }}</a>
             {{- ' > ' -}}
@@ -130,7 +130,7 @@
 
                                 {%- if customField.type == constant('\App\\Entity\\CustomField::TYPE_SELECT') and customField.customFieldOptions is not empty -%}
                                     <div class="mb-3">
-                                        <label>{{ customField.name }}</label>
+                                        <label class="text-break">{{ customField.name }}</label>
                                         {%- spaceless -%}
                                         {%- for customFieldOption in customField.customFieldOptions -%}
                                             <div class="custom-control custom-checkbox">
@@ -146,7 +146,7 @@
                                                     class="custom-control-input"
                                                 >
                                                 <label
-                                                        class="custom-control-label"
+                                                        class="custom-control-label text-break"
                                                         for="option_{{ customFieldOption.id }}"
                                                 >
                                                     {{- customFieldOption.name -}}
@@ -160,7 +160,7 @@
 
                                 {%- if customField.type == constant('\App\\Entity\\CustomField::TYPE_SELECT_SINGLE') and customField.customFieldOptions is not empty -%}
                                     <div class="mb-3">
-                                        <label>{{ customField.name }}</label>
+                                        <label class="text-break">{{ customField.name }}</label>
                                         <div>
                                             <select name="form_custom_field[{{ customField.id }}][values][]" class="custom-select">
                                                 {%- spaceless -%}
@@ -185,7 +185,7 @@
 
                                 {%- if customField.type == constant('\App\\Entity\\CustomField::TYPE_CHECKBOX_MULTIPLE') and customField.customFieldOptions is not empty -%}
                                     <div class="mb-3">
-                                        <label>{{ customField.name }}</label>
+                                        <label class="text-break">{{ customField.name }}</label>
 
                                         {%- spaceless -%}
                                         {%- for customFieldOption in customField.customFieldOptions -%}
@@ -218,7 +218,7 @@
                                         constant('\App\\Entity\\CustomField::TYPE_INTEGER_RANGE'),
                                     ]
                                 %}
-                                    <label>{{ customField.name }} {%- if customField.unit is not empty %} [{{ customField.unit }}]{% endif -%}</label>
+                                    <label class="text-break">{{ customField.name }} {%- if customField.unit is not empty %} [{{ customField.unit }}]{% endif -%}</label>
                                     <div class="form-row mb-3">
                                         <div class="col-6">
                                             {%- apply normalizeWhitespace -%}
@@ -249,7 +249,7 @@
                                         constant('\App\\Entity\\CustomField::TYPE_YEAR_RANGE'),
                                     ]
                                 %}
-                                    <label>{{ customField.name }}</label>
+                                    <label class="text-break">{{ customField.name }}</label>
                                     <div class="form-row mb-3">
                                         <div class="col-6">
                                             {%- apply normalizeWhitespace -%}

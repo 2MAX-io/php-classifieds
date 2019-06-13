@@ -12,8 +12,8 @@
             <div class="col-md-8 col-lg-9">
                 <h3 class="mb-3">
                     {{ 'trans.Feature listing' | trans }}:
-                    <a href="{{ path('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}">
-                        {{ listing.title }}
+                    <a href="{{ path('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}" class="text-break">
+                        {{- listing.title -}}
                     </a>
                 </h3>
 
@@ -45,9 +45,9 @@
                     <div class="row">
                         {% for package in packages %}
                             <div class="col-md-4">
-                                <h4>{{ package.name }}</h4>
+                                <h4 class="text-break">{{ package.name }}</h4>
 
-                                <div class="mb-2">
+                                <div class="mb-2 text-break">
                                     {{ package.description | nl2br }}
                                 </div>
 

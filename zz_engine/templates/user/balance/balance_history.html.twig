@@ -36,7 +36,7 @@
                             <td><span class="text-nowrap">{{ userBalanceChange.datetime | date }}</span></td>
                             <td>{{ returnPlusIfPositive(userBalanceChange.balanceChange) }}{{ userBalanceChange.balanceChange | moneyPrecise }}</td>
                             <td>{{ userBalanceChange.balanceFinal | moneyPrecise }}</td>
-                            <td>{{ userBalanceChange.description }}</td>
+                            <td class="text-break">{{ userBalanceChange.description }}</td>
                         </tr>
                     {% else %}
                         <tr>

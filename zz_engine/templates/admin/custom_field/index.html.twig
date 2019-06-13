@@ -32,9 +32,9 @@
             <tr data-id="{{ custom_field.id }}">
                 <td><i class="fas fa-arrows-alt sortableHandle"></i></td>
                 <td>
-                    <div>{{ custom_field.name }}</div>
+                    <div class="text-break">{{ custom_field.name }}</div>
                     {% if custom_field.nameForAdmin %}
-                        <div class="text-muted">{{ custom_field.nameForAdmin }}</div>
+                        <div class="text-muted text-break">{{ custom_field.nameForAdmin }}</div>
                     {% endif %}
                 </td>
                 <td>{{ ('trans.customFieldType.'~custom_field.type) | trans }}</td>
@@ -48,7 +48,7 @@
                         {{ custom_field.searchable | boolText | trans }}
                     </span>
                 </td>
-                <td>{{ custom_field.unit }}</td>
+                <td class="text-break">{{ custom_field.unit }}</td>
                 <td>
                     <a href="{{ path('app_admin_custom_field_edit', {'id': custom_field.id}) }}" class="btn btn-dark">
                         {{ 'trans.Edit' | trans }}

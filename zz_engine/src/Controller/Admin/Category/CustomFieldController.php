@@ -42,7 +42,8 @@ class CustomFieldController extends AbstractAdminController
     public function new(
         Request $request,
         CustomFieldCategorySelectionService $customFieldCategorySelectionService,
-        CustomFieldForCategoryService $customFieldForCategoryService
+        CustomFieldForCategoryService $customFieldForCategoryService,
+        CustomFieldService $customFieldService
     ): Response {
         $this->denyUnlessAdmin();
 
@@ -65,6 +66,7 @@ class CustomFieldController extends AbstractAdminController
             $em->flush();
 
             $customFieldForCategoryService->reorder();
+            $customFieldService->reorder();
 
             return $this->redirectToRoute('app_admin_custom_field_edit', [
                 'id' => $customField->getId(),

@@ -7,7 +7,7 @@
 
 {% block body %}
 
-    <div class="container mt-3 mb-3">
+    <div class="container mt-3 mb-3 text-break">
         {% if settings.masterSiteLinkShow %}
             <a href="{{ settings.masterSiteUrl }}">{{ settings.masterSiteAnchorText }}</a>
             >
@@ -105,17 +105,17 @@
                     {% for listingCustomFieldValue in listing.listingCustomFieldValues %}
                         {# @var listingCustomFieldValue \App\Entity\ListingCustomFieldValue #}
                         <div class="name-value-group mb-2 mr-1 mr-md-2">
-                            <div class="name">
+                            <div class="name text-break">
                                 {{ listingCustomFieldValue.customField.name }}
                             </div>
                             {% if listingCustomFieldValue.customFieldOption is empty %}
                                 {% if listingCustomFieldValue.customField.type == constant('\App\\Entity\\CustomField::TYPE_INTEGER_RANGE') %}
-                                    <strong>{{ listingCustomFieldValue.value | thousandsSeparate }} {{ listingCustomFieldValue.customField.unit | default }}</strong>
+                                    <strong class="text-break">{{ listingCustomFieldValue.value | thousandsSeparate }} {{ listingCustomFieldValue.customField.unit | default }}</strong>
                                 {% else %}
-                                    <strong>{{ listingCustomFieldValue.value }}</strong>
+                                    <strong class="text-break">{{ listingCustomFieldValue.value }}</strong>
                                 {% endif %}
                             {% else %}
-                                <strong>{{ listingCustomFieldValue.customFieldOption.name }}</strong>
+                                <strong class="text-break">{{ listingCustomFieldValue.customFieldOption.name }}</strong>
                             {% endif %}
                         </div>
                     {% endfor %}

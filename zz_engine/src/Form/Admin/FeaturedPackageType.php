@@ -52,6 +52,9 @@ class FeaturedPackageType extends AbstractType
                 new Constraints\GreaterThanOrEqual([
                     'value' => 0,
                 ]),
+                new Constraints\LessThanOrEqual([
+                    'value' => 3650,
+                ]),
             ],
         ]);
         $builder->add('daysListingExpire', IntegerType::class, [
@@ -60,6 +63,9 @@ class FeaturedPackageType extends AbstractType
                 new NotBlank(),
                 new Constraints\GreaterThanOrEqual([
                     'value' => 0,
+                ]),
+                new Constraints\LessThanOrEqual([
+                    'value' => 3650,
                 ]),
             ],
         ]);

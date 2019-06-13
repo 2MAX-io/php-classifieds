@@ -319,7 +319,7 @@ class Listing
 
     public function isExpired(): bool
     {
-        return $this->getValidUntilDate() < date('Y-m-d 00:00:00');
+        return $this->getValidUntilDate() < (new \DateTime())->setTime(0,0);
     }
 
     public function getId(): ?int

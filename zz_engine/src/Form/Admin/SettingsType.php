@@ -49,7 +49,7 @@ class SettingsType extends AbstractType
             'empty_data' => '',
             'constraints' => [
                 new NotBlank(),
-                new Length(['min' => 2]),
+                new Length(['min' => 2, 'max' => 158]),
             ],
         ]);
         $builder->add('metaKeywords', TextareaType::class, [
@@ -107,7 +107,7 @@ class SettingsType extends AbstractType
             'empty_data' => '',
             'constraints' => [
                 new NotBlank(),
-                new Length(['min' => 4]),
+                new Length(['min' => 4, 'max' => 40]),
             ],
         ]);
         $builder->add('emailReplyTo', EmailType::class, [
@@ -199,6 +199,9 @@ class SettingsType extends AbstractType
         $builder->add('searchPlaceholder', TextType::class, [
             'label' => 'trans.Search examples',
             'required' => true,
+            'constraints' => [
+                new Length(['max' => 45]),
+            ],
         ]);
         $builder->add('masterSiteLinkShow', BoolRequiredType::class, [
             'label' => 'trans.Show link to master site',
@@ -256,6 +259,7 @@ class SettingsType extends AbstractType
             'required' => true,
             'constraints' => [
                 new NotBlank(),
+                new Length(['max' => 100]),
             ],
         ]);
         $builder->add('customJavascriptBottom', TextareaType::class, [

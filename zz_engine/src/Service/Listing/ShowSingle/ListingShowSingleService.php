@@ -44,7 +44,7 @@ class ListingShowSingleService
             'categoryJoin',
             Join::WITH,
             $qb->expr()->andX(
-                $qb->expr()->eq('categoryJoin.category', 'listing.category')
+                $qb->expr()->eq('categoryJoin.category', 'listing.category'),
             )
         );
         $qb->andWhere($qb->expr()->eq('listing.id', ':listingId'));
@@ -52,6 +52,7 @@ class ListingShowSingleService
 
         $qb->addOrderBy('categoryJoin.sort', 'ASC');
         $qb->addOrderBy('customFieldOption.sort', 'ASC');
+        $qb->addOrderBy('customField.sort', 'ASC');
 
         return ListingShowDto::fromDoctrineResult($qb->getQuery()->getOneOrNullResult());
     }

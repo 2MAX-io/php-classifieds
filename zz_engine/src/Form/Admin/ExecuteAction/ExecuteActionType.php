@@ -57,7 +57,7 @@ class ExecuteActionType extends AbstractType
             'class' => CustomFieldOption::class,
             'choice_label' => static function (CustomFieldOption $customFieldOption) {
                 $customField = $customFieldOption->getCustomField();
-                $hint = $customField->getNameForAdmin() ? " ( {$customField->getNameForAdmin()} )" : '';
+                $hint = $customField->getNameForAdmin() ? " ({$customField->getNameForAdmin()})" : '';
 
                 return $customField->getName() . $hint . ' ⇾ ' . $customFieldOption->getName();
             },

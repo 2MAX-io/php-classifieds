@@ -9,11 +9,13 @@
             <h1>{{ 'trans.Copy options from other custom field' | trans }}</h1>
             <h5>{{ 'trans.to custom field' | trans }}:
                 <strong class="text-break">
-                    {{ customField.name }}
-                    {% if customField.nameForAdmin %}
-                        ( {{ customField.nameForAdmin }} )
-                    {% endif %}
+                    {{- customField.name -}}
                 </strong>
+                <span class="text-break text-muted">
+                    {%- if customField.nameForAdmin -%}
+                        ({{- customField.nameForAdmin -}})
+                    {%- endif -%}
+                </span>
             </h5>
         </div>
         <div class="col-md-4 text-md-right">

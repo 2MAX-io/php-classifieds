@@ -10,10 +10,12 @@
             <h5>{{ 'trans.for custom field' | trans }}:
                 <strong class="text-break">
                     {{ customFieldOption.customField.name }}
-                    {% if customFieldOption.customField.nameForAdmin %}
-                        ( {{ customFieldOption.customField.nameForAdmin }} )
-                    {% endif %}
                 </strong>
+                <span class="text-break text-muted">
+                    {%- if customFieldOption.customField.nameForAdmin -%}
+                        ({{- customFieldOption.customField.nameForAdmin -}})
+                    {%- endif -%}
+                </span>
             </h5>
         </div>
         <div class="col-md-4 text-md-right">

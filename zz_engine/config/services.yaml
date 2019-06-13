@@ -64,3 +64,5 @@ services:
 
     App\Service\System\HealthCheck\HealthCheckService:
         arguments: [!tagged app.health_checker]
+
+    Symfony\Component\HttpKernel\CacheClearer\CacheClearerInterface: '@cache_clearer'

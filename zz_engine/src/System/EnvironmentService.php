@@ -50,4 +50,9 @@ class EnvironmentService
                 )
             );
     }
+
+    public function getCacheDir(): string
+    {
+        return $this->parameterBag->get('kernel.cache_dir');
+    }
 }

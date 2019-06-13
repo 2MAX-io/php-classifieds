@@ -8,6 +8,7 @@ use App\Exception\UserVisibleMessageException;
 use App\Helper\FilePath;
 use App\Helper\ExceptionHelper;
 use App\Helper\Random;
+use App\Service\System\Cache\SystemClearCacheService;
 use App\Service\System\Signature\SignatureVerifyHighSecurity;
 use App\System\EnvironmentService;
 use Psr\Log\LoggerInterface;
@@ -30,11 +31,17 @@ class UpgradeService
      */
     private $filesystem;
 
-    public function __construct(EnvironmentService $environmentService, Filesystem $filesystem, LoggerInterface $logger)
+    /**
+     * @var SystemClearCacheService
+     */
+    private $systemClearCacheService;
+
+    public function __construct(EnvironmentService $environmentService, Filesystem $filesystem, SystemClearCacheService $systemClearCacheService, LoggerInterface $logger)
     {
         $this->logger = $logger;
         $this->environmentService = $environmentService;
         $this->filesystem = $filesystem;
+        $this->systemClearCacheService = $systemClearCacheService;
     }
 
     public function upgrade(array $upgradeArr): void
@@ -50,6 +57,8 @@ class UpgradeService
                 $this->runFileUpgrade($upgradeItem['id'], $upgradeItem['content'], $upgradeItem['contentSignature']);
             }
         }
+
+        $this->systemClearCacheService->clearAllCaches();
     }
 
     public function runFileUpgrade(int $id, string $content, string $signature): void

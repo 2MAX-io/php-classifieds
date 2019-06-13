@@ -52,17 +52,21 @@ class UpgradeController extends AbstractAdminController
     public function upgradeExecute(
         Request $request,
         UpgradeService $upgradeService,
-        UpgradeApiService $upgradeApiService
+        UpgradeApiService $upgradeApiService,
+        VersionCheckService $versionCheckService
     ): Response {
         $this->denyUnlessAdmin();
         $this->blockIfUpgradeDisabled();
 
         if (!$this->isCsrfTokenValid('adminExecuteUpgrade', $request->request->get('_token'))) {
+            throw new UserVisibleMessageException('CSRF token invalid');
+        }
+
+        if (!$versionCheckService->canUpgrade()) {
             return $this->redirectToRoute('app_admin_upgrade');
         }
 
         $upgradeArr = $upgradeApiService->getUpgradeList();
-
         if ($upgradeArr === null) {
             throw new UserVisibleMessageException('trans.Upgrade not started');
         }

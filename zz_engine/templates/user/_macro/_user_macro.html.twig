@@ -22,7 +22,7 @@
 
     {% endif %}
 
-    {%- if listing.status in [constant('\App\\Entity\\Listing::STATUS_DEACTIVATED'), constant('\App\\Entity\\Listing::STATUS_ADMIN_REMOVED'), constant('\App\\Entity\\Listing::STATUS_REJECTED')] -%}
+    {%- if listing.status in [constant('\App\\Entity\\Listing::STATUS_DEACTIVATED'), constant('\App\\Entity\\Listing::STATUS_ADMIN_REMOVED'), constant('\App\\Entity\\Listing::STATUS_REJECTED'), constant('\App\\Entity\\Listing::STATUS_PENDING')] -%}
         {{ include('user/listing/_action/_delete_form.html.twig') }}
     {%- endif -%}
 {% endmacro %}

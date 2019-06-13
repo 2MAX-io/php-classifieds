@@ -164,7 +164,7 @@ class Listing
     private $description;
 
     /**
-     * @ORM\Column(type="decimal", precision=10, scale=2, nullable=true)
+     * @ORM\Column(type="float", nullable=true)
      */
     private $price;
 
@@ -351,7 +351,7 @@ class Listing
         return $this;
     }
 
-    public function getPrice(): ?string
+    public function getPrice(): ?float
     {
         if ($this->price === null) {
             return null;
@@ -360,7 +360,7 @@ class Listing
         return $this->price;
     }
 
-    public function setPrice(?string $price): self
+    public function setPrice(?float $price): self
     {
         $this->price = $price;
 

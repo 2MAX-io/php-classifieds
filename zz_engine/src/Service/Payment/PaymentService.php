@@ -66,7 +66,7 @@ class PaymentService
             $this->trans->trans(
                 'trans.Payment for featured listing: %listingInfo%, featured package: %featurePackageName%, price: %price%, featured days: %featuredDays%',
                 [
-                    '%featurePackageName%' => "{$featuredPackage->getName()} ( {$featuredPackage->getAdminName()} ) [id:{$featuredPackage->getId()}]",
+                    '%featurePackageName%' => "{$featuredPackage->getName()} ({$featuredPackage->getAdminName()}) [id:{$featuredPackage->getId()}]",
                     '%price%' => $featuredPackage->getPriceFloat(),
                     '%listingInfo%' => "{$listing->getTitle()} [id: {$listing->getId()}]",
                     '%featuredDays%' => $featuredPackage->getDaysFeaturedExpire(),

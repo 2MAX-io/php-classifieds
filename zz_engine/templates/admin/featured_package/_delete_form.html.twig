@@ -1,7 +1,7 @@
 <form
         method="post"
         action="{{ path('app_admin_featured_package_delete', {'id': featured_package.id}) }}"
-        onsubmit="return confirm('{{ 'trans.Delete featured package' | trans }}: {{ featured_package.adminName }}, {{ featured_package.name }}');"
+        onsubmit="return confirm('{{ 'trans.Delete featured package' | trans }}: {{ featured_package.name }}, {{ featured_package.adminName }}');"
         class="d-inline"
 >
 <input type="hidden" name="_method" value="DELETE">

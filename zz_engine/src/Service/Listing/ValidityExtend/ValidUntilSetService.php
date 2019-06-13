@@ -29,6 +29,7 @@ class ValidUntilSetService
         if ($newValidUntilDate < $listing->getValidUntilDate()) {
             return;
         }
+        $newValidUntilDate->setTime(23, 59, 59);
 
         $listing->setValidUntilDate($newValidUntilDate);
         $this->em->persist($listing);

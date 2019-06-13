@@ -53,13 +53,15 @@ class FeaturedListingService
     public function makeFeatured(Listing $listing, int $featuredTimeSeconds): void
     {
         $featuredUntilDate = $listing->getFeaturedUntilDate();
-
         $baseDatetimeToAddFeaturedInterval = Carbon::now();
         if (null !== $featuredUntilDate && $featuredUntilDate > Carbon::now()) {
             $baseDatetimeToAddFeaturedInterval = $featuredUntilDate;
         }
 
         $newFeaturedUntilDate = Carbon::instance($baseDatetimeToAddFeaturedInterval)->addSeconds($featuredTimeSeconds);
+        if ($newFeaturedUntilDate > Carbon::now()->addHour(24)) {
+            $newFeaturedUntilDate->setTime(23, 59, 59);
+        }
 
         $listing->setFeatured(true);
         $listing->setFeaturedUntilDate($newFeaturedUntilDate);

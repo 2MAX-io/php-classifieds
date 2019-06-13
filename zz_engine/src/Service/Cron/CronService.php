@@ -90,7 +90,7 @@ class CronService
 UPDATE listing SET featured=0 WHERE featured_until_date <= :now OR featured_until_date IS NULL
 '
         );
-        $query->bindValue(':now', date('Y-m-d 00:00:00'));
+        $query->bindValue(':now', date('Y-m-d H:i:s'));
         $query->execute();
     }
 

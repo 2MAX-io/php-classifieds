@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Service\Admin\CustomField;
 
 use App\Entity\CustomField;
+use App\Entity\ListingCustomFieldValue;
 use App\Service\System\Sort\SortService;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -39,5 +40,17 @@ class CustomFieldService
         $stmt = $pdo->prepare('SET @count = :count');
         $stmt->execute([':count' => SortService::START_REORDER_FROM]);
         $pdo->query('UPDATE custom_field SET sort = @count:= @count + 1 WHERE 1 ORDER BY sort ASC;');
+    }
+
+    public function deleteValueFromListings(CustomField $customField): void
+    {
+        $qb = $this->em->getRepository(ListingCustomFieldValue::class)->createQueryBuilder('listingCustomFieldValue');
+        $qb->delete(ListingCustomFieldValue::class, 'listingCustomFieldValue');
+
+        $qb->andWhere($qb->expr()->eq('listingCustomFieldValue.customField', ':customField'));
+        $qb->andWhere($qb->expr()->isNull('listingCustomFieldValue.customFieldOption'));
+        $qb->setParameter('customField', $customField->getId());
+
+        $qb->getQuery()->execute();
     }
 }

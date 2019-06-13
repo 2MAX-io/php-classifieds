@@ -80,7 +80,7 @@
                 </div>
 
                 <div>
-                    <u>If your SMTP username is an email, it should be same as "SMTP username"</u>
+                    <u>If your "SMTP username" is an email, it should be same as "Email from address"</u>
                 </div>
             </div>
 

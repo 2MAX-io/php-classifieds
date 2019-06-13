@@ -67,6 +67,10 @@ if (!empty($_POST)) {
                     if ($_POST['load_listings'] ?? null === '1') {
                         loadSql(__DIR__ . '/data/example/listing_demo_user.sql');
                         loadSql(__DIR__ . '/data/example/listing.large.sql');
+
+                        $stmt = $pdo->prepare(/** @lang MySQL */ 'UPDATE listing SET valid_until_date = :validUntilDate WHERE 1');
+                        $stmt->bindValue('validUntilDate', date('Y-m-d 23:59:59', time() + 3600*24*7));
+                        $stmt->execute();
                     }
                 }
             }
@@ -79,6 +83,7 @@ if (!empty($_POST)) {
             setEmailSettings($_POST['email_from_address']);
             setLicense($_POST['license']);
 
+            $pdo->exec("UPDATE setting SET last_update_date = '2010-01-01 00:00:00'");
             saveConfig();
 
             $pdo->commit();

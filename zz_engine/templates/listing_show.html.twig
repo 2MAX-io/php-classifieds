@@ -381,6 +381,8 @@
 
 {% block js %}
     <script>
+        let showPreviewForOwner = "{{ app.request.query.get('showPreviewForOwner', '') }}";
+
         $('[data-fancybox="file"]').fancybox({
             buttons: [
                 "zoom",
@@ -391,8 +393,13 @@
         });
 
         let showContactInformation = function (listingId) {
+            let params = {};
+            if (showPreviewForOwner !== '') {
+                params.showPreviewForOwner = 1;
+            }
+
             $.post(
-                Routing.generate('app_listing_contact_data', {}),
+                Routing.generate('app_listing_contact_data', params),
                 {
                     listingId: listingId
                 }

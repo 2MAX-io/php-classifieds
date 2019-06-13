@@ -77,7 +77,11 @@ class AdminListingActionController extends AbstractAdminController
             $em = $this->getDoctrine()->getManager();
             $listing->setOrderByDate(new \DateTime());
             $listing->setFeatured(true);
-            $listing->setFeaturedUntilDate(Carbon::instance($listing->getFeaturedUntilDate())->addDays(7));
+            if ($listing->getFeaturedUntilDate() > new \DateTime()) {
+                $listing->setFeaturedUntilDate(Carbon::instance($listing->getFeaturedUntilDate())->addDays(7));
+            } else {
+                $listing->setFeaturedUntilDate(Carbon::now()->addDays(7));
+            }
             $em->flush();
         }
 

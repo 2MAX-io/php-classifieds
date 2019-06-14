@@ -131,7 +131,7 @@ class FeaturedPackage
 
     public function setPriceFloat(?float $price): self
     {
-        $this->price = (int) $price * 100;
+        $this->price = (int) ($price * 100);
 
         return $this;
     }

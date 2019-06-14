@@ -73,6 +73,22 @@ if (!extension_loaded('tokenizer')) {
     $errors[] = 'This app requires tokenizer extension';
 }
 
+if (!extension_loaded('curl')) {
+    $errors[] = 'This app requires curl extension';
+}
+
+if (!extension_loaded('libxml')) {
+    $errors[] = 'This app requires libxml extension';
+}
+
+if (!extension_loaded('xml')) {
+    $errors[] = 'This app requires xml extension';
+}
+
+if (!extension_loaded('xmlwriter')) {
+    $errors[] = 'This app requires xmlwriter extension';
+}
+
 if (!extension_loaded('SPL')) {
     $errors[] = 'This app requires SPL extension';
 }

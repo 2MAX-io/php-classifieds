@@ -64,7 +64,6 @@ class PoliceLogIpService
             $realIpBehindProxy = $_SERVER['HTTP_CF_CONNECTING_IP'] . ' --> ' . $_SERVER['HTTP_CF_VISITOR'] ?? '';
         }
 
-
         $log = new ListingPoliceLog();
         $log->setSourceIp($_SERVER['REMOTE_ADDR']);
         $log->setDestinationIp($_SERVER['SERVER_ADDR']);

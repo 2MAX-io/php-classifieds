@@ -146,7 +146,7 @@
             </div>
             <div>
                 <input type="checkbox" name="load_pages" id="load-pages" class="custom-checkbox" value="1" <?php echo empty($_POST['load_pages']) ?: 'checked' ?>>
-                <label for="load-pages">Load pages</label>
+                <label for="load-pages">Load example sub-pages like terms and conditions</label>
             </div>
         </div>
 

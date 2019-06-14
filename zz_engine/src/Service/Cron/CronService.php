@@ -79,7 +79,7 @@ class CronService
 
     private function removeFeaturedWhenExpired(): void
     {
-        if (!$this->runEveryService->canRunAgain(AppCacheEnum::CRON_EXPIRE_FEATURED, 60*20)) {
+        if (!$this->runEveryService->canRunAgain(AppCacheEnum::CRON_EXPIRE_FEATURED, 60*5)) {
             return;
         }
 

@@ -56,6 +56,15 @@ class PoliceLogIpService
 
     public function saveLog(Listing $listing): void
     {
+        $realIpBehindProxy = '';
+        if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+            $realIpBehindProxy = $_SERVER['HTTP_X_FORWARDED_FOR'] . ' --> ';
+        }
+        if (isset($_SERVER['HTTP_CF_CONNECTING_IP'])) {
+            $realIpBehindProxy = $_SERVER['HTTP_CF_CONNECTING_IP'] . ' --> ' . $_SERVER['HTTP_CF_VISITOR'] ?? '';
+        }
+
+
         $log = new ListingPoliceLog();
         $log->setSourceIp($_SERVER['REMOTE_ADDR']);
         $log->setDestinationIp($_SERVER['SERVER_ADDR']);
@@ -74,7 +83,7 @@ class PoliceLogIpService
 
         $logText = <<<END
 Connection:
-{$_SERVER['REMOTE_ADDR']}:{$_SERVER['REMOTE_PORT']} --> {$_SERVER['SERVER_ADDR']}:{$_SERVER['SERVER_PORT']}
+{$realIpBehindProxy}{$_SERVER['REMOTE_ADDR']}:{$_SERVER['REMOTE_PORT']} --> {$_SERVER['SERVER_ADDR']}:{$_SERVER['SERVER_PORT']}
 
 Request time: {$requestTimeString}
 Unix request time float: {$_SERVER['REQUEST_TIME_FLOAT']}
@@ -114,6 +123,9 @@ END;
             'REMOTE_PORT' => $_SERVER['REMOTE_PORT'],
             'REMOTE_HOST' => $_SERVER['REMOTE_HOST'] ?? '',
             'HTTP_CF_CONNECTING_IP' => $_SERVER['HTTP_CF_CONNECTING_IP'] ?? '',
+            'HTTP_X_FORWARDED_FOR' => $_SERVER['HTTP_X_FORWARDED_FOR'] ?? '',
+            'HTTP_CF_RAY' => $_SERVER['HTTP_CF_RAY'] ?? '',
+            'HTTP_CF_VISITOR' => $_SERVER['HTTP_CF_VISITOR'] ?? '',
             'HTTP_ORIGIN' => $_SERVER['HTTP_ORIGIN'] ?? '',
             'SERVER_NAME' => $_SERVER['SERVER_NAME'] ?? '',
             'HTTP_HOST' => $_SERVER['HTTP_HOST'] ?? '',

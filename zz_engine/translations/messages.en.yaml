@@ -512,7 +512,7 @@ trans.min: min
 trans.max: max
 'trans.View more': 'View more'
 'trans.Delete category': 'Delete category'
-'trans.Delete category custom field': 'Delete category custom field'
+'trans.Delete custom field from category': 'Delete custom field from category'
 'trans.Delete custom field option': 'Delete custom field option'
 'trans.Delete custom field': 'Delete custom field'
 'trans.To delete custom field, you must first delete all dependencies like: custom fields assigned to categories, custom field options': 'To delete custom field, you must first delete all dependencies like: custom fields assigned to categories, custom field options'
@@ -552,8 +552,8 @@ trans.Date: Date
 'trans.Featuring of listing: %listingTitle%, using package: %featuredPackageName%': 'Featuring of listing: %listingTitle%, using package: %featuredPackageName%'
 'trans.Topping up the account balance': 'Topping up the account balance'
 'trans.Change reason in description, visible to user': 'Change reason in description, visible to user'
-'trans.Balanced change by administrator to: %newBalance% from previous: %previousBalance%, reason: %reason%': 'Balanced change by administrator to: %newBalance% from previous: %previousBalance%, reason: %reason%'
-'trans.Balanced change by administrator to: %newBalance% from previous: %previousBalance%': 'Balanced change by administrator to: %newBalance% from previous: %previousBalance%'
+'trans.Balance change by administrator to: %newBalance% from previous: %previousBalance%, reason: %reason%': 'Balance change by administrator to: %newBalance% from previous: %previousBalance%, reason: %reason%'
+'trans.Balance change by administrator to: %newBalance% from previous: %previousBalance%': 'Balance change by administrator to: %newBalance% from previous: %previousBalance%'
 'trans.History of balance changes': 'History of balance changes'
 'trans.History of listings featuring': 'History of listings featuring'
 trans.Payments: Payments

@@ -42,7 +42,7 @@ class UserChangeBalanceController extends AbstractAdminController
             if ($form->get(UserChangeBalanceType::CHANGE_REASON)->getData()) {
                 $userBalanceChange->setDescription(
                     $trans->trans(
-                        'trans.Balanced change by administrator to: %newBalance% from previous: %previousBalance%, reason: %reason%',
+                        'trans.Balance change by administrator to: %newBalance% from previous: %previousBalance%, reason: %reason%',
                         [
                             '%newBalance%' => $userBalanceChange->getBalanceFinal() / 100,
                             '%previousBalance%' => $previousBalance / 100,
@@ -53,7 +53,7 @@ class UserChangeBalanceController extends AbstractAdminController
             } else{
                 $userBalanceChange->setDescription(
                     $trans->trans(
-                        'trans.Balanced change by administrator to: %newBalance% from previous: %previousBalance%',
+                        'trans.Balance change by administrator to: %newBalance% from previous: %previousBalance%',
                         [
                             '%newBalance%' => $userBalanceChange->getBalanceFinal() / 100,
                             '%previousBalance%' => $previousBalance / 100,

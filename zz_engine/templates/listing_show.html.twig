@@ -230,9 +230,7 @@
 
                 {# Informations #}
                 <div class="card mb-3 w-100">
-                    <div class="card-header">
-                        <h5>{{ 'trans.Informations' | trans }}</h5>
-                    </div>
+                    <h5 class="card-header">{{ 'trans.Informations' | trans }}</h5>
 
                     <div class="card-body">
                         {% if displayAsExpired(listing) %}
@@ -315,9 +313,7 @@
                 <!-- photos side -->
                 {% if listing.listingFiles.count > 0 %}
                     <div class="card mb-3 d-none d-md-block">
-                        <div class="card-header">
-                            <h5>{{ 'trans.Photos' | trans }}</h5>
-                        </div>
+                        <h5 class="card-header">{{ 'trans.Photos' | trans }}</h5>
 
                         <div class="card-body">
                             {% for listingFile in listing.listingFiles %}
@@ -341,9 +337,7 @@
                 <!-- share listing -->
                 {% if not displayAsExpired(listing) %}
                     <div class="card mb-3 d-none d-md-block">
-                        <div class="card-header">
-                            <h5>{{ 'trans.Share This Listing' | trans }}</h5>
-                        </div>
+                        <h5 class="card-header">{{ 'trans.Share This Listing' | trans }}</h5>
 
                         <div class="card-body">
                             <div class="mb-2" data-href="{{ url('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}">

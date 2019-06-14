@@ -17,18 +17,18 @@
                                     href="{{ path('app_category', {'categorySlug': category.slug}) }}"
                                     class="text-dark"
                             >
-                                {{ category.name }}
+                                {{- category.name -}}
                             </a>
                         </h5>
                         <div>
-                            {% for categoryChild in category.children %}
+                            {%- for categoryChild in category.children -%}
                                 <a
                                         href="{{ path('app_category', {'categorySlug': categoryChild.slug}) }}"
                                         class="category-link link-list-item"
                                 >
-                                    {{ categoryChild.name }}
+                                    {{- categoryChild.name -}}
                                 </a>
-                            {% endfor %}
+                            {%- endfor -%}
                         </div>
                     </div>
                 </div>

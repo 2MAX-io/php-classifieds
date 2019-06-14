@@ -396,3 +396,7 @@ input.form-control, textarea.form-control, select.form-control {
     border-top-left-radius: .25rem;
     border-bottom-left-radius: .25rem;
 }
+
+.paginationMaxPerPage {
+    border: 1px solid #dee2e6;
+}

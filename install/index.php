@@ -5,7 +5,8 @@ error_reporting(-1);
 
 $errors = array();
 
-if (version_compare(PHP_VERSION, '70300', '<')) {
+/** @noinspection ConstantCanBeUsedInspection */
+if (version_compare(PHP_VERSION, '7.3', '<')) {
     $phpVersion = PHP_VERSION;
     $errors[] = "This app requires at least: PHP 7.3, current PHP version is: $phpVersion";
     $errors[] = 'Most hosts support current PHP versions, but not by default. 

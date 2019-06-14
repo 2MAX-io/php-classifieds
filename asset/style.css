@@ -390,3 +390,9 @@ input.form-control, textarea.form-control, select.form-control {
         padding: 0;
     }
 }
+
+.page-item.prev .page-link {
+    margin-left: 0;
+    border-top-left-radius: .25rem;
+    border-bottom-left-radius: .25rem;
+}

@@ -3,6 +3,7 @@
 <link rel="stylesheet" type="text/css"  href="bootstrap.css" />
 
 <div class="container">
+    <div class="float-right mt-2"><a href="https://documentation.2max.io/display/CLAS/Required+permissions" class="btn btn-info" target="_blank">documentation</a></div>
     <h1>Installation - 2max.io Classified Ads</h1>
     <h2>Filesystem problems</h2>
 
@@ -10,7 +11,7 @@
 
     <div class="alert alert-danger">
         <h4 class="text-danger">Invalid permissions, before installation begins, you need to apply correct permissions.</h4>
-        <p>One way to do that, is to use commands from textarea bellow in root path of this app.</p>
+        <p>One way to do that, is to use commands from textarea bellow in <a href="https://documentation.2max.io/display/CLAS/Where+is+app+root+directory" target="_blank">root path of this app</a>.</p>
         <p>Root path of this app is directory with file: zzzz_2max_io_classified_ads_project_root.txt</p>
 
         <textarea class="w-100 form-control" style="height: 7em;">
@@ -30,6 +31,12 @@ chown -R www-data:www-data <?php echo $projectRootPath ?>;
         </textarea>
 
         <p>in commands above change <u>www-data</u> to group of your webserver process, if it is different</p>
+        
+        <p>More info about setting up correct permissions can be found in <a href="https://documentation.2max.io/display/CLAS/Required+permissions" target="_blank">documentation</a></p>
+    </div>
+
+    <div class="mb-2">
+        <a href="" class="btn btn-primary">Refresh</a>
     </div>
 
     <div class="mb-5">
@@ -139,6 +146,4 @@ chown -R www-data:www-data <?php echo $projectRootPath ?>;
             </div>
         <?php endif; ?>
     </div>
-
-    <a href="" class="btn btn-primary">Refresh</a>
 </div>

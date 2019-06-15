@@ -410,3 +410,5 @@ php zz_engine/bin/console doctrine:schema:update --force
 php zz_engine/bin/console doctrine:schema:create --dump-sql > install/data/_schema.sql
 php zz_engine/bin/console doctrine:schema:update --force
 php zz_engine/bin/console security:encode-password
+composer require --dev -d zz_engine paragonie/sodium_compat
+composer require -d zz_engine paragonie/sodium_compat

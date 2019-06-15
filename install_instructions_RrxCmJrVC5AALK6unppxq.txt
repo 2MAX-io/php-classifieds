@@ -1,0 +1,10 @@
+Installation instructions can be found in documentation:
+
+https://documentation.2max.io/display/CLAS/Installation
+
+https://documentation.2max.io/display/CLAS
+
+2MAX.io Classified Ads with Custom Fields PHP script
+
+Licensed under Evanto / Code Canyon Regular License
+https://codecanyon.net/licenses/terms/regular

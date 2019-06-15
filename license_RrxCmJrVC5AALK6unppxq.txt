@@ -1,0 +1,6 @@
+2MAX.io Classified Ads with Custom Fields PHP script
+
+Licensed under Envato / Code Canyon Regular License
+https://codecanyon.net/licenses/terms/regular
+
+To use this PHP app it is required to poses License certificate and purchase code.

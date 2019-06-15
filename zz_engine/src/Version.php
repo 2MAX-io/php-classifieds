@@ -4,6 +4,10 @@ declare(strict_types=1);
 
 namespace App;
 
+/**
+ * @copyright 2MAX.io Classified Ads
+ * @link https://2max.io
+ */
 class Version
 {
     public const VERSION = 1;

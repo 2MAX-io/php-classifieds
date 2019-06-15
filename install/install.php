@@ -84,6 +84,7 @@ if (!empty($_POST)) {
             setLicense($_POST['license']);
 
             $pdo->exec("UPDATE setting SET last_update_date = '2010-01-01 00:00:00'");
+            $pdo->exec("UPDATE listing SET order_by_date = '2010-01-01 00:00:00'");
             saveConfig();
 
             $pdo->commit();

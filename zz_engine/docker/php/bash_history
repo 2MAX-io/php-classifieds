@@ -409,3 +409,4 @@ php zz_engine/bin/console debug:router > /var/www/html/out.txt
 php zz_engine/bin/console doctrine:schema:update --force
 php zz_engine/bin/console doctrine:schema:create --dump-sql > install/data/_schema.sql
 php zz_engine/bin/console doctrine:schema:update --force
+php zz_engine/bin/console security:encode-password

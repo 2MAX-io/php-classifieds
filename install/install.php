@@ -5,7 +5,7 @@ declare(strict_types=1);
 use App\Helper\FilePath;
 use App\Helper\Random;
 use App\Service\User\RoleInterface;
-use Symfony\Component\Security\Core\Encoder\Argon2iPasswordEncoder;
+use Symfony\Component\Security\Core\Encoder\SodiumPasswordEncoder;
 use Webmozart\PathUtil\Path;
 
 include 'include/bootstrap.php';
@@ -143,7 +143,7 @@ function insertAdmin(string $email, string $password): void {
 
 EOF;
 
-        $argon2iPasswordEncoder = new Argon2iPasswordEncoder();
+        $argon2iPasswordEncoder = new SodiumPasswordEncoder();
 
         $stmt = $pdo->prepare($sql);
         $stmt->bindValue('email', $email);

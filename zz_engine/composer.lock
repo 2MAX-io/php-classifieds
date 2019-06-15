@@ -2127,16 +2127,16 @@
         },
         {
             "name": "minwork/array",
-            "version": "v1.5.1",
+            "version": "v1.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/minwork/array.git",
-                "reference": "846667854054caa55a5933a91f399a63c2bc00e6"
+                "reference": "bb06a817683f7ea3b3c1e18dcfe3248480229f14"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/minwork/array/zipball/846667854054caa55a5933a91f399a63c2bc00e6",
-                "reference": "846667854054caa55a5933a91f399a63c2bc00e6",
+                "url": "https://api.github.com/repos/minwork/array/zipball/bb06a817683f7ea3b3c1e18dcfe3248480229f14",
+                "reference": "bb06a817683f7ea3b3c1e18dcfe3248480229f14",
                 "shasum": ""
             },
             "require": {
@@ -2174,7 +2174,7 @@
                 "objects",
                 "php 7"
             ],
-            "time": "2019-05-29T21:42:51+00:00"
+            "time": "2019-06-13T10:20:21+00:00"
         },
         {
             "name": "monolog/monolog",

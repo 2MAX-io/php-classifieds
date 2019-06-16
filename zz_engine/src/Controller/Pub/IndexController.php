@@ -10,6 +10,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * @copyright 2MAX.io Classified Ads
+ * @link https://2max.io
+ */
 class IndexController extends AbstractController
 {
     /**

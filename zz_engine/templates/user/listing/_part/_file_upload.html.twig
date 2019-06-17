@@ -58,7 +58,7 @@
     };
 
     $('#listing_file').fileuploader({
-        fileMaxSize: 20,
+        fileMaxSize: 40,
         extensions: ['jpg', 'jpeg', 'png', 'gif'],
         limit: 10,
         addMore: true,
@@ -222,7 +222,10 @@
             },
             maxWidth: 1920,
             maxHeight: 1080,
-            quality: 98
+            quality: 90
+        },
+        reader: {
+            maxSize: 50
         },
         captions: {
             button: function(options) { return Translator.trans('trans.Browse') + ' ' + (options.limit === 1 ? Translator.trans('trans.file') : Translator.trans('trans.files')); },

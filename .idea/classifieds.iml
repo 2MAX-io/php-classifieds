@@ -7,6 +7,7 @@
       <excludeFolder url="file://$MODULE_DIR$/asset/build" />
       <excludeFolder url="file://$MODULE_DIR$/asset/build/sourcemaps" />
       <excludeFolder url="file://$MODULE_DIR$/static" />
+      <excludeFolder url="file://$MODULE_DIR$/test_fileuploader" />
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/docker/mysql/data" />
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/docker/mysql/sql" />
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/var" />

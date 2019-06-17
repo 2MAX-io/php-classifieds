@@ -158,9 +158,10 @@
                                             </div>
                                         {%- endfor -%}
                                         {%- endspaceless -%}
-                                        {% if customField.customFieldOptions.count > 5 %}
+                                        {%- if customField.customFieldOptions.count > 5 -%}
                                             <div class="btn btn-link p-0" data-toggle="collapse" data-target=".show-more-custom-field-{{ customField.id }}" onclick="$(this).remove()">{{ 'trans.show more' | trans }}</div>
-                                        {% endif %}                                    </div>
+                                        {%- endif -%}
+                                    </div>
                                 {% endif %}
 
                                 {%- if customField.type == constant('\App\\Entity\\CustomField::TYPE_SELECT_SINGLE') and customField.customFieldOptions is not empty -%}
@@ -216,9 +217,9 @@
                                             </div>
                                         {%- endfor -%}
                                         {%- endspaceless -%}
-                                        {% if customField.customFieldOptions.count > 5 %}
+                                        {%- if customField.customFieldOptions.count > 5 -%}
                                             <div class="btn btn-link p-0" data-toggle="collapse" data-target=".show-more-custom-field-{{ customField.id }}" onclick="$(this).remove()">{{ 'trans.show more' | trans }}</div>
-                                        {% endif %}
+                                        {%- endif -%}
                                     </div>
                                 {% endif %}
 

@@ -60,6 +60,9 @@
     $('#listing_file').fileuploader({
         fileMaxSize: 20,
         extensions: ['jpg', 'jpeg', 'png', 'gif'],
+        limit: 10,
+        addMore: true,
+        files: {{ listingFilesForJavascript | default([]) | json_encode | raw }},
         thumbnails: {
             popup: {
                 onShow: function(item) {
@@ -103,15 +106,6 @@
                 item.imageLoaded = true;
             },
         },
-        sorter: {
-            selectorExclude: null,
-            placeholder: null,
-            scrollContainer: window,
-            onSort: function(list, listEl, parentEl, newInputEl, inputEl) {}
-        },
-        files: {{ listingFilesForJavascript | default([]) | json_encode | raw }},
-        limit: 10,
-        addMore: true,
         upload: {
             url: '{{ path('app_file_upload') }}',
             data: null,
@@ -207,14 +201,6 @@
 
             return list;
         },
-        editor: {
-            cropper: {
-                showGrid: true
-            },
-            maxWidth: 800,
-            maxHeight: 600,
-            quality: 98
-        },
         onRemove: function(item) {
             if ('listingFileId' in item.data) {
                 $.post('{{ path('app_listing_file_remove') }}', {
@@ -223,6 +209,20 @@
             }
 
             return true;
+        },
+        sorter: {
+            selectorExclude: null,
+            placeholder: null,
+            scrollContainer: window,
+            onSort: function(list, listEl, parentEl, newInputEl, inputEl) {}
+        },
+        editor: {
+            cropper: {
+                showGrid: true
+            },
+            maxWidth: 800,
+            maxHeight: 600,
+            quality: 98
         },
         captions: {
             button: function(options) { return Translator.trans('trans.Browse') + ' ' + (options.limit === 1 ? Translator.trans('trans.file') : Translator.trans('trans.files')); },

@@ -215,18 +215,19 @@
             <div class="col-6 col-md">
                 <h5>{{ 'trans.About' | trans }}</h5>
                 <ul class="list-unstyled text-small">
-                    {% if settings.linkAdvertisement %}
+                    {%- if settings.linkAdvertisement -%}
                         <li><a class="text-danger mobile-link" href="{{ path('app_page', {'slug': settings.linkAdvertisement}) }}">{{ 'trans.Advertisement' | trans }}</a></li>
-                    {% endif %}
-                    {% if settings.linkTermsConditions %}
+                    {%- endif -%}
+                    {%- if settings.linkTermsConditions -%}
                         <li><a class="text-muted mobile-link" href="{{ path('app_page', {'slug': settings.linkTermsConditions}) }}">{{ 'trans.Terms and conditions' | trans }}</a></li>
-                    {% endif %}
-                    {% if settings.linkPrivacyPolicy %}
+                    {%- endif -%}
+                    {%- if settings.linkPrivacyPolicy -%}
                         <li><a class="text-muted mobile-link" href="{{ path('app_page', {'slug': settings.linkPrivacyPolicy}) }}">{{ 'trans.Privacy policy' | trans }}</a></li>
-                    {% endif %}
-                    {% if settings.linkContact %}
+                    {%- endif -%}
+                    <li><a class="text-muted mobile-link" href="{{ path('app_credits') }}">{{ 'trans.Credits' | trans }}</a></li>
+                    {%- if settings.linkContact -%}
                         <li><a class="text-muted mobile-link" href="{{ path('app_page', {'slug': settings.linkContact}) }}">{{ 'trans.Contact' | trans }}</a></li>
-                    {% endif %}
+                    {%- endif -%}
                 </ul>
             </div>
         </div>

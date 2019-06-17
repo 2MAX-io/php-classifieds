@@ -58,6 +58,9 @@
                 <div class="card mb-3">
                     <div class="card-header">
                         <strong>{{ 'trans.Filters' | trans }}</strong>
+                        <a href="{{ path(app.request.get('_route'), app.request.attributes.get('_route_params')) }}" class="float-right">
+                            {{- 'trans.clear filters' | trans -}}
+                        </a>
                     </div>
                     <div class="card-body">
                         <form method="get">

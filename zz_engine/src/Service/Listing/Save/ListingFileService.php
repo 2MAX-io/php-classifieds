@@ -40,6 +40,9 @@ class ListingFileService
                 $sortForExisting[$listingId] = (int) $fileUploaderListElement['index'];
                 continue;
             }
+            if (!isset($fileUploaderListElement['data']['tmpFilePath'])) {
+                continue;
+            }
 
             $fileUploadDto = ListingFileUploadDto::fromFileUploaderListElement($fileUploaderListElement);
             if (!\file_exists($fileUploadDto->getSourceFilePath())) {

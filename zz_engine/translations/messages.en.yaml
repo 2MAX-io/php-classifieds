@@ -134,6 +134,7 @@ trans:
   You have the latest version of 2MAX.io Classified Ads. No action required.: 'You have the latest version of 2MAX.io Classified Ads. No action required.'
   'Used images and pictures:': 'Used images and pictures:'
   clear filters: 'clear filters'
+  show more: 'show more'
 
 trans.customFieldType.select: Select field, filter as checkboxes
 trans.customFieldType.select_single: Select field, filter as single select

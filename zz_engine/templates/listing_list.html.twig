@@ -136,7 +136,7 @@
                                         <label class="text-break">{{ customField.name }}</label>
                                         {%- spaceless -%}
                                         {%- for customFieldOption in customField.customFieldOptions -%}
-                                            <div class="custom-control custom-checkbox">
+                                            <div class="custom-control custom-checkbox {% if loop.index > 5 %}collapse{% endif %} show-more-custom-field-{{ customField.id }}">
                                                 {%- apply normalizeWhitespace -%}
                                                 <input
                                                     name="form_custom_field[{{ customField.id }}][values][]"
@@ -158,7 +158,9 @@
                                             </div>
                                         {%- endfor -%}
                                         {%- endspaceless -%}
-                                    </div>
+                                        {% if customField.customFieldOptions.count > 5 %}
+                                            <div class="btn btn-link p-0" data-toggle="collapse" data-target=".show-more-custom-field-{{ customField.id }}" onclick="$(this).remove()">{{ 'trans.show more' | trans }}</div>
+                                        {% endif %}                                    </div>
                                 {% endif %}
 
                                 {%- if customField.type == constant('\App\\Entity\\CustomField::TYPE_SELECT_SINGLE') and customField.customFieldOptions is not empty -%}
@@ -192,7 +194,7 @@
 
                                         {%- spaceless -%}
                                         {%- for customFieldOption in customField.customFieldOptions -%}
-                                            <div class="custom-control custom-checkbox">
+                                            <div class="custom-control custom-checkbox {% if loop.index > 5 %}collapse{% endif %} show-more-custom-field-{{ customField.id }}">
                                                 {%- apply normalizeWhitespace -%}
                                                 <input
                                                     name="form_custom_field[{{ customField.id }}][values][]"
@@ -214,6 +216,9 @@
                                             </div>
                                         {%- endfor -%}
                                         {%- endspaceless -%}
+                                        {% if customField.customFieldOptions.count > 5 %}
+                                            <div class="btn btn-link p-0" data-toggle="collapse" data-target=".show-more-custom-field-{{ customField.id }}" onclick="$(this).remove()">{{ 'trans.show more' | trans }}</div>
+                                        {% endif %}
                                     </div>
                                 {% endif %}
 

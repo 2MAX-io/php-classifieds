@@ -410,7 +410,7 @@ trans:
   Delete custom field option: 'Usuń z pola niestandardowego opcje'
   Delete custom field: 'Usuń pole niestandardowe'
   'To delete custom field, you must first delete all dependencies like: custom fields assigned to categories, custom field options': 'Aby usunąć pole niestandardowe, najpierw musisz usunąć wszystkie jego powiązania takie jak: pola niestandardowe przypisane do kategorii, opcje pola niestandardowego'
-  'To delete category, you must first delete or move all dependencies like: category listings, subcategories, assigned custom fields, featured packages': 'Aby usunąć kategorie, najpierw musisz usunąć lub przenieść jej wszystkie zależności takie jak: ogłoszenia w kategorii, podkategorie, przypisane pola niestandardowe, pakiety wyróżnień'
+  'To delete category, you must first delete or move all dependencies like: listings in this category, subcategories, assigned custom fields, featured packages': 'Aby usunąć kategorie, najpierw musisz usunąć lub przenieść jej wszystkie zależności takie jak: ogłoszenia w tej kategorii, podkategorie, przypisane pola niestandardowe, pakiety wyróżnień'
   View all categories: 'Zobacz wszystkie kategorie'
   Featured packages: 'Pakiety wyróżnień'
   Name for admin: 'Nazwa dla admina'
@@ -570,5 +570,5 @@ trans:
   clear filters: 'wyczyść filtry'
   show more: 'pokaż więcej'
   'Could not connect to: %url%, during security audit, if testing on local machine you can ignore this': 'Nie można było się połączyć z adresem: %url%, podczas audytu bezpieczeństwa, jeżeli testujesz na lokalnej maszynie możesz to zignorować'
-  Would remove this option from users listings, if set to any listing: 'Usunię tą opcję z ogłoszeń użytkowników, jeżeli przypisana do jakiegokolwiek ogłoszenia'
-
+  It would remove this custom field option from users listings: 'Usunie tą opcję pola niestandardowego z ogłoszeń użytkowników'
+  It would remove values set for this custom field in users listings: 'Usunie wartości ustawione dla tego pola niestandardowego z ogłoszeń użytkowników'

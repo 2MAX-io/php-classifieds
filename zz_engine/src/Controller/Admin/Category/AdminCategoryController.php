@@ -6,13 +6,13 @@ namespace App\Controller\Admin\Category;
 
 use App\Controller\Admin\Base\AbstractAdminController;
 use App\Entity\Category;
-use App\Exception\UserVisibleMessageException;
 use App\Form\Admin\AdminCategorySaveType;
 use App\Helper\ExceptionHelper;
 use App\Helper\Json;
 use App\Service\Admin\Category\AdminCategoryService;
 use App\Service\Admin\Category\CategoryPictureUploadService;
 use App\Service\Category\TreeService;
+use App\Service\FlashBag\FlashService;
 use App\Service\System\Sort\SortService;
 use Doctrine\DBAL\Exception\ForeignKeyConstraintViolationException;
 use Psr\Log\LoggerInterface;
@@ -144,6 +144,7 @@ class AdminCategoryController extends AbstractAdminController
         Request $request,
         Category $category,
         TreeService $treeService,
+        FlashService $flashService,
         LoggerInterface $logger
     ): Response {
         $this->denyUnlessAdmin();
@@ -158,12 +159,12 @@ class AdminCategoryController extends AbstractAdminController
                 $em->flush();
             } /** @noinspection PhpRedundantCatchClauseInspection */ catch (ForeignKeyConstraintViolationException $e) {
                 $logger->notice('constraint error during deletion', ExceptionHelper::flatten($e, [$e->getMessage()]));
-                throw new UserVisibleMessageException(
-                    'trans.To delete category, you must first delete or move all dependencies like: category listings, subcategories, assigned custom fields, featured packages',
-                    [],
-                    0,
-                    $e
+                $flashService->addFlash(
+                    FlashService::ERROR_ABOVE_FORM,
+                    'trans.To delete category, you must first delete or move all dependencies like: listings in this category, subcategories, assigned custom fields, featured packages'
                 );
+
+                return $this->redirectToRoute('app_admin_category_edit', ['id' => $category->getId()]);
             }
         }
 

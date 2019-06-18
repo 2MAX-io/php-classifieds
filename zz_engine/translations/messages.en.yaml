@@ -521,7 +521,7 @@ trans.max: max
 'trans.Delete custom field option': 'Delete custom field option'
 'trans.Delete custom field': 'Delete custom field'
 'trans.To delete custom field, you must first delete all dependencies like: custom fields assigned to categories, custom field options': 'To delete custom field, you must first delete all dependencies like: custom fields assigned to categories, custom field options'
-'trans.To delete category, you must first delete or move all dependencies like: category listings, subcategories, assigned custom fields, featured packages': 'To delete category, you must first delete or move all dependencies like: category listings, subcategories, assigned custom fields, featured packages'
+'trans.To delete category, you must first delete or move all dependencies like: listings in this category, subcategories, assigned custom fields, featured packages': 'To delete category, you must first delete or move all dependencies like: listings in this category, subcategories, assigned custom fields, featured packages'
 'trans.View all categories': 'View all categories'
 'trans.Featured packages': 'Featured packages'
 'trans.Name for admin': 'Name for admin'

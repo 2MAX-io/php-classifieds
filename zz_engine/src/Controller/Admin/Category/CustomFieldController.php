@@ -7,7 +7,6 @@ namespace App\Controller\Admin\Category;
 use App\Controller\Admin\Base\AbstractAdminController;
 use App\Entity\Category;
 use App\Entity\CustomField;
-use App\Exception\UserVisibleMessageException;
 use App\Form\Admin\CustomFieldType;
 use App\Helper\ExceptionHelper;
 use App\Helper\Json;
@@ -15,6 +14,7 @@ use App\Repository\CustomFieldRepository;
 use App\Service\Admin\CustomField\CategorySelection\CustomFieldCategorySelectionService;
 use App\Service\Admin\CustomField\CustomFieldForCategoryService;
 use App\Service\Admin\CustomField\CustomFieldService;
+use App\Service\FlashBag\FlashService;
 use App\Service\System\Sort\SortService;
 use Doctrine\DBAL\Exception\ForeignKeyConstraintViolationException;
 use Doctrine\ORM\EntityManagerInterface;
@@ -127,6 +127,7 @@ class CustomFieldController extends AbstractAdminController
         CustomField $customField,
         CustomFieldService $customFieldService,
         EntityManagerInterface $em,
+        FlashService $flashService,
         LoggerInterface $logger
     ): Response {
         $this->denyUnlessAdmin();
@@ -141,12 +142,13 @@ class CustomFieldController extends AbstractAdminController
             } /** @noinspection PhpRedundantCatchClauseInspection */ catch (ForeignKeyConstraintViolationException $e) {
                 $logger->notice('constraint error during deletion', ExceptionHelper::flatten($e, [$e->getMessage()]));
                 $em->rollback();
-                throw new UserVisibleMessageException(
-                    'trans.To delete custom field, you must first delete all dependencies like: custom fields assigned to categories, custom field options',
-                    [],
-                    0,
-                    $e
+                $flashService->addFlash(
+                    FlashService::ERROR_ABOVE_FORM,
+                    'trans.To delete custom field, you must first delete all dependencies like: custom fields assigned to categories, custom field options'
                 );
+
+                return $this->redirectToRoute('app_admin_custom_field_edit', ['id' => $customField->getId()]);
+
             }
         }
 

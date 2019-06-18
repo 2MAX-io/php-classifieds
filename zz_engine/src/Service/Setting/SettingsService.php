@@ -7,12 +7,14 @@ namespace App\Service\Setting;
 use App\Entity\Setting;
 use App\Helper\Str;
 use App\Repository\SettingRepository;
+use App\Service\System\Cache\RuntimeCacheService;
+use App\System\Cache\AppCacheEnum;
 use App\System\Cache\RuntimeCacheEnum;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\Cache\Simple\ArrayCache;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 use Symfony\Component\PropertyInfo\PropertyInfoExtractorInterface;
-use Psr\SimpleCache\CacheInterface;
+use Symfony\Contracts\Cache\CacheInterface;
+use Symfony\Contracts\Cache\ItemInterface;
 
 class SettingsService
 {
@@ -34,25 +36,25 @@ class SettingsService
     /**
      * @var CacheInterface
      */
-    private $arrayCache;
+    private $cache;
 
     /**
-     * @var CacheInterface
+     * @var RuntimeCacheService
      */
-    private $cache;
+    private $runtimeCache;
 
     public function __construct(
         PropertyInfoExtractorInterface $propertyInfoExtractor,
         SettingRepository $settingRepository,
         EntityManagerInterface $em,
-        ArrayCache $arrayCache,
+        RuntimeCacheService $runtimeCache,
         CacheInterface $cache
     ) {
         $this->propertyInfoExtractor = $propertyInfoExtractor;
         $this->settingRepository = $settingRepository;
         $this->em = $em;
-        $this->arrayCache = $arrayCache;
         $this->cache = $cache;
+        $this->runtimeCache = $runtimeCache;
     }
 
     public function save(SettingsDto $settingsDto): void
@@ -81,26 +83,19 @@ class SettingsService
         }
 
         $this->em->flush();
-        $this->cache->delete(RuntimeCacheEnum::SETTINGS);
-        $this->arrayCache->delete(RuntimeCacheEnum::SETTINGS);
+        $this->cache->delete(AppCacheEnum::SETTINGS);
+        $this->runtimeCache->delete(RuntimeCacheEnum::SETTINGS);
     }
 
     public function getSettingsDto(): SettingsDto
     {
-        if ($this->arrayCache->has(RuntimeCacheEnum::SETTINGS)) {
-            return $this->arrayCache->get(RuntimeCacheEnum::SETTINGS);
-        }
+        return $this->runtimeCache->get(RuntimeCacheEnum::SETTINGS, function() {
+            return $this->cache->get(AppCacheEnum::SETTINGS, static function(ItemInterface $item) {
+                $item->expiresAfter(300);
 
-        if ($this->cache->has(RuntimeCacheEnum::SETTINGS)) {
-            return $this->cache->get(RuntimeCacheEnum::SETTINGS);
-        }
-
-        $settingsDto = $this->getSettingsDtoWithoutCache();
-
-        $this->arrayCache->set(RuntimeCacheEnum::SETTINGS, $settingsDto);
-        $this->cache->set(RuntimeCacheEnum::SETTINGS, $settingsDto, 300);
-
-        return $settingsDto;
+                return $this->getSettingsDtoWithoutCache();
+            });
+        });
     }
 
     public function getSettingsDtoWithoutCache(): SettingsDto

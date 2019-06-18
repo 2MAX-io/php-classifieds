@@ -414,3 +414,4 @@ composer require --dev -d zz_engine paragonie/sodium_compat
 composer require -d zz_engine paragonie/sodium_compat
 php zz_engine/bin/console debug:container | grep cache.app.simple
 php zz_engine/bin/console debug:container | grep array
+php zz_engine/bin/console debug:container | grep cache

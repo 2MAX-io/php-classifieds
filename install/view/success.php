@@ -18,7 +18,7 @@
     <div class="alert alert-info">
         Set up cron
 
-        <textarea class="w-100 form-text"><?php echo $crontabText ?></textarea>
+        <textarea class="w-100 form-text"><?php echo $crontabText ?? '' ?></textarea>
     </div>
 
     <div class="alert alert-info">

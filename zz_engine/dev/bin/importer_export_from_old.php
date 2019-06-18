@@ -3,10 +3,9 @@
 declare(strict_types=1);
 
 $pdo = new PDO(
-    'mysql:host=mysql;dbname=admin_ogloszenia', 'root', '', [
+    'mysql:host=mysql;dbname=admin_ogloszenia;charset=utf8', 'root', '', [
     PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
     PDO::ATTR_EMULATE_PREPARES => false,
-    PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8',
     PDO::MYSQL_ATTR_USE_BUFFERED_QUERY => false,
 ]
 );

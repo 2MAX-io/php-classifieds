@@ -10,18 +10,16 @@ declare(strict_types=1);
  */
 
 $pdo = new \PDO(
-    'mysql:host=mysql;dbname=classifieds', 'root', '', [
+    'mysql:host=mysql;dbname=classifieds;charset=utf8mb4', 'root', '', [
     \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
     \PDO::ATTR_EMULATE_PREPARES => false,
-    \PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8',
     \PDO::MYSQL_ATTR_USE_BUFFERED_QUERY => false,
-]
-);
+]);
 
 $csvHandle = fopen($argv[1], 'rb');
 $sqlHandle = fopen($argv[2], 'wb');
-saveSql( /** @lang MySQL */ 'SET NAMES utf8;', $sqlHandle);
-saveSql( /** @lang MySQL */ 'SET AUTOCOMMIT = 0;', $sqlHandle);
+saveSql('SET NAMES utf8;', $sqlHandle);
+saveSql('SET AUTOCOMMIT = 0;', $sqlHandle);
 
 $header = fgetcsv($csvHandle, 0, ',', '"', "\0");
 $currentOldListingId = null;
@@ -38,7 +36,6 @@ while (($csvRow = fgetcsv($csvHandle, 0, ',', '"', "\0")) !== FALSE) {
     }
     saveListingFile($csvRow, $sqlHandle);
 }
-
 
 saveSql( /** @lang MySQL */ 'COMMIT;', $sqlHandle);
 fclose($csvHandle);

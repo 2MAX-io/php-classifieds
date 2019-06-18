@@ -209,7 +209,7 @@ class DevGenerateTestListings
         /** @var User $user */
         $user = $this->cache->get(
             'devGenerateListingsUser',
-            function (ItemInterface $item) {
+            function () {
                 $user = $this->em->getRepository(User::class)->findOneBy(['email' => 'user-demo@2max.io']);
 
                 if (!$user) {

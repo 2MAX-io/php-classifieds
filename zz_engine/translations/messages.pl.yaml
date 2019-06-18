@@ -380,7 +380,7 @@ trans:
   Custom fields: 'Pola niestandardowe'
   to fill for listings in category: 'do wypełnienia dla ogłoszeń w kategorii'
   Required?: 'Wymagane?'
-  Searchable?: 'Przeszukiwalne?'
+  Searchable?: 'Filtrowalne?'
   Unit: 'Jednostka'
   Add custom field: 'Dodaj pole niestandardowe'
   Edit custom field: 'Edytuj pole niestandardowe'

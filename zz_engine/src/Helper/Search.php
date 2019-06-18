@@ -24,9 +24,11 @@ class Search
     public static function optimizeLike(string $search): string
     {
         $return = $search;
-        $hasWildcard = Str::containsOneOf($search, ['*', '?']);
-        $return = \str_replace('*', '%', $return);
-        $return = \str_replace('?', '_', $return);
+        $hasWildcard = Str::containsOneOf($search, ['*', '?', '%']);
+        $return = Str::replaceMultiple($return, [
+            '*' => '%',
+            '?' => '_',
+        ]);
 
         if ($hasWildcard) {
             return $return;

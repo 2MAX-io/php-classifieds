@@ -119,7 +119,7 @@ UPDATE listing SET user_deactivated=1 WHERE valid_until_date <= :olderThan
 
         /** @var \PDO $pdo */
         $pdo = $this->em->getConnection();
-        $query = $pdo->prepare(
+        $pdo->exec(
         /** @lang MySQL */ '
 UPDATE listing
     JOIN listing_file
@@ -130,9 +130,7 @@ UPDATE listing
     ON minSortJoin.listing_id = listing_file.listing_id && listing_file.sort = minSortJoin.minSort
 SET listing.main_image = listing_file.path
 WHERE 1
-'
-        );
-        $query->execute();
+');
     }
 
     private function openIndexPage(): void

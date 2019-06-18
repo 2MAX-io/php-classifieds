@@ -47,7 +47,7 @@ class CustomFieldOptionCopyService
 
     private function getOptionsIndexedByValue(CustomField $targetCustomField): array
     {
-        return Arr::indexBy($targetCustomField->getCustomFieldOptions()->toArray(), function(CustomFieldOption $customFieldOption) {
+        return Arr::indexBy($targetCustomField->getCustomFieldOptions()->toArray(), static function(CustomFieldOption $customFieldOption) {
             return [$customFieldOption->getValue() => $customFieldOption];
         });
     }

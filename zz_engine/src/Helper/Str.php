@@ -36,6 +36,15 @@ class Str
         );
     }
 
+    public static function replaceMultiple(string $string, array $replace): string
+    {
+        return \str_replace(
+            \array_keys($replace),
+            \array_values($replace),
+            $string
+        );
+    }
+
     public static function replaceIgnoreCase(string $string, array $from, string $to): string
     {
         return \str_ireplace(

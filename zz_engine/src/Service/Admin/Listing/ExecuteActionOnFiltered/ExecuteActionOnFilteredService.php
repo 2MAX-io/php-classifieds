@@ -66,7 +66,7 @@ class ExecuteActionOnFilteredService
         $selectSql = $qb->getQuery()->getSQL();
         $stmt = $pdo->prepare("
 INSERT INTO filtered_id_list (id, listing_id)
-$selectSql
+$selectSql #safe, because contains only not bound prepared statement placeholders, that are bound latter
 ");
         $stmt->execute(Sql::getParametersFromQb($qb));
 
@@ -109,7 +109,7 @@ SET category_id = :category_id
 
         $stmt = $pdo->prepare("
 INSERT INTO filtered_id_list (id)
-$selectSql
+$selectSql #safe, because contains only not bound prepared statement placeholders, that are bound latter
 ");
         $stmt->execute(Sql::getParametersFromQb($qb));
     }

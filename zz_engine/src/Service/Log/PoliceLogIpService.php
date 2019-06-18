@@ -112,30 +112,34 @@ END;
 
     private function getServerAsString(): string
     {
-        $otherInfo = [
-            'REQUEST_URI' => $_SERVER['REQUEST_URI'] ?? '',
-            'REQUEST_METHOD' => $_SERVER['REQUEST_METHOD'] ?? '',
-            'HTTP_USER_AGENT' => $_SERVER['HTTP_USER_AGENT'] ?? '',
-            'SERVER_ADDR' => $_SERVER['SERVER_ADDR'],
-            'SERVER_PORT' => $_SERVER['SERVER_PORT'],
-            'REMOTE_ADDR' => $_SERVER['REMOTE_ADDR'],
-            'REMOTE_PORT' => $_SERVER['REMOTE_PORT'],
-            'REMOTE_HOST' => $_SERVER['REMOTE_HOST'] ?? '',
-            'HTTP_CF_CONNECTING_IP' => $_SERVER['HTTP_CF_CONNECTING_IP'] ?? '',
-            'HTTP_X_FORWARDED_FOR' => $_SERVER['HTTP_X_FORWARDED_FOR'] ?? '',
-            'HTTP_CF_RAY' => $_SERVER['HTTP_CF_RAY'] ?? '',
-            'HTTP_CF_VISITOR' => $_SERVER['HTTP_CF_VISITOR'] ?? '',
-            'HTTP_ORIGIN' => $_SERVER['HTTP_ORIGIN'] ?? '',
-            'SERVER_NAME' => $_SERVER['SERVER_NAME'] ?? '',
-            'HTTP_HOST' => $_SERVER['HTTP_HOST'] ?? '',
-            'SERVER_PROTOCOL' => $_SERVER['SERVER_PROTOCOL'] ?? '',
-            'HTTP_REFERER' => $_SERVER['HTTP_REFERER'] ?? '',
-            'REQUEST_TIME_FLOAT' => $_SERVER['REQUEST_TIME_FLOAT'],
+        $serverKeysToGet = [
+            'REQUEST_URI',
+            'REQUEST_METHOD',
+            'HTTP_USER_AGENT',
+            'SERVER_ADDR',
+            'SERVER_PORT',
+            'REMOTE_ADDR',
+            'REMOTE_PORT',
+            'REMOTE_HOST',
+            'HTTP_CF_CONNECTING_IP',
+            'HTTP_X_FORWARDED_FOR',
+            'HTTP_CF_RAY',
+            'HTTP_CF_VISITOR',
+            'HTTP_ORIGIN',
+            'SERVER_NAME',
+            'HTTP_HOST',
+            'SERVER_PROTOCOL',
+            'HTTP_REFERER',
+            'REQUEST_TIME_FLOAT',
         ];
 
         $return = '';
-        foreach ($otherInfo as $name => $value) {
-            $return .= "$name => {$value} \r\n";
+        foreach ($serverKeysToGet as $serverKey) {
+            if (!isset($_SERVER[$serverKey])) {
+                continue;
+            }
+
+            $return .= "$serverKey => {$_SERVER[$serverKey]} \r\n";
         }
 
         return $return;

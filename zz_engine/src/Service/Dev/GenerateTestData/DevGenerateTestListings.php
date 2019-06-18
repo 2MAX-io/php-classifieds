@@ -13,12 +13,11 @@ use App\Entity\ListingFile;
 use App\Entity\User;
 use App\Helper\Arr;
 use App\Helper\SlugHelper;
+use App\Service\System\Cache\RuntimeCacheService;
 use App\Service\System\Sort\SortService;
 use Carbon\Carbon;
 use Doctrine\ORM\EntityManagerInterface;
 use Faker\Factory;
-use Symfony\Contracts\Cache\CacheInterface;
-use Symfony\Contracts\Cache\ItemInterface;
 
 class DevGenerateTestListings
 {
@@ -28,21 +27,18 @@ class DevGenerateTestListings
     private $em;
 
     /**
-     * @var CacheInterface
+     * @var RuntimeCacheService
      */
-    private $cache;
+    private $runtimeCache;
 
-    public function __construct(EntityManagerInterface $em, CacheInterface $cache)
+    public function __construct(EntityManagerInterface $em, RuntimeCacheService $runtimeCache)
     {
         $this->em = $em;
-        $this->cache = $cache;
+        $this->runtimeCache = $runtimeCache;
     }
 
     public function generate(int $count): void
     {
-        $this->cache->delete('devGenerateListingsUser');
-        $this->cache->delete('devGenerateListingsCategories');
-
         \gc_enable();
         $this->em->getConnection()->getConfiguration()->setSQLLogger();
 
@@ -175,7 +171,7 @@ class DevGenerateTestListings
 
     private function getRandomCategory(): Category
     {
-        $categoryList = $this->cache->get('devGenerateListingsCategories', function() {
+        $categoryList = $this->runtimeCache->get('devGenerateListingsCategories', function() {
             return $this->em->getRepository(Category::class)->findBy(['lvl' => 2]);
         });
 
@@ -207,7 +203,7 @@ class DevGenerateTestListings
     private function getUser(): User
     {
         /** @var User $user */
-        $user = $this->cache->get(
+        $user = $this->runtimeCache->get(
             'devGenerateListingsUser',
             function () {
                 $user = $this->em->getRepository(User::class)->findOneBy(['email' => 'user-demo@2max.io']);

@@ -74,8 +74,9 @@
     };
 
     cascader.onLeafSelection = function(leafId) {
-        $('.formCategory').val(leafId);
-        $('.formCategory').trigger('change', leafId)
+        let $formCategory = $('.formCategory');
+        $formCategory.val(leafId);
+        $formCategory.trigger('change', leafId)
     };
 
     cascader.onFormChangeUpdateCascader = function() {

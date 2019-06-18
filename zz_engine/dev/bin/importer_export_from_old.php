@@ -189,6 +189,7 @@ while ($dbRow = $stmt->fetch(PDO::FETCH_ASSOC)) {
 
     if (count($csvRow) !== count($header)) {
         echo "CSV row columns count does not match header items count\r\n";
+        /** @noinspection ForgottenDebugOutputInspection */
         print_r($csvRow);
         echo "\r\n";
         exit;

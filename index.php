@@ -16,6 +16,7 @@ require __DIR__ . '/zz_engine/config/bootstrap.php';
 if ($_SERVER['APP_DEBUG']) {
     umask(0000);
 
+    /** @noinspection ForgottenDebugOutputInspection */
     Debug::enable();
 }
 

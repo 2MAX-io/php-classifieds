@@ -12,7 +12,7 @@ use App\Service\System\Upgrade\VersionCheckService;
 use App\System\Cache\AppCacheEnum;
 use App\System\EnvironmentService;
 use App\Version;
-use Psr\SimpleCache\CacheInterface;
+use Symfony\Contracts\Cache\CacheInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -73,7 +73,7 @@ class UpgradeController extends AbstractAdminController
 
         $upgradeService->upgrade($upgradeArr);
 
-        return $this->render('admin/secondary/upgrade/upgrade_executed.html.twig', []);
+        return $this->render('admin/secondary/upgrade/upgrade_executed.html.twig');
     }
 
     private function blockIfUpgradeDisabled(): void

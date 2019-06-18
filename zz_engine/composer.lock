@@ -1373,16 +1373,16 @@
         },
         {
             "name": "friendsofsymfony/jsrouting-bundle",
-            "version": "2.3.0",
+            "version": "2.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfSymfony/FOSJsRoutingBundle.git",
-                "reference": "c24d1820da8b6ec55cb2023b456f1d49dd2cbe62"
+                "reference": "f6c9ee6857bce5924fbd54d4c6176a4dfa9de5b4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSJsRoutingBundle/zipball/c24d1820da8b6ec55cb2023b456f1d49dd2cbe62",
-                "reference": "c24d1820da8b6ec55cb2023b456f1d49dd2cbe62",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSJsRoutingBundle/zipball/f6c9ee6857bce5924fbd54d4c6176a4dfa9de5b4",
+                "reference": "f6c9ee6857bce5924fbd54d4c6176a4dfa9de5b4",
                 "shasum": ""
             },
             "require": {
@@ -1431,7 +1431,7 @@
                 "javascript",
                 "routing"
             ],
-            "time": "2019-02-03T16:01:06+00:00"
+            "time": "2019-06-17T18:22:41+00:00"
         },
         {
             "name": "giggsey/libphonenumber-for-php",
@@ -2127,16 +2127,16 @@
         },
         {
             "name": "minwork/array",
-            "version": "v1.6.0",
+            "version": "v1.7.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/minwork/array.git",
-                "reference": "bb06a817683f7ea3b3c1e18dcfe3248480229f14"
+                "reference": "04e7c2e8bb8d93967d14773973dde96605c9a35a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/minwork/array/zipball/bb06a817683f7ea3b3c1e18dcfe3248480229f14",
-                "reference": "bb06a817683f7ea3b3c1e18dcfe3248480229f14",
+                "url": "https://api.github.com/repos/minwork/array/zipball/04e7c2e8bb8d93967d14773973dde96605c9a35a",
+                "reference": "04e7c2e8bb8d93967d14773973dde96605c9a35a",
                 "shasum": ""
             },
             "require": {
@@ -2174,7 +2174,7 @@
                 "objects",
                 "php 7"
             ],
-            "time": "2019-06-13T10:20:21+00:00"
+            "time": "2019-06-17T15:26:01+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -3973,16 +3973,16 @@
         },
         {
             "name": "symfony/flex",
-            "version": "v1.2.6",
+            "version": "v1.2.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/flex.git",
-                "reference": "5ed49091eb73f912dd23dab92bf07c0180cfb009"
+                "reference": "8618b243d44bac71e4006062f245d807d84f7a6c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/flex/zipball/5ed49091eb73f912dd23dab92bf07c0180cfb009",
-                "reference": "5ed49091eb73f912dd23dab92bf07c0180cfb009",
+                "url": "https://api.github.com/repos/symfony/flex/zipball/8618b243d44bac71e4006062f245d807d84f7a6c",
+                "reference": "8618b243d44bac71e4006062f245d807d84f7a6c",
                 "shasum": ""
             },
             "require": {
@@ -4018,7 +4018,7 @@
                 }
             ],
             "description": "Composer plugin for Symfony",
-            "time": "2019-06-05T14:26:30+00:00"
+            "time": "2019-06-15T07:15:42+00:00"
         },
         {
             "name": "symfony/form",

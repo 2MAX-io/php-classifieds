@@ -1,6 +1,7 @@
 <title>Install</title>
 
-<link rel="stylesheet" type="text/css"  href="bootstrap.css" />
+<!--suppress HtmlUnknownTarget -->
+<link rel="stylesheet" type="text/css" href="bootstrap.css" />
 
 <div class="container">
 

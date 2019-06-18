@@ -1,6 +1,7 @@
 <title>Install - problems</title>
 
-<link rel="stylesheet" type="text/css"  href="bootstrap.css" />
+<!--suppress HtmlUnknownTarget -->
+<link rel="stylesheet" type="text/css" href="bootstrap.css" />
 
 <div class="container">
     <div class="float-right mt-2"><a href="https://documentation.2max.io/display/CLAS/Required+permissions" class="btn btn-info" target="_blank">documentation</a></div>

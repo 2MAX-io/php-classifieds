@@ -1,6 +1,7 @@
 <title>Install success</title>
 
-<link rel="stylesheet" type="text/css"  href="bootstrap.css" />
+<!--suppress HtmlUnknownTarget -->
+<link rel="stylesheet" type="text/css" href="bootstrap.css" />
 
 <div class="container">
 
@@ -25,6 +26,7 @@
         Check if emails are send correctly by registering an user
     </div>
 
+    <!--suppress HtmlUnknownTarget -->
     <a href="../admin/red5" class="btn btn-primary">Go to admin page</a>
 
 </div>

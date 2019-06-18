@@ -6,6 +6,7 @@ namespace App\Service\System\Upgrade\Api;
 
 use App\Helper\Json;
 use App\Helper\ExceptionHelper;
+use App\Service\System\Cache\RuntimeCacheService;
 use App\Service\System\License\LicenseService;
 use App\Service\System\Signature\SignatureVerifyNormalSecurity;
 use App\Service\System\Upgrade\Base\UpgradeApi;
@@ -16,7 +17,6 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\RequestOptions;
 use Psr\Log\LoggerInterface;
-use Symfony\Component\Cache\Simple\ArrayCache;
 use Symfony\Component\HttpFoundation\Response;
 
 class UpgradeApiService
@@ -27,33 +27,27 @@ class UpgradeApiService
     private $logger;
 
     /**
-     * @var ArrayCache
-     */
-    private $arrayCache;
-
-    /**
      * @var LicenseService
      */
     private $licenseService;
 
-    public function __construct(LicenseService $licenseService, ArrayCache $arrayCache, LoggerInterface $logger)
+    /**
+     * @var RuntimeCacheService
+     */
+    private $runtimeCache;
+
+    public function __construct(LicenseService $licenseService, RuntimeCacheService $runtimeCache, LoggerInterface $logger)
     {
         $this->logger = $logger;
-        $this->arrayCache = $arrayCache;
         $this->licenseService = $licenseService;
+        $this->runtimeCache = $runtimeCache;
     }
 
     public function getLatestVersion(): ?LatestVersionDto
     {
-        $cacheName = RuntimeCacheEnum::LATEST_VERSION;
-        if ($this->arrayCache->has($cacheName)) {
-            return $this->arrayCache->get($cacheName);
-        }
-
-        $return = $this->getLatestVersionNoCache();
-        $this->arrayCache->set($cacheName, $return);
-
-        return $return;
+        return $this->runtimeCache->get(RuntimeCacheEnum::LATEST_VERSION, function() {
+            return $this->getLatestVersionNoCache();
+        });
     }
 
     public function getLatestVersionNoCache(): ?LatestVersionDto

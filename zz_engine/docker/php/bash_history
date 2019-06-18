@@ -412,3 +412,5 @@ php zz_engine/bin/console doctrine:schema:update --force
 php zz_engine/bin/console security:encode-password
 composer require --dev -d zz_engine paragonie/sodium_compat
 composer require -d zz_engine paragonie/sodium_compat
+php zz_engine/bin/console debug:container | grep cache.app.simple
+php zz_engine/bin/console debug:container | grep array

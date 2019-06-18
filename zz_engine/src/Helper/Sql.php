@@ -4,12 +4,10 @@ declare(strict_types=1);
 
 namespace App\Helper;
 
-use Doctrine\Bundle\DoctrineBundle\Twig\DoctrineExtension;
 use Doctrine\ORM\Query\Parameter;
 use Doctrine\ORM\Query\ParserResult;
 use Doctrine\ORM\QueryBuilder;
 use ReflectionObject;
-use Symfony\Component\VarDumper\Cloner\Data;
 
 class Sql
 {

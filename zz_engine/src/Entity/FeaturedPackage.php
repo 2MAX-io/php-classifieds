@@ -73,9 +73,9 @@ class FeaturedPackage
     /**
      * @var float
      *
-     * used only for form validation
+     * used only for form auto validation, if saving empty featured package form successful can be removed
      */
-    private $priceFloat;
+    private /** @noinspection PhpUnusedPrivateFieldInspection */ $priceFloat;
 
     public function __construct()
     {

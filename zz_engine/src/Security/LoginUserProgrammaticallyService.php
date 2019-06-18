@@ -11,7 +11,6 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
-use Symfony\Component\Security\Http\SecurityEvents;
 
 class LoginUserProgrammaticallyService
 {
@@ -55,6 +54,6 @@ class LoginUserProgrammaticallyService
         $this->session->set('_security_main', \serialize($token));
 
         $event = new InteractiveLoginEvent($this->requestStack->getMasterRequest(), $token);
-        $this->eventDispatcher->dispatch(SecurityEvents::INTERACTIVE_LOGIN, $event);
+        $this->eventDispatcher->dispatch($event);
     }
 }

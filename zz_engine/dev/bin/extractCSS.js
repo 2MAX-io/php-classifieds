@@ -16,7 +16,6 @@ if(!filename) {
 }
 
 const file_coverage = fs.readFileSync(filename);
-
 const css_coverage = JSON.parse(file_coverage);
 
 for (const entry of css_coverage) {

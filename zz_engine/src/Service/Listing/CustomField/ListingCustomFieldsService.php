@@ -12,6 +12,7 @@ use App\Helper\Arr;
 use App\Helper\Str;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr\Join;
+use Psr\Log\LoggerInterface;
 
 class ListingCustomFieldsService
 {
@@ -20,9 +21,15 @@ class ListingCustomFieldsService
      */
     private $em;
 
-    public function __construct(EntityManagerInterface $em)
+    /**
+     * @var LoggerInterface
+     */
+    private $logger;
+
+    public function __construct(EntityManagerInterface $em, LoggerInterface $logger)
     {
         $this->em = $em;
+        $this->logger = $logger;
     }
 
     /**
@@ -105,7 +112,11 @@ class ListingCustomFieldsService
         if (Str::beginsWith($customFieldValue, '__form_custom_field_option_id_')) {
             $optionId = (int) \str_replace('__form_custom_field_option_id_', '', $customFieldValue);
             $option = $this->em->getRepository(CustomFieldOption::class)->find($optionId);
-            $customFieldValue = $option->getValue();
+            if ($option === null || $option->getValue() === null) {
+                $this->logger->error('option should not be null', ['optionId' => $optionId]);
+            }
+
+            $customFieldValue = $option->getValue() ?? (string) $optionId; // should not be null
         }
 
         if ($multiple) {
@@ -117,6 +128,7 @@ class ListingCustomFieldsService
                 $listingCustomFieldValue = new ListingCustomFieldValue();
             }
         } else {
+            /** @noinspection NestedPositiveIfStatementsInspection */
             if (isset($listingCustomFieldValues[$customFieldId])) {
                 $listingCustomFieldValue = $listingCustomFieldValues[$customFieldId];
                 unset($listingCustomFieldValuesToRemove[$customFieldId]);

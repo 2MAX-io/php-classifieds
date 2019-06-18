@@ -14,7 +14,8 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\RequestOptions;
 use Psr\Log\LoggerInterface;
-use Psr\SimpleCache\CacheInterface;
+use Symfony\Component\Cache\Adapter\AdapterInterface;
+use Symfony\Contracts\Cache\CacheInterface;
 use Symfony\Component\HttpFoundation\UrlHelper;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Webmozart\PathUtil\Path;
@@ -27,7 +28,7 @@ class SecurityHealthChecker implements HealthCheckerInterface
     private $trans;
 
     /**
-     * @var CacheInterface
+     * @var CacheInterface|AdapterInterface
      */
     private $cache;
 
@@ -55,8 +56,9 @@ class SecurityHealthChecker implements HealthCheckerInterface
 
     public function checkHealth(): HealthCheckResultDto
     {
-        if ($this->cache->get(AppCacheEnum::ADMIN_SECURITY_CHECK, false)) {
-            return new HealthCheckResultDto(false);
+        $cacheItem = $this->cache->getItem(AppCacheEnum::ADMIN_SECURITY_CHECK);
+        if ($cacheItem->isHit() && $cacheItem->get() === true) {
+            return new HealthCheckResultDto(false); // return no problems
         }
 
         $healthCheckResultDto = $this->engineNotPublic();
@@ -72,7 +74,9 @@ class SecurityHealthChecker implements HealthCheckerInterface
         /**
          * cache only when security check successful
          */
-        $this->cache->set(AppCacheEnum::ADMIN_SECURITY_CHECK, true, 3600*16);
+        $cacheItem->expiresAfter(3600*16);
+        $cacheItem->set(true);
+        $this->cache->save($cacheItem);
 
         return new HealthCheckResultDto(false);
     }

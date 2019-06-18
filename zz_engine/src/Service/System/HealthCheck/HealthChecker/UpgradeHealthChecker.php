@@ -9,7 +9,8 @@ use App\Service\System\HealthCheck\HealthCheckResultDto;
 use App\Service\System\Upgrade\VersionCheckService;
 use App\System\Cache\AppCacheEnum;
 use App\System\EnvironmentService;
-use Psr\SimpleCache\CacheInterface;
+use Symfony\Contracts\Cache\CacheInterface;
+use Symfony\Contracts\Cache\ItemInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class UpgradeHealthChecker implements HealthCheckerInterface
@@ -61,14 +62,10 @@ class UpgradeHealthChecker implements HealthCheckerInterface
 
     private function canUpgrade(): bool
     {
-        $cacheName = AppCacheEnum::ADMIN_UPGRADE_CHECK;
-        if ($this->cache->has($cacheName)) {
-            return $this->cache->get($cacheName);
-        }
+        return $this->cache->get(AppCacheEnum::ADMIN_UPGRADE_CHECK, function(ItemInterface $item) {
+            $item->expiresAfter(3600*16);
 
-        $return = $this->versionCheckService->canUpgrade();
-        $this->cache->set($cacheName, $return, 3600*16);
-
-        return $return;
+            return $this->versionCheckService->canUpgrade();
+        });
     }
 }

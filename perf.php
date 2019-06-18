@@ -1,8 +1,7 @@
 <?php
 
-use App\Kernel;
-use Symfony\Component\Debug\Debug;
-use Symfony\Component\HttpFoundation\Request;
+declare(strict_types=1);
+
 use Twig\TwigFilter;
 use Twig\TwigFunction;
 
@@ -19,13 +18,17 @@ $twig = new \Twig\Environment($loader, [
 $twig->addFilter(new TwigFilter('trans', 'fooReturnSame'));
 $twig->addFunction(new TwigFunction('path', 'fooReturnSame'));
 $twig->addFunction(new TwigFunction('asset', 'fooReturnSame'));
-$twig->addFunction(new TwigFunction('lowSecurityCheckIsAdminInPublic', function() {
+$twig->addFunction(new TwigFunction('lowSecurityCheckIsAdminInPublic', static function() {
     return false;
 }));
 
 echo $twig->render('index.html.twig', ['name' => 'zz']);
 
 
+/**
+ * @param mixed $val
+ * @return mixed
+ */
 function fooReturnSame($val) {
     return $val;
 }

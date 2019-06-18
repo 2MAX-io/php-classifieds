@@ -11,11 +11,11 @@ class ValueExist extends Constraint
     public const NOT_UNIQUE_ERROR = '23bd9dbf-6b9b-41cd-a99e-4844bcf3077f';
 
     public $message = 'Value could not be found.';
-    public $em = null;
-    public $entityClass = null;
+    public $em;
+    public $entityClass;
     public $repositoryMethod = 'findBy';
     public $fields = [];
-    public $errorPath = null;
+    public $errorPath;
     public $ignoreNull = true;
 
     protected static $errorNames = [

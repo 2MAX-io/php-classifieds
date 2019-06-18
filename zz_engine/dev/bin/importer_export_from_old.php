@@ -11,8 +11,8 @@ $pdo = new PDO(
 ]
 );
 
-$stmt = $pdo->prepare(
-    /** @lang MySQL */ "
+$stmt = $pdo->query(
+    /** @lang MySQL */ '
     SELECT 
             o_ogloszenia.id AS listing_id,
             o_ogloszenia.user_id AS listing_user_id,
@@ -65,10 +65,10 @@ ORDER BY
     o_uzytkownicy.id ASC,
     o_galeria.id ASC
 # LIMIT 100
-");
+');
 $stmt->execute();
 
-$fpCsv = fopen($argv[1], 'w');
+$fpCsv = fopen($argv[1], 'wb');
 $header = [
     'listing_id',
 
@@ -121,7 +121,7 @@ if (count($header) !== count(array_unique($header))) {
     exit;
 }
 
-fputcsv($fpCsv, $header, ",", '"', "\0");
+fputcsv($fpCsv, $header, ',', '"', "\0");
 while ($dbRow = $stmt->fetch(PDO::FETCH_ASSOC)) {
 
     $dbRow['listing_category'] = mapCategory($dbRow);
@@ -195,12 +195,12 @@ while ($dbRow = $stmt->fetch(PDO::FETCH_ASSOC)) {
         exit;
     }
 
-    fputcsv($fpCsv, $csvRow, ",", '"', "\0");
+    fputcsv($fpCsv, $csvRow, ',', '"', "\0");
 }
 
 fclose($fpCsv);
 
-function getNewImagePath(array $dbRow) {
+function getNewImagePath(array $dbRow): string {
     if (empty(trim($dbRow['listing_file_path_legacy'] ?? ''))) {
         return '';
     }
@@ -209,10 +209,11 @@ function getNewImagePath(array $dbRow) {
     $imgDir = (int) ($userId / 32000);
 
     $filename = basename($dbRow['listing_file_path_legacy']);
+
     return "static/listing/0000_legacy/galeria/$imgDir/$userId/s$filename";
 }
 
-function setUserDeactivated(array $dbRow) {
+function setUserDeactivated(array $dbRow): array {
     $dbRow['listing_user_deactivated'] = 0;
 
     if ($dbRow['listing_level_legacy'] === 0) {
@@ -226,7 +227,8 @@ function setUserDeactivated(array $dbRow) {
     return $dbRow;
 }
 
-function mapCategory(array $dbRow) {
+function mapCategory(array $dbRow): int {
+    /** @noinspection PackedHashtableOptimizationInspection */
     $map = [
         71 => 1201,
         72 => 1202,
@@ -349,7 +351,7 @@ function normalizePrice(string $price): ?int {
     $return = trim($return);
     $return = trim($return, '.');
 
-    if (ctype_digit($return) && $return > 1) {
+    if ($return > 1 && ctype_digit($return)) {
 //        echo "success $price -> $return\r\n";
         return (int) $return;
     }

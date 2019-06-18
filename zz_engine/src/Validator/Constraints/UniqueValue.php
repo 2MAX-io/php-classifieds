@@ -11,13 +11,13 @@ class UniqueValue extends Constraint
     public const NOT_UNIQUE_ERROR = '23bd9dbf-6b9b-41cd-a99e-4844bcf3077f';
 
     public $message = 'This value is already used.';
-    public $em = null;
-    public $entityClass = null;
+    public $em;
+    public $entityClass;
     public $repositoryMethod = 'findBy';
     public $fields = [];
-    public $errorPath = null;
+    public $errorPath;
     public $ignoreNull = true;
-    public $excludeCurrent = null;
+    public $excludeCurrent;
 
     protected static $errorNames = [
         self::NOT_UNIQUE_ERROR => 'NOT_UNIQUE_ERROR',

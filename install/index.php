@@ -101,6 +101,10 @@ if (count($errors) === 0) {
 
 include 'view/php_requirements.php';
 
+/**
+ * @param string|mixed $string
+ * @return string
+ */
 function escape($string) {
-    return htmlspecialchars($string, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+    return htmlspecialchars($string, ENT_QUOTES | ENT_SUBSTITUTE);
 }

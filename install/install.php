@@ -56,7 +56,7 @@ if (!empty($_POST)) {
             loadSql(__DIR__ . '/data/_schema.sql');
             loadSql(__DIR__ . '/data/_required_data.sql');
             loadSql(__DIR__ . '/data/settings.sql');
-            $pdo->exec("UPDATE setting SET last_update_date = '2010-01-01 00:00:00'");
+            $pdo->exec("UPDATE setting SET last_update_date = '2010-01-01 00:00:00' WHERE 1");
 
             if ($_POST['load_categories'] ?? null === '1') {
                 loadSql(__DIR__ . '/data/example/category.sql');
@@ -83,8 +83,8 @@ if (!empty($_POST)) {
             setEmailSettings($_POST['email_from_address']);
             setLicense($_POST['license']);
 
-            $pdo->exec("UPDATE setting SET last_update_date = '2010-01-01 00:00:00'");
-            $pdo->exec("UPDATE listing SET order_by_date = '2010-01-01 00:00:00'");
+            $pdo->exec("UPDATE setting SET last_update_date = '2010-01-01 00:00:00' WHERE 1");
+            $pdo->exec("UPDATE listing SET order_by_date = '2010-01-01 00:00:00' WHERE 1");
             saveConfig();
 
             $pdo->commit();
@@ -97,7 +97,7 @@ if (!empty($_POST)) {
 * * * * * $projectRootPath/zz_engine/bin/console app:cron:main >/dev/null 2>&1
 * * * * * $projectRootPath/zz_engine/bin/console app:cron:secondary >/dev/null 2>&1
 EOT;
-        include "view/success.php";
+        include 'view/success.php';
         exit;
     }
 }
@@ -108,11 +108,11 @@ function loadSql(string $filePath): void {
     global $pdo;
     $currentQuery = '';
 
-    $handle = fopen($filePath, 'r');
+    $handle = fopen($filePath, 'rb');
     while ($line = fgets($handle)) {
         $currentQuery .= $line;
         if (preg_match('~;$~', $line)) {
-            $pdo->query($currentQuery);
+            $pdo->exec($currentQuery);
             $currentQuery = '';
         }
     }
@@ -121,6 +121,7 @@ function loadSql(string $filePath): void {
 function countTables(string $dbName): int {
     global $pdo;
 
+    /** @noinspection SqlResolve */
     $stmt = $pdo->prepare(
     /** @lang MySQL */ 'SELECT count(1) FROM information_schema.tables where table_schema=:dbName;'
     );

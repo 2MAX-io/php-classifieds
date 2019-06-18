@@ -31,7 +31,7 @@ class BalanceTopUpController extends AbstractUserController
         if ($form->isSubmitted() && $form->isValid()) {
             $paymentDto = $paymentService->createPaymentForTopUp(
                 $currentUserService->getUser(),
-                (int) ($form->get(TopUpBalanceType::TOP_UP_AMOUNT)->getData() * 100)
+                $form->get(TopUpBalanceType::TOP_UP_AMOUNT)->getData() * 100
             );
 
             $this->getDoctrine()->getManager()->flush();

@@ -7,8 +7,8 @@ let final_css_bytes = '';
 let total_bytes = 0;
 let used_bytes = 0;
 
-const filename = process.argv[2]
-const output = './final_css.css'
+const filename = process.argv[2];
+const output = './final_css.css';
 
 if(!filename) {
   console.error('Missing filename to get coverage information from');
@@ -21,8 +21,8 @@ const css_coverage = JSON.parse(file_coverage);
 
 for (const entry of css_coverage) {
   if (!entry.url.split("?")[0].endsWith('.css')) continue;
-  console.log(entry.url)
-  final_css_bytes += '# ' + entry.url + '\n\n'
+  console.log(entry.url);
+  final_css_bytes += '# ' + entry.url + '\n\n';
   total_bytes += entry.text.length;
   for (const range of entry.ranges) {
     used_bytes += range.end - range.start - 1;

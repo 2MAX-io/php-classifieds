@@ -116,18 +116,18 @@ class ListingListService
                     $rangeCondition = $qb->expr()->andX();
 
                     if (!empty($customFieldFormValueArray['range']['min'])) {
-                        $rangeCondition->add($qb->expr()->gte('listingCustomFieldValue.value', ':customFieldValueMin_' . ((int) $sqlParamId)));
+                        $rangeCondition->add($qb->expr()->gte('listingCustomFieldValue.value', ':customFieldValueMin_' . $sqlParamId));
                         $qb->setParameter(
-                            ':customFieldValueMin_' . ((int)$sqlParamId),
+                            ':customFieldValueMin_' . $sqlParamId,
                             $customFieldFormValueArray['range']['min'],
                             \Doctrine\DBAL\Types\Type::INTEGER
                         );
                     }
 
                     if (!empty($customFieldFormValueArray['range']['max'])) {
-                        $rangeCondition->add($qb->expr()->lte('listingCustomFieldValue.value', ':customFieldValueMax_' . ((int) $sqlParamId)));
+                        $rangeCondition->add($qb->expr()->lte('listingCustomFieldValue.value', ':customFieldValueMax_' . $sqlParamId));
                         $qb->setParameter(
-                            ':customFieldValueMax_' . ((int)$sqlParamId),
+                            ':customFieldValueMax_' . $sqlParamId,
                             $customFieldFormValueArray['range']['max'],
                             \Doctrine\DBAL\Types\Type::INTEGER
                         );
@@ -136,8 +136,8 @@ class ListingListService
                     if ($rangeCondition->count() > 0) {
                         $customFieldConditionList->add($rangeCondition);
 
-                        $rangeCondition->add($qb->expr()->eq('listingCustomFieldValue.customField', ':customFieldId_' . ((int) $sqlParamId)));
-                        $qb->setParameter(':customFieldId_' . ((int) $sqlParamId), $customFieldId);
+                        $rangeCondition->add($qb->expr()->eq('listingCustomFieldValue.customField', ':customFieldId_' . $sqlParamId));
+                        $qb->setParameter(':customFieldId_' . $sqlParamId, $customFieldId);
 
                         $usedCustomFieldIdList[] = $customFieldId;
                     }
@@ -151,11 +151,11 @@ class ListingListService
 
                         $sqlParamId++;
                         $customFieldConditionList->add($qb->expr()->andX(
-                            $qb->expr()->eq('listingCustomFieldValue.value', ':customFieldValue_' . ((int) $sqlParamId)),
-                            $qb->expr()->eq('listingCustomFieldValue.customField', ':customFieldId_' . ((int) $sqlParamId)),
+                            $qb->expr()->eq('listingCustomFieldValue.value', ':customFieldValue_' . $sqlParamId),
+                            $qb->expr()->eq('listingCustomFieldValue.customField', ':customFieldId_' . $sqlParamId),
                         ));
-                        $qb->setParameter(':customFieldId_' . ((int) $sqlParamId), $customFieldId);
-                        $qb->setParameter(':customFieldValue_' . ((int) $sqlParamId), $valueItem);
+                        $qb->setParameter(':customFieldId_' . $sqlParamId, $customFieldId);
+                        $qb->setParameter(':customFieldValue_' . $sqlParamId, $valueItem);
 
                         if ($customField->getType() === CustomField::TYPE_CHECKBOX_MULTIPLE) {
                             $usedCustomFieldIdList[] = $customFieldId . "_$valueItem";

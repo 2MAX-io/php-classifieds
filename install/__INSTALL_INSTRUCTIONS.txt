@@ -15,5 +15,5 @@ https://documentation.2max.io/display/CLAS/2MAX.io+Classified+Ads+with+Custom+Fi
 _______________________________________________________________________________________________________________________
 2MAX.io Classified Ads with Custom Fields PHP script
 
-Licensed under Evanto / Code Canyon Regular License
+Licensed under Envato / Code Canyon Regular License
 https://codecanyon.net/licenses/terms/regular

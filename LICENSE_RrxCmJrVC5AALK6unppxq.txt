@@ -3,4 +3,4 @@
 Licensed under Envato / Code Canyon Regular License
 https://codecanyon.net/licenses/terms/regular
 
-To use this PHP app it is required to poses License certificate and purchase code.
+To use this PHP app it is required to poses License certificate and purchase code provided by Envato / Code Canyon

@@ -407,7 +407,7 @@
         };
 
         let $topImage = $('.listing-show-top-image');
-        if ($topImage.width() < 300 && $topImage.height() < 300) {
+        if ($topImage.width() < 300 || $topImage.height() < 300) {
             $topImage.parents('.zoom-wrapper').find('.zoom').remove();
         }
     </script>

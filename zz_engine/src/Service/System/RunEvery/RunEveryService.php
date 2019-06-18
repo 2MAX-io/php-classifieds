@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace App\Service\System\RunEvery;
 
-use Psr\SimpleCache\CacheInterface;
+use Symfony\Component\Cache\Adapter\AdapterInterface;
+use Symfony\Contracts\Cache\CacheInterface;
 
 class RunEveryService
 {
     /**
-     * @var CacheInterface
+     * @var CacheInterface|AdapterInterface
      */
     private $cache;
 
@@ -18,21 +19,18 @@ class RunEveryService
         $this->cache = $cache;
     }
 
-    public function runEvery(callable $function, string $name, int $seconds = null): void
-    {
-        if (!$this->cache->get($name, false)) {
-            $function();
-            $this->cache->set($name, true, $seconds);
-        }
-    }
-
     public function canRunAgain(string $name, int $seconds = null): bool
     {
-        if (!$this->cache->get($name, false)) {
-            $this->cache->set($name, true, $seconds);
-            return true;
+        $cacheName = $name . '_CAN_RUN_AGAIN';
+        $cacheItem = $this->cache->getItem($cacheName);
+        if ($cacheItem->isHit()) {
+            return false;
         }
 
-        return false;
+        $cacheItem->expiresAfter($seconds);
+        $cacheItem->set(false);
+        $this->cache->save($cacheItem);
+
+        return true;
     }
 }

@@ -86,7 +86,7 @@ class ListingCustomFieldListType extends AbstractType
                 ]);
             }
 
-            if (\in_array($customField->getType(), [CustomField::TYPE_CHECKBOX_MULTIPLE], true)) {
+            if ($customField->getType() === CustomField::TYPE_CHECKBOX_MULTIPLE) {
                 $choices = $this->getChoices($customField);
                 if (!$choices) {
                     continue;
@@ -104,7 +104,7 @@ class ListingCustomFieldListType extends AbstractType
                 ]);
             }
 
-            if (\in_array($customField->getType(), [CustomField::TYPE_INTEGER_RANGE], true)) {
+            if ($customField->getType() === CustomField::TYPE_INTEGER_RANGE) {
                 $maxIntegerValue = (int) \str_repeat('9', 12);
                 $builder->add($customField->getId(), IntegerType::class, [
                     'label' => $customField->getName(),
@@ -123,7 +123,7 @@ class ListingCustomFieldListType extends AbstractType
                 ]);
             }
 
-            if (\in_array($customField->getType(), [CustomField::TYPE_YEAR_RANGE], true)) {
+            if ($customField->getType() === CustomField::TYPE_YEAR_RANGE) {
                 $builder->add($customField->getId(), YearType::class, [
                     'label' => $customField->getName(),
                     'placeholder' => $this->trans->trans('trans.Select'),
@@ -205,8 +205,8 @@ class ListingCustomFieldListType extends AbstractType
             return $value;
         }
 
-        if (\in_array($customField->getType(), [CustomField::TYPE_CHECKBOX_MULTIPLE])) {
-            return \array_map(function(ListingCustomFieldValue $customFieldValue) {
+        if ($customField->getType() === CustomField::TYPE_CHECKBOX_MULTIPLE) {
+            return \array_map(static function(ListingCustomFieldValue $customFieldValue) {
                 $value = $customFieldValue->getCustomFieldOption();
                 if (null === $value) {
                     return null;

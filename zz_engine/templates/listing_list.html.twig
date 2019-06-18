@@ -128,13 +128,12 @@
                             </div>
 
                             {# @var customField \App\Entity\CustomField #}
-                            {%- spaceless -%}
+                            {%- apply spaceless -%}
                             {%- for customField in customFieldList -%}
 
                                 {%- if customField.type == constant('\App\\Entity\\CustomField::TYPE_SELECT') and customField.customFieldOptions is not empty -%}
                                     <div class="mb-3">
                                         <label class="text-break">{{ customField.name }}</label>
-                                        {%- spaceless -%}
                                         {%- for customFieldOption in customField.customFieldOptions -%}
                                             <div class="custom-control custom-checkbox {% if loop.index > 5 %}collapse{% endif %} show-more-custom-field-{{ customField.id }}">
                                                 {%- apply normalizeWhitespace -%}
@@ -157,7 +156,6 @@
                                                 {%- endapply -%}
                                             </div>
                                         {%- endfor -%}
-                                        {%- endspaceless -%}
                                         {%- if customField.customFieldOptions.count > 5 -%}
                                             <div class="btn btn-link p-0" data-toggle="collapse" data-target=".show-more-custom-field-{{ customField.id }}" onclick="$(this).remove()">{{ 'trans.show more' | trans }}</div>
                                         {%- endif -%}
@@ -169,7 +167,6 @@
                                         <label class="text-break">{{ customField.name }}</label>
                                         <div>
                                             <select name="form_custom_field[{{ customField.id }}][values][]" class="custom-select">
-                                                {%- spaceless -%}
                                                 <option value="">{{ 'trans.Select' | trans }}</option>
                                                 {%- for customFieldOption in customField.customFieldOptions -%}
                                                     {%- apply normalizeWhitespace -%}
@@ -183,7 +180,6 @@
                                                     </option>
                                                     {%- endapply -%}
                                                 {%- endfor -%}
-                                                {%- endspaceless -%}
                                             </select>
                                         </div>
                                     </div>
@@ -193,7 +189,6 @@
                                     <div class="mb-3">
                                         <label class="text-break">{{ customField.name }}</label>
 
-                                        {%- spaceless -%}
                                         {%- for customFieldOption in customField.customFieldOptions -%}
                                             <div class="custom-control custom-checkbox {% if loop.index > 5 %}collapse{% endif %} show-more-custom-field-{{ customField.id }}">
                                                 {%- apply normalizeWhitespace -%}
@@ -216,7 +211,6 @@
                                                 {%- endapply -%}
                                             </div>
                                         {%- endfor -%}
-                                        {%- endspaceless -%}
                                         {%- if customField.customFieldOptions.count > 5 -%}
                                             <div class="btn btn-link p-0" data-toggle="collapse" data-target=".show-more-custom-field-{{ customField.id }}" onclick="$(this).remove()">{{ 'trans.show more' | trans }}</div>
                                         {%- endif -%}
@@ -304,7 +298,7 @@
                                     </div>
                                 {%- endif -%}
                             {%- endfor -%}
-                            {%- endspaceless -%}
+                            {%- endapply -%}
 
                             <button class="btn btn-primary w-100">{{ 'trans.Filter' | trans }}</button>
                         </form>
@@ -317,7 +311,7 @@
             <div class="col-md-9">
                 <!-- listing -->
                 <div class="listing-list">
-                    {%- spaceless -%}
+                    {%- apply spaceless -%}
                     {%- for listing in listingList -%}
                         <div id="listing-{{ listing.id }}" class="card shadow-level-1 mb-3 {% if listing.featured %}listing-recommended{% endif %}">
                             <div class="container-fluid">
@@ -375,7 +369,7 @@
                             {{- 'trans.No classified ads matching criteria were found' | trans -}}
                         </div>
                     {%- endfor -%}
-                    {%- endspaceless -%}
+                    {%- endapply -%}
                 </div>
 
                 {% include 'base/_pagination.html.twig' %}

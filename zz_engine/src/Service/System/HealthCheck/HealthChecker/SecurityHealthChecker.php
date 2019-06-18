@@ -11,6 +11,7 @@ use App\Service\System\HealthCheck\Base\HealthCheckerInterface;
 use App\Service\System\HealthCheck\HealthCheckResultDto;
 use App\System\Cache\AppCacheEnum;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\RequestOptions;
 use Psr\Log\LoggerInterface;
 use Psr\SimpleCache\CacheInterface;
@@ -87,21 +88,39 @@ class SecurityHealthChecker implements HealthCheckerInterface
 
         try {
             $client = new Client([
-                RequestOptions::TIMEOUT => 10,
-                RequestOptions::CONNECT_TIMEOUT => 10,
-                RequestOptions::READ_TIMEOUT => 10,
+                RequestOptions::TIMEOUT => 5,
+                RequestOptions::CONNECT_TIMEOUT => 5,
+                RequestOptions::READ_TIMEOUT => 5,
                 RequestOptions::VERIFY => false,
                 RequestOptions::HTTP_ERRORS => false,
             ]);
 
-            $testedUrl = $this->urlHelper->getAbsoluteUrl(Path::makeRelative($testFilePath, FilePath::getPublicDir()));
+            $testedUrl = $this->urlHelper->getAbsoluteUrl('/' . Path::makeRelative($testFilePath, FilePath::getPublicDir()));
             $response = $client->get($testedUrl);
 
             if (Str::containsOneOf($response->getBody()->getContents(), ['zbD2vXzqDyiFqE2iqFPPM', 'SecurityHealthChecker'])) {
-                return new HealthCheckResultDto(true, $this->trans->trans('trans.ALERT! security alert, not allowed file is publicly accessible %url%', [
-                    '%url%' => $testedUrl,
-                ]));
+                return new HealthCheckResultDto(
+                    true,
+                    $this->trans->trans(
+                        'trans.ALERT! security alert, not allowed file is publicly accessible %url%',
+                        [
+                            '%url%' => $testedUrl,
+                        ]
+                    )
+                );
             }
+        } catch (ConnectException $e) {
+            $this->logger->critical('error during security check ' . __METHOD__, ExceptionHelper::flatten($e));
+
+            return new HealthCheckResultDto(
+                true,
+                $this->trans->trans(
+                    'trans.Could not connect to: %url%, during security audit, if testing on local machine you can ignore this',
+                    [
+                        '%url%' => $testedUrl ?? '',
+                    ]
+                )
+            );
         } catch (\Throwable $e) {
             $this->logger->critical('error during security check ' . __METHOD__, ExceptionHelper::flatten($e));
 
@@ -115,9 +134,9 @@ class SecurityHealthChecker implements HealthCheckerInterface
     {
         try {
             $client = new Client([
-                RequestOptions::TIMEOUT => 10,
-                RequestOptions::CONNECT_TIMEOUT => 10,
-                RequestOptions::READ_TIMEOUT => 10,
+                RequestOptions::TIMEOUT => 5,
+                RequestOptions::CONNECT_TIMEOUT => 5,
+                RequestOptions::READ_TIMEOUT => 5,
                 RequestOptions::VERIFY => false,
                 RequestOptions::HTTP_ERRORS => false,
             ]);
@@ -126,10 +145,28 @@ class SecurityHealthChecker implements HealthCheckerInterface
             $response = $client->get($testedUrl);
 
             if (Str::containsOneOf($response->getBody()->getContents(), ['ref:'])) {
-                return new HealthCheckResultDto(true, $this->trans->trans('trans.ALERT! security alert, not allowed file is publicly accessible %url%', [
-                    '%url%' => $testedUrl,
-                ]));
+                return new HealthCheckResultDto(
+                    true,
+                    $this->trans->trans(
+                        'trans.ALERT! security alert, not allowed file is publicly accessible %url%',
+                        [
+                            '%url%' => $testedUrl,
+                        ]
+                    )
+                );
             }
+        } catch (ConnectException $e) {
+            $this->logger->critical('error during security check ' . __METHOD__, ExceptionHelper::flatten($e));
+
+            return new HealthCheckResultDto(
+                true,
+                $this->trans->trans(
+                    'trans.Could not connect to: %url%, during security audit, if testing on local machine you can ignore this',
+                    [
+                        '%url%' => $testedUrl ?? '',
+                    ]
+                )
+            );
         } catch (\Throwable $e) {
             $this->logger->critical('error during security check ' . __METHOD__, ExceptionHelper::flatten($e));
 

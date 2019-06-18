@@ -135,6 +135,7 @@ trans:
   'Used images and pictures:': 'Used images and pictures:'
   clear filters: 'clear filters'
   show more: 'show more'
+  'Could not connect to: %url%, during security audit, if testing on local machine you can ignore this': 'Could not connect to: %url%, during security audit, if testing on local machine you can ignore this'
 
 trans.customFieldType.select: Select field, filter as checkboxes
 trans.customFieldType.select_single: Select field, filter as single select

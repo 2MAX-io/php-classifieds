@@ -14,6 +14,7 @@ use App\Service\System\Sort\SortService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Form;
+use Symfony\Component\Form\SubmitButton;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -39,7 +40,7 @@ class CustomFieldOptionController extends AbstractAdminController
         $customFieldOption->setSort(SortService::LAST_VALUE);
         /** @var Form $form */
         $form = $this->createForm(CustomFieldOptionType::class, $customFieldOption);
-        $form->add(CustomFieldOptionType::SAVE_AND_ADD, SubmitType::class, [
+        $saveAndAddButton = $form->add(CustomFieldOptionType::SAVE_AND_ADD, SubmitType::class, [
             'label' => 'trans.Save and Add',
         ]);
         $form->handleRequest($request);
@@ -51,7 +52,7 @@ class CustomFieldOptionController extends AbstractAdminController
 
             $customFieldOptionService->reorder();
 
-            if ($form->getClickedButton() && CustomFieldOptionType::SAVE_AND_ADD === $form->getClickedButton()->getName()) {
+            if ($saveAndAddButton instanceof SubmitButton && $saveAndAddButton->isClicked()) {
                 return $this->redirectToRoute('app_admin_custom_field_option_add', [
                     'id' => $customField->getId(),
                 ]);
@@ -84,7 +85,7 @@ class CustomFieldOptionController extends AbstractAdminController
 
         $oldCustomField = clone $customFieldOption;
         $form = $this->createForm(CustomFieldOptionType::class, $customFieldOption);
-        $form->add(CustomFieldOptionType::SAVE_AND_ADD, SubmitType::class, [
+        $saveAndAddButton = $form->add(CustomFieldOptionType::SAVE_AND_ADD, SubmitType::class, [
             'label' => 'trans.Save and Add',
         ]);
         $form->handleRequest($request);
@@ -101,7 +102,7 @@ class CustomFieldOptionController extends AbstractAdminController
                 $customFieldOption->getValue()
             );
 
-            if ($form->getClickedButton() && CustomFieldOptionType::SAVE_AND_ADD === $form->getClickedButton()->getName()) {
+            if ($saveAndAddButton instanceof SubmitButton && $saveAndAddButton->isClicked()) {
                 return $this->redirectToRoute('app_admin_custom_field_option_add', [
                     'id' => $customFieldOption->getCustomField()->getId(),
                 ]);

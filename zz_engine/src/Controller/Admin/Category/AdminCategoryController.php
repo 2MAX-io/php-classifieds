@@ -61,7 +61,6 @@ class AdminCategoryController extends AbstractAdminController
 
         /** @var Form $form */
         $form = $this->createForm(AdminCategorySaveType::class, $category);
-        /** @var SubmitButton $saveAndAddButton */
         $saveAndAddButton = $form->add(AdminCategorySaveType::SAVE_AND_ADD, SubmitType::class, [
             'label' => 'trans.Save and Add',
         ]);
@@ -77,7 +76,7 @@ class AdminCategoryController extends AbstractAdminController
             $treeService->rebuild();
             $em->flush();
 
-            if ($saveAndAddButton->isClicked()) {
+            if ($saveAndAddButton instanceof SubmitButton && $saveAndAddButton->isClicked()) {
                 return $this->redirectToRoute('app_admin_category_new', [
                     'parentCategory' => $category->getParent()->getId(),
                 ]);
@@ -107,7 +106,6 @@ class AdminCategoryController extends AbstractAdminController
 
         /** @var Form $form */
         $form = $this->createForm(AdminCategorySaveType::class, $category);
-        /** @var SubmitButton $saveAndAddButton */
         $saveAndAddButton = $form->add(AdminCategorySaveType::SAVE_AND_ADD, SubmitType::class, [
             'label' => 'trans.Save and Add',
         ]);

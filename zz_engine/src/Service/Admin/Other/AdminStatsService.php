@@ -12,8 +12,9 @@ use App\Service\Listing\ListingPublicDisplayService;
 use App\System\Cache\AppCacheEnum;
 use Carbon\Carbon;
 use Doctrine\ORM\EntityManagerInterface;
-use Psr\SimpleCache\CacheInterface;
+use Symfony\Contracts\Cache\CacheInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
+use Symfony\Contracts\Cache\ItemInterface;
 
 class AdminStatsService
 {
@@ -77,42 +78,6 @@ class AdminStatsService
         return (int) $qb->getQuery()->getSingleScalarResult();
     }
 
-    /**
-     * @Cache
-     */
-    public function getAllListingsCount(): int
-    {
-        $cacheName = AppCacheEnum::ADMIN_STATS_LISTINGS_COUNT;
-        if ($this->cache->has($cacheName)) {
-            return $this->cache->get($cacheName);
-        }
-
-        $qb = $this->em->getRepository(Listing::class)->createQueryBuilder('listing');
-        $qb->select($qb->expr()->count('listing.id'));
-
-        $return = (int) $qb->getQuery()->getSingleScalarResult();
-        $this->cache->set($cacheName, $return, 300);
-
-        return $return;
-    }
-
-    public function getUserCount(): int
-    {
-        $cacheName = AppCacheEnum::ADMIN_STATS_USERS_COUNT;
-        if ($this->cache->has($cacheName)) {
-            return $this->cache->get($cacheName);
-        }
-
-        $qb = $this->em->getRepository(User::class)->createQueryBuilder('user');
-        $qb->select($qb->expr()->count('user.id'));
-
-
-        $return = (int) $qb->getQuery()->getSingleScalarResult();
-        $this->cache->set($cacheName, $return, 300);
-
-        return $return;
-    }
-
     public function getFeaturedListingsCount(): int
     {
         $qb = $this->em->getRepository(Listing::class)->createQueryBuilder('listing');
@@ -123,19 +88,42 @@ class AdminStatsService
         return (int) $qb->getQuery()->getSingleScalarResult();
     }
 
+    /**
+     * @Cache
+     */
+    public function getAllListingsCount(): int
+    {
+        return $this->cache->get(AppCacheEnum::ADMIN_STATS_LISTINGS_COUNT, function(ItemInterface $item) {
+            $item->expiresAfter(300);
+
+            $qb = $this->em->getRepository(Listing::class)->createQueryBuilder('listing');
+            $qb->select($qb->expr()->count('listing.id'));
+
+            return (int) $qb->getQuery()->getSingleScalarResult();
+        });
+    }
+
+    public function getUserCount(): int
+    {
+        return $this->cache->get(AppCacheEnum::ADMIN_STATS_USERS_COUNT, function(ItemInterface $item) {
+            $item->expiresAfter(300);
+
+            $qb = $this->em->getRepository(User::class)->createQueryBuilder('user');
+            $qb->select($qb->expr()->count('user.id'));
+
+            return (int) $qb->getQuery()->getSingleScalarResult();
+        });
+    }
+
     public function getListingViewsCount(): int
     {
-        $cacheName = AppCacheEnum::ADMIN_STATS_VIEWS_COUNT;
-        if ($this->cache->has($cacheName)) {
-            return $this->cache->get($cacheName);
-        }
+        return $this->cache->get(AppCacheEnum::ADMIN_STATS_VIEWS_COUNT, function(ItemInterface $item) {
+            $item->expiresAfter(300);
 
-        $qb = $this->em->getRepository(ListingView::class)->createQueryBuilder('listingView');
-        $qb->select('SUM(listingView.viewCount)');
+            $qb = $this->em->getRepository(ListingView::class)->createQueryBuilder('listingView');
+            $qb->select('SUM(listingView.viewCount)');
 
-        $return = (int) $qb->getQuery()->getSingleScalarResult();
-        $this->cache->set($cacheName, $return, 300);
-
-        return $return;
+            return (int) $qb->getQuery()->getSingleScalarResult();
+        });
     }
 }

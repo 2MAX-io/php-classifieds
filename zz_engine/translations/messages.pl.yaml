@@ -570,4 +570,5 @@ trans:
   clear filters: 'wyczyść filtry'
   show more: 'pokaż więcej'
   'Could not connect to: %url%, during security audit, if testing on local machine you can ignore this': 'Nie można było się połączyć z adresem: %url%, podczas audytu bezpieczeństwa, jeżeli testujesz na lokalnej maszynie możesz to zignorować'
+  Would remove this option from users listings, if set to any listing: 'Usunię tą opcję z ogłoszeń użytkowników, jeżeli przypisana do jakiegokolwiek ogłoszenia'
 

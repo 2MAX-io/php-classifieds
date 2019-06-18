@@ -12,15 +12,16 @@ ini_set('memory_limit', '-1');
 ini_set('log_errors', 'On');
 ini_set('error_log', 'data/PHP_native_error_'.date('Y-m-d').'.log');
 
+/** @noinspection ConstantCanBeUsedInspection - works bad with old PHP versions */
 if (version_compare(PHP_VERSION, '7.3', '<')) {
     echo 'This app requires PHP 7.3';
     exit;
 }
 
-require dirname(__DIR__, 2) . '/zz_engine/vendor/autoload.php';
+require __DIR__ . '/../../zz_engine/vendor/autoload.php';
 
 function escape(string $string): string {
-    return htmlspecialchars($string, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+    return htmlspecialchars($string, ENT_QUOTES | ENT_SUBSTITUTE);
 }
 
 function getProjectRootPath(): string {

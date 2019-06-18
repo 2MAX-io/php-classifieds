@@ -159,8 +159,8 @@ class ValueExistValidator extends ConstraintValidator
             return;
         }
 
-        $errorPath = null !== $constraint->errorPath ? $constraint->errorPath : $fields[0];
-        $invalidValue = isset($criteria[$errorPath]) ? $criteria[$errorPath] : $criteria[$fields[0]];
+        $errorPath = $constraint->errorPath ?? $fields[0];
+        $invalidValue = $criteria[$errorPath] ?? $criteria[$fields[0]];
 
         $this->context->buildViolation($constraint->message)
             ->atPath($errorPath)

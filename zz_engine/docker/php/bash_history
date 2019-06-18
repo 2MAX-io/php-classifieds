@@ -416,3 +416,4 @@ php zz_engine/bin/console debug:container | grep cache.app.simple
 php zz_engine/bin/console debug:container | grep array
 php zz_engine/bin/console debug:container | grep cache
 composer update -d zz_engine --optimize-autoloader
+composer update -d zz_engine --optimize-autoloader

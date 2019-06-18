@@ -43,9 +43,9 @@
 
             let form = new FormData();
             form.append('files[]', item.editor._blob);
-            form.append('fileuploader', 1);
+            form.append('fileuploader', '1');
             form.append('_namee', item.name);
-            form.append('_editingg', true);
+            form.append('_editingg', '1');
 
             $.ajax({
                 url: '{{ path('app_file_upload') }}',

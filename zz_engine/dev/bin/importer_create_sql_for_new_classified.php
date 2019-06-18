@@ -37,7 +37,7 @@ while (($csvRow = fgetcsv($csvHandle, 0, ',', '"', "\0")) !== FALSE) {
     saveListingFile($csvRow, $sqlHandle);
 }
 
-saveSql( /** @lang MySQL */ 'COMMIT;', $sqlHandle);
+saveSql('COMMIT;', $sqlHandle);
 fclose($csvHandle);
 fclose($sqlHandle);
 
@@ -186,7 +186,7 @@ function saveListingFile(array $csvRow, $sqlHandle): void {
     $row = array_intersect_key($csvRow, array_flip($columnsToInclude));
     $row['listing_file_listing_id'] = $csvRow['listing_id'];
 
-    saveSql( /** @lang MySQL */ 'INSERT INTO listing_file SET '.arrayToSetStringListingFile($row).';', $sqlHandle);
+    saveSql('INSERT INTO listing_file SET '.arrayToSetStringListingFile($row).';', $sqlHandle);
 }
 
 /**
@@ -197,7 +197,7 @@ function saveListing(array $csvRow, $sqlHandle): void {
 //    $csvRow['listing_user_id'] = 1; // force user id, to have all listings on single account
     $csvRow['listing_search_text'] = $csvRow['listing_title'] . ' ' . $csvRow['listing_description']; // default value, should be regenerated
 
-    saveSql( /** @lang MySQL */ 'INSERT INTO listing SET '.arrayToSetStringListing($csvRow).';', $sqlHandle);
+    saveSql('INSERT INTO listing SET '.arrayToSetStringListing($csvRow).';', $sqlHandle);
 }
 
 /**
@@ -219,7 +219,7 @@ function saveUser(array $csvRow, $sqlHandle): void {
     $row['listing_user_roles'] = '["ROLE_USER"]';
     $row['listing_user_enabled'] = 1;
 
-    saveSql( /** @lang MySQL */ 'REPLACE INTO `user` SET '.arrayToSetStringUser($row).';', $sqlHandle);
+    saveSql('REPLACE INTO `user` SET '.arrayToSetStringUser($row).';', $sqlHandle);
 }
 
 
@@ -233,7 +233,7 @@ function saveListingViews(array $csvRow, $sqlHandle): void {
         'listing_view.datetime' => date('Y') . '-01-01 00:00:00',
     ];
 
-    saveSql( /** @lang MySQL */ 'INSERT INTO listing_view SET '.arrayToSqlSetString($fileRow).';', $sqlHandle);
+    saveSql('INSERT INTO listing_view SET '.arrayToSqlSetString($fileRow).';', $sqlHandle);
 }
 
 /**
@@ -249,5 +249,5 @@ function savePoliceLog(array $csvRow, $sqlHandle): void {
         'zzzz_listing_police_log.user_id' => $csvRow['user_id'],
     ];
 
-    saveSql( /** @lang MySQL */ 'INSERT INTO zzzz_listing_police_log SET '.arrayToSqlSetString($fileRow).';', $sqlHandle);
+    saveSql('INSERT INTO zzzz_listing_police_log SET '.arrayToSqlSetString($fileRow).';', $sqlHandle);
 }

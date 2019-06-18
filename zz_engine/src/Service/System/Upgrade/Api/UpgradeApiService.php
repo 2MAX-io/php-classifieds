@@ -55,7 +55,7 @@ class UpgradeApiService
         try {
             $client = new Client([
                 RequestOptions::TIMEOUT => 10,
-                RequestOptions::CONNECT_TIMEOUT => 10,
+                RequestOptions::CONNECT_TIMEOUT => 5,
                 RequestOptions::READ_TIMEOUT => 10,
             ]);
             $request = new Request(

@@ -79,16 +79,18 @@ class CronService
 
     private function removeFeaturedWhenExpired(): void
     {
-        if (!$this->runEveryService->canRunAgain(AppCacheEnum::CRON_EXPIRE_FEATURED, 60*5)) {
+        if (!$this->runEveryService->canRunAgain(AppCacheEnum::CRON_EXPIRE_FEATURED, 60 * 5)) {
             return;
         }
 
         /** @var \PDO $pdo */
         $pdo = $this->em->getConnection();
         $query = $pdo->prepare(
-        /** @lang MySQL */ '
+        /** @lang MySQL */ <<<'TAG'
+
 UPDATE listing SET featured=0 WHERE featured_until_date <= :now OR featured_until_date IS NULL
-'
+
+TAG
         );
         $query->bindValue(':now', date('Y-m-d H:i:s'));
         $query->execute();
@@ -96,16 +98,18 @@ UPDATE listing SET featured=0 WHERE featured_until_date <= :now OR featured_unti
 
     private function deactivateExpired(): void
     {
-        if (!$this->runEveryService->canRunAgain(AppCacheEnum::CRON_DEACTIVATE_EXPIRED, 60*23)) {
+        if (!$this->runEveryService->canRunAgain(AppCacheEnum::CRON_DEACTIVATE_EXPIRED, 60 * 23)) {
             return;
         }
 
         /** @var \PDO $pdo */
         $pdo = $this->em->getConnection();
         $query = $pdo->prepare(
-        /** @lang MySQL */ '
+        /** @lang MySQL */ <<<'TAG'
+
 UPDATE listing SET user_deactivated=1 WHERE valid_until_date <= :olderThan
-'
+
+TAG
         );
         $query->bindValue(':olderThan', Carbon::now()->subDays(90));
         $query->execute();
@@ -113,14 +117,15 @@ UPDATE listing SET user_deactivated=1 WHERE valid_until_date <= :olderThan
 
     private function setMainImage(): void
     {
-        if (!$this->runEveryService->canRunAgain(AppCacheEnum::CRON_SET_MAIN_IMAGE, 60*25)) {
+        if (!$this->runEveryService->canRunAgain(AppCacheEnum::CRON_SET_MAIN_IMAGE, 60 * 25)) {
             return;
         }
 
         /** @var \PDO $pdo */
         $pdo = $this->em->getConnection();
         $pdo->exec(
-        /** @lang MySQL */ '
+        /** @lang MySQL */ <<<'TAG'
+
 UPDATE listing
     JOIN listing_file
     ON listing.id = listing_file.listing_id
@@ -130,7 +135,9 @@ UPDATE listing
     ON minSortJoin.listing_id = listing_file.listing_id && listing_file.sort = minSortJoin.minSort
 SET listing.main_image = listing_file.path
 WHERE 1
-');
+
+TAG
+        );
     }
 
     private function openIndexPage(): void
@@ -139,12 +146,14 @@ WHERE 1
             return;
         }
 
-        $client = new Client([
-            RequestOptions::TIMEOUT => 30,
-            RequestOptions::CONNECT_TIMEOUT => 30,
-            RequestOptions::READ_TIMEOUT => 30,
-            RequestOptions::VERIFY => false,
-        ]);
+        $client = new Client(
+            [
+                RequestOptions::TIMEOUT => 30,
+                RequestOptions::CONNECT_TIMEOUT => 30,
+                RequestOptions::READ_TIMEOUT => 30,
+                RequestOptions::VERIFY => false,
+            ]
+        );
 
         $client->get($this->urlGenerator->generate('app_index', [], UrlGeneratorInterface::ABSOLUTE_URL));
     }

@@ -58,7 +58,7 @@ class PhoneValidator extends ConstraintValidator
         }
     }
 
-    private function addViolation(string $value, Constraint $constraint): void
+    private function addViolation(string $value, Phone $constraint): void
     {
         $this->context->buildViolation($constraint->message)
             ->setParameter('{{ string }}', $value)

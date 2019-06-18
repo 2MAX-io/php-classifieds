@@ -121,12 +121,12 @@ class ListingListController extends AbstractController
         if (isset($map[$route])) {
             if (\is_callable($map[$route])) {
                 return $map[$route]();
-            } else {
-                return $map[$route];
             }
-        } else {
-            return $this->trans->trans('trans.Listings');
+
+            return $map[$route];
         }
+
+        return $this->trans->trans('trans.Listings');
     }
 
     private function getBreadcrumbsForRoute(ListingListDto $listingListDto): ?string

@@ -50,7 +50,7 @@ class FileUploader {
 		$this->default_options['move_uploaded_file'] = function($tmp, $dest, $item) {
 			return move_uploaded_file($tmp, $dest);
 		};
-        return $this->initialize($name, $options);
+        $this->initialize($name, $options);
     }
     
 	/**
@@ -596,7 +596,8 @@ class FileUploader {
 			
 			if ($validate === true) {
                 // process the files
-				for($i = 0; $i < count($this->field['input']['name']); $i++) {
+                $count = count($this->field['input']['name']);
+                for($i = 0; $i < $count; $i++) {
 					$file = array(
 						'name' => $this->field['input']['name'][$i],
 						'tmp_name' => $this->field['input']['tmp_name'][$i],
@@ -613,8 +614,8 @@ class FileUploader {
 						$tmp_name = $uploadDir . '.unconfirmed_' . self::filterFilename($chunk['temp_name']);
 						if (!isset($chunk['isFirst']) && !file_exists($tmp_name))
 							continue;
-						$sp = fopen($file['tmp_name'], 'r');
-						$op = fopen($tmp_name, isset($chunk['isFirst']) ? 'w' : 'a');
+						$sp = fopen($file['tmp_name'], 'rb');
+						$op = fopen($tmp_name, isset($chunk['isFirst']) ? 'wb' : 'ab');
 						while (!feof($sp)) {
 						   $buffer = fread($sp, 512);
 						   fwrite($op, $buffer);
@@ -793,9 +794,16 @@ class FileUploader {
 			}
             
 			// edit file
-			if (($this->options['editor'] != null || isset($item['editor']) && file_exists($file) && strpos($item['type'], 'image/') === 0)) {
-				$width = isset($this->options['editor']['maxWidth']) ? $this->options['editor']['maxWidth'] : null;
-				$height = isset($this->options['editor']['maxHeight']) ? $this->options['editor']['maxHeight'] : null;
+            if (
+                $this->options['editor'] != null
+                || (
+                    isset($item['editor'])
+                    && file_exists($file)
+                    && strpos($item['type'], 'image/') === 0
+                )
+            ) {
+                $width = isset($this->options['editor']['maxWidth']) ? $this->options['editor']['maxWidth'] : null;
+                $height = isset($this->options['editor']['maxHeight']) ? $this->options['editor']['maxHeight'] : null;
 				$quality = isset($this->options['editor']['quality']) ? $this->options['editor']['quality'] : 90;
 				$rotation = isset($item['editor']['rotation']) ? $item['editor']['rotation'] : 0;
 				$crop = isset($this->options['editor']['crop']) ? $this->options['editor']['crop'] : false;

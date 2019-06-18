@@ -44,13 +44,15 @@ saveSql( /** @lang MySQL */ 'COMMIT;', $sqlHandle);
 fclose($csvHandle);
 fclose($sqlHandle);
 
-
-function saveSql($sql, $sqlHandle) {
+/**
+ * @param resource $sqlHandle
+ */
+function saveSql(string $sql, $sqlHandle): void {
     fwrite($sqlHandle, $sql . "\r\n");
 }
 
-function sqlEscape($unescaped): string {
-    // only for use without db connection, when generating large quantity of SQL
+function sqlEscape(string $unescaped): string {
+    // only for use without db connection, when generating large quantity of SQL without database
     $replacements = array(
         "\x00"=>'\x00',
         "\n"=>'\n',
@@ -60,10 +62,10 @@ function sqlEscape($unescaped): string {
         '"'=>'\"',
         "\x1a"=>'\x1a'
     );
-    return strtr((string) $unescaped, $replacements);
+    return strtr($unescaped, $replacements);
 }
 
-function arrayToSqlSetString(array $csvRow, array $map = null) {
+function arrayToSqlSetString(array $csvRow, array $map = null): string {
     $csvRow = array_map('sqlEscape', $csvRow);
     $result = '';
     foreach ($csvRow as $key => $value) {
@@ -81,7 +83,7 @@ function arrayToSqlSetString(array $csvRow, array $map = null) {
     return rtrim($result, ', ');
 }
 
-function arrayToSqlSetStringSingleElement($column, $value) {
+function arrayToSqlSetStringSingleElement(string $column, string $value): string {
     $notNull = [
         'listing.title',
         'listing.description',
@@ -166,7 +168,10 @@ function arrayToSetStringUser(array $csvRow): string {
     return arrayToSqlSetString($csvRow, $map);
 }
 
-function saveListingFile(array $csvRow, $sqlHandle) {
+/**
+ * @param resource $sqlHandle
+ */
+function saveListingFile(array $csvRow, $sqlHandle): void {
     if (empty($csvRow['listing_file_path'])) {
         return;
     }
@@ -187,7 +192,10 @@ function saveListingFile(array $csvRow, $sqlHandle) {
     saveSql( /** @lang MySQL */ 'INSERT INTO listing_file SET '.arrayToSetStringListingFile($row).';', $sqlHandle);
 }
 
-function saveListing(array $csvRow, $sqlHandle) {
+/**
+ * @param resource $sqlHandle
+ */
+function saveListing(array $csvRow, $sqlHandle): void {
 
 //    $csvRow['listing_user_id'] = 1; // force user id, to have all listings on single account
     $csvRow['listing_search_text'] = $csvRow['listing_title'] . ' ' . $csvRow['listing_description']; // default value, should be regenerated
@@ -195,7 +203,10 @@ function saveListing(array $csvRow, $sqlHandle) {
     saveSql( /** @lang MySQL */ 'INSERT INTO listing SET '.arrayToSetStringListing($csvRow).';', $sqlHandle);
 }
 
-function saveUser(array $csvRow, $sqlHandle) {
+/**
+ * @param resource $sqlHandle
+ */
+function saveUser(array $csvRow, $sqlHandle): void {
     $columnsToInclude = [
         'listing_user_id',
         'listing_user_name',
@@ -214,7 +225,11 @@ function saveUser(array $csvRow, $sqlHandle) {
     saveSql( /** @lang MySQL */ 'REPLACE INTO `user` SET '.arrayToSetStringUser($row).';', $sqlHandle);
 }
 
-function saveListingViews(array $csvRow, $sqlHandle) {
+
+/**
+ * @param resource $sqlHandle
+ */
+function saveListingViews(array $csvRow, $sqlHandle): void {
     $fileRow = [
         'listing_view.listing_id' => $csvRow['listing_id'],
         'listing_view.view_count' => (int) $csvRow['listing_views_count'],
@@ -224,7 +239,10 @@ function saveListingViews(array $csvRow, $sqlHandle) {
     saveSql( /** @lang MySQL */ 'INSERT INTO listing_view SET '.arrayToSqlSetString($fileRow).';', $sqlHandle);
 }
 
-function savePoliceLog(array $csvRow, $sqlHandle) {
+/**
+ * @param resource $sqlHandle
+ */
+function savePoliceLog(array $csvRow, $sqlHandle): void {
     $fileRow = [
         'zzzz_listing_police_log.text' => $csvRow['listing_police_log'],
         'zzzz_listing_police_log.source_ip' => $csvRow['listing_ip_legacy'],

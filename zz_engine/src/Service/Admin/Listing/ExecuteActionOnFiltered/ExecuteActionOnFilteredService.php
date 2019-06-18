@@ -91,6 +91,7 @@ SELECT id, listing_id, :customField, :customFieldOption, :val FROM filtered_id_l
         $stmt = $pdo->prepare('
 UPDATE listing JOIN filtered_id_list ON listing.id = filtered_id_list.id
 SET category_id = :category_id 
+WHERE 1
 '
         );
         $stmt->bindValue(':category_id', $category->getId());

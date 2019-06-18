@@ -90,7 +90,7 @@ class SettingsService
     public function getSettingsDto(): SettingsDto
     {
         return $this->runtimeCache->get(RuntimeCacheEnum::SETTINGS, function(): SettingsDto {
-            return $this->cache->get(AppCacheEnum::SETTINGS, static function(ItemInterface $item): SettingsDto {
+            return $this->cache->get(AppCacheEnum::SETTINGS, function(ItemInterface $item): SettingsDto {
                 $item->expiresAfter(300);
 
                 return $this->getSettingsDtoWithoutCache();

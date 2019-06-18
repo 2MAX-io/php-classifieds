@@ -103,7 +103,7 @@ include 'view/php_requirements.php';
 
 /**
  * @param string|mixed $string
- * @return string
+ * @return string|mixed
  */
 function escape($string) {
     return htmlspecialchars($string, ENT_QUOTES | ENT_SUBSTITUTE);

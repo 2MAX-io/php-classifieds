@@ -570,5 +570,5 @@ trans:
   clear filters: 'wyczyść filtry'
   show more: 'pokaż więcej'
   'Could not connect to: %url%, during security audit, if testing on local machine you can ignore this': 'Nie można było się połączyć z adresem: %url%, podczas audytu bezpieczeństwa, jeżeli testujesz na lokalnej maszynie możesz to zignorować'
-  It would remove this custom field option from users listings: 'Usunie tą opcję pola niestandardowego z ogłoszeń użytkowników'
-  It would remove values set for this custom field in users listings: 'Usunie wartości ustawione dla tego pola niestandardowego z ogłoszeń użytkowników'
+  It would delete this custom field option from users listings: 'Usunie tą opcję pola niestandardowego z ogłoszeń użytkowników'
+  It would delete values set for this custom field from users listings: 'Usunie wartości ustawione dla tego pola niestandardowego z ogłoszeń użytkowników'

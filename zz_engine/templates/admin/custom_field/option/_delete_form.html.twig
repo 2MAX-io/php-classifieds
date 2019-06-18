@@ -1,7 +1,7 @@
 <form
         method="post"
         action="{{ path('app_admin_custom_field_option_delete', {'id': customFieldOption.id}) }}"
-        onsubmit="return confirm('{{ 'trans.Delete custom field option' | trans }}: {{ customFieldOption.name }}? {{ 'trans.It would remove this custom field option from users listings' | trans }}');"
+        onsubmit="return confirm('{{ 'trans.Delete custom field option' | trans }}: {{ customFieldOption.name }}? {{ 'trans.It would delete this custom field option from users listings' | trans }}');"
         class="d-inline"
 >
     <input type="hidden" name="_method" value="DELETE">

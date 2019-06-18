@@ -18,6 +18,7 @@ use Doctrine\DBAL\Exception\ForeignKeyConstraintViolationException;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Form;
+use Symfony\Component\Form\SubmitButton;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -60,7 +61,8 @@ class AdminCategoryController extends AbstractAdminController
 
         /** @var Form $form */
         $form = $this->createForm(AdminCategorySaveType::class, $category);
-        $form->add(AdminCategorySaveType::SAVE_AND_ADD, SubmitType::class, [
+        /** @var SubmitButton $saveAndAddButton */
+        $saveAndAddButton = $form->add(AdminCategorySaveType::SAVE_AND_ADD, SubmitType::class, [
             'label' => 'trans.Save and Add',
         ]);
         $form->handleRequest($request);
@@ -75,7 +77,7 @@ class AdminCategoryController extends AbstractAdminController
             $treeService->rebuild();
             $em->flush();
 
-            if ($form->getClickedButton() && AdminCategorySaveType::SAVE_AND_ADD === $form->getClickedButton()->getName()) {
+            if ($saveAndAddButton->isClicked()) {
                 return $this->redirectToRoute('app_admin_category_new', [
                     'parentCategory' => $category->getParent()->getId(),
                 ]);
@@ -105,7 +107,8 @@ class AdminCategoryController extends AbstractAdminController
 
         /** @var Form $form */
         $form = $this->createForm(AdminCategorySaveType::class, $category);
-        $form->add(AdminCategorySaveType::SAVE_AND_ADD, SubmitType::class, [
+        /** @var SubmitButton $saveAndAddButton */
+        $saveAndAddButton = $form->add(AdminCategorySaveType::SAVE_AND_ADD, SubmitType::class, [
             'label' => 'trans.Save and Add',
         ]);
         $form->handleRequest($request);
@@ -120,7 +123,7 @@ class AdminCategoryController extends AbstractAdminController
             $treeService->rebuild();
             $em->flush();
 
-            if ($form->getClickedButton() && AdminCategorySaveType::SAVE_AND_ADD === $form->getClickedButton()->getName()) {
+            if ($saveAndAddButton instanceof SubmitButton && $saveAndAddButton->isClicked()) {
                 return $this->redirectToRoute('app_admin_category_new', [
                     'parentCategory' => $category->getParent()->getId(),
                 ]);

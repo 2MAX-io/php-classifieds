@@ -5,7 +5,6 @@ declare(strict_types=1);
 use App\Helper\FilePath;
 use App\Helper\Random;
 use App\Service\User\RoleInterface;
-use Symfony\Component\Security\Core\Encoder\Argon2iPasswordEncoder;
 use Webmozart\PathUtil\Path;
 
 include 'include/bootstrap.php';
@@ -145,7 +144,12 @@ function insertAdmin(string $email, string $password): void {
 
 EOF;
 
-        $argon2iPasswordEncoder = new Argon2iPasswordEncoder();
+        /**
+         * for now must be used, because most shared hosting do not have sodium extension installed
+         *
+         * @noinspection PhpDeprecationInspection
+         */
+        $argon2iPasswordEncoder = new Symfony\Component\Security\Core\Encoder\Argon2iPasswordEncoder();
 
         $stmt = $pdo->prepare($sql);
         $stmt->bindValue('email', $email);
@@ -156,7 +160,6 @@ EOF;
         echo 'Error while creating admin user';
         exit;
     }
-
 }
 
 function saveConfig(): void {

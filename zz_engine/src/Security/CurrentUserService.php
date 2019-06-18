@@ -7,10 +7,10 @@ namespace App\Security;
 use App\Entity\Admin;
 use App\Entity\User;
 use App\Helper\SerializerHelper;
+use App\Service\System\Cache\RuntimeCacheService;
 use App\Service\User\RoleInterface;
 use App\System\Cache\RuntimeCacheEnum;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\Cache\Simple\ArrayCache;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Security;
@@ -33,16 +33,20 @@ class CurrentUserService
     private $em;
 
     /**
-     * @var ArrayCache
+     * @var RuntimeCacheService
      */
-    private $arrayCache;
+    private $runtimeCache;
 
-    public function __construct(Security $security, SessionInterface $session, ArrayCache $arrayCache, EntityManagerInterface $em)
-    {
+    public function __construct(
+        Security $security,
+        SessionInterface $session,
+        RuntimeCacheService $runtimeCache,
+        EntityManagerInterface $em
+    ) {
         $this->security = $security;
         $this->session = $session;
         $this->em = $em;
-        $this->arrayCache = $arrayCache;
+        $this->runtimeCache = $runtimeCache;
     }
 
     public function getUser(): ?User
@@ -91,14 +95,9 @@ class CurrentUserService
      */
     public function lowSecurityCheckIsAdminInPublic(): bool
     {
-        if ($this->arrayCache->has(RuntimeCacheEnum::ADMIN_IN_PUBLIC)) {
-            return (bool) $this->arrayCache->get(RuntimeCacheEnum::ADMIN_IN_PUBLIC);
-        }
-
-        $return = $this->lowSecurityCheckIsAdminInPublicNoCache();
-        $this->arrayCache->set(RuntimeCacheEnum::ADMIN_IN_PUBLIC, $return);
-
-        return $return;
+        return $this->runtimeCache->get(RuntimeCacheEnum::ADMIN_IN_PUBLIC, function(): bool {
+            return $this->lowSecurityCheckIsAdminInPublicNoCache();
+        });
     }
 
     /**

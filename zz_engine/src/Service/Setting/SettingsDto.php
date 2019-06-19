@@ -313,7 +313,7 @@ class SettingsDto
         $this->masterSiteAnchorText = $masterSiteAnchorText;
     }
 
-    public function isMasterSiteLinkShow(): bool
+    public function getMasterSiteLinkShow(): bool
     {
         return $this->masterSiteLinkShow ?? false;
     }

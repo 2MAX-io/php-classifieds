@@ -60,8 +60,8 @@
 </div>
 
     <div class="mb-2">
-        {% for problem in healthCheckService.problems  %}
-            <div class="alert alert-danger">{{ problem }}</div>
+        {% for healthCheckProblem in healthCheckProblemList  %}
+            <div class="alert alert-danger">{{ healthCheckProblem }}</div>
         {% endfor %}
     </div>
 {% endblock %}

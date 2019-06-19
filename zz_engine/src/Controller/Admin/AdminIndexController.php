@@ -21,10 +21,11 @@ class AdminIndexController extends AbstractAdminController
         HealthCheckService $healthCheckService
     ): Response {
         $this->denyUnlessAdmin();
+        $healthCheckProblemList = $healthCheckService->getProblems();
 
         return $this->render('admin/index.html.twig', [
             'adminStats' => $adminStatsService,
-            'healthCheckService' => $healthCheckService,
+            'healthCheckProblemList' => $healthCheckProblemList,
         ]);
     }
 }

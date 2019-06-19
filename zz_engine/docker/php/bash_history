@@ -425,3 +425,6 @@ wget https://classifieds.localhost/
 apt install wget
 ping https://classifieds.localhost/
 trace https://classifieds.localhost/
+cat /var/log/apache2/error.log 
+composer update -d zz_engine --optimize-autoloader
+composer install -d zz_engine --optimize-autoloader

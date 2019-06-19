@@ -138,6 +138,7 @@ trans:
   'Could not connect to: %url%, during security audit, if testing on local machine you can ignore this': 'Could not connect to: %url%, during security audit, if testing on local machine you can ignore this'
   It would delete this custom field option from users listings: 'It would delete this custom field option from users listings'
   It would delete values set for this custom field from users listings: 'It would delete values set for this custom field from users listings'
+  'Health check failed due to unknown error. If this problem do not correct itself, you must take action.': 'Health check failed due to unknown error. If this problem do not correct itself, you must take action.'
 
 trans.customFieldType.select: Select field, filter as checkboxes
 trans.customFieldType.select_single: Select field, filter as single select

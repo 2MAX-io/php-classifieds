@@ -168,6 +168,9 @@
     "pagerfanta/pagerfanta": {
         "version": "v2.1.2"
     },
+    "paragonie/sodium_compat": {
+        "version": "v1.10.0"
+    },
     "paypal/rest-api-sdk-php": {
         "version": "1.14.0"
     },

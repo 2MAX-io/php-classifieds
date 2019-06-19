@@ -13,7 +13,7 @@
     </div>
 
     <div class="alert alert-info">
-        To rerun install, you need to remove configuration file <?php echo $configFilePath ?> and clear app database.
+        To rerun install, you need to remove configuration file <?php echo e($configFilePath) ?> and clear app database.
     </div>
 
 </div>

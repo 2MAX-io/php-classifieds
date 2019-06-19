@@ -13,7 +13,7 @@
 
     <?php foreach ($errors as $error): ?>
         <div class="alert alert-danger">
-            <?php echo escape($error) ?>
+            <?php echo e($error) ?>
         </div>
     <?php endforeach; ?>
 

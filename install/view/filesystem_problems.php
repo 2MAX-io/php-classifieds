@@ -16,9 +16,9 @@
         <p>Root path of this app is directory with file: zzzz_2max_io_classified_ads_project_root.txt</p>
 
         <textarea class="w-100 form-control" style="height: 7em;">
-find <?php echo $projectRootPath ?> -type d -exec chmod 750 {} \;
-find <?php echo $projectRootPath ?> -type f -exec chmod 640 {} \;
-chmod +x <?php echo $projectRootPath ?>/zz_engine/bin/console;
+find <?php echo e($projectRootPath) ?> -type d -exec chmod 750 {} \;
+find <?php echo e($projectRootPath) ?> -type f -exec chmod 640 {} \;
+chmod +x <?php echo e($projectRootPath) ?>/zz_engine/bin/console;
         </textarea>
 
         <p>If above commands would not work on it's own. Other potential issue may be incorrect <b>chown</b> settings.</p>
@@ -26,9 +26,9 @@ chmod +x <?php echo $projectRootPath ?>/zz_engine/bin/console;
         <p>In most cases running one of commands bellow would fix problems, but do not run them if you do not know what exactly are you doing</p>
 
         <textarea class="w-100 form-control" style="height: 5em;">
-chown -R YOUR_CURRENT_USER_HERE:YOUR_CURRENT_USER_HERE <?php echo $projectRootPath ?>;
-chown -R YOUR_CURRENT_USER_HERE:www-data <?php echo $projectRootPath ?>;
-chown -R www-data:www-data <?php echo $projectRootPath ?>;
+chown -R YOUR_CURRENT_USER_HERE:YOUR_CURRENT_USER_HERE <?php echo e($projectRootPath) ?>;
+chown -R YOUR_CURRENT_USER_HERE:www-data <?php echo e($projectRootPath) ?>;
+chown -R www-data:www-data <?php echo e($projectRootPath) ?>;
         </textarea>
 
         <p>in commands above change <u>www-data</u> to group of your webserver process, if it is different</p>
@@ -82,7 +82,7 @@ chown -R www-data:www-data <?php echo $projectRootPath ?>;
                 </div>
 
                 <textarea class="w-100 form-control" style="height: 10em;">
-<?php echo implode("\n", $creatingDirFailedList); ?>
+<?php echo e(implode("\n", $creatingDirFailedList)); ?>
 		        </textarea>
             </div>
         <?php endif; ?>
@@ -98,7 +98,7 @@ chown -R www-data:www-data <?php echo $projectRootPath ?>;
                 </div>
 
                 <textarea class="w-100 form-control" style="height: 10em;">
-<?php echo implode("\n", $readingFileFailedList); ?>
+<?php echo e(implode("\n", $readingFileFailedList)); ?>
                 </textarea>
             </div>
         <?php endif; ?>
@@ -114,7 +114,7 @@ chown -R www-data:www-data <?php echo $projectRootPath ?>;
                 </div>
 
                 <textarea class="w-100 form-control" style="height: 10em;">
-<?php echo implode("\n", $writingFileFailedList); ?>
+<?php echo e(implode("\n", $writingFileFailedList)); ?>
                 </textarea>
             </div>
         <?php endif; ?>
@@ -128,7 +128,7 @@ chown -R www-data:www-data <?php echo $projectRootPath ?>;
                 </div>
 
                 <textarea class="w-100 form-control" style="height: 10em;">
-<?php echo implode("\n", $incorrectFilePermissionList); ?>
+<?php echo e(implode("\n", $incorrectFilePermissionList)); ?>
                 </textarea>
             </div>
         <?php endif; ?>
@@ -142,7 +142,7 @@ chown -R www-data:www-data <?php echo $projectRootPath ?>;
                 </div>
 
                 <textarea class="w-100 form-control" style="height: 10em;">
-<?php echo implode("\n", $incorrectDirPermissionList); ?>
+<?php echo e(implode("\n", $incorrectDirPermissionList)); ?>
                 </textarea>
             </div>
         <?php endif; ?>

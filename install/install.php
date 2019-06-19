@@ -157,7 +157,7 @@ EOF;
         $stmt->bindValue('roles', json_encode([RoleInterface::ROLE_ADMIN]));
         $stmt->execute();
     } catch (\Throwable $e) {
-        echo 'Error while creating admin user';
+        echo e('Error while creating admin user');
         exit;
     }
 }
@@ -227,7 +227,7 @@ EOF;
         $stmt->bindValue('value', $value);
         $stmt->execute();
     } catch (\Throwable $e) {
-        echo "Error while saving the setting with name: $name";
+        echo e("Error while saving the setting with name: $name");
         exit;
     }
 }

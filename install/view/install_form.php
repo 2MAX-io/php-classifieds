@@ -11,7 +11,7 @@
 
         <?php foreach ($errors as $error): ?>
             <div class="alert alert-danger text-break">
-                <?php echo escape($error) ?>
+                <?php echo e($error) ?>
             </div>
         <?php endforeach; ?>
 
@@ -26,27 +26,27 @@
 
             <div class="form-group">
                 <label>DB host</label>
-                <input name="db_host" value="<?php echo escape($_POST['db_host'] ?? 'localhost') ?>" type="text" placeholder="DB host" class="form-control" required>
+                <input name="db_host" value="<?php echo e($_POST['db_host'] ?? 'localhost') ?>" type="text" placeholder="DB host" class="form-control" required>
             </div>
 
             <div class="form-group">
                 <label>DB port</label>
-                <input name="db_port" value="<?php echo escape($_POST['db_port'] ?? '3306') ?>" type="text" placeholder="DB port" class="form-control" required>
+                <input name="db_port" value="<?php echo e($_POST['db_port'] ?? '3306') ?>" type="text" placeholder="DB port" class="form-control" required>
             </div>
 
             <div class="form-group">
                 <label>DB database name</label>
-                <input name="db_name" value="<?php echo escape($_POST['db_name'] ?? '') ?>" type="text" placeholder="database_name" class="form-control" required>
+                <input name="db_name" value="<?php echo e($_POST['db_name'] ?? '') ?>" type="text" placeholder="database_name" class="form-control" required>
             </div>
 
             <div class="form-group">
                 <label>DB username</label>
-                <input name="db_user" value="<?php echo escape($_POST['db_user'] ?? '') ?>" type="text" placeholder="username" class="form-control" required>
+                <input name="db_user" value="<?php echo e($_POST['db_user'] ?? '') ?>" type="text" placeholder="username" class="form-control" required>
             </div>
 
             <div class="form-group">
                 <label>DB password</label>
-                <input name="db_pass" value="<?php echo escape($_POST['db_pass'] ?? '') ?>" type="text" class="form-control">
+                <input name="db_pass" value="<?php echo e($_POST['db_pass'] ?? '') ?>" type="text" class="form-control">
             </div>
         </div>
 
@@ -55,22 +55,22 @@
 
             <div class="form-group">
                 <label>SMTP host</label>
-                <input name="smtp_host" value="<?php echo escape($_POST['smtp_host'] ?? '') ?>" type="text" placeholder="mail.host.com" class="form-control" required>
+                <input name="smtp_host" value="<?php echo e($_POST['smtp_host'] ?? '') ?>" type="text" placeholder="mail.host.com" class="form-control" required>
             </div>
 
             <div class="form-group">
                 <label>SMTP port</label>
-                <input name="smtp_port" value="<?php echo escape($_POST['smtp_port'] ?? '465') ?>" type="text" placeholder="465" class="form-control" required>
+                <input name="smtp_port" value="<?php echo e($_POST['smtp_port'] ?? '465') ?>" type="text" placeholder="465" class="form-control" required>
             </div>
 
             <div class="form-group">
                 <label>SMTP username</label>
-                <input name="smtp_username" value="<?php echo escape($_POST['smtp_username'] ?? '') ?>" type="text" placeholder="user@mail.com" class="form-control" required>
+                <input name="smtp_username" value="<?php echo e($_POST['smtp_username'] ?? '') ?>" type="text" placeholder="user@mail.com" class="form-control" required>
             </div>
 
             <div class="form-group">
                 <label>SMTP password</label>
-                <input name="smtp_password" value="<?php echo escape($_POST['smtp_password'] ?? '') ?>" type="text" class="form-control" required>
+                <input name="smtp_password" value="<?php echo e($_POST['smtp_password'] ?? '') ?>" type="text" class="form-control" required>
             </div>
 
             <div class="alert alert-info">
@@ -87,7 +87,7 @@
 
             <div class="form-group">
                 <label>Email from address</label>
-                <input name="email_from_address" value="<?php echo escape($_POST['email_from_address'] ?? '') ?>" type="email" placeholder="user@mail.com" class="form-control" required>
+                <input name="email_from_address" value="<?php echo e($_POST['email_from_address'] ?? '') ?>" type="email" placeholder="user@mail.com" class="form-control" required>
             </div>
         </div>
 
@@ -98,7 +98,7 @@
                 <label>Timezone</label>
                 <select name="app_timezone" type="text" class="form-control">
                     <?php foreach (\DateTimeZone::listIdentifiers() as $timezone): ?>
-                        <option <?php echo $timezone === ($_POST['app_timezone'] ?? 'UTC') ? 'selected' : '' ?> value="<?php echo $timezone ?>"><?php echo $timezone ?></option>
+                        <option <?php echo e($timezone === ($_POST['app_timezone'] ?? 'UTC') ? 'selected' : '') ?> value="<?php echo e($timezone) ?>"><?php echo e($timezone) ?></option>
                     <?php endforeach; ?>
                 </select>
             </div>
@@ -109,12 +109,12 @@
 
             <div class="form-group">
                 <label>Admin email</label>
-                <input name="admin_email" value="<?php echo escape($_POST['admin_email'] ?? '') ?>" type="email" placeholder="admin@classified.com" class="form-control" required>
+                <input name="admin_email" value="<?php echo e($_POST['admin_email'] ?? '') ?>" type="email" placeholder="admin@classified.com" class="form-control" required>
             </div>
 
             <div class="form-group">
                 <label>Admin password</label>
-                <input name="admin_password" value="<?php echo escape($_POST['admin_password'] ?? '') ?>" type="text" placeholder="password" class="form-control" required>
+                <input name="admin_password" value="<?php echo e($_POST['admin_password'] ?? '') ?>" type="text" placeholder="password" class="form-control" required>
             </div>
         </div>
 
@@ -126,7 +126,7 @@
                 <div class="mb-2">
                     <a href="https://documentation.2max.io/display/CLAS/Get+license+file+for+installation" target="_blank">instruction: how to get license file?</a>
                 </div>
-                <textarea name="license" class="form-control" style="height: 15em;"><?php echo escape($_POST['license'] ?? '') ?></textarea>
+                <textarea name="license" class="form-control" style="height: 15em;"><?php echo e($_POST['license'] ?? '') ?></textarea>
             </div>
         </div>
 
@@ -134,19 +134,19 @@
             <h3>Load example data</h3>
 
             <div>
-                <input type="checkbox" name="load_categories" id="load-categories" class="custom-checkbox" value="1" <?php echo empty($_POST['load_categories']) ?: 'checked' ?>>
+                <input type="checkbox" name="load_categories" id="load-categories" class="custom-checkbox" value="1" <?php echo e(empty($_POST['load_categories']) ?: 'checked') ?>>
                 <label for="load-categories">Load example categories</label>
             </div>
             <div>
-                <input type="checkbox" name="load_custom_fields" id="load-custom-fields" class="custom-checkbox" value="1" <?php echo empty($_POST['load_custom_fields']) ?: 'checked' ?>>
+                <input type="checkbox" name="load_custom_fields" id="load-custom-fields" class="custom-checkbox" value="1" <?php echo e(empty($_POST['load_custom_fields']) ?: 'checked') ?>>
                 <label for="load-custom-fields">Load example custom fields</label>
             </div>
             <div>
-                <input type="checkbox" name="load_listings" id="load-listings" class="custom-checkbox" value="1" <?php echo empty($_POST['load_listings']) ?: 'checked' ?>>
+                <input type="checkbox" name="load_listings" id="load-listings" class="custom-checkbox" value="1" <?php echo e(empty($_POST['load_listings']) ?: 'checked') ?>>
                 <label for="load-listings">Load example listings</label>
             </div>
             <div>
-                <input type="checkbox" name="load_pages" id="load-pages" class="custom-checkbox" value="1" <?php echo empty($_POST['load_pages']) ?: 'checked' ?>>
+                <input type="checkbox" name="load_pages" id="load-pages" class="custom-checkbox" value="1" <?php echo e(empty($_POST['load_pages']) ?: 'checked') ?>>
                 <label for="load-pages">Load example sub-pages like terms and conditions</label>
             </div>
         </div>

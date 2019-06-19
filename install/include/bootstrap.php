@@ -14,7 +14,7 @@ ini_set('error_log', 'data/PHP_native_error_'.date('Y-m-d').'.log');
 
 /** @noinspection ConstantCanBeUsedInspection - works bad with old PHP versions */
 if (version_compare(PHP_VERSION, '7.3', '<')) {
-    echo 'This app requires PHP 7.3';
+    echo e('This app requires PHP 7.3');
     exit;
 }
 

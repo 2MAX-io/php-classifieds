@@ -147,7 +147,11 @@ function insertAdmin(string $email, string $password): void {
 EOF;
 
         try {
-            $passwordEncoder = new SodiumPasswordEncoder();
+            if (SodiumPasswordEncoder::isSupported()) {
+                $passwordEncoder = new SodiumPasswordEncoder();
+            } else {
+                $passwordEncoder = new NativePasswordEncoder();
+            }
         } catch (\Throwable $e) {
             if (false !== strpos($e->getMessage(), 'Libsodium is not available')) {
                 $passwordEncoder = new NativePasswordEncoder();

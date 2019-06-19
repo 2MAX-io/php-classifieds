@@ -2,8 +2,10 @@
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 PROJECT_DIR=${DIR}/../../..
+GIT_HASH=$(git rev-parse HEAD)
+INSTALLER_DIR=zz_engine/var/installer/installer_$(date +%Y-%m-%d_%H%M%S)_${GIT_HASH::8}
+INSTALLER_ZIP=installer_$(date +%Y-%m-%d_%H%M%S)_${GIT_HASH::8}.zip
 
-INSTALLER_DIR=zz_engine/var/installer/installer_$(date +%Y-%m-%d_%H%M%S)
 git checkout-index -a -f --prefix=${INSTALLER_DIR}/
 
 rm -r ${INSTALLER_DIR}/.idea
@@ -27,8 +29,6 @@ mkdir ${INSTALLER_DIR}/zz_engine/var/cache/prod
 cd ${INSTALLER_DIR}
 
 composer install --no-scripts --classmap-authoritative --quiet --no-dev --no-interaction -d zz_engine
-
-INSTALLER_ZIP=installer_$(date +%Y-%m-%d_%H%M%S)_$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 7 | head -n 1).zip
 
 zip -rq9 ${INSTALLER_ZIP} .
 

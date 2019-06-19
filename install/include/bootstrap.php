@@ -20,7 +20,7 @@ if (version_compare(PHP_VERSION, '7.3', '<')) {
 
 require __DIR__ . '/../../zz_engine/vendor/autoload.php';
 
-function escape(string $string): string {
+function e(string $string): string {
     return htmlspecialchars($string, ENT_QUOTES | ENT_SUBSTITUTE);
 }
 

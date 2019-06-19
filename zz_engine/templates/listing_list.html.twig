@@ -135,14 +135,13 @@
                                     <div class="mb-3">
                                         <label class="text-break">{{ customField.name }}</label>
                                         {%- for customFieldOption in customField.customFieldOptions -%}
-                                            <div class="custom-control custom-checkbox {% if loop.index > 5 %}collapse{% endif %} show-more-custom-field-{{ customField.id }}">
+                                            {%- set checked = customFieldOption.value in app.request.get('form_custom_field')[customField.id]['values'] | default([]) -%}
+                                            <div class="custom-control custom-checkbox {% if loop.index > 5 and not checked %}collapse{% endif %} show-more-custom-field-{{ customField.id }}">
                                                 {%- apply normalizeWhitespace -%}
                                                 <input
                                                     name="form_custom_field[{{ customField.id }}][values][]"
                                                     value="{{ customFieldOption.value }}"
-                                                    {% if customFieldOption.value in app.request.get('form_custom_field')[customField.id]['values'] | default([]) %}
-                                                        {{- 'checked' -}}
-                                                    {% endif %}
+                                                    {%- if checked -%}{{- ' checked ' -}}{%- endif -%}
                                                     type="checkbox"
                                                     id="option_{{ customFieldOption.id }}"
                                                     class="custom-control-input"
@@ -157,7 +156,7 @@
                                             </div>
                                         {%- endfor -%}
                                         {%- if customField.customFieldOptions.count > 5 -%}
-                                            <div class="btn btn-link p-0" data-toggle="collapse" data-target=".show-more-custom-field-{{ customField.id }}" onclick="$(this).remove()">{{ 'trans.show more' | trans }}</div>
+                                            <div class="btn btn-link px-0 py-1 cursor-pointer" data-toggle="collapse" data-target=".show-more-custom-field-{{ customField.id }}" onclick="$(this).remove()">{{ 'trans.show more' | trans }}</div>
                                         {%- endif -%}
                                     </div>
                                 {% endif %}
@@ -188,16 +187,14 @@
                                 {%- if customField.type == constant('\App\\Entity\\CustomField::TYPE_CHECKBOX_MULTIPLE') and customField.customFieldOptions is not empty -%}
                                     <div class="mb-3">
                                         <label class="text-break">{{ customField.name }}</label>
-
                                         {%- for customFieldOption in customField.customFieldOptions -%}
-                                            <div class="custom-control custom-checkbox {% if loop.index > 5 %}collapse{% endif %} show-more-custom-field-{{ customField.id }}">
+                                            {%- set checked = customFieldOption.value in app.request.get('form_custom_field')[customField.id]['values'] | default([]) -%}
+                                            <div class="custom-control custom-checkbox {% if loop.index > 5 and not checked %}collapse{% endif %} show-more-custom-field-{{ customField.id }}">
                                                 {%- apply normalizeWhitespace -%}
                                                 <input
                                                     name="form_custom_field[{{ customField.id }}][values][]"
                                                     value="{{ customFieldOption.value }}"
-                                                    {% if customFieldOption.value in app.request.get('form_custom_field')[customField.id]['values'] | default([]) %}
-                                                        {{- 'checked' -}}
-                                                    {% endif %}
+                                                    {%- if checked -%}{{- ' checked ' -}}{%- endif -%}
                                                     type="checkbox"
                                                     id="option_{{ customFieldOption.id }}"
                                                     class="custom-control-input"
@@ -212,7 +209,7 @@
                                             </div>
                                         {%- endfor -%}
                                         {%- if customField.customFieldOptions.count > 5 -%}
-                                            <div class="btn btn-link p-0" data-toggle="collapse" data-target=".show-more-custom-field-{{ customField.id }}" onclick="$(this).remove()">{{ 'trans.show more' | trans }}</div>
+                                            <div class="btn btn-link px-0 py-1 cursor-pointer" data-toggle="collapse" data-target=".show-more-custom-field-{{ customField.id }}" onclick="$(this).remove()">{{ 'trans.show more' | trans }}</div>
                                         {%- endif -%}
                                     </div>
                                 {% endif %}

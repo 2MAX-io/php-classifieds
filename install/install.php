@@ -5,6 +5,7 @@ declare(strict_types=1);
 use App\Helper\FilePath;
 use App\Helper\Random;
 use App\Service\User\RoleInterface;
+use Symfony\Component\Security\Core\Encoder\NativePasswordEncoder;
 use Symfony\Component\Security\Core\Encoder\SodiumPasswordEncoder;
 use Webmozart\PathUtil\Path;
 
@@ -149,12 +150,7 @@ EOF;
             $passwordEncoder = new SodiumPasswordEncoder();
         } catch (\Throwable $e) {
             if (false !== strpos($e->getMessage(), 'Libsodium is not available')) {
-                /**
-                 * used as fallback if Libsodium not installed, which is the case for some shared hosting providers
-                 *
-                 * @noinspection PhpDeprecationInspection
-                 */
-                $passwordEncoder = new Symfony\Component\Security\Core\Encoder\Argon2iPasswordEncoder();
+                $passwordEncoder = new NativePasswordEncoder();
             } else {
                 throw $e;
             }

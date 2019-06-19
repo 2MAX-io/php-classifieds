@@ -105,6 +105,6 @@ class ListingFileService
     {
         return FileHelper::getFilenameValidCharacters($fileUploadDto->getOriginalFilename())
         . '.'
-        . \pathinfo($fileUploadDto->getOriginalFilename(), PATHINFO_EXTENSION);
+        . \pathinfo($fileUploadDto->getOriginalFilename(), \PATHINFO_EXTENSION);
     }
 }

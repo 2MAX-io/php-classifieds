@@ -40,7 +40,7 @@ class ListingPublicDisplayService
     public function applyPublicDisplayConditions(QueryBuilder $qb): void
     {
         $qb->andWhere($qb->expr()->gte('listing.validUntilDate', ':todayDayStart'));
-        $qb->setParameter(':todayDayStart', date('Y-m-d 00:00:00'));
+        $qb->setParameter(':todayDayStart', \date('Y-m-d 00:00:00'));
 
         $qb->andWhere('listing.userDeactivated = 0');
         $qb->andWhere('listing.userRemoved = 0');

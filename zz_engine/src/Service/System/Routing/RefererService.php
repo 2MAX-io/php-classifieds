@@ -87,6 +87,6 @@ class RefererService
 
     public function getRelativeUrl(string $url): string
     {
-        return \parse_url($url, PHP_URL_PATH);
+        return \parse_url($url, \PHP_URL_PATH);
     }
 }

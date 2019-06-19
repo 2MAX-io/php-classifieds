@@ -48,7 +48,7 @@ class PoliceLogIpService
         $output = '';
         foreach ($logList as $logListElement) {
             $output .= $logListElement->getText();
-            $output .= str_repeat("\r\n", 1) . str_repeat('=', 100) . str_repeat("\r\n", 3);
+            $output .= \str_repeat("\r\n", 1) . \str_repeat('=', 100) . \str_repeat("\r\n", 3);
         }
 
         return $output;
@@ -78,7 +78,7 @@ class PoliceLogIpService
         }
 
         $requestTimeString = \DateTime::createFromFormat('U.u', (string) $_SERVER['REQUEST_TIME_FLOAT'])->format('Y-m-d H:i:s.u P');
-        $currentServerTime = \DateTime::createFromFormat('U.u', (string) microtime(true))->format('Y-m-d H:i:s.u P');
+        $currentServerTime = \DateTime::createFromFormat('U.u', (string) \microtime(true))->format('Y-m-d H:i:s.u P');
 
         $logText = <<<END
 Connection:

@@ -38,7 +38,7 @@ class DevGenerateTestListingsCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): void
     {
-        ini_set('memory_limit', (string) Megabyte::toByes(1024));
+        \ini_set('memory_limit', (string) Megabyte::toByes(1024));
         $io = new SymfonyStyle($input, $output);
         $requestedCount = (int) $input->getArgument('count');
 

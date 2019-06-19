@@ -82,7 +82,7 @@ class UpgradeService
             'upgrade'
             . '_' . $id
             . '_' . \md5($decodedContent)
-            . '_' . date('Y_m_d__His')
+            . '_' . \date('Y_m_d__His')
             . '_' . Random::string(8)
             . '.php'
         );

@@ -104,7 +104,7 @@ class Admin implements UserInterface, RoleInterface, EnablableInterface
         // guarantee every user at least has ROLE_USER
         $roles[] = RoleInterface::ROLE_USER;
 
-        return array_unique($roles);
+        return \array_unique($roles);
     }
 
     public function setRoles(array $roles): self

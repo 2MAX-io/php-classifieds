@@ -92,7 +92,7 @@ UPDATE listing SET featured=0 WHERE featured_until_date <= :now OR featured_unti
 
 TAG
         );
-        $query->bindValue(':now', date('Y-m-d H:i:s'));
+        $query->bindValue(':now', \date('Y-m-d H:i:s'));
         $query->execute();
     }
 

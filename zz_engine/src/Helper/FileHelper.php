@@ -14,7 +14,7 @@ class FileHelper
 {
     public static function isImage(string $path): bool
     {
-        return in_array(
+        return \in_array(
             Path::getExtension($path, true),
             ['jpg', 'png', 'gif', 'jpeg'],
             true
@@ -29,7 +29,7 @@ class FileHelper
                 ->setDelimiter('_')
         );
 
-        return $generator->generate(pathinfo($filename, PATHINFO_FILENAME));
+        return $generator->generate(\pathinfo($filename, \PATHINFO_FILENAME));
     }
 
     public static function throwExceptionIfUnsafeExtensionFromUploadedFile(UploadedFile $uploadedFile): void
@@ -39,7 +39,7 @@ class FileHelper
 
     public static function throwExceptionIfUnsafeFilename(string $filename): void
     {
-        static::throwExceptionIfUnsafeExtension(pathinfo($filename, PATHINFO_EXTENSION));
+        static::throwExceptionIfUnsafeExtension(\pathinfo($filename, \PATHINFO_EXTENSION));
     }
 
     public static function throwExceptionIfUnsafePath(string $path, string $mustBeInsideDir = null): void
@@ -51,7 +51,7 @@ class FileHelper
             );
         }
 
-        static::throwExceptionIfUnsafeExtension(pathinfo($path, PATHINFO_EXTENSION));
+        static::throwExceptionIfUnsafeExtension(\pathinfo($path, \PATHINFO_EXTENSION));
     }
 
     public static function throwExceptionIfUnsafeExtension(string $extension): void

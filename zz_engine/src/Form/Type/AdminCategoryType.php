@@ -31,7 +31,7 @@ class AdminCategoryType extends AbstractType
             'choice_label' => static function (Category $category) {
                 $path = $category->getPath();
 
-                $path = array_map(
+                $path = \array_map(
                     static function (Category $category) {
                         return $category->getName();
                     },

@@ -79,7 +79,8 @@ class UniqueValueValidator extends ConstraintValidator
             }
 
             if (!$class->hasField($fieldName) && !$class->hasAssociation($fieldName)) {
-                throw new ConstraintDefinitionException(sprintf('The field "%s" is not mapped by Doctrine, so it cannot be validated for uniqueness.', $fieldName));
+                throw new ConstraintDefinitionException(
+                    \sprintf('The field "%s" is not mapped by Doctrine, so it cannot be validated for uniqueness.', $fieldName));
             }
 
             if ($field instanceof UniqueValueDto) {
@@ -112,7 +113,8 @@ class UniqueValueValidator extends ConstraintValidator
             $supportedClass = $repository->getClassName();
 
             if ($constraint->entityClass !== $supportedClass) {
-                throw new ConstraintDefinitionException(sprintf('The "%s" entity repository does not support the "%s" entity. The entity should be an instance of or extend "%s".', $constraint->entityClass, $class->getName(), $supportedClass));
+                throw new ConstraintDefinitionException(
+                    \sprintf('The "%s" entity repository does not support the "%s" entity. The entity should be an instance of or extend "%s".', $constraint->entityClass, $class->getName(), $supportedClass));
             }
         } else {
             throw new ConstraintDefinitionException(

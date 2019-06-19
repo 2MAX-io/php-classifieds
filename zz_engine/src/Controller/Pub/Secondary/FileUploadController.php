@@ -24,13 +24,13 @@ class FileUploadController extends AbstractController
             FileHelper::throwExceptionIfUnsafeFilename($fileName);
         }
 
-        $tmpUploadDir = FilePath::getTempFileUpload() . '/' . date('Y') . '/' . date('m') . '/' . date('d') . '/';
+        $tmpUploadDir = FilePath::getTempFileUpload() . '/' . \date('Y') . '/' . \date('m') . '/' . \date('d') . '/';
         $filesystem->mkdir($tmpUploadDir, 0770);
         $fileUploader = new FileUploader($fileKey, [
             'uploadDir' => $tmpUploadDir,
             'extensions' => ['jpg', 'jpeg', 'png'],
             'fileMaxSize' => 2,
-            'title' => ['zz_file_upload_' . date('Ymd_His') . '_{random}.{extension}', 32]
+            'title' => ['zz_file_upload_' . \date('Ymd_His') . '_{random}.{extension}', 32]
         ]);
         $response = $fileUploader->upload();
 

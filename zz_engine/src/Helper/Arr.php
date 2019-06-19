@@ -16,7 +16,7 @@ class Arr
 
     public static function valuesToInt(array $array): array
     {
-        return \array_map('intval', $array);
+        return \array_map('\intval', $array);
     }
 
     /**

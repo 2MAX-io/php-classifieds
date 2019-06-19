@@ -25,7 +25,7 @@ class FilesystemChecker
         $fileIterator = $finder->files()->getIterator();
         $i = 0;
         foreach ($fileIterator as $file) {
-            if (!is_writable($file->getPathname())
+            if (!\is_writable($file->getPathname())
                 || !\is_readable($file->getPathname())
                 || false === @\file_get_contents($file->getPathname(), false, null, 0, 1)
             ) {
@@ -55,7 +55,7 @@ class FilesystemChecker
         $dirIterator = $finder->directories()->getIterator();
         $i = 0;
         foreach($dirIterator as $dir) {
-            if (!is_writable($dir->getPathname()) || !\is_readable($dir->getPathname())) {
+            if (!\is_writable($dir->getPathname()) || !\is_readable($dir->getPathname())) {
                 ++$i;
                 if ($i > 5000) {
                     break;

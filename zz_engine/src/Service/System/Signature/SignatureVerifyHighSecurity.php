@@ -12,7 +12,7 @@ class SignatureVerifyHighSecurity
                 $payload,
                 \base64_decode($signature),
                 \trim(static::getPublicKey()),
-                OPENSSL_ALGO_SHA256
+                \OPENSSL_ALGO_SHA256
             );
     }
 

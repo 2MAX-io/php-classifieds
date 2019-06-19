@@ -55,7 +55,7 @@ class SystemClearCacheService
 
     public function clearAllCaches(): void
     {
-        @opcache_reset();
+        @\opcache_reset();
         $this->cacheClearer->clear($this->environmentService->getCacheDir());
 
         $environmentService = $this->environmentService;
@@ -65,7 +65,7 @@ class SystemClearCacheService
             KernelEvents::TERMINATE,
             static function () use ($environmentService, $filesystem, $logger): void {
                 try {
-                    $oldCache = $environmentService->getCacheDir() . date('_Ymd_His');
+                    $oldCache = $environmentService->getCacheDir() . \date('_Ymd_His');
                     $filesystem->rename($environmentService->getCacheDir(), $oldCache);
                     $filesystem->remove($oldCache);
                 } catch (\Throwable $e) {

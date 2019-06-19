@@ -39,7 +39,7 @@ class TranslationConvertCommand extends Command
         $messageCatalogue->add($translations);
 
         \file_put_contents(
-            \dirname($sourceFile) . '/' . date('Y-m-d H:i:s_') . \basename($sourceFile),
+            \dirname($sourceFile) . '/' . \date('Y-m-d H:i:s_') . \basename($sourceFile),
             $xliffFileDumper->formatCatalogue($messageCatalogue, 'messages')
         );
 

@@ -40,7 +40,7 @@ class TranslationGenerateToEnCommand extends Command
         $translations = \array_combine($translationKeys, $translationValues);
 
         \file_put_contents(
-            \dirname($sourceFile) . '/' . date('Y-m-d H:i:s_') . \basename($sourceFile),
+            \dirname($sourceFile) . '/' . \date('Y-m-d H:i:s_') . \basename($sourceFile),
             Yaml::dump($translations)
         );
 

@@ -59,7 +59,7 @@ class TwigNoDependencies implements RuntimeExtensionInterface
 
     public function moneyPrecise(int $value): string
     {
-        return number_format(
+        return \number_format(
             \round($value / 100, 2),
             2,
             AppNumberFormatter::getDecimalSeparator(),
@@ -69,7 +69,7 @@ class TwigNoDependencies implements RuntimeExtensionInterface
 
     public function thousandsSeparate(int $value): string
     {
-        return number_format(
+        return \number_format(
             $value,
             0,
             AppNumberFormatter::getDecimalSeparator(),
@@ -80,10 +80,10 @@ class TwigNoDependencies implements RuntimeExtensionInterface
     public function money(float $money): string
     {
         if ($money < 40) {
-            return (string) round($money, 2);
+            return (string) \round($money, 2);
         }
 
-        return number_format(
+        return \number_format(
             $money,
             0,
             AppNumberFormatter::getDecimalSeparator(),

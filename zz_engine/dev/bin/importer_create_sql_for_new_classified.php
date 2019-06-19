@@ -63,7 +63,7 @@ function sqlEscape(string $unescaped): string {
 }
 
 function arrayToSqlSetString(array $csvRow, array $map = null): string {
-    $csvRow = array_map('sqlEscape', $csvRow);
+    $csvRow = array_map('\sqlEscape', $csvRow);
     $result = '';
     foreach ($csvRow as $key => $value) {
         if ($map === null) {

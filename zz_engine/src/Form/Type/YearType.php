@@ -20,7 +20,7 @@ class YearType extends AbstractType
     public function getChoices(): array
     {
         $choices = [];
-        for ($i=date('Y'); $i >= 1980; --$i) {
+        for ($i= \date('Y'); $i >= 1980; --$i) {
             $choices[$i] = $i;
         }
 

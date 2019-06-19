@@ -52,7 +52,7 @@ class CustomFieldOptionController extends AbstractAdminController
 
             $customFieldOptionService->reorder();
 
-            if ($saveAndAddButton instanceof SubmitButton && $saveAndAddButton->isClicked()) {
+            if ($saveAndAddButton->getClickedButton() instanceof SubmitButton && $saveAndAddButton->getClickedButton()->isClicked()) {
                 return $this->redirectToRoute('app_admin_custom_field_option_add', [
                     'id' => $customField->getId(),
                 ]);
@@ -85,6 +85,7 @@ class CustomFieldOptionController extends AbstractAdminController
 
         $oldCustomField = clone $customFieldOption;
         $form = $this->createForm(CustomFieldOptionType::class, $customFieldOption);
+        /** @var Form $saveAndAddButton */
         $saveAndAddButton = $form->add(CustomFieldOptionType::SAVE_AND_ADD, SubmitType::class, [
             'label' => 'trans.Save and Add',
         ]);
@@ -102,7 +103,7 @@ class CustomFieldOptionController extends AbstractAdminController
                 $customFieldOption->getValue()
             );
 
-            if ($saveAndAddButton instanceof SubmitButton && $saveAndAddButton->isClicked()) {
+            if ($saveAndAddButton->getClickedButton() instanceof SubmitButton && $saveAndAddButton->getClickedButton()->isClicked()) {
                 return $this->redirectToRoute('app_admin_custom_field_option_add', [
                     'id' => $customFieldOption->getCustomField()->getId(),
                 ]);

@@ -76,7 +76,7 @@ class AdminCategoryController extends AbstractAdminController
             $treeService->rebuild();
             $em->flush();
 
-            if ($saveAndAddButton instanceof SubmitButton && $saveAndAddButton->isClicked()) {
+            if ($saveAndAddButton->getClickedButton() instanceof SubmitButton && $saveAndAddButton->getClickedButton()->isClicked()) {
                 return $this->redirectToRoute('app_admin_category_new', [
                     'parentCategory' => $category->getParent()->getId(),
                 ]);
@@ -121,7 +121,7 @@ class AdminCategoryController extends AbstractAdminController
             $treeService->rebuild();
             $em->flush();
 
-            if ($saveAndAddButton instanceof SubmitButton && $saveAndAddButton->isClicked()) {
+            if ($saveAndAddButton->getClickedButton() instanceof SubmitButton && $saveAndAddButton->getClickedButton()->isClicked()) {
                 return $this->redirectToRoute('app_admin_category_new', [
                     'parentCategory' => $category->getParent()->getId(),
                 ]);

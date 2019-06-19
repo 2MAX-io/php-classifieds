@@ -49,7 +49,11 @@ class AssetVersionStrategyService implements VersionStrategyInterface
      */
     public function applyVersion($path): string
     {
-        $versioned = \sprintf('%s?%s', \ltrim($this->getVersion($path), '/'), $this->version);
+        $versionedPath = $this->getVersion($path);
+        if ($versionedPath === $this->version) {
+            $versionedPath = $path;
+        }
+        $versioned = \sprintf('%s?%s', \ltrim($versionedPath, '/'), $this->version);
 
         if ($path && \strpos($path, '/') === 0) {
             return '/'.$versioned;

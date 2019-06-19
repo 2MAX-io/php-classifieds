@@ -146,18 +146,13 @@ function insertAdmin(string $email, string $password): void {
 
 EOF;
 
-        try {
-            if (SodiumPasswordEncoder::isSupported()) {
-                $passwordEncoder = new SodiumPasswordEncoder();
-            } else {
-                $passwordEncoder = new NativePasswordEncoder();
-            }
-        } catch (\Throwable $e) {
-            if (false !== strpos($e->getMessage(), 'Libsodium is not available')) {
-                $passwordEncoder = new NativePasswordEncoder();
-            } else {
-                throw $e;
-            }
+        if (SodiumPasswordEncoder::isSupported()) {
+            $passwordEncoder = new SodiumPasswordEncoder();
+        } else {
+            /**
+             * used as fallback if Libsodium not installed, which is the case for some shared hosting providers
+             */
+            $passwordEncoder = new NativePasswordEncoder();
         }
 
         $stmt = $pdo->prepare($sql);

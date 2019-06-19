@@ -6,6 +6,7 @@ namespace App\Controller\User\Balance;
 
 use App\Controller\User\Base\AbstractUserController;
 use App\Form\TopUpBalanceType;
+use App\Helper\Integer;
 use App\Security\CurrentUserService;
 use App\Service\Money\UserBalanceService;
 use App\Service\Payment\PaymentService;
@@ -31,7 +32,7 @@ class BalanceTopUpController extends AbstractUserController
         if ($form->isSubmitted() && $form->isValid()) {
             $paymentDto = $paymentService->createPaymentForTopUp(
                 $currentUserService->getUser(),
-                $form->get(TopUpBalanceType::TOP_UP_AMOUNT)->getData() * 100
+                Integer::toInteger($form->get(TopUpBalanceType::TOP_UP_AMOUNT)->getData() * 100)
             );
 
             $this->getDoctrine()->getManager()->flush();

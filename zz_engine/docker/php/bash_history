@@ -417,3 +417,11 @@ php zz_engine/bin/console debug:container | grep array
 php zz_engine/bin/console debug:container | grep cache
 composer update -d zz_engine --optimize-autoloader
 composer update -d zz_engine --optimize-autoloader
+uname -r
+uname -d
+uname --help
+uname -a
+wget https://classifieds.localhost/
+apt install wget
+ping https://classifieds.localhost/
+trace https://classifieds.localhost/

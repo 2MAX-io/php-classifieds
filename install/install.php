@@ -179,6 +179,7 @@ function dumpConfig(array $config): void {
         'APP_TIMEZONE' => 'UTC',
         'APP_UPGRADE_DISABLED' => false,
         'APP_UPGRADE_AVAILABLE_CHECK_DISABLED' => false,
+        'APP_ASSET_VERSION' => 1,
         'DATABASE_URL' => '',
         'MAILER_URL' => '',
     ];

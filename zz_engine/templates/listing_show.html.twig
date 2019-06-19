@@ -154,7 +154,7 @@
 
                 {% if listing.listingFiles is not empty %}
                     <div>
-                        {% for listingFile in listing.listingFiles %}
+                        {% for listingFile in listing.listingFiles.slice(1) %}
                             <a
                                     href="{{ asset(listingFile.pathInNormalSize) }}"
                                     data-fancybox="file"

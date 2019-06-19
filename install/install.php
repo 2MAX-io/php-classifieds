@@ -5,6 +5,7 @@ declare(strict_types=1);
 use App\Helper\FilePath;
 use App\Helper\Random;
 use App\Service\User\RoleInterface;
+use Symfony\Component\Security\Core\Encoder\SodiumPasswordEncoder;
 use Webmozart\PathUtil\Path;
 
 include 'include/bootstrap.php';
@@ -144,20 +145,28 @@ function insertAdmin(string $email, string $password): void {
 
 EOF;
 
-        /**
-         * for now must be used, because most shared hosting do not have sodium extension installed
-         *
-         * @noinspection PhpDeprecationInspection
-         */
-        $argon2iPasswordEncoder = new Symfony\Component\Security\Core\Encoder\SodiumPasswordEncoder();
+        try {
+            $passwordEncoder = new SodiumPasswordEncoder();
+        } catch (\Throwable $e) {
+            if (false !== strpos($e->getMessage(), 'Libsodium is not available')) {
+                /**
+                 * used as fallback if Libsodium not installed, which is the case for some shared hosting providers
+                 *
+                 * @noinspection PhpDeprecationInspection
+                 */
+                $passwordEncoder = new Symfony\Component\Security\Core\Encoder\Argon2iPasswordEncoder();
+            } else {
+                throw $e;
+            }
+        }
 
         $stmt = $pdo->prepare($sql);
         $stmt->bindValue('email', $email);
-        $stmt->bindValue('password', $argon2iPasswordEncoder->encodePassword($password, ''));
+        $stmt->bindValue('password', $passwordEncoder->encodePassword($password, ''));
         $stmt->bindValue('roles', json_encode([RoleInterface::ROLE_ADMIN]));
         $stmt->execute();
     } catch (\Throwable $e) {
-        echo e('Error while creating admin user');
+        echo e('Error while creating admin user: ' . $e->getMessage());
         exit;
     }
 }
@@ -227,7 +236,7 @@ EOF;
         $stmt->bindValue('value', $value);
         $stmt->execute();
     } catch (\Throwable $e) {
-        echo e("Error while saving the setting with name: $name");
+        echo e("Error while saving the setting with name: $name, {$e->getMessage()}");
         exit;
     }
 }

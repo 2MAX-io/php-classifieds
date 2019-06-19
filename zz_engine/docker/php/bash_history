@@ -430,3 +430,4 @@ composer update -d zz_engine --optimize-autoloader
 composer install -d zz_engine --optimize-autoloader
 /var/www/html/zz_engine/bin/console app:dev:generate-test-listings 15000
 /var/www/html/zz_engine/bin/console app:dev:generate-test-listings 15000
+composer install -d zz_engine --optimize-autoloader

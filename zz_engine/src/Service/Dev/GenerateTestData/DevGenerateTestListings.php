@@ -62,6 +62,11 @@ class DevGenerateTestListings
             $listing->setSearchText($listing->getTitle() . ' ' . $listing->getDescription());
             $listing->setValidUntilDate(Carbon::now()->addDays(7));
 
+            if (\random_int(0, 100) > 80) {
+                $listing->setFeatured(true);
+                $listing->setFeaturedUntilDate($listing->getValidUntilDate());
+            }
+
             if (\random_int(1,100) > 20) {
                 $listing->setPrice(\random_int(1, 40000000) / 100);
             }
@@ -184,12 +189,39 @@ class DevGenerateTestListings
 
     private function addFiles(Listing $listing): void
     {
-        $count = Arr::random([0, \random_int(1,3)]);
+        $count = 0;
+        if (\random_int(0, 100) > 10) {
+            $count = \random_int(1,3);
+        }
+
         $sort = SortService::FIRST_VALUE;
         for ($i=0; $i<$count; ++$i) {
             $sort++;
             $listingFile = new ListingFile();
-            $listingFile->setPath(Arr::random(['static/system/1920x1080.png', 'static/system/1080x1920.png']));
+            $listingFile->setPath(
+                Arr::random(
+                    [
+                        'static/system/1920x1080.png',
+                        'static/system/1080x1920.png',
+                        'static/system/category/cars2.jpg',
+                        'static/system/category/electronics.jpg',
+                        'static/system/category/electronics_home_appliances.jpg',
+                        'static/system/category/events_wedding.jpg',
+                        'static/system/category/fashion_clothing_footwear.jpg',
+                        'static/system/category/finance_accounting.jpg',
+                        'static/system/category/for_free.jpg',
+                        'static/system/category/health_beauty_cosmetic.jpg',
+                        'static/system/category/home_furniture_garden.jpg',
+                        'static/system/category/jobs.jpg',
+                        'static/system/category/phones_accessories.jpg',
+                        'static/system/category/real_estates_houses_flats_apartments.jpg',
+                        'static/system/category/renovation_construction.jpg',
+                        'static/system/category/services_companies.jpg',
+                        'static/system/category/sport.jpg',
+                        'static/system/category/various_classifieds.jpg',
+                    ]
+                )
+            );
             $listingFile->setSort($sort);
             $listingFile->setSizeBytes(1);
             $listingFile->setMimeType('image/jpeg');

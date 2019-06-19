@@ -149,7 +149,7 @@ EOF;
          *
          * @noinspection PhpDeprecationInspection
          */
-        $argon2iPasswordEncoder = new Symfony\Component\Security\Core\Encoder\Argon2iPasswordEncoder();
+        $argon2iPasswordEncoder = new Symfony\Component\Security\Core\Encoder\SodiumPasswordEncoder();
 
         $stmt = $pdo->prepare($sql);
         $stmt->bindValue('email', $email);

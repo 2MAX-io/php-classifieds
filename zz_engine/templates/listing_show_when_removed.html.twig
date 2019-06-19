@@ -11,11 +11,12 @@
 
 {% block body %}
 
-    <div class="container mt-3 mb-3">
+    <div class="container mt-3 mb-3 text-break">
         {% if settings.masterSiteLinkShow %}
             <a href="{{ settings.masterSiteUrl }}">{{ settings.masterSiteAnchorText }}</a>
             >
         {% endif %}
+
         <a href="{{ path('app_index') }}">{{ 'trans.Classifieds' | trans }}</a>
 
         {% for category in categoryBreadcrumbs %}
@@ -26,7 +27,7 @@
     <div class="container mt-3 listing-show">
         <div class="row">
             <div class="col-md-7">
-                {% if isCurrentUserListing(listing) %}
+                {% if userOrAdmin(listing) %}
                     <a href="{{ path('app_listing_show', {'id': listing.id, 'slug': listing.slug, 'showPreviewForOwner': 1}) }}" class="btn btn-primary w-100 mb-2">
                         <div>{{- 'trans.Current status' | trans -}}: <span class="{{ getListingStatusClass(listing) }}">{{ getListingStatus(listing) }}</span>.</div>
                         <div>{{- 'trans.Click to preview how listing would look after activation' | trans -}}</div>
@@ -60,52 +61,27 @@
 
                 <div class="mb-2 d-none d-md-block">
                     {{ 'trans.Listing identifier' | trans }}: {{ listing.id }}
-
-                    <div class="float-md-right">
-                        {{ 'trans.Views' | trans }}: {{ listingShowDto.viewsCount+1 | thousandsSeparate }}
-                    </div>
                 </div>
+                <!-- end main content -->
             </div>
 
-            <!-- sidebar -->
+            <!-- Sidebar -->
             <div class="col-md-5">
+
                 {% if isCurrentUserListing(listing) %}
                     <a href="{{ path('app_listing_edit', {'id': listing.id}) }}" class="btn btn-primary mb-2">
-                        {{ 'trans.Edit listing' | trans }}
+                        {{- 'trans.Edit listing' | trans -}}
                     </a>
                 {% endif %}
 
                 {% if lowSecurityCheckIsAdminInPublic() %}
-                    <a
-                            href="{{ path('app_admin_listing_edit', {'id': listing.id}) }}"
-                            class="btn btn-outline-danger mb-2"
-                    >
+                    <a href="{{ path('app_admin_listing_edit', {'id': listing.id}) }}" class="btn btn-outline-danger mb-2">
                         {{ 'trans.Edit listing as Admin' | trans }}
                     </a>
                 {% endif %}
 
                 {% if userOrAdmin(listing) %}
                     <span class="{{ getListingStatusClass(listing) }}">{{ getListingStatus(listing) }}</span>
-                {% endif %}
-
-                {% if listing.price is not empty %}
-                    <div>
-                        <div class="my-1">
-                            <h3 class="btn btn-dark price btn-lg">
-                                {{ 'trans.Price' | trans }}: {{ listing.price }}
-                            </h3>
-
-                            {% if listing.priceFor %}<span>{{ ('trans.priceFor.'~listing.priceFor) | trans }}</span>{% endif %}
-
-                            {% if listing.priceNegotiable is not null %}
-                                {% if listing.priceNegotiable %}
-                                    <span class="badge badge-success">{{ 'trans.negotiable' | trans }}</span>
-                                {% else %}
-                                    <span class="badge badge-danger">{{ 'trans.NOT negotiable' | trans }}</span>
-                                {% endif %}
-                            {% endif %}
-                        </div>
-                    </div>
                 {% endif %}
 
                 <!-- info -->
@@ -115,27 +91,41 @@
                     <div class="card-body">
                         <div class="mb-2 py-2">
                             <div class="row">
-                                <div class="col-sm-4">{{ 'trans.Date added' | trans }}</div>
+                                <div class="col-sm-4 col-md-5">
+                                    {{ 'trans.Date added' | trans }}
+                                </div>
 
-                                <div class="col-sm-8">
-                                    {{ listing.orderByDate | date }}
+                                <div class="col-sm-8 col-md-7">
+                                    {{ listing.firstCreatedDate | date(dateFormatShort) }}
                                 </div>
                             </div>
                         </div>
 
                         <div class="mb-2 py-2">
                             <div class="row">
-                                <div class="col-sm-4">{{ 'trans.Expiration date' | trans }}</div>
+                                <div class="col-sm-4 col-md-5">
+                                    {{ 'trans.Expiration date' | trans }}
+                                </div>
 
-                                <div class="col-sm-8">
-                                    {{ listing.validUntilDate | date }}
+                                <div class="col-sm-8 col-md-7">
+                                    {{ listing.validUntilDate | date(dateFormatShort) }}
                                 </div>
                             </div>
                         </div>
 
+                        <div class="mb-2 py-2">
+                            <div class="row">
+                                <div class="col-sm-4 col-md-5">
+                                    {{- 'trans.Listing identifier' | trans -}}
+                                </div>
+
+                                <div class="col-sm-8 col-md-7">
+                                    {{- listing.id -}}
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>

@@ -12,6 +12,9 @@ parameters:
     upgrade_disabled: '%env(resolve:APP_UPGRADE_DISABLED)%'
     env(APP_UPGRADE_AVAILABLE_CHECK_DISABLED): false
     upgrade_available_check_disabled: '%env(resolve:APP_UPGRADE_AVAILABLE_CHECK_DISABLED)%'
+    env(APP_ASSET_VERSION): 1
+    asset_version: '%env(resolve:APP_ASSET_VERSION)%'
+
 
 services:
     # default configuration for services in *this* file
@@ -64,3 +67,8 @@ services:
         arguments: [!tagged app.health_checker]
 
     Symfony\Component\HttpKernel\CacheClearer\CacheClearerInterface: '@cache_clearer'
+
+    App\Service\System\Asset\AssetVersionStrategyService:
+        arguments:
+            $version: '%asset_version%'
+        public: false

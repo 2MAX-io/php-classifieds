@@ -74,4 +74,9 @@ class FilePath
     {
         return self::getPath(__DIR__ . '/../../../static/tmp/file_upload');
     }
+
+    public static function getAssetBuildDir(): string
+    {
+        return self::getPath(__DIR__ . '/../../../asset/build');
+    }
 }

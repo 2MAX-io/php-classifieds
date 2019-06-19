@@ -85,11 +85,8 @@ class CronService
 
         /** @var \PDO $pdo */
         $pdo = $this->em->getConnection();
-        $query = $pdo->prepare(
-        /** @lang MySQL */ <<<'TAG'
-
+        $query = $pdo->prepare(<<<'TAG'
 UPDATE listing SET featured=0 WHERE featured_until_date <= :now OR featured_until_date IS NULL
-
 TAG
         );
         $query->bindValue(':now', \date('Y-m-d H:i:s'));
@@ -104,11 +101,8 @@ TAG
 
         /** @var \PDO $pdo */
         $pdo = $this->em->getConnection();
-        $query = $pdo->prepare(
-        /** @lang MySQL */ <<<'TAG'
-
+        $query = $pdo->prepare(<<<'TAG'
 UPDATE listing SET user_deactivated=1 WHERE valid_until_date <= :olderThan
-
 TAG
         );
         $query->bindValue(':olderThan', Carbon::now()->subDays(90));
@@ -123,9 +117,7 @@ TAG
 
         /** @var \PDO $pdo */
         $pdo = $this->em->getConnection();
-        $pdo->exec(
-        /** @lang MySQL */ <<<'TAG'
-
+        $pdo->exec(<<<'TAG'
 UPDATE listing
     JOIN listing_file
     ON listing.id = listing_file.listing_id
@@ -135,7 +127,6 @@ UPDATE listing
     ON minSortJoin.listing_id = listing_file.listing_id && listing_file.sort = minSortJoin.minSort
 SET listing.main_image = listing_file.path
 WHERE 1
-
 TAG
         );
     }

@@ -222,7 +222,6 @@ function saveUser(array $csvRow, $sqlHandle): void {
     saveSql('REPLACE INTO `user` SET '.arrayToSetStringUser($row).';', $sqlHandle);
 }
 
-
 /**
  * @param resource $sqlHandle
  */

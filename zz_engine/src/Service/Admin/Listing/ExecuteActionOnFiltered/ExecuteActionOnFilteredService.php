@@ -64,18 +64,22 @@ class ExecuteActionOnFilteredService
         $stmt->execute();
 
         $selectSql = $qb->getQuery()->getSQL();
-        $stmt = $pdo->prepare("# noinspection SqlResolveForFile
+        $stmt = $pdo->prepare(<<<TAG
+# noinspection SqlResolveForFile
 
 INSERT INTO filtered_id_list (id, listing_id)
 $selectSql #safe, because contains only not bound prepared statement placeholders, that are bound latter
-");
+TAG
+);
         $stmt->execute(Sql::getParametersFromQb($qb));
 
         $pdo = $this->em->getConnection();
-        $stmt = $pdo->prepare('# noinspection SqlResolveForFile
+        $stmt = $pdo->prepare(<<<'TAG'
+# noinspection SqlResolveForFile
 REPLACE INTO listing_custom_field_value (id, listing_id, custom_field_id, custom_field_option_id, value)
 SELECT id, listing_id, :customField, :customFieldOption, :val FROM filtered_id_list
-');
+TAG
+);
         $stmt->bindValue(':customField', $customFieldOption->getCustomField()->getId());
         $stmt->bindValue(':customFieldOption', $customFieldOption->getId());
         $stmt->bindValue(':val', $customFieldOption->getValue());
@@ -87,11 +91,13 @@ SELECT id, listing_id, :customField, :customFieldOption, :val FROM filtered_id_l
         $this->createTempTableWithFiltered();
 
         $pdo = $this->em->getConnection();
-        $stmt = $pdo->prepare('# noinspection SqlResolveForFile
+        $stmt = $pdo->prepare(<<<'TAG'
+# noinspection SqlResolveForFile
 UPDATE listing JOIN filtered_id_list ON listing.id = filtered_id_list.id
 SET category_id = :category_id 
 WHERE 1
-');
+TAG
+);
         $stmt->bindValue(':category_id', $category->getId());
         $stmt->execute();
     }
@@ -106,10 +112,12 @@ WHERE 1
         $qb->addSelect('listing.id');
         $selectSql = $qb->getQuery()->getSQL();
 
-        $stmt = $pdo->prepare("# noinspection SqlResolveForFile
+        $stmt = $pdo->prepare(<<<TAG
+# noinspection SqlResolveForFile
 INSERT INTO filtered_id_list (id)
 $selectSql #safe, because contains only not bound prepared statement placeholders, that are bound latter
-");
+TAG
+);
         $stmt->execute(Sql::getParametersFromQb($qb));
     }
 

@@ -17,4 +17,7 @@
     <rule ref="../../vendor/stesie/phpcs-doctrine-annotation-rules/src/DoctrineAnnotationCodingStandard/ruleset.xml">
         <exclude name="DoctrineAnnotationCodingStandard.Commenting.VarTag"/>
     </rule>
+    <rule ref="Internal.NoCodeFound">
+        <severity>0</severity>
+    </rule>
 </ruleset>

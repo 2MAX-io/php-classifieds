@@ -144,6 +144,18 @@ class User implements UserInterface, RoleInterface, EnablableInterface, EncoderA
         return null; // use the default encoder
     }
 
+    public function __sleep(): array
+    {
+        return [
+            'id',
+            'username',
+            'email',
+            'roles',
+            'enabled',
+            'password',
+        ];
+    }
+
     public function getId(): ?int
     {
         return $this->id;

@@ -24,7 +24,7 @@ class AdminLogoUploadType extends AbstractType
                 new NotBlank(),
                 new Image(),
                 new File([
-                    'maxSize' => '100k'
+                    'maxSize' => '250k'
                 ]),
             ],
         ]);

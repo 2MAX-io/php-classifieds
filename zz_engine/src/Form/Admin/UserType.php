@@ -33,9 +33,7 @@ class UserType extends AbstractType
                 'invalid_message' => 'Repeated value does note match',
                 'constraints' => [
                     new NotBlank(),
-                    new Email([
-                        'mode' => Email::VALIDATION_MODE_STRICT
-                    ]),
+                    new Email(['mode' => Email::VALIDATION_MODE_STRICT]),
                 ],
             ]
         );
@@ -55,9 +53,7 @@ class UserType extends AbstractType
                 'invalid_message' => 'Repeated value does note match',
                 'constraints' => [
                     new NotBlank(),
-                    new Length([
-                        'min' => 2,
-                    ]),
+                    new Length(['min' => 2,]),
                 ],
             ]
         );
@@ -75,11 +71,7 @@ class UserType extends AbstractType
                 'type' => PasswordType::class,
                 'invalid_message' => 'Repeated value does note match',
                 'constraints' => [
-                    new Length(
-                        [
-                            'min' => 8,
-                        ]
-                    ),
+                    new Length(['min' => 8,]),
                 ],
             ]
         );

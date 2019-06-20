@@ -79,6 +79,11 @@ class CustomFieldOption
         return $this->customField;
     }
 
+    public function getCustomFieldNotNull(): CustomField
+    {
+        return $this->customField;
+    }
+
     public function setCustomField(?CustomField $customField): self
     {
         $this->customField = $customField;

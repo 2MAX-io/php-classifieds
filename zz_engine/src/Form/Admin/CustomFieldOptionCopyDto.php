@@ -18,6 +18,11 @@ class CustomFieldOptionCopyDto
         return $this->sourceCustomField;
     }
 
+    public function getSourceCustomFieldNotNull(): CustomField
+    {
+        return $this->sourceCustomField;
+    }
+
     public function setSourceCustomField(?CustomField $sourceCustomField): void
     {
         $this->sourceCustomField = $sourceCustomField;

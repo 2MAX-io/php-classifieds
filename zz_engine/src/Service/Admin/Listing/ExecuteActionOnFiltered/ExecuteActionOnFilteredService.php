@@ -54,10 +54,10 @@ class ExecuteActionOnFilteredService
 
         $qb->andWhere($qb->expr()->isNull('listingCustomFieldValueExceptChanged.id'));
         $qb->andWhere($qb->expr()->eq('categoryCustomFieldJoin.customField', ':categoryCustomField'));
-        $qb->setParameter(':customField', $customFieldOption->getCustomField()->getId());
+        $qb->setParameter(':customField', $customFieldOption->getCustomFieldNotNull()->getId());
         $qb->setParameter(':customFieldOption', $customFieldOption->getId());
         $qb->setParameter(':value', $customFieldOption->getValue());
-        $qb->setParameter(':categoryCustomField', $customFieldOption->getCustomField()->getId());
+        $qb->setParameter(':categoryCustomField', $customFieldOption->getCustomFieldNotNull()->getId());
 
         $pdo = $this->em->getConnection();
         $stmt = $pdo->prepare('CREATE TEMPORARY TABLE filtered_id_list (`id` int(11) UNSIGNED NOT NULL, `listing_id` int(11) UNSIGNED NOT NULL);');
@@ -80,7 +80,7 @@ REPLACE INTO listing_custom_field_value (id, listing_id, custom_field_id, custom
 SELECT id, listing_id, :customField, :customFieldOption, :val FROM filtered_id_list
 TAG
 );
-        $stmt->bindValue(':customField', $customFieldOption->getCustomField()->getId());
+        $stmt->bindValue(':customField', $customFieldOption->getCustomFieldNotNull()->getId());
         $stmt->bindValue(':customFieldOption', $customFieldOption->getId());
         $stmt->bindValue(':val', $customFieldOption->getValue());
         $stmt->execute();

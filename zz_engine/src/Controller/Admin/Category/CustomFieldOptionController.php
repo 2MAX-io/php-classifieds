@@ -105,7 +105,7 @@ class CustomFieldOptionController extends AbstractAdminController
 
             if ($saveAndAddButton->getClickedButton() instanceof SubmitButton && $saveAndAddButton->getClickedButton()->isClicked()) {
                 return $this->redirectToRoute('app_admin_custom_field_option_add', [
-                    'id' => $customFieldOption->getCustomField()->getId(),
+                    'id' => $customFieldOption->getCustomFieldNotNull()->getId(),
                 ]);
             }
 
@@ -151,7 +151,7 @@ class CustomFieldOptionController extends AbstractAdminController
             $customFieldOptionService->reorder();
         }
 
-        return $this->redirectToRoute('app_admin_custom_field_edit', ['id' => $customFieldOption->getCustomField()->getId()]);
+        return $this->redirectToRoute('app_admin_custom_field_edit', ['id' => $customFieldOption->getCustomFieldNotNull()->getId()]);
     }
 
     /**

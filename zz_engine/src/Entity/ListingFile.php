@@ -88,6 +88,11 @@ class ListingFile
         return $this->listing;
     }
 
+    public function getListingNotNull(): Listing
+    {
+        return $this->listing;
+    }
+
     public function setListing(?Listing $listing): self
     {
         $this->listing = $listing;

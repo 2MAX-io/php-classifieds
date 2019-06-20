@@ -88,10 +88,7 @@ class RegisterController extends AbstractUserController
         }
 
         $user = $userRepository->findByEmail($userEmail);
-        if (!$user instanceof User) {
-            throw new UserVisibleMessageException('User could not be found by email');
-        }
-        if ($user->getEmail() !== $userEmail) {
+        if ($user instanceof User && $user->getEmail() !== $userEmail) {
             $flashService->addFlash(
                 FlashService::ERROR_ABOVE_FORM,
                 'trans.Confirmation link is invalid or expired, check if confirmation link is correct'

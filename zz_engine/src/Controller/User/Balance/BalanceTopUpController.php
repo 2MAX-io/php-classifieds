@@ -31,7 +31,7 @@ class BalanceTopUpController extends AbstractUserController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $paymentDto = $paymentService->createPaymentForTopUp(
-                $currentUserService->getUserOrNull(),
+                $currentUserService->getUser(),
                 Integer::toInteger($form->get(TopUpBalanceType::TOP_UP_AMOUNT)->getData() * 100)
             );
 
@@ -44,7 +44,7 @@ class BalanceTopUpController extends AbstractUserController
             'user/balance/balance_top_up.html.twig',
             [
                 'form' => $form->createView(),
-                'userBalance' => $userBalanceService->getCurrentBalance($currentUserService->getUserOrNull()),
+                'userBalance' => $userBalanceService->getCurrentBalance($currentUserService->getUser()),
             ]
         );
     }

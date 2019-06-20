@@ -63,7 +63,6 @@ class CurrentUserService
     public function getUser(): User
     {
         $user = $this->security->getUser();
-
         if ($user instanceof User) {
             return $user;
         }

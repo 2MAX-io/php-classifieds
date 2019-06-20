@@ -40,13 +40,13 @@ class PaginationService
 
     public function getMaxPerPage(): int
     {
-        $default = $this->settingsService->getSettingsDto()->getItemsPerPageMax();
+        $default = (int) $this->settingsService->getSettingsDto()->getItemsPerPageMax();
         if ($default < 1) {
             $default = 10;
         }
 
         $request = $this->requestStack->getMasterRequest();
-        if (null !== $request) {
+        if (null === $request) {
             return $default;
         }
         $fromRequest = $request->get('perPage', $default);

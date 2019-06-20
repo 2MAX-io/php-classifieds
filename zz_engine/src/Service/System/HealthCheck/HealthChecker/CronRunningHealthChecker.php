@@ -43,7 +43,7 @@ class CronRunningHealthChecker implements HealthCheckerInterface
 
         $dateAfterCronShouldRun = Carbon::now()->subHours(24)->startOfDay();
         if ($lastCronRunSystemLog->getDate() < $dateAfterCronShouldRun) {
-            $lastRunDate = $lastCronRunSystemLog->getDate()->format('Y-m-d, H:i');
+            $lastRunDate = $lastCronRunSystemLog->getDateNotNull()->format('Y-m-d, H:i');
             return new HealthCheckResultDto(true, $this->trans->trans('trans.Cron for this application is not set up, cron did not run after: %date%', [
                 '%date%' => $lastRunDate,
             ]));

@@ -31,7 +31,7 @@ class ListingFileRemoveController extends AbstractAdminController
         }
 
         return $this->redirectToRoute('app_admin_listing_edit', [
-            'id' => $listingFile->getListing()->getId(),
+            'id' => $listingFile->getListingNotNull()->getId(),
         ]);
     }
 }

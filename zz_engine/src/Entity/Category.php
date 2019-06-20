@@ -228,6 +228,11 @@ class Category
         return $this->parent;
     }
 
+    public function getParentNotNull(): self
+    {
+        return $this->parent;
+    }
+
     public function setParent(?self $parent): self
     {
         $this->parent = $parent;

@@ -408,6 +408,11 @@ class Listing
         return $this->category;
     }
 
+    public function getCategoryNotNull(): Category
+    {
+        return $this->category;
+    }
+
     public function setCategory(?Category $category): self
     {
         $this->category = $category;
@@ -470,6 +475,11 @@ class Listing
     }
 
     public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function getUserNotNull(): User
     {
         return $this->user;
     }

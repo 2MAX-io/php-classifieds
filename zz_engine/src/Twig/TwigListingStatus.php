@@ -32,23 +32,31 @@ class TwigListingStatus implements RuntimeExtensionInterface
         $status = $listing->getStatus();
 
         if ($status === $listing::STATUS_ACTIVE_FEATURED) {
+            $featuredUntilDate = $this->translator->trans('trans.none');
+            if ($listing->getFeaturedUntilDate() instanceof \DateTimeInterface) {
+                $featuredUntilDate = $listing->getFeaturedUntilDate()->format(
+                    $this->environmentService->getTwigDateFormatShort()
+                );
+            }
             return $this->translator->trans(
                 "trans.listing.status.$status",
                 [
-                    '%featuredUntilDate%' => $listing->getFeaturedUntilDate()->format(
-                        $this->environmentService->getTwigDateFormatShort()
-                    ),
+                    '%featuredUntilDate%' => $featuredUntilDate,
                 ]
             );
         }
 
         if ($status === $listing::STATUS_ACTIVE) {
+            $activeUntilDate = $this->translator->trans('trans.none');
+            if ($listing->getValidUntilDate() instanceof \DateTimeInterface) {
+                $activeUntilDate = $listing->getValidUntilDate()->format(
+                    $this->environmentService->getTwigDateFormatShort()
+                );
+            }
             return $this->translator->trans(
                 "trans.listing.status.$status",
                 [
-                    '%activeUntilDate%' => $listing->getValidUntilDate()->format(
-                        $this->environmentService->getTwigDateFormatShort()
-                    ),
+                    '%activeUntilDate%' => $activeUntilDate,
                 ]
             );
         }

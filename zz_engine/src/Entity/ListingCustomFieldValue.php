@@ -85,6 +85,11 @@ class ListingCustomFieldValue
         return $this->customField;
     }
 
+    public function getCustomFieldNotNull(): CustomField
+    {
+        return $this->customField;
+    }
+
     /**
      * @param CustomField|object|null $customField
      */

@@ -83,6 +83,11 @@ class CustomFieldJoinCategory
         return $this->category;
     }
 
+    public function getCategoryNotNull(): Category
+    {
+        return $this->category;
+    }
+
     public function setCategory(?Category $category): self
     {
         $this->category = $category;

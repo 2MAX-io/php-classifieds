@@ -30,7 +30,7 @@ class CustomFieldOptionCopyService
         $currentOptions = $this->getOptionsIndexedByValue($targetCustomField);
         $sort = $targetCustomField->getCustomFieldOptions()->count() ? $targetCustomField->getCustomFieldOptions()->last()->getSort(): SortService::START_REORDER_FROM;
 
-        foreach ($customFieldOptionCopyDto->getSourceCustomField()->getCustomFieldOptions() as $sourceCustomFieldOption) {
+        foreach ($customFieldOptionCopyDto->getSourceCustomFieldNotNull()->getCustomFieldOptions() as $sourceCustomFieldOption) {
             $sort++;
             $newValue = $sourceCustomFieldOption->getValue();
             if (isset($currentOptions[$newValue])) {

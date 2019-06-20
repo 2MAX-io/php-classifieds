@@ -90,13 +90,13 @@ class ListingFileService
 
     private function getDestinationDirectory(Listing $listing): string
     {
-        $userDivider = \floor($listing->getUser()->getId() / 10000) + 1;
+        $userDivider = \floor($listing->getUserNotNull()->getId() / 10000) + 1;
 
         return FilePath::getListingFilePath()
             . '/'
             . $userDivider
             . '/'
-            . 'user_' . $listing->getUser()->getId()
+            . 'user_' . $listing->getUserNotNull()->getId()
             . '/'
             . 'listing_' . $listing->getId();
     }

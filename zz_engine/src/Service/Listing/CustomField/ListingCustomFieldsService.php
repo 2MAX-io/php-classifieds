@@ -153,11 +153,11 @@ class ListingCustomFieldsService
     private function getListingCustomFieldValues(Listing $listing): array
     {
         return Arr::indexBy($listing->getListingCustomFieldValues()->toArray(), static function(ListingCustomFieldValue $customFieldValue) {
-            if ($customFieldValue->getCustomField()->getType() === CustomField::TYPE_CHECKBOX_MULTIPLE) {
-                return [$customFieldValue->getCustomField()->getId() . '_' . $customFieldValue->getValue() => $customFieldValue];
+            if ($customFieldValue->getCustomFieldNotNull()->getType() === CustomField::TYPE_CHECKBOX_MULTIPLE) {
+                return [$customFieldValue->getCustomFieldNotNull()->getId() . '_' . $customFieldValue->getValue() => $customFieldValue];
             }
 
-            return [$customFieldValue->getCustomField()->getId() => $customFieldValue];
+            return [$customFieldValue->getCustomFieldNotNull()->getId() => $customFieldValue];
         });
     }
 }

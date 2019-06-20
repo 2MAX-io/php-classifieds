@@ -78,7 +78,7 @@ class AdminCategoryController extends AbstractAdminController
 
             if ($saveAndAddButton->getClickedButton() instanceof SubmitButton && $saveAndAddButton->getClickedButton()->isClicked()) {
                 return $this->redirectToRoute('app_admin_category_new', [
-                    'parentCategory' => $category->getParent()->getId(),
+                    'parentCategory' => $category->getParentNotNull()->getId(),
                 ]);
             }
 
@@ -123,7 +123,7 @@ class AdminCategoryController extends AbstractAdminController
 
             if ($saveAndAddButton->getClickedButton() instanceof SubmitButton && $saveAndAddButton->getClickedButton()->isClicked()) {
                 return $this->redirectToRoute('app_admin_category_new', [
-                    'parentCategory' => $category->getParent()->getId(),
+                    'parentCategory' => $category->getParentNotNull()->getId(),
                 ]);
             }
 

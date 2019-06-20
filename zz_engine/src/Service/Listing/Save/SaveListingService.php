@@ -203,9 +203,9 @@ class SaveListingService
         $slugSourceText = '';
         $slugSourceText .= $listing->getTitle();
         $slugSourceText .= ' ';
-        $slugSourceText .= $listing->getCategory()->getName();
+        $slugSourceText .= $listing->getCategoryNotNull()->getName();
         $slugSourceText .= ' ';
-        $slugSourceText .= $listing->getCategory()->getParent()->getName();
+        $slugSourceText .= $listing->getCategoryNotNull()->getParentNotNull()->getName();
         $slugSourceText .= ' ';
 
         foreach ($listing->getListingCustomFieldValues() as $listingCustomFieldValue) {

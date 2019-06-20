@@ -45,7 +45,7 @@ class CategoryCustomFieldController extends AbstractAdminController
             $customFieldForCategoryService->reorder();
 
             return $this->redirectToRoute('app_admin_category_edit', [
-                'id' => $customFieldJoinCategory->getCategory()->getId(),
+                'id' => $customFieldJoinCategory->getCategoryNotNull()->getId(),
             ]);
         }
 
@@ -105,7 +105,7 @@ class CategoryCustomFieldController extends AbstractAdminController
         }
 
         return $this->redirectToRoute('app_admin_category_edit', [
-            'id' => $customFieldJoinCategory->getCategory()->getId(),
+            'id' => $customFieldJoinCategory->getCategoryNotNull()->getId(),
         ]);
     }
 }

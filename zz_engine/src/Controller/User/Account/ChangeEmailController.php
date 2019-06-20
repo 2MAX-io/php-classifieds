@@ -33,7 +33,7 @@ class ChangeEmailController extends AbstractUserController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $changeEmailService->sendConfirmation(
-                $currentUserService->getUserOrNull(),
+                $currentUserService->getUser(),
                 $form->get(ChangeEmailType::FORM_NEW_EMAIL)->getData()
             );
 

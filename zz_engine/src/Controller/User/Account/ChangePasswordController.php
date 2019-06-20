@@ -33,7 +33,7 @@ class ChangePasswordController extends AbstractUserController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $changePasswordService->sendConfirmation(
-                $currentUserService->getUserOrNull(),
+                $currentUserService->getUser(),
                 $form->get(ChangePasswordType::FORM_NEW_PASSWORD)->getData()
             );
 

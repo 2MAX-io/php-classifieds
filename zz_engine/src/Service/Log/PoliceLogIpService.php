@@ -38,7 +38,7 @@ class PoliceLogIpService
             )
         ));
         $qb->setParameter(':listingId', $listing->getId());
-        $qb->setParameter(':userId', $listing->getUser()->getId());
+        $qb->setParameter(':userId', $listing->getUserNotNull()->getId());
 
         $qb->addOrderBy('log.datetime', 'ASC');
 

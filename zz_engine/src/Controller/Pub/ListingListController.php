@@ -114,7 +114,7 @@ class ListingListController extends AbstractController
             'app_last_added' => $this->trans->trans('trans.Last added'),
             'app_user_listings' => $this->trans->trans('trans.Listings of user'),
             'app_category' => static function() use ($listingListDto) {
-                return $listingListDto->getCategory()->getName();
+                return $listingListDto->getCategoryNotNull()->getName();
             },
         ];
 

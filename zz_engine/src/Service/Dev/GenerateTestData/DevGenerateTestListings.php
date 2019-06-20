@@ -89,7 +89,7 @@ class DevGenerateTestListings
 
     private function setCustomFields(Listing $listing): void
     {
-        foreach ($listing->getCategory()->getCustomFields() as $customField) {
+        foreach ($listing->getCategoryNotNull()->getCustomFields() as $customField) {
             $this->addMultipleCustomFieldValues($listing, $customField);
             $this->setYearRange($listing, $customField);
             $this->setIntegerRange($listing, $customField);

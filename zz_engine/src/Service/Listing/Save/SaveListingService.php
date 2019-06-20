@@ -78,8 +78,8 @@ class SaveListingService
         $listing->setOrderByDate($currentDate);
         $listing->setEmailShow(true);
 
-        if ($this->currentUserService->getUser()) {
-            $listing->setEmail($this->currentUserService->getUser()->getEmail());
+        if ($this->currentUserService->getUserOrNull()) {
+            $listing->setEmail($this->currentUserService->getUserOrNull()->getEmail());
         }
 
         return $listing;
@@ -101,7 +101,7 @@ class SaveListingService
         $this->saveSearchText($listing);
 
         if (!$listing->getUser()) { // set user when creating, if not set
-            $listing->setUser($this->currentUserService->getUser());
+            $listing->setUser($this->currentUserService->getUserOrNull());
         }
 
         $listing->setDescription(

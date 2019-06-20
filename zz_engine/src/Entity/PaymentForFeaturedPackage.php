@@ -46,7 +46,7 @@ class PaymentForFeaturedPackage
         return $this->payment;
     }
 
-    public function setPayment(Payment $payment): self
+    public function setPayment(?Payment $payment): self
     {
         $this->payment = $payment;
 

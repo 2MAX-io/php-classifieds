@@ -22,7 +22,6 @@ class BalanceHistoryController extends AbstractUserController
         UserBalanceHistoryService $userBalanceHistoryService
     ): Response {
         $this->dennyUnlessUser();
-
         $currentUser = $currentUserService->getUser();
 
         return $this->render(

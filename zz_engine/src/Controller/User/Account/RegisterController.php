@@ -7,6 +7,8 @@ namespace App\Controller\User\Account;
 use App\Controller\User\Base\AbstractUserController;
 use App\Entity\Token;
 use App\Entity\TokenField;
+use App\Entity\User;
+use App\Exception\UserVisibleMessageException;
 use App\Form\User\Account\RegisterType;
 use App\Repository\UserRepository;
 use App\Service\FlashBag\FlashService;
@@ -86,6 +88,9 @@ class RegisterController extends AbstractUserController
         }
 
         $user = $userRepository->findByEmail($userEmail);
+        if (!$user instanceof User) {
+            throw new UserVisibleMessageException('User could not be found by email');
+        }
         if ($user->getEmail() !== $userEmail) {
             $flashService->addFlash(
                 FlashService::ERROR_ABOVE_FORM,

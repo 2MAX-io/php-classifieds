@@ -10,6 +10,7 @@ use App\Entity\CustomFieldJoinCategory;
 use App\Helper\Arr;
 use App\Service\System\Sort\SortService;
 use Doctrine\ORM\EntityManagerInterface;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 class CustomFieldCategorySelectionService
@@ -24,10 +25,16 @@ class CustomFieldCategorySelectionService
      */
     private $requestStack;
 
-    public function __construct(RequestStack $requestStack, EntityManagerInterface $em)
+    /**
+     * @var LoggerInterface
+     */
+    private $logger;
+
+    public function __construct(RequestStack $requestStack, EntityManagerInterface $em, LoggerInterface $logger)
     {
         $this->em = $em;
         $this->requestStack = $requestStack;
+        $this->logger = $logger;
     }
 
     /**
@@ -41,7 +48,7 @@ class CustomFieldCategorySelectionService
         foreach ($categories as $category) {
             $customFieldCategorySelectionItemDto = new CustomFieldCategorySelectionItemDto();
             $customFieldCategorySelectionItemDto->setCategory($category);
-            $selectedInRequest = $this->requestStack->getMasterRequest()->get('selectedCategories', []);
+            $selectedInRequest = $this->getSelectedCategories();
             $customFieldCategorySelectionItemDto->setSelected(
                 $this->requestStack->getCurrentRequest()->request->count() ?
                     Arr::inArray((string) $category->getId(), $selectedInRequest)
@@ -131,5 +138,17 @@ class CustomFieldCategorySelectionService
                 $this->em->remove($customFieldJoinCategory);
             }
         }
+    }
+
+    private function getSelectedCategories(): array
+    {
+        $request = $this->requestStack->getMasterRequest();
+        if (null === $request) {
+            $this->logger->error('request not found');
+
+            return [];
+        }
+
+        return $request->get('selectedCategories', []);
     }
 }

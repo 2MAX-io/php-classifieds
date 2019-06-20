@@ -26,6 +26,11 @@ class ContainerHelper
 
     public static function getSettings(): SettingsDto
     {
-        return static::getContainer()->get(SettingsService::class)->getSettingsDto();
+        $container = static::getContainer();
+        if (!$container instanceof ContainerInterface) {
+            throw new \RuntimeException('could not find container');
+        }
+
+        return $container->get(SettingsService::class)->getSettingsDto();
     }
 }

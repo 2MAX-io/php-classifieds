@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Form\Admin\ExecuteAction;
 
+use App\Entity\CustomField;
 use App\Entity\CustomFieldOption;
 use App\Form\Type\CategoryType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -56,6 +57,7 @@ class ExecuteActionType extends AbstractType
             'placeholder' => 'trans.Select',
             'class' => CustomFieldOption::class,
             'choice_label' => static function (CustomFieldOption $customFieldOption) {
+                /** @var CustomField $customField */
                 $customField = $customFieldOption->getCustomField();
                 $hint = $customField->getNameForAdmin() ? " ({$customField->getNameForAdmin()})" : '';
 

@@ -45,7 +45,11 @@ class PaginationService
             $default = 10;
         }
 
-        $fromRequest = $this->requestStack->getMasterRequest()->get('perPage', $default);
+        $request = $this->requestStack->getMasterRequest();
+        if (null !== $request) {
+            return $default;
+        }
+        $fromRequest = $request->get('perPage', $default);
 
         return (int) \min($fromRequest, 100);
     }

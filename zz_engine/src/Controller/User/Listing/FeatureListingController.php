@@ -36,7 +36,7 @@ class FeatureListingController extends AbstractUserController
         return $this->render('user/listing/feature_listing.twig', [
             'listing' => $listing,
             'packages' => $featuredPackageService->getPackages($listing),
-            'userBalance' => $userBalanceService->getCurrentBalance($currentUserService->getUser()),
+            'userBalance' => $userBalanceService->getCurrentBalance($currentUserService->getUserOrNull()),
         ]);
     }
 

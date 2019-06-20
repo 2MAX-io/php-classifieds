@@ -23,8 +23,11 @@ class VersionCheckService
     public function canUpgrade(): bool
     {
         $latestVersionDto = $this->upgradeApiService->getLatestVersion();
+        if (null === $latestVersionDto) {
+            return false;
+        }
 
-        return $this->fetchedLatestVersion() && $latestVersionDto->getVersion() > $this->getInstalledVersion();
+        return $latestVersionDto->getVersion() > $this->getInstalledVersion();
     }
 
     public function getLatestVersion(): ?LatestVersionDto
@@ -35,10 +38,5 @@ class VersionCheckService
     public function getInstalledVersion(): int
     {
         return Version::getVersion();
-    }
-
-    private function fetchedLatestVersion(): bool
-    {
-        return $this->upgradeApiService->getLatestVersion() !== null;
     }
 }

@@ -75,7 +75,7 @@ class PaymentService
         );
         $paymentDto->setCurrency($this->settingsService->getCurrency());
         $paymentDto->setAmount($featuredPackage->getPrice());
-        $paymentDto->setUser($this->currentUserService->getUser());
+        $paymentDto->setUser($this->currentUserService->getUserOrNull());
         if ($this->settingsService->getSettingsDto()->getPaymentGatewayPaymentDescription()) {
             $paymentDto->setGatewayPaymentDescription($this->settingsService->getSettingsDto()->getPaymentGatewayPaymentDescription());
         } else {
@@ -107,7 +107,7 @@ class PaymentService
         );
         $paymentDto->setCurrency($this->settingsService->getCurrency());
         $paymentDto->setAmount($amount);
-        $paymentDto->setUser($this->currentUserService->getUser());
+        $paymentDto->setUser($this->currentUserService->getUserOrNull());
         if ($this->settingsService->getSettingsDto()->getPaymentGatewayPaymentDescription()) {
             $paymentDto->setGatewayPaymentDescription($this->settingsService->getSettingsDto()->getPaymentGatewayPaymentDescription());
         } else {

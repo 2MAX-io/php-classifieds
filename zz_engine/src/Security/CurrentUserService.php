@@ -49,7 +49,7 @@ class CurrentUserService
         $this->runtimeCache = $runtimeCache;
     }
 
-    public function getUser(): ?User
+    public function getUserOrNull(): ?User
     {
         $user = $this->security->getUser();
 
@@ -60,7 +60,18 @@ class CurrentUserService
         return null;
     }
 
-    public function getAdmin(): ?Admin
+    public function getUser(): User
+    {
+        $user = $this->security->getUser();
+
+        if ($user instanceof User) {
+            return $user;
+        }
+
+        throw new \RuntimeException('could not get current user');
+    }
+
+    public function getAdminOrNull(): ?Admin
     {
         $user = $this->security->getUser();
 
@@ -73,12 +84,12 @@ class CurrentUserService
 
     public function isAdmin(): bool
     {
-        return $this->getAdmin() instanceof Admin;
+        return $this->getAdminOrNull() instanceof Admin;
     }
 
     public function isCurrentUser(User $user): bool
     {
-        return $this->getUser() === $user;
+        return $this->getUserOrNull() === $user;
     }
 
     public function isLoggedInUser(): bool

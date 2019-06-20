@@ -71,7 +71,7 @@ class PoliceLogIpService
         $log->setListingId($listing->getId());
 
         $userEmail = '';
-        $user = $this->currentUserService->getUser();
+        $user = $this->currentUserService->getUserOrNull();
         if ($user) {
             $log->setUserId($user->getId());
             $userEmail = $user->getEmail();

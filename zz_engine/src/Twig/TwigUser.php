@@ -44,12 +44,12 @@ class TwigUser implements RuntimeExtensionInterface
 
     public function isCurrentUserListing(Listing $listing): bool
     {
-        return $this->currentUserService->getUser() === $listing->getUser();
+        return $this->currentUserService->getUserOrNull() === $listing->getUser();
     }
 
     public function userOrAdmin(Listing $listing): bool
     {
-        return $this->currentUserService->getUser() === $listing->getUser() || $this->currentUserService->lowSecurityCheckIsAdminInPublic();
+        return $this->currentUserService->getUserOrNull() === $listing->getUser() || $this->currentUserService->lowSecurityCheckIsAdminInPublic();
     }
 
     public function displayAsExpired(Listing $listing, bool $showPreviewForOwner = false): bool
@@ -59,7 +59,7 @@ class TwigUser implements RuntimeExtensionInterface
         /** @noinspection NotOptimalIfConditionsInspection */
         if ($showPreviewForOwner &&
             (
-                $this->currentUserService->getUser() === $listing->getUser()
+                $this->currentUserService->getUserOrNull() === $listing->getUser()
                 || $this->currentUserService->lowSecurityCheckIsAdminInPublic()
             )
         ) {

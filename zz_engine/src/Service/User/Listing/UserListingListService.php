@@ -61,7 +61,7 @@ class UserListingListService
         $qb->join('listing.category', 'category');
         $qb->join('category.parent', 'categoryParent');
         $qb->andWhere($qb->expr()->eq('listing.user', ':user'));
-        $qb->setParameter(':user', $this->currentUserService->getUser());
+        $qb->setParameter(':user', $this->currentUserService->getUserOrNull());
 
         $qb->andWhere($qb->expr()->eq('listing.userRemoved', 0));
 

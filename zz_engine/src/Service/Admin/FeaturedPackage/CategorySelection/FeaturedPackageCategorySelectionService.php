@@ -9,6 +9,7 @@ use App\Entity\FeaturedPackage;
 use App\Entity\FeaturedPackageForCategory;
 use App\Helper\Arr;
 use Doctrine\ORM\EntityManagerInterface;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 class FeaturedPackageCategorySelectionService
@@ -23,10 +24,16 @@ class FeaturedPackageCategorySelectionService
      */
     private $requestStack;
 
-    public function __construct(RequestStack $requestStack, EntityManagerInterface $em)
+    /**
+     * @var LoggerInterface
+     */
+    private $logger;
+
+    public function __construct(RequestStack $requestStack, EntityManagerInterface $em, LoggerInterface $logger)
     {
         $this->em = $em;
         $this->requestStack = $requestStack;
+        $this->logger = $logger;
     }
 
     /**
@@ -40,7 +47,7 @@ class FeaturedPackageCategorySelectionService
         foreach ($categories as $category) {
             $categorySelectionDto = new FeaturedPackageCategorySelectionDto();
             $categorySelectionDto->setCategory($category);
-            $selectedInRequest = $this->requestStack->getMasterRequest()->get('selectedCategories', []);
+            $selectedInRequest = $this->getSelectedCategories();
             $categorySelectionDto->setSelected(
                 $this->requestStack->getCurrentRequest()->request->count() ?
                     Arr::inArray((string) $category->getId(), $selectedInRequest)
@@ -129,5 +136,17 @@ class FeaturedPackageCategorySelectionService
                 $this->em->remove($featuredPackageJoin);
             }
         }
+    }
+
+    private function getSelectedCategories(): array
+    {
+        $request = $this->requestStack->getMasterRequest();
+        if (null === $request) {
+            $this->logger->error('request not found');
+
+            return [];
+        }
+
+        return $request->get('selectedCategories', []);
     }
 }

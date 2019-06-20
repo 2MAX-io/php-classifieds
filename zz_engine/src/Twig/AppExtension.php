@@ -25,6 +25,7 @@ class AppExtension extends AbstractExtension
             new TwigFunction('getCleaveConfig', [TwigNoDependencies::class, 'getCleaveConfig']),
             new TwigFunction('optionAttr', [TwigForm::class, 'optionAttr'], ['is_safe' => ['html']]),
             new TwigFunction('returnPlusIfPositive', [TwigNoDependencies::class, 'returnPlusIfPositive']),
+            new TwigFunction('secondsUntil', [TwigNoDependencies::class, 'secondsUntil']),
         ];
     }
 

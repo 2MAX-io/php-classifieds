@@ -6,6 +6,8 @@ namespace App\Twig;
 
 use App\Helper\Str;
 use App\System\Localization\AppNumberFormatter;
+use Carbon\Carbon;
+use DateTimeInterface;
 use Twig\Extension\RuntimeExtensionInterface;
 
 class TwigNoDependencies implements RuntimeExtensionInterface
@@ -111,5 +113,14 @@ class TwigNoDependencies implements RuntimeExtensionInterface
     public function normalizeWhitespace(string $string): string
     {
         return \trim(\preg_replace('/\s+/u', ' ', $string));
+    }
+
+    public function secondsUntil(?DateTimeInterface $dateTime): ?int
+    {
+        if (null === $dateTime) {
+            return null;
+        }
+
+        return Carbon::instance($dateTime)->diffInSeconds(Carbon::now());
     }
 }

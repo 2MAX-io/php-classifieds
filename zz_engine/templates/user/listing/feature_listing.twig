@@ -57,7 +57,7 @@
                             </div>
                         {% endfor %}
 
-
+                        {% if not listing.featured or secondsUntil(listing.featuredUntilDate) < 1800 %}
                         <div class="col-md-4">
                             <h4>{{ 'trans.Featured demonstration' | trans }}</h4>
 
@@ -69,6 +69,7 @@
                                 {% endif %}
                             </div>
                         </div>
+                        {% endif %}
                     </div>
 
                     <div class="alert alert-info mt-3">

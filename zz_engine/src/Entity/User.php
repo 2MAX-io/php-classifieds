@@ -144,6 +144,9 @@ class User implements UserInterface, RoleInterface, EnablableInterface, EncoderA
         return null; // use the default encoder
     }
 
+    /**
+     * prevents big session, when serializing user security token
+     */
     public function __sleep(): array
     {
         return [

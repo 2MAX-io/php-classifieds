@@ -59,7 +59,7 @@ class FeaturedListingService
         }
 
         $newFeaturedUntilDate = Carbon::instance($baseDatetimeToAddFeaturedInterval)->addSeconds($featuredTimeSeconds);
-        if ($newFeaturedUntilDate > Carbon::now()->addHour(24)) {
+        if ($newFeaturedUntilDate > Carbon::now()->addHour(16)) {
             $newFeaturedUntilDate->setTime(23, 59, 59);
         }
 

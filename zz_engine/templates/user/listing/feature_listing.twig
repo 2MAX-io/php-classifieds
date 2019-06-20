@@ -57,7 +57,7 @@
                             </div>
                         {% endfor %}
 
-                        {% if not listing.featured or secondsUntil(listing.featuredUntilDate) < 1800 %}
+                        {% if listing.featuredUntilDate is null or (listing.featured and diffToNowWithinSeconds(listing.featuredUntilDate, -1800, 0)) %}
                         <div class="col-md-4">
                             <h4>{{ 'trans.Featured demonstration' | trans }}</h4>
 

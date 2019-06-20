@@ -115,12 +115,17 @@ class TwigNoDependencies implements RuntimeExtensionInterface
         return \trim(\preg_replace('/\s+/u', ' ', $string));
     }
 
-    public function secondsUntil(?DateTimeInterface $dateTime): ?int
+    /**
+     * diffToNowWithinSeconds(listing.featuredUntilDate, -1800, 0)
+     * true if less than 1800 seconds to now
+     */
+    public function diffToNowWithinSeconds(?DateTimeInterface $dateTime, int $maxSecondsLeft, int $maxSecondsRight=0): bool
     {
         if (null === $dateTime) {
-            return null;
+            return false;
         }
+        $diffInSeconds = Carbon::instance($dateTime)->diffInSeconds(Carbon::now(), false);
 
-        return Carbon::instance($dateTime)->diffInSeconds(Carbon::now());
+        return $maxSecondsLeft < $diffInSeconds && $diffInSeconds < $maxSecondsRight;
     }
 }

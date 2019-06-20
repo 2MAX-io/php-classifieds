@@ -74,7 +74,7 @@ class Category
     private $children;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Listing", mappedBy="category")
+     * @ORM\OneToMany(targetEntity="App\Entity\Listing", mappedBy="category", fetch="EXTRA_LAZY")
      */
     private $listings;
 

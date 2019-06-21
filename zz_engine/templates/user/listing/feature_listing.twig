@@ -28,7 +28,7 @@
 
                 {% if userBalance > 0 %}
                     <div class="my-4">
-                        {{ 'trans.Your balance is' | trans }}:
+                        {{ 'trans.Current balance' | trans }}:
                         <strong class="badge badge-success">{{ userBalance | moneyPrecise }}</strong>
                         {{ 'trans.that you can use to feature listings' | trans }}
                     </div>
@@ -59,7 +59,7 @@
 
                         {% if listing.featuredUntilDate is null or (listing.featured and diffToNowWithinSeconds(listing.featuredUntilDate, -1800, 0)) %}
                         <div class="col-md-4">
-                            <h4>{{ 'trans.Featured demonstration' | trans }}</h4>
+                            <h4>{{ 'trans.Try featured' | trans }}</h4>
 
                             <div>
                                 {% if listing.featuredUntilDate is null %}
@@ -76,9 +76,6 @@
                         <div>
                             {{ 'trans.Do you feature many listings?' | trans }}
                             {{ 'trans.Do you feature frequently?' | trans }}
-                        </div>
-                        <div>
-                            {{ 'trans.Consider topping up your account and feature listings by one click, using your account balance' | trans }}
                         </div>
 
                         <a href="{{ path('app_user_balance_top_up') }}" class="btn btn-primary">

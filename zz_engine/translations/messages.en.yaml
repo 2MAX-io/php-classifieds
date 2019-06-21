@@ -423,10 +423,10 @@ trans.Users: Users
 'trans.Set balance to': 'Set balance to'
 'trans.User list': 'User list'
 trans.Username: Username
-'trans.Featured demonstration': 'Featured demonstration'
+'trans.Try featured': 'Try featured'
 '{1}trans.Feature for one day for %price%: %listing%?|]1,Inf[ Feature for %featuredDays% days for %price%: %listing%?': '{1}Feature for one day for %price%: %listing%?|]1,Inf[ Feature for %featuredDays% days for %price%: %listing%?'
 '{1}trans.Feature for one day for %price%|]1,Inf[ Feature for %featuredDays% days for %price%': '{1} Feature for one day for %price%|]1,Inf[ Feature for %featuredDays% days for %price%'
-'trans.Your balance is': 'Your balance is'
+'trans.Current balance': 'Current balance'
 'trans.that you can use to feature listings': 'that you can use to feature listings'
 'trans.Confirmation link is invalid or expired, check if confirmation link is correct': 'Confirmation link is invalid or expired, check if confirmation link is correct'
 'trans.Registration means acceptance of the': 'Registration means acceptance of the'

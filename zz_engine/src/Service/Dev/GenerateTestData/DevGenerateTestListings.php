@@ -229,6 +229,10 @@ class DevGenerateTestListings
             $listing->addListingFile($listingFile);
 
             $this->em->persist($listingFile);
+
+            if (!$listing->getMainImage()) {
+                $listing->setMainImage($listingFile->getPath());
+            }
         }
     }
 

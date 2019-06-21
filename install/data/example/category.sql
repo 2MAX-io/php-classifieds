@@ -55,7 +55,7 @@ INSERT INTO category (id, parent_id, name, slug, sort, lft, rgt, lvl, picture) V
 INSERT INTO category (id, parent_id, name, slug, sort, lft, rgt, lvl, picture) VALUES (58, 53, 'Financial Advice', 'financial-advice', 156, 169, 170, 2, null);
 INSERT INTO category (id, parent_id, name, slug, sort, lft, rgt, lvl, picture) VALUES (59, 53, 'Solicitor and Conveyancing', 'solicitor-and-conveyancing', 157, 165, 166, 2, null);
 INSERT INTO category (id, parent_id, name, slug, sort, lft, rgt, lvl, picture) VALUES (60, 53, 'Other', 'other-financial-accounting-legal-services', 158, 173, 174, 2, null);
-INSERT INTO category (id, parent_id, name, slug, sort, lft, rgt, lvl, picture) VALUES (61, 1, 'Sport, Travel and Laisure', 'sport-travel-laisure', 159, 138, 163, 1, 'static/system/category/sport.jpg');
+INSERT INTO category (id, parent_id, name, slug, sort, lft, rgt, lvl, picture) VALUES (61, 1, 'Sport, Travel and Leisure', 'sport-travel-leisure', 159, 138, 163, 1, 'static/system/category/sport.jpg');
 INSERT INTO category (id, parent_id, name, slug, sort, lft, rgt, lvl, picture) VALUES (62, 61, 'Bicycles', 'bicycles', 160, 161, 162, 2, null);
 INSERT INTO category (id, parent_id, name, slug, sort, lft, rgt, lvl, picture) VALUES (63, 61, 'Fitness and Gym Equipment', 'fitness-gym-equipment', 161, 155, 156, 2, null);
 INSERT INTO category (id, parent_id, name, slug, sort, lft, rgt, lvl, picture) VALUES (64, 61, 'Camping and Hiking', 'camping-and-hiking', 162, 153, 154, 2, null);

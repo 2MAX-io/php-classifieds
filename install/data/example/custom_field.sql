@@ -301,7 +301,7 @@ INSERT INTO custom_field_option (id, custom_field_id, name, value, sort) VALUES 
 INSERT INTO custom_field_option (id, custom_field_id, name, value, sort) VALUES (151, 23, 'Other', 'other', 250);
 INSERT INTO custom_field_option (id, custom_field_id, name, value, sort) VALUES (152, 24, 'Notebook', 'notebook', 252);
 INSERT INTO custom_field_option (id, custom_field_id, name, value, sort) VALUES (153, 24, 'Mac', 'mac', 253);
-INSERT INTO custom_field_option (id, custom_field_id, name, value, sort) VALUES (154, 24, 'Macbook', 'macbook', 254);
+INSERT INTO custom_field_option (id, custom_field_id, name, value, sort) VALUES (154, 24, 'MacBook', 'macbook', 254);
 INSERT INTO custom_field_option (id, custom_field_id, name, value, sort) VALUES (155, 25, 'PS4', 'ps4', 256);
 INSERT INTO custom_field_option (id, custom_field_id, name, value, sort) VALUES (156, 25, 'Xbox One', 'xbox-one', 257);
 INSERT INTO custom_field_option (id, custom_field_id, name, value, sort) VALUES (157, 25, 'PS3', 'ps3', 258);

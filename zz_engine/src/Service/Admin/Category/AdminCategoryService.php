@@ -107,11 +107,6 @@ class AdminCategoryService
 
         $rootCategory->setSort(0);
         $this->reorderCategoryAndChildren($rootCategory, SortService::START_REORDER_FROM);
-
-//        $pdo = $this->em->getConnection();
-//        $stmt = $pdo->prepare('SET @count = :count');
-//        $stmt->execute([':count' => SortService::START_REORDER_FROM]);
-//        $pdo->query('UPDATE `category` SET sort = parent_id*1000 + @count:= @count + 1 WHERE 1 ORDER BY lft ASC, sort ASC;');
     }
 
     private function reorderCategoryAndChildren(Category $parentCategory, int $baseSort = null): void

@@ -148,8 +148,6 @@ class PayPalPaymentMethod implements PaymentMethodInterface
                 'cache.enabled' => true,
                 'cache.FileName' => FilePath::getCacheDir() . '/payPalCache.php', // for determining paypal cache directory
                 'http.CURLOPT_CONNECTTIMEOUT' => 20,
-                // 'http.headers.PayPal-Partner-Attribution-Id' => '123123123'
-                //'log.AdapterFactory' => '\PayPal\Log\DefaultLogFactory' // Factory class implementing \PayPal\Log\PayPalLogFactory
             )
         );
 

@@ -8,7 +8,6 @@ use App\Controller\User\Base\AbstractUserController;
 use App\Entity\Token;
 use App\Entity\TokenField;
 use App\Entity\User;
-use App\Exception\UserVisibleMessageException;
 use App\Form\User\Account\RegisterType;
 use App\Repository\UserRepository;
 use App\Service\FlashBag\FlashService;

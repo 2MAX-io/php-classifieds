@@ -9,7 +9,7 @@ const rename = require('gulp-rename');
 
 function css() {
   return src([
-      'asset/bootstrap.css',
+      'asset/lib/bootstrap/bootstrap.css',
       'asset/style.css',
     ])
     .pipe(concat('app.css'))
@@ -29,7 +29,7 @@ function css() {
 
 function adminCss() {
   return src([
-      'asset/bootstrap.css',
+      'asset/lib/bootstrap/bootstrap.css',
       'asset/style.css',
       'asset/admin.css',
     ])
@@ -69,13 +69,13 @@ function cssBottom() {
 
 function js() {
   return src([
-    'asset/jquery.js',
+    'asset/lib/jquery/jquery.js',
     'asset/bundles/fosjsrouting/js/router.js',
     'asset/bundles/bazingajstranslation/js/translator.min.js',
     'asset/lib/fancybox/jquery.fancybox.js',
     'asset/lib/cleave/cleave.js',
     'asset/lib/autosize/autosize.js',
-    'asset/bootstrap.bundle.js',
+    'asset/lib/bootstrap/bootstrap.bundle.js',
     'asset/main.js',
   ])
     .pipe(sourcemaps.init())
@@ -96,14 +96,14 @@ function js() {
 
 function adminJs() {
   return src([
-    'asset/jquery.js',
+    'asset/lib/jquery/jquery.js',
     'asset/bundles/fosjsrouting/js/router.js',
     'asset/bundles/bazingajstranslation/js/translator.min.js',
     'asset/lib/sortable_js/Sortable.min.js',
     'asset/lib/sortable_js/jquery-sortable.js',
     'asset/lib/cleave/cleave.js',
     'asset/lib/autosize/autosize.js',
-    'asset/bootstrap.bundle.js',
+    'asset/lib/bootstrap/bootstrap.bundle.js',
     'asset/main.js',
     'asset/main_admin.js',
   ])

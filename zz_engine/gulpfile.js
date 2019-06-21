@@ -1,4 +1,4 @@
-const { src, dest, parallel } = require('gulp');
+const { src, dest, parallel, series } = require('gulp');
 const concat = require('gulp-concat');
 const uglify = require('gulp-uglify');
 const cssnano = require('gulp-cssnano');
@@ -128,4 +128,4 @@ exports.css = css;
 exports.cssBottom = cssBottom;
 exports.adminCss = adminCss;
 exports.adminJs = adminJs;
-exports.default = parallel(css, cssBottom, js, adminCss, adminJs);
+exports.default = series(css, cssBottom, js, adminCss, adminJs);

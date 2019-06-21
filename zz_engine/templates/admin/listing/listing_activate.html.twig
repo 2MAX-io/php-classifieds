@@ -5,7 +5,7 @@
 {% block title %}{{ 'trans.Activation' | trans }}{% endblock %}
 
 {% block body %}
-    <div class="mt-1">
+    <div class="mt-2 container-fluid">
         <table class="table table-responsive-sm" id="listings">
             <thead>
             <tr>
@@ -39,11 +39,7 @@
                     <td>
                         <div>
                             <a title="{{ listing.title }}" href="{{ path('app_listing_show', {id: listing.id, 'slug': listing.slug}) }}">
-                                <img
-                                        class="rounded list-small-img"
-                                        alt="{{ listing.title }}"
-                                        src="{{ asset(listing.mainImageInListSize | default('static/system/blank.png')) }}"
-                                >
+                                <img class="rounded list-small-img" alt="{{ listing.title }}" src="{{ asset(listing.mainImageInListSize | default('static/system/blank.png')) }}">
                             </a>
                         </div>
                     </td>

@@ -432,3 +432,5 @@ composer install -d zz_engine --optimize-autoloader
 /var/www/html/zz_engine/bin/console app:dev:generate-test-listings 15000
 composer install -d zz_engine --optimize-autoloader
 php zz_engine/bin/console doctrine:schema:create --dump-sql > install/data/_schema.sql
+/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 2000
+/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 2000

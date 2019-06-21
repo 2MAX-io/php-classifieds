@@ -6,6 +6,10 @@ use App\Kernel;
 use Symfony\Component\Debug\Debug;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * @copyright 2MAX.io Classified Ads
+ * @link https://2max.io
+ */
 ini_set('log_errors', 'On');
 ini_set('error_log', 'zz_engine/var/log/PHP_native_error_'.date('Y-m-d').'.log');
 

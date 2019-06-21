@@ -152,8 +152,9 @@
                     <div>
                         {% for listingFile in listing.listingFiles.slice(1) %}
                             <a
-                                    href="{{ asset(listingFile.pathInNormalSize) }}"
-                                    data-fancybox="file"
+                                    href="javascript:"
+                                    data-fancybox-trigger="file"
+                                    data-fancybox-index="{{ loop.index }}"
                                     class="fancybox"
                             >
                                 <img
@@ -312,7 +313,7 @@
                                 <div class="img-thumbnail d-inline-block mr-2 mb-2" style="width: 120px">
                                     <a
                                             href="{{ asset(listingFile.pathInNormalSize) }}"
-                                            data-fancybox="fileSidebar"
+                                            data-fancybox="file"
                                             class="fancybox"
                                     >
                                         <div

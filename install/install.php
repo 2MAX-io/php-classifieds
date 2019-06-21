@@ -24,10 +24,15 @@ if (!empty($_POST)) {
     $pdo = null;
     $dbName = $_POST['db_name'];
     try {
-        $pdo = new \PDO("mysql:host={$_POST['db_host']};port={$_POST['db_port']};dbname={$_POST['db_name']};charset=utf8mb4", $_POST['db_user'], $_POST['db_pass'], [
-            \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
-            \PDO::ATTR_EMULATE_PREPARES => false,
-        ]);
+        $pdo = new \PDO(
+            "mysql:host={$_POST['db_host']};port={$_POST['db_port']};dbname={$_POST['db_name']};charset=utf8mb4",
+            $_POST['db_user'],
+            $_POST['db_pass'],
+            [
+                \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
+                \PDO::ATTR_EMULATE_PREPARES => false,
+            ]
+        );
 
         if (countTables($dbName) > 0) {
             $errors[] = 'Database is not empty, clear it first';
@@ -59,13 +64,13 @@ if (!empty($_POST)) {
             loadSql(__DIR__ . '/data/settings.sql');
             $pdo->exec("UPDATE setting SET last_update_date = '2010-01-01 00:00:00' WHERE 1");
 
-            if ($_POST['load_categories'] ?? null === '1') {
+            if ($_POST['load_categories'] ?? false) {
                 loadSql(__DIR__ . '/data/example/category.sql');
 
-                if ($_POST['load_custom_fields'] ?? null === '1') {
+                if ($_POST['load_custom_fields'] ?? false) {
                     loadSql(__DIR__ . '/data/example/custom_field.sql');
 
-                    if ($_POST['load_listings'] ?? null === '1') {
+                    if ($_POST['load_listings'] ?? false) {
                         loadSql(__DIR__ . '/data/example/listing_demo_user.sql');
                         loadSql(__DIR__ . '/data/example/listing.large.sql');
 
@@ -76,7 +81,7 @@ if (!empty($_POST)) {
                 }
             }
 
-            if ($_POST['load_pages'] ?? null === '1') {
+            if ($_POST['load_pages'] ?? false) {
                 loadSql(__DIR__ . '/data/example/page.sql');
             }
 
@@ -168,14 +173,14 @@ EOF;
 
 function saveConfig(): void {
     $dbPass = empty($_POST['db_pass']) ? '' : ':' . $_POST['db_pass'];
-    dumpConfig([
+    saveConfigToFile([
         'DATABASE_URL' => "mysql://{$_POST['db_user']}{$dbPass}@{$_POST['db_host']}:{$_POST['db_port']}/{$_POST['db_name']}",
         'MAILER_URL' => "smtp://{$_POST['smtp_host']}:{$_POST['smtp_port']}?encryption=ssl&auth_mode=plain&username={$_POST['smtp_username']}&password={$_POST['smtp_password']}",
         'APP_TIMEZONE' => $_POST['app_timezone'],
     ]);
 }
 
-function dumpConfig(array $config): void {
+function saveConfigToFile(array $config): void {
     $defaultConfig = [
         'APP_ENV' => 'prod',
         'APP_SECRET' => Random::string(64),

@@ -238,7 +238,14 @@ class DevGenerateTestListings
         $user = $this->runtimeCache->get(
             'devGenerateListingsUser',
             function () {
-                $user = $this->em->getRepository(User::class)->findOneBy(['email' => 'user-demo@2max.io']);
+                $qb = $this->em->getRepository(User::class)->createQueryBuilder('user');
+                $qb->andWhere($qb->expr()->orX(
+                    $qb->expr()->eq('user.email', ':email'),
+                    $qb->expr()->eq('user.id', 1),
+                ));
+                $qb->setParameter('email', 'user-demo@2max.io');
+                $qb->orderBy('user.id', 'DESC');
+                $user = $qb->getQuery()->getOneOrNullResult();
 
                 if (!$user) {
                     throw new \UnexpectedValueException('user: user-demo@2max.io not found');

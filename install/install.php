@@ -91,6 +91,7 @@ if (!empty($_POST)) {
 
             $pdo->exec("UPDATE setting SET last_update_date = '2010-01-01 00:00:00' WHERE 1");
             $pdo->exec("UPDATE listing SET order_by_date = '2010-01-01 00:00:00' WHERE 1");
+            $pdo->exec('ALTER TABLE user AUTO_INCREMENT = 1000;');
             saveConfig();
 
             $pdo->commit();

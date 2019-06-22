@@ -24,6 +24,12 @@ class AppDateTimeType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefault('view_timezone', $this->environmentService->getAppTimezone());
+        $resolver->setDefault('widget', 'single_text');
+        $resolver->setDefault('html5', false);
+        $resolver->setDefault('format', 'Y-MM-dd HH:mm:ss');
+        $resolver->setDefault('attr', [
+            'class' => 'input-datetime',
+        ]);
     }
 
     public function getParent(): string

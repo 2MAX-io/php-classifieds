@@ -17,6 +17,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Validator\Constraints\Image;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
@@ -65,6 +66,9 @@ class AdminCategorySaveType extends AbstractType
             'mapped' => false,
             'constraints' => [
                 new Image(),
+                new File([
+                    'maxSize' => '250k',
+                ]),
             ],
         ]);
     }

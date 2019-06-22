@@ -131,7 +131,7 @@
                             {%- apply spaceless -%}
                             {%- for customField in customFieldList -%}
 
-                                {%- if customField.type == constant('\App\\Entity\\CustomField::TYPE_SELECT') and customField.customFieldOptions is not empty -%}
+                                {%- if customField.type == constant('\App\\Entity\\CustomField::SELECT_AS_CHECKBOXES') and customField.customFieldOptions is not empty -%}
                                     <div class="mb-3">
                                         <label class="text-break">{{ customField.name }}</label>
                                         {%- for customFieldOption in customField.customFieldOptions -%}
@@ -161,7 +161,7 @@
                                     </div>
                                 {% endif %}
 
-                                {%- if customField.type == constant('\App\\Entity\\CustomField::TYPE_SELECT_SINGLE') and customField.customFieldOptions is not empty -%}
+                                {%- if customField.type == constant('\App\\Entity\\CustomField::SELECT_SINGLE') and customField.customFieldOptions is not empty -%}
                                     <div class="mb-3">
                                         <label class="text-break">{{ customField.name }}</label>
                                         <div>
@@ -184,7 +184,7 @@
                                     </div>
                                 {%- endif -%}
 
-                                {%- if customField.type == constant('\App\\Entity\\CustomField::TYPE_CHECKBOX_MULTIPLE') and customField.customFieldOptions is not empty -%}
+                                {%- if customField.type == constant('\App\\Entity\\CustomField::CHECKBOX_MULTIPLE') and customField.customFieldOptions is not empty -%}
                                     <div class="mb-3">
                                         <label class="text-break">{{ customField.name }}</label>
                                         {%- for customFieldOption in customField.customFieldOptions -%}
@@ -215,7 +215,7 @@
                                 {% endif %}
 
                                 {% if customField.type in [
-                                        constant('\App\\Entity\\CustomField::TYPE_INTEGER_RANGE'),
+                                        constant('\App\\Entity\\CustomField::INTEGER_RANGE'),
                                     ]
                                 %}
                                     <label class="text-break">{{ customField.name }} {%- if customField.unit is not empty %} [{{ customField.unit }}]{% endif -%}</label>
@@ -246,7 +246,7 @@
                                 {% endif %}
 
                                 {% if customField.type in [
-                                        constant('\App\\Entity\\CustomField::TYPE_YEAR_RANGE'),
+                                        constant('\App\\Entity\\CustomField::YEAR_RANGE'),
                                     ]
                                 %}
                                     <label class="text-break">{{ customField.name }}</label>

@@ -31,11 +31,11 @@ class CustomFieldType extends AbstractType
         $builder->add('type', ChoiceType::class, [
             'label' => 'trans.Type',
             'choices' => [
-                'trans.customFieldType.select_single' => CustomField::TYPE_SELECT_SINGLE,
-                'trans.customFieldType.select' => CustomField::TYPE_SELECT,
-                'trans.customFieldType.checkbox_multiple' => CustomField::TYPE_CHECKBOX_MULTIPLE,
-                'trans.customFieldType.integer_range' => CustomField::TYPE_INTEGER_RANGE,
-                'trans.customFieldType.year_range' => CustomField::TYPE_YEAR_RANGE,
+                'trans.customFieldType.SELECT_SINGLE' => CustomField::SELECT_SINGLE,
+                'trans.customFieldType.SELECT_AS_CHECKBOXES' => CustomField::SELECT_AS_CHECKBOXES,
+                'trans.customFieldType.CHECKBOX_MULTIPLE' => CustomField::CHECKBOX_MULTIPLE,
+                'trans.customFieldType.INTEGER_RANGE' => CustomField::INTEGER_RANGE,
+                'trans.customFieldType.YEAR_RANGE' => CustomField::YEAR_RANGE,
             ],
             'constraints' => [
                 new NotBlank(),

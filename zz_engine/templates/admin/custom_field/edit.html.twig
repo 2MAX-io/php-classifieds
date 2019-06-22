@@ -18,9 +18,9 @@
 </div>
 
     {% if custom_field.type in [
-        constant('\App\\Entity\\CustomField::TYPE_SELECT'),
-        constant('\App\\Entity\\CustomField::TYPE_SELECT_SINGLE'),
-        constant('\App\\Entity\\CustomField::TYPE_CHECKBOX_MULTIPLE'),
+        constant('\App\\Entity\\CustomField::SELECT_AS_CHECKBOXES'),
+        constant('\App\\Entity\\CustomField::SELECT_SINGLE'),
+        constant('\App\\Entity\\CustomField::CHECKBOX_MULTIPLE'),
     ]
     %}
         <div class="container mt-3">

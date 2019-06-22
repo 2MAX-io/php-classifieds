@@ -104,7 +104,7 @@ class DevGenerateTestListings
 
         $used = [];
         $requestedNumber = 1;
-        if ($customField->getType() === CustomField::TYPE_CHECKBOX_MULTIPLE) {
+        if ($customField->getType() === CustomField::CHECKBOX_MULTIPLE) {
             $requestedNumber = \random_int(1, $customField->getCustomFieldOptions()->count());
         }
 
@@ -142,7 +142,7 @@ class DevGenerateTestListings
 
     private function setYearRange(Listing $listing, CustomField $customField): void
     {
-        if ($customField->getType() !== CustomField::TYPE_YEAR_RANGE) {
+        if ($customField->getType() !== CustomField::YEAR_RANGE) {
             return;
         }
 
@@ -159,7 +159,7 @@ class DevGenerateTestListings
 
     private function setIntegerRange(Listing $listing, CustomField $customField): void
     {
-        if ($customField->getType() !== CustomField::TYPE_INTEGER_RANGE) {
+        if ($customField->getType() !== CustomField::INTEGER_RANGE) {
             return;
         }
 

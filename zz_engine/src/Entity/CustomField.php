@@ -13,11 +13,11 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class CustomField
 {
-    public const TYPE_SELECT = 'select';
-    public const TYPE_INTEGER_RANGE = 'integer_range';
-    public const TYPE_YEAR_RANGE = 'year_range';
-    public const TYPE_CHECKBOX_MULTIPLE = 'checkbox_multiple';
-    public const TYPE_SELECT_SINGLE = 'select_single';
+    public const SELECT_AS_CHECKBOXES = 'SELECT_AS_CHECKBOXES';
+    public const SELECT_SINGLE = 'SELECT_SINGLE';
+    public const CHECKBOX_MULTIPLE = 'CHECKBOX_MULTIPLE';
+    public const INTEGER_RANGE = 'INTEGER_RANGE';
+    public const YEAR_RANGE = 'YEAR_RANGE';
 
     /**
      * @ORM\Id()

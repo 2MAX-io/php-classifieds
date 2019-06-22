@@ -10,9 +10,9 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class FlashService
 {
-    public const INFO = 'info_flash';
-    public const SUCCESS_ABOVE_FORM = 'success_above_form';
-    public const ERROR_ABOVE_FORM = 'error_above_form';
+    public const INFO = 'INFO';
+    public const SUCCESS_ABOVE_FORM = 'SUCCESS_ABOVE_FORM';
+    public const ERROR_ABOVE_FORM = 'ERROR_ABOVE_FORM';
 
     /**
      * @var FlashBagInterface

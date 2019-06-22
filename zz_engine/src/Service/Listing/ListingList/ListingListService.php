@@ -157,7 +157,7 @@ class ListingListService
                         $qb->setParameter(':customFieldId_' . $sqlParamId, $customFieldId);
                         $qb->setParameter(':customFieldValue_' . $sqlParamId, $valueItem);
 
-                        if ($customField->getType() === CustomField::TYPE_CHECKBOX_MULTIPLE) {
+                        if ($customField->getType() === CustomField::CHECKBOX_MULTIPLE) {
                             $usedCustomFieldIdList[] = $customFieldId . "_$valueItem";
                         } else {
                             $usedCustomFieldIdList[] = $customFieldId;

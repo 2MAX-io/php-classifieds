@@ -140,11 +140,11 @@ trans:
   It would delete values set for this custom field from users listings: 'It would delete values set for this custom field from users listings'
   'Health check failed due to unknown error. If this problem do not correct itself, you must take action.': 'Health check failed due to unknown error. If this problem do not correct itself, you must take action.'
 
-trans.customFieldType.select: Select field, filter as checkboxes
-trans.customFieldType.select_single: Select field, filter as single select
-trans.customFieldType.year_range: Field with year
-trans.customFieldType.integer_range: Field with integer
-trans.customFieldType.checkbox_multiple: Multiple checkboxes
+trans.customFieldType.SELECT_AS_CHECKBOXES: Select field, filter as checkboxes
+trans.customFieldType.SELECT_SINGLE: Select field, filter as single select
+trans.customFieldType.YEAR_RANGE: Field with year
+trans.customFieldType.INTEGER_RANGE: Field with integer
+trans.customFieldType.CHECKBOX_MULTIPLE: Multiple checkboxes
 
 trans.listing.status.STATUS_PENDING: 'Pending'
 trans.listing.status.STATUS_ACTIVE: 'Active'

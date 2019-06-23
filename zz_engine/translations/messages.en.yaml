@@ -139,6 +139,9 @@ trans:
   It would delete this custom field option from users listings: 'It would delete this custom field option from users listings'
   It would delete values set for this custom field from users listings: 'It would delete values set for this custom field from users listings'
   'Health check failed due to unknown error. If this problem do not correct itself, you must take action.': 'Health check failed due to unknown error. If this problem do not correct itself, you must take action.'
+  'Some files are still uploading, are you sure you want to submit form now?': 'Some files are still uploading, are you sure you want to submit form now?'
+  'Are you sure?': 'Are you sure?'
+  'OK': 'OK'
 
 trans.customFieldType.SELECT_AS_CHECKBOXES: Select field, filter as checkboxes
 trans.customFieldType.SELECT_SINGLE: Select field, filter as single select

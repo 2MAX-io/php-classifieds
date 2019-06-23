@@ -19,4 +19,38 @@
     {#});#}
 
     autosize($('.textarea-autosize'));
+
+    let isUploadFinished = function () {
+        return $.fileuploader.getInstance('#listing_file').getChoosedFiles()[0].uploaded;
+    };
+
+    let onListingSaveFormSubmit = function (button, event) {
+        if ($(button).data('force-submit')) {
+            return;
+        }
+
+        if (isUploadFinished()) {
+            return;
+        }
+
+        event.preventDefault();
+
+        window.setTimeout(function () {
+            if (isUploadFinished()) {
+                $(button).click();
+            } else {
+                $.fancyConfirm({
+                    message: Translator.trans('trans.Some files are still uploading, are you sure you want to submit form now?'),
+                    okButton: Translator.trans('trans.Yes'),
+                    noButton: Translator.trans('trans.Cancel'),
+                    callback: function(confirmed) {
+                        if (confirmed) {
+                            $(button).data('force-submit', true);
+                            $(button).click();
+                        }
+                    }
+                });
+            }
+        }, 1000);
+    };
 </script>

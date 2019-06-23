@@ -62,6 +62,7 @@
         extensions: ['jpg', 'jpeg', 'png', 'gif'],
         limit: 10,
         addMore: true,
+        enableApi: true,
         files: {{ listingFilesForJavascript | default([]) | json_encode | raw }},
         thumbnails: {
             popup: {

@@ -74,5 +74,5 @@
 <label>{{ 'trans.Pictures' | trans }}</label>
 <input id="listing_file" type="file" multiple="multiple" name="files">
 
-<button class="btn btn-primary">{{ button_label|default('trans.Save' | trans) }}</button>
+<button class="btn btn-primary" onclick="onListingSaveFormSubmit(this, event);">{{ button_label|default('trans.Save' | trans) }}</button>
 {{ form_end(form) }}

@@ -572,3 +572,6 @@ trans:
   It would delete this custom field option from users listings: 'Usunie tą opcję pola niestandardowego z ogłoszeń użytkowników'
   It would delete values set for this custom field from users listings: 'Usunie wartości ustawione dla tego pola niestandardowego z ogłoszeń użytkowników'
   'Health check failed due to unknown error. If this problem do not correct itself, you must take action.': 'Sprawdzenie sprawności aplikacji nie powiodło z powodu nieznanego błędu. Jeżeli ten problem sam się nie skoryguje, musisz podjąć działanie'
+  'Some files are still uploading, are you sure you want to submit form now?': 'Niektóre pliki są nadal przesyłane, czy na pewno chcesz teraz przesłać formularz?'
+  'Are you sure?': 'Jesteś pewny?'
+  'OK': 'OK'

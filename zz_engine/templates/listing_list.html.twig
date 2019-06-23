@@ -313,13 +313,13 @@
                         <div onclick="window.location.href='{{ path('app_listing_show', {id: listing.id, 'slug': listing.slug}) }}'" id="listing-{{ listing.id }}" class="card listing-list-item mb-3 {% if listing.featured %}listing-recommended{% endif %}">
                             <div class="container-fluid">
                                 <div class="row py-2">
-                                    <div class="col-12 col-md-3 px-2 {% if listing.mainImage is empty %}d-none-soft{% endif %} d-md-block">
+                                    <div class="col-12 col-md-4 px-2 {% if listing.mainImage is empty %}d-none-soft{% endif %} d-md-block">
                                         <a title="{{ listing.title }}" href="{{ path('app_listing_show', {id: listing.id, 'slug': listing.slug}) }}">
                                             <img class="rounded listing-list-img mx-auto" alt="{{ listing.title }}" src="{{ asset(listing.mainImageInListSize | default('static/system/blank.png')) }}">
                                         </a>
                                     </div>
 
-                                    <div class="card-text col-12 col-md-9 pb-3">
+                                    <div class="card-text col-12 col-md-8 pb-3">
                                         <h5 class="pt-1">
                                             <strong>
                                                 <a href="{{ path('app_listing_show', {id: listing.id, 'slug': listing.slug}) }}" class="use-visited-color">

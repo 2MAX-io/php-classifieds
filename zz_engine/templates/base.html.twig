@@ -241,8 +241,8 @@
 {% block javascripts %}
     <script src="{{ asset('asset/build/app.js') }}"></script>
     <script src="{{ asset('asset/lib/cleave/addons/cleave-phone.'~ settings.languageTwoLetters | lower ~'.js') }}"></script>
-    <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
-    <script src="{{ path('bazinga_jstranslation_js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData', version: asset_version(path('fos_js_routing_js')) }) }}"></script>
+    <script src="{{ asset(path('bazinga_jstranslation_js')) }}"></script>
 
     {{ settings.customJavascriptBottom | raw }}
 {% endblock %}

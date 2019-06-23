@@ -1,4 +1,5 @@
-2MAX.io Classified Ads with Custom Fields PHP script
+2MAX.io Classified Ads
+Responsive Classified Ads with Custom Fields & Filters
 
 Licensed under Envato / Code Canyon Regular License
 https://codecanyon.net/licenses/terms/regular

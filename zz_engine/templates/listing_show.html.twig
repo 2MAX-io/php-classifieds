@@ -233,7 +233,7 @@
                         {% else %}
                             <button
                                     id="showContactInformation"
-                                    class="btn btn-success w-100"
+                                    class="btn btn-success w-100 mb-3"
                                     onclick="showContactInformation({{ listing.id }})"
                             >
                                 {{ 'trans.Show contact information' | trans }}
@@ -241,7 +241,7 @@
                         {% endif %}
 
                         {% if listing.city is not empty and not displayAsExpired(listing) %}
-                            <div class="mb-2 py-2">
+                            <div class="mb-3">
                                 <div class="row">
                                     <div class="col-sm-4 col-md-5">
                                         {{ 'trans.City' | trans }}
@@ -254,7 +254,7 @@
                             </div>
                         {% endif %}
 
-                        <div class="mb-2 py-2">
+                        <div class="mb-3">
                             <div class="row">
                                 <div class="col-sm-4 col-md-5">
                                     {{ 'trans.Date added' | trans }}
@@ -266,7 +266,7 @@
                             </div>
                         </div>
 
-                        <div class="mb-2 py-2">
+                        <div class="mb-3">
                             <div class="row">
                                 <div class="col-sm-4 col-md-5">
                                     {{ 'trans.Expiration date' | trans }}
@@ -278,7 +278,7 @@
                             </div>
                         </div>
 
-                        <div class="mb-2 py-2">
+                        <div class="mb-3 d-none d-md-block">
                             <div class="row">
                                 <div class="col-sm-4 col-md-5">
                                     {{ 'trans.Views' | trans }}

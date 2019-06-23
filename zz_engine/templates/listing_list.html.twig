@@ -310,7 +310,7 @@
                 <div class="listing-list">
                     {%- apply spaceless -%}
                     {%- for listing in listingList -%}
-                        <div onclick="window.location.href='{{ path('app_listing_show', {id: listing.id, 'slug': listing.slug}) }}'" id="listing-{{ listing.id }}" class="card listing-list-item mb-3 {% if listing.featured %}listing-recommended{% endif %}">
+                        <div onclick="window.location.href='{{ path('app_listing_show', {id: listing.id, 'slug': listing.slug}) }}'" id="listing-{{ listing.id }}" class="card listing-list-item cursor-pointer mb-3 {% if listing.featured %}listing-recommended{% endif %}">
                             <div class="container-fluid">
                                 <div class="row py-2">
                                     <div class="col-12 col-md-4 px-2 {% if listing.mainImage is empty %}d-none-soft{% endif %} d-md-block">

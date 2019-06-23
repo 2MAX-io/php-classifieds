@@ -312,21 +312,15 @@
                     {%- for listing in listingList -%}
                         <div id="listing-{{ listing.id }}" class="card listing-list-item mb-3 {% if listing.featured %}listing-recommended{% endif %}">
                             <div class="container-fluid">
-                                <div class="row">
-                                    <div class="col-12 col-md-3 pt-3 pb-md-3">
+                                <div class="row py-2">
+                                    <div class="col-12 col-md-3 px-2 {% if listing.mainImage is empty %}d-none-soft{% endif %} d-md-block">
                                         <a title="{{ listing.title }}" href="{{ path('app_listing_show', {id: listing.id, 'slug': listing.slug}) }}">
                                             <img class="rounded listing-list-img" alt="{{ listing.title }}" src="{{ asset(listing.mainImageInListSize | default('static/system/blank.png')) }}">
                                         </a>
                                     </div>
 
-                                    <div class="card-text col-12 col-md-9 pb-3 pt-sm-3">
-                                        {% if listing.featured %}
-                                            <div class="pt-3 pt-sm-0 float-right">
-                                                <span class="badge badge-pill badge-warning">{{ 'trans.Recommended' | trans }}</span>
-                                            </div>
-                                        {% endif %}
-
-                                        <h5 class="pt-3 pt-sm-0">
+                                    <div class="card-text col-12 col-md-9 pb-3">
+                                        <h5 class="pt-1">
                                             <strong>
                                                 <a href="{{ path('app_listing_show', {id: listing.id, 'slug': listing.slug}) }}" class="use-visited-color">
                                                     {{- listing.title -}}
@@ -335,25 +329,28 @@
                                         </h5>
 
                                         <div>
+                                            {% if listing.featured %}
+                                                <span class="badge badge-pill badge-warning mr-2">{{ 'trans.Recommended' | trans }}</span>
+                                            {% endif %}
                                             {% if listing.city is not empty %}
                                                 <span class="mr-1">
-                                                    <i class="fas fa-map-marker-alt text-danger"></i> {{ listing.city }}
+                                                    <i class="fas fa-map-marker-alt text-danger d-inline"></i>&nbsp;{{ listing.city }}
                                                 </span>
                                             {% endif %}
 
-                                            <span class="mr-1">
+                                            <span class="mr-1 text-nowrap">
                                                 <i class="fas fa-calendar text-black-50"></i> {{ listing.orderByDate | date }}
                                             </span>
                                         </div>
 
                                         {% if listing.price is not empty %}
                                             <div class="mt-1">
-                                                <span class="btn btn-dark btn-sm price">
+                                                <span class="btn btn-dark btn-sm price mr-2">
                                                     {{ 'trans.Price' | trans }}: {{ listing.price | money }}
                                                 </span>
 
                                                 {% if listing.priceFor %}
-                                                    <span>{{ ('trans.priceFor.'~listing.priceFor) | trans }}</span>
+                                                    <span class="mr-2">{{ ('trans.priceFor.'~listing.priceFor) | trans }}</span>
                                                 {% endif %}
                                             </div>
                                         {% endif %}

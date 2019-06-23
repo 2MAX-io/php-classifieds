@@ -62,11 +62,12 @@ class ListingType extends AbstractType
             'label' => 'trans.Description',
             'attr' => [
                 'class' => 'form-listing-description-textarea textarea-autosize',
+                'minlength' => 10,
                 'maxlength' => 10000,
             ],
             'constraints' => [
                 new NotBlank(),
-                new Length(['min' => 20, 'max' => 10000]),
+                new Length(['min' => 10, 'max' => 10000]),
                 new HasLetterNumber(),
             ],
             'empty_data' => '',

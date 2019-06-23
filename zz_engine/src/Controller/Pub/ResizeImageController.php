@@ -89,7 +89,7 @@ class ResizeImageController
     private function getMakeImageParams(string $type): array
     {
         if ('list' === $type) {
-            return ['w' => 450, 'h' => 300, 'fit' => 'crop',];
+            return ['w' => 480, 'h' => 270, 'fit' => 'crop',];
         }
 
         if ('normal' === $type) {

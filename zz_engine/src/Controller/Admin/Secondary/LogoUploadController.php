@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class LogoUploadController extends AbstractAdminController
 {
     /**
-     * @Route("/admin/red5/logo-upload", name="app_admin_logo_upload")
+     * @Route("/admin/red5/settings/logo-upload", name="app_admin_logo_upload")
      */
     public function index(Request $request, LogoUploadService $logoUploadService): Response
     {

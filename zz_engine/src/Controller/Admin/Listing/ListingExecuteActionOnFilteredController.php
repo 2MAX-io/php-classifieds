@@ -16,7 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class ListingExecuteActionOnFilteredController extends AbstractAdminController
 {
     /**
-     * @Route("/admin/red5/listing/execute-action-on-filtered", name="app_admin_listing_execute_on_filtered")
+     * @Route("/admin/red5/listing/search/execute-action-on-filtered", name="app_admin_listing_execute_on_filtered")
      */
     public function executeActionOnFiltered(
         Request $request,

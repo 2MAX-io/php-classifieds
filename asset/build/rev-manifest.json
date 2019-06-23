@@ -1,9 +1,10 @@
 {
-  "asset/build/admin.css": "asset/build/admin-3b3ba8e5ca.css",
-  "asset/build/admin.js": "asset/build/admin-8c50cabc54.js",
+  "asset/build/admin.css": "asset/build/admin-ed907197d3.css",
+  "asset/build/admin.js": "asset/build/admin-f60678f7cc.js",
   "asset/build/admin.js.map": "asset/build/admin-97cf9e514b.js.map",
   "asset/build/app.bottom.css": "asset/build/app-a5bd14320b.bottom.css",
-  "asset/build/app.css": "asset/build/app-e360b3df18.css",
-  "asset/build/app.js": "asset/build/app-3b4dafdeac.js",
+  "asset/build/app.css": "asset/build/app-d2ce93fbdc.css",
+  "asset/build/app.css.map": "asset/build/app-29ae611fc3.css.map",
+  "asset/build/app.js": "asset/build/app-9a24aee56d.js",
   "asset/build/app.js.map": "asset/build/app-9fcc94a805.js.map"
 }

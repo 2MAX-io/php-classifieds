@@ -211,7 +211,9 @@ a.use-visited-color:visited {
 
 
 .listing-list-img {
-    max-height: 10rem;
+    max-height: 16rem;
+    object-fit: cover;
+    width: 100%;
 }
 
 .user-listings-feature-this-link {

@@ -312,15 +312,15 @@
                     {%- for listing in listingList -%}
                         <div onclick="window.location.href='{{ path('app_listing_show', {id: listing.id, 'slug': listing.slug}) }}'" id="listing-{{ listing.id }}" class="card listing-list-item cursor-pointer mb-3 {% if listing.featured %}listing-recommended{% endif %}">
                             <div class="container-fluid">
-                                <div class="row py-md-2">
-                                    <div class="col-12 col-md-4 p-0 px-md-2 {% if listing.mainImage is empty %}d-none-soft{% endif %} d-md-block">
+                                <div class="row py-md-1">
+                                    <div class="col-12 col-md-4 p-0 px-md-1 {% if listing.mainImage is empty %}d-none-soft{% endif %} d-md-block">
                                         <a title="{{ listing.title }}" href="{{ path('app_listing_show', {id: listing.id, 'slug': listing.slug}) }}">
                                             <img class="listing-list-img" alt="{{ listing.title }}" src="{{ asset(listing.mainImageInListSize | default('static/system/blank.png')) }}">
                                         </a>
                                     </div>
 
                                     <div class="card-text col-12 col-md-8 pb-3">
-                                        <h5 class="pt-1">
+                                        <h5 class="pt-2">
                                             <strong>
                                                 <a href="{{ path('app_listing_show', {id: listing.id, 'slug': listing.slug}) }}" class="use-visited-color">
                                                     {{- listing.title -}}

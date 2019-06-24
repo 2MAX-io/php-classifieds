@@ -20,11 +20,11 @@
 
     autosize($('.textarea-autosize'));
 
-    function isUploadFinished() {
+    let isUploadFinished = function () {
         return $.fileuploader.getInstance('#listing_file').getChoosedFiles()[0].uploaded;
-    }
+    };
 
-    function onListingSaveFormSubmit(button, event) {
+    let onListingSaveFormSubmit = function (button, event) {
         if ($(button).data('force-submit')) {
             return;
         }
@@ -52,5 +52,5 @@
                 });
             }
         }, 1000);
-    }
+    };
 </script>

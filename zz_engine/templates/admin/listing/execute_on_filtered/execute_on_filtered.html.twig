@@ -50,14 +50,14 @@
 
 {% block js %}
     <script>
-        function showActionFields() {
+        let showActionFields = function () {
             let $select = $('.selectActonInput');
             let action = $select.val();
 
             let $actionField = $('.actionField');
             $actionField.hide();
             $actionField.filter('[data-for-action="'+action+'"]').show();
-        }
+        };
 
         $('.selectActonInput').on('change', function () {
             showActionFields();

@@ -214,6 +214,14 @@ a.use-visited-color:visited {
     max-height: 16rem;
     object-fit: cover;
     width: 100%;
+    border-top-left-radius: 0.25rem;
+    border-top-right-radius: 0.25rem;
+}
+
+@media (min-width: 576px) {
+    .listing-list-img {
+        border-radius: 0.25rem;
+    }
 }
 
 .user-listings-feature-this-link {

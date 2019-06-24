@@ -142,6 +142,7 @@ trans:
   'Some files are still uploading, are you sure you want to submit form now?': 'Some files are still uploading, are you sure you want to submit form now?'
   'Are you sure?': 'Are you sure?'
   'OK': 'OK'
+  'Listing has been removed': 'Listing has been removed'
 
 trans.customFieldType.SELECT_AS_CHECKBOXES: Select field, filter as checkboxes
 trans.customFieldType.SELECT_SINGLE: Select field, filter as single select

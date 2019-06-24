@@ -7,6 +7,7 @@ namespace App\Controller\User\Base;
 use App\Entity\Admin;
 use App\Entity\Listing;
 use App\Entity\User;
+use App\Exception\UserVisibleMessageException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 
@@ -34,7 +35,7 @@ abstract class AbstractUserController extends AbstractController
         }
 
         if ($listing->getUserRemoved() || ($listing->getAdminRemoved() && !$ignoreAdminDeleted)) {
-            throw new UnauthorizedHttpException('listing has been removed');
+            throw new UserVisibleMessageException('trans.Listing has been removed');
         }
     }
 

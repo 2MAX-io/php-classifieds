@@ -381,7 +381,7 @@
             hash: false,
         });
 
-        let showContactInformation = function (listingId) {
+        function showContactInformation(listingId) {
             let params = {};
             if (showPreviewForOwner !== '') {
                 params.showPreviewForOwner = 1;
@@ -399,7 +399,7 @@
                 $showContactInformation.before(response.html);
                 $showContactInformation.remove();
             });
-        };
+        }
 
         let $topImage = $('.listing-show-top-image');
         if ($topImage.width() < 300 || $topImage.height() < 300) {

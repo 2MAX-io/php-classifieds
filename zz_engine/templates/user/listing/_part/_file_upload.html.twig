@@ -3,7 +3,7 @@
 <script src="{{ asset('asset/lib/fileuploader/jquery.fileuploader.min.js') }}"></script>
 
 <script>
-    let saveEditedImage = function(image, item) {
+    function saveEditedImage(image, item) {
         // set new image
         item.editor._blob = image;
 
@@ -55,7 +55,7 @@
                 contentType: false
             });
         }
-    };
+    }
 
     $('#listing_file').fileuploader({
         fileMaxSize: 40,

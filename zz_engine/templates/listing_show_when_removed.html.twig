@@ -67,22 +67,23 @@
 
             <!-- Sidebar -->
             <div class="col-md-5">
+                <div class="d-none-soft d-md-block">
+                    {% if isCurrentUserListing(listing) %}
+                        <a href="{{ path('app_listing_edit', {'id': listing.id}) }}" class="btn btn-primary mb-2 mr-1">
+                            {{- 'trans.Edit listing' | trans -}}
+                        </a>
+                    {% endif %}
 
-                {% if isCurrentUserListing(listing) %}
-                    <a href="{{ path('app_listing_edit', {'id': listing.id}) }}" class="btn btn-primary mb-2">
-                        {{- 'trans.Edit listing' | trans -}}
-                    </a>
-                {% endif %}
+                    {% if lowSecurityCheckIsAdminInPublic() %}
+                        <a href="{{ path('app_admin_listing_edit', {'id': listing.id}) }}" class="btn btn-outline-danger mb-2 mr-1">
+                            {{ 'trans.Edit listing as Admin' | trans }}
+                        </a>
+                    {% endif %}
 
-                {% if lowSecurityCheckIsAdminInPublic() %}
-                    <a href="{{ path('app_admin_listing_edit', {'id': listing.id}) }}" class="btn btn-outline-danger mb-2">
-                        {{ 'trans.Edit listing as Admin' | trans }}
-                    </a>
-                {% endif %}
-
-                {% if userOrAdmin(listing) %}
-                    <span class="{{ getListingStatusClass(listing) }}">{{ getListingStatus(listing) }}</span>
-                {% endif %}
+                    {% if userOrAdmin(listing) %}
+                        <span class="{{ getListingStatusClass(listing) }} text-nowrap">{{ getListingStatus(listing) }}</span>
+                    {% endif %}
+                </div>
 
                 <!-- info -->
                 <div class="card mb-3 w-100">

@@ -315,7 +315,7 @@
                                 <div class="row py-2">
                                     <div class="col-12 col-md-4 px-2 {% if listing.mainImage is empty %}d-none-soft{% endif %} d-md-block">
                                         <a title="{{ listing.title }}" href="{{ path('app_listing_show', {id: listing.id, 'slug': listing.slug}) }}">
-                                            <img class="rounded listing-list-img mx-auto" alt="{{ listing.title }}" src="{{ asset(listing.mainImageInListSize | default('static/system/blank.png')) }}">
+                                            <img class="rounded listing-list-img" alt="{{ listing.title }}" src="{{ asset(listing.mainImageInListSize | default('static/system/blank.png')) }}">
                                         </a>
                                     </div>
 

@@ -3,7 +3,7 @@
 <script src="{{ asset('asset/lib/fileuploader/jquery.fileuploader.min.js') }}"></script>
 
 <script>
-    let saveEditedImage = function(image, item) {
+    var saveEditedImage = function(image, item) {
         // set new image
         item.editor._blob = image;
 
@@ -41,7 +41,7 @@
             item.imageIsUploading = true;
             item.editor._editingg = true;
 
-            let form = new FormData();
+            var form = new FormData();
             form.append('files[]', item.editor._blob);
             form.append('fileuploader', '1');
             form.append('_namee', item.name);
@@ -152,7 +152,7 @@
 
                 // if warnings
                 if (data.hasWarnings) {
-                    for (let warning in data.warnings) {
+                    for (var warning in data.warnings) {
                         alert(data.warnings);
                     }
 
@@ -169,7 +169,7 @@
                 }, 400);
             },
             onError: function(item) {
-                let progressBar = item.html.find('.progress-bar2');
+                var progressBar = item.html.find('.progress-bar2');
 
                 if(progressBar.length) {
                     progressBar.find('span').html(0 + "%");
@@ -182,7 +182,7 @@
                 ) : null;
             },
             onProgress: function(data, item) {
-                let progressBar = item.html.find('.progress-bar2');
+                var progressBar = item.html.find('.progress-bar2');
 
                 if(progressBar.length > 0) {
                     progressBar.show();

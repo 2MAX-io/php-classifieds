@@ -20,11 +20,11 @@
 
     autosize($('.textarea-autosize'));
 
-    let isUploadFinished = function () {
+    var isUploadFinished = function () {
         return $.fileuploader.getInstance('#listing_file').getChoosedFiles()[0].uploaded;
     };
 
-    let onListingSaveFormSubmit = function (button, event) {
+    var onListingSaveFormSubmit = function (button, event) {
         if ($(button).data('force-submit')) {
             return;
         }

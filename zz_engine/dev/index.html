@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>2MAX.io Classified Ads - Responsive Classified Ads with Custom Fields & Filters</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="msapplication-TileColor" content="#DD080C">
+    <meta name="theme-color" content="#DD080C">
+
+    <style>
+        body {
+            font-size: 1.5em;
+        }
+        .container {
+            width: 100%;
+            margin-right: auto;
+            margin-left: auto;
+            word-wrap: break-word;
+
+            max-width: 800px;
+        }
+        @media (min-width: 1200px) {
+            .container {
+            }
+        }
+        @media (max-width: 768px) {
+
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+
+
+
+
+
+
+    <h2>Demo of 2MAX Classified Ads:</h2>
+    <h3><a href="https://classified-demo.2max.io/">Public side demo</a></h3>
+    <h3><a href="https://classified-admin-demo.2max.io/login">User side demo</a></h3>
+    <h3><a href="https://classified-admin-demo.2max.io/admin/red5/login">Administration side demo</a></h3>
+
+    <h1>2MAX.io Classified Ads</h1>
+    <h3>Responsive Classified Ads with Custom Fields & Filters</h3>
+
+    <div>
+        <p>
+            This app is ideal for local news portal or site focused on single topic (bicycles, RC models, cars etc).
+            Where can be used as subpage that provide ads directory functionality.
+            At the same time providing another way of income for site through monetization of featured listings.
+        </p>
+        <p>
+            Great for site that will only use single currency in single city or region (county, province, metropolitan area, agglomeration).
+            And does not require separation into regions and countries.
+            Nonetheless it is still possible to separate listings into regions using custom fields as filters.
+        </p>
+    </div>
+
+    <h2>Main Features</h2>
+    <ul style="list-style-type: disc;">
+        <li>Custom Fields and Custom Filters to easily search ads</li>
+        <li>Responsive and optimized for mobile users</li>
+        <li>Administrative features required to run real world classified ads site</li>
+        <li>Monetization through featured ad functionality, direct pay or payment using account's prepaid wallet with credits. That can be top up via payment beforehand</li>
+        <li>Have been tested to run on both cPanel and DirectAdmin web hosting panels</li>
+        <li>Written in modern and fast PHP 7.3 and compatible with MYSQL 5.6+</li>
+    </ul>
+
+    <h4>Custom Fields and Custom Filters:</h4>
+    <ul style="list-style-type: disc;">
+        <li>category specific fields, such as brand, mileage or year of car production can be easily added</li>
+        <li>custom fields can be freely assigned to any category</li>
+        <li>custom filters that use custom fields, can be used to quickly narrow down ads by the viewers</li>
+        <li>custom attributes will be displayed on listing show page for quick reference</li>
+        <li>numeric custom field, displayed in listing filters as number range</li>
+        <li>select custom field, displayed in listing filters as checkboxes, so user can select multiple options at once</li>
+        <li>multiple checkboxes, used to mark different properties of listing, for example features of car</li>
+        <li>when custom field with checkboxes has many options, large list of options is collapsed to few items, and "show more" button appears that allow to see all the options</li>
+        <li>single select field, displayed in listing filters as single select field with configurable options</li>
+        <li>year custom field, displayed in filters as filterable range with two select fields</li>
+        <li>price filter, which allows to narrow down listings using from-to price range</li>
+        <li>you can manage order of custom fields in every category separately</li>
+        <li>admin has option to make custom field required, which requires user to fill that custom field when adding or editing listing</li>
+        <li>admin has option to make custom field searchable, when enabled, user can filter by this custom field</li>
+        <li>admin has option to make custom field not searchable, in this case custom field would be only displayed on single listing page</li>
+        <li>admin can set integer custom field's unit, which will be displayed near integer custom field filter (useful for square meters, or similar)</li>
+        <li>same custom field may be reused in many categories</li>
+        <li>custom field can be assigned to parent category, to filter subcategories which also have this custom field</li>
+        <li>when having many custom fields, admin can set optional, visible only to him hint about custom field, that will help him refer to specific custom field</li>
+        <li>ability to sort custom field options alphabetically on demand, after that, you can still reorder them according to your needs, so you are not constrained to only alphabetical order</li>
+        <li>clear filters button, which allows viewer to quickly clear all custom search criteria without need to deselect them manually</li>
+    </ul>
+
+    <h4>Listing</h4>
+    <ul style="list-style-type: disc;">
+        <li>user can add title, description, category, phone, email, price, city and custom fields (of selected category) for his listing</li>
+        <li>title of listing is protected so user do not abuse CAPITAL LETTERS</li>
+        <li>checkbox option to show user's email address</li>
+        <li>requirement that phone or email are filled, so viewers can contact poster of an ad</li>
+        <li>option to suffix price of listing with different units such as [per bag, per tone, per meter etc]</li>
+        <li>option for user to mark listing price as negotiable or not negotiable</li>
+        <li>protects your user's privacy by displaying phone number and email only after requesting contact details, by clicking show contact details button</li>
+        <li>option to add, remove and change order of photos</li>
+        <li>client side resize of large images before upload to reduce upload time and to free the user from resizing images by hand</li>
+        <li>on single listing page, link to author's other listings</li>
+        <li>listing's views count</li>
+        <li>copy to clipboard: phone, email, link to listing</li>
+        <li>admin setting to remove some phrases from title, used to remove repetitive texts like "to sell, selling, for sale etc"</li>
+        <li>admin has option to allow country specific characters, that prevent abuse of other not allowed characters</li>
+    </ul>
+
+    <h4>List of listings: in category, listings of user, last added</h4>
+    <ul style="list-style-type: disc;">
+        <li>search by keywords</li>
+        <li>filter by custom fields</li>
+        <li>featured listings displayed first and highlighted</li>
+        <li>listing has information about: city, price and date</li>
+        <li>breadcrumbs with current category</li>
+        <li>pagination</li>
+        <li>option to select number of listings per page</li>
+        <li>link to categories with same depth, to quickly switch to other subcategory</li>
+    </ul>
+
+    <h4>Payments and Monetization</h4>
+    <ul style="list-style-type: disc;">
+        <li>monetization through featuring of listings</li>
+        <li>account top up, wallet - ability to use account balance to quickly feature listings, useful for clients who promote large volume of listings</li>
+        <li>admin can set user's top up balance (wallet balance) without payment via manual payment, which would enable this user to use wallet for featuring ads</li>
+        <li>before payment, user has ability to preview how featured ad looks, by featuring his listing for 30 minutes as demonstration</li>
+        <li>PayPal payment gateway</li>
+        <li>featured packages, have their own name, description and price</li>
+        <li>featured package can be assigned to categories</li>
+        <li>featured package has option to set featured days, and additional days of listing expiration</li>
+        <li>each featuring of listing, rises it to the top, so it&nbsp;incentivises to feature ads more often&nbsp;</li>
+        <li>option to set different prices for featured packages based on category, with fallback to default options, if category specific featured packages are not set</li>
+        <li>option to disable payments entirely</li>
+        <li>option to set payments to live mode, to receive real payments</li>
+        <li>option to set payments to sandbox mode, to test payments without making real payment</li>
+    </ul>
+
+    <h4>Mobile View</h4>
+    <ul style="list-style-type: disc;">
+        <li>all pages implement responsive web design principles and are optimized to be viewed on smartphone</li>
+        <li>pages use minimal amount of images, which improves mobile experience, especially when using internet on the go</li>
+        <li>when adding listing from smartphone, option to add images using camera of smartphone</li>
+        <li>client side reduction of size for large images, to reduce upload size, important when using metered mobile connection</li>
+        <li>CSS and JS is bundled and compressed</li>
+    </ul>
+
+    <h4>Categories</h4>
+    <ul style="list-style-type: disc;">
+        <li>tested to support up to 3 levels of nested categories ie. Electronics -&gt; Consoles -&gt; PS4</li>
+        <li>admin can manage order of categories</li>
+        <li>admin can manage order of custom fields in category</li>
+        <li>admin can set picture for main categories, used on index page</li>
+        <li>View all categories page allows user to quickly see all main categories and subcategories (2 levels)</li>
+    </ul>
+
+    <h4>Administration</h4>
+    <ul style="list-style-type: disc;">
+        <li>option to show only listings approved by administrator</li>
+        <li>option to show listing without admin approval, admin still have list of listings to preview, so he can easily monitor new listings</li>
+        <li>option to change category using admin's search functionality, so you are able to quickly move ads between categories, when you want to change structure of categories</li>
+        <li>option to apply custom field for search results, so for example, you can quickly add custom field to listings, by searching for brand by keyword</li>
+        <li>option to add subpages</li>
+        <li>option to set desired subpages as terms and conditions, privacy policy</li>
+        <li>if classified page is subpage of your main site, you can set link with custom text to main site, it would be displayed in main menu and in breadcrumbs</li>
+        <li>admin can feature user listing from admin panel</li>
+        <li>admin can raise, put on top manually any listing</li>
+        <li>admin can add rejection reason when rejecting listing</li>
+        <li>in settings, admin can set up page with common rejection reasons, which will be displayed near rejection status to the author of listing, author can refer to it and fix issues in rejected listing</li>
+        <li>option to upload custom page logo in settings</li>
+        <li>on Activate page, option to activate or reject multiple listings using selection, especially useful when combined with increasing per page amount to quickly activate many listings</li>
+        <li>option to set custom per page number in activation and search</li>
+        <li>admin dashboard with various stats about classified app</li>
+        <li>admin has option to reject, activate, and remove listing</li>
+        <li>admin can search listing using keywords and various filters</li>
+        <li>admin can modify and search users</li>
+        <li>admin has access to "Police Log", than can be passed to Police and contains: source IP address, source port, destination IP, destination port, exact time of request, changes of listing content. With option to quickly copy to clipboard. This saves time otherwise required to search through system logs to retrieve relevant data.</li>
+        <li>on admin listing lists (through gray show more info button) and in edit listing page, admin has access to granular information about listing, which help in administration of the site</li>
+        <li>detailed list of payments made by users</li>
+        <li>admin can change user email and password by hand</li>
+        <li>admin can edit listings of users and remove images</li>
+        <li>copy custom field options from another custom field, useful for custom field with many options, when it is tiresome to do this manually</li>
+        <li>ability to quickly add categories and custom field options by using "Save and Add" button while adding new elements</li>
+        <li>when logged in as admin, and viewing public classified pages, you can enter single listing page and use "Edit listing as Admin" button to modify listing with administrative privileges</li>
+    </ul>
+
+    <h4>User</h4>
+    <ul style="list-style-type: disc;">
+        <li>can top up his account wallet for future payments</li>
+        <li>can see history of his payments</li>
+        <li>can run trial of featured listing for 30 minutes as a test before payment</li>
+        <li>has ability to search by keyword in his listings</li>
+        <li>user has information about status and expiration date of his listings</li>
+        <li>can deactivate listings</li>
+        <li>can activate, deactivated listing</li>
+        <li>can remove deactivated or expired listing</li>
+        <li>can extend duration of listing</li>
+        <li>can edit his listings</li>
+        <li>can register</li>
+        <li>can request password reset</li>
+        <li>can change email and password and confirm change via email</li>
+    </ul>
+
+    <h4>SEO options</h4>
+    <ul style="list-style-type: disc;">
+        <li>page title</li>
+        <li>suffix for every page title</li>
+        <li>meta description and keywords</li>
+        <li>RSS, which Google uses to index pages faster</li>
+        <li>custom text for category used in URL (slug), which would improve your ranking in Google for words that you use in slug</li>
+        <li>subpages have slug that is used in URL</li>
+        <li>single listing page auto generates slug used in URL address with keywords from title, category and custom fields</li>
+        <li>valid HTML:&nbsp;<a href="https://validator.w3.org/nu/?doc=https%3A%2F%2Fclassified-demo.2max.io%2F">Check by W3 HTML validator</a></li>
+        <li>high page speed score:&nbsp;<a href="https://developers.google.com/speed/pagespeed/insights/?url=https%3A%2F%2Fclassified-demo.2max.io%2F">Google PageSpeed Insights</a></li>
+        <li>supports HTTPS</li>
+    </ul>
+
+    <h4>Secondary features</h4>
+    <ul style="list-style-type: disc;">
+        <li>RSS so your users can easily find new ads</li>
+        <li>Last added page, so users can quickly find newest ads and act on them quickly</li>
+        <li>GDPR / cookie / privacy policy notice</li>
+        <li>Protected against attacks. Protected from SQL injection using prepared statements, XSS using escaping and CSRF by the use of tokens</li>
+        <li>Database queries utilize indexes to achieve best performance</li>
+        <li>full HTTPS support</li>
+    </ul>
+
+    <h4>Localization</h4>
+    <ul style="list-style-type: disc;">
+        <li>you can create your own translation for this app, messages are stored in translation files</li>
+        <li>option to set country, and use country specific phone number formats</li>
+        <li>option to set currency, to format money value for your country</li>
+    </ul>
+
+    <h4>Other Settings</h4>
+    <p>Settings allow to set listing, payments, SEO, page title, meta tags and localization settings described in other sections. In addition to that they allow to set:</p>
+    <ul style="list-style-type: disc;">
+        <li>custom CSS and JS, JS can be added in both head and bottom of page, inserting JS in head is useful for Google Tag Manager</li>
+        <li>custom footer, footer can include current year</li>
+        <li>alias for email from field</li>
+        <li>placeholder for search field with examples of search keywords</li>
+        <li>reply to email address</li>
+        <li>default items per page number</li>
+    </ul>
+
+    <h4>Installer</h4>
+    <ul style="list-style-type: disc;">
+        <li>installer do not require manual modification of files during installation</li>
+        <li>you can set database config and config required to send email messages in installer</li>
+        <li>ability to fill app with example data: categories, custom fields, listings, subpages. For demo, preview and testing purposes.</li>
+        <li>installer checks requirements before installation</li>
+        <li>installer validates file system permissions and suggests changes</li>
+        <li>installer creates database structures on empty database and bootstraps database with required data</li>
+        <li>installer creates admin account with selected password</li>
+    </ul>
+
+    <h4>Other:</h4>
+    <ul style="list-style-type: disc;">
+        <li>health check validators, that inform of any problems with app, displayed on index of admin page</li>
+        <li>created using modern, mature and up-to-date Symfony 4 framework</li>
+        <li>created using widely used frontend framework Bootstrap 4</li>
+        <li>Documentation:&nbsp;<a href="http://documentation.2max.io/display/CLAS">http://documentation.2max.io/display/CLAS</a></li>
+    </ul>
+
+    <h4>Minimal requirements</h4>
+    <ul style="list-style-type: disc;">
+        <li>PHP 7.3+</li>
+        <li>MYSQL 5.6+</li>
+        <li><a href="https://documentation.2max.io/display/CLAS/Requirements">Full list of requirements for web server to install and use this PHP script</a></li>
+    </ul>
+
+
+
+
+
+
+	<div style="margin-bottom: 2em; margin-top: 2em;">
+		<a href="https://codecanyon.net/user/2max_io">Buy 2MAX.io Classified Ads</a>
+	</div>
+
+
+
+</div>
+</body>
+</html>

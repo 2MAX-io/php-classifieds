@@ -40,22 +40,21 @@
         <button class="btn btn-primary mb-4">{{ button_label|default('trans.Save' | trans) }}</button>
         {{ form_end(form) }}
 
-        <div class="row">
+        <div class="row mb-2">
             {{ adminMacro.listingInfo(listing) }}
         </div>
 
-        <div class="card-deck">
+        <div class="my-4">
             {% for listingFile in listing.listingFiles %}
-                <div class="card-body" style="max-width: 10rem;">
+                <div class="d-inline-block mr-4">
                     <div class="mb-2">
                         <img
-                                class="img-cover-center"
+                                class="img-cover-center admin-image-delete"
                                 src="{{ asset(listingFile.pathInListSize) }}"
                                 alt=""
-                                style="max-height: 100px;"
                         >
                     </div>
-                    <div>
+                    <div class="text-center">
                         {{ include('admin/listing/_action/_delete_file_form.html.twig') }}
                     </div>
                 </div>

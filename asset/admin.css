@@ -114,3 +114,16 @@
 .sortable-drag {
     opacity: 0;
 }
+
+.admin-logo {
+    max-width: 215px;
+}
+
+.police-log-textarea {
+    width: 100%;
+    min-height: 30vh;
+}
+
+.admin-image-delete {
+    max-height: 100px;
+}

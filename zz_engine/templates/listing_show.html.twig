@@ -309,9 +309,9 @@
                     <div class="card mb-3 d-none d-md-block">
                         <h5 class="card-header">{{ 'trans.Photos' | trans }}</h5>
 
-                        <div class="card-body">
+                        <div class="card-body text-center">
                             {% for listingFile in listing.listingFiles %}
-                                <div class="img-thumbnail d-inline-block mr-2 mb-2" style="width: 120px">
+                                <div class="img-thumbnail d-inline-block mr-2 mb-2 listing-show-side-photo">
                                     <a
                                             href="{{ asset(listingFile.pathInNormalSize) }}"
                                             data-fancybox="file"

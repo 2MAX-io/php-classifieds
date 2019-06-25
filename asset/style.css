@@ -412,4 +412,9 @@ input.form-control, textarea.form-control, select.form-control {
 
 .paginationMaxPerPage {
     border: 1px solid #dee2e6;
+    width: 10rem;
+}
+
+.listing-show-side-photo {
+    width: 120px;
 }

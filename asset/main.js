@@ -105,3 +105,20 @@ $.fancyConfirm = function(opts) {
         }
     });
 };
+
+$('.listingListItemClick').on('click', function () {
+    var $listingListItem = $(this);
+    window.location.href = $listingListItem.find('.listingListLink').attr('href');
+});
+
+$('.listingListItemClick').on('mousedown mouseup', function (e) {
+    if (e.which !== 2) {
+        return;
+    }
+
+    var $listingListItem = $(this);
+    Object.assign(document.createElement('a'), {
+        target: '_blank',
+        href: $listingListItem.find('.listingListLink').attr('href'),
+    }).click();
+});

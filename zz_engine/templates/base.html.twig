@@ -187,7 +187,7 @@
 
             <button
                     class="btn btn-dark btn-sm"
-                    onclick="document.getElementById('gdpr').remove(); document.cookie = 'gdpr=1; expires='+ new Date(new Date().getTime()+315360000000).toUTCString()+'; path=/'"
+                    onclick="$('#gdpr').remove(); document.cookie = 'gdpr=1; expires='+ new Date(new Date().getTime()+315360000000).toUTCString()+'; path=/'"
             >
                 {{- 'trans.I accept' | trans -}}
             </button>

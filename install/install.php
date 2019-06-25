@@ -173,7 +173,7 @@ EOF;
 }
 
 function saveConfig(): void {
-    $dbPass = empty($_POST['db_pass']) ? '' : ':' . $_POST['db_pass'];
+    $dbPass = empty($_POST['db_pass']) ? '' : ':' . \urlencode($_POST['db_pass']);
     saveConfigToFile([
         'DATABASE_URL' => "mysql://{$_POST['db_user']}{$dbPass}@{$_POST['db_host']}:{$_POST['db_port']}/{$_POST['db_name']}",
         'MAILER_URL' => "smtp://{$_POST['smtp_host']}:{$_POST['smtp_port']}?encryption=ssl&auth_mode=plain&username={$_POST['smtp_username']}&password={$_POST['smtp_password']}",

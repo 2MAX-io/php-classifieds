@@ -26,17 +26,13 @@ class LogoUploadService
     {
         FileHelper::throwExceptionIfUnsafeExtensionFromUploadedFile($uploadedFile);
 
-        $destinationFilename = $this->getDestinationFilename($uploadedFile);
-
-        if (!FileHelper::isImage($destinationFilename)) {
-            throw new \UnexpectedValueException(
-                'file is not image'
-            );
-        }
-
+        $destinationPath = $this->getDestinationPath($uploadedFile);
+        FileHelper::throwExceptionIfNotImage($destinationPath);
+        FileHelper::throwExceptionIfUnsafeFilename($destinationPath);
+        FileHelper::throwExceptionIfPathOutsideDir($destinationPath, FilePath::getLogoPath());
         $movedFile = $uploadedFile->move(
-            FilePath::getLogoPath(),
-            \basename($destinationFilename)
+            \dirname($destinationPath),
+            \basename($destinationPath)
         );
 
         $this->saveLogoSetting(Path::makeRelative($movedFile->getRealPath(), FilePath::getProjectDir()));
@@ -47,11 +43,12 @@ class LogoUploadService
         return $this->settingsService->getSettingsDtoWithoutCache()->getLogoPath();
     }
 
-    private function getDestinationFilename(UploadedFile $uploadedFile): string
+    private function getDestinationPath(UploadedFile $uploadedFile): string
     {
-        $ext = $uploadedFile->getClientOriginalExtension();
+        $extension = $uploadedFile->getClientOriginalExtension();
 
-        return FileHelper::getFilenameValidCharacters($uploadedFile->getClientOriginalName()) . '.' . $ext;
+        return FilePath::getLogoPath()
+            . '/' . FileHelper::getFilenameValidCharacters($uploadedFile->getClientOriginalName()) . '.' . $extension;
     }
 
     private function saveLogoSetting(string $logoPath): void

@@ -21,6 +21,13 @@ class FileHelper
         );
     }
 
+    public static function throwExceptionIfNotImage(string $path): void
+    {
+        if (!static::isImage($path)) {
+            throw new \UnexpectedValueException('file is not image');
+        }
+    }
+
     public static function getFilenameValidCharacters(string $filename): string
     {
         $generator = new SlugGenerator(
@@ -42,7 +49,7 @@ class FileHelper
         static::throwExceptionIfUnsafeExtension(\pathinfo($filename, \PATHINFO_EXTENSION));
     }
 
-    public static function throwExceptionIfUnsafePath(string $path, string $mustBeInsideDir = null): void
+    public static function throwExceptionIfPathOutsideDir(string $path, string $mustBeInsideDir = null): void
     {
         $mustBeInsideDir = $mustBeInsideDir ?? FilePath::getStaticPath();
         if (Path::getLongestCommonBasePath([Path::canonicalize($path), $mustBeInsideDir]) !== $mustBeInsideDir) {
@@ -52,6 +59,32 @@ class FileHelper
         }
 
         static::throwExceptionIfUnsafeExtension(\pathinfo($path, \PATHINFO_EXTENSION));
+    }
+
+    public static function reducePathLength(string $path, int $maxLength = 255): string
+    {
+        $dirname = \dirname($path);
+        $extension = '.' . \pathinfo($path, \PATHINFO_EXTENSION);
+        $usedLength = \strlen(Path::makeRelative($dirname . '/' .$extension, FilePath::getProjectDir()));
+        $filenameMaxLength = $maxLength - $usedLength - 1;
+
+        $return = $dirname;
+        $return .= '/' . \substr(\pathinfo($path, \PATHINFO_FILENAME), 0, $filenameMaxLength);
+        $return .= $extension;
+
+        return $return;
+    }
+
+    public static function reduceFilenameLength(string $path, int $maxLength = 100): string
+    {
+        $extension = '.' . \pathinfo($path, \PATHINFO_EXTENSION);
+        $filenameMaxLength = $maxLength - \strlen($extension) - 1;
+
+        $return = \dirname($path);
+        $return .= '/' . \substr(\pathinfo($path, \PATHINFO_FILENAME), 0, $filenameMaxLength);
+        $return .= $extension;
+
+        return $return;
     }
 
     public static function throwExceptionIfUnsafeExtension(string $extension): void

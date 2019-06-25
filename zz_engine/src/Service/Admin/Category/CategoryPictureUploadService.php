@@ -15,27 +15,28 @@ class CategoryPictureUploadService
     public function savePicture(Category $category, UploadedFile $uploadedFile): void
     {
         FileHelper::throwExceptionIfUnsafeExtensionFromUploadedFile($uploadedFile);
-
-        $destinationFilename = $this->getDestinationFilename($uploadedFile);
-
-        if (!FileHelper::isImage($destinationFilename)) {
-            throw new \UnexpectedValueException(
-                'file is not image'
-            );
-        }
+        $destinationPath = $this->getDestinationPath($uploadedFile);
+        FileHelper::throwExceptionIfNotImage($destinationPath);
+        FileHelper::throwExceptionIfPathOutsideDir($destinationPath, FilePath::getCategoryPicturePath());
 
         $movedFile = $uploadedFile->move(
-            FilePath::getCategoryPicturePath(),
-            \basename($destinationFilename)
+            \dirname($destinationPath),
+            \basename($destinationPath)
         );
 
         $category->setPicture(Path::makeRelative($movedFile->getRealPath(), FilePath::getProjectDir()));
     }
 
-    private function getDestinationFilename(UploadedFile $uploadedFile): string
+    private function getDestinationPath(UploadedFile $uploadedFile): string
     {
-        $ext = $uploadedFile->getClientOriginalExtension();
+        $extension = $uploadedFile->getClientOriginalExtension();
 
-        return FileHelper::getFilenameValidCharacters($uploadedFile->getClientOriginalName()) . '.' . $ext;
+        $return = FilePath::getCategoryPicturePath()
+            . '/'
+            . FileHelper::getFilenameValidCharacters($uploadedFile->getClientOriginalName()) . '.' . $extension;
+        $return = FileHelper::reduceFilenameLength($return, 50);
+        $return = FileHelper::reducePathLength($return, 100);
+
+        return $return;
     }
 }

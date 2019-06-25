@@ -48,10 +48,11 @@ class ListingFileService
             if (!\file_exists($fileUploadDto->getSourceFilePath())) {
                 continue;
             }
-            FileHelper::throwExceptionIfUnsafePath($fileUploadDto->getSourceFilePath(), FilePath::getTempFileUpload());
+            FileHelper::throwExceptionIfPathOutsideDir($fileUploadDto->getSourceFilePath(), FilePath::getTempFileUpload());
             $tmpFile = new File($fileUploadDto->getSourceFilePath());
             $destinationPath = $this->getDestinationPath($listing, $fileUploadDto);
-            FileHelper::throwExceptionIfUnsafePath($destinationPath, FilePath::getListingFilePath());
+            FileHelper::throwExceptionIfPathOutsideDir($destinationPath, FilePath::getListingFilePath());
+            FileHelper::throwExceptionIfUnsafeFilename($destinationPath);
             $newFile = $tmpFile->move(\dirname($destinationPath), \basename($destinationPath));
 
             $listingFile = new ListingFile();
@@ -83,9 +84,11 @@ class ListingFileService
             . \basename($this->getDestinationFileName($fileUploadDto));
 
 
-        FileHelper::throwExceptionIfUnsafePath($destinationPath, FilePath::getListingFilePath());
-
-        return Path::canonicalize($destinationPath);
+        FileHelper::throwExceptionIfPathOutsideDir($destinationPath, FilePath::getListingFilePath());
+        $destinationPath = Path::canonicalize($destinationPath);
+        $destinationPath = FileHelper::reduceFilenameLength($destinationPath, 70);
+        $destinationPath = FileHelper::reducePathLength($destinationPath);
+        return $destinationPath;
     }
 
     private function getDestinationDirectory(Listing $listing): string

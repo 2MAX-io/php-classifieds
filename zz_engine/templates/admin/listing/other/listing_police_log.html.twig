@@ -11,11 +11,15 @@
             </a>
         </h1>
 
-        <button type="button" class="btn btn-primary mb-4" id="policeLogCopyToClipboard">
-            {{ 'trans.Copy to clipboard' | trans }}
-        </button>
+        <div>
+            <button type="button" class="btn btn-primary mb-4" id="policeLogCopyToClipboard">
+                {{ 'trans.Copy to clipboard' | trans }}
+            </button>
+        </div>
 
-        <textarea class="police-log-textarea">{{- policeLogText -}}</textarea>
+        <div>
+            <textarea class="police-log-textarea">{{- policeLogText -}}</textarea>
+        </div>
     </div>
 {% endblock %}
 

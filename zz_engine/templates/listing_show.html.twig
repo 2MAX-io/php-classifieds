@@ -55,21 +55,23 @@
                     </div>
                 </div>
 
-                {% if isCurrentUserListing(listing) %}
-                    <a href="{{ path('app_listing_edit', {'id': listing.id}) }}" class="btn btn-primary mb-2 mr-1 d-md-none">
-                        {{- 'trans.Edit listing' | trans -}}
-                    </a>
-                {% endif %}
+                <div class="d-md-none mb-2">
+                    {% if isCurrentUserListing(listing) %}
+                        <a href="{{ path('app_listing_edit', {'id': listing.id}) }}" class="btn btn-primary mb-2 mr-1">
+                            {{- 'trans.Edit listing' | trans -}}
+                        </a>
+                    {% endif %}
 
-                {% if lowSecurityCheckIsAdminInPublic() %}
-                    <a href="{{ path('app_admin_listing_edit', {'id': listing.id}) }}" class="btn btn-outline-danger mb-2 mr-1 d-md-none">
-                        {{- 'trans.Edit listing as Admin' | trans -}}
-                    </a>
-                {% endif %}
+                    {% if lowSecurityCheckIsAdminInPublic() %}
+                        <a href="{{ path('app_admin_listing_edit', {'id': listing.id}) }}" class="btn btn-outline-danger mb-2 mr-1">
+                            {{- 'trans.Edit listing as Admin' | trans -}}
+                        </a>
+                    {% endif %}
 
-                {% if userOrAdmin(listing) %}
-                    <span class="{{ getListingStatusClass(listing) }} text-nowrap d-md-none">{{ getListingStatus(listing) }}</span>
-                {% endif %}
+                    {% if userOrAdmin(listing) %}
+                        <span class="{{ getListingStatusClass(listing) }} text-nowrap">{{ getListingStatus(listing) }}</span>
+                    {% endif %}
+                </div>
 
                 {% if listing.listingFiles is not empty %}
                     <div class="mb-2 text-center">

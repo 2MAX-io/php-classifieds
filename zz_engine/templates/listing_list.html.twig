@@ -141,7 +141,7 @@
                                                 <input
                                                     name="form_custom_field[{{ customField.id }}][values][]"
                                                     value="{{ customFieldOption.value }}"
-                                                    {%- if checked -%}{{- ' checked ' -}}{%- endif -%}
+                                                    {% if checked %}{{- ' checked ' -}}{% endif %}
                                                     type="checkbox"
                                                     id="option_{{ customFieldOption.id }}"
                                                     class="custom-control-input"
@@ -194,7 +194,7 @@
                                                 <input
                                                     name="form_custom_field[{{ customField.id }}][values][]"
                                                     value="{{ customFieldOption.value }}"
-                                                    {%- if checked -%}{{- ' checked ' -}}{%- endif -%}
+                                                    {% if checked %}{{- ' checked ' -}}{% endif %}
                                                     type="checkbox"
                                                     id="option_{{ customFieldOption.id }}"
                                                     class="custom-control-input"

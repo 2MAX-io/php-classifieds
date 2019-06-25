@@ -32,8 +32,7 @@ class CategoryPictureUploadService
         $extension = $uploadedFile->getClientOriginalExtension();
 
         $return = FilePath::getCategoryPicturePath()
-            . '/'
-            . FileHelper::getFilenameValidCharacters($uploadedFile->getClientOriginalName()) . '.' . $extension;
+            . '/' . FileHelper::getFilenameValidCharacters($uploadedFile->getClientOriginalName()) . '.' . $extension;
         $return = FileHelper::reduceFilenameLength($return, 50);
         $return = FileHelper::reducePathLength($return, 100);
 

@@ -46,9 +46,12 @@ class LogoUploadService
     private function getDestinationPath(UploadedFile $uploadedFile): string
     {
         $extension = $uploadedFile->getClientOriginalExtension();
-
-        return FilePath::getLogoPath()
+        $destinationPath = FilePath::getLogoPath()
             . '/' . FileHelper::getFilenameValidCharacters($uploadedFile->getClientOriginalName()) . '.' . $extension;
+        $destinationPath = FileHelper::reduceFilenameLength($destinationPath, 50);
+        $destinationPath = FileHelper::reducePathLength($destinationPath, 100);
+
+        return $destinationPath;
     }
 
     private function saveLogoSetting(string $logoPath): void

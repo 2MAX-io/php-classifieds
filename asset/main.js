@@ -105,3 +105,8 @@ $.fancyConfirm = function(opts) {
         }
     });
 };
+
+$('.listingListItemClick').on('click', function () {
+    var $listingListItem = $(this);
+    window.location.href = $listingListItem.find('.listingListLink').attr('href');
+});

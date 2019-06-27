@@ -1,6 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-142869039-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-142869039-1');
+    </script>
+
     <meta charset="utf-8">
     <title>2MAX.io Classified Ads - Responsive Classified Ads with Custom Fields & Filters</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -19,6 +29,9 @@
             word-wrap: break-word;
 
             max-width: 800px;
+        }
+        .mb-2 {
+            margin-bottom: 1rem;
         }
         @media (min-width: 1200px) {
             .container {
@@ -61,7 +74,7 @@
     </div>
 
     <h2>Main Features</h2>
-    <ul style="list-style-type: disc;">
+    <ul>
         <li>Custom Fields and Custom Filters to easily search ads</li>
         <li>Responsive and optimized for mobile users</li>
         <li>Administrative features required to run real world classified ads site</li>
@@ -71,7 +84,7 @@
     </ul>
 
     <h4>Custom Fields and Custom Filters:</h4>
-    <ul style="list-style-type: disc;">
+    <ul>
         <li>category specific fields, such as brand, mileage or year of car production can be easily added</li>
         <li>custom fields can be freely assigned to any category</li>
         <li>custom filters that use custom fields, can be used to quickly narrow down ads by the viewers</li>
@@ -96,7 +109,7 @@
     </ul>
 
     <h4>Listing</h4>
-    <ul style="list-style-type: disc;">
+    <ul>
         <li>user can add title, description, category, phone, email, price, city and custom fields (of selected category) for his listing</li>
         <li>title of listing is protected so user do not abuse CAPITAL LETTERS</li>
         <li>checkbox option to show user's email address</li>
@@ -114,7 +127,7 @@
     </ul>
 
     <h4>List of listings: in category, listings of user, last added</h4>
-    <ul style="list-style-type: disc;">
+    <ul>
         <li>search by keywords</li>
         <li>filter by custom fields</li>
         <li>featured listings displayed first and highlighted</li>
@@ -126,7 +139,7 @@
     </ul>
 
     <h4>Payments and Monetization</h4>
-    <ul style="list-style-type: disc;">
+    <ul>
         <li>monetization through featuring of listings</li>
         <li>account top up, wallet - ability to use account balance to quickly feature listings, useful for clients who promote large volume of listings</li>
         <li>admin can set user's top up balance (wallet balance) without payment via manual payment, which would enable this user to use wallet for featuring ads</li>
@@ -143,7 +156,7 @@
     </ul>
 
     <h4>Mobile View</h4>
-    <ul style="list-style-type: disc;">
+    <ul>
         <li>all pages implement responsive web design principles and are optimized to be viewed on smartphone</li>
         <li>pages use minimal amount of images, which improves mobile experience, especially when using internet on the go</li>
         <li>when adding listing from smartphone, option to add images using camera of smartphone</li>
@@ -152,7 +165,7 @@
     </ul>
 
     <h4>Categories</h4>
-    <ul style="list-style-type: disc;">
+    <ul>
         <li>tested to support up to 3 levels of nested categories ie. Electronics -&gt; Consoles -&gt; PS4</li>
         <li>admin can manage order of categories</li>
         <li>admin can manage order of custom fields in category</li>
@@ -161,7 +174,7 @@
     </ul>
 
     <h4>Administration</h4>
-    <ul style="list-style-type: disc;">
+    <ul>
         <li>option to show only listings approved by administrator</li>
         <li>option to show listing without admin approval, admin still have list of listings to preview, so he can easily monitor new listings</li>
         <li>option to change category using admin's search functionality, so you are able to quickly move ads between categories, when you want to change structure of categories</li>
@@ -191,7 +204,7 @@
     </ul>
 
     <h4>User</h4>
-    <ul style="list-style-type: disc;">
+    <ul>
         <li>can top up his account wallet for future payments</li>
         <li>can see history of his payments</li>
         <li>can run trial of featured listing for 30 minutes as a test before payment</li>
@@ -208,7 +221,7 @@
     </ul>
 
     <h4>SEO options</h4>
-    <ul style="list-style-type: disc;">
+    <ul>
         <li>page title</li>
         <li>suffix for every page title</li>
         <li>meta description and keywords</li>
@@ -222,7 +235,7 @@
     </ul>
 
     <h4>Secondary features</h4>
-    <ul style="list-style-type: disc;">
+    <ul>
         <li>RSS so your users can easily find new ads</li>
         <li>Last added page, so users can quickly find newest ads and act on them quickly</li>
         <li>GDPR / cookie / privacy policy notice</li>
@@ -232,7 +245,7 @@
     </ul>
 
     <h4>Localization</h4>
-    <ul style="list-style-type: disc;">
+    <ul>
         <li>you can create your own translation for this app, messages are stored in translation files</li>
         <li>option to set country, and use country specific phone number formats</li>
         <li>option to set currency, to format money value for your country</li>
@@ -240,7 +253,7 @@
 
     <h4>Other Settings</h4>
     <p>Settings allow to set listing, payments, SEO, page title, meta tags and localization settings described in other sections. In addition to that they allow to set:</p>
-    <ul style="list-style-type: disc;">
+    <ul>
         <li>custom CSS and JS, JS can be added in both head and bottom of page, inserting JS in head is useful for Google Tag Manager</li>
         <li>custom footer, footer can include current year</li>
         <li>alias for email from field</li>
@@ -250,7 +263,7 @@
     </ul>
 
     <h4>Installer</h4>
-    <ul style="list-style-type: disc;">
+    <ul>
         <li>installer do not require manual modification of files during installation</li>
         <li>you can set database config and config required to send email messages in installer</li>
         <li>ability to fill app with example data: categories, custom fields, listings, subpages. For demo, preview and testing purposes.</li>
@@ -261,30 +274,98 @@
     </ul>
 
     <h4>Other:</h4>
-    <ul style="list-style-type: disc;">
+    <ul>
         <li>health check validators, that inform of any problems with app, displayed on index of admin page</li>
         <li>created using modern, mature and up-to-date Symfony 4 framework</li>
         <li>created using widely used frontend framework Bootstrap 4</li>
+        <li>Works on Chrome, Firefox, Safari, Opera, Edge, IE11, IE10</li>
         <li>Documentation:&nbsp;<a href="http://documentation.2max.io/display/CLAS">http://documentation.2max.io/display/CLAS</a></li>
     </ul>
 
     <h4>Minimal requirements</h4>
-    <ul style="list-style-type: disc;">
+    <ul>
         <li>PHP 7.3+</li>
         <li>MYSQL 5.6+</li>
         <li><a href="https://documentation.2max.io/display/CLAS/Requirements">Full list of requirements for web server to install and use this PHP script</a></li>
     </ul>
 
+    <h4>Custom Modifications & Tailoring, to your specific needs</h4>
+    <div>
+        <p>
+            Do you need some custom modifications to our base script to meet all your needs and requirements?
+        </p>
+        <p>
+            If that's the case. Please contact us and explain what is needed and required.
+            It would help us a lot, if in addition to detailed information about WHAT is needed to be done.
+            You would also include information WHY you need a certain functionality,
+            in short, we want to know what end result you want accomplish by adding features or changing things around.
+            This details, will help us better match the solution to your needs, and possibly suggest alternative solutions.
+        </p>
+
+        <p>
+            In case of questions, please contact us via: <a href="mailto:2max.io@2max.io" target="_blank">2max.io@2max.io</a>
+        </p>
+    </div>
 
 
+    <h1>Purchase and Costs</h1>
+    <h4>Base price for this app is <u>$99</u> netto + TAX, plus optional commission of payment gateway, if you chose to pay by one.</h4>
 
+    <p>
+        This price is for base version of 2MAX Classified Ads.
+        For use, by you or one client, in a single end product which end users are not charged for.
+        It includes updates and required fixes if app does not work as described for minimum period of 1 year.
+    </p>
+    <p>
+        This price point does not include any guarantees on support or answering any questions.
+        Still we would make our best effort to answer any of your questions.
+        But we want to be clear, that we would put our priority and focus to customers that decided to pay us for priority support and custom modifications first.
+        Before we take care of clients that purchased base version.
+    </p>
+    <p>
+        After purchasing base version, you could also decide to make custom modifications and to get support form other vendor.
+        To modify this app, you would need to find vendor with knowledge of PHP 7, MYSQL, Symfony 4, CSS, JS, gulp, linux, bash, jQuery and Bootstrap 4.
+        Base version includes source code of app, and you are free to modify it to your needs as needed.
+    </p>
+    <p>
+        If you need help with installation, need priority support with SLA and general day to day help.
+        We can offer those services for additional fee. Exact cost would depend on amount of service you would require.
+        We can offer recurring support fees. Initial star-up and support fee for period of 3 to 12 months to get you started.
+        Or we could simply negotiate support tailor made to your needs.
+    </p>
+    <p>
+        Bellow you can find our base rates for custom modifications and support.
+        Those rates are subject to negotiation, if you purchase our products and services for total amount greater than $500 including all your past orders.
+        Before we could start, we would expect installment of 30%. With minimum of $99.
+        All prices are netto, they do not include taxes and payment gateway commission, if you chose to pay via one.
+    </p>
 
+    <div class="mb-2">
+        <table>
+            <tr>
+                <th>Service</th>
+                <th>Price</th>
+            </tr>
+            <tr>
+                <td>Installation</td>
+                <td>$99</td>
+            </tr>
+            <tr>
+                <td>Hour of work on your custom modifications</td>
+                <td>$30</td>
+            </tr>
+            <tr>
+                <td>Hour of support</td>
+                <td>$10</td>
+            </tr>
+        </table>
+    </div>
 
-	<div style="margin-bottom: 2em; margin-top: 2em;">
-		<a href="https://codecanyon.net/user/2max_io">Buy 2MAX.io Classified Ads</a>
-	</div>
+    <div>
+        If you are interested in purchase or have any questions please contact us at: <a href="mailto:2max.io@2max.io" target="_blank">2max.io@2max.io</a>
 
-
+        <p>Thank you for your interest. With regards, 2MAX.io</p>
+    </div>
 
 </div>
 </body>

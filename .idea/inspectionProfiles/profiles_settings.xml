@@ -1,5 +1,8 @@
 <component name="InspectionProjectProfileManager">
   <settings>
+    <option name="PROJECT_PROFILE" value="2MAX.io" />
+    <option name="USE_PROJECT_PROFILE" value="false" />
+    <version value="1.0" />
     <info color="6e00a2">
       <option name="EFFECT_COLOR" value="6e00a2" />
       <option name="ERROR_STRIPE_COLOR" value="6e00a2" />

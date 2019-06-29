@@ -443,3 +443,4 @@ composer install -d zz_engine --optimize-autoloader
 composer require -w zz_engine "hybridauth/hybridauth" : "~3.0"
 composer require -d zz_engine 
 composer require -d zz_engine hybridauth/hybridauth ~3.0
+composer update -d zz_engine --optimize-autoloader

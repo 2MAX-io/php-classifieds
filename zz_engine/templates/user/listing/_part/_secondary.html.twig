@@ -25,6 +25,9 @@
     };
 
     var onListingSaveFormSubmit = function (button, event) {
+        if (!preventDoubleClick(button, event)) {
+            return;
+        }
         if ($(button).data('force-submit')) {
             return;
         }

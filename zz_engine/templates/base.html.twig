@@ -52,30 +52,28 @@
             </button>
 
             <div class="collapse navbar-collapse" id="navbarPageTop">
-                <ul class="navbar-nav justify-content-around d-sm-none">
+                <ul class="navbar-nav justify-content-around d-sm-none mb-2">
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ path('app_index') }}">{{ 'trans.Home page' | trans }}</a>
+                        <a class="nav-link menu-top-item" href="{{ path('app_index') }}">{{ 'trans.Home page' | trans }}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ path('app_category_view_all') }}">{{ 'trans.Categories' | trans }}</a>
+                        <a class="nav-link menu-top-item" href="{{ path('app_category_view_all') }}">{{ 'trans.Categories' | trans }}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ path('app_last_added') }}">{{ 'trans.Last added' | trans }}</a>
+                        <a class="nav-link menu-top-item" href="{{ path('app_last_added') }}">{{ 'trans.Last added' | trans }}</a>
                     </li>
                     {% if settings.masterSiteLinkShow %}
-                    <li class="nav-item">
+                    <li class="nav-item menu-top-item">
                         <a class="nav-link" href="{{ settings.masterSiteUrl }}">{{ settings.masterSiteAnchorText }}</a>
                     </li>
                     {%- endif -%}
-
-                    {% if lowSecurityCheckIsAdminInPublic() %}
-                        <li class="nav-item">
-                            <a class="nav-link btn btn-outline-danger" href="{{ path('app_admin_index') }}">
-                                {{- 'trans.Admin panel' | trans -}}
-                            </a>
-                        </li>
-                    {%- endif -%}
                 </ul>
+
+                {% if lowSecurityCheckIsAdminInPublic() %}
+                    <a class="nav-link btn btn-outline-danger d-sm-none" href="{{ path('app_admin_index') }}">
+                        {{- 'trans.Admin panel' | trans -}}
+                    </a>
+                {%- endif -%}
 
                 <div class="col-md-8 container-remove-padding">
                     <form class="form-inline my-2 my-lg-0" method="get" action="{{ path('app_listing_search') }}">

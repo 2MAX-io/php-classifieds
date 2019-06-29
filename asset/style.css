@@ -424,3 +424,7 @@ input.form-control, textarea.form-control, select.form-control {
 .listing-show-side-photo {
     width: 120px;
 }
+
+.menu-top-item {
+    border-bottom: 1px dashed #cecece;
+}

@@ -71,9 +71,6 @@ class LoginOauthController extends AbstractUserController
         try{
             $hybridAuth = new Hybridauth($config);
             $adapter = $hybridAuth->authenticate($oauthProviderName);
-            if (!$adapter->isConnected()) {
-                throw new CustomUserMessageAuthenticationException('User is not connected.');
-            }
             $userProfile = $adapter->getUserProfile();
             $email = Str::emptyTrim($userProfile->emailVerified) ? $userProfile->email : $userProfile->emailVerified;
             $user = $em->getRepository(User::class)->findOneBy(['email' => $email]);

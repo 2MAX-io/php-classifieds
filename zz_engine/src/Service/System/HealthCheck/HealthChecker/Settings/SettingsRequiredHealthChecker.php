@@ -130,6 +130,10 @@ class SettingsRequiredHealthChecker implements HealthCheckerInterface
             'customJavascriptBottom',
             'customJavascriptInHead',
             'customCss',
+            'facebookSignInAppId',
+            'facebookSignInAppSecret',
+            'googleSignInClientId',
+            'googleSignInClientSecret',
         ];
     }
 

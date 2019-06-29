@@ -110,3 +110,20 @@ $('.listingListItemClick').on('click', function () {
     var $listingListItem = $(this);
     window.location.href = $listingListItem.find('.listingListLink').attr('href');
 });
+
+function preventDoubleClick(element, event) {
+    var $element = $(element);
+    var previousClickTimestamp = $element.data('last-click-timestamp') || null;
+    $element.data('last-click-timestamp', event.timeStamp);
+
+    if (previousClickTimestamp !== null && event.timeStamp - 1000 < previousClickTimestamp) {
+        event.preventDefault();
+        return false;
+    }
+
+    return true;
+}
+
+$('.preventDoubleClick').on('click', function (event) {
+    preventDoubleClick(this, event);
+});

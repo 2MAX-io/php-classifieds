@@ -235,10 +235,7 @@
                                 {{ 'trans.Listing has expired' | trans }}
                             </div>
                         {% else %}
-                            <button
-                                    class="btn btn-success w-100 mb-3 showContactInformation"
-                                    onclick="showContactInformation({{ listing.id }})"
-                            >
+                            <button class="btn btn-success w-100 mb-3 onClickShowContactInformation" data-listing-id="{{ listing.id }}">
                                 {{ 'trans.Show contact information' | trans }}
                             </button>
                         {% endif %}
@@ -382,7 +379,13 @@
             hash: false,
         });
 
-        function showContactInformation(listingId) {
+        $('.onClickShowContactInformation').on('click', function (event) {
+            if (!preventDoubleClick(this, event)) {
+                return;
+            }
+
+            var $button = $(this);
+            var listingId = $(this).data('listing-id');
             var params = {};
             if (showPreviewForOwner !== '') {
                 params.showPreviewForOwner = 1;
@@ -396,11 +399,10 @@
             ).done(function (response) {
                 $('.listing-contact-data').remove();
 
-                var $showContactInformation = $('.showContactInformation');
-                $showContactInformation.before(response.html);
-                $showContactInformation.remove();
+                $button.before(response.html);
+                $button.remove();
             });
-        }
+        });
 
         var $topImage = $('.listing-show-top-image');
         if ($topImage.prop('naturalWidth') < 150 || $topImage.prop('naturalHeight') < 120) {

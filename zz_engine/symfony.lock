@@ -132,6 +132,9 @@
     "hautelook/phpass": {
         "version": "1.1.0"
     },
+    "hybridauth/hybridauth": {
+        "version": "v3.0.0"
+    },
     "intervention/image": {
         "version": "2.4.2"
     },

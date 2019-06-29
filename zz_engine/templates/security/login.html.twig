@@ -2,8 +2,10 @@
 
 {% block title %}{{ 'trans.Log in!' | trans }}{% endblock %}
 
-{% block body %}
+{# @var settings \App\Service\Setting\SettingsDto #}
+{%- set settings = settings() -%}
 
+{% block body %}
 <div class="container mt-3 mt-md-4">
     <div class="row">
         <div class="col-md-6 offset-md-3">
@@ -65,15 +67,23 @@
 
                     <hr>
 
-{#                    <div class="row">#}
-{#                        <div class="col-md-6 mb-3 mb-md-0">#}
-{#                            <a href="#" class="btn btn-secondary btn-block"><i class="fab fa-facebook-f"></i> Facebook</a>#}
-{#                        </div>#}
+                    <div class="row">
+                        {% if settings.facebookSignInEnabled %}
+                            <div class="col-md-6 mb-md-0">
+                                <a href="{{ path('app_login_oauth', {'provider': constant('\App\\Controller\\User\\Account\\LoginOauthController::FACEBOOK_PROVIDER')}) }}" class="btn btn-secondary btn-block">
+                                    <i class="fab fa-facebook-f"></i> {{ 'trans.Facebook' | trans }}
+                                </a>
+                            </div>
+                        {% endif %}
 
-{#                        <div class="col-md-6">#}
-{#                            <a href="#" class="btn btn-secondary btn-block"><i class="fab fa-twitter"></i> Twitter</a>#}
-{#                        </div>#}
-{#                    </div>#}
+                        {% if settings.googleSignInEnabled %}
+                            <div class="col-md-6 mb-3 mb-md-0">
+                                <a href="{{ path('app_login_oauth', {'provider': constant('\App\\Controller\\User\\Account\\LoginOauthController::GOOGLE_PROVIDER')}) }}" class="btn btn-secondary btn-block">
+                                    <i class="fab fa-google"></i> {{ 'trans.Google' | trans }}
+                                </a>
+                            </div>
+                        {% endif %}
+                    </div>
                 </div>
 
                 <div class="card-footer text-muted">

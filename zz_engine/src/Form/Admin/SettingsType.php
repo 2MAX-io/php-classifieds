@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Form\Admin;
 
 use App\Form\Type\BoolRequiredType;
+use App\Form\Type\BoolType;
 use App\Form\Type\LanguageTwoLettersType;
 use App\Form\Type\PageType;
 use App\Service\Setting\SettingsDto;
@@ -275,6 +276,30 @@ class SettingsType extends AbstractType
         $builder->add('customCss', TextareaType::class, [
             'label' => 'trans.Custom CSS',
             'help' => 'trans.put your code inside: <style type="text/css"></style>',
+            'required' => true,
+        ]);
+        $builder->add('facebookSignInEnabled', BoolType::class, [
+            'label' => 'trans.Facebook Sign in enabled?',
+            'required' => true,
+        ]);
+        $builder->add('facebookSignInAppId', TextType::class, [
+            'label' => 'trans.Facebook Sign in App ID',
+            'required' => true,
+        ]);
+        $builder->add('facebookSignInAppSecret', TextType::class, [
+            'label' => 'trans.Facebook Sign in App Secret',
+            'required' => true,
+        ]);
+        $builder->add('googleSignInEnabled', BoolType::class, [
+            'label' => 'trans.Google Sign in enabled?',
+            'required' => true,
+        ]);
+        $builder->add('googleSignInClientId', TextType::class, [
+            'label' => 'trans.Google Sign in Client ID',
+            'required' => true,
+        ]);
+        $builder->add('googleSignInClientSecret', TextType::class, [
+            'label' => 'trans.Google Sign in Client Secret',
             'required' => true,
         ]);
     }

@@ -440,3 +440,6 @@ php zz_engine/bin/console doctrine:schema:create --dump-sql > install/data/_sche
 php zz_engine/bin/console doctrine:schema:update --force
 composer update -d zz_engine --optimize-autoloader
 composer install -d zz_engine --optimize-autoloader
+composer require -w zz_engine "hybridauth/hybridauth" : "~3.0"
+composer require -d zz_engine 
+composer require -d zz_engine hybridauth/hybridauth ~3.0

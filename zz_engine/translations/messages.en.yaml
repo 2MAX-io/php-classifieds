@@ -36,6 +36,8 @@ trans:
   'Amount per': 'Amount per'
   'Amount is negotiable?': 'Amount is negotiable?'
   'not required': 'not required'
+  'Google': 'Google'
+  'Facebook': 'Facebook'
 
   priceFor.PRICE_FOR_NETTO: 'netto'
   priceFor.PRICE_FOR_BRUTTO: 'brutto'
@@ -143,6 +145,14 @@ trans:
   'Are you sure?': 'Are you sure?'
   'OK': 'OK'
   'Listing has been removed': 'Listing has been removed'
+  Social login: 'Social login'
+  'Google Sign in enabled?': 'Google Sign in enabled?'
+  'Google Sign in Client ID': 'Google Sign in Client ID'
+  'Google Sign in Client Secret': 'Google Sign in Client Secret'
+  'Facebook Sign in enabled?': 'Facebook Sign in enabled?'
+  'Facebook Sign in App ID': 'Facebook Sign in App ID'
+  'Facebook Sign in App Secret': 'Facebook Sign in App Secret'
+  'Sorry, could not login': 'Sorry, could not login'
 
 trans.customFieldType.SELECT_AS_CHECKBOXES: Select field, filter as checkboxes
 trans.customFieldType.SELECT_SINGLE: Select field, filter as single select

@@ -12,6 +12,7 @@
         "guzzlehttp/guzzle": "^6.3",
         "hackzilla/password-generator": "^1.4",
         "hautelook/phpass": "^1.1",
+        "hybridauth/hybridauth": "~3.0",
         "league/glide-symfony": "^1.0",
         "minwork/array": "^1.3",
         "nesbot/carbon": "^2.16",

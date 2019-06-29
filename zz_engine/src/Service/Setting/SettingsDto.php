@@ -183,6 +183,36 @@ class SettingsDto
      */
     private $license;
 
+    /**
+     * @var string|null
+     */
+    private $facebookSignInEnabled;
+
+    /**
+     * @var string|null
+     */
+    private $facebookSignInAppId;
+
+    /**
+     * @var string|null
+     */
+    private $facebookSignInAppSecret;
+
+    /**
+     * @var string|null
+     */
+    private $googleSignInEnabled;
+
+    /**
+     * @var string|null
+     */
+    private $googleSignInClientId;
+
+    /**
+     * @var string|null
+     */
+    private $googleSignInClientSecret;
+
     public function getIndexPageTitle(): ?string
     {
         return $this->indexPageTitle;
@@ -531,5 +561,65 @@ class SettingsDto
     public function setLicense(?string $license): void
     {
         $this->license = $license;
+    }
+
+    public function getFacebookSignInAppId(): ?string
+    {
+        return $this->facebookSignInAppId;
+    }
+
+    public function setFacebookSignInAppId(?string $facebookSignInAppId): void
+    {
+        $this->facebookSignInAppId = $facebookSignInAppId;
+    }
+
+    public function getFacebookSignInAppSecret(): ?string
+    {
+        return $this->facebookSignInAppSecret;
+    }
+
+    public function setFacebookSignInAppSecret(?string $facebookSignInAppSecret): void
+    {
+        $this->facebookSignInAppSecret = $facebookSignInAppSecret;
+    }
+
+    public function getGoogleSignInClientId(): ?string
+    {
+        return $this->googleSignInClientId;
+    }
+
+    public function setGoogleSignInClientId(?string $googleSignInClientId): void
+    {
+        $this->googleSignInClientId = $googleSignInClientId;
+    }
+
+    public function getGoogleSignInClientSecret(): ?string
+    {
+        return $this->googleSignInClientSecret;
+    }
+
+    public function setGoogleSignInClientSecret(?string $googleSignInClientSecret): void
+    {
+        $this->googleSignInClientSecret = $googleSignInClientSecret;
+    }
+
+    public function getFacebookSignInEnabled(): ?string
+    {
+        return $this->facebookSignInEnabled;
+    }
+
+    public function setFacebookSignInEnabled(?string $facebookSignInEnabled): void
+    {
+        $this->facebookSignInEnabled = $facebookSignInEnabled;
+    }
+
+    public function getGoogleSignInEnabled(): ?string
+    {
+        return $this->googleSignInEnabled;
+    }
+
+    public function setGoogleSignInEnabled(?string $googleSignInEnabled): void
+    {
+        $this->googleSignInEnabled = $googleSignInEnabled;
     }
 }

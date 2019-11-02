@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Exception\Controller;
 
 use App\Exception\UserVisibleException;
+use App\Exception\UserVisibleMessageException;
 use App\Helper\ExceptionHelper;
 use App\Helper\Str;
 use Psr\Log\LoggerInterface;
@@ -46,6 +47,10 @@ class ExceptionController extends BaseExceptionController
      */
     public function showAction(Request $request, FlattenException $exception, DebugLoggerInterface $logger = null): Response
     {
+        if ($this->isUserVisibleException($exception)) {
+            $this->debug = false;
+        }
+
         $currentContent = $this->getAndCleanOutputBuffering($request->headers->get('X-Php-Ob-Level', -1));
         $showException = $request->attributes->get('showException', $this->debug); // As opposed to an additional parameter, this maintains BC
 
@@ -84,20 +89,24 @@ class ExceptionController extends BaseExceptionController
 
     private function getUserVisibleExceptionMessage(FlattenException $exception): ?string
     {
-        if ($exception->getClass() === UserVisibleException::class) {
-            $message = $exception->getMessage();
-
-            try {
-                if (Str::beginsWith($message, 'trans.')) {
-                    return $this->trans->trans($message);
-                }
-            } catch (\Throwable $e) {
-                $this->logger->error($e->getMessage(), ExceptionHelper::flatten($e));
-            }
-
-            return $message;
+        if (!$this->isUserVisibleException($exception)) {
+            return null;
         }
 
-        return null;
+        $message = $exception->getMessage();
+        try {
+            if (Str::beginsWith($message, 'trans.')) {
+                return $this->trans->trans($message);
+            }
+        } catch (\Throwable $e) {
+            $this->logger->error($e->getMessage(), ExceptionHelper::flatten($e));
+        }
+
+        return $message;
+    }
+
+    private function isUserVisibleException(FlattenException $exception): bool
+    {
+        return UserVisibleException::class === $exception->getClass();
     }
 }

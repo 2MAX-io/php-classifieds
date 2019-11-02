@@ -168,7 +168,7 @@ class CustomFieldOptionController extends AbstractAdminController
     ): Response {
         $this->denyUnlessAdmin();
 
-        if ($this->isCsrfTokenValid('adminCustomFieldOptionsSaveSort', $request->headers->get('x-csrf-token'))) {
+        if ($this->isCsrfTokenValid('adminCustomFieldOptionsOrderCsrfToken', $request->headers->get('x-csrf-token'))) {
             $em = $this->getDoctrine()->getManager();
 
             $requestContentArray  = Json::toArray($request->getContent());

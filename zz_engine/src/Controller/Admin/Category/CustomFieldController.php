@@ -97,7 +97,8 @@ class CustomFieldController extends AbstractAdminController
         Request $request,
         CustomField $customField,
         CustomFieldCategorySelectionService $customFieldCategorySelectionService,
-        CustomFieldForCategoryService $customFieldForCategoryService
+        CustomFieldForCategoryService $customFieldForCategoryService,
+        CsrfTokenManagerInterface $csrfTokenManager
     ): Response {
         $this->denyUnlessAdmin();
 
@@ -122,6 +123,9 @@ class CustomFieldController extends AbstractAdminController
             'categorySelectionList' => $customFieldCategorySelectionService->getCategorySelectionList($customField),
             'custom_field' => $customField,
             'form' => $form->createView(),
+            ParamEnum::JSON_DATA => [
+                'adminCustomFieldOptionsOrderCsrfToken' => $csrfTokenManager->getToken('adminCustomFieldOptionsOrderCsrfToken')->getValue(),
+            ],
         ]);
     }
 

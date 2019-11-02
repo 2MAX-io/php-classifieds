@@ -6,6 +6,7 @@ namespace App\Controller\User;
 
 use App\Controller\User\Base\AbstractUserController;
 use App\Entity\Listing;
+use App\Enum\ParamEnum;
 use App\Form\ListingType;
 use App\Helper\Json;
 use App\Service\Category\CategoryListService;
@@ -72,7 +73,7 @@ class UserListingController extends AbstractUserController
             if ($request->request->get('fileuploader-list-files')) {
                 $listingFileService->processListingFiles(
                     $listing,
-                    Json::decodeToArray($request->request->get('fileuploader-list-files')) ?? []
+                    Json::toArray($request->request->get('fileuploader-list-files')) ?? []
                 );
             }
 
@@ -119,7 +120,7 @@ class UserListingController extends AbstractUserController
             if ($request->request->get('fileuploader-list-files')) {
                 $listingFileService->processListingFiles(
                     $listing,
-                    Json::decodeToArray($request->request->get('fileuploader-list-files')) ?? []
+                    Json::toArray($request->request->get('fileuploader-list-files')) ?? []
                 );
             }
             $listingCustomFieldsService->saveCustomFieldsToListing(
@@ -145,7 +146,9 @@ class UserListingController extends AbstractUserController
                 'listing' => $listing,
                 'form' => $form->createView(),
                 'formCategorySelectList' => $categoryListService->getFormCategorySelectList(),
-                'listingFilesForJavascript' => $createListingService->getListingFilesForJavascript($listing),
+                ParamEnum::JSON_DATA => [
+                    'listingFilesForJavascript' => $createListingService->getListingFilesForJavascript($listing),
+                ],
             ]
         );
     }

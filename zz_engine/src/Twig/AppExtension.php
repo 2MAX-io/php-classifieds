@@ -42,6 +42,7 @@ class AppExtension extends AbstractExtension
             new TwigFilter('thousandsSeparate', [TwigNoDependencies::class, 'thousandsSeparate']),
             new TwigFilter('boolGreenRedClass', [TwigNoDependencies::class, 'boolGreenRedClass']),
             new TwigFilter('normalizeWhitespace', [TwigNoDependencies::class, 'normalizeWhitespace'], ['is_safe' => ['html']]),
+            new TwigFilter('inlineJson', [TwigNoDependencies::class, 'inlineJson'], ['is_safe' => ['html']]),
         ];
     }
 }

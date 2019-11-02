@@ -171,7 +171,7 @@ class CustomFieldOptionController extends AbstractAdminController
         if ($this->isCsrfTokenValid('adminCustomFieldOptionsSaveSort', $request->headers->get('x-csrf-token'))) {
             $em = $this->getDoctrine()->getManager();
 
-            $requestContentArray  = Json::decodeToArray($request->getContent());
+            $requestContentArray  = Json::toArray($request->getContent());
             $customFieldOptionService->saveOrderOfOptions($requestContentArray['orderedIdList']);
             $em->flush();
 

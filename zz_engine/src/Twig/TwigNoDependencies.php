@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Twig;
 
+use App\Helper\Json;
 use App\Helper\Str;
 use App\System\Localization\AppNumberFormatter;
 use Carbon\Carbon;
@@ -127,5 +128,14 @@ class TwigNoDependencies implements RuntimeExtensionInterface
         $diffInSeconds = Carbon::instance($dateTime)->diffInSeconds(Carbon::now(), false);
 
         return $maxSecondsLeft < $diffInSeconds && $diffInSeconds < $maxSecondsRight;
+    }
+
+    public function inlineJson($value): string
+    {
+        if (false === (\is_object($value) || \is_array($value))) {
+            throw new \RuntimeException('only array or object allowed');
+        }
+
+        return \htmlspecialchars(Json::toString($value), \ENT_NOQUOTES);
     }
 }

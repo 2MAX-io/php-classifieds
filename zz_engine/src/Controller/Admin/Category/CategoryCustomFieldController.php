@@ -72,7 +72,7 @@ class CategoryCustomFieldController extends AbstractAdminController
         if ($this->isCsrfTokenValid('adminCustomFieldsInCategorySaveSort', $request->headers->get('x-csrf-token'))) {
             $em = $this->getDoctrine()->getManager();
 
-            $requestContentArray = Json::decodeToArray($request->getContent());
+            $requestContentArray = Json::toArray($request->getContent());
             $customFieldForCategoryService->saveOrder($requestContentArray['orderedIdList']);
             $em->flush();
 

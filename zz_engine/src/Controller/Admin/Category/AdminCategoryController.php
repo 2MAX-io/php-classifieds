@@ -190,7 +190,7 @@ class AdminCategoryController extends AbstractAdminController
         if ($this->isCsrfTokenValid('adminCategorySaveSort', $request->headers->get('x-csrf-token'))) {
             $em = $this->getDoctrine()->getManager();
 
-            $requestContentArray  = Json::decodeToArray($request->getContent());
+            $requestContentArray  = Json::toArray($request->getContent());
             $adminCategoryService->saveOrder($requestContentArray['orderedIdList']);
             $em->flush();
 

@@ -129,7 +129,7 @@ class SaveListingService
     {
         $fileUploaderListFilesFromRequest = $this->requestStack->getMasterRequest()->request->get('fileuploader-list-files', false);
         if ($fileUploaderListFilesFromRequest) {
-            $files = Json::decodeToArray($fileUploaderListFilesFromRequest);
+            $files = Json::toArray($fileUploaderListFilesFromRequest);
             $files = \array_map(function($file): array {
                 if (isset($file['data']['tmpFilePath'])) {
                     $file['file'] = $this->packages->getUrl($file['data']['tmpFilePath']);

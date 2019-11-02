@@ -83,7 +83,7 @@ class UpgradeApiService
                     return null;
                 }
 
-                $responseArr = Json::decodeToArray($responseBody);
+                $responseArr = Json::toArray($responseBody);
                 $versionDto = new LatestVersionDto((int) $responseArr['version'], (string) $responseArr['date']);
 
                 return $versionDto;
@@ -113,7 +113,7 @@ class UpgradeApiService
                 [
                     'x-license' => \base64_encode($this->licenseService->getLicenseText()),
                     'x-license-url' => $this->licenseService->getCurrentUrlOfLicense(),
-                ], Json::jsonEncode($jsonArray)
+                ], Json::toString($jsonArray)
             );
             $response = $client->send($request);
 
@@ -130,7 +130,7 @@ class UpgradeApiService
                 return null;
             }
 
-            return Json::decodeToArray($responseBody);
+            return Json::toArray($responseBody);
         } catch (\Throwable $e) {
             $this->logger->error('failed when getting upgrade', ExceptionHelper::flatten($e));
         }

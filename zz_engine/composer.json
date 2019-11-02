@@ -5,6 +5,7 @@
         "php": "^7.3",
         "ext-ctype": "*",
         "ext-iconv": "*",
+        "ext-json": "*",
         "ausi/slug-generator": "^1.1",
         "beberlei/doctrineextensions": "^1.2",
         "friendsofsymfony/jsrouting-bundle": "^2.3",

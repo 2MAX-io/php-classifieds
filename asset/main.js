@@ -1,6 +1,26 @@
 "use strict";
 
-var app = {};
+var app = {
+    jsonDataCache: null,
+};
+
+app.getJsonDataCached = function () {
+    if (app.jsonDataCache === null) {
+        app.jsonDataCache = app.getJsonData();
+    }
+
+    return app.jsonDataCache;
+};
+
+app.getJsonData = function () {
+    var $jsonData = $('#js__jsonData');
+
+    if ($jsonData.length < 1) {
+        return [];
+    }
+
+    return JSON.parse($jsonData[0].textContent);
+};
 
 function copyTextToClipboard(text) {
     var textArea = document.createElement("textarea");

@@ -237,6 +237,7 @@
 {{ settings.customCss | raw }}
 
 {% block javascripts %}
+    <script type="application/json" id="js__jsonData">{{ jsonData | default([]) | inlineJson }}</script>
     <script src="{{ asset('asset/build/app.js') }}"></script>
     <script src="{{ asset('asset/lib/cleave/addons/cleave-phone.'~ settings.languageTwoLetters | lower ~'.js') }}"></script>
     <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData', version: asset_version(path('fos_js_routing_js')) }) }}"></script>

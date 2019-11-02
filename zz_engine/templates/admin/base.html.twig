@@ -180,6 +180,7 @@
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css">
 
 {% block javascripts %}
+    <script type="application/json" id="js__jsonData">{{ jsonData | default([]) | inlineJson }}</script>
     <script src="{{ asset('asset/build/admin.js') }}"></script>
 
     <script src="{{ path('bazinga_jstranslation_js') }}"></script>

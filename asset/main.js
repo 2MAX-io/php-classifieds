@@ -1,3 +1,6 @@
+"use strict";
+
+var app = {};
 
 function copyTextToClipboard(text) {
     var textArea = document.createElement("textarea");

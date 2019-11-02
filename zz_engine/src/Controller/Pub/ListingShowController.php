@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller\Pub;
 
+use App\Enum\ParamEnum;
 use App\Service\Category\CategoryListService;
 use App\Service\Listing\ListingPublicDisplayService;
 use App\Service\Listing\ShowSingle\ListingShowSingleService;
@@ -51,6 +52,9 @@ class ListingShowController extends AbstractController
                     'categoryBreadcrumbs' => $categoryListService->getBreadcrumbs(
                         $listingShowDto->getListing()->getCategory()
                     ),
+                    ParamEnum::JSON_DATA => [
+                        'showPreviewForOwner' => $request->query->get('showPreviewForOwner'),
+                    ],
                 ]
             );
         }

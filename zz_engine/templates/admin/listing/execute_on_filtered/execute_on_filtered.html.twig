@@ -49,20 +49,5 @@
 {% endblock %}
 
 {% block js %}
-    <script>
-        let showActionFields = function () {
-            let $select = $('.selectActonInput');
-            let action = $select.val();
-
-            let $actionField = $('.actionField');
-            $actionField.hide();
-            $actionField.filter('[data-for-action="'+action+'"]').show();
-        };
-
-        $('.selectActonInput').on('change', function () {
-            showActionFields();
-        });
-
-        showActionFields();
-    </script>
+    <script src="{{ asset('asset/component/admin/listing/execute-on-filtered.js') }}"></script>
 {% endblock js %}

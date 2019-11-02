@@ -56,12 +56,5 @@
 {% endblock %}
 
 {% block js %}
-    <script>
-        $('.input-datetime').toArray().forEach(function (field) {
-            new Cleave(field, {
-                delimiters: ['-', '-', ' ', ':', ':'],
-                blocks: [4, 2, 2, 2, 2, 2]
-            });
-        });
-    </script>
+    <script src="{{ asset('asset/component/admin/listing/edit-advanced.js') }}"></script>
 {% endblock %}

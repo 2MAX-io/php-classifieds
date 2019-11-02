@@ -6,7 +6,7 @@ namespace App\Service\Admin\CustomField;
 
 use App\Entity\CustomFieldOption;
 use App\Entity\ListingCustomFieldValue;
-use App\Exception\UserVisibleMessageException;
+use App\Exception\UserVisibleException;
 use App\Service\System\Sort\SortService;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -69,7 +69,7 @@ class CustomFieldOptionService
 
         $newValuesUsed = $qb->getQuery()->getSingleScalarResult();
         if ($newValuesUsed > 0) {
-            throw new UserVisibleMessageException('Can not change option value, because target value already exist');
+            throw new UserVisibleException('Can not change option value, because target value already exist');
         }
 
         $qb = $this->em->getRepository(ListingCustomFieldValue::class)->createQueryBuilder('listingCustomFieldValue');

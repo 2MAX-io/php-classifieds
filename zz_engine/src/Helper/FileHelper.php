@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Helper;
 
-use App\Exception\UserVisibleMessageException;
+use App\Exception\UserVisibleException;
 use Ausi\SlugGenerator\SlugGenerator;
 use Ausi\SlugGenerator\SlugOptions;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -53,7 +53,7 @@ class FileHelper
     {
         $mustBeInsideDir = $mustBeInsideDir ?? FilePath::getStaticPath();
         if (Path::getLongestCommonBasePath([Path::canonicalize($path), $mustBeInsideDir]) !== $mustBeInsideDir) {
-            throw new UserVisibleMessageException(
+            throw new UserVisibleException(
                 'detected file path change'
             );
         }
@@ -100,7 +100,7 @@ class FileHelper
                 'swf',
             ]
         )) {
-            throw new UserVisibleMessageException(
+            throw new UserVisibleException(
                 "file extension $fileExtension is not allowed"
             );
         }
@@ -129,13 +129,13 @@ class FileHelper
                 'htaccess',
             ]
         )) {
-            throw new UserVisibleMessageException(
+            throw new UserVisibleException(
                 "file extension $fileExtension is not allowed"
             );
         }
 
         if (\preg_match('~^php\d+~', $fileExtension)) {
-            throw new UserVisibleMessageException(
+            throw new UserVisibleException(
                 "file extension $fileExtension is not allowed"
             );
         }

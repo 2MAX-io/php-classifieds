@@ -7,7 +7,7 @@ namespace App\Exception;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 
-class UserVisibleMessageException extends \Exception implements HttpExceptionInterface
+class UserVisibleException extends \Exception implements HttpExceptionInterface
 {
     /**
      * @param string $message #TranslationKey

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Service\Payment\Method;
 
-use App\Exception\UserVisibleMessageException;
+use App\Exception\UserVisibleException;
 use App\Helper\ExceptionHelper;
 use App\Helper\FilePath;
 use App\Helper\Integer;
@@ -96,7 +96,7 @@ class PayPalPaymentMethod implements PaymentMethodInterface
 
             // Redirect the customer to $approvalUrl
         } catch (\Exception $ex) {
-            throw new UserVisibleMessageException('trans.Failed to create payment, please try again later', [], 0, $ex);
+            throw new UserVisibleException('trans.Failed to create payment, please try again later', [], 0, $ex);
         }
     }
 

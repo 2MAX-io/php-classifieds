@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Controller\Admin\Secondary;
 
 use App\Controller\Admin\Base\AbstractAdminController;
-use App\Exception\UserVisibleMessageException;
+use App\Exception\UserVisibleException;
 use App\Service\System\Upgrade\Api\UpgradeApiService;
 use App\Service\System\Upgrade\UpgradeService;
 use App\Service\System\Upgrade\VersionCheckService;
@@ -59,7 +59,7 @@ class UpgradeController extends AbstractAdminController
         $this->blockIfUpgradeDisabled();
 
         if (!$this->isCsrfTokenValid('adminExecuteUpgrade', $request->request->get('_token'))) {
-            throw new UserVisibleMessageException('CSRF token invalid');
+            throw new UserVisibleException('CSRF token invalid');
         }
 
         if (!$versionCheckService->canUpgrade()) {
@@ -68,7 +68,7 @@ class UpgradeController extends AbstractAdminController
 
         $upgradeArr = $upgradeApiService->getUpgradeList();
         if ($upgradeArr === null) {
-            throw new UserVisibleMessageException('trans.Upgrade not started');
+            throw new UserVisibleException('trans.Upgrade not started');
         }
 
         $upgradeService->upgrade($upgradeArr);
@@ -79,7 +79,7 @@ class UpgradeController extends AbstractAdminController
     private function blockIfUpgradeDisabled(): void
     {
         if ($this->environmentService->getUpgradeDisabled()) {
-            throw new UserVisibleMessageException('trans.The update option has been manually disabled in configuration. If you plan to enable it, make sure that you have not made any changes to the application code.');
+            throw new UserVisibleException('trans.The update option has been manually disabled in configuration. If you plan to enable it, make sure that you have not made any changes to the application code.');
         }
     }
 }

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Service\System\Upgrade;
 
-use App\Exception\UserVisibleMessageException;
+use App\Exception\UserVisibleException;
 use App\Helper\FilePath;
 use App\Helper\ExceptionHelper;
 use App\Helper\Random;
@@ -47,7 +47,7 @@ class UpgradeService
     public function upgrade(array $upgradeArr): void
     {
         if ($this->environmentService->getUpgradeDisabled()) {
-            throw new UserVisibleMessageException('trans.The update option has been manually disabled in configuration. If you plan to enable it, make sure that you have not made any changes to the application code.');
+            throw new UserVisibleException('trans.The update option has been manually disabled in configuration. If you plan to enable it, make sure that you have not made any changes to the application code.');
         }
 
         foreach ($upgradeArr['upgradeList'] as $upgradeItem) {
@@ -64,7 +64,7 @@ class UpgradeService
     public function runFileUpgrade(int $id, string $content, string $signature): void
     {
         if ($this->environmentService->getUpgradeDisabled()) {
-            throw new UserVisibleMessageException('trans.The update option has been manually disabled in configuration. If you plan to enable it, make sure that you have not made any changes to the application code.');
+            throw new UserVisibleException('trans.The update option has been manually disabled in configuration. If you plan to enable it, make sure that you have not made any changes to the application code.');
         }
 
         if (!SignatureVerifyHighSecurity::authenticate($content, $signature)) {

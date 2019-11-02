@@ -7,7 +7,7 @@ namespace App\Controller\User\Payment;
 use App\Entity\Payment;
 use App\Entity\PaymentForBalanceTopUp;
 use App\Entity\PaymentForFeaturedPackage;
-use App\Exception\UserVisibleMessageException;
+use App\Exception\UserVisibleException;
 use App\Helper\ExceptionHelper;
 use App\Service\Listing\Featured\FeaturedListingService;
 use App\Service\Money\UserBalanceService;
@@ -37,7 +37,7 @@ class PaymentController extends AbstractController
         LoggerInterface $logger
     ): Response {
         if (!$settingsService->getSettingsDto()->isPaymentAllowed()) {
-            throw new UserVisibleMessageException('trans.Payments have been disabled');
+            throw new UserVisibleException('trans.Payments have been disabled');
         }
 
         $em->beginTransaction();
@@ -148,10 +148,10 @@ class PaymentController extends AbstractController
     }
 
     /**
-     * @throws UserVisibleMessageException
+     * @throws UserVisibleException
      */
     private function throwGeneralException(): void
     {
-        throw new UserVisibleMessageException('trans.Could not process payment, if you have been charged and did not receive service, please contact us');
+        throw new UserVisibleException('trans.Could not process payment, if you have been charged and did not receive service, please contact us');
     }
 }

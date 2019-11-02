@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use App\Exception\UserVisibleMessageException;
+use App\Exception\UserVisibleException;
 use Webmozart\PathUtil\Path;
 
 ini_set('display_errors', '1');
@@ -27,7 +27,7 @@ function e(string $string): string {
 function getProjectRootPath(): string {
     $projectRootPath = Path::canonicalize(__DIR__ . '/../../');
     if (!file_exists($projectRootPath . '/zzzz_2max_io_classified_ads_project_root.txt')) {
-        throw new UserVisibleMessageException('Can not find project root');
+        throw new UserVisibleException('Can not find project root');
     }
 
     return $projectRootPath;

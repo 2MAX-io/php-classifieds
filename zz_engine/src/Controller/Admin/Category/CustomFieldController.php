@@ -7,6 +7,8 @@ namespace App\Controller\Admin\Category;
 use App\Controller\Admin\Base\AbstractAdminController;
 use App\Entity\Category;
 use App\Entity\CustomField;
+use App\Enum\ParamEnum;
+use App\Exception\UserVisibleException;
 use App\Form\Admin\CustomFieldType;
 use App\Helper\ExceptionHelper;
 use App\Helper\Json;
@@ -22,18 +24,22 @@ use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 class CustomFieldController extends AbstractAdminController
 {
     /**
      * @Route("/admin/red5/custom-field/", name="app_admin_custom_field_index", methods={"GET"})
      */
-    public function index(CustomFieldRepository $customFieldRepository): Response
+    public function index(CustomFieldRepository $customFieldRepository, CsrfTokenManagerInterface $csrfTokenManager): Response
     {
         $this->denyUnlessAdmin();
 
         return $this->render('admin/custom_field/index.html.twig', [
             'custom_fields' => $customFieldRepository->findBy([], ['sort' => 'ASC']),
+            ParamEnum::JSON_DATA => [
+                'adminCustomFieldsSaveSortCsrfToken' => $csrfTokenManager->getToken('adminCustomFieldsSaveSortCsrfToken')->getValue(),
+            ],
         ]);
     }
 
@@ -169,15 +175,16 @@ class CustomFieldController extends AbstractAdminController
     ): Response {
         $this->denyUnlessAdmin();
 
-        if ($this->isCsrfTokenValid('adminCustomFieldsSaveSort', $request->headers->get('x-csrf-token'))) {
-            $em = $this->getDoctrine()->getManager();
-
-            $requestContentArray  = Json::toArray($request->getContent());
-            $customFieldService->saveOrder($requestContentArray['orderedIdList']);
-            $em->flush();
-
-            $customFieldService->reorder();
+        if (!$this->isCsrfTokenValid('adminCustomFieldsSaveSortCsrfToken', $request->headers->get('x-csrf-token'))) {
+            throw new UserVisibleException('invalid CSRF token');
         }
+        $em = $this->getDoctrine()->getManager();
+
+        $requestContentArray  = Json::toArray($request->getContent());
+        $customFieldService->saveOrder($requestContentArray['orderedIdList']);
+        $em->flush();
+
+        $customFieldService->reorder();
 
         return $this->json([]);
     }

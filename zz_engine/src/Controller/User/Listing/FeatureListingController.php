@@ -7,7 +7,7 @@ namespace App\Controller\User\Listing;
 use App\Controller\User\Base\AbstractUserController;
 use App\Entity\FeaturedPackage;
 use App\Entity\Listing;
-use App\Exception\UserVisibleMessageException;
+use App\Exception\UserVisibleException;
 use App\Security\CurrentUserService;
 use App\Service\Listing\Featured\FeaturedListingService;
 use App\Service\Listing\Featured\FeaturedPackageService;
@@ -88,11 +88,11 @@ class FeatureListingController extends AbstractUserController
             $em = $this->getDoctrine()->getManager();
 
             if ($featuredPackage->getRemoved()) {
-                throw new UserVisibleMessageException('Featured package has been removed');
+                throw new UserVisibleException('Featured package has been removed');
             }
 
             if (!$featuredListingService->isPackageForListingCategory($listing, $featuredPackage)) {
-                throw new UserVisibleMessageException('trans.This featured package is not intended for the current category of this listing');
+                throw new UserVisibleException('trans.This featured package is not intended for the current category of this listing');
             }
 
             if ($featuredListingService->hasAmount($listing, $featuredPackage)) {
@@ -104,7 +104,7 @@ class FeatureListingController extends AbstractUserController
                 $em->flush();
             } else {
                 if (!$settingsService->getSettingsDto()->isPaymentAllowed()) {
-                    throw new UserVisibleMessageException('trans.Payments have been disabled');
+                    throw new UserVisibleException('trans.Payments have been disabled');
                 }
 
                 $paymentDto = $paymentService->createPaymentForFeaturedPackage($listing, $featuredPackage);

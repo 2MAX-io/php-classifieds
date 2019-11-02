@@ -66,30 +66,5 @@
 {% endblock %}
 
 {% block js %}
-    <!-- CSRF -->
-    <script>
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-Token': '{{ csrf_token('adminCustomFieldsSaveSort') }}',
-            }
-        });
-    </script>
-    <script>
-        $('.sortable').sortable({
-            handle: '.sortableHandle'
-        });
-
-        $('.saveOrder').click(function () {
-            let orderedIdList = $('.sortable').sortable('widget').toArray();
-
-            $.ajax(Routing.generate('app_admin_custom_field_save_order', []), {
-                    type: 'POST',
-                    dataType: 'json',
-                    data: JSON.stringify({
-                        orderedIdList: orderedIdList
-                    })
-                }
-            );
-        });
-    </script>
+    <script src="{{ asset('asset/component/admin/custom-field.js') }}"></script>
 {% endblock %}

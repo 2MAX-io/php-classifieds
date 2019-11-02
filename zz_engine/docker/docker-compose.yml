@@ -1,4 +1,4 @@
-version: '3'
+version: "3.7"
 services:
     php:
         container_name: classifieds_php
@@ -15,7 +15,7 @@ services:
             - './php/bash_history:/root/.bash_history'
             - './php/bash_history:/var/www/.bash_history'
         environment:
-            XDEBUG_CONFIG: remote_host=172.18.0.1
+            XDEBUG_CONFIG: remote_host=192.168.205.1
             PHP_IDE_CONFIG: serverName=classifieds.localhost
             APP_DEBUG: 1
             PROMPT_COMMAND: 'history -a'
@@ -25,6 +25,10 @@ services:
         stdin_open: true
         tty: true
 #        user: "1000:1000"
+        networks:
+            classifieds.localhost:
+                aliases:
+                    - "php"
     mysql:
         container_name: classifieds_mysql
         command: mysqld --sql_mode=""
@@ -42,3 +46,14 @@ services:
             - MYSQL_USER=classifieds
             - MYSQL_PASSWORD=classifieds
             - PROMPT_COMMAND=history -a
+        networks:
+            classifieds.localhost:
+                aliases:
+                    - "mysql"
+networks:
+    classifieds.localhost:
+        name: "classifieds.localhost"
+        ipam:
+            driver: default
+            config:
+                -   subnet: ${PROJECT_SUBNET}

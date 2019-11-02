@@ -30,12 +30,15 @@ class AdminCategoryController extends AbstractAdminController
     /**
      * @Route("/admin/red5/category", name="app_admin_category")
      */
-    public function index(AdminCategoryService $categoryService): Response
+    public function index(AdminCategoryService $categoryService, CsrfTokenManagerInterface $csrfTokenManager): Response
     {
         $this->denyUnlessAdmin();
 
         return $this->render('admin/category/index.html.twig', [
             'categoryList' => $categoryService->getCategoryList(),
+            ParamEnum::JSON_DATA => [
+                'adminCategorySaveSort' => $csrfTokenManager->getToken('adminCategorySaveSort')->getValue(),
+            ],
         ]);
     }
 

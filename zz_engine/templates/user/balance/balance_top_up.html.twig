@@ -54,13 +54,5 @@
 {% endblock %}
 
 {% block js %}
-    <script>
-        new Cleave('.input-money', {
-            numeral: true,
-            numeralThousandsGroupStyle: 'thousand',
-            numeralPositiveOnly: true,
-            delimiter: '{{ getCleaveConfig().delimiter }}',
-            numeralDecimalMark: '{{ getCleaveConfig().numeralDecimalMark }}'
-        });
-    </script>
+    <script src="{{ asset('asset/component/payment/balance-top-up.js') }}"></script>
 {% endblock %}

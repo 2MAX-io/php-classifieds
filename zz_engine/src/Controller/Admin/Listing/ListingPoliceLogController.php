@@ -6,6 +6,7 @@ namespace App\Controller\Admin\Listing;
 
 use App\Controller\Admin\Base\AbstractAdminController;
 use App\Entity\Listing;
+use App\Enum\ParamEnum;
 use App\Service\Log\PoliceLogIpService;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -22,6 +23,9 @@ class ListingPoliceLogController extends AbstractAdminController
         return $this->render('admin/listing/other/listing_police_log.html.twig', [
             'listing' => $listing,
             'policeLogText' => $policeLogIpService->prepareOutput($listing),
+            ParamEnum::JSON_DATA => [
+                'policeLogText' => $policeLogIpService->prepareOutput($listing),
+            ],
         ]);
     }
 }

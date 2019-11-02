@@ -1,45 +1,44 @@
 version: '3'
 services:
-  php:
-    container_name: classifieds_php
-    build:
-      context: './php/'
-      dockerfile: Dockerfile
-    ports: ['80:80', '443:443']
-    volumes:
-      - './../../:/var/www/html'
-      - './php/php.ini:/usr/local/etc/php/php.ini'
-      - './php/xdebug_out:/tmp/xdebug_out'
-      - './php/ssl/localhost.crt:/etc/ssl/certs/ssl-cert-snakeoil.pem'
-      - './php/ssl/localhost.key:/etc/ssl/private/ssl-cert-snakeoil.key'
-      - './php/bash_history:/root/.bash_history'
-      - './php/bash_history:/var/www/.bash_history'
-      - '$HOME/.cache/composer:/var/zzzz_composer_cache'
-    environment:
-      XDEBUG_CONFIG: remote_host=172.18.0.1
-      PHP_IDE_CONFIG: serverName=classifieds.localhost
-      APP_DEBUG: 1
-      PROMPT_COMMAND: 'history -a'
-      APACHE_RUN_USER: '#1000'
-      APACHE_RUN_GROUP: '#33'
-      COMPOSER_HOME: '/var/zzzz_composer_cache'
-    stdin_open: true
-    tty: true
-#    user: "1000:1000"
-  mysql:
-    container_name: classifieds_mysql
-    command: mysqld --sql_mode=""
-    image: mysql:5.7
-    ports: ['3306:3306']
-    volumes:
-      - './mysql/data:/var/lib/mysql'
-      - './mysql/sql:/sql'
-      - './mysql/my.cnf:/etc/mysql/conf.d/my.cnf'
-      - './mysql/bash_history:/root/.bash_history'
-    environment:
-      - MYSQL_ALLOW_EMPTY_PASSWORD=true
-      - MYSQL_ROOT_PASSWORD=
-      - MYSQL_DATABASE=classifieds
-      - MYSQL_USER=classifieds
-      - MYSQL_PASSWORD=classifieds
-      - PROMPT_COMMAND=history -a
+    php:
+        container_name: classifieds_php
+        build:
+            context: './php/'
+            dockerfile: Dockerfile
+        ports: ['80:80', '443:443']
+        volumes:
+            - './../../:/var/www/html'
+            - './php/php.ini:/usr/local/etc/php/php.ini'
+            - './php/xdebug_out:/tmp/xdebug_out'
+            - './php/ssl/localhost.crt:/etc/ssl/certs/ssl-cert-snakeoil.pem'
+            - './php/ssl/localhost.key:/etc/ssl/private/ssl-cert-snakeoil.key'
+            - './php/bash_history:/root/.bash_history'
+            - './php/bash_history:/var/www/.bash_history'
+        environment:
+            XDEBUG_CONFIG: remote_host=172.18.0.1
+            PHP_IDE_CONFIG: serverName=classifieds.localhost
+            APP_DEBUG: 1
+            PROMPT_COMMAND: 'history -a'
+            APACHE_RUN_USER: '#1000'
+            APACHE_RUN_GROUP: '#33'
+            COMPOSER_HOME: '/var/www/html/zz_engine/var/cache/zz_composer'
+        stdin_open: true
+        tty: true
+#        user: "1000:1000"
+    mysql:
+        container_name: classifieds_mysql
+        command: mysqld --sql_mode=""
+        image: mysql:5.7
+        ports: ['3306:3306']
+        volumes:
+            - './mysql/data:/var/lib/mysql'
+            - './mysql/sql:/sql'
+            - './mysql/my.cnf:/etc/mysql/conf.d/my.cnf'
+            - './mysql/bash_history:/root/.bash_history'
+        environment:
+            - MYSQL_ALLOW_EMPTY_PASSWORD=true
+            - MYSQL_ROOT_PASSWORD=
+            - MYSQL_DATABASE=classifieds
+            - MYSQL_USER=classifieds
+            - MYSQL_PASSWORD=classifieds
+            - PROMPT_COMMAND=history -a

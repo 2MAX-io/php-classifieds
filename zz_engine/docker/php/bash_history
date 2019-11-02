@@ -453,3 +453,10 @@ find /var/www/html -type d -exec chmod 750 {} \;
 find /var/www/html -type f -exec chmod 640 {} \;
 chmod +x /var/www/html/zz_engine/bin/console;
         
+composer update
+cd zz_engine/
+composer update
+composer install
+composer install
+cd zz_engine/
+composer install

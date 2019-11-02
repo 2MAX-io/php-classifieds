@@ -19,9 +19,6 @@
 {% endblock %}
 
  {% block js %}
-     {% include 'user/listing/_part/_custom_fields.html.twig' %}
      {% include 'user/listing/_part/_file_upload.html.twig' %}
-     {% include 'user/listing/_part/_secondary.html.twig' %}
-
-     <script src="{{ asset('asset/component/cascader.js') }}"></script>
+     {% include 'user/listing/_part/_listing_js.html.twig' %}
  {% endblock %}

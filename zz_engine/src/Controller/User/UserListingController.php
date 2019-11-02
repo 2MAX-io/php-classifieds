@@ -89,7 +89,10 @@ class UserListingController extends AbstractUserController
                 'listing' => $listing,
                 'form' => $form->createView(),
                 'formCategorySelectList' => $categoryListService->getFormCategorySelectList(),
-                'listingFilesForJavascript' => $createListingService->getListingFilesForJavascript($listing),
+                ParamEnum::JSON_DATA => [
+                    'listingFilesForJavascript' => $createListingService->getListingFilesForJavascript($listing),
+                    'listingId' => $listing->getId(),
+                ],
             ]
         );
     }
@@ -148,6 +151,7 @@ class UserListingController extends AbstractUserController
                 'formCategorySelectList' => $categoryListService->getFormCategorySelectList(),
                 ParamEnum::JSON_DATA => [
                     'listingFilesForJavascript' => $createListingService->getListingFilesForJavascript($listing),
+                    'listingId' => $listing->getId(),
                 ],
             ]
         );

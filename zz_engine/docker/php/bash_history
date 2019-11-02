@@ -444,3 +444,12 @@ composer require -w zz_engine "hybridauth/hybridauth" : "~3.0"
 composer require -d zz_engine 
 composer require -d zz_engine hybridauth/hybridauth ~3.0
 composer update -d zz_engine --optimize-autoloader
+ls
+pwd
+composer install -d zz_engine --optimize-autoloader
+find /var/www/html -type d -exec chmod 750 {} \;
+find /var/www/html -type f -exec chmod 640 {} \;
+find /var/www/html -type d -exec chmod 750 {} \;
+find /var/www/html -type f -exec chmod 640 {} \;
+chmod +x /var/www/html/zz_engine/bin/console;
+        

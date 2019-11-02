@@ -21,6 +21,7 @@
  {% block js %}
      {% include 'user/listing/_part/_custom_fields.html.twig' %}
      {% include 'user/listing/_part/_file_upload.html.twig' %}
-     {% include 'user/listing/_part/_category_select.html.twig' %}
      {% include 'user/listing/_part/_secondary.html.twig' %}
+
+     <script src="{{ asset('asset/component/cascader.js') }}"></script>
  {% endblock %}

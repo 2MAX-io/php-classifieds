@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class ListingFileRemoveController extends AbstractUserController
 {
     /**
-     * @Route("/user/listing/file/remove", name="app_listing_file_remove", methods={"POST"})
+     * @Route("/user/listing/file/remove", name="app_listing_file_remove", methods={"POST"}, options={"expose": true})
      */
     public function remove(Request $request, FileModificationEventService $fileModificationEventService): Response
     {

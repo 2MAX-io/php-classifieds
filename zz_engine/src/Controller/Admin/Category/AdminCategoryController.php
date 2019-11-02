@@ -6,6 +6,7 @@ namespace App\Controller\Admin\Category;
 
 use App\Controller\Admin\Base\AbstractAdminController;
 use App\Entity\Category;
+use App\Enum\ParamEnum;
 use App\Form\Admin\AdminCategorySaveType;
 use App\Helper\ExceptionHelper;
 use App\Helper\Json;
@@ -22,6 +23,7 @@ use Symfony\Component\Form\SubmitButton;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 class AdminCategoryController extends AbstractAdminController
 {
@@ -100,7 +102,8 @@ class AdminCategoryController extends AbstractAdminController
         Request $request,
         Category $category,
         TreeService $treeService,
-        CategoryPictureUploadService $categoryPictureUploadService
+        CategoryPictureUploadService $categoryPictureUploadService,
+        CsrfTokenManagerInterface $csrfTokenManager
     ): Response {
         $this->denyUnlessAdmin();
 
@@ -135,6 +138,9 @@ class AdminCategoryController extends AbstractAdminController
         return $this->render('admin/category/edit.html.twig', [
             'category' => $category,
             'form' => $form->createView(),
+            ParamEnum::JSON_DATA => [
+                'adminCustomFieldsInCategorySaveSort' => $csrfTokenManager->getToken('adminCustomFieldsInCategorySaveSort')->getValue(),
+            ],
         ]);
     }
 

@@ -7,6 +7,7 @@ namespace App\Controller\Admin\Category;
 use App\Controller\Admin\Base\AbstractAdminController;
 use App\Entity\Category;
 use App\Entity\CustomFieldJoinCategory;
+use App\Exception\UserVisibleException;
 use App\Form\Admin\CategoryAddCustomFieldType;
 use App\Helper\Json;
 use App\Service\Admin\CustomField\CustomFieldForCategoryService;
@@ -69,15 +70,16 @@ class CategoryCustomFieldController extends AbstractAdminController
     ): Response {
         $this->denyUnlessAdmin();
 
-        if ($this->isCsrfTokenValid('adminCustomFieldsInCategorySaveSort', $request->headers->get('x-csrf-token'))) {
-            $em = $this->getDoctrine()->getManager();
-
-            $requestContentArray = Json::toArray($request->getContent());
-            $customFieldForCategoryService->saveOrder($requestContentArray['orderedIdList']);
-            $em->flush();
-
-            $customFieldForCategoryService->reorder();
+        if (!$this->isCsrfTokenValid('adminCustomFieldsInCategorySaveSort', $request->headers->get('x-csrf-token'))) {
+            throw new UserVisibleException('CSRF token invalid');
         }
+        $em = $this->getDoctrine()->getManager();
+
+        $requestContentArray = Json::toArray($request->getContent());
+        $customFieldForCategoryService->saveOrder($requestContentArray['orderedIdList']);
+        $em->flush();
+
+        $customFieldForCategoryService->reorder();
 
         return $this->json([]);
     }

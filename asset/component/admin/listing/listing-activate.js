@@ -9,7 +9,7 @@ function selectAll(selector) {
 }
 
 function getCheckboxesValues(selector) {
-    let values = [];
+    var values = [];
     $(selector + ':checked').each(function (i, el) {
         values.push(el.value);
     });
@@ -23,11 +23,11 @@ function enableSelection(button) {
     $(button).remove();
 }
 
-let $listingSelectionForm = $('.listingSelectionForm');
+var $listingSelectionForm = $('.listingSelectionForm');
 $listingSelectionForm.one('submit', function listingSelectionSubmitCallback(event) {
     event.preventDefault();
 
-    let $checked = $('.listingSelectionCheckbox').filter(':checked');
+    var $checked = $('.listingSelectionCheckbox').filter(':checked');
     if ($checked.length < 1) {
         alert(Translator.trans('trans.No listings selected'));
 

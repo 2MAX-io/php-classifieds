@@ -22,6 +22,8 @@ use Webmozart\PathUtil\Path;
 
 class SecurityHealthChecker implements HealthCheckerInterface
 {
+    public const /** @noinspection SpellCheckingInspection */ NON_PUBLIC_STR_IDENTIFIER = 'zbD2vXzqDyiFqE2iqFPPM';
+
     /**
      * @var TranslatorInterface
      */
@@ -102,7 +104,7 @@ class SecurityHealthChecker implements HealthCheckerInterface
             $testedUrl = $this->urlHelper->getAbsoluteUrl('/' . Path::makeRelative($testFilePath, FilePath::getPublicDir()));
             $response = $client->get($testedUrl);
 
-            if (Str::containsOneOf($response->getBody()->getContents(), ['zbD2vXzqDyiFqE2iqFPPM', 'SecurityHealthChecker'])) {
+            if (Str::containsOneOf($response->getBody()->getContents(), [static::NON_PUBLIC_STR_IDENTIFIER, 'SecurityHealthChecker'])) {
                 return new HealthCheckResultDto(
                     true,
                     $this->trans->trans(

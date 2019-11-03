@@ -55,9 +55,9 @@ class OmnipayPaymentMethod implements PaymentMethodInterface
             $response = $transaction->send();
             $data = $response->getData();
 
-            $paymentDto->setGatewayPaymentId($data["id"]);
+            $paymentDto->setGatewayPaymentId($data['id']);
             $paymentDto->setGatewayToken('todo');
-            $paymentDto->setGatewayStatus($data["state"]);
+            $paymentDto->setGatewayStatus($data['state']);
 
             if ($response->isSuccessful()) {
 //                echo "Step 2 was successful!\n";

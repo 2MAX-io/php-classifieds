@@ -18,6 +18,7 @@ class SignatureVerifyHighSecurity
 
     public static function getPublicKey(): string
     {
+        /** @noinspection SpellCheckingInspection */
         return <<<'EOT'
 -----BEGIN PUBLIC KEY-----
 MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAw5HFK+TGPGfbYJ9RK3Pk

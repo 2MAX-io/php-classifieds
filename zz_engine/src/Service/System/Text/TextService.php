@@ -46,7 +46,9 @@ class TextService
     public static function getAllowedCharacters(): string
     {
         $allowedCharacters = ' ';
+        /** @noinspection SpellCheckingInspection */
         $allowedCharacters .= 'qwertyuiopasdfghjklzxcvbnm';
+        /** @noinspection SpellCheckingInspection */
         $allowedCharacters .= 'QWERTYUIOPASDFGHJKLZXCVBNM';
         $allowedCharacters .= '1234567890';
         $allowedCharacters .= '~!@#$%^&*_+-=?';

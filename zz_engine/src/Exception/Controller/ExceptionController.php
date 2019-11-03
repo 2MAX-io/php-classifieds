@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Exception\Controller;
 
 use App\Exception\UserVisibleException;
-use App\Exception\UserVisibleMessageException;
 use App\Helper\ExceptionHelper;
 use App\Helper\Str;
 use Psr\Log\LoggerInterface;

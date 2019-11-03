@@ -40,7 +40,7 @@ class ChangeEmailService
     {
         $token = $this->tokenService->getTokenBuilder(
             Token::USER_EMAIL_CHANGE_TYPE,
-            Carbon::now()->add('day', 7)
+            Carbon::now()->add('day', 7),
         );
         $token->addField(TokenField::USER_NEW_EMAIL_FIELD, $newEmail);
         $token->addField(TokenField::USER_ID_FIELD, (string) $user->getId());

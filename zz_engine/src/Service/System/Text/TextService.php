@@ -36,6 +36,10 @@ class TextService
 
     public function removeNotAllowedCharacters(string $text): string
     {
+        if (!$this->settingsService->getAllowedCharactersEnabled()) {
+            return $text;
+        }
+
         $allowedCharacters = static::getAllowedCharacters();
         $allowedCharacters .= $this->settingsService->getAllowedCharacters();
         $allowedCharacters .= \mb_strtoupper($this->settingsService->getAllowedCharacters());

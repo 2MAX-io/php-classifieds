@@ -330,7 +330,6 @@ trans:
   Activated: 'Aktywowane'
   Language: 'Język'
   Currency: 'Waluta'
-  Allowed non standard characters in listing: 'Dozwolone niestandardowe znaki'
   'enter here, all characters specific to your language, except for standard characters A-Z, 0-9, for example: ąĄßöИ': 'wprowadź tutaj, wszystkie znaki specyficzne dla Twojego języka, za wyjątkiem standardowych znaków A-Z, 0-9, na przykład: ąĄßöИ, jeżeli jest taka potrzeba'
   Search examples: 'Przykłady wyszukiwania'
   You have canceled payment. If you want to feature listing, try again and complete payment: 'Płatność anulowana. Jeżeli chcesz wyróżnić ogłoszenie, spróbuj ponownie i wykonaj płatność.'
@@ -586,3 +585,7 @@ trans:
   'Facebook Sign in App ID': 'Logowanie z Facebook App ID'
   'Facebook Sign in App Secret': 'Logowanie z Facebook App Secret'
   'Sorry, could not login': 'Sorry, could not login'
+
+'trans.Remove non standard characters in listing - Enabled': 'Usuń niestandardowe znaki z ogłoszenia - Włączone'
+'trans.Remove non standard characters in listing - List of allowed characters': 'Usuń niestandardowe znaki z ogłoszenia - Lista dozwolonych znaków'
+'trans.allows to remove all non standard characters from listing, except those which are white listed bellow': 'pozwala na usunięcie wszystkich niestandardowych znaków z ogłoszenia, za wyjątkiem tych wpisanych poniżej'

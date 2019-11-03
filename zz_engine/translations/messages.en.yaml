@@ -464,7 +464,6 @@ trans.Roles: Roles
 trans.Activated: Activated
 trans.Language: Language
 trans.Currency: Currency
-'trans.Allowed non standard characters in listing': 'Allowed non standard characters in listing'
 'trans.Search examples': 'Search examples'
 'trans.You have canceled payment. If you want to feature listing, try again and complete payment': 'You have canceled payment. If you want to feature listing, try again and complete payment'
 'trans.You have canceled payment. If you want to top up account, try again and complete payment': 'You have canceled payment. If you want to top up account, try again and complete payment'
@@ -629,4 +628,6 @@ trans.Preview: Preview
 'trans.No classified ads matching criteria were found': 'No classified ads matching criteria were found'
 'trans.Link to contact page': 'Link to contact page'
 'trans.Link to information about advertisement': 'Link to information about advertisement'
-
+'trans.Remove non standard characters in listing - Enabled': 'Remove non standard characters in listing - Enabled'
+'trans.Remove non standard characters in listing - List of allowed characters': 'Remove non standard characters in listing - List of allowed characters'
+'trans.allows to remove all non standard characters from listing, except those which are white listed bellow': 'allows to remove all non standard characters from listing, except those which are white listed bellow'

@@ -127,6 +127,11 @@ class SettingsService
         return $this->getSettingsDto()->getCurrency();
     }
 
+    public function getAllowedCharactersEnabled(): bool
+    {
+        return $this->getSettingsDto()->getAllowedCharactersEnabled();
+    }
+
     public function getAllowedCharacters(): string
     {
         return $this->getSettingsDto()->getAllowedCharacters();

@@ -10,6 +10,7 @@ use App\Form\Type\LanguageTwoLettersType;
 use App\Form\Type\PageType;
 use App\Service\Setting\SettingsDto;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
@@ -184,12 +185,17 @@ class SettingsType extends AbstractType
                 new Length(['max' => 4]),
             ],
         ]);
+        $builder->add('allowedCharactersEnabled', CheckboxType::class, [
+            'label' => 'trans.Remove non standard characters in listing - Enabled',
+            'help' => 'trans.allows to remove all non standard characters from listing, except those which are white listed bellow',
+            'required' => true,
+            'constraints' => [],
+        ]);
         $builder->add('allowedCharacters', TextType::class, [
-            'label' => 'trans.Allowed non standard characters in listing',
+            'label' => 'trans.Remove non standard characters in listing - List of allowed characters',
             'help' => 'trans.enter here, all characters specific to your language, except for standard characters A-Z, 0-9, for example: ąĄßöИ, if needed',
             'required' => true,
-            'constraints' => [
-            ],
+            'constraints' => [],
         ]);
         $builder->add('wordsToRemoveFromTitle', TextareaType::class, [
             'label' => 'trans.Words to remove from listing title, separated by new line',

@@ -94,6 +94,11 @@ class SettingsDto
     private $currency;
 
     /**
+     * @var bool|null
+     */
+    private $allowedCharactersEnabled;
+
+    /**
      * @var string|null
      */
     private $allowedCharacters;
@@ -301,6 +306,16 @@ class SettingsDto
     public function setCurrency(?string $currency): void
     {
         $this->currency = $currency;
+    }
+
+    public function getAllowedCharactersEnabled(): ?bool
+    {
+        return $this->allowedCharactersEnabled ?? false;
+    }
+
+    public function setAllowedCharactersEnabled(?bool $allowedCharactersEnabled): void
+    {
+        $this->allowedCharactersEnabled = $allowedCharactersEnabled;
     }
 
     public function getAllowedCharacters(): ?string

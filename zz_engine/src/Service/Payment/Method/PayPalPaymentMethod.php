@@ -128,15 +128,16 @@ class PayPalPaymentMethod implements PaymentMethodInterface
         }
     }
 
-    public function getApiContext(): ApiContext
+    private function getApiContext(): ApiContext
     {
+        // sandbox / demo, client id and secret
         // client id: AYSq3RDGsmBLJE-otTkBtM-jBRd1TCQwFf9RGfwddNXWz0uFU9ztymylOhRS
         // client secret: EGnHDxD_qRPdaLdZz8iCr8N7_MzF-YHPTkjs6NKYQvQSBngp4PTTVWkPZRbL
 
         $apiContext = new ApiContext(
             new OAuthTokenCredential(
                 $this->settingsService->getSettingsDto()->getPaymentPayPalClientId(),
-                $this->settingsService->getSettingsDto()->getPaymentPayPalClientSecret()
+                $this->settingsService->getSettingsDto()->getPaymentPayPalClientSecret(),
             )
         );
         $apiContext->setConfig(

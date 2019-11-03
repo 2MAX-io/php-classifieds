@@ -460,3 +460,7 @@ composer install
 composer install
 cd zz_engine/
 composer install
+composer require league/omnipay:^3 omnipay/paypal
+cd zz_engine/
+composer require league/omnipay:^3 omnipay/paypal
+composer require league/omnipay:^3 omnipay/paypal

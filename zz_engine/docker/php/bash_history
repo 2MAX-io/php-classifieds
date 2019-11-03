@@ -464,3 +464,6 @@ composer require league/omnipay:^3 omnipay/paypal
 cd zz_engine/
 composer require league/omnipay:^3 omnipay/paypal
 composer require league/omnipay:^3 omnipay/paypal
+cd zz_engine/
+composer require symfony/mailer
+composer update

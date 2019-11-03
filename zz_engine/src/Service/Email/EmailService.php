@@ -6,8 +6,10 @@ namespace App\Service\Email;
 
 use App\Entity\User;
 use App\Service\Setting\SettingsService;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\NamedAddress;
 use Symfony\Contracts\Translation\TranslatorInterface;
-use Twig\Environment as Twig;
 
 class EmailService
 {
@@ -15,11 +17,6 @@ class EmailService
      * @var \Swift_Mailer
      */
     private $mailer;
-
-    /**
-     * @var Twig
-     */
-    private $twig;
 
     /**
      * @var TranslatorInterface
@@ -32,123 +29,99 @@ class EmailService
     private $settingsService;
 
     public function __construct(
-        \Swift_Mailer $mailer,
-        Twig $twig,
+        MailerInterface $mailer,
         SettingsService $settingsService,
         TranslatorInterface $trans
     ) {
         $this->mailer = $mailer;
-        $this->twig = $twig;
         $this->trans = $trans;
         $this->settingsService = $settingsService;
     }
 
     public function sendRegisterEmail(User $user, string $token): void
     {
-        $message = (new \Swift_Message($this->trans->trans('trans.Confirm account registration')))
-            ->setReplyTo($this->getEmailReplyTo())
-            ->setFrom($this->getEmailFromAddress(), $this->getEmailFromName())
-            ->setTo($user->getEmail())
-            ->setBody(
-                $this->twig->render(
-                    'email/registration.html.twig',
-                    [
-                        'user' => $user,
-                        'token' => $token,
-                    ]
-                ),
-                'text/html'
-            )
-        ;
-        $this->mailer->send($message);
-        $this->mailer->getTransport();
+        $email = new TemplatedEmail();
+        $email->subject($this->trans->trans('trans.Confirm account registration'));
+        $email->from(new NamedAddress($this->getEmailFromAddress(), $this->getEmailFromName()));
+        $email->to($user->getEmail());
+        $email->replyTo($this->getEmailReplyTo());
+        $email->htmlTemplate('email/registration.html.twig');
+        $email->context([
+            'user' => $user,
+            'token' => $token,
+        ]);
+        $this->mailer->send($email);
     }
 
     public function sendEmailChangeConfirmationToPreviousEmail(User $user, string $newEmail, string $token): void
     {
-        $message = (new \Swift_Message($this->trans->trans('trans.Confirmation of email address change')))
-            ->setReplyTo($this->getEmailReplyTo())
-            ->setFrom($this->getEmailFromAddress(), $this->getEmailFromName())
-            ->setTo($user->getEmail())
-            ->setBody(
-                $this->twig->render(
-                    'email/change_email_previous_email_confirmation.html.twig',
-                    [
-                        'user' => $user,
-                        'newEmail' => $newEmail,
-                        'token' => $token,
-                    ]
-                ),
-                'text/html'
-            )
-        ;
-        $this->mailer->send($message);
-        $this->mailer->getTransport();
+        $email = new TemplatedEmail();
+        $email->subject($this->trans->trans('trans.Confirmation of email address change'));
+        $email->from(new NamedAddress($this->getEmailFromAddress(), $this->getEmailFromName()));
+        $email->to($user->getEmail());
+        $email->replyTo($this->getEmailReplyTo());
+
+        $email->htmlTemplate('email/change_email_previous_email_confirmation.html.twig');
+        $email->context([
+                'user' => $user,
+                'newEmail' => $newEmail,
+                'token' => $token,
+            ]
+        );
+        $this->mailer->send($email);
     }
 
     public function sendEmailChangeNotificationToNewEmail(User $user, string $newEmail, string $token): void
     {
-        $message = (new \Swift_Message($this->trans->trans('trans.Verification of the correctness of the new email address')))
-            ->setReplyTo($this->getEmailReplyTo())
-            ->setFrom($this->getEmailFromAddress(), $this->getEmailFromName())
-            ->setTo($newEmail)
-            ->setBody(
-                $this->twig->render(
-                    'email/change_email_new_email_notification.html.twig',
-                    [
-                        'user' => $user,
-                        'newEmail' => $newEmail,
-                        'oldEmail' => $user->getEmail(),
-                        'token' => $token,
-                    ]
-                ),
-                'text/html'
-            )
-        ;
-        $this->mailer->send($message);
-        $this->mailer->getTransport();
+        $email = new TemplatedEmail();
+        $email->subject($this->trans->trans('trans.Verification of the correctness of the new email address'));
+        $email->from(new NamedAddress($this->getEmailFromAddress(), $this->getEmailFromName()));
+        $email->to($user->getEmail());
+        $email->replyTo($this->getEmailReplyTo());
+
+        $email->htmlTemplate('email/change_email_new_email_notification.html.twig');
+        $email->context([
+                'user' => $user,
+                'newEmail' => $newEmail,
+                'oldEmail' => $user->getEmail(),
+                'token' => $token,
+            ]
+        );
+        $this->mailer->send($email);
     }
 
     public function changePasswordConfirmation(User $user, string $token): void
     {
-        $message = (new \Swift_Message($this->trans->trans('trans.Password change confirmation')))
-            ->setReplyTo($this->getEmailReplyTo())
-            ->setFrom($this->getEmailFromAddress(), $this->getEmailFromName())
-            ->setTo($user->getEmail())
-            ->setBody(
-                $this->twig->render(
-                    'email/change_password_confirmation.html.twig',
-                    [
-                        'user' => $user,
-                        'token' => $token,
-                    ]
-                ),
-                'text/html'
-            )
-        ;
-        $this->mailer->send($message);
-        $this->mailer->getTransport();
+        $email = new TemplatedEmail();
+        $email->subject($this->trans->trans('trans.Password change confirmation'));
+        $email->from(new NamedAddress($this->getEmailFromAddress(), $this->getEmailFromName()));
+        $email->to($user->getEmail());
+        $email->replyTo($this->getEmailReplyTo());
+
+        $email->htmlTemplate('email/change_password_confirmation.html.twig');
+        $email->context([
+                'user' => $user,
+                'token' => $token,
+            ]
+        );
+        $this->mailer->send($email);
     }
 
     public function remindPasswordConfirmation(User $user, string $token): void
     {
-        $message = (new \Swift_Message($this->trans->trans('trans.Password remind confirmation')))
-            ->setReplyTo($this->getEmailReplyTo())
-            ->setFrom($this->getEmailFromAddress(), $this->getEmailFromName())
-            ->setTo($user->getEmail())
-            ->setBody(
-                $this->twig->render(
-                    'email/remind_password_confirmation.html.twig',
-                    [
-                        'user' => $user,
-                        'token' => $token,
-                    ]
-                ),
-                'text/html'
-            )
-        ;
-        $this->mailer->send($message);
-        $this->mailer->getTransport();
+        $email = new TemplatedEmail();
+        $email->subject($this->trans->trans('trans.Password remind confirmation'));
+        $email->from(new NamedAddress($this->getEmailFromAddress(), $this->getEmailFromName()));
+        $email->to($user->getEmail());
+        $email->replyTo($this->getEmailReplyTo());
+
+        $email->htmlTemplate('email/remind_password_confirmation.html.twig');
+        $email->context([
+                'user' => $user,
+                'token' => $token,
+            ]
+        );
+        $this->mailer->send($email);
     }
 
     private function getEmailFromName(): string

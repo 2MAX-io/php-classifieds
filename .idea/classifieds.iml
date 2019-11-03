@@ -78,7 +78,6 @@
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/squizlabs/php_codesniffer" />
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/stefano/stefano-tree" />
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/stesie/phpcs-doctrine-annotation-rules" />
-      <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/swiftmailer/swiftmailer" />
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/symfony/apache-pack" />
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/symfony/asset" />
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/symfony/cache" />
@@ -101,6 +100,7 @@
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/symfony/inflector" />
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/symfony/intl" />
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/symfony/lock" />
+      <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/symfony/mailer" />
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/symfony/maker-bundle" />
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/symfony/mime" />
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/symfony/monolog-bridge" />
@@ -124,7 +124,6 @@
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/symfony/serializer" />
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/symfony/service-contracts" />
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/symfony/stopwatch" />
-      <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/symfony/swiftmailer-bundle" />
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/symfony/translation" />
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/symfony/translation-contracts" />
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/symfony/twig-bridge" />

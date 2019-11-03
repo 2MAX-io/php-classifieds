@@ -37,7 +37,6 @@
       <path value="$PROJECT_DIR$/zz_engine/vendor/symfony/polyfill-mbstring" />
       <path value="$PROJECT_DIR$/zz_engine/vendor/symfony/http-kernel" />
       <path value="$PROJECT_DIR$/zz_engine/vendor/symfony/polyfill-php73" />
-      <path value="$PROJECT_DIR$/zz_engine/vendor/symfony/swiftmailer-bundle" />
       <path value="$PROJECT_DIR$/zz_engine/vendor/symfony/var-exporter" />
       <path value="$PROJECT_DIR$/zz_engine/vendor/symfony/monolog-bundle" />
       <path value="$PROJECT_DIR$/zz_engine/vendor/symfony/config" />
@@ -124,7 +123,6 @@
       <path value="$PROJECT_DIR$/zz_engine/vendor/symfony/translation-contracts" />
       <path value="$PROJECT_DIR$/zz_engine/vendor/symfony/web-profiler-bundle" />
       <path value="$PROJECT_DIR$/zz_engine/vendor/symfony/stopwatch" />
-      <path value="$PROJECT_DIR$/zz_engine/vendor/swiftmailer/swiftmailer" />
       <path value="$PROJECT_DIR$/zz_engine/vendor/symfony/property-info" />
       <path value="$PROJECT_DIR$/zz_engine/vendor/symfony/event-dispatcher-contracts" />
       <path value="$PROJECT_DIR$/zz_engine/vendor/symfony/framework-bundle" />
@@ -163,6 +161,7 @@
       <path value="$PROJECT_DIR$/zz_engine/vendor/moneyphp/money" />
       <path value="$PROJECT_DIR$/zz_engine/vendor/clue/stream-filter" />
       <path value="$PROJECT_DIR$/zz_engine/vendor/psr/http-client" />
+      <path value="$PROJECT_DIR$/zz_engine/vendor/symfony/mailer" />
     </include_path>
   </component>
   <component name="PhpInterpreters">

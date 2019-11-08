@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "aef059a334df76e077eb7a6415ed5b20",
+    "content-hash": "333de6cbee90c3123bc9ad3032b5837e",
     "packages": [
         {
             "name": "ausi/slug-generator",
@@ -7208,6 +7208,60 @@
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
             "time": "2019-10-30T12:58:49+00:00"
+        },
+        {
+            "name": "ticketswap/omnipay-przelewy24",
+            "version": "2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/TicketSwap/omnipay-przelewy24.git",
+                "reference": "62121d8fcbb5103e53656fb5fe0d0d583a567a89"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/TicketSwap/omnipay-przelewy24/zipball/62121d8fcbb5103e53656fb5fe0d0d583a567a89",
+                "reference": "62121d8fcbb5103e53656fb5fe0d0d583a567a89",
+                "shasum": ""
+            },
+            "require": {
+                "omnipay/common": "^3"
+            },
+            "require-dev": {
+                "omnipay/tests": "^3"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Omnipay\\Przelewy24\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "TicketSwap",
+                    "email": "info@ticketswap.com"
+                }
+            ],
+            "description": "Przelewy24 driver for the Omnipay payment processing library",
+            "homepage": "https://github.com/ticketswap/omnipay-przelewy24",
+            "keywords": [
+                "Przelewy24",
+                "gateway",
+                "merchant",
+                "omnipay",
+                "pay",
+                "payment",
+                "transfer"
+            ],
+            "time": "2018-05-25T12:21:48+00:00"
         },
         {
             "name": "twig/twig",

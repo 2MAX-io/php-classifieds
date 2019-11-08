@@ -12,6 +12,7 @@ use App\Entity\PaymentForBalanceTopUp;
 use App\Entity\User;
 use App\Security\CurrentUserService;
 use App\Service\Payment\Method\OmnipayPaymentMethod;
+use App\Service\Payment\Method\OmnipayPrzelewy24PaymentMethod;
 use App\Service\Payment\Method\PayPalPaymentMethod;
 use App\Service\Setting\SettingsService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -46,7 +47,7 @@ class PaymentService
     private $trans;
 
     public function __construct(
-        OmnipayPaymentMethod $payPalPaymentMethod,
+        OmnipayPrzelewy24PaymentMethod $payPalPaymentMethod,
         EntityManagerInterface $em,
         SettingsService $settingsService,
         CurrentUserService $currentUserService,

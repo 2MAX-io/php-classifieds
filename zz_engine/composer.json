@@ -47,6 +47,7 @@
         "symfony/twig-bundle": "4.3.*",
         "symfony/validator": "4.3.*",
         "symfony/yaml": "4.3.*",
+        "ticketswap/omnipay-przelewy24": "^2.0",
         "webmozart/path-util": "^2.3",
         "willdurand/js-translation-bundle": "^2.6",
         "zendframework/zend-feed": "^2.12"

@@ -467,3 +467,17 @@ composer require league/omnipay:^3 omnipay/paypal
 cd zz_engine/
 composer require symfony/mailer
 composer update
+composer require ticketswap/omnipay-przelewy24
+composer require ticketswap/omnipay-przelewy24
+cd zz_engine/
+composer require ticketswap/omnipay-przelewy24
+ping wp.pl
+composer require ticketswap/omnipay-przelewy24
+composer update
+cd zz_engine/
+composer update
+php zz_engine/bin/console app:cron:main
+cd ..
+php zz_engine/bin/console app:cron:main
+cd zz_engine/
+composer require ticketswap/omnipay-przelewy24

@@ -113,10 +113,7 @@ class PaymentNotifyController extends AbstractController
                 $em->flush();
                 $em->commit();
 
-                return $this->redirectToRoute(
-                    'app_user_feature_listing',
-                    ['id' => $paymentForFeaturedPackage->getListing()->getId()]
-                );
+                return new Response('', Response::HTTP_OK);
             }
 
             if ($paymentEntity->getPaymentForBalanceTopUp() instanceof PaymentForBalanceTopUp) {
@@ -131,7 +128,7 @@ class PaymentNotifyController extends AbstractController
                 $em->flush();
                 $em->commit();
 
-                return $this->redirectToRoute('app_user_balance_top_up');
+                return new Response('', Response::HTTP_OK);
             }
 
 
@@ -149,7 +146,7 @@ class PaymentNotifyController extends AbstractController
 
         $this->throwGeneralException();
 
-        return new Response();
+        return new Response('', Response::HTTP_UNPROCESSABLE_ENTITY);
     }
 
     /**

@@ -83,9 +83,9 @@ class FeaturedListingService
     {
         $this->em->beginTransaction();
 
-        if ($listing->getUser() !== $this->currentUserService->getUserOrNull()) {
-            throw new \RuntimeException('listing of different user');
-        }
+//        if ($listing->getUser() !== $this->currentUserService->getUserOrNull()) {
+//            throw new \RuntimeException('listing of different user');
+//        }
 
         try {
             $cost = $featuredPackage->getPrice();

@@ -88,24 +88,31 @@ class OmnipayPrzelewy24PaymentMethod implements PaymentMethodInterface
         try {
             $confirmPaymentDto = new ConfirmPaymentDto();
             $gateway = $this->getGateway();
+            $transactionId = $confirmPaymentConfigDto->getRequest()->get('p24_order_id');
             $transaction = $gateway->completePurchase([
                 'sessionId' => $confirmPaymentConfigDto->getPaymentAppToken(),
                 'amount' => $confirmPaymentConfigDto->getPaymentEntity()->getAmount() / 100,
                 'currency' => 'PLN',
-                'transactionId' => $confirmPaymentConfigDto->getPaymentEntity()->getGatewayToken(),
+                'transactionId' => $transactionId,
             ]);
             $response = $transaction->send();
             if ($response->isSuccessful()) {
                 $data = $response->getData();
-                $confirmPaymentDto->setGatewayTransactionId($data['id']);
-                $confirmPaymentDto->setGatewayPaymentId($data['id']);
-                $confirmPaymentDto->setGatewayStatus($data['state']);
+                $this->logger->info('confirm payment response', [
+                    'responseData' => $data,
+                ]);
+                $confirmPaymentDto->setGatewayTransactionId($transactionId);
+                $confirmPaymentDto->setGatewayStatus($data['error']);
                 $confirmPaymentDto->setConfirmed($response->isSuccessful());
-                $confirmPaymentDto->setGatewayAmount(Integer::toInteger($data['transactions'][0]['amount']['total'] * 100));
+                $confirmPaymentDto->setGatewayAmount(Integer::toInteger($confirmPaymentConfigDto->getRequest()->get('p24_amount')));
 
                 return $confirmPaymentDto;
             } else {
-                throw new UserVisibleException('Payment confirmation failed'); //todo
+                $this->logger->critical('payment not successful', [
+                    'responseData' => $response->getData(),
+                ]);
+
+                throw new UserVisibleException('Payment not successful'); //todo
             }
         } catch (\Throwable $e) {
             $this->logger->critical('error while confirmPayment', ExceptionHelper::flatten($e));

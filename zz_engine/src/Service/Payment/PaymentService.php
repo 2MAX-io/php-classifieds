@@ -10,13 +10,18 @@ use App\Entity\Payment;
 use App\Entity\PaymentForFeaturedPackage;
 use App\Entity\PaymentForBalanceTopUp;
 use App\Entity\User;
+use App\Exception\UserVisibleException;
 use App\Helper\Random;
 use App\Security\CurrentUserService;
+use App\Service\Listing\Featured\FeaturedListingService;
+use App\Service\Money\UserBalanceService;
 use App\Service\Payment\Method\PayPalPaymentMethod;
-use App\Service\Payment\Method\Przelewy24PaymentMethod;
 use App\Service\Payment\Method\PayPalNativePaymentMethod;
 use App\Service\Setting\SettingsService;
 use Doctrine\ORM\EntityManagerInterface;
+use Psr\Log\LoggerInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class PaymentService
@@ -45,19 +50,43 @@ class PaymentService
      * @var TranslatorInterface
      */
     private $trans;
+    /**
+     * @var UserBalanceService
+     */
+    private $userBalanceService;
+    /**
+     * @var LoggerInterface
+     */
+    private $logger;
+    /**
+     * @var FeaturedListingService
+     */
+    private $featuredListingService;
+    /**
+     * @var UrlGeneratorInterface
+     */
+    private $urlGenerator;
 
     public function __construct(
-        Przelewy24PaymentMethod $paymentMethodService,
-        EntityManagerInterface $em,
+        PayPalPaymentMethod $paymentMethodService,
+        UserBalanceService $userBalanceService,
+        FeaturedListingService $featuredListingService,
         SettingsService $settingsService,
         CurrentUserService $currentUserService,
-        TranslatorInterface $trans
+        EntityManagerInterface $em,
+        UrlGeneratorInterface $urlGenerator,
+        TranslatorInterface $trans,
+        LoggerInterface $logger
     ) {
         $this->paymentMethodService = $paymentMethodService;
         $this->em = $em;
         $this->settingsService = $settingsService;
         $this->currentUserService = $currentUserService;
         $this->trans = $trans;
+        $this->userBalanceService = $userBalanceService;
+        $this->logger = $logger;
+        $this->featuredListingService = $featuredListingService;
+        $this->urlGenerator = $urlGenerator;
     }
 
     public function createPaymentForFeaturedPackage(Listing $listing, FeaturedPackage $featuredPackage): PaymentDto
@@ -178,10 +207,94 @@ class PaymentService
         return $confirmPaymentDto;
     }
 
+    public function completePurchase(ConfirmPaymentDto $confirmPaymentDto): CompletePurchaseDto
+    {
+        $completePaymentDto = new CompletePurchaseDto();
+        $paymentEntity = $confirmPaymentDto->getPaymentEntity();
+
+        if (!$paymentEntity instanceof Payment) {
+            $this->logger->error('could not find payment entity', [$confirmPaymentDto]);
+
+            $this->throwGeneralException();
+        }
+
+        $paymentForFeaturedPackage = $paymentEntity->getPaymentForFeaturedPackage();
+        if ($paymentForFeaturedPackage instanceof PaymentForFeaturedPackage) {
+            $this->markBalanceUpdated($confirmPaymentDto);
+            $userBalanceChange = $this->userBalanceService->addBalance(
+                $confirmPaymentDto->getGatewayAmount(),
+                $paymentForFeaturedPackage->getListing()->getUser(),
+                $paymentEntity
+            );
+            $userBalanceChange->setDescription(
+                $this->trans->trans(
+                    'trans.Featuring of listing: %listingTitle%, using package: %featuredPackageName%, payment acceptance',
+                    [
+                        '%listingTitle%' => $paymentForFeaturedPackage->getListing()->getTitle(),
+                        '%featuredPackageName%' => $paymentForFeaturedPackage->getFeaturedPackage()->getName(),
+                    ]
+                )
+            );
+            $userBalanceChange->setPayment($paymentEntity);
+            $this->em->flush();
+
+            $userBalanceChange = $this->featuredListingService->makeFeaturedByBalance(
+                $paymentForFeaturedPackage->getListing(),
+                $paymentForFeaturedPackage->getFeaturedPackage(),
+                $paymentEntity
+            );
+            $userBalanceChange->setDescription(
+                $this->trans->trans(
+                    'trans.Featuring of listing: %listingTitle%, using package: %featuredPackageName%',
+                    [
+                        '%listingTitle%' => $paymentForFeaturedPackage->getListing()->getTitle(),
+                        '%featuredPackageName%' => $paymentForFeaturedPackage->getFeaturedPackage()->getName(),
+                    ]
+                )
+            );
+
+            $this->em->flush();
+            $this->em->commit();
+
+            $completePaymentDto->setIsRedirect(true);
+            $completePaymentDto->setResponse(new RedirectResponse($this->urlGenerator->generate('app_user_feature_listing', [
+                'id' => $paymentForFeaturedPackage->getListing()->getId()
+            ])));
+
+            return $completePaymentDto;
+        }
+
+        if ($paymentEntity->getPaymentForBalanceTopUp() instanceof PaymentForBalanceTopUp) {
+            $this->markBalanceUpdated($confirmPaymentDto);
+            $userBalanceChange = $this->userBalanceService->addBalance(
+                $confirmPaymentDto->getGatewayAmount(),
+                $paymentEntity->getPaymentForBalanceTopUp()->getUser(),
+                $paymentEntity
+            );
+            $userBalanceChange->setPayment($paymentEntity);
+            $userBalanceChange->setDescription($this->trans->trans('trans.Topping up the account balance'));
+            $this->em->flush();
+            $this->em->commit();
+
+            $completePaymentDto->setIsRedirect(true);
+            $completePaymentDto->setResponse(new RedirectResponse($this->urlGenerator->generate('app_user_balance_top_up')));
+
+            return $completePaymentDto;
+        }
+    }
+
     public function getPaymentEntity(string $paymentAppToken): Payment
     {
         return $this->em->getRepository(Payment::class)->findOneBy([
             'appToken' => $paymentAppToken
         ]);
+    }
+
+    /**
+     * @throws UserVisibleException
+     */
+    private function throwGeneralException(): void
+    {
+        throw new UserVisibleException('trans.Could not process payment, if you have been charged and did not receive service, please contact us');
     }
 }

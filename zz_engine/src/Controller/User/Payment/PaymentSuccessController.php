@@ -5,12 +5,8 @@ declare(strict_types=1);
 namespace App\Controller\User\Payment;
 
 use App\Entity\Payment;
-use App\Entity\PaymentForBalanceTopUp;
-use App\Entity\PaymentForFeaturedPackage;
 use App\Exception\UserVisibleException;
 use App\Helper\ExceptionHelper;
-use App\Service\Listing\Featured\FeaturedListingService;
-use App\Service\Money\UserBalanceService;
 use App\Service\Payment\ConfirmPaymentConfigDto;
 use App\Service\Payment\PaymentService;
 use App\Service\Setting\SettingsService;
@@ -20,7 +16,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
 class PaymentSuccessController extends AbstractController
 {
@@ -31,11 +26,8 @@ class PaymentSuccessController extends AbstractController
         Request $request,
         string $paymentAppToken,
         PaymentService $paymentService,
-        UserBalanceService $userBalanceService,
-        FeaturedListingService $featuredListingService,
         SettingsService $settingsService,
         EntityManagerInterface $em,
-        TranslatorInterface $trans,
         LoggerInterface $logger
     ): Response {
         if (!$settingsService->getSettingsDto()->isPaymentAllowed()) {
@@ -53,87 +45,32 @@ class PaymentSuccessController extends AbstractController
             if (!$confirmPaymentDto->isConfirmed()) {
                 $logger->error('payment is not confirmed', [$confirmPaymentDto]);
 
-                $this->throwGeneralException();
+                throw $this->getGeneralException();
             }
 
             if ($paymentService->isBalanceUpdated($confirmPaymentDto)) {
                 $logger->error('balance has been already updated', [$confirmPaymentDto]);
 
-                $this->throwGeneralException();
+                throw $this->getGeneralException();
             }
 
             $paymentEntity = $confirmPaymentDto->getPaymentEntity();
             if (!$paymentEntity instanceof Payment) {
                 $logger->error('could not find payment entity', [$confirmPaymentDto]);
 
-                $this->throwGeneralException();
+                throw $this->getGeneralException();
             }
 
             if ($confirmPaymentDto->getGatewayAmount() !== $paymentEntity->getAmount()) {
                 $logger->error('paid amount do not match between gateway and payment entity', [$confirmPaymentDto]);
 
-                $this->throwGeneralException();
+                throw $this->getGeneralException();
             }
 
-            $paymentForFeaturedPackage = $paymentEntity->getPaymentForFeaturedPackage();
-            if ($paymentForFeaturedPackage instanceof PaymentForFeaturedPackage) {
-                $paymentService->markBalanceUpdated($confirmPaymentDto);
-                $userBalanceChange = $userBalanceService->addBalance(
-                    $confirmPaymentDto->getGatewayAmount(),
-                    $paymentForFeaturedPackage->getListing()->getUser(),
-                    $paymentEntity
-                );
-                $userBalanceChange->setDescription(
-                    $trans->trans(
-                        'trans.Featuring of listing: %listingTitle%, using package: %featuredPackageName%, payment acceptance',
-                        [
-                            '%listingTitle%' => $paymentForFeaturedPackage->getListing()->getTitle(),
-                            '%featuredPackageName%' => $paymentForFeaturedPackage->getFeaturedPackage()->getName(),
-                        ]
-                    )
-                );
-                $userBalanceChange->setPayment($paymentEntity);
-                $em->flush();
-
-                $userBalanceChange = $featuredListingService->makeFeaturedByBalance(
-                    $paymentForFeaturedPackage->getListing(),
-                    $paymentForFeaturedPackage->getFeaturedPackage(),
-                    $paymentEntity
-                );
-                $userBalanceChange->setDescription(
-                    $trans->trans(
-                        'trans.Featuring of listing: %listingTitle%, using package: %featuredPackageName%',
-                        [
-                            '%listingTitle%' => $paymentForFeaturedPackage->getListing()->getTitle(),
-                            '%featuredPackageName%' => $paymentForFeaturedPackage->getFeaturedPackage()->getName(),
-                        ]
-                    )
-                );
-
-                $em->flush();
-                $em->commit();
-
-                return $this->redirectToRoute(
-                    'app_user_feature_listing',
-                    ['id' => $paymentForFeaturedPackage->getListing()->getId()]
-                );
+            $completePurchaseDto = $paymentService->completePurchase($confirmPaymentDto);
+            if ($completePurchaseDto->isRedirect()) {
+                return $completePurchaseDto->getResponse();
             }
-
-            if ($paymentEntity->getPaymentForBalanceTopUp() instanceof PaymentForBalanceTopUp) {
-                $paymentService->markBalanceUpdated($confirmPaymentDto);
-                $userBalanceChange = $userBalanceService->addBalance(
-                    $confirmPaymentDto->getGatewayAmount(),
-                    $paymentEntity->getPaymentForBalanceTopUp()->getUser(),
-                    $paymentEntity
-                );
-                $userBalanceChange->setPayment($paymentEntity);
-                $userBalanceChange->setDescription($trans->trans('trans.Topping up the account balance'));
-                $em->flush();
-                $em->commit();
-
-                return $this->redirectToRoute('app_user_balance_top_up');
-            }
-
 
             if ($em->getConnection()->isTransactionActive()) {
                 $em->commit();
@@ -144,19 +81,16 @@ class PaymentSuccessController extends AbstractController
 
             $logger->error('error while processing payment', ExceptionHelper::flatten($e));
 
-            $this->throwGeneralException();
+            throw $this->getGeneralException($e);
         }
 
-        $this->throwGeneralException();
+        $logger->error('could not find any valid response for success payment');
 
-        return new Response();
+        throw $this->getGeneralException();
     }
 
-    /**
-     * @throws UserVisibleException
-     */
-    private function throwGeneralException(): void
+    private function getGeneralException(\Throwable $e = null): \Throwable
     {
-        throw new UserVisibleException('trans.Could not process payment, if you have been charged and did not receive service, please contact us');
+        return new UserVisibleException('trans.Could not process payment, if you have been charged and did not receive service, please contact us', [], 0, $e);
     }
 }

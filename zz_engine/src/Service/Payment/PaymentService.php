@@ -152,7 +152,7 @@ class PaymentService
 
     public function markBalanceUpdated(ConfirmPaymentDto $confirmPaymentDto): void
     {
-        $paymentEntity = $this->getPaymentEntity($confirmPaymentDto);
+        $paymentEntity = $this->getPaymentEntity($confirmPaymentDto->getPaymentEntity()->getAppToken());
         $paymentEntity->setBalanceUpdated(true);
         $paymentEntity->setGatewayStatus($confirmPaymentDto->getGatewayStatus());
 
@@ -161,14 +161,12 @@ class PaymentService
 
     public function isBalanceUpdated(ConfirmPaymentDto $confirmPaymentDto): bool
     {
-        return $this->getPaymentEntity($confirmPaymentDto)->getBalanceUpdated();
+        return $this->getPaymentEntity($confirmPaymentDto->getPaymentEntity()->getAppToken())->getBalanceUpdated();
     }
 
     public function confirmPayment(ConfirmPaymentConfigDto $confirmPaymentConfigDto): ConfirmPaymentDto
     {
-        $paymentEntity = $this->em->getRepository(Payment::class)->findOneBy(
-            ['appToken' => $confirmPaymentConfigDto->getPaymentAppToken()]
-        );
+        $paymentEntity = $this->getPaymentEntity($confirmPaymentConfigDto->getPaymentAppToken());
         $confirmPaymentConfigDto->setPaymentEntity($paymentEntity);
         $confirmPaymentDto = $this->paymentMethodService->confirmPayment($confirmPaymentConfigDto);
 
@@ -179,10 +177,10 @@ class PaymentService
         return $confirmPaymentDto;
     }
 
-    public function getPaymentEntity(ConfirmPaymentDto $confirmPaymentDto): Payment
+    public function getPaymentEntity(string $paymentAppToken): Payment
     {
-        return $this->em->getRepository(Payment::class)->findOneBy(
-            ['gatewayPaymentId' => $confirmPaymentDto->getGatewayPaymentId()]
-        );
+        return $this->em->getRepository(Payment::class)->findOneBy([
+            'appToken' => $paymentAppToken
+        ]);
     }
 }

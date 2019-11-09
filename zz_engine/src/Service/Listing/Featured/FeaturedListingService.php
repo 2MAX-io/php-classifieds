@@ -83,9 +83,16 @@ class FeaturedListingService
     {
         $this->em->beginTransaction();
 
-//        if ($listing->getUser() !== $this->currentUserService->getUserOrNull()) {
-//            throw new \RuntimeException('listing of different user');
-//        }
+        $paymentAndListingHasSameUser = $payment && $listing->getUser() === $payment->getUser();
+        $listingOfCurrentUser = $listing->getUser() === $this->currentUserService->getUserOrNull();
+        if (!$paymentAndListingHasSameUser && !$listingOfCurrentUser) {
+            if ($payment && !$paymentAndListingHasSameUser) {
+                throw new \RuntimeException('payment and listing does not have same user');
+            }
+            if (!$listingOfCurrentUser) {
+                throw new \RuntimeException('not current user listing');
+            }
+        }
 
         try {
             $cost = $featuredPackage->getPrice();

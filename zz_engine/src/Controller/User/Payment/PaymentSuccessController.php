@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Controller\User\Payment;
 
-use App\Entity\Payment;
 use App\Exception\UserVisibleException;
 use App\Helper\ExceptionHelper;
 use App\Service\Payment\ConfirmPaymentConfigDto;
@@ -41,32 +40,7 @@ class PaymentSuccessController extends AbstractController
             $confirmPaymentConfigDto->setRequest($request);
             $confirmPaymentConfigDto->setPaymentAppToken($paymentAppToken);
             $confirmPaymentDto = $paymentService->confirmPayment($confirmPaymentConfigDto);
-
-            if (!$confirmPaymentDto->isConfirmed()) {
-                $logger->error('payment is not confirmed', [$confirmPaymentDto]);
-
-                throw $this->getGeneralException();
-            }
-
-            if ($paymentService->isBalanceUpdated($confirmPaymentDto)) {
-                $logger->error('balance has been already updated', [$confirmPaymentDto]);
-
-                throw $this->getGeneralException();
-            }
-
-            $paymentEntity = $confirmPaymentDto->getPaymentEntity();
-            if (!$paymentEntity instanceof Payment) {
-                $logger->error('could not find payment entity', [$confirmPaymentDto]);
-
-                throw $this->getGeneralException();
-            }
-
-            if ($confirmPaymentDto->getGatewayAmount() !== $paymentEntity->getAmount()) {
-                $logger->error('paid amount do not match between gateway and payment entity', [$confirmPaymentDto]);
-
-                throw $this->getGeneralException();
-            }
-
+            $paymentService->validate($confirmPaymentDto);
             $completePurchaseDto = $paymentService->completePurchase($confirmPaymentDto);
             if ($completePurchaseDto->isRedirect()) {
                 return $completePurchaseDto->getResponse();

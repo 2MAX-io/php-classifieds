@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller\User\Payment;
 
+use App\Enum\ParamEnum;
 use App\Exception\UserVisibleException;
 use App\Service\Listing\Featured\FeaturedListingService;
 use App\Service\Money\UserBalanceService;
@@ -33,7 +34,11 @@ class PaymentWaitController extends AbstractController
         TranslatorInterface $trans,
         LoggerInterface $logger
     ): Response {
-        return $this->render('payment/payment_wait.html.twig');
+        return $this->render('payment/payment_wait.html.twig', [
+            ParamEnum::JSON_DATA => [
+                'paymentAppToken' => $paymentAppToken,
+            ],
+        ]);
     }
 
     /**
@@ -41,10 +46,12 @@ class PaymentWaitController extends AbstractController
      */
     public function paymentWaitRefresh(
         Request $request,
-        LoggerInterface $logger
+        PaymentService $paymentService
     ): Response {
+        $paymentEntity = $paymentService->getPaymentEntity($request->get('paymentAppToken'));
+
         return $this->json([
-            'paymentComplete' => false,
+            'paymentComplete' => $paymentEntity->getBalanceUpdated(),
             'lastRefreshTime' => \date('H:i:s'),
         ]);
     }

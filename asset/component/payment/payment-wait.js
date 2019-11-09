@@ -5,11 +5,12 @@ app.paymentWait.init = function () {
 };
 
 app.paymentWait.refresh = function () {
+    var paymentAppToken = app.getJsonDataCached()['paymentAppToken'];
     $.ajax(Routing.generate('app_payment_wait_refresh_ajax', []), {
         type: 'POST',
         dataType: 'json',
         data: {
-            paymentAppToken: app.getJsonDataCached()['paymentAppToken']
+            paymentAppToken: paymentAppToken
         }
     }).done(function (data) {
         app.debugLog(data);
@@ -21,10 +22,12 @@ app.paymentWait.refresh = function () {
             $jsPaymentStatus.addClass('text-success');
             $jsPaymentStatus.removeClass('text-danger');
             $jsPaymentStatus.text(Translator.trans('trans.Success, redirecting...'));
+
+            window.location.href = Routing.generate('app_payment_wait_redirect', {paymentAppToken: paymentAppToken});
         } else {
             setTimeout(function () {
                 app.paymentWait.refresh();
-            }, 2000);
+            }, 800);
         }
 
     }).fail(function () {

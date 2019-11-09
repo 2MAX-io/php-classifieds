@@ -82,6 +82,11 @@ class Payment
     private $gatewayToken;
 
     /**
+     * @ORM\Column(type="string", length=70, nullable=false)
+     */
+    private $appToken;
+
+    /**
      * @var PaymentForFeaturedPackage|null
      *
      * @ORM\OneToOne(targetEntity="PaymentForFeaturedPackage", mappedBy="payment", fetch="EXTRA_LAZY")
@@ -307,6 +312,18 @@ class Payment
     public function setDescription(string $description): self
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    public function getAppToken(): ?string
+    {
+        return $this->appToken;
+    }
+
+    public function setAppToken(string $appToken): self
+    {
+        $this->appToken = $appToken;
 
         return $this;
     }

@@ -18,13 +18,17 @@ class PaymentHelperService
         $this->urlGenerator = $urlGenerator;
     }
 
-    public function getSuccessUrl(): string
+    public function getSuccessUrl(PaymentDto $paymentDto): string
     {
-        return $this->urlGenerator->generate('app_payment', [], UrlGeneratorInterface::ABSOLUTE_URL);
+        return $this->urlGenerator->generate('app_payment', [
+            'paymentAppToken' => $paymentDto->getPaymentAppToken(),
+        ], UrlGeneratorInterface::ABSOLUTE_URL);
     }
 
-    public function getCancelUrl(): string
+    public function getCancelUrl(PaymentDto $paymentDto): string
     {
-        return $this->urlGenerator->generate('app_payment_cancel', [], UrlGeneratorInterface::ABSOLUTE_URL);
+        return $this->urlGenerator->generate('app_payment_cancel', [
+            'paymentAppToken' => $paymentDto->getPaymentAppToken(),
+        ], UrlGeneratorInterface::ABSOLUTE_URL);
     }
 }

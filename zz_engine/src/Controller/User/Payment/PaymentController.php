@@ -11,6 +11,7 @@ use App\Exception\UserVisibleException;
 use App\Helper\ExceptionHelper;
 use App\Service\Listing\Featured\FeaturedListingService;
 use App\Service\Money\UserBalanceService;
+use App\Service\Payment\ConfirmPaymentConfigDto;
 use App\Service\Payment\PaymentService;
 use App\Service\Setting\SettingsService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -24,10 +25,11 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class PaymentController extends AbstractController
 {
     /**
-     * @Route("/user/payment", name="app_payment")
+     * @Route("/user/payment/{paymentAppToken}", name="app_payment")
      */
     public function payment(
         Request $request,
+        string $paymentAppToken,
         PaymentService $paymentService,
         UserBalanceService $userBalanceService,
         FeaturedListingService $featuredListingService,
@@ -43,7 +45,10 @@ class PaymentController extends AbstractController
         $em->beginTransaction();
 
         try {
-            $confirmPaymentDto = $paymentService->confirmPayment($request);
+            $confirmPaymentConfigDto = new ConfirmPaymentConfigDto();
+            $confirmPaymentConfigDto->setRequest($request);
+            $confirmPaymentConfigDto->setPaymentAppToken($paymentAppToken);
+            $confirmPaymentDto = $paymentService->confirmPayment($confirmPaymentConfigDto);
 
             if (!$confirmPaymentDto->isConfirmed()) {
                 $logger->error('payment is not confirmed', [$confirmPaymentDto]);

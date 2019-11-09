@@ -60,6 +60,11 @@ class PaymentDto
     public $gatewayPaymentDescription;
 
     /**
+     * @var string|null
+     */
+    public $paymentAppToken;
+
+    /**
      * @var Payment|null
      */
     public $paymentEntity;
@@ -187,5 +192,15 @@ class PaymentDto
     public function setPaymentDescription(string $paymentDescription): void
     {
         $this->paymentDescription = $paymentDescription;
+    }
+
+    public function getPaymentAppToken(): ?string
+    {
+        return $this->paymentAppToken;
+    }
+
+    public function setPaymentAppToken(?string $paymentAppToken): void
+    {
+        $this->paymentAppToken = $paymentAppToken;
     }
 }

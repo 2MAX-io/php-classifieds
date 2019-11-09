@@ -481,3 +481,21 @@ cd ..
 php zz_engine/bin/console app:cron:main
 cd zz_engine/
 composer require ticketswap/omnipay-przelewy24
+php zz_engine/bin/console make:entity --regenerate "App\Entity"
+php zz_engine/bin/console make:entity --regenerate "App\Entity"
+composer require symfony/maker-bundle --dev
+cd zz_engine/
+composer require symfony/maker-bundle --dev
+php zz_engine/bin/console make:entity --regenerate "App\Entity"
+cd ..
+php zz_engine/bin/console make:entity --regenerate "App\Entity"
+cd zz_engine/
+php bin/console make:entity --regenerate App
+php bin/console make:entity --regenerate "App\Entity"
+php bin/console make:entity --regenerate "App"
+php bin/console make:entity --help
+php bin/console make:entity --regenerate "App"
+php bin/console make:entity --regenerate "App\Entity"
+php bin/console list
+php zz_engine/bin/console make:entity --regenerate "App\Entity"
+php zz_engine/bin/console doctrine:schema:update --force

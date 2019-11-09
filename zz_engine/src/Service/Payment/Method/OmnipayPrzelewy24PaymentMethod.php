@@ -7,6 +7,7 @@ use App\Exception\UserVisibleException;
 use App\Helper\ExceptionHelper;
 use App\Helper\Integer;
 use App\Service\Payment\Base\PaymentMethodInterface;
+use App\Service\Payment\ConfirmPaymentConfigDto;
 use App\Service\Payment\ConfirmPaymentDto;
 use App\Service\Payment\PaymentDto;
 use App\Service\Payment\PaymentHelperService;
@@ -15,7 +16,6 @@ use Omnipay\Common\GatewayInterface;
 use Omnipay\Omnipay;
 use Omnipay\Przelewy24\Gateway;
 use Psr\Log\LoggerInterface;
-use Symfony\Component\HttpFoundation\Request;
 
 class OmnipayPrzelewy24PaymentMethod implements PaymentMethodInterface
 {
@@ -48,14 +48,14 @@ class OmnipayPrzelewy24PaymentMethod implements PaymentMethodInterface
             $gateway = $this->getGateway();
             $transaction = $gateway->purchase([
                 'channel' => Gateway::P24_CHANNEL_ALL,
-                'sessionId' => 'unique',
+                'sessionId' => $paymentDto->getPaymentAppToken(),
                 'amount' => $paymentDto->getAmount() / 100,
                 'currency' => $paymentDto->getCurrency(),
                 'currency' => 'PLN',
                 'description' => $paymentDto->getGatewayPaymentDescription(),
-                'returnUrl' => $this->paymentHelperService->getSuccessUrl(),
-                'notifyUrl' => $this->paymentHelperService->getSuccessUrl(),
-                'cancelUrl' => $this->paymentHelperService->getCancelUrl(),
+                'returnUrl' => $this->paymentHelperService->getSuccessUrl($paymentDto),
+                'notifyUrl' => $this->paymentHelperService->getSuccessUrl($paymentDto),
+                'cancelUrl' => $this->paymentHelperService->getCancelUrl($paymentDto),
                 'card' => [
                     'email' => 'info@example.com',
                     'name' => 'My name',
@@ -66,7 +66,7 @@ class OmnipayPrzelewy24PaymentMethod implements PaymentMethodInterface
             $data = $response->getData();
 
             $paymentDto->setGatewayPaymentId($data['token']);
-            $paymentDto->setGatewayToken('token');
+            $paymentDto->setGatewayToken($data['token']);
             $paymentDto->setGatewayStatus($data['error']);
 
             if ($response->isSuccessful()) {
@@ -77,25 +77,22 @@ class OmnipayPrzelewy24PaymentMethod implements PaymentMethodInterface
                 $paymentDto->setPaymentExecuteUrl($response->getRedirectUrl());
             }
         } catch (\Exception $e) {
-//            echo "Exception caught while attempting purchase.\n";
-//            echo "Exception type == " . get_class($e) . "\n";
-//            echo "Message == " . $e->getMessage() . "\n";
-
             $this->logger->critical('error while createPayment', ExceptionHelper::flatten($e)); // todo
+
+            throw new UserVisibleException('can not create payment');
         }
     }
 
-    public function confirmPayment(Request $request): ConfirmPaymentDto
+    public function confirmPayment(ConfirmPaymentConfigDto $confirmPaymentConfigDto): ConfirmPaymentDto
     {
         try {
             $confirmPaymentDto = new ConfirmPaymentDto();
-            $paymentId = $request->get('paymentId');
-            $payerId = $request->get('PayerID');
-
             $gateway = $this->getGateway();
             $transaction = $gateway->completePurchase([
-                'payer_id' => $payerId,
-                'transactionReference' => $paymentId,
+                'sessionId' => $confirmPaymentConfigDto->getPaymentAppToken(),
+                'amount' => $confirmPaymentConfigDto->getPaymentEntity()->getAmount() / 100,
+                'currency' => 'PLN',
+                'transactionId' => $confirmPaymentConfigDto->getPaymentEntity()->getGatewayToken(),
             ]);
             $response = $transaction->send();
             if ($response->isSuccessful()) {

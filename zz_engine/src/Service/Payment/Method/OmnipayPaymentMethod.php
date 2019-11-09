@@ -7,6 +7,7 @@ use App\Exception\UserVisibleException;
 use App\Helper\ExceptionHelper;
 use App\Helper\Integer;
 use App\Service\Payment\Base\PaymentMethodInterface;
+use App\Service\Payment\ConfirmPaymentConfigDto;
 use App\Service\Payment\ConfirmPaymentDto;
 use App\Service\Payment\PaymentDto;
 use App\Service\Payment\PaymentHelperService;
@@ -14,7 +15,6 @@ use App\Service\Setting\SettingsService;
 use Omnipay\Common\GatewayInterface;
 use Omnipay\Omnipay;
 use Psr\Log\LoggerInterface;
-use Symfony\Component\HttpFoundation\Request;
 
 class OmnipayPaymentMethod implements PaymentMethodInterface
 {
@@ -49,8 +49,8 @@ class OmnipayPaymentMethod implements PaymentMethodInterface
                 'amount' => $paymentDto->getAmount() / 100,
                 'currency' => $paymentDto->getCurrency(),
                 'description' => $paymentDto->getGatewayPaymentDescription(),
-                'returnUrl' => $this->paymentHelperService->getSuccessUrl(),
-                'cancelUrl' => $this->paymentHelperService->getCancelUrl(),
+                'returnUrl' => $this->paymentHelperService->getSuccessUrl($paymentDto),
+                'cancelUrl' => $this->paymentHelperService->getCancelUrl($paymentDto),
             ]);
             $response = $transaction->send();
             $data = $response->getData();
@@ -67,20 +67,18 @@ class OmnipayPaymentMethod implements PaymentMethodInterface
                 $paymentDto->setPaymentExecuteUrl($response->getRedirectUrl());
             }
         } catch (\Exception $e) {
-//            echo "Exception caught while attempting purchase.\n";
-//            echo "Exception type == " . get_class($e) . "\n";
-//            echo "Message == " . $e->getMessage() . "\n";
-
             $this->logger->critical('error while createPayment', ExceptionHelper::flatten($e)); // todo
+
+            throw new UserVisibleException('can not create payment');
         }
     }
 
-    public function confirmPayment(Request $request): ConfirmPaymentDto
+    public function confirmPayment(ConfirmPaymentConfigDto $confirmPaymentConfigDto): ConfirmPaymentDto
     {
         try {
             $confirmPaymentDto = new ConfirmPaymentDto();
-            $paymentId = $request->get('paymentId');
-            $payerId = $request->get('PayerID');
+            $paymentId = $confirmPaymentConfigDto->getRequest()->get('paymentId');
+            $payerId = $confirmPaymentConfigDto->getRequest()->get('PayerID');
 
             $gateway = $this->getGateway();
             $transaction = $gateway->completePurchase([

@@ -10,13 +10,12 @@ use App\Entity\Payment;
 use App\Entity\PaymentForFeaturedPackage;
 use App\Entity\PaymentForBalanceTopUp;
 use App\Entity\User;
+use App\Helper\Random;
 use App\Security\CurrentUserService;
 use App\Service\Payment\Method\OmnipayPaymentMethod;
-use App\Service\Payment\Method\OmnipayPrzelewy24PaymentMethod;
 use App\Service\Payment\Method\PayPalPaymentMethod;
 use App\Service\Setting\SettingsService;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class PaymentService
@@ -24,7 +23,7 @@ class PaymentService
     /**
      * @var PayPalPaymentMethod
      */
-    private $payPalPaymentMethod;
+    private $paymentMethodService;
 
     /**
      * @var EntityManagerInterface
@@ -47,13 +46,13 @@ class PaymentService
     private $trans;
 
     public function __construct(
-        OmnipayPrzelewy24PaymentMethod $payPalPaymentMethod,
+        OmnipayPaymentMethod $paymentMethodService,
         EntityManagerInterface $em,
         SettingsService $settingsService,
         CurrentUserService $currentUserService,
         TranslatorInterface $trans
     ) {
-        $this->payPalPaymentMethod = $payPalPaymentMethod;
+        $this->paymentMethodService = $paymentMethodService;
         $this->em = $em;
         $this->settingsService = $settingsService;
         $this->currentUserService = $currentUserService;
@@ -128,7 +127,8 @@ class PaymentService
 
     public function createPayment(PaymentDto $paymentDto): PaymentDto
     {
-        $this->payPalPaymentMethod->createPayment($paymentDto);
+        $paymentDto->setPaymentAppToken(Random::string(64));
+        $this->paymentMethodService->createPayment($paymentDto);
 
         $paymentEntity = new Payment();
         $paymentEntity->setCanceled(false);
@@ -138,6 +138,7 @@ class PaymentService
         $paymentEntity->setGatewayPaymentId($paymentDto->getGatewayPaymentId());
         $paymentEntity->setGatewayToken($paymentDto->getGatewayToken());
         $paymentEntity->setGatewayStatus($paymentDto->getGatewayStatus());
+        $paymentEntity->setAppToken($paymentDto->getPaymentAppToken());
         $paymentEntity->setUser($paymentDto->getUser());
         $paymentEntity->setType($paymentDto->getPaymentType());
         $paymentEntity->setDescription($paymentDto->getPaymentDescription());
@@ -163,11 +164,14 @@ class PaymentService
         return $this->getPaymentEntity($confirmPaymentDto)->getBalanceUpdated();
     }
 
-    public function confirmPayment(Request $request): ConfirmPaymentDto
+    public function confirmPayment(ConfirmPaymentConfigDto $confirmPaymentConfigDto): ConfirmPaymentDto
     {
-        $confirmPaymentDto = $this->payPalPaymentMethod->confirmPayment($request);
+        $paymentEntity = $this->em->getRepository(Payment::class)->findOneBy(
+            ['appToken' => $confirmPaymentConfigDto->getPaymentAppToken()]
+        );
+        $confirmPaymentConfigDto->setPaymentEntity($paymentEntity);
+        $confirmPaymentDto = $this->paymentMethodService->confirmPayment($confirmPaymentConfigDto);
 
-        $paymentEntity = $this->getPaymentEntity($confirmPaymentDto);
         $paymentEntity->setGatewayTransactionId($confirmPaymentDto->getGatewayTransactionId());
 
         $confirmPaymentDto->setPaymentEntity($paymentEntity);

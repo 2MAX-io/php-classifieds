@@ -99,11 +99,11 @@
         "public-dir": "../"
     },
     "require-dev": {
-        "roave/security-advisories": "dev-master",
         "fzaninotto/faker": "^1.8",
+        "roave/security-advisories": "dev-master",
         "slevomat/coding-standard": "^5.0",
         "stesie/phpcs-doctrine-annotation-rules": "^1.2",
-        "symfony/maker-bundle": "^1.11",
+        "symfony/maker-bundle": "^1.14",
         "symfony/profiler-pack": "^1.0"
     }
 }

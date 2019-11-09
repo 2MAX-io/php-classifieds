@@ -9,6 +9,7 @@ use App\Helper\ExceptionHelper;
 use App\Helper\FilePath;
 use App\Helper\Integer;
 use App\Service\Payment\Base\PaymentMethodInterface;
+use App\Service\Payment\ConfirmPaymentConfigDto;
 use App\Service\Payment\ConfirmPaymentDto;
 use App\Service\Payment\PaymentDto;
 use App\Service\Payment\PaymentHelperService;
@@ -24,7 +25,6 @@ use PayPal\Api\Transaction;
 use PayPal\Auth\OAuthTokenCredential;
 use PayPal\Rest\ApiContext;
 use Psr\Log\LoggerInterface;
-use Symfony\Component\HttpFoundation\Request;
 
 class PayPalPaymentMethod implements PaymentMethodInterface
 {
@@ -100,15 +100,15 @@ class PayPalPaymentMethod implements PaymentMethodInterface
         }
     }
 
-    public function confirmPayment(Request $request): ConfirmPaymentDto
+    public function confirmPayment(ConfirmPaymentConfigDto $confirmPaymentConfigDto): ConfirmPaymentDto
     {
         $confirmPaymentDto = new ConfirmPaymentDto();
-        $paymentId = $request->get('paymentId');
+        $paymentId = $confirmPaymentConfigDto->getRequest()->get('paymentId');
         $apiContext = $this->getApiContext();
         $payment = Payment::get($paymentId, $apiContext);
 
         $execution = new PaymentExecution();
-        $execution->setPayerId($request->get('PayerID'));
+        $execution->setPayerId($confirmPaymentConfigDto->getRequest()->get('PayerID'));
 
         try {
             $payment = $payment->execute($execution, $apiContext);

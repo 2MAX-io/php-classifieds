@@ -22,6 +22,10 @@ app.getJsonData = function () {
     return JSON.parse($jsonData[0].textContent);
 };
 
+app.debugLog = function (message) {
+    console.log(message);
+};
+
 function copyTextToClipboard(text) {
     var textArea = document.createElement("textarea");
 

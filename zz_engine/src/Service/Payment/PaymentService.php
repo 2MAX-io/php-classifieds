@@ -47,7 +47,7 @@ class PaymentService
     private $trans;
 
     public function __construct(
-        OmnipayPaymentMethod $paymentMethodService,
+        OmnipayPrzelewy24PaymentMethod $paymentMethodService,
         EntityManagerInterface $em,
         SettingsService $settingsService,
         CurrentUserService $currentUserService,

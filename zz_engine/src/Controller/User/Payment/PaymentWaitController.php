@@ -22,7 +22,7 @@ class PaymentWaitController extends AbstractController
     /**
      * @Route("/user/payment/wait/{paymentAppToken}", name="app_payment_wait")
      */
-    public function payment(
+    public function paymentWait(
         Request $request,
         string $paymentAppToken,
         PaymentService $paymentService,
@@ -34,6 +34,19 @@ class PaymentWaitController extends AbstractController
         LoggerInterface $logger
     ): Response {
         return $this->render('payment/payment_wait.html.twig');
+    }
+
+    /**
+     * @Route("/user/payment/payment-wait-refresh", name="app_payment_wait_refresh_ajax", options={"expose": true})
+     */
+    public function paymentWaitRefresh(
+        Request $request,
+        LoggerInterface $logger
+    ): Response {
+        return $this->json([
+            'paymentComplete' => false,
+            'lastRefreshTime' => \date('H:i:s'),
+        ]);
     }
 
     /**

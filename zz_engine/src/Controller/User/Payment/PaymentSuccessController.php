@@ -25,7 +25,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class PaymentSuccessController extends AbstractController
 {
     /**
-     * @Route("/user/payment/{paymentAppToken}", name="app_payment")
+     * @Route("/user/payment/success/{paymentAppToken}", name="app_payment")
      */
     public function payment(
         Request $request,

@@ -53,8 +53,8 @@ class OmnipayPrzelewy24PaymentMethod implements PaymentMethodInterface
                 'currency' => $paymentDto->getCurrency(),
                 'currency' => 'PLN',
                 'description' => $paymentDto->getGatewayPaymentDescription(),
-                'returnUrl' => $this->paymentHelperService->getSuccessUrl($paymentDto),
-                'notifyUrl' => $this->paymentHelperService->getSuccessUrl($paymentDto),
+                'returnUrl' => $this->paymentHelperService->getPaymentWaitUrl($paymentDto),
+                'notifyUrl' => $this->paymentHelperService->getPaymentNotifyUrl($paymentDto),
                 'cancelUrl' => $this->paymentHelperService->getCancelUrl($paymentDto),
                 'card' => [
                     'email' => 'info@example.com',

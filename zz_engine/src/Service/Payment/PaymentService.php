@@ -13,6 +13,7 @@ use App\Entity\User;
 use App\Helper\Random;
 use App\Security\CurrentUserService;
 use App\Service\Payment\Method\OmnipayPaymentMethod;
+use App\Service\Payment\Method\OmnipayPrzelewy24PaymentMethod;
 use App\Service\Payment\Method\PayPalPaymentMethod;
 use App\Service\Setting\SettingsService;
 use Doctrine\ORM\EntityManagerInterface;

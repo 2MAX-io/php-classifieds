@@ -25,6 +25,20 @@ class PaymentHelperService
         ], UrlGeneratorInterface::ABSOLUTE_URL);
     }
 
+    public function getPaymentWaitUrl(PaymentDto $paymentDto): string
+    {
+        return $this->urlGenerator->generate('app_payment_wait', [
+            'paymentAppToken' => $paymentDto->getPaymentAppToken(),
+        ], UrlGeneratorInterface::ABSOLUTE_URL);
+    }
+
+    public function getPaymentNotifyUrl(PaymentDto $paymentDto): string
+    {
+        return $this->urlGenerator->generate('app_payment_notify', [
+            'paymentAppToken' => $paymentDto->getPaymentAppToken(),
+        ], UrlGeneratorInterface::ABSOLUTE_URL);
+    }
+
     public function getCancelUrl(PaymentDto $paymentDto): string
     {
         return $this->urlGenerator->generate('app_payment_cancel', [

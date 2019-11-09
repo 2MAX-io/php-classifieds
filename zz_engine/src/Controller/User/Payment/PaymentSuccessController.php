@@ -22,7 +22,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class PaymentController extends AbstractController
+class PaymentSuccessController extends AbstractController
 {
     /**
      * @Route("/user/payment/{paymentAppToken}", name="app_payment")

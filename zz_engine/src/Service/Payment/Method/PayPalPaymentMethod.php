@@ -1,12 +1,10 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Service\Payment\Method;
 
 use App\Exception\UserVisibleException;
 use App\Helper\ExceptionHelper;
-use App\Helper\FilePath;
 use App\Helper\Integer;
 use App\Service\Payment\Base\PaymentMethodInterface;
 use App\Service\Payment\ConfirmPaymentConfigDto;
@@ -14,16 +12,8 @@ use App\Service\Payment\ConfirmPaymentDto;
 use App\Service\Payment\PaymentDto;
 use App\Service\Payment\PaymentHelperService;
 use App\Service\Setting\SettingsService;
-use PayPal\Api\Amount;
-use PayPal\Api\Item;
-use PayPal\Api\ItemList;
-use PayPal\Api\Payer;
-use PayPal\Api\Payment;
-use PayPal\Api\PaymentExecution;
-use PayPal\Api\RedirectUrls;
-use PayPal\Api\Transaction;
-use PayPal\Auth\OAuthTokenCredential;
-use PayPal\Rest\ApiContext;
+use Omnipay\Common\GatewayInterface;
+use Omnipay\Omnipay;
 use Psr\Log\LoggerInterface;
 
 class PayPalPaymentMethod implements PaymentMethodInterface
@@ -32,12 +22,10 @@ class PayPalPaymentMethod implements PaymentMethodInterface
      * @var PaymentHelperService
      */
     private $paymentHelperService;
-
     /**
      * @var SettingsService
      */
     private $settingsService;
-
     /**
      * @var LoggerInterface
      */
@@ -55,103 +43,81 @@ class PayPalPaymentMethod implements PaymentMethodInterface
 
     public function createPayment(PaymentDto $paymentDto): void
     {
-        $payer = new Payer();
-        $payer->setPaymentMethod('paypal');
-
-        $redirectUrls = new RedirectUrls();
-        $redirectUrls->setReturnUrl($this->paymentHelperService->getSuccessUrl());
-        $redirectUrls->setCancelUrl($this->paymentHelperService->getCancelUrl());
-
-        $amount = new Amount();
-        $amount->setCurrency($paymentDto->getCurrency());
-        $amount->setTotal($paymentDto->getAmount() / 100);
-
-        $item = new Item();
-        $item->setName($paymentDto->getGatewayPaymentDescription());
-        $item->setPrice($amount->getTotal());
-        $item->setCurrency($paymentDto->getCurrency());
-        $item->setQuantity(1);
-
-        $itemList = new ItemList();
-        $itemList->setItems([$item]);
-
-        $transaction = new Transaction();
-        $transaction->setAmount($amount);
-        $transaction->setItemList($itemList);
-
-        $payment = new Payment();
-        $payment->setIntent('sale');
-        $payment->setPayer($payer);
-        $payment->setRedirectUrls($redirectUrls);
-        $payment->setTransactions(array($transaction));
-
         try {
-            $payment->create($this->getApiContext());
-            $approvalUrl = $payment->getApprovalLink();
+            $gateway = $this->getGateway();
+            $transaction = $gateway->purchase([
+                'amount' => $paymentDto->getAmount() / 100,
+                'currency' => $paymentDto->getCurrency(),
+                'description' => $paymentDto->getGatewayPaymentDescription(),
+                'returnUrl' => $this->paymentHelperService->getSuccessUrl($paymentDto),
+                'cancelUrl' => $this->paymentHelperService->getCancelUrl($paymentDto),
+            ]);
+            $response = $transaction->send();
+            $data = $response->getData();
 
-            $paymentDto->setPaymentExecuteUrl($approvalUrl);
-            $paymentDto->setGatewayPaymentId($payment->getId());
-            $paymentDto->setGatewayToken($payment->getToken());
-            $paymentDto->setGatewayStatus($payment->getState());
+            $paymentDto->setGatewayPaymentId($data['id']);
+            $paymentDto->setGatewayToken('todo');
+            $paymentDto->setGatewayStatus($data['state']);
 
-            // Redirect the customer to $approvalUrl
-        } catch (\Exception $ex) {
-            throw new UserVisibleException('trans.Failed to create payment, please try again later', [], 0, $ex);
+            if ($response->isSuccessful()) {
+//                echo "Step 2 was successful!\n";
+            }
+
+            if ($response->isRedirect()) {
+                $paymentDto->setPaymentExecuteUrl($response->getRedirectUrl());
+            }
+        } catch (\Exception $e) {
+            $this->logger->critical('error while createPayment', ExceptionHelper::flatten($e)); // todo
+
+            throw new UserVisibleException('can not create payment');
         }
     }
 
     public function confirmPayment(ConfirmPaymentConfigDto $confirmPaymentConfigDto): ConfirmPaymentDto
     {
-        $confirmPaymentDto = new ConfirmPaymentDto();
-        $paymentId = $confirmPaymentConfigDto->getRequest()->get('paymentId');
-        $apiContext = $this->getApiContext();
-        $payment = Payment::get($paymentId, $apiContext);
-
-        $execution = new PaymentExecution();
-        $execution->setPayerId($confirmPaymentConfigDto->getRequest()->get('PayerID'));
-
         try {
-            $payment = $payment->execute($execution, $apiContext);
+            $confirmPaymentDto = new ConfirmPaymentDto();
+            $paymentId = $confirmPaymentConfigDto->getRequest()->get('paymentId');
+            $payerId = $confirmPaymentConfigDto->getRequest()->get('PayerID');
 
-            $confirmPaymentDto->setGatewayTransactionId($payment->getTransactions()[0]->getRelatedResources()[0]->getSale()->getId());
-            $confirmPaymentDto->setGatewayPaymentId($payment->getId());
-            $confirmPaymentDto->setGatewayStatus($payment->getState());
-            $confirmPaymentDto->setConfirmed($payment->getState() === 'approved');
-            $confirmPaymentDto->setGatewayAmount(Integer::toInteger($payment->getTransactions()[0]->getAmount()->getTotal() * 100));
+            $gateway = $this->getGateway();
+            $transaction = $gateway->completePurchase([
+                'payer_id' => $payerId,
+                'transactionReference' => $paymentId,
+            ]);
+            $response = $transaction->send();
+            if ($response->isSuccessful()) {
+                $data = $response->getData();
+                $confirmPaymentDto->setGatewayTransactionId($data['id']);
+                $confirmPaymentDto->setGatewayPaymentId($data['id']);
+                $confirmPaymentDto->setGatewayStatus($data['state']);
+                $confirmPaymentDto->setConfirmed($response->isSuccessful());
+                $confirmPaymentDto->setGatewayAmount(Integer::toInteger($data['transactions'][0]['amount']['total'] * 100));
 
-            return $confirmPaymentDto;
-
+                return $confirmPaymentDto;
+            } else {
+                throw new UserVisibleException('Payment confirmation failed'); //todo
+            }
         } catch (\Throwable $e) {
-            $this->logger->critical('failed to confirm PayPal payment', ExceptionHelper::flatten($e));
+            $this->logger->critical('error while confirmPayment', ExceptionHelper::flatten($e));
 
-            throw $e;
+            throw new UserVisibleException('Payment confirmation failed', [], 0, $e); //todo
         }
     }
 
-    private function getApiContext(): ApiContext
+    private function getGateway(): GatewayInterface
     {
+        $gateway = Omnipay::create('PayPal_Rest');
+
         // sandbox / demo, client id and secret
         // client id: AYSq3RDGsmBLJE-otTkBtM-jBRd1TCQwFf9RGfwddNXWz0uFU9ztymylOhRS
         // client secret: EGnHDxD_qRPdaLdZz8iCr8N7_MzF-YHPTkjs6NKYQvQSBngp4PTTVWkPZRbL
+        $gateway->initialize([
+            'clientId' => $this->settingsService->getSettingsDto()->getPaymentPayPalClientId(),
+            'secret' => $this->settingsService->getSettingsDto()->getPaymentPayPalClientSecret(),
+            'testMode' => true, // Or false when you are ready for live transactions
+        ]);
 
-        $apiContext = new ApiContext(
-            new OAuthTokenCredential(
-                $this->settingsService->getSettingsDto()->getPaymentPayPalClientId(),
-                $this->settingsService->getSettingsDto()->getPaymentPayPalClientSecret(),
-            )
-        );
-        $apiContext->setConfig(
-            array(
-                'mode' => $this->settingsService->getSettingsDto()->getPaymentPayPalMode() ?? 'sandbox',
-                'log.LogEnabled' => true,
-                'log.FileName' => FilePath::getLogDir() . '/payPal_'. \date('Y-m') .'.log',
-                'log.LogLevel' => 'INFO', // PLEASE USE `INFO` LEVEL FOR LOGGING IN LIVE ENVIRONMENTS, DEBUG in dev only
-                'cache.enabled' => true,
-                'cache.FileName' => FilePath::getCacheDir() . '/payPalCache.php', // for determining paypal cache directory
-                'http.CURLOPT_CONNECTTIMEOUT' => 20,
-            )
-        );
-
-        return $apiContext;
+        return $gateway;
     }
 }

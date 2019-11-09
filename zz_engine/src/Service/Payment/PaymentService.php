@@ -12,9 +12,9 @@ use App\Entity\PaymentForBalanceTopUp;
 use App\Entity\User;
 use App\Helper\Random;
 use App\Security\CurrentUserService;
-use App\Service\Payment\Method\OmnipayPaymentMethod;
-use App\Service\Payment\Method\OmnipayPrzelewy24PaymentMethod;
 use App\Service\Payment\Method\PayPalPaymentMethod;
+use App\Service\Payment\Method\Przelewy24PaymentMethod;
+use App\Service\Payment\Method\PayPalNativePaymentMethod;
 use App\Service\Setting\SettingsService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -22,7 +22,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class PaymentService
 {
     /**
-     * @var PayPalPaymentMethod
+     * @var PayPalNativePaymentMethod
      */
     private $paymentMethodService;
 
@@ -47,7 +47,7 @@ class PaymentService
     private $trans;
 
     public function __construct(
-        OmnipayPrzelewy24PaymentMethod $paymentMethodService,
+        Przelewy24PaymentMethod $paymentMethodService,
         EntityManagerInterface $em,
         SettingsService $settingsService,
         CurrentUserService $currentUserService,

@@ -14,9 +14,10 @@ use App\Service\Payment\PaymentHelperService;
 use App\Service\Setting\SettingsService;
 use Omnipay\Common\GatewayInterface;
 use Omnipay\Omnipay;
+use Omnipay\Przelewy24\Gateway;
 use Psr\Log\LoggerInterface;
 
-class OmnipayPaymentMethod implements PaymentMethodInterface
+class Przelewy24PaymentMethod implements PaymentMethodInterface
 {
     /**
      * @var PaymentHelperService
@@ -46,18 +47,27 @@ class OmnipayPaymentMethod implements PaymentMethodInterface
         try {
             $gateway = $this->getGateway();
             $transaction = $gateway->purchase([
+                'channel' => Gateway::P24_CHANNEL_ALL,
+                'sessionId' => $paymentDto->getPaymentAppToken(),
                 'amount' => $paymentDto->getAmount() / 100,
                 'currency' => $paymentDto->getCurrency(),
+                'currency' => 'PLN',
                 'description' => $paymentDto->getGatewayPaymentDescription(),
-                'returnUrl' => $this->paymentHelperService->getSuccessUrl($paymentDto),
+                'returnUrl' => $this->paymentHelperService->getPaymentWaitUrl($paymentDto),
+                'notifyUrl' => $this->paymentHelperService->getPaymentNotifyUrl($paymentDto),
                 'cancelUrl' => $this->paymentHelperService->getCancelUrl($paymentDto),
+                'card' => [
+                    'email' => 'info@example.com',
+                    'name' => 'My name',
+                    'country' => 'PL',
+                ],
             ]);
             $response = $transaction->send();
             $data = $response->getData();
 
-            $paymentDto->setGatewayPaymentId($data['id']);
-            $paymentDto->setGatewayToken('todo');
-            $paymentDto->setGatewayStatus($data['state']);
+            $paymentDto->setGatewayPaymentId($data['token']);
+            $paymentDto->setGatewayToken($data['token']);
+            $paymentDto->setGatewayStatus($data['error']);
 
             if ($response->isSuccessful()) {
 //                echo "Step 2 was successful!\n";
@@ -77,26 +87,32 @@ class OmnipayPaymentMethod implements PaymentMethodInterface
     {
         try {
             $confirmPaymentDto = new ConfirmPaymentDto();
-            $paymentId = $confirmPaymentConfigDto->getRequest()->get('paymentId');
-            $payerId = $confirmPaymentConfigDto->getRequest()->get('PayerID');
-
             $gateway = $this->getGateway();
+            $transactionId = $confirmPaymentConfigDto->getRequest()->get('p24_order_id');
             $transaction = $gateway->completePurchase([
-                'payer_id' => $payerId,
-                'transactionReference' => $paymentId,
+                'sessionId' => $confirmPaymentConfigDto->getPaymentAppToken(),
+                'amount' => $confirmPaymentConfigDto->getPaymentEntity()->getAmount() / 100,
+                'currency' => 'PLN',
+                'transactionId' => $transactionId,
             ]);
             $response = $transaction->send();
             if ($response->isSuccessful()) {
                 $data = $response->getData();
-                $confirmPaymentDto->setGatewayTransactionId($data['id']);
-                $confirmPaymentDto->setGatewayPaymentId($data['id']);
-                $confirmPaymentDto->setGatewayStatus($data['state']);
+                $this->logger->info('confirm payment response', [
+                    'responseData' => $data,
+                ]);
+                $confirmPaymentDto->setGatewayTransactionId($transactionId);
+                $confirmPaymentDto->setGatewayStatus($data['error']);
                 $confirmPaymentDto->setConfirmed($response->isSuccessful());
-                $confirmPaymentDto->setGatewayAmount(Integer::toInteger($data['transactions'][0]['amount']['total'] * 100));
+                $confirmPaymentDto->setGatewayAmount(Integer::toInteger($confirmPaymentConfigDto->getRequest()->get('p24_amount')));
 
                 return $confirmPaymentDto;
             } else {
-                throw new UserVisibleException('Payment confirmation failed'); //todo
+                $this->logger->critical('payment not successful', [
+                    'responseData' => $response->getData(),
+                ]);
+
+                throw new UserVisibleException('Payment not successful'); //todo
             }
         } catch (\Throwable $e) {
             $this->logger->critical('error while confirmPayment', ExceptionHelper::flatten($e));
@@ -107,15 +123,13 @@ class OmnipayPaymentMethod implements PaymentMethodInterface
 
     private function getGateway(): GatewayInterface
     {
-        $gateway = Omnipay::create('PayPal_Rest');
+        $gateway = Omnipay::create('Przelewy24');
 
-        // sandbox / demo, client id and secret
-        // client id: AYSq3RDGsmBLJE-otTkBtM-jBRd1TCQwFf9RGfwddNXWz0uFU9ztymylOhRS
-        // client secret: EGnHDxD_qRPdaLdZz8iCr8N7_MzF-YHPTkjs6NKYQvQSBngp4PTTVWkPZRbL
         $gateway->initialize([
-            'clientId' => $this->settingsService->getSettingsDto()->getPaymentPayPalClientId(),
-            'secret' => $this->settingsService->getSettingsDto()->getPaymentPayPalClientSecret(),
-            'testMode' => true, // Or false when you are ready for live transactions
+            'merchantId' => '88765',
+            'posId'      => '88765',
+            'crc'        => '46c6913c10c95dd9',
+            'testMode'   => true,
         ]);
 
         return $gateway;

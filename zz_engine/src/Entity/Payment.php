@@ -47,6 +47,11 @@ class Payment
     private $amount;
 
     /**
+     * @ORM\Column(type="string", length=10, nullable=false)
+     */
+    private $currency;
+
+    /**
      * @ORM\Column(type="datetime", nullable=false)
      */
     private $datetime;
@@ -324,6 +329,18 @@ class Payment
     public function setAppToken(string $appToken): self
     {
         $this->appToken = $appToken;
+
+        return $this;
+    }
+
+    public function getCurrency(): ?string
+    {
+        return $this->currency;
+    }
+
+    public function setCurrency(string $currency): self
+    {
+        $this->currency = $currency;
 
         return $this;
     }

@@ -166,6 +166,7 @@ class PaymentService
         $paymentEntity->setBalanceUpdated(false);
         $paymentEntity->setDatetime(new \DateTime());
         $paymentEntity->setAmount($paymentDto->getAmount());
+        $paymentEntity->setCurrency($paymentDto->getCurrency());
         $paymentEntity->setGatewayPaymentId($paymentDto->getGatewayPaymentId());
         $paymentEntity->setGatewayToken($paymentDto->getGatewayToken());
         $paymentEntity->setGatewayStatus($paymentDto->getGatewayStatus());

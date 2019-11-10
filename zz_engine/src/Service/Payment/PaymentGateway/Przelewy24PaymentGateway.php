@@ -60,13 +60,14 @@ class Przelewy24PaymentGateway implements PaymentGatewayInterface
                 'notifyUrl' => $this->paymentHelperService->getPaymentNotifyUrl($paymentDto),
                 'cancelUrl' => $this->paymentHelperService->getCancelUrl($paymentDto),
                 'card' => [
-                    'email' => 'info@example.com',
-                    'name' => 'My name',
-                    'country' => 'PL',
+                    'email' => $paymentDto->getUser()->getEmail(),
                 ],
             ]);
             $response = $transaction->send();
             $data = $response->getData();
+            $this->logger->info('[payment][przelewy24] payment created response', [
+                'responseData' => $data,
+            ]);
 
             if ($response->isSuccessful()) {
                 $paymentDto->setGatewayPaymentId($data['token']);
@@ -97,7 +98,7 @@ class Przelewy24PaymentGateway implements PaymentGatewayInterface
             $transaction = $gateway->completePurchase([
                 'sessionId' => $confirmPaymentConfigDto->getPaymentAppToken(),
                 'amount' => $confirmPaymentConfigDto->getPaymentEntity()->getAmount() / 100,
-                'currency' => 'PLN',
+                'currency' => $confirmPaymentConfigDto->getPaymentEntity()->getCurrency(),
                 'transactionId' => $transactionId,
             ]);
             $response = $transaction->send();

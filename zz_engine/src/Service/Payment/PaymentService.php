@@ -285,8 +285,8 @@ class PaymentService
             $this->em->flush();
             $this->em->commit();
 
-            $completePaymentDto->setIsRedirect(true);
-            $completePaymentDto->setResponse(new RedirectResponse($this->urlGenerator->generate('app_user_feature_listing', [
+            $completePaymentDto->setIsSuccess(true);
+            $completePaymentDto->setRedirectResponse(new RedirectResponse($this->urlGenerator->generate('app_user_feature_listing', [
                 'id' => $paymentForFeaturedPackage->getListing()->getId()
             ])));
 
@@ -305,8 +305,8 @@ class PaymentService
             $this->em->flush();
             $this->em->commit();
 
-            $completePaymentDto->setIsRedirect(true);
-            $completePaymentDto->setResponse(new RedirectResponse($this->urlGenerator->generate('app_user_balance_top_up')));
+            $completePaymentDto->setIsSuccess(true);
+            $completePaymentDto->setRedirectResponse(new RedirectResponse($this->urlGenerator->generate('app_user_balance_top_up')));
 
             return $completePaymentDto;
         }

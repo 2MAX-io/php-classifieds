@@ -50,87 +50,11 @@ class PaymentNotifyController extends AbstractController
             $confirmPaymentConfigDto->setPaymentAppToken($paymentAppToken);
             $confirmPaymentDto = $paymentService->confirmPayment($confirmPaymentConfigDto);
 
-            if (!$confirmPaymentDto->isConfirmed()) {
-                $logger->error('payment is not confirmed', [$confirmPaymentDto]);
-
-                $this->throwGeneralException();
-            }
-
-            if ($paymentService->isBalanceUpdated($confirmPaymentDto)) {
-                $logger->error('balance has been already updated', [$confirmPaymentDto]);
-
-                $this->throwGeneralException();
-            }
-
-            $paymentEntity = $confirmPaymentDto->getPaymentEntity();
-            if (!$paymentEntity instanceof Payment) {
-                $logger->error('could not find payment entity', [$confirmPaymentDto]);
-
-                $this->throwGeneralException();
-            }
-
-            if ($confirmPaymentDto->getGatewayAmount() !== $paymentEntity->getAmount()) {
-                $logger->error('paid amount do not match between gateway and payment entity', [$confirmPaymentDto]);
-
-                $this->throwGeneralException();
-            }
-
-            $paymentForFeaturedPackage = $paymentEntity->getPaymentForFeaturedPackage();
-            if ($paymentForFeaturedPackage instanceof PaymentForFeaturedPackage) {
-                $paymentService->markBalanceUpdated($confirmPaymentDto);
-                $userBalanceChange = $userBalanceService->addBalance(
-                    $confirmPaymentDto->getGatewayAmount(),
-                    $paymentForFeaturedPackage->getListing()->getUser(),
-                    $paymentEntity
-                );
-                $userBalanceChange->setDescription(
-                    $trans->trans(
-                        'trans.Featuring of listing: %listingTitle%, using package: %featuredPackageName%, payment acceptance',
-                        [
-                            '%listingTitle%' => $paymentForFeaturedPackage->getListing()->getTitle(),
-                            '%featuredPackageName%' => $paymentForFeaturedPackage->getFeaturedPackage()->getName(),
-                        ]
-                    )
-                );
-                $userBalanceChange->setPayment($paymentEntity);
-                $em->flush();
-
-                $userBalanceChange = $featuredListingService->makeFeaturedByBalance(
-                    $paymentForFeaturedPackage->getListing(),
-                    $paymentForFeaturedPackage->getFeaturedPackage(),
-                    $paymentEntity
-                );
-                $userBalanceChange->setDescription(
-                    $trans->trans(
-                        'trans.Featuring of listing: %listingTitle%, using package: %featuredPackageName%',
-                        [
-                            '%listingTitle%' => $paymentForFeaturedPackage->getListing()->getTitle(),
-                            '%featuredPackageName%' => $paymentForFeaturedPackage->getFeaturedPackage()->getName(),
-                        ]
-                    )
-                );
-
-                $em->flush();
-                $em->commit();
-
+            $paymentService->validate($confirmPaymentDto);
+            $completePurchaseDto = $paymentService->completePurchase($confirmPaymentDto);
+            if ($completePurchaseDto->isSuccess()) {
                 return new Response('', Response::HTTP_OK);
             }
-
-            if ($paymentEntity->getPaymentForBalanceTopUp() instanceof PaymentForBalanceTopUp) {
-                $paymentService->markBalanceUpdated($confirmPaymentDto);
-                $userBalanceChange = $userBalanceService->addBalance(
-                    $confirmPaymentDto->getGatewayAmount(),
-                    $paymentEntity->getPaymentForBalanceTopUp()->getUser(),
-                    $paymentEntity
-                );
-                $userBalanceChange->setPayment($paymentEntity);
-                $userBalanceChange->setDescription($trans->trans('trans.Topping up the account balance'));
-                $em->flush();
-                $em->commit();
-
-                return new Response('', Response::HTTP_OK);
-            }
-
 
             if ($em->getConnection()->isTransactionActive()) {
                 $em->commit();

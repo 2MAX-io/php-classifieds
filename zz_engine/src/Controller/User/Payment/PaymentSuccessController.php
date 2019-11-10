@@ -42,8 +42,8 @@ class PaymentSuccessController extends AbstractController
             $confirmPaymentDto = $paymentService->confirmPayment($confirmPaymentConfigDto);
             $paymentService->validate($confirmPaymentDto);
             $completePurchaseDto = $paymentService->completePurchase($confirmPaymentDto);
-            if ($completePurchaseDto->isRedirect()) {
-                return $completePurchaseDto->getResponse();
+            if ($completePurchaseDto->isSuccess()) {
+                return $completePurchaseDto->getRedirectResponse();
             }
 
             if ($em->getConnection()->isTransactionActive()) {

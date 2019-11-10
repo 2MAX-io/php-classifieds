@@ -10,30 +10,30 @@ class CompletePurchaseDto
     /**
      * @var bool
      */
-    private $isRedirect = false;
+    private $isSuccess = false;
 
     /**
      * @var null|Response
      */
-    private $response;
+    private $redirectResponse;
 
-    public function isRedirect(): bool
+    public function isSuccess(): bool
     {
-        return $this->isRedirect;
+        return $this->isSuccess;
     }
 
-    public function setIsRedirect(bool $isRedirect): void
+    public function setIsSuccess(bool $isSuccess): void
     {
-        $this->isRedirect = $isRedirect;
+        $this->isSuccess = $isSuccess;
     }
 
-    public function getResponse(): ?Response
+    public function getRedirectResponse(): ?Response
     {
-        return $this->response;
+        return $this->redirectResponse;
     }
 
-    public function setResponse(?Response $response): void
+    public function setRedirectResponse(?Response $redirectResponse): void
     {
-        $this->response = $response;
+        $this->redirectResponse = $redirectResponse;
     }
 }

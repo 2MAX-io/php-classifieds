@@ -59,8 +59,8 @@ class PayPalNativePaymentMethod implements PaymentMethodInterface
         $payer->setPaymentMethod('paypal');
 
         $redirectUrls = new RedirectUrls();
-        $redirectUrls->setReturnUrl($this->paymentHelperService->getSuccessUrl());
-        $redirectUrls->setCancelUrl($this->paymentHelperService->getCancelUrl());
+        $redirectUrls->setReturnUrl($this->paymentHelperService->getSuccessUrl($paymentDto));
+        $redirectUrls->setCancelUrl($this->paymentHelperService->getCancelUrl($paymentDto));
 
         $amount = new Amount();
         $amount->setCurrency($paymentDto->getCurrency());

@@ -67,12 +67,4 @@ class PaymentWaitController extends AbstractController
             'lastRefreshTime' => \date('H:i:s'),
         ]);
     }
-
-    /**
-     * @throws UserVisibleException
-     */
-    private function throwGeneralException(): void
-    {
-        throw new UserVisibleException('trans.Could not process payment, if you have been charged and did not receive service, please contact us');
-    }
 }

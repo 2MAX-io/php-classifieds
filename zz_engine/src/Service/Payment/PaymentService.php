@@ -213,26 +213,26 @@ class PaymentService
         if (!$confirmPaymentDto->isConfirmed()) {
             $this->logger->error('payment is not confirmed', [$confirmPaymentDto]);
 
-            throw $this->getGeneralException();
+            throw new \RuntimeException('payment is not confirmed');
         }
 
         if ($this->isBalanceUpdated($confirmPaymentDto)) {
             $this->logger->error('balance has been already updated', [$confirmPaymentDto]);
 
-            throw $this->getGeneralException();
+            throw new \RuntimeException('balance has been already updated');
         }
 
         $paymentEntity = $confirmPaymentDto->getPaymentEntity();
         if (!$paymentEntity instanceof Payment) {
             $this->logger->error('could not find payment entity', [$confirmPaymentDto]);
 
-            throw $this->getGeneralException();
+            throw new \RuntimeException('could not find payment entity');
         }
 
         if ($confirmPaymentDto->getGatewayAmount() !== $paymentEntity->getAmount()) {
             $this->logger->error('paid amount do not match between gateway and payment entity', [$confirmPaymentDto]);
 
-            throw $this->getGeneralException();
+            throw new \RuntimeException('paid amount do not match between gateway and payment entity');
         }
     }
 
@@ -244,7 +244,7 @@ class PaymentService
         if (!$paymentEntity instanceof Payment) {
             $this->logger->error('could not find payment entity', [$confirmPaymentDto]);
 
-            throw $this->getGeneralException();
+            throw new \RuntimeException('could not find payment entity');
         }
 
         $paymentForFeaturedPackage = $paymentEntity->getPaymentForFeaturedPackage();
@@ -319,10 +319,5 @@ class PaymentService
         return $this->em->getRepository(Payment::class)->findOneBy([
             'appToken' => $paymentAppToken
         ]);
-    }
-
-    private function getGeneralException(\Exception $e = null): \Throwable
-    {
-        return new UserVisibleException('trans.Could not process payment, if you have been charged and did not receive service, please contact us', [], 0, $e);
     }
 }

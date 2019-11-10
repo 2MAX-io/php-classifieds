@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Service\Payment\Method;
+namespace App\Service\Payment\PaymentGateway;
 
 use App\Exception\UserVisibleException;
 use App\Helper\ExceptionHelper;

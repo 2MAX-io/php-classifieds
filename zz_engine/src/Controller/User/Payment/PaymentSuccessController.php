@@ -6,7 +6,7 @@ namespace App\Controller\User\Payment;
 
 use App\Exception\UserVisibleException;
 use App\Helper\ExceptionHelper;
-use App\Service\Payment\ConfirmPaymentConfigDto;
+use App\Service\Payment\Dto\ConfirmPaymentConfigDto;
 use App\Service\Payment\PaymentService;
 use App\Service\Setting\SettingsService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -63,7 +63,7 @@ class PaymentSuccessController extends AbstractController
         throw $this->getGeneralException();
     }
 
-    private function getGeneralException(\Throwable $e = null): \Throwable
+    private function getGeneralException(\Exception $e = null): \Throwable
     {
         return new UserVisibleException('trans.Could not process payment, if you have been charged and did not receive service, please contact us', [], 0, $e);
     }

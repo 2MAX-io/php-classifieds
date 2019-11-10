@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Service\Payment;
 
+use App\Service\Payment\Dto\PaymentDto;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class PaymentHelperService

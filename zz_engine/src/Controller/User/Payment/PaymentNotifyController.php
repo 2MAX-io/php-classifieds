@@ -4,14 +4,9 @@ declare(strict_types=1);
 
 namespace App\Controller\User\Payment;
 
-use App\Entity\Payment;
-use App\Entity\PaymentForBalanceTopUp;
-use App\Entity\PaymentForFeaturedPackage;
 use App\Exception\UserVisibleException;
 use App\Helper\ExceptionHelper;
-use App\Service\Listing\Featured\FeaturedListingService;
-use App\Service\Money\UserBalanceService;
-use App\Service\Payment\ConfirmPaymentConfigDto;
+use App\Service\Payment\Dto\ConfirmPaymentConfigDto;
 use App\Service\Payment\PaymentService;
 use App\Service\Setting\SettingsService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -20,7 +15,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
 class PaymentNotifyController extends AbstractController
 {
@@ -31,11 +25,8 @@ class PaymentNotifyController extends AbstractController
         Request $request,
         string $paymentAppToken,
         PaymentService $paymentService,
-        UserBalanceService $userBalanceService,
-        FeaturedListingService $featuredListingService,
         SettingsService $settingsService,
         EntityManagerInterface $em,
-        TranslatorInterface $trans,
         LoggerInterface $logger
     ): Response {
         if (!$settingsService->getSettingsDto()->isPaymentAllowed()) {

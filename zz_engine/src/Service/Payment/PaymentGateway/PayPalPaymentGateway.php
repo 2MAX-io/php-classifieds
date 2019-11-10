@@ -57,6 +57,9 @@ class PayPalPaymentGateway implements PaymentGatewayInterface
             ]);
             $response = $transaction->send();
             $data = $response->getData();
+            $this->logger->info('[payment][paypal] payment created response', [
+                'responseData' => $data,
+            ]);
 
             if ($response->isSuccessful()) {
                 $paymentDto->setGatewayPaymentId($data['id']);
@@ -66,6 +69,8 @@ class PayPalPaymentGateway implements PaymentGatewayInterface
                 $this->logger->critical('[payment][paypal] payment creation not successful', [
                     'data' => $data,
                 ]);
+
+                throw UserVisibleException::fromPrevious('trans.Failed to create payment, please try again later');
             }
 
             if ($response->isRedirect()) {
@@ -93,7 +98,7 @@ class PayPalPaymentGateway implements PaymentGatewayInterface
             $response = $transaction->send();
             if ($response->isSuccessful()) {
                 $data = $response->getData();
-                $this->logger->info('[payment] payment confirmation response', [
+                $this->logger->info('[payment][paypal] payment confirmation response', [
                     'responseData' => $data,
                 ]);
 

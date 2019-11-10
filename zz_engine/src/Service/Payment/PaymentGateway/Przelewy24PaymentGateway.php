@@ -77,6 +77,8 @@ class Przelewy24PaymentGateway implements PaymentGatewayInterface
                 $this->logger->critical('[payment][przelewy24] payment creation not successful', [
                     'data' => $data,
                 ]);
+
+                throw UserVisibleException::fromPrevious('trans.Failed to create payment, please try again later');
             }
 
             if ($response->isRedirect()) {

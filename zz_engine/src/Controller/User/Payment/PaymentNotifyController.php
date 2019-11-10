@@ -56,19 +56,9 @@ class PaymentNotifyController extends AbstractController
 
             $logger->error('error while processing payment', ExceptionHelper::flatten($e));
 
-            $this->throwGeneralException();
+            return new Response('', Response::HTTP_INTERNAL_SERVER_ERROR);
         }
 
-        $this->throwGeneralException();
-
-        return new Response('', Response::HTTP_UNPROCESSABLE_ENTITY);
-    }
-
-    /**
-     * @throws UserVisibleException
-     */
-    private function throwGeneralException(): void
-    {
-        throw new UserVisibleException('trans.Could not process payment, if you have been charged and did not receive service, please contact us');
+        return new Response('', Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 }

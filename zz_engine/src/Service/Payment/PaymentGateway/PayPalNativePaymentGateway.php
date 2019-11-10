@@ -121,7 +121,6 @@ class PayPalNativePaymentGateway implements PaymentGatewayInterface
             $confirmPaymentDto->setGatewayAmount(Integer::toInteger($payment->getTransactions()[0]->getAmount()->getTotal() * 100));
 
             return $confirmPaymentDto;
-
         } catch (\Throwable $e) {
             $this->logger->critical('[payment][paypal native] failed to confirm PayPal payment', ExceptionHelper::flatten($e));
 

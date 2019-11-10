@@ -585,6 +585,12 @@ trans:
   'Facebook Sign in App ID': 'Logowanie z Facebook App ID'
   'Facebook Sign in App Secret': 'Logowanie z Facebook App Secret'
   'Sorry, could not login': 'Sorry, could not login'
+  Awaiting payment confirmation: 'Czekamy na potwierdzenie płatności'
+  no need to refresh this page, it would refresh automatically: 'nie musisz odświeżać tej strony, odświeża się automatycznie'
+  Last refresh time: 'Czas ostatniego odświeżenia'
+  Payment status: 'Status płatności'
+  Waiting: 'Oczekuje'
+  Success, redirecting...: 'Potwierdzona, przekierowywujemy...'
 
 'trans.Remove non standard characters in listing - Enabled': 'Usuń niestandardowe znaki z ogłoszenia - Włączone'
 'trans.Remove non standard characters in listing - List of allowed characters': 'Usuń niestandardowe znaki z ogłoszenia - Lista dozwolonych znaków'

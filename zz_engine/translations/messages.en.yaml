@@ -153,6 +153,12 @@ trans:
   'Facebook Sign in App ID': 'Facebook Sign in App ID'
   'Facebook Sign in App Secret': 'Facebook Sign in App Secret'
   'Sorry, could not login': 'Sorry, could not login'
+  Awaiting payment confirmation: 'Awaiting payment confirmation'
+  no need to refresh this page, it would refresh automatically: 'no need to refresh this page, it would refresh automatically'
+  Last refresh time: 'Last refresh time'
+  Payment status: 'Payment status'
+  Waiting: 'Waiting'
+  Success, redirecting...: 'Success, redirecting...'
 
 trans.customFieldType.SELECT_AS_CHECKBOXES: Select field, filter as checkboxes
 trans.customFieldType.SELECT_SINGLE: Select field, filter as single select

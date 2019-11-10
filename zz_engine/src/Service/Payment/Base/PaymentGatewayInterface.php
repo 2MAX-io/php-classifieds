@@ -8,9 +8,11 @@ use App\Service\Payment\ConfirmPaymentConfigDto;
 use App\Service\Payment\ConfirmPaymentDto;
 use App\Service\Payment\PaymentDto;
 
-interface PaymentMethodInterface
+interface PaymentGatewayInterface
 {
     public function createPayment(PaymentDto $paymentDto): void;
 
     public function confirmPayment(ConfirmPaymentConfigDto $confirmPaymentConfigDto): ConfirmPaymentDto;
+
+    public static function getName(): string;
 }

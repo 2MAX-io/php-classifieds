@@ -137,6 +137,31 @@ class SettingsService
         return $this->getSettingsDto()->getAllowedCharacters();
     }
 
+    public function getPaymentGateway(): string
+    {
+        return $this->getSettingsDto()->getPaymentGateway();
+    }
+
+    public function getPaymentPrzelewy24MerchantId(): string
+    {
+        return $this->getSettingsDto()->getPaymentPrzelewy24MerchantId();
+    }
+
+    public function getPaymentPrzelewy24PosId(): string
+    {
+        return $this->getSettingsDto()->getPaymentPrzelewy24PosId();
+    }
+
+    public function getPaymentPrzelewy24Crc(): string
+    {
+        return $this->getSettingsDto()->getPaymentPrzelewy24Crc();
+    }
+
+    public function getPaymentPrzelewy24Mode(): string
+    {
+        return $this->getSettingsDto()->getPaymentPrzelewy24Mode();
+    }
+
     /**
      * @return Setting[]
      */

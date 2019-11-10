@@ -6,9 +6,10 @@ namespace App\Service\Payment\Method;
 use App\Exception\UserVisibleException;
 use App\Helper\ExceptionHelper;
 use App\Helper\Integer;
-use App\Service\Payment\Base\PaymentMethodInterface;
+use App\Service\Payment\Base\PaymentGatewayInterface;
 use App\Service\Payment\ConfirmPaymentConfigDto;
 use App\Service\Payment\ConfirmPaymentDto;
+use App\Service\Payment\Enum\PaymentGatewayEnum;
 use App\Service\Payment\PaymentDto;
 use App\Service\Payment\PaymentHelperService;
 use App\Service\Setting\SettingsService;
@@ -16,7 +17,7 @@ use Omnipay\Common\GatewayInterface;
 use Omnipay\Omnipay;
 use Psr\Log\LoggerInterface;
 
-class PayPalPaymentMethod implements PaymentMethodInterface
+class PayPalPaymentGateway implements PaymentGatewayInterface
 {
     /**
      * @var PaymentHelperService
@@ -119,5 +120,10 @@ class PayPalPaymentMethod implements PaymentMethodInterface
         ]);
 
         return $gateway;
+    }
+
+    public static function getName(): string
+    {
+        return PaymentGatewayEnum::PAYPAL;
     }
 }

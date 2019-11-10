@@ -591,6 +591,7 @@ trans:
   Payment status: 'Status płatności'
   Waiting: 'Oczekuje'
   Success, redirecting...: 'Potwierdzona, przekierowywujemy...'
+  Payment Gateway: 'Bramka płatności'
 
 'trans.Remove non standard characters in listing - Enabled': 'Usuń niestandardowe znaki z ogłoszenia - Włączone'
 'trans.Remove non standard characters in listing - List of allowed characters': 'Usuń niestandardowe znaki z ogłoszenia - Lista dozwolonych znaków'

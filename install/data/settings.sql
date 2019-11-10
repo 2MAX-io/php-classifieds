@@ -16,6 +16,8 @@ INSERT INTO setting (name, value, last_update_date) VALUES ( 'masterSiteLinkShow
 INSERT INTO setting (name, value, last_update_date) VALUES ( 'linkPrivacyPolicy', '', '2010-01-01 00:00:00');
 INSERT INTO setting (name, value, last_update_date) VALUES ( 'linkRejectionReason', '', '2010-01-01 00:00:00');
 INSERT INTO setting (name, value, last_update_date) VALUES ( 'requireListingAdminActivation', '0', '2010-01-01 00:00:00');
+INSERT INTO setting (name, value, last_update_date) VALUES ( 'paymentGateway', 'paypal', '2010-01-01 00:00:00');
+INSERT INTO setting (name, value, last_update_date) VALUES ( 'paymentPrzelewy24Mode', 'sandbox', '2010-01-01 00:00:00');
 INSERT INTO setting (name, value, last_update_date) VALUES ( 'paymentPayPalMode', 'sandbox', '2010-01-01 00:00:00');
 INSERT INTO setting (name, value, last_update_date) VALUES ( 'paymentGatewayPaymentDescription', 'example.com - featuring of Classified Ads', '2010-01-01 00:00:00');
 INSERT INTO setting (name, value, last_update_date) VALUES ( 'wordsToRemoveFromTitle', 'to sell

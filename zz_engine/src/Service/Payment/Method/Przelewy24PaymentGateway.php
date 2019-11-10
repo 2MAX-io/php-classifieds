@@ -6,9 +6,11 @@ namespace App\Service\Payment\Method;
 use App\Exception\UserVisibleException;
 use App\Helper\ExceptionHelper;
 use App\Helper\Integer;
-use App\Service\Payment\Base\PaymentMethodInterface;
+use App\Service\Payment\Base\PaymentGatewayInterface;
 use App\Service\Payment\ConfirmPaymentConfigDto;
 use App\Service\Payment\ConfirmPaymentDto;
+use App\Service\Payment\Enum\PaymentGatewayEnum;
+use App\Service\Payment\Enum\PaymentModeEnum;
 use App\Service\Payment\PaymentDto;
 use App\Service\Payment\PaymentHelperService;
 use App\Service\Setting\SettingsService;
@@ -17,7 +19,7 @@ use Omnipay\Omnipay;
 use Omnipay\Przelewy24\Gateway;
 use Psr\Log\LoggerInterface;
 
-class Przelewy24PaymentMethod implements PaymentMethodInterface
+class Przelewy24PaymentGateway implements PaymentGatewayInterface
 {
     /**
      * @var PaymentHelperService
@@ -65,12 +67,14 @@ class Przelewy24PaymentMethod implements PaymentMethodInterface
             $response = $transaction->send();
             $data = $response->getData();
 
-            $paymentDto->setGatewayPaymentId($data['token']);
-            $paymentDto->setGatewayToken($data['token']);
-            $paymentDto->setGatewayStatus($data['error']);
-
             if ($response->isSuccessful()) {
-//                echo "Step 2 was successful!\n";
+                $paymentDto->setGatewayPaymentId($data['token']);
+                $paymentDto->setGatewayToken($data['token']);
+                $paymentDto->setGatewayStatus($data['error']);
+            } else {
+                $this->logger->critical('payment creation not successful', [
+                    'data' => $data,
+                ]);
             }
 
             if ($response->isRedirect()) {
@@ -79,7 +83,7 @@ class Przelewy24PaymentMethod implements PaymentMethodInterface
         } catch (\Exception $e) {
             $this->logger->critical('error while createPayment', ExceptionHelper::flatten($e)); // todo
 
-            throw new UserVisibleException('can not create payment');
+            throw new UserVisibleException('can not create payment', [], 0, $e);
         }
     }
 
@@ -126,12 +130,17 @@ class Przelewy24PaymentMethod implements PaymentMethodInterface
         $gateway = Omnipay::create('Przelewy24');
 
         $gateway->initialize([
-            'merchantId' => '88765',
-            'posId'      => '88765',
-            'crc'        => '46c6913c10c95dd9',
-            'testMode'   => true,
+            'merchantId' => $this->settingsService->getPaymentPrzelewy24MerchantId(),
+            'posId'      => $this->settingsService->getPaymentPrzelewy24PosId(),
+            'crc'        => $this->settingsService->getPaymentPrzelewy24Crc(),
+            'testMode'   => $this->settingsService->getPaymentPrzelewy24Mode() === PaymentModeEnum::SANDBOX,
         ]);
 
         return $gateway;
+    }
+
+    public static function getName(): string
+    {
+        return PaymentGatewayEnum::PRZELEWY24;
     }
 }

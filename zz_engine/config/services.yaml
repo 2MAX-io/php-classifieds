@@ -27,6 +27,8 @@ services:
             tags: ['twig.extension']
         App\Service\System\HealthCheck\Base\HealthCheckerInterface:
             tags: ['app.health_checker']
+        App\Service\Payment\Base\PaymentGatewayInterface:
+            tags: ['app.payment_gateway_list']
 
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
@@ -65,6 +67,9 @@ services:
 
     App\Service\System\HealthCheck\HealthCheckService:
         arguments: [!tagged app.health_checker]
+
+    App\Service\Payment\PaymentGatewayService:
+        arguments: [!tagged app.payment_gateway_list]
 
     Symfony\Component\HttpKernel\CacheClearer\CacheClearerInterface: '@cache_clearer'
 

@@ -139,6 +139,16 @@ class SettingsDto
     private $paymentAllowed;
 
     /**
+     * @var null|string
+     */
+    private $paymentGateway;
+
+    /**
+     * @var string|null
+     */
+    private $paymentGatewayPaymentDescription;
+
+    /**
      * @var string|null
      */
     private $paymentPayPalMode;
@@ -154,9 +164,24 @@ class SettingsDto
     private $paymentPayPalClientSecret;
 
     /**
-     * @var string|null
+     * @var null|string
      */
-    private $paymentGatewayPaymentDescription;
+    private $paymentPrzelewy24Mode;
+
+    /**
+     * @var null|string
+     */
+    private $paymentPrzelewy24MerchantId;
+
+    /**
+     * @var null|string
+     */
+    private $paymentPrzelewy24PosId;
+
+    /**
+     * @var null|string
+     */
+    private $paymentPrzelewy24Crc;
 
     /**
      * @var string|null
@@ -636,5 +661,55 @@ class SettingsDto
     public function setGoogleSignInEnabled(?string $googleSignInEnabled): void
     {
         $this->googleSignInEnabled = $googleSignInEnabled;
+    }
+
+    public function getPaymentGateway(): ?string
+    {
+        return $this->paymentGateway;
+    }
+
+    public function setPaymentGateway(?string $paymentGateway): void
+    {
+        $this->paymentGateway = $paymentGateway;
+    }
+
+    public function getPaymentPrzelewy24MerchantId(): ?string
+    {
+        return $this->paymentPrzelewy24MerchantId;
+    }
+
+    public function setPaymentPrzelewy24MerchantId(?string $paymentPrzelewy24MerchantId): void
+    {
+        $this->paymentPrzelewy24MerchantId = $paymentPrzelewy24MerchantId;
+    }
+
+    public function getPaymentPrzelewy24PosId(): ?string
+    {
+        return $this->paymentPrzelewy24PosId;
+    }
+
+    public function setPaymentPrzelewy24PosId(?string $paymentPrzelewy24PosId): void
+    {
+        $this->paymentPrzelewy24PosId = $paymentPrzelewy24PosId;
+    }
+
+    public function getPaymentPrzelewy24Crc(): ?string
+    {
+        return $this->paymentPrzelewy24Crc;
+    }
+
+    public function setPaymentPrzelewy24Crc(?string $paymentPrzelewy24Crc): void
+    {
+        $this->paymentPrzelewy24Crc = $paymentPrzelewy24Crc;
+    }
+
+    public function getPaymentPrzelewy24Mode(): ?string
+    {
+        return $this->paymentPrzelewy24Mode;
+    }
+
+    public function setPaymentPrzelewy24Mode(?string $paymentPrzelewy24Mode): void
+    {
+        $this->paymentPrzelewy24Mode = $paymentPrzelewy24Mode;
     }
 }

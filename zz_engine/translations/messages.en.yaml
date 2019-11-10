@@ -159,6 +159,7 @@ trans:
   Payment status: 'Payment status'
   Waiting: 'Waiting'
   Success, redirecting...: 'Success, redirecting...'
+  Payment Gateway: 'Payment Gateway'
 
 trans.customFieldType.SELECT_AS_CHECKBOXES: Select field, filter as checkboxes
 trans.customFieldType.SELECT_SINGLE: Select field, filter as single select
@@ -637,3 +638,5 @@ trans.Preview: Preview
 'trans.Remove non standard characters in listing - Enabled': 'Remove non standard characters in listing - Enabled'
 'trans.Remove non standard characters in listing - List of allowed characters': 'Remove non standard characters in listing - List of allowed characters'
 'trans.allows to remove all non standard characters from listing, except those which are white listed bellow': 'allows to remove all non standard characters from listing, except those which are white listed bellow'
+'trans.payment_gateway.paypal': 'PayPal'
+'trans.payment_gateway.przelewy24': 'Przelewy24'

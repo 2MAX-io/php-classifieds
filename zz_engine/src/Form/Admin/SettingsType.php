@@ -8,6 +8,7 @@ use App\Form\Type\BoolRequiredType;
 use App\Form\Type\BoolType;
 use App\Form\Type\LanguageTwoLettersType;
 use App\Form\Type\PageType;
+use App\Service\Payment\Enum\PaymentGatewayEnum;
 use App\Service\Setting\SettingsDto;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -240,6 +241,18 @@ class SettingsType extends AbstractType
                 new NotBlank(),
             ],
         ]);
+        $builder->add('paymentGateway', ChoiceType::class, [
+            'label' => 'trans.Payment Gateway',
+            'required' => true,
+            'placeholder' => 'trans.Select',
+            'choices' => [
+                'trans.payment_gateway.paypal' => PaymentGatewayEnum::PAYPAL,
+                'trans.payment_gateway.przelewy24' => PaymentGatewayEnum::PRZELEWY24,
+            ],
+            'constraints' => [
+                new NotBlank(),
+            ],
+        ]);
         $builder->add('paymentPayPalMode', ChoiceType::class, [
             'label' => 'trans.Payments - PayPal mode',
             'required' => true,
@@ -255,6 +268,37 @@ class SettingsType extends AbstractType
         $builder->add('paymentPayPalClientId', TextType::class, [
             'label' => 'trans.Payments - PayPal Client ID',
             'required' => true,
+        ]);
+        $builder->add('paymentPayPalClientSecret', TextType::class, [
+            'label' => 'trans.Payments - PayPal Client secret',
+            'required' => true,
+        ]);
+        $builder->add('paymentPrzelewy24Mode', ChoiceType::class, [
+            'label' => 'trans.Przelewy24 mode',
+            'required' => true,
+            'placeholder' => 'trans.Select',
+            'choices' => [
+                'trans.payment.przelewy24.sandbox' => 'sandbox',
+                'trans.payment.przelewy24.live' => 'live',
+            ],
+            'constraints' => [
+                new NotBlank(),
+            ],
+        ]);
+        $builder->add('paymentPrzelewy24MerchantId', TextType::class, [
+            'label' => 'trans.Przelewy24 - Merchant id',
+            'help' => 'trans.account login, seller id, p24_merchant_id, digits',
+            'required' => false,
+        ]);
+        $builder->add('paymentPrzelewy24PosId', TextType::class, [
+            'label' => 'trans.Przelewy24 - Pos id',
+            'help' => 'trans.usually same as Merchant id, shop id, p24_pos_id',
+            'required' => false,
+        ]);
+        $builder->add('paymentPrzelewy24Crc', TextType::class, [
+            'label' => 'trans.Przelewy24 - CRC',
+            'help' => 'trans.CRC key from account details',
+            'required' => false,
         ]);
         $builder->add('paymentPayPalClientSecret', TextType::class, [
             'label' => 'trans.Payments - PayPal Client secret',

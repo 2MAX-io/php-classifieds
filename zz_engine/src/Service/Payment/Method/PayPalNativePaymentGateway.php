@@ -8,9 +8,10 @@ use App\Exception\UserVisibleException;
 use App\Helper\ExceptionHelper;
 use App\Helper\FilePath;
 use App\Helper\Integer;
-use App\Service\Payment\Base\PaymentMethodInterface;
+use App\Service\Payment\Base\PaymentGatewayInterface;
 use App\Service\Payment\ConfirmPaymentConfigDto;
 use App\Service\Payment\ConfirmPaymentDto;
+use App\Service\Payment\Enum\PaymentGatewayEnum;
 use App\Service\Payment\PaymentDto;
 use App\Service\Payment\PaymentHelperService;
 use App\Service\Setting\SettingsService;
@@ -26,7 +27,7 @@ use PayPal\Auth\OAuthTokenCredential;
 use PayPal\Rest\ApiContext;
 use Psr\Log\LoggerInterface;
 
-class PayPalNativePaymentMethod implements PaymentMethodInterface
+class PayPalNativePaymentGateway implements PaymentGatewayInterface
 {
     /**
      * @var PaymentHelperService
@@ -153,5 +154,10 @@ class PayPalNativePaymentMethod implements PaymentMethodInterface
         );
 
         return $apiContext;
+    }
+
+    public static function getName(): string
+    {
+        return PaymentGatewayEnum::PAYPAL_NATIVE;
     }
 }

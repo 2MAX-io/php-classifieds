@@ -20,10 +20,15 @@
 
         <h2>{{ 'trans.Payments' | trans }}</h2>
         {{ form_row(form.paymentAllowed) }}
+        {{ form_row(form.paymentGateway) }}
+        {{ form_row(form.paymentGatewayPaymentDescription) }}
         {{ form_row(form.paymentPayPalMode) }}
         {{ form_row(form.paymentPayPalClientId) }}
         {{ form_row(form.paymentPayPalClientSecret) }}
-        {{ form_row(form.paymentGatewayPaymentDescription) }}
+        {{ form_row(form.paymentPrzelewy24Mode) }}
+        {{ form_row(form.paymentPrzelewy24MerchantId) }}
+        {{ form_row(form.paymentPrzelewy24PosId) }}
+        {{ form_row(form.paymentPrzelewy24Crc) }}
 
         <h2>{{ 'trans.Pagination' | trans }}</h2>
         {{ form_row(form.itemsPerPageMax) }}

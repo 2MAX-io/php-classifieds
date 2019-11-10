@@ -10,14 +10,10 @@ use App\Entity\Payment;
 use App\Entity\PaymentForFeaturedPackage;
 use App\Entity\PaymentForBalanceTopUp;
 use App\Entity\User;
-use App\Exception\UserVisibleException;
 use App\Helper\Random;
 use App\Security\CurrentUserService;
 use App\Service\Listing\Featured\FeaturedListingService;
 use App\Service\Money\UserBalanceService;
-use App\Service\Payment\Method\PayPalPaymentMethod;
-use App\Service\Payment\Method\PayPalNativePaymentMethod;
-use App\Service\Payment\Method\Przelewy24PaymentMethod;
 use App\Service\Setting\SettingsService;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
@@ -27,11 +23,6 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class PaymentService
 {
-    /**
-     * @var PayPalNativePaymentMethod
-     */
-    private $paymentMethodService;
-
     /**
      * @var EntityManagerInterface
      */
@@ -68,8 +59,13 @@ class PaymentService
      */
     private $urlGenerator;
 
+    /**
+     * @var PaymentGatewayService
+     */
+    private $paymentGatewayService;
+
     public function __construct(
-        Przelewy24PaymentMethod $paymentMethodService,
+        PaymentGatewayService $paymentGatewayService,
         UserBalanceService $userBalanceService,
         FeaturedListingService $featuredListingService,
         SettingsService $settingsService,
@@ -79,7 +75,6 @@ class PaymentService
         TranslatorInterface $trans,
         LoggerInterface $logger
     ) {
-        $this->paymentMethodService = $paymentMethodService;
         $this->em = $em;
         $this->settingsService = $settingsService;
         $this->currentUserService = $currentUserService;
@@ -88,6 +83,7 @@ class PaymentService
         $this->logger = $logger;
         $this->featuredListingService = $featuredListingService;
         $this->urlGenerator = $urlGenerator;
+        $this->paymentGatewayService = $paymentGatewayService;
     }
 
     public function createPaymentForFeaturedPackage(Listing $listing, FeaturedPackage $featuredPackage): PaymentDto
@@ -159,7 +155,7 @@ class PaymentService
     public function createPayment(PaymentDto $paymentDto): PaymentDto
     {
         $paymentDto->setPaymentAppToken(Random::string(64));
-        $this->paymentMethodService->createPayment($paymentDto);
+        $this->paymentGatewayService->getPaymentGateway()->createPayment($paymentDto);
 
         $paymentEntity = new Payment();
         $paymentEntity->setCanceled(false);
@@ -199,7 +195,7 @@ class PaymentService
     {
         $paymentEntity = $this->getPaymentEntity($confirmPaymentConfigDto->getPaymentAppToken());
         $confirmPaymentConfigDto->setPaymentEntity($paymentEntity);
-        $confirmPaymentDto = $this->paymentMethodService->confirmPayment($confirmPaymentConfigDto);
+        $confirmPaymentDto = $this->paymentGatewayService->getPaymentGateway()->confirmPayment($confirmPaymentConfigDto);
 
         $paymentEntity->setGatewayTransactionId($confirmPaymentDto->getGatewayTransactionId());
 

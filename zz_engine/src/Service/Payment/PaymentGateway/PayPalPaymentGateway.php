@@ -60,7 +60,7 @@ class PayPalPaymentGateway implements PaymentGatewayInterface
 
             if ($response->isSuccessful()) {
                 $paymentDto->setGatewayPaymentId($data['id']);
-                $paymentDto->setGatewayToken('todo');
+                $paymentDto->setGatewayToken($data['id']);
                 $paymentDto->setGatewayStatus($data['state']);
             } else {
                 $this->logger->critical('[payment][paypal] payment creation not successful', [
@@ -72,7 +72,7 @@ class PayPalPaymentGateway implements PaymentGatewayInterface
                 $paymentDto->setPaymentExecuteUrl($response->getRedirectUrl());
             }
         } catch (\Exception $e) {
-            $this->logger->critical('[payment][paypal] error while payment creation', ExceptionHelper::flatten($e)); // todo
+            $this->logger->critical('[payment][paypal] error while payment creation', ExceptionHelper::flatten($e));
 
             throw UserVisibleException::fromPrevious('trans.Failed to create payment, please try again later', $e);
         }

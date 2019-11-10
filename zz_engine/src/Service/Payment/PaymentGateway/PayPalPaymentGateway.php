@@ -23,10 +23,12 @@ class PayPalPaymentGateway implements PaymentGatewayInterface
      * @var PaymentHelperService
      */
     private $paymentHelperService;
+
     /**
      * @var SettingsService
      */
     private $settingsService;
+
     /**
      * @var LoggerInterface
      */
@@ -56,21 +58,23 @@ class PayPalPaymentGateway implements PaymentGatewayInterface
             $response = $transaction->send();
             $data = $response->getData();
 
-            $paymentDto->setGatewayPaymentId($data['id']);
-            $paymentDto->setGatewayToken('todo');
-            $paymentDto->setGatewayStatus($data['state']);
-
             if ($response->isSuccessful()) {
-//                echo "Step 2 was successful!\n";
+                $paymentDto->setGatewayPaymentId($data['id']);
+                $paymentDto->setGatewayToken('todo');
+                $paymentDto->setGatewayStatus($data['state']);
+            } else {
+                $this->logger->critical('[payment][paypal] payment creation not successful', [
+                    'data' => $data,
+                ]);
             }
 
             if ($response->isRedirect()) {
                 $paymentDto->setPaymentExecuteUrl($response->getRedirectUrl());
             }
         } catch (\Exception $e) {
-            $this->logger->critical('error while createPayment', ExceptionHelper::flatten($e)); // todo
+            $this->logger->critical('[payment][paypal] error while payment creation', ExceptionHelper::flatten($e)); // todo
 
-            throw new UserVisibleException('can not create payment');
+            throw UserVisibleException::fromPrevious('trans.Failed to create payment, please try again later', $e);
         }
     }
 
@@ -89,6 +93,10 @@ class PayPalPaymentGateway implements PaymentGatewayInterface
             $response = $transaction->send();
             if ($response->isSuccessful()) {
                 $data = $response->getData();
+                $this->logger->info('[payment] payment confirmation response', [
+                    'responseData' => $data,
+                ]);
+
                 $confirmPaymentDto->setGatewayTransactionId($data['id']);
                 $confirmPaymentDto->setGatewayPaymentId($data['id']);
                 $confirmPaymentDto->setGatewayStatus($data['state']);
@@ -97,12 +105,16 @@ class PayPalPaymentGateway implements PaymentGatewayInterface
 
                 return $confirmPaymentDto;
             } else {
-                throw new UserVisibleException('Payment confirmation failed'); //todo
+                $this->logger->critical('[payment][paypal] payment confirmation not successful', [
+                    'responseData' => $response->getData(),
+                ]);
+
+                throw UserVisibleException::fromPrevious('trans.Payment confirmation failed');
             }
         } catch (\Throwable $e) {
-            $this->logger->critical('error while confirmPayment', ExceptionHelper::flatten($e));
+            $this->logger->critical('[payment][paypal] error during payment confirmation', ExceptionHelper::flatten($e));
 
-            throw new UserVisibleException('Payment confirmation failed', [], 0, $e); //todo
+            throw UserVisibleException::fromPrevious('trans.Error during payment confirmation', $e);
         }
     }
 

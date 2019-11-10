@@ -96,8 +96,8 @@ class PayPalNativePaymentGateway implements PaymentGatewayInterface
             $paymentDto->setGatewayStatus($payment->getState());
 
             // Redirect the customer to $approvalUrl
-        } catch (\Exception $ex) {
-            throw new UserVisibleException('trans.Failed to create payment, please try again later', [], 0, $ex);
+        } catch (\Exception $e) {
+            throw UserVisibleException::fromPrevious('trans.Failed to create payment, please try again later', $e);
         }
     }
 
@@ -123,9 +123,9 @@ class PayPalNativePaymentGateway implements PaymentGatewayInterface
             return $confirmPaymentDto;
 
         } catch (\Throwable $e) {
-            $this->logger->critical('failed to confirm PayPal payment', ExceptionHelper::flatten($e));
+            $this->logger->critical('[payment][paypal native] failed to confirm PayPal payment', ExceptionHelper::flatten($e));
 
-            throw $e;
+            throw UserVisibleException::fromPrevious('trans.Payment confirmation failed', $e);
         }
     }
 

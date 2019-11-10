@@ -10,6 +10,16 @@ use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 class UserVisibleException extends \Exception implements HttpExceptionInterface
 {
     /**
+     * @var string
+     */
+    private $messageKey;
+
+    /**
+     * @var array
+     */
+    private $messageData;
+
+    /**
      * @param string $message #TranslationKey
      */
     public function __construct(string $message = '', array $messageData = [], int $code = 0, \Exception $previous = null)
@@ -20,14 +30,12 @@ class UserVisibleException extends \Exception implements HttpExceptionInterface
     }
 
     /**
-     * @var string
+     * @param string $message #TranslationKey
      */
-    private $messageKey;
-
-    /**
-     * @var array
-     */
-    private $messageData;
+    public static function fromPrevious(string $message, \Exception $previous = null, array $messageData = [], int $code = 0): self
+    {
+        return new static($message, $messageData, $code, $previous);
+    }
 
     /**
      * Set a message that will be shown to the user.

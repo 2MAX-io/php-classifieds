@@ -25,10 +25,12 @@ class Przelewy24PaymentGateway implements PaymentGatewayInterface
      * @var PaymentHelperService
      */
     private $paymentHelperService;
+
     /**
      * @var SettingsService
      */
     private $settingsService;
+
     /**
      * @var LoggerInterface
      */
@@ -53,7 +55,6 @@ class Przelewy24PaymentGateway implements PaymentGatewayInterface
                 'sessionId' => $paymentDto->getPaymentAppToken(),
                 'amount' => $paymentDto->getAmount() / 100,
                 'currency' => $paymentDto->getCurrency(),
-                'currency' => 'PLN',
                 'description' => $paymentDto->getGatewayPaymentDescription(),
                 'returnUrl' => $this->paymentHelperService->getPaymentWaitUrl($paymentDto),
                 'notifyUrl' => $this->paymentHelperService->getPaymentNotifyUrl($paymentDto),
@@ -72,7 +73,7 @@ class Przelewy24PaymentGateway implements PaymentGatewayInterface
                 $paymentDto->setGatewayToken($data['token']);
                 $paymentDto->setGatewayStatus($data['error']);
             } else {
-                $this->logger->critical('payment creation not successful', [
+                $this->logger->critical('[payment][przelewy24] payment creation not successful', [
                     'data' => $data,
                 ]);
             }
@@ -81,9 +82,9 @@ class Przelewy24PaymentGateway implements PaymentGatewayInterface
                 $paymentDto->setPaymentExecuteUrl($response->getRedirectUrl());
             }
         } catch (\Exception $e) {
-            $this->logger->critical('error while createPayment', ExceptionHelper::flatten($e)); // todo
+            $this->logger->critical('[payment][przelewy24] error while creating payment', ExceptionHelper::flatten($e));
 
-            throw new UserVisibleException('can not create payment', [], 0, $e);
+            throw UserVisibleException::fromPrevious('trans.Failed to create payment, please try again later', $e);
         }
     }
 
@@ -102,9 +103,10 @@ class Przelewy24PaymentGateway implements PaymentGatewayInterface
             $response = $transaction->send();
             if ($response->isSuccessful()) {
                 $data = $response->getData();
-                $this->logger->info('confirm payment response', [
+                $this->logger->info('[payment] payment confirmation response', [
                     'responseData' => $data,
                 ]);
+
                 $confirmPaymentDto->setGatewayTransactionId($transactionId);
                 $confirmPaymentDto->setGatewayStatus($data['error']);
                 $confirmPaymentDto->setConfirmed($response->isSuccessful());
@@ -112,16 +114,16 @@ class Przelewy24PaymentGateway implements PaymentGatewayInterface
 
                 return $confirmPaymentDto;
             } else {
-                $this->logger->critical('payment not successful', [
+                $this->logger->critical('[payment][przelewy24] payment confirmation not successful', [
                     'responseData' => $response->getData(),
                 ]);
 
-                throw new UserVisibleException('Payment not successful'); //todo
+                throw new UserVisibleException('trans.Payment confirmation failed');
             }
         } catch (\Throwable $e) {
-            $this->logger->critical('error while confirmPayment', ExceptionHelper::flatten($e));
+            $this->logger->critical('[payment][przelewy24] error while payment confirmation', ExceptionHelper::flatten($e));
 
-            throw new UserVisibleException('Payment confirmation failed', [], 0, $e); //todo
+            throw UserVisibleException::fromPrevious('trans.Error during payment confirmation', $e);
         }
     }
 

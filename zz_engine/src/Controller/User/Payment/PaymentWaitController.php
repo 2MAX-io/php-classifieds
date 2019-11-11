@@ -9,6 +9,7 @@ use App\Entity\PaymentForFeaturedPackage;
 use App\Enum\ParamEnum;
 use App\Exception\UserVisibleException;
 use App\Service\Payment\PaymentService;
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -34,23 +35,23 @@ class PaymentWaitController extends AbstractController
      */
     public function paymentWaitRedirect(
         string $paymentAppToken,
-        PaymentService $paymentService
+        PaymentService $paymentService,
+        LoggerInterface $logger
     ): Response {
         $paymentEntity = $paymentService->getPaymentEntity($paymentAppToken);
-
         $paymentForFeaturedPackage = $paymentEntity->getPaymentForFeaturedPackage();
         if ($paymentForFeaturedPackage instanceof PaymentForFeaturedPackage) {
-            return $this->redirectToRoute(
-                'app_user_feature_listing',
-                ['id' => $paymentForFeaturedPackage->getListing()->getId()]
-            );
+            return $this->redirectToRoute('app_user_feature_listing', [
+                'id' => $paymentForFeaturedPackage->getListing()->getId(),
+            ]);
         }
 
         if ($paymentEntity->getPaymentForBalanceTopUp() instanceof PaymentForBalanceTopUp) {
             return $this->redirectToRoute('app_user_balance_top_up');
         }
 
-        throw new UserVisibleException('could not redirect from payment');
+        $logger->error('could not redirect from payment wait');
+        throw new UserVisibleException('trans.Could not redirect from wait for payment page');
     }
 
     /**

@@ -73,17 +73,18 @@ class Przelewy24PaymentGateway implements PaymentGatewayInterface
                 $paymentDto->setGatewayPaymentId($data['token']);
                 $paymentDto->setGatewayToken($data['token']);
                 $paymentDto->setGatewayStatus($data['error']);
-            } else {
-                $this->logger->critical('[payment][przelewy24] payment creation not successful', [
-                    'data' => $data,
-                ]);
+                if ($response->isRedirect()) {
+                    $paymentDto->setPaymentExecuteUrl($response->getRedirectUrl());
+                }
 
-                throw UserVisibleException::fromPrevious('trans.Failed to create payment, please try again later');
+                return;
             }
 
-            if ($response->isRedirect()) {
-                $paymentDto->setPaymentExecuteUrl($response->getRedirectUrl());
-            }
+            $this->logger->critical('[payment][przelewy24] payment creation not successful', [
+                'data' => $data,
+            ]);
+
+            throw UserVisibleException::fromPrevious('trans.Failed to create payment, please try again later');
         } catch (\Exception $e) {
             $this->logger->critical('[payment][przelewy24] error while creating payment', ExceptionHelper::flatten($e));
 

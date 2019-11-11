@@ -140,17 +140,15 @@ class PayPalNativePaymentGateway implements PaymentGatewayInterface
                 $this->settingsService->getSettingsDto()->getPaymentPayPalClientSecret(),
             )
         );
-        $apiContext->setConfig(
-            array(
-                'mode' => $this->settingsService->getSettingsDto()->getPaymentPayPalMode() ?? 'sandbox',
-                'log.LogEnabled' => true,
-                'log.FileName' => FilePath::getLogDir() . '/payPal_'. \date('Y-m') .'.log',
-                'log.LogLevel' => 'INFO', // PLEASE USE `INFO` LEVEL FOR LOGGING IN LIVE ENVIRONMENTS, DEBUG in dev only
-                'cache.enabled' => true,
-                'cache.FileName' => FilePath::getCacheDir() . '/payPalCache.php', // for determining paypal cache directory
-                'http.CURLOPT_CONNECTTIMEOUT' => 20,
-            )
-        );
+        $apiContext->setConfig([
+            'mode' => $this->settingsService->getSettingsDto()->getPaymentPayPalMode() ?? 'sandbox',
+            'log.LogEnabled' => true,
+            'log.FileName' => FilePath::getLogDir() . '/payPal_'. \date('Y-m') .'.log',
+            'log.LogLevel' => 'INFO', // PLEASE USE `INFO` LEVEL FOR LOGGING IN LIVE ENVIRONMENTS, DEBUG in dev only
+            'cache.enabled' => true,
+            'cache.FileName' => FilePath::getCacheDir() . '/payPalCache.php', // for determining paypal cache directory
+            'http.CURLOPT_CONNECTTIMEOUT' => 20,
+        ]);
 
         return $apiContext;
     }

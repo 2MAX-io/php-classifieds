@@ -590,7 +590,7 @@ trans:
   Last refresh time: 'Czas ostatniego odświeżenia'
   Payment status: 'Status płatności'
   Waiting: 'Oczekuje'
-  Success, redirecting...: 'Potwierdzona, przekierowywujemy...'
+  Success, redirecting...: 'Potwierdzona, przekierowywanie...'
   Payment Gateway: 'Bramka płatności'
 
 'trans.Remove non standard characters in listing - Enabled': 'Usuń niestandardowe znaki z ogłoszenia - Włączone'

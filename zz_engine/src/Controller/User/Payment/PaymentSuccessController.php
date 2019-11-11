@@ -49,11 +49,10 @@ class PaymentSuccessController extends AbstractController
             if ($em->getConnection()->isTransactionActive()) {
                 $em->commit();
             }
-
         } catch (\Throwable $e) {
             $em->rollback();
 
-            $logger->error('error while processing payment', ExceptionHelper::flatten($e));
+            $logger->error('error on payment success', ExceptionHelper::flatten($e));
 
             throw $this->getGeneralException($e);
         }

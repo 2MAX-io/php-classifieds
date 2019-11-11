@@ -65,17 +65,18 @@ class PayPalPaymentGateway implements PaymentGatewayInterface
                 $paymentDto->setGatewayPaymentId($data['id']);
                 $paymentDto->setGatewayToken($data['id']);
                 $paymentDto->setGatewayStatus($data['state']);
-            } else {
-                $this->logger->critical('[payment][paypal] payment creation not successful', [
-                    'data' => $data,
-                ]);
+                if ($response->isRedirect()) {
+                    $paymentDto->setPaymentExecuteUrl($response->getRedirectUrl());
+                }
 
-                throw UserVisibleException::fromPrevious('trans.Failed to create payment, please try again later');
+                return;
             }
 
-            if ($response->isRedirect()) {
-                $paymentDto->setPaymentExecuteUrl($response->getRedirectUrl());
-            }
+            $this->logger->critical('[payment][paypal] payment creation not successful', [
+                'data' => $data,
+            ]);
+
+            throw UserVisibleException::fromPrevious('trans.Failed to create payment, please try again later');
         } catch (\Exception $e) {
             $this->logger->critical('[payment][paypal] error while payment creation', ExceptionHelper::flatten($e));
 

@@ -40,7 +40,6 @@ class PaymentNotifyController extends AbstractController
             $confirmPaymentConfigDto->setRequest($request);
             $confirmPaymentConfigDto->setPaymentAppToken($paymentAppToken);
             $confirmPaymentDto = $paymentService->confirmPayment($confirmPaymentConfigDto);
-
             $paymentService->validate($confirmPaymentDto);
             $completePurchaseDto = $paymentService->completePurchase($confirmPaymentDto);
             if ($completePurchaseDto->isSuccess()) {
@@ -50,11 +49,10 @@ class PaymentNotifyController extends AbstractController
             if ($em->getConnection()->isTransactionActive()) {
                 $em->commit();
             }
-
         } catch (\Throwable $e) {
             $em->rollback();
 
-            $logger->error('error while processing payment', ExceptionHelper::flatten($e));
+            $logger->error('error getting payment notification', ExceptionHelper::flatten($e));
 
             return new Response('', Response::HTTP_INTERNAL_SERVER_ERROR);
         }

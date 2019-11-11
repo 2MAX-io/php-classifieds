@@ -19,6 +19,7 @@ class CreateUserService
      * @var EntityManagerInterface
      */
     private $em;
+
     /**
      * @var PasswordGenerateService
      */

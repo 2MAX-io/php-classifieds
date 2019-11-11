@@ -8,22 +8,20 @@ use App\Entity\Payment;
 use App\Service\FlashBag\FlashService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class PaymentCancelController extends AbstractController
 {
     /**
-     * @Route("/user/payment/cancel", name="app_payment_cancel")
+     * @Route("/user/payment/cancel/{paymentAppToken}", name="app_payment_cancel")
      */
     public function paymentCancel(
-        Request $request,
+        string $paymentAppToken,
         FlashService $flashService,
         EntityManagerInterface $em
     ): Response {
-        $gatewayToken = $request->get('token');
-        $paymentEntity = $em->getRepository(Payment::class)->findOneBy(['gatewayToken' => $gatewayToken]);
+        $paymentEntity = $em->getRepository(Payment::class)->findOneBy(['appToken' => $paymentAppToken]);
         if (!$paymentEntity) {
             throw $this->createNotFoundException();
         }

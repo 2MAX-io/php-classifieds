@@ -116,13 +116,13 @@ class Przelewy24PaymentGateway implements PaymentGatewayInterface
                 $confirmPaymentDto->setGatewayAmount(Integer::toInteger($confirmPaymentConfigDto->getRequest()->get('p24_amount')));
 
                 return $confirmPaymentDto;
-            } else {
-                $this->logger->critical('[payment][przelewy24] payment confirmation not successful', [
-                    'responseData' => $response->getData(),
-                ]);
-
-                throw new UserVisibleException('trans.Payment confirmation failed');
             }
+
+            $this->logger->critical('[payment][przelewy24] payment confirmation not successful', [
+                'responseData' => $response->getData(),
+            ]);
+
+            throw new UserVisibleException('trans.Payment confirmation failed');
         } catch (\Throwable $e) {
             $this->logger->critical('[payment][przelewy24] error while payment confirmation', ExceptionHelper::flatten($e));
 

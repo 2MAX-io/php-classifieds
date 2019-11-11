@@ -109,13 +109,13 @@ class PayPalPaymentGateway implements PaymentGatewayInterface
                 $confirmPaymentDto->setGatewayAmount(Integer::toInteger($data['transactions'][0]['amount']['total'] * 100));
 
                 return $confirmPaymentDto;
-            } else {
-                $this->logger->critical('[payment][paypal] payment confirmation not successful', [
-                    'responseData' => $response->getData(),
-                ]);
-
-                throw UserVisibleException::fromPrevious('trans.Payment confirmation failed');
             }
+
+            $this->logger->critical('[payment][paypal] payment confirmation not successful', [
+                'responseData' => $response->getData(),
+            ]);
+
+            throw UserVisibleException::fromPrevious('trans.Payment confirmation failed');
         } catch (\Throwable $e) {
             $this->logger->critical('[payment][paypal] error during payment confirmation', ExceptionHelper::flatten($e));
 

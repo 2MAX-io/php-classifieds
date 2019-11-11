@@ -46,18 +46,22 @@ class PaymentService
      * @var TranslatorInterface
      */
     private $trans;
+
     /**
      * @var UserBalanceService
      */
     private $userBalanceService;
+
     /**
      * @var LoggerInterface
      */
     private $logger;
+
     /**
      * @var FeaturedListingService
      */
     private $featuredListingService;
+
     /**
      * @var UrlGeneratorInterface
      */
@@ -241,7 +245,6 @@ class PaymentService
     {
         $completePaymentDto = new CompletePurchaseDto();
         $paymentEntity = $confirmPaymentDto->getPaymentEntity();
-
         if (!$paymentEntity instanceof Payment) {
             $this->logger->error('could not find payment entity', [$confirmPaymentDto]);
 

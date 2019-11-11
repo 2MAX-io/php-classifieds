@@ -42,6 +42,6 @@ class PaymentGatewayService
             }
         }
 
-        throw new \RuntimeException("payment gateway not found: $paymentGatewayName");
+        throw new \RuntimeException("payment gateway not found for: $paymentGatewayName");
     }
 }

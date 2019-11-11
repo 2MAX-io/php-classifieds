@@ -124,7 +124,7 @@ class PayPalNativePaymentGateway implements PaymentGatewayInterface
         } catch (\Throwable $e) {
             $this->logger->critical('[payment][paypal native] failed to confirm PayPal payment', ExceptionHelper::flatten($e));
 
-            throw UserVisibleException::fromPrevious('trans.Payment confirmation failed', $e);
+            throw UserVisibleException::fromPrevious('trans.Payment confirmation failed, if you have been charged and did not receive service, please contact us', $e);
         }
     }
 

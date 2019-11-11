@@ -161,8 +161,9 @@ trans:
   Success, redirecting...: 'Success, redirecting...'
   Payment Gateway: 'Payment Gateway'
   Failed to create payment, please try again later: 'Failed to create payment, please try again later'
-  Payment confirmation failed: 'Payment confirmation failed'
-  Error during payment confirmation: 'Error during payment confirmation'
+  Payment confirmation failed, if you have been charged and did not receive service, please contact us: 'Payment confirmation failed, if you have been charged and did not receive service, please contact us'
+  Error during payment confirmation, if you have been charged and did not receive service, please contact us: 'Error during payment confirmation, if you have been charged and did not receive service, please contact us'
+  Error while creating payment, please try again later: 'Error while creating payment, please try again later'
 
 trans.customFieldType.SELECT_AS_CHECKBOXES: Select field, filter as checkboxes
 trans.customFieldType.SELECT_SINGLE: Select field, filter as single select

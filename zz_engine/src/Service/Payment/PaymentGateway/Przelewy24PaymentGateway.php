@@ -123,11 +123,11 @@ class Przelewy24PaymentGateway implements PaymentGatewayInterface
                 'responseData' => $response->getData(),
             ]);
 
-            throw new UserVisibleException('trans.Payment confirmation failed');
+            throw new UserVisibleException('trans.Payment confirmation failed, if you have been charged and did not receive service, please contact us');
         } catch (\Throwable $e) {
             $this->logger->critical('[payment][przelewy24] error while payment confirmation', ExceptionHelper::flatten($e));
 
-            throw UserVisibleException::fromPrevious('trans.Error during payment confirmation', $e);
+            throw UserVisibleException::fromPrevious('trans.Error during payment confirmation, if you have been charged and did not receive service, please contact us', $e);
         }
     }
 

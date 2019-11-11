@@ -116,11 +116,11 @@ class PayPalPaymentGateway implements PaymentGatewayInterface
                 'responseData' => $response->getData(),
             ]);
 
-            throw UserVisibleException::fromPrevious('trans.Payment confirmation failed');
+            throw UserVisibleException::fromPrevious('trans.Payment confirmation failed, if you have been charged and did not receive service, please contact us');
         } catch (\Throwable $e) {
             $this->logger->critical('[payment][paypal] error during payment confirmation', ExceptionHelper::flatten($e));
 
-            throw UserVisibleException::fromPrevious('trans.Error during payment confirmation', $e);
+            throw UserVisibleException::fromPrevious('trans.Error during payment confirmation, if you have been charged and did not receive service, please contact us', $e);
         }
     }
 

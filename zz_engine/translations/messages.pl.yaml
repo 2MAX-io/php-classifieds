@@ -592,6 +592,9 @@ trans:
   Waiting: 'Oczekuje'
   Success, redirecting...: 'Potwierdzona, przekierowywanie...'
   Payment Gateway: 'Bramka płatności'
+  Error while creating payment, please try again later: 'Błąd podczas tworzenia płatności, proszę spróbować ponownie później'
+  Payment confirmation failed: 'Niepowodzenie podczas potwierdzenia płatności'
+  Error during payment confirmation: 'Błąd podczas potwierdzenia płatności'
 
 'trans.Remove non standard characters in listing - Enabled': 'Usuń niestandardowe znaki z ogłoszenia - Włączone'
 'trans.Remove non standard characters in listing - List of allowed characters': 'Usuń niestandardowe znaki z ogłoszenia - Lista dozwolonych znaków'

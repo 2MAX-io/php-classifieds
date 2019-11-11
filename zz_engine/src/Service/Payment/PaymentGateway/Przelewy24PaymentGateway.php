@@ -80,7 +80,7 @@ class Przelewy24PaymentGateway implements PaymentGatewayInterface
                 return;
             }
 
-            $this->logger->critical('[payment][przelewy24] payment creation not successful', [
+            $this->logger->critical('[payment][przelewy24] payment creation failed', [
                 'data' => $data,
             ]);
 
@@ -88,7 +88,7 @@ class Przelewy24PaymentGateway implements PaymentGatewayInterface
         } catch (\Exception $e) {
             $this->logger->critical('[payment][przelewy24] error while creating payment', ExceptionHelper::flatten($e));
 
-            throw UserVisibleException::fromPrevious('trans.Failed to create payment, please try again later', $e);
+            throw UserVisibleException::fromPrevious('trans.Error while creating payment, please try again later', $e);
         }
     }
 
@@ -119,7 +119,7 @@ class Przelewy24PaymentGateway implements PaymentGatewayInterface
                 return $confirmPaymentDto;
             }
 
-            $this->logger->critical('[payment][przelewy24] payment confirmation not successful', [
+            $this->logger->critical('[payment][przelewy24] Payment confirmation failed', [
                 'responseData' => $response->getData(),
             ]);
 

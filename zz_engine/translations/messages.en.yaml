@@ -160,6 +160,9 @@ trans:
   Waiting: 'Waiting'
   Success, redirecting...: 'Success, redirecting...'
   Payment Gateway: 'Payment Gateway'
+  Failed to create payment, please try again later: 'Failed to create payment, please try again later'
+  Payment confirmation failed: 'Payment confirmation failed'
+  Error during payment confirmation: 'Error during payment confirmation'
 
 trans.customFieldType.SELECT_AS_CHECKBOXES: Select field, filter as checkboxes
 trans.customFieldType.SELECT_SINGLE: Select field, filter as single select

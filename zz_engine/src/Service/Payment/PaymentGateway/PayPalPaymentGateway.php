@@ -72,7 +72,7 @@ class PayPalPaymentGateway implements PaymentGatewayInterface
                 return;
             }
 
-            $this->logger->critical('[payment][paypal] payment creation not successful', [
+            $this->logger->critical('[payment][paypal] payment creation failed', [
                 'data' => $data,
             ]);
 
@@ -80,7 +80,7 @@ class PayPalPaymentGateway implements PaymentGatewayInterface
         } catch (\Exception $e) {
             $this->logger->critical('[payment][paypal] error while payment creation', ExceptionHelper::flatten($e));
 
-            throw UserVisibleException::fromPrevious('trans.Failed to create payment, please try again later', $e);
+            throw UserVisibleException::fromPrevious('trans.Error while creating payment, please try again later', $e);
         }
     }
 
@@ -112,7 +112,7 @@ class PayPalPaymentGateway implements PaymentGatewayInterface
                 return $confirmPaymentDto;
             }
 
-            $this->logger->critical('[payment][paypal] payment confirmation not successful', [
+            $this->logger->critical('[payment][paypal] payment confirmation failed', [
                 'responseData' => $response->getData(),
             ]);
 

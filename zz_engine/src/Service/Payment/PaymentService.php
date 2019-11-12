@@ -203,6 +203,7 @@ class PaymentService
 
         $paymentEntity->setGatewayTransactionId($confirmPaymentDto->getGatewayTransactionId());
         $paymentEntity->setPaid(true);
+        $paymentEntity->setGatewayAmountPaid($confirmPaymentDto->getGatewayAmount());
 
         $confirmPaymentDto->setPaymentEntity($paymentEntity);
 
@@ -291,14 +292,13 @@ class PaymentService
                 )
             );
 
-            $this->em->flush();
-            $this->em->commit();
-
             $completePaymentDto->setIsSuccess(true);
             $completePaymentDto->setRedirectResponse(new RedirectResponse($this->urlGenerator->generate('app_user_feature_listing', [
                 'id' => $paymentForFeaturedPackage->getListing()->getId()
             ])));
             $this->markSuccess($confirmPaymentDto);
+            $this->em->flush();
+            $this->em->commit();
 
             return $completePaymentDto;
         }
@@ -311,12 +311,12 @@ class PaymentService
             );
             $userBalanceChange->setPayment($paymentEntity);
             $userBalanceChange->setDescription($this->trans->trans('trans.Topping up the account balance'));
-            $this->em->flush();
-            $this->em->commit();
 
             $completePaymentDto->setIsSuccess(true);
             $completePaymentDto->setRedirectResponse(new RedirectResponse($this->urlGenerator->generate('app_user_balance_top_up')));
             $this->markSuccess($confirmPaymentDto);
+            $this->em->flush();
+            $this->em->commit();
 
             return $completePaymentDto;
         }

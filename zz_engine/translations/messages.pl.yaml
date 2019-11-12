@@ -449,7 +449,7 @@ trans:
   History of balance changes: 'Historia zmian salda'
   History of listings featuring: 'Historia wyróżnień ogłoszeń'
   Payments: 'Płatności'
-  Balance updated?: 'Saldo zaktualizowane?'
+  Paid?: 'Opłacone?'
   Canceled?: 'Anulowane?'
   details: 'szczegóły'
   Payment: 'Płatność'
@@ -595,6 +595,8 @@ trans:
   Error while creating payment, please try again later: 'Błąd podczas tworzenia płatności, proszę spróbować ponownie później'
   Payment confirmation failed, if you have been charged and did not receive service, please contact us: 'Niepowodzenie podczas potwierdzenia płatności, jeżeli zapłaciłeś i nie otrzymałeś usługi, prosimy o kontakt z nami'
   Error during payment confirmation, if you have been charged and did not receive service, please contact us: 'Błąd podczas potwierdzenia płatności, jeżeli zapłaciłeś i nie otrzymałeś usługi, prosimy o kontakt z nami'
+  Gateway amount paid: 'Bramka płatności zapłacona kwota'
+  Delivered?: 'Dostarczone?'
 
 'trans.Remove non standard characters in listing - Enabled': 'Usuń niestandardowe znaki z ogłoszenia - Włączone'
 'trans.Remove non standard characters in listing - List of allowed characters': 'Usuń niestandardowe znaki z ogłoszenia - Lista dozwolonych znaków'

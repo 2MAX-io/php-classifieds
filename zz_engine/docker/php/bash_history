@@ -520,3 +520,4 @@ php zz_engine/bin/console doctrine:schema:update --force
 php zz_engine/bin/console make:entity --regenerate "App\Entity"
 php zz_engine/bin/console make:entity --regenerate "App\Entity"
 php zz_engine/bin/console doctrine:schema:update --force
+php zz_engine/bin/console doctrine:schema:update --force

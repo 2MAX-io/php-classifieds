@@ -20,6 +20,10 @@
                 <td>{{ payment.amount | moneyPrecise }} {{ payment.currency }}</td>
             </tr>
             <tr>
+                <th>{{ 'trans.Gateway amount paid' | trans }}</th>
+                <td>{{ payment.amount | moneyPrecise }} {{ payment.currency }}</td>
+            </tr>
+            <tr>
                 <th>{{ 'trans.Date' | trans }}</th>
                 <td>{{ payment.datetime ? payment.datetime|date('Y-m-d H:i:s') : '' }}</td>
             </tr>
@@ -28,9 +32,15 @@
                 <td>{{ payment.gatewayStatus }}</td>
             </tr>
             <tr>
-                <th>{{ 'trans.Balance updated?' | trans }}</th>
+                <th>{{ 'trans.Paid?' | trans }}</th>
                 <td>
-                    <span class="{{ payment.balanceUpdated | boolGreenRedClass }}">{{ payment.balanceUpdated | boolText | trans }}</span>
+                    <span class="{{ payment.paid | boolGreenRedClass }}">{{ payment.paid | boolText | trans }}</span>
+                </td>
+            </tr>
+            <tr>
+                <th>{{ 'trans.Delivered?' | trans }}</th>
+                <td>
+                    <span class="{{ payment.paid | boolGreenRedClass }}">{{ payment.paid | boolText | trans }}</span>
                 </td>
             </tr>
             <tr>

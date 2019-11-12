@@ -11,7 +11,7 @@
                 <th style="min-width: 8rem;">{{ 'trans.Date' | trans }}</th>
                 <th>{{ 'trans.Amount' | trans }}</th>
                 <th>{{ 'trans.Payment gateway - status' | trans }}</th>
-                <th>{{ 'trans.Balance updated?' | trans }}</th>
+                <th>{{ 'trans.Paid?' | trans }}</th>
                 <th>{{ 'trans.Canceled?' | trans }}</th>
                 <th>{{ 'trans.Payment gateway - transaction ID' | trans }}</th>
                 <th></th>
@@ -24,7 +24,7 @@
                 <td>{{ payment.amount | moneyPrecise }}</td>
                 <td>{{ payment.gatewayStatus }}</td>
                 <td>
-                    <span class="{{ payment.balanceUpdated | boolGreenRedClass }}">{{ payment.balanceUpdated | boolText | trans }}</span>
+                    <span class="{{ payment.paid | boolGreenRedClass }}">{{ payment.paid | boolText | trans }}</span>
                 </td>
                 <td>
                     <span class="{{ payment.canceled | boolGreenRedClass }}">{{ payment.canceled | boolText | trans }}</span>

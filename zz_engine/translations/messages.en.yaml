@@ -164,6 +164,8 @@ trans:
   Payment confirmation failed, if you have been charged and did not receive service, please contact us: 'Payment confirmation failed, if you have been charged and did not receive service, please contact us'
   Error during payment confirmation, if you have been charged and did not receive service, please contact us: 'Error during payment confirmation, if you have been charged and did not receive service, please contact us'
   Error while creating payment, please try again later: 'Error while creating payment, please try again later'
+  Gateway amount paid: 'Gateway amount paid'
+  Delivered?: 'Delivered?'
 
 trans.customFieldType.SELECT_AS_CHECKBOXES: Select field, filter as checkboxes
 trans.customFieldType.SELECT_SINGLE: Select field, filter as single select
@@ -586,7 +588,7 @@ trans.Date: Date
 'trans.History of balance changes': 'History of balance changes'
 'trans.History of listings featuring': 'History of listings featuring'
 trans.Payments: Payments
-'trans.Balance updated?': 'Balance updated?'
+'trans.Paid?': 'Paid?'
 'trans.Canceled?': 'Canceled?'
 trans.details: details
 trans.Payment: Payment

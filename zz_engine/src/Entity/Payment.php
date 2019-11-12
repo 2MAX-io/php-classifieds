@@ -49,7 +49,7 @@ class Payment
     /**
      * @ORM\Column(type="integer", nullable=true)
      */
-    private $amountPaid;
+    private $gatewayAmountPaid;
 
     /**
      * @ORM\Column(type="string", length=10, nullable=false)
@@ -355,14 +355,14 @@ class Payment
         return $this;
     }
 
-    public function getAmountPaid(): ?int
+    public function getGatewayAmountPaid(): ?int
     {
-        return $this->amountPaid;
+        return $this->gatewayAmountPaid;
     }
 
-    public function setAmountPaid(?int $amountPaid): self
+    public function setGatewayAmountPaid(?int $gatewayAmountPaid): self
     {
-        $this->amountPaid = $amountPaid;
+        $this->gatewayAmountPaid = $gatewayAmountPaid;
 
         return $this;
     }

@@ -47,6 +47,11 @@ class Payment
     private $amount;
 
     /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $amountPaid;
+
+    /**
      * @ORM\Column(type="string", length=10, nullable=false)
      */
     private $currency;
@@ -64,7 +69,12 @@ class Payment
     /**
      * @ORM\Column(type="boolean", nullable=false)
      */
-    private $balanceUpdated;
+    private $paid;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=false)
+     */
+    private $delivered;
 
     /**
      * @ORM\Column(type="boolean", nullable=false)
@@ -158,14 +168,14 @@ class Payment
         return $this;
     }
 
-    public function getBalanceUpdated(): ?bool
+    public function getPaid(): ?bool
     {
-        return $this->balanceUpdated;
+        return $this->paid;
     }
 
-    public function setBalanceUpdated(bool $balanceUpdated): self
+    public function setPaid(bool $paid): self
     {
-        $this->balanceUpdated = $balanceUpdated;
+        $this->paid = $paid;
 
         return $this;
     }
@@ -341,6 +351,30 @@ class Payment
     public function setCurrency(string $currency): self
     {
         $this->currency = $currency;
+
+        return $this;
+    }
+
+    public function getAmountPaid(): ?int
+    {
+        return $this->amountPaid;
+    }
+
+    public function setAmountPaid(?int $amountPaid): self
+    {
+        $this->amountPaid = $amountPaid;
+
+        return $this;
+    }
+
+    public function getDelivered(): ?bool
+    {
+        return $this->delivered;
+    }
+
+    public function setDelivered(bool $delivered): self
+    {
+        $this->delivered = $delivered;
 
         return $this;
     }

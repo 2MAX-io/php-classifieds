@@ -64,7 +64,7 @@ class PaymentWaitController extends AbstractController
         $paymentEntity = $paymentService->getPaymentEntity($request->get('paymentAppToken'));
 
         return $this->json([
-            'paymentComplete' => $paymentEntity->getBalanceUpdated(),
+            'paymentComplete' => $paymentEntity->getPaid(),
             'lastRefreshTime' => \date('H:i:s'),
         ]);
     }

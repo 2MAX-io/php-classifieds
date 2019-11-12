@@ -167,7 +167,8 @@ class PaymentService
 
         $paymentEntity = new Payment();
         $paymentEntity->setCanceled(false);
-        $paymentEntity->setBalanceUpdated(false);
+        $paymentEntity->setPaid(false);
+        $paymentEntity->setDelivered(false);
         $paymentEntity->setDatetime(new \DateTime());
         $paymentEntity->setAmount($paymentDto->getAmount());
         $paymentEntity->setCurrency($paymentDto->getCurrency());
@@ -186,18 +187,12 @@ class PaymentService
         return $paymentDto;
     }
 
-    public function markBalanceUpdated(ConfirmPaymentDto $confirmPaymentDto): void
+    public function process(ConfirmPaymentConfigDto $confirmPaymentConfigDto): CompletePurchaseDto
     {
-        $paymentEntity = $this->getPaymentEntity($confirmPaymentDto->getPaymentEntity()->getAppToken());
-        $paymentEntity->setBalanceUpdated(true);
-        $paymentEntity->setGatewayStatus($confirmPaymentDto->getGatewayStatus());
+        $confirmPaymentDto = $this->confirmPayment($confirmPaymentConfigDto);
+        $this->validate($confirmPaymentDto);
 
-        $this->em->persist($paymentEntity);
-    }
-
-    public function isBalanceUpdated(ConfirmPaymentDto $confirmPaymentDto): bool
-    {
-        return $this->getPaymentEntity($confirmPaymentDto->getPaymentEntity()->getAppToken())->getBalanceUpdated();
+        return $this->completePurchase($confirmPaymentDto);
     }
 
     public function confirmPayment(ConfirmPaymentConfigDto $confirmPaymentConfigDto): ConfirmPaymentDto
@@ -207,6 +202,7 @@ class PaymentService
         $confirmPaymentDto = $this->paymentGatewayService->getPaymentGateway()->confirmPayment($confirmPaymentConfigDto);
 
         $paymentEntity->setGatewayTransactionId($confirmPaymentDto->getGatewayTransactionId());
+        $paymentEntity->setPaid(true);
 
         $confirmPaymentDto->setPaymentEntity($paymentEntity);
 
@@ -221,10 +217,10 @@ class PaymentService
             throw new \RuntimeException('payment is not confirmed');
         }
 
-        if ($this->isBalanceUpdated($confirmPaymentDto)) {
-            $this->logger->error('balance has been already updated', [$confirmPaymentDto]);
+        if ($this->isDelivered($confirmPaymentDto)) {
+            $this->logger->error('already delivered', [$confirmPaymentDto]);
 
-            throw new \RuntimeException('balance has been already updated');
+            throw new \RuntimeException('already delivered');
         }
 
         $paymentEntity = $confirmPaymentDto->getPaymentEntity();
@@ -241,6 +237,16 @@ class PaymentService
         }
     }
 
+    public function isPaid(ConfirmPaymentDto $confirmPaymentDto): bool
+    {
+        return $this->getPaymentEntity($confirmPaymentDto->getPaymentEntity()->getAppToken())->getPaid();
+    }
+
+    public function isDelivered(ConfirmPaymentDto $confirmPaymentDto): bool
+    {
+        return $this->getPaymentEntity($confirmPaymentDto->getPaymentEntity()->getAppToken())->getDelivered();
+    }
+
     public function completePurchase(ConfirmPaymentDto $confirmPaymentDto): CompletePurchaseDto
     {
         $completePaymentDto = new CompletePurchaseDto();
@@ -253,7 +259,6 @@ class PaymentService
 
         $paymentForFeaturedPackage = $paymentEntity->getPaymentForFeaturedPackage();
         if ($paymentForFeaturedPackage instanceof PaymentForFeaturedPackage) {
-            $this->markBalanceUpdated($confirmPaymentDto);
             $userBalanceChange = $this->userBalanceService->addBalance(
                 $confirmPaymentDto->getGatewayAmount(),
                 $paymentForFeaturedPackage->getListing()->getUser(),
@@ -293,12 +298,12 @@ class PaymentService
             $completePaymentDto->setRedirectResponse(new RedirectResponse($this->urlGenerator->generate('app_user_feature_listing', [
                 'id' => $paymentForFeaturedPackage->getListing()->getId()
             ])));
+            $this->markSuccess($confirmPaymentDto);
 
             return $completePaymentDto;
         }
 
         if ($paymentEntity->getPaymentForBalanceTopUp() instanceof PaymentForBalanceTopUp) {
-            $this->markBalanceUpdated($confirmPaymentDto);
             $userBalanceChange = $this->userBalanceService->addBalance(
                 $confirmPaymentDto->getGatewayAmount(),
                 $paymentEntity->getPaymentForBalanceTopUp()->getUser(),
@@ -311,11 +316,21 @@ class PaymentService
 
             $completePaymentDto->setIsSuccess(true);
             $completePaymentDto->setRedirectResponse(new RedirectResponse($this->urlGenerator->generate('app_user_balance_top_up')));
+            $this->markSuccess($confirmPaymentDto);
 
             return $completePaymentDto;
         }
 
         return $completePaymentDto;
+    }
+
+    public function markSuccess(ConfirmPaymentDto $confirmPaymentDto): void
+    {
+        $paymentEntity = $this->getPaymentEntity($confirmPaymentDto->getPaymentEntity()->getAppToken());
+        $paymentEntity->setDelivered(true);
+        $paymentEntity->setGatewayStatus($confirmPaymentDto->getGatewayStatus());
+
+        $this->em->persist($paymentEntity);
     }
 
     public function getPaymentEntity(string $paymentAppToken): Payment

@@ -508,3 +508,15 @@ php zz_engine/bin/console make:entity --regenerate "App\Entity"
 php zz_engine/bin/console doctrine:schema:update --force
 php zz_engine/bin/console doctrine:schema:update --force
 php zz_engine/bin/console doctrine:schema:update --force
+php zz_engine/bin/console make:entity --regenerate "App\Entity"
+php zz_engine/bin/console list
+php zz_engine/bin/console help
+php zz_engine/bin/console list
+php zz_engine/bin/console list | grep config
+php zz_engine/bin/console debug:config profiler
+php zz_engine/bin/console debug:config web_profiler
+php zz_engine/bin/console doctrine:schema:update --force
+php zz_engine/bin/console doctrine:schema:update --force
+php zz_engine/bin/console make:entity --regenerate "App\Entity"
+php zz_engine/bin/console make:entity --regenerate "App\Entity"
+php zz_engine/bin/console doctrine:schema:update --force

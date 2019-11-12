@@ -39,9 +39,7 @@ class PaymentSuccessController extends AbstractController
             $confirmPaymentConfigDto = new ConfirmPaymentConfigDto();
             $confirmPaymentConfigDto->setRequest($request);
             $confirmPaymentConfigDto->setPaymentAppToken($paymentAppToken);
-            $confirmPaymentDto = $paymentService->confirmPayment($confirmPaymentConfigDto);
-            $paymentService->validate($confirmPaymentDto);
-            $completePurchaseDto = $paymentService->completePurchase($confirmPaymentDto);
+            $completePurchaseDto = $paymentService->process($confirmPaymentConfigDto);
             if ($completePurchaseDto->isSuccess()) {
                 return $completePurchaseDto->getRedirectResponse();
             }

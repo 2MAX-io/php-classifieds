@@ -40,12 +40,12 @@ class PaymentSuccessController extends AbstractController
             $confirmPaymentConfigDto->setRequest($request);
             $confirmPaymentConfigDto->setPaymentAppToken($paymentAppToken);
             $completePurchaseDto = $paymentService->process($confirmPaymentConfigDto);
+            if ($em->getConnection()->isTransactionActive()) {
+                $em->flush();
+                $em->commit();
+            }
             if ($completePurchaseDto->isSuccess()) {
                 return $completePurchaseDto->getRedirectResponse();
-            }
-
-            if ($em->getConnection()->isTransactionActive()) {
-                $em->commit();
             }
         } catch (\Throwable $e) {
             $em->rollback();

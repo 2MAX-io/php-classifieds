@@ -297,8 +297,6 @@ class PaymentService
                 'id' => $paymentForFeaturedPackage->getListing()->getId()
             ])));
             $this->markSuccess($confirmPaymentDto);
-            $this->em->flush();
-            $this->em->commit();
 
             return $completePaymentDto;
         }
@@ -315,8 +313,6 @@ class PaymentService
             $completePaymentDto->setIsSuccess(true);
             $completePaymentDto->setRedirectResponse(new RedirectResponse($this->urlGenerator->generate('app_user_balance_top_up')));
             $this->markSuccess($confirmPaymentDto);
-            $this->em->flush();
-            $this->em->commit();
 
             return $completePaymentDto;
         }

@@ -21,7 +21,7 @@
             </tr>
             <tr>
                 <th>{{ 'trans.Gateway amount paid' | trans }}</th>
-                <td>{{ payment.amount | moneyPrecise }} {{ payment.currency }}</td>
+                <td>{{ payment.gatewayAmountPaid | moneyPrecise }} {{ payment.currency }}</td>
             </tr>
             <tr>
                 <th>{{ 'trans.Date' | trans }}</th>
@@ -40,7 +40,7 @@
             <tr>
                 <th>{{ 'trans.Delivered?' | trans }}</th>
                 <td>
-                    <span class="{{ payment.paid | boolGreenRedClass }}">{{ payment.paid | boolText | trans }}</span>
+                    <span class="{{ payment.delivered | boolGreenRedClass }}">{{ payment.delivered | boolText | trans }}</span>
                 </td>
             </tr>
             <tr>

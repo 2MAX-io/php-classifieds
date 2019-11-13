@@ -97,6 +97,8 @@ class PayPalNativePaymentGateway implements PaymentGatewayInterface
 
             // Redirect the customer to $approvalUrl
         } catch (\Exception $e) {
+            $this->logger->critical('[payment][paypal native] error while payment creation', ExceptionHelper::flatten($e));
+
             throw UserVisibleException::fromPrevious('trans.Failed to create payment, please try again later', $e);
         }
     }

@@ -50,8 +50,8 @@ class PaymentWaitController extends AbstractController
             return $this->redirectToRoute('app_user_balance_top_up');
         }
 
-        $logger->error('could not redirect from payment wait');
-        throw new UserVisibleException('trans.Could not redirect from wait for payment page');
+        $logger->error('redirect route not found in payment wait redirect');
+        throw new UserVisibleException('trans.Destination page not found, if you have been charged and did not receive service, please contact us');
     }
 
     /**

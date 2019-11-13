@@ -597,6 +597,7 @@ trans:
   Error during payment confirmation, if you have been charged and did not receive service, please contact us: 'Błąd podczas potwierdzenia płatności, jeżeli zapłaciłeś i nie otrzymałeś usługi, prosimy o kontakt z nami'
   Gateway amount paid: 'Bramka płatności zapłacona kwota'
   Delivered?: 'Dostarczone?'
+  Destination page not found, if you have been charged and did not receive service, please contact us: 'Strona docelowa nie została znaleziona, jeżeli zapłaciłeś i nie otrzymałeś usługi, prosimy o kontakt z nami'
 
 'trans.Remove non standard characters in listing - Enabled': 'Usuń niestandardowe znaki z ogłoszenia - Włączone'
 'trans.Remove non standard characters in listing - List of allowed characters': 'Usuń niestandardowe znaki z ogłoszenia - Lista dozwolonych znaków'

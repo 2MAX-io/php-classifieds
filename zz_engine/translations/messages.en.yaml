@@ -166,6 +166,7 @@ trans:
   Error while creating payment, please try again later: 'Error while creating payment, please try again later'
   Gateway amount paid: 'Gateway amount paid'
   Delivered?: 'Delivered?'
+  Destination page not found, if you have been charged and did not receive service, please contact us: 'Destination page not found, if you have been charged and did not receive service, please contact us'
 
 trans.customFieldType.SELECT_AS_CHECKBOXES: Select field, filter as checkboxes
 trans.customFieldType.SELECT_SINGLE: Select field, filter as single select

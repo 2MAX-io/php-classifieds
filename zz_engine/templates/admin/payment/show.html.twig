@@ -21,7 +21,11 @@
             </tr>
             <tr>
                 <th>{{ 'trans.Gateway amount paid' | trans }}</th>
-                <td>{{ payment.gatewayAmountPaid | moneyPrecise }} {{ payment.currency }}</td>
+                <td>
+                    {% if payment.gatewayAmountPaid is not null %}
+                        {{ payment.gatewayAmountPaid | moneyPrecise }} {{ payment.currency }}
+                    {% endif %}
+                </td>
             </tr>
             <tr>
                 <th>{{ 'trans.Date' | trans }}</th>

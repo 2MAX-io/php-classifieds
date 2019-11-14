@@ -13,10 +13,12 @@ class PaymentGatewayService
      * @var iterable|PaymentGatewayInterface[]
      */
     private $paymentMethodList;
+
     /**
      * @var SettingsService
      */
     private $settingsService;
+
     /**
      * @var LoggerInterface
      */

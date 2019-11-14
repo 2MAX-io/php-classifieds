@@ -204,6 +204,7 @@ class PaymentService
         $paymentEntity->setGatewayTransactionId($confirmPaymentDto->getGatewayTransactionId());
         $paymentEntity->setPaid(true);
         $paymentEntity->setGatewayAmountPaid($confirmPaymentDto->getGatewayAmount());
+        $paymentEntity->setGatewayStatus($confirmPaymentDto->getGatewayStatus());
 
         $confirmPaymentDto->setPaymentEntity($paymentEntity);
 
@@ -296,7 +297,7 @@ class PaymentService
             $completePaymentDto->setRedirectResponse(new RedirectResponse($this->urlGenerator->generate('app_user_feature_listing', [
                 'id' => $paymentForFeaturedPackage->getListing()->getId()
             ])));
-            $this->markSuccess($confirmPaymentDto);
+            $this->markDelivered($confirmPaymentDto);
 
             return $completePaymentDto;
         }
@@ -312,7 +313,7 @@ class PaymentService
 
             $completePaymentDto->setIsSuccess(true);
             $completePaymentDto->setRedirectResponse(new RedirectResponse($this->urlGenerator->generate('app_user_balance_top_up')));
-            $this->markSuccess($confirmPaymentDto);
+            $this->markDelivered($confirmPaymentDto);
 
             return $completePaymentDto;
         }
@@ -320,11 +321,10 @@ class PaymentService
         return $completePaymentDto;
     }
 
-    public function markSuccess(ConfirmPaymentDto $confirmPaymentDto): void
+    public function markDelivered(ConfirmPaymentDto $confirmPaymentDto): void
     {
         $paymentEntity = $this->getPaymentEntity($confirmPaymentDto->getPaymentEntity()->getAppToken());
         $paymentEntity->setDelivered(true);
-        $paymentEntity->setGatewayStatus($confirmPaymentDto->getGatewayStatus());
 
         $this->em->persist($paymentEntity);
     }

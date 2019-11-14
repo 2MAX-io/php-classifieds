@@ -60,8 +60,12 @@ class TwigNoDependencies implements RuntimeExtensionInterface
         return 'trans.No';
     }
 
-    public function moneyPrecise(int $value): string
+    public function moneyPrecise(?int $value): ?string
     {
+        if (null === $value) {
+            return null;
+        }
+
         return \number_format(
             \round($value / 100, 2),
             2,

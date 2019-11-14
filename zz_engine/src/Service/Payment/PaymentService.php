@@ -163,7 +163,8 @@ class PaymentService
     public function createPayment(PaymentDto $paymentDto): PaymentDto
     {
         $paymentDto->setPaymentAppToken(Random::string(64));
-        $this->paymentGatewayService->getPaymentGateway()->createPayment($paymentDto);
+        $paymentGateway = $this->paymentGatewayService->getPaymentGateway();
+        $paymentGateway->createPayment($paymentDto);
 
         $paymentEntity = new Payment();
         $paymentEntity->setCanceled(false);
@@ -175,6 +176,7 @@ class PaymentService
         $paymentEntity->setGatewayPaymentId($paymentDto->getGatewayPaymentId());
         $paymentEntity->setGatewayToken($paymentDto->getGatewayToken());
         $paymentEntity->setGatewayStatus($paymentDto->getGatewayStatus());
+        $paymentEntity->setGatewayName($paymentGateway::getName());
         $paymentEntity->setAppToken($paymentDto->getPaymentAppToken());
         $paymentEntity->setUser($paymentDto->getUser());
         $paymentEntity->setType($paymentDto->getPaymentType());

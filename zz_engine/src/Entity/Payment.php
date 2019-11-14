@@ -102,6 +102,13 @@ class Payment
     private $appToken;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(type="string", length=70, nullable=false)
+     */
+    private $gatewayName;
+
+    /**
      * @var PaymentForFeaturedPackage|null
      *
      * @ORM\OneToOne(targetEntity="PaymentForFeaturedPackage", mappedBy="payment", fetch="EXTRA_LAZY")
@@ -377,5 +384,15 @@ class Payment
         $this->delivered = $delivered;
 
         return $this;
+    }
+
+    public function getGatewayName(): string
+    {
+        return $this->gatewayName;
+    }
+
+    public function setGatewayName(string $gatewayName): void
+    {
+        $this->gatewayName = $gatewayName;
     }
 }

@@ -15,4 +15,6 @@ interface PaymentGatewayInterface
     public function confirmPayment(ConfirmPaymentConfigDto $confirmPaymentConfigDto): ConfirmPaymentDto;
 
     public static function getName(): string;
+
+    public function getGatewayMode(): string;
 }

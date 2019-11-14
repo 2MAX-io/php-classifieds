@@ -13,6 +13,7 @@ use App\Service\Payment\Dto\ConfirmPaymentConfigDto;
 use App\Service\Payment\Dto\ConfirmPaymentDto;
 use App\Service\Payment\Enum\PaymentGatewayEnum;
 use App\Service\Payment\Dto\PaymentDto;
+use App\Service\Payment\Enum\GatewayModeEnum;
 use App\Service\Payment\PaymentHelperService;
 use App\Service\Setting\SettingsService;
 use PayPal\Api\Amount;
@@ -143,7 +144,7 @@ class PayPalNativePaymentGateway implements PaymentGatewayInterface
             )
         );
         $apiContext->setConfig([
-            'mode' => $this->settingsService->getSettingsDto()->getPaymentPayPalMode() ?? 'sandbox',
+            'mode' => $this->getGatewayMode(),
             'log.LogEnabled' => true,
             'log.FileName' => FilePath::getLogDir() . '/payPal_'. \date('Y-m') .'.log',
             'log.LogLevel' => 'INFO', // PLEASE USE `INFO` LEVEL FOR LOGGING IN LIVE ENVIRONMENTS, DEBUG in dev only
@@ -153,6 +154,11 @@ class PayPalNativePaymentGateway implements PaymentGatewayInterface
         ]);
 
         return $apiContext;
+    }
+
+    public function getGatewayMode(): string
+    {
+        return $this->settingsService->getSettingsDto()->getPaymentPayPalMode() ?? GatewayModeEnum::SANDBOX;
     }
 
     public static function getName(): string

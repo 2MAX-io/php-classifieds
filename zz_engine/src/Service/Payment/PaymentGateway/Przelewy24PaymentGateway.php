@@ -10,7 +10,7 @@ use App\Service\Payment\Base\PaymentGatewayInterface;
 use App\Service\Payment\Dto\ConfirmPaymentConfigDto;
 use App\Service\Payment\Dto\ConfirmPaymentDto;
 use App\Service\Payment\Enum\PaymentGatewayEnum;
-use App\Service\Payment\Enum\PaymentModeEnum;
+use App\Service\Payment\Enum\GatewayModeEnum;
 use App\Service\Payment\Dto\PaymentDto;
 use App\Service\Payment\PaymentHelperService;
 use App\Service\Setting\SettingsService;
@@ -139,10 +139,15 @@ class Przelewy24PaymentGateway implements PaymentGatewayInterface
             'merchantId' => $this->settingsService->getPaymentPrzelewy24MerchantId(),
             'posId'      => $this->settingsService->getPaymentPrzelewy24PosId(),
             'crc'        => $this->settingsService->getPaymentPrzelewy24Crc(),
-            'testMode'   => $this->settingsService->getPaymentPrzelewy24Mode() === PaymentModeEnum::SANDBOX,
+            'testMode'   => $this->settingsService->getPaymentPrzelewy24Mode() === GatewayModeEnum::SANDBOX,
         ]);
 
         return $gateway;
+    }
+
+    public function getGatewayMode(): string
+    {
+        return $this->settingsService->getPaymentPrzelewy24Mode();
     }
 
     public static function getName(): string

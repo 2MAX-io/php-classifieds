@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace App\Service\Payment\Enum;
 
-class PaymentModeEnum
+class GatewayModeEnum
 {
     public const SANDBOX = 'sandbox';
     public const LIVE = 'live';

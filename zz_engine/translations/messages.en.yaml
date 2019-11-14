@@ -167,6 +167,7 @@ trans:
   Gateway amount paid: 'Gateway amount paid'
   Delivered?: 'Delivered?'
   Destination page not found, if you have been charged and did not receive service, please contact us: 'Destination page not found, if you have been charged and did not receive service, please contact us'
+  Payment gateway - mode: 'Payment gateway - mode'
 
 trans.customFieldType.SELECT_AS_CHECKBOXES: Select field, filter as checkboxes
 trans.customFieldType.SELECT_SINGLE: Select field, filter as single select

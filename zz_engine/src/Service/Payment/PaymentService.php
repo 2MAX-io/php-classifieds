@@ -177,6 +177,7 @@ class PaymentService
         $paymentEntity->setGatewayToken($paymentDto->getGatewayToken());
         $paymentEntity->setGatewayStatus($paymentDto->getGatewayStatus());
         $paymentEntity->setGatewayName($paymentGateway::getName());
+        $paymentEntity->setGatewayMode($paymentGateway->getGatewayMode());
         $paymentEntity->setAppToken($paymentDto->getPaymentAppToken());
         $paymentEntity->setUser($paymentDto->getUser());
         $paymentEntity->setType($paymentDto->getPaymentType());

@@ -11,6 +11,7 @@ use App\Service\Payment\Dto\ConfirmPaymentConfigDto;
 use App\Service\Payment\Dto\ConfirmPaymentDto;
 use App\Service\Payment\Enum\PaymentGatewayEnum;
 use App\Service\Payment\Dto\PaymentDto;
+use App\Service\Payment\Enum\GatewayModeEnum;
 use App\Service\Payment\PaymentHelperService;
 use App\Service\Setting\SettingsService;
 use Omnipay\Common\GatewayInterface;
@@ -134,10 +135,15 @@ class PayPalPaymentGateway implements PaymentGatewayInterface
         $gateway->initialize([
             'clientId' => $this->settingsService->getSettingsDto()->getPaymentPayPalClientId(),
             'secret' => $this->settingsService->getSettingsDto()->getPaymentPayPalClientSecret(),
-            'testMode' => true, // Or false when you are ready for live transactions
+            'testMode' => $this->getGatewayMode() === GatewayModeEnum::SANDBOX,
         ]);
 
         return $gateway;
+    }
+
+    public function getGatewayMode(): string
+    {
+        return $this->settingsService->getSettingsDto()->getPaymentPayPalMode();
     }
 
     public static function getName(): string

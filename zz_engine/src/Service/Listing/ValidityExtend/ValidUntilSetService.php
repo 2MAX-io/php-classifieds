@@ -8,16 +8,16 @@ use App\Entity\Listing;
 use App\Helper\Date;
 use Carbon\Carbon;
 use Carbon\CarbonInterval;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\ORM\EntityManagerInterface;
 
 class ValidUntilSetService
 {
     /**
-     * @var ObjectManager
+     * @var EntityManagerInterface
      */
     private $em;
 
-    public function __construct(ObjectManager $em)
+    public function __construct(EntityManagerInterface $em)
     {
         $this->em = $em;
     }

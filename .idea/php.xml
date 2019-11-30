@@ -62,7 +62,6 @@
       <path value="$PROJECT_DIR$/zz_engine/vendor/doctrine/orm" />
       <path value="$PROJECT_DIR$/zz_engine/vendor/egulias/email-validator" />
       <path value="$PROJECT_DIR$/zz_engine/vendor/doctrine/dbal" />
-      <path value="$PROJECT_DIR$/zz_engine/vendor/doctrine/doctrine-cache-bundle" />
       <path value="$PROJECT_DIR$/zz_engine/vendor/doctrine/instantiator" />
       <path value="$PROJECT_DIR$/zz_engine/vendor/doctrine/migrations" />
       <path value="$PROJECT_DIR$/zz_engine/vendor/doctrine/collections" />

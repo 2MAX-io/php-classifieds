@@ -9,14 +9,14 @@ use App\Entity\ListingFile;
 use App\Helper\FileHelper;
 use App\Helper\FilePath;
 use App\Service\Event\FileModificationEventService;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\File\File;
 use Webmozart\PathUtil\Path;
 
 class ListingFileService
 {
     /**
-     * @var ObjectManager
+     * @var EntityManagerInterface
      */
     private $em;
 
@@ -25,7 +25,7 @@ class ListingFileService
      */
     private $fileModificationEventService;
 
-    public function __construct(ObjectManager $em, FileModificationEventService $fileModificationEventService)
+    public function __construct(EntityManagerInterface $em, FileModificationEventService $fileModificationEventService)
     {
         $this->em = $em;
         $this->fileModificationEventService = $fileModificationEventService;

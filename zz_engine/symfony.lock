@@ -84,6 +84,18 @@
     "doctrine/reflection": {
         "version": "v1.0.0"
     },
+    "easycorp/easy-log-handler": {
+        "version": "1.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "1.0",
+            "ref": "70062abc2cd58794d2a90274502f81b55cd9951b"
+        },
+        "files": [
+            "config/packages/dev/easy_log_handler.yaml"
+        ]
+    },
     "egulias/email-validator": {
         "version": "2.1.7"
     },
@@ -216,6 +228,9 @@
     "psr/http-message": {
         "version": "1.0.1"
     },
+    "psr/link": {
+        "version": "1.0.0"
+    },
     "psr/log": {
         "version": "1.1.0"
     },
@@ -276,6 +291,9 @@
     "symfony/asset": {
         "version": "v4.2.5"
     },
+    "symfony/browser-kit": {
+        "version": "v4.4.0"
+    },
     "symfony/cache": {
         "version": "v4.2.4"
     },
@@ -298,14 +316,35 @@
             "config/bootstrap.php"
         ]
     },
+    "symfony/css-selector": {
+        "version": "v4.4.0"
+    },
     "symfony/debug": {
         "version": "v4.2.4"
+    },
+    "symfony/debug-bundle": {
+        "version": "4.1",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "4.1",
+            "ref": "f8863cbad2f2e58c4b65fa1eac892ab189971bea"
+        },
+        "files": [
+            "config/packages/dev/debug.yaml"
+        ]
+    },
+    "symfony/debug-pack": {
+        "version": "v1.0.7"
     },
     "symfony/dependency-injection": {
         "version": "v4.2.4"
     },
     "symfony/doctrine-bridge": {
         "version": "v4.2.5"
+    },
+    "symfony/dom-crawler": {
+        "version": "v4.4.0"
     },
     "symfony/dotenv": {
         "version": "v4.2.4"
@@ -318,6 +357,9 @@
     },
     "symfony/event-dispatcher-contracts": {
         "version": "v1.1.1"
+    },
+    "symfony/expression-language": {
+        "version": "v4.4.0"
     },
     "symfony/filesystem": {
         "version": "v4.2.4"
@@ -358,6 +400,12 @@
             "src/Controller/.gitignore",
             "src/Kernel.php"
         ]
+    },
+    "symfony/http-client": {
+        "version": "v4.4.0"
+    },
+    "symfony/http-client-contracts": {
+        "version": "v2.0.1"
     },
     "symfony/http-foundation": {
         "version": "v4.2.4"
@@ -421,6 +469,22 @@
     "symfony/orm-pack": {
         "version": "v1.0.6"
     },
+    "symfony/phpunit-bridge": {
+        "version": "4.3",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "4.3",
+            "ref": "b0582341f1df39aaf3a9a866cdbe49937da35984"
+        },
+        "files": [
+            ".env.test",
+            "bin/phpunit",
+            "config/bootstrap.php",
+            "phpunit.xml.dist",
+            "tests/.gitignore"
+        ]
+    },
     "symfony/polyfill-intl-icu": {
         "version": "v1.11.0"
     },
@@ -435,6 +499,9 @@
     },
     "symfony/polyfill-php73": {
         "version": "v1.11.0"
+    },
+    "symfony/process": {
+        "version": "v4.4.0"
     },
     "symfony/profiler-pack": {
         "version": "v1.0.4"
@@ -493,6 +560,9 @@
     "symfony/stopwatch": {
         "version": "v4.2.5"
     },
+    "symfony/test-pack": {
+        "version": "v1.0.6"
+    },
     "symfony/translation": {
         "version": "3.3",
         "recipe": {
@@ -526,6 +596,9 @@
             "templates/base.html.twig"
         ]
     },
+    "symfony/twig-pack": {
+        "version": "v1.0.0"
+    },
     "symfony/validator": {
         "version": "4.1",
         "recipe": {
@@ -543,6 +616,9 @@
     },
     "symfony/var-exporter": {
         "version": "v4.2.4"
+    },
+    "symfony/web-link": {
+        "version": "v4.4.0"
     },
     "symfony/web-profiler-bundle": {
         "version": "3.3",
@@ -563,6 +639,9 @@
     },
     "ticketswap/omnipay-przelewy24": {
         "version": "2.0"
+    },
+    "twig/extra-bundle": {
+        "version": "v3.0.0"
     },
     "twig/twig": {
         "version": "v2.7.4"

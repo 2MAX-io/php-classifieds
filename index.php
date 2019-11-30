@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 use App\Kernel;
-use Symfony\Component\Debug\Debug;
+use Symfony\Component\ErrorHandler\Debug;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -20,7 +20,6 @@ require __DIR__ . '/zz_engine/config/bootstrap.php';
 if ($_SERVER['APP_DEBUG']) {
     umask(0000);
 
-    /** @noinspection ForgottenDebugOutputInspection */
     Debug::enable();
 }
 

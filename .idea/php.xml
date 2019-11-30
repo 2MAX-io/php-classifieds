@@ -163,6 +163,22 @@
       <path value="$PROJECT_DIR$/zz_engine/vendor/symfony/mailer" />
       <path value="$PROJECT_DIR$/zz_engine/vendor/ticketswap/omnipay-przelewy24" />
       <path value="$PROJECT_DIR$/zz_engine/vendor/symfony/error-handler" />
+      <path value="$PROJECT_DIR$/zz_engine/vendor/symfony/http-client" />
+      <path value="$PROJECT_DIR$/zz_engine/vendor/symfony/browser-kit" />
+      <path value="$PROJECT_DIR$/zz_engine/vendor/symfony/expression-language" />
+      <path value="$PROJECT_DIR$/zz_engine/vendor/symfony/process" />
+      <path value="$PROJECT_DIR$/zz_engine/vendor/symfony/phpunit-bridge" />
+      <path value="$PROJECT_DIR$/zz_engine/vendor/symfony/css-selector" />
+      <path value="$PROJECT_DIR$/zz_engine/vendor/symfony/dom-crawler" />
+      <path value="$PROJECT_DIR$/zz_engine/vendor/symfony/http-client-contracts" />
+      <path value="$PROJECT_DIR$/zz_engine/vendor/symfony/debug-pack" />
+      <path value="$PROJECT_DIR$/zz_engine/vendor/symfony/debug-bundle" />
+      <path value="$PROJECT_DIR$/zz_engine/vendor/symfony/test-pack" />
+      <path value="$PROJECT_DIR$/zz_engine/vendor/easycorp/easy-log-handler" />
+      <path value="$PROJECT_DIR$/zz_engine/vendor/psr/link" />
+      <path value="$PROJECT_DIR$/zz_engine/vendor/symfony/twig-pack" />
+      <path value="$PROJECT_DIR$/zz_engine/vendor/symfony/web-link" />
+      <path value="$PROJECT_DIR$/zz_engine/vendor/twig/extra-bundle" />
     </include_path>
   </component>
   <component name="PhpInterpreters">

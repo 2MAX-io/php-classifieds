@@ -525,3 +525,5 @@ composer update -d zz_engine --optimize-autoloader
 composer update -d zz_engine --optimize-autoloader
 composer update -d zz_engine --optimize-autoloader
 composer update -d zz_engine --optimize-autoloader
+composer update -d zz_engine --optimize-autoloader
+composer update -d zz_engine --optimize-autoloader

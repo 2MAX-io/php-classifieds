@@ -23,7 +23,7 @@ services:
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
 
     _instanceof:
-        Twig_ExtensionInterface:
+        Twig\Extension\ExtensionInterface:
             tags: ['twig.extension']
         App\Service\System\HealthCheck\Base\HealthCheckerInterface:
             tags: ['app.health_checker']

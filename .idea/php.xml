@@ -162,6 +162,7 @@
       <path value="$PROJECT_DIR$/zz_engine/vendor/psr/http-client" />
       <path value="$PROJECT_DIR$/zz_engine/vendor/symfony/mailer" />
       <path value="$PROJECT_DIR$/zz_engine/vendor/ticketswap/omnipay-przelewy24" />
+      <path value="$PROJECT_DIR$/zz_engine/vendor/symfony/error-handler" />
     </include_path>
   </component>
   <component name="PhpInterpreters">

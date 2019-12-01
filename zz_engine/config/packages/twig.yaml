@@ -12,4 +12,4 @@ twig:
     date:
         format: '%twig_date_format%'
         timezone: '%timezone%'
-    exception_controller: App\Exception\Controller\ExceptionController::showAction
+    exception_controller: null

@@ -51,13 +51,12 @@ services:
         tags:
             - { name: 'kernel.event_listener', event: 'security.interactive_login' }
 
-    libphonenumber\PhoneNumberUtil:
-        factory: 'App\System\Support\Phone\PhoneNumberService:factory'
+    App\EventListener\Exception\UserVisibleExceptionListener:
+        tags:
+            - { name: kernel.event_listener, event: kernel.exception }
 
-    App\Exception\Controller\ExceptionController:
-        public: true
-        arguments:
-            $debug: '%kernel.debug%'
+    libphonenumber\PhoneNumberUtil:
+        factory: ['@App\System\Support\Phone\PhoneNumberService', 'factory']
 
     App\Service\Setting\SettingsService:
         public: true

@@ -540,3 +540,20 @@ composer update -d zz_engine --optimize-autoloader
 php zz_engine/bin/console make:entity 
 php zz_engine/bin/console make:entity 
 php zz_engine/bin/console doctrine:schema:update --force
+composer require php-http/curl-client guzzlehttp/psr7 php-http/message
+cd zz_engine/
+composer require php-http/curl-client guzzlehttp/psr7 php-http/message
+composer require http
+composer require symfony/psr-http-message-bridge
+composer install -d zz_engine --optimize-autoloader
+cd ..
+composer install -d zz_engine --optimize-autoloader
+composer install -d zz_engine --optimize-autoloader
+php zz_engine/bin/console doctrine:schema:update --force
+composer update -d zz_engine --optimize-autoloader
+composer require guzzlehttp/guzzle
+composer require -d zz_engine guzzlehttp/guzzle
+composer require -d zz_engine php-http/curl-client guzzlehttp/psr7 php-http/message
+composer require -d zz_engine http-factory-guzzle
+composer require -d zz_engine http-interop/http-factory-guzzle
+composer update -d zz_engine --optimize-autoloader

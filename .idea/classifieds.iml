@@ -43,6 +43,7 @@
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/guzzlehttp/psr7" />
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/hackzilla/password-generator" />
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/hautelook/phpass" />
+      <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/http-interop/http-factory-guzzle" />
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/hybridauth/hybridauth" />
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/intervention/image" />
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/jdorn/sql-formatter" />
@@ -71,6 +72,7 @@
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/psr/cache" />
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/psr/container" />
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/psr/http-client" />
+      <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/psr/http-factory" />
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/psr/http-message" />
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/psr/link" />
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/psr/log" />

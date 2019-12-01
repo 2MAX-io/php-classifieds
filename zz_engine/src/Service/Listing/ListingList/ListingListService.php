@@ -11,6 +11,7 @@ use App\Helper\Arr;
 use App\Helper\Search;
 use App\Helper\Str;
 use App\Service\Listing\ListingPublicDisplayService;
+use App\Service\Listing\Search\SaveSearchHistoryService;
 use App\Service\System\Pagination\PaginationService;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr\Join;
@@ -39,9 +40,15 @@ class ListingListService
      */
     private $requestStack;
 
+    /**
+     * @var SaveSearchHistoryService
+     */
+    private $saveSearchHistory;
+
     public function __construct(
         EntityManagerInterface $em,
         ListingPublicDisplayService $listingPublicDisplayService,
+        SaveSearchHistoryService $saveSearchHistory,
         RequestStack $requestStack,
         PaginationService $paginationService
     ) {
@@ -49,6 +56,7 @@ class ListingListService
         $this->listingPublicDisplayService = $listingPublicDisplayService;
         $this->paginationService = $paginationService;
         $this->requestStack = $requestStack;
+        $this->saveSearchHistory = $saveSearchHistory;
     }
 
     public function getListings(ListingListDto $listingListDto): ListingListDto
@@ -84,6 +92,8 @@ class ListingListService
         if ($request->get('query', false)) {
             $qb->andWhere('MATCH (listing.searchText) AGAINST (:query BOOLEAN) > 0');
             $qb->setParameter(':query', Search::optimizeMatch($request->get('query', false)));
+
+            $this->saveSearchHistory->saveSearch($request->get('query', false));
         }
 
         if ($request->get('user', false)) {
@@ -120,7 +130,7 @@ class ListingListService
                         $qb->setParameter(
                             ':customFieldValueMin_' . $sqlParamId,
                             $customFieldFormValueArray['range']['min'],
-                            \Doctrine\DBAL\Types\Type::INTEGER
+                            \Doctrine\DBAL\Types\Types::INTEGER
                         );
                     }
 
@@ -129,7 +139,7 @@ class ListingListService
                         $qb->setParameter(
                             ':customFieldValueMax_' . $sqlParamId,
                             $customFieldFormValueArray['range']['max'],
-                            \Doctrine\DBAL\Types\Type::INTEGER
+                            \Doctrine\DBAL\Types\Types::INTEGER
                         );
                     }
 

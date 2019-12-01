@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Controller\Pub;
+namespace App\Controller;
 
 use App\Service\Index\CategoryListService;
 use App\Service\Index\ListingListForIndexService;

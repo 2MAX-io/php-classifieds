@@ -133,17 +133,4 @@ class TwigNoDependencies implements RuntimeExtensionInterface
 
         return $maxSecondsLeft < $diffInSeconds && $diffInSeconds < $maxSecondsRight;
     }
-
-    /**
-     * @param array|object $value
-     * @return string
-     */
-    public function inlineJson($value): string
-    {
-        if (false === (\is_object($value) || \is_array($value))) {
-            throw new \RuntimeException('only array or object allowed');
-        }
-
-        return \htmlspecialchars(Json::toString($value), \ENT_NOQUOTES);
-    }
 }

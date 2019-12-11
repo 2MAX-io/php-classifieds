@@ -32,6 +32,9 @@ class AppExtension extends AbstractExtension
     public function getFilters(): array
     {
         return [
+            new TwigFilter('inlineJson', [InlineJson::class, 'inlineJson'], ['is_safe' => ['html']]),
+            new TwigFilter('normalizeWhitespace', [TwigNoDependencies::class, 'normalizeWhitespace'], ['is_safe' => ['html']]),
+
             new TwigFilter('boolText', [TwigNoDependencies::class, 'boolText']),
             new TwigFilter('displayTextWarning', [TwigNoDependencies::class, 'displayTextWarning']),
             new TwigFilter('isExpired', [TwigNoDependencies::class, 'isExpired']),
@@ -41,8 +44,6 @@ class AppExtension extends AbstractExtension
             new TwigFilter('phone', [TwigPhone::class, 'phone']),
             new TwigFilter('thousandsSeparate', [TwigNoDependencies::class, 'thousandsSeparate']),
             new TwigFilter('boolGreenRedClass', [TwigNoDependencies::class, 'boolGreenRedClass']),
-            new TwigFilter('normalizeWhitespace', [TwigNoDependencies::class, 'normalizeWhitespace'], ['is_safe' => ['html']]),
-            new TwigFilter('inlineJson', [TwigNoDependencies::class, 'inlineJson'], ['is_safe' => ['html']]),
         ];
     }
 }

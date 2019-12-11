@@ -4,6 +4,6 @@ new Cleave('.input-money', {
     numeral: true,
     numeralThousandsGroupStyle: 'thousand',
     numeralPositiveOnly: true,
-    delimiter: '{{ getCleaveConfig().delimiter }}',
-    numeralDecimalMark: '{{ getCleaveConfig().numeralDecimalMark }}'
+    delimiter: app.getJsonDataCached()['cleaveConfig']['delimiter'],
+    numeralDecimalMark: app.getJsonDataCached()['cleaveConfig']['numeralDecimalMark']
 });

@@ -2,21 +2,21 @@
 
 new Cleave('.input-phone', {
     phone: true,
-    phoneRegionCode: '{{ settings.languageTwoLetters }}'
+    phoneRegionCode: app.getJsonDataCached()['cleaveConfig']['languageTwoLetters']
 });
 new Cleave('.input-money', {
     numeral: true,
     numeralThousandsGroupStyle: 'thousand',
     numeralPositiveOnly: true,
-    delimiter: '{{ getCleaveConfig().delimiter }}',
-    numeralDecimalMark: '{{ getCleaveConfig().numeralDecimalMark }}'
+    delimiter: app.getJsonDataCached()['cleaveConfig']['delimiter'],
+    numeralDecimalMark: app.getJsonDataCached()['cleaveConfig']['numeralDecimalMark']
 });
 // new Cleave('.input-number', {
 //     numeral: true,
 //     numeralThousandsGroupStyle: 'thousand',
 //     numeralPositiveOnly: true,
 //     delimiter: ' ',
-//     numeralDecimalMark: '{{ getCleaveConfig().numeralDecimalMark }}'
+//     numeralDecimalMark: app.getJsonDataCached()['cleaveConfig']['numeralDecimalMark']
 // });
 
 autosize($('.textarea-autosize'));

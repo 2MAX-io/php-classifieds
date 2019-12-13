@@ -8,13 +8,13 @@ use App\Entity\User;
 use App\Service\Setting\SettingsService;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Mailer\MailerInterface;
-use Symfony\Component\Mime\NamedAddress;
+use Symfony\Component\Mime\Address;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class EmailService
 {
     /**
-     * @var \Swift_Mailer
+     * @var MailerInterface
      */
     private $mailer;
 
@@ -42,7 +42,7 @@ class EmailService
     {
         $email = new TemplatedEmail();
         $email->subject($this->trans->trans('trans.Confirm account registration'));
-        $email->from(new NamedAddress($this->getEmailFromAddress(), $this->getEmailFromName()));
+        $email->from(new Address($this->getEmailFromAddress(), $this->getEmailFromName()));
         $email->to($user->getEmail());
         $email->replyTo($this->getEmailReplyTo());
         $email->htmlTemplate('email/registration.html.twig');
@@ -57,7 +57,7 @@ class EmailService
     {
         $email = new TemplatedEmail();
         $email->subject($this->trans->trans('trans.Confirmation of email address change'));
-        $email->from(new NamedAddress($this->getEmailFromAddress(), $this->getEmailFromName()));
+        $email->from(new Address($this->getEmailFromAddress(), $this->getEmailFromName()));
         $email->to($user->getEmail());
         $email->replyTo($this->getEmailReplyTo());
 
@@ -75,7 +75,7 @@ class EmailService
     {
         $email = new TemplatedEmail();
         $email->subject($this->trans->trans('trans.Verification of the correctness of the new email address'));
-        $email->from(new NamedAddress($this->getEmailFromAddress(), $this->getEmailFromName()));
+        $email->from(new Address($this->getEmailFromAddress(), $this->getEmailFromName()));
         $email->to($user->getEmail());
         $email->replyTo($this->getEmailReplyTo());
 
@@ -94,7 +94,7 @@ class EmailService
     {
         $email = new TemplatedEmail();
         $email->subject($this->trans->trans('trans.Password change confirmation'));
-        $email->from(new NamedAddress($this->getEmailFromAddress(), $this->getEmailFromName()));
+        $email->from(new Address($this->getEmailFromAddress(), $this->getEmailFromName()));
         $email->to($user->getEmail());
         $email->replyTo($this->getEmailReplyTo());
 
@@ -111,7 +111,7 @@ class EmailService
     {
         $email = new TemplatedEmail();
         $email->subject($this->trans->trans('trans.Password remind confirmation'));
-        $email->from(new NamedAddress($this->getEmailFromAddress(), $this->getEmailFromName()));
+        $email->from(new Address($this->getEmailFromAddress(), $this->getEmailFromName()));
         $email->to($user->getEmail());
         $email->replyTo($this->getEmailReplyTo());
 

@@ -43,6 +43,32 @@ IndexIgnore *
 
 #     put custom htaccess HERE - you can delete this line
 
+    # REDIRECT OLD - START
+    RewriteCond %{REQUEST_URI} ^/ogloszenie.php
+    RewriteCond %{QUERY_STRING} id=(\d+) [NC]
+    RewriteRule .* /l/%1/%1-ogloszenia-jaslo [R=301,L,QSD]
+
+    # 301 --- /kategoria.php?kat=2 => /c/motoryzacja-jaslo
+    RewriteCond %{QUERY_STRING} (^|&)kat\=2($|&)
+    RewriteRule ^kategoria\.php$ /c/motoryzacja\-jaslo? [L,R=301]
+
+    # 301 --- /kategoria.php?kat=5&podkategorie[]=38&filtr=1 => /c/praca-oferty-jaslo
+    RewriteCond %{QUERY_STRING} (^|&)kat\=5($|&)
+    RewriteCond %{QUERY_STRING} (^|&)podkategorie\[\]\=38($|&)
+    RewriteRule ^kategoria\.php$ /c/praca\-oferty\-jaslo? [L,R=301]
+
+    # 301 --- /kategoria.php?kat=3 => /c/nieruchomosci-domy-mieszkania-dzialki
+    RewriteCond %{QUERY_STRING} (^|&)kat\=3($|&)
+    RewriteRule ^kategoria\.php$ /c/nieruchomosci\-domy\-mieszkania\-dzialki? [L,R=301]
+
+    Redirect 301 /wyszukiwarka.php /listing/list
+    Redirect 301 /uzytkownik/rejestracja.php /register
+    Redirect 301 /strony/regulamin.php /p/regulamin
+    Redirect 301 /strony/kontakt.php /p/kontakt
+    Redirect 301 /uzytkownik/przypomnij.php /remind-password
+    Redirect 301 /ostatnio_dodane.php /last-added
+    # REDIRECT OLD - END
+
 # CUSTOM HTACCESS END - do not remove this line
 
 <IfModule mod_rewrite.c>

@@ -34,6 +34,7 @@ class ListingShowSingleService
         $qb->addSelect('listingCustomFieldValue');
         $qb->addSelect('customFieldOption');
         $qb->addSelect('listingFile');
+        $qb->addSelect('category');
         $qb->addSelect($viewsCountQuery);
         $qb->join('listing.category', 'category');
         $qb->leftJoin('category.customFieldsJoin', 'listingCategoryCustomFieldsJoin');

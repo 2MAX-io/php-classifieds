@@ -49,6 +49,7 @@ class ListingShowController extends AbstractController
                 [
                     'listingShowDto' => $listingShowDto,
                     'listing' => $listingShowDto->getListing(),
+                    'category' => $listingShowDto->getListing()->getCategory(),
                     'categoryBreadcrumbs' => $categoryListService->getBreadcrumbs(
                         $listingShowDto->getListing()->getCategory()
                     ),
@@ -71,6 +72,7 @@ class ListingShowController extends AbstractController
             [
                 'listingShowDto' => $listingShowDto,
                 'listing' => $listingShowDto->getListing(),
+                'category' => $listingShowDto->getListing()->getCategory(),
                 'categoryBreadcrumbs' => $categoryListService->getBreadcrumbs(
                     $listingShowDto->getListing()->getCategory()
                 ),

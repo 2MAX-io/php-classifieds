@@ -93,6 +93,7 @@ class ListingListController extends AbstractController
                 'customFieldList' => $customFieldsForCategory,
                 'categoryList' => $categoryListService->getLevelOfSubcategoriesToDisplayForCategory($category),
                 'categoryBreadcrumbs' => $categoryListService->getBreadcrumbs($category),
+                'category' => $category,
                 'queryParameters' => [
                     'query' => $request->query->get('query'),
                     'user' => $request->query->get('user'),

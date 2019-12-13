@@ -557,3 +557,15 @@ composer require -d zz_engine php-http/curl-client guzzlehttp/psr7 php-http/mess
 composer require -d zz_engine http-factory-guzzle
 composer require -d zz_engine http-interop/http-factory-guzzle
 composer update -d zz_engine --optimize-autoloader
+php zz_engine/bin/console doctrine:schema:update --force
+php zz_engine/bin/console doctrine:schema:update --force
+php zz_engine/bin/console doctrine:schema:update --force
+php zz_engine/bin/console doctrine:schema:update --force
+php zz_engine/bin/console doctrine:schema:update --dump-sql 
+php zz_engine/bin/console doctrine:schema:update --force
+php zz_engine/bin/console doctrine:schema:update --force
+php zz_engine/bin/console doctrine:schema:update --force
+php zz_engine/bin/console doctrine:schema:update --dump-sql 
+php zz_engine/bin/console doctrine:schema:update --dump-sql 
+php zz_engine/bin/console doctrine:schema:update --force
+php zz_engine/bin/console doctrine:schema:update --force

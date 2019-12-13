@@ -19,7 +19,6 @@ $pdo = new \PDO(
 $csvHandle = fopen($argv[1], 'rb');
 $sqlHandle = fopen($argv[2], 'wb');
 saveSql('SET NAMES utf8;', $sqlHandle);
-saveSql('SET AUTOCOMMIT = 0;', $sqlHandle);
 
 $header = fgetcsv($csvHandle, 0, ',', '"', "\0");
 $currentOldListingId = null;
@@ -29,9 +28,9 @@ while (($csvRow = fgetcsv($csvHandle, 0, ',', '"', "\0")) !== FALSE) {
     if ($currentOldListingId !== $csvRow['listing_id']) {
         $currentOldListingId = $csvRow['listing_id'];
 
+        saveUser($csvRow, $sqlHandle);
         saveListing($csvRow, $sqlHandle);
         saveListingViews($csvRow, $sqlHandle);
-        saveUser($csvRow, $sqlHandle);
         savePoliceLog($csvRow, $sqlHandle);
     }
     saveListingFile($csvRow, $sqlHandle);
@@ -48,7 +47,11 @@ function saveSql(string $sql, $sqlHandle): void {
     fwrite($sqlHandle, $sql . "\r\n");
 }
 
-function sqlEscape(string $unescaped): string {
+function sqlEscape(?string $unescaped): ?string {
+    if (null === $unescaped) {
+        return null;
+    }
+
     // only for use without db connection, when generating large quantity of SQL without database
     $replacements = array(
         "\x00"=>'\x00',
@@ -80,7 +83,7 @@ function arrayToSqlSetString(array $csvRow, array $map = null): string {
     return rtrim($result, ', ');
 }
 
-function arrayToSqlSetStringSingleElement(string $column, string $value): string {
+function arrayToSqlSetStringSingleElement(string $column, ?string $value): string {
     $notNull = [
         'listing.title',
         'listing.description',
@@ -219,7 +222,7 @@ function saveUser(array $csvRow, $sqlHandle): void {
     $row['listing_user_roles'] = '["ROLE_USER"]';
     $row['listing_user_enabled'] = 1;
 
-    saveSql('REPLACE INTO `user` SET '.arrayToSetStringUser($row).';', $sqlHandle);
+    saveSql('INSERT INTO `user` SET '.arrayToSetStringUser($row).' ON DUPLICATE KEY UPDATE id=id;', $sqlHandle);
 }
 
 /**

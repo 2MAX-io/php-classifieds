@@ -58,3 +58,10 @@ time mysqldump dev_test listing listing_custom_field_value listing_file --no-cre
 time mysqldump dev_test listing listing_custom_field_value listing_file --no-create-info --skip-add-drop-table --skip-add-locks --skip-disable-keys --skip-set-charset --compact --skip-extended-insert --skip-opt --complete-insert  > /sql/listing.large.sql
 time mysqldump dev_test listing listing_custom_field_value listing_file --no-create-info --skip-add-drop-table --skip-add-locks --skip-disable-keys --skip-set-charset --compact --skip-extended-insert --skip-opt --complete-insert  > /sql/listing.large.sql
 time mysqldump dev_test listing listing_custom_field_value listing_file --no-create-info --skip-add-drop-table --skip-add-locks --skip-disable-keys --skip-set-charset --compact --skip-extended-insert --skip-opt --complete-insert  > /sql/listing.large.sql
+time mysqldump classifieds > /sql/db_backup_$(date +%Y-%m-%d_%H%M%S).sql && chown -R 1000:1000 /sql
+bash /var/www/html/zz_engine/dev/bin/import_db.sh
+mysql classifieds < /sql/lpodnogl_ogl.sql
+mysql -e "DROP DATABASE classifieds; CREATE DATABASE classifieds;"
+mysql classifieds < /sql/lpodnogl_ogl.sql
+mysql classifieds < /sql/db_backup_2019-12-11_104055.sql
+time mysqldump classifieds > /sql/db_backup_$(date +%Y-%m-%d_%H%M%S).sql && chown -R 1000:1000 /sql

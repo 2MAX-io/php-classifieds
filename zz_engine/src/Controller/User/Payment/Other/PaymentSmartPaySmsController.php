@@ -21,7 +21,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class PaymentSmartPaySmsController extends AbstractController
 {
     /**
-     * @Route("/user/payment/smartpay/Lufn4twHDxDzzfHfiFzKL", name="app_payment_smartpay_sms")
+     * @Route("/payment/smartpay/Lufn4twHDxDzzfHfiFzKL", name="app_payment_smartpay_sms")
      */
     public function paymentSmartPaySms(
         Request $request,
@@ -39,6 +39,7 @@ class PaymentSmartPaySmsController extends AbstractController
             $numberToDaysMap['74068'] = 42;
 
             $featuredTimeDays = $numberToDaysMap[$smsPaymentNumber];
+            /** @var Listing $listing */
             $listing = $em->getRepository(Listing::class)->find($listingId);
             if (null === $listing) {
                 $logger->alert('listing not found');
@@ -46,6 +47,7 @@ class PaymentSmartPaySmsController extends AbstractController
             }
 
             $featuredListingService->makeFeatured($listing, $featuredTimeDays * 3600*24);
+            $em->flush();
         } catch (\Throwable $e) {
             $logger->alert('error while featuring listing by SMS', ExceptionHelper::flatten($e));
 

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Security;
 
+use App\Entity\Admin;
 use App\Entity\User;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -52,6 +53,17 @@ class LoginUserProgrammaticallyService
 
         $this->tokenStorage->setToken($token);
         $this->session->set('_security_main', \serialize($token));
+
+        $event = new InteractiveLoginEvent($this->requestStack->getMasterRequest(), $token);
+        $this->eventDispatcher->dispatch($event);
+    }
+
+    public function loginAdmin(Admin $admin): void
+    {
+        $token = new UsernamePasswordToken($admin, null, 'admin', $admin->getRoles());
+
+        $this->tokenStorage->setToken($token);
+        $this->session->set('_security_admin', \serialize($token));
 
         $event = new InteractiveLoginEvent($this->requestStack->getMasterRequest(), $token);
         $this->eventDispatcher->dispatch($event);

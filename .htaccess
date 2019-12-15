@@ -27,8 +27,8 @@ IndexIgnore *
 # CUSTOM HTACCESS START - do not remove this line
 
 #     force https - START
-#        RewriteCond %{HTTPS} off
-#        RewriteRule .* https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+        RewriteCond %{HTTPS} off
+        RewriteRule .* https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 #     force https - END
 
 #     set php version for cPanel with litespeed server - START

@@ -9,8 +9,8 @@ time docker exec classifieds_mysql bash -c "mysql admin_ogloszenia < /sql/admin_
 docker exec classifieds_mysql mysql admin_ogloszenia -e "UPDATE o_ogloszenia SET opis_d = SUBSTR(opis_d, 1, 9900) WHERE LENGTH(opis_d) > 10000;"
 #time docker exec classifieds_mysql mysql admin_ogloszenia -e "alter table o_ogloszenia modify opis_d varchar(11000) not null, ALGORITHM=COPY;"
 
-docker exec classifieds_php bash -c "php zz_engine/dev/bin/importer_export_from_old.php /var/www/html/zz_engine/docker/mysql/sql/importer_export_from_old.csv"
-docker exec classifieds_php bash -c "php zz_engine/dev/bin/importer_create_sql_for_new_classified.php /var/www/html/zz_engine/docker/mysql/sql/importer_export_from_old.csv /var/www/html/zz_engine/docker/mysql/sql/importer_import_to_new.sql"
+docker exec classifieds_php bash -c "php zz_engine/dev/bin/importer_export_from_old.php /var/www/html/zz_engine/var/mysql/importer_export_from_old.csv"
+docker exec classifieds_php bash -c "php zz_engine/dev/bin/importer_create_sql_for_new_classified.php /var/www/html/zz_engine/var/mysql/importer_export_from_old.csv /var/www/html/zz_engine/var/mysql/importer_import_to_new.sql"
 
 docker exec classifieds_mysql mysql classifieds -e "SET FOREIGN_KEY_CHECKS = 0; DROP TABLE listing_file"
 docker exec classifieds_mysql mysql classifieds -e "SET FOREIGN_KEY_CHECKS = 0; DROP TABLE listing_view"

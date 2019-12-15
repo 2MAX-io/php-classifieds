@@ -3,7 +3,7 @@ FROM php:7.3-apache
 RUN apt-get update -y \
 && apt-get install --no-install-recommends -y git zip unzip libfreetype6-dev libjpeg62-turbo-dev libpng-dev zlib1g-dev libicu-dev g++
 
-RUN pecl install xdebug-2.7.2 \
+RUN pecl install xdebug-2.9.0 \
 && docker-php-ext-enable xdebug \
 && echo "xdebug.remote_enable=1" >> /usr/local/etc/php/php.ini
 

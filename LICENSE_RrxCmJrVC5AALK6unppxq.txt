@@ -1,7 +1,4 @@
 2MAX.io Classified Ads
 Responsive Classified Ads with Custom Fields & Filters
 
-Licensed under Envato / Code Canyon Regular License
-https://codecanyon.net/licenses/terms/regular
-
-To use this PHP app it is required to poses License certificate and purchase code provided by Envato / Code Canyon
+To use this PHP app it is required to poses License certificate and purchase code provided by https://php-classified-ads.2max.io/

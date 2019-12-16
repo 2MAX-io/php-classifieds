@@ -3890,16 +3890,16 @@
         },
         {
             "name": "stefano/stefano-tree",
-            "version": "4.0.3",
+            "version": "4.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bartko-s/stefano-tree.git",
-                "reference": "b082c86c14fb4395ffdc6e091207719789c1c1c7"
+                "reference": "cc803862400089cfc9411674a8f644aadfc7de85"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bartko-s/stefano-tree/zipball/b082c86c14fb4395ffdc6e091207719789c1c1c7",
-                "reference": "b082c86c14fb4395ffdc6e091207719789c1c1c7",
+                "url": "https://api.github.com/repos/bartko-s/stefano-tree/zipball/cc803862400089cfc9411674a8f644aadfc7de85",
+                "reference": "cc803862400089cfc9411674a8f644aadfc7de85",
                 "shasum": ""
             },
             "require": {
@@ -3952,7 +3952,7 @@
                 "tree",
                 "zend"
             ],
-            "time": "2019-11-05T22:37:50+00:00"
+            "time": "2019-12-15T21:47:30+00:00"
         },
         {
             "name": "symfony/apache-pack",
@@ -4925,16 +4925,16 @@
         },
         {
             "name": "symfony/flex",
-            "version": "v1.5.3",
+            "version": "v1.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/flex.git",
-                "reference": "59b42aa1d3385a21683601c15e63eb35d2ebe8a4"
+                "reference": "952f45d1c5077e658cb16a61d11603bee873f968"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/flex/zipball/59b42aa1d3385a21683601c15e63eb35d2ebe8a4",
-                "reference": "59b42aa1d3385a21683601c15e63eb35d2ebe8a4",
+                "url": "https://api.github.com/repos/symfony/flex/zipball/952f45d1c5077e658cb16a61d11603bee873f968",
+                "reference": "952f45d1c5077e658cb16a61d11603bee873f968",
                 "shasum": ""
             },
             "require": {
@@ -4970,7 +4970,7 @@
                 }
             ],
             "description": "Composer plugin for Symfony",
-            "time": "2019-12-01T15:56:52+00:00"
+            "time": "2019-12-13T18:05:11+00:00"
         },
         {
             "name": "symfony/form",

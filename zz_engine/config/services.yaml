@@ -73,3 +73,6 @@ services:
         arguments:
             $version: '%asset_version%'
         public: false
+
+    App\Service\Email\Transport\SelfSignedEmailTransportFactory:
+        tags: ['mailer.transport_factory']

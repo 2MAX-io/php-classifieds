@@ -65,3 +65,58 @@ mysql -e "DROP DATABASE classifieds; CREATE DATABASE classifieds;"
 mysql classifieds < /sql/lpodnogl_ogl.sql
 mysql classifieds < /sql/db_backup_2019-12-11_104055.sql
 time mysqldump classifieds > /sql/db_backup_$(date +%Y-%m-%d_%H%M%S).sql && chown -R 1000:1000 /sql
+mysql -e "DROP DATABASE classifieds; CREATE DATABASE classifieds;"
+mysql classifieds < /var/www/html/zz_engine/var/mysql/admin_ogloszenia.sql 
+mysql -e "DROP DATABASE admin_ogloszenia; CREATE DATABASE admin_ogloszenia;"
+mysql admin_ogloszenia < /var/www/html/zz_engine/var/mysql/admin_ogloszenia.sql 
+mysql -e "DROP DATABASE classifieds; CREATE DATABASE classifieds;"
+mysql classifieds < /var/www/html/zz_engine/var/mysql/j4u_ogloszenia.sql 
+mysql classifieds < /var/www/html/zz_engine/var/mysql/j4u_ogloszenia.sql 
+mysql -e "DROP DATABASE classifieds; CREATE DATABASE classifieds;"
+time mysql --max_allowed_packet=1G classifieds < /var/www/html/zz_engine/var/mysql/j4u_ogloszenia.sql 
+mysql -e "DROP DATABASE classifieds; CREATE DATABASE classifieds;"
+time mysql --max_allowed_packet=1G classifieds < /var/www/html/zz_engine/var/mysql/j4u_ogloszenia.sql 
+time mysqldump classifieds > /sql/db_backup_$(date +%Y-%m-%d_%H%M%S).sql && chown -R 1000:1000 /sql
+time mysqldump classifieds > /var/www/html/zz_engine/var/mysql//db_backup_$(date +%Y-%m-%d_%H%M%S).sql && chown -R 1000:1000 /var/www/html/zz_engine/var/mysql/
+mysql -e "DROP DATABASE classifieds; CREATE DATABASE classifieds;"
+time mysql --max_allowed_packet=1G classifieds < /var/www/html/zz_engine/var/mysql/db_backup_2019-12-15_155923.sql 
+mysql -e "DROP DATABASE classifieds; CREATE DATABASE classifieds;"
+time mysql --max_allowed_packet=1G classifieds < /var/www/html/zz_engine/var/mysql/db_backup_2019-12-15_155923.sql 
+time mysql --init-command="SET SESSION FOREIGN_KEY_CHECKS=0;SET UNIQUE_CHECKS=0;" --max_allowed_packet=1G classifieds < /var/www/html/zz_engine/var/mysql/db_backup_2019-12-15_155923.sql 
+less /var/www/html/zz_engine/var/mysql/db_backup_2019-12-15_155923.sql
+mysql -e "DROP DATABASE classifieds; CREATE DATABASE classifieds;"
+time mysql --init-command="SET SESSION AUTOCOMMIT = 0,FOREIGN_KEY_CHECKS=0;SET UNIQUE_CHECKS=0;" --max_allowed_packet=1G classifieds < /var/www/html/zz_engine/var/mysql/db_backup_2019-12-15_155923.sql /sql/commit.sql
+time mysql --init-command="SET SESSION AUTOCOMMIT=0; SET SESSION FOREIGN_KEY_CHECKS=0; SET SESSION UNIQUE_CHECKS=0;" --max_allowed_packet=1G classifieds < /var/www/html/zz_engine/var/mysql/db_backup_2019-12-15_155923.sql /sql/commit.sql
+time mysql --init-command="SET SESSION AUTOCOMMIT=0; SET SESSION FOREIGN_KEY_CHECKS=0; SET SESSION UNIQUE_CHECKS=0;" --max_allowed_packet=1G classifieds < cat /var/www/html/zz_engine/var/mysql/db_backup_2019-12-15_155923.sql /sql/commit.sql
+time mysql --init-command="SET SESSION AUTOCOMMIT=0; SET SESSION FOREIGN_KEY_CHECKS=0; SET SESSION UNIQUE_CHECKS=0;" --max_allowed_packet=1G classifieds < cat /var/www/html/zz_engine/var/mysql/db_backup_2019-12-15_155923.sql /sql/commit.sql
+time mysql --init-command="SET SESSION AUTOCOMMIT=0; SET SESSION FOREIGN_KEY_CHECKS=0; SET SESSION UNIQUE_CHECKS=0;" --max_allowed_packet=1G classifieds < cat /var/www/html/zz_engine/var/mysql/db_backup_2019-12-15_155923.sql /sql/commit.sql 
+time mysql --init-command="SET SESSION AUTOCOMMIT=0; SET SESSION FOREIGN_KEY_CHECKS=0; SET SESSION UNIQUE_CHECKS=0;" --max_allowed_packet=1G classifieds < cat /var/www/html/zz_engine/var/mysql/db_backup_2019-12-15_155923.sql /sql/db_backup_2019-12-15_155923.sql 
+time mysql --init-command="SET SESSION AUTOCOMMIT=0; SET SESSION FOREIGN_KEY_CHECKS=0; SET SESSION UNIQUE_CHECKS=0;" --max_allowed_packet=1G classifieds < /var/www/html/zz_engine/var/mysql/db_backup_2019-12-15_155923.sql /sql/db_backup_2019-12-15_155923.sql 
+time mysql --init-command="SET SESSION FOREIGN_KEY_CHECKS=0; SET SESSION UNIQUE_CHECKS=0;" --max_allowed_packet=1G classifieds < /var/www/html/zz_engine/var/mysql/db_backup_2019-12-15_155923.sql /sql/db_backup_2019-12-15_155923.sql 
+time mysql --init-command="SET SESSION FOREIGN_KEY_CHECKS=0; SET UNIQUE_CHECKS=0;" classifieds < /var/www/html/zz_engine/var/mysql/db_backup_2019-12-15_155923.sql /sql/db_backup_2019-12-15_155923.sql 
+time mysql --init-command="SET SESSION FOREIGN_KEY_CHECKS=0; SET UNIQUE_CHECKS=0;" classifieds <  /sql/db_backup_2019-12-15_155923.sql 
+time mysql --init-command="SET SESSION FOREIGN_KEY_CHECKS=0; SET UNIQUE_CHECKS=0;" classifieds <  /sql/db_backup_2019-12-15_155923.sql 
+time mysql --init-command="SET SESSION FOREIGN_KEY_CHECKS=0; SET UNIQUE_CHECKS=0;" classifieds <  /sql/db_backup_2019-12-15_155923.sql 
+cat /etc/mysql/conf.d/my.cnf
+ls /etc/mysql/conf.d/my.cnf
+ls /etc/mysql/conf.d/
+cat /etc/mysql/conf.d/mysql.cnf 
+cat /etc/mysql/conf.d/docker.cnf 
+cat /etc/mysql/conf.d/my.cnf
+ls /etc/mysql/conf.d/
+ll
+ls -la
+ls -la /etc/mysql/conf.d/
+chmod 755 /etc/mysql/conf.d/my.cnf 
+ls -la /etc/mysql/conf.d/
+chmod 655 /etc/mysql/conf.d/my.cnf 
+ls -la /etc/mysql/conf.d/
+chmod 644 /etc/mysql/conf.d/my.cnf 
+ls -la /etc/mysql/conf.d/
+time mysql --init-command="SET SESSION FOREIGN_KEY_CHECKS=0; SET UNIQUE_CHECKS=0;" classifieds <  /sql/db_backup_2019-12-15_155923.sql 
+mysql admin_ogloszenia < /var/www/html/zz_engine/var/mysql/admin_ogloszenia.sql 
+mysql -e "DROP DATABASE admin_ogloszenia; CREATE DATABASE admin_ogloszenia;"
+mysql -e "DROP DATABASE IF EXISTS admin_ogloszenia; CREATE DATABASE admin_ogloszenia;"
+mysql admin_ogloszenia < /var/www/html/zz_engine/var/mysql/admin_ogloszenia.sql 
+mysql admin_ogloszenia < /var/www/html/zz_engine/var/mysql/admin_ogloszenia.sql 
+mysql admin_ogloszenia < /var/www/html/zz_engine/var/mysql/admin_ogloszenia.sql 

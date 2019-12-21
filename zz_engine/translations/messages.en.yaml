@@ -169,11 +169,11 @@ trans:
   Destination page not found, if you have been charged and did not receive service, please contact us: 'Destination page not found, if you have been charged and did not receive service, please contact us'
   Payment gateway - mode: 'Payment gateway - mode'
 
-trans.customFieldType.SELECT_AS_CHECKBOXES: Select field, filter as checkboxes
-trans.customFieldType.SELECT_SINGLE: Select field, filter as single select
-trans.customFieldType.YEAR_RANGE: Field with year
-trans.customFieldType.INTEGER_RANGE: Field with integer
-trans.customFieldType.CHECKBOX_MULTIPLE: Multiple checkboxes
+trans.customFieldType.SELECT_AS_CHECKBOXES: 'Checkboxes in filters, single select when editing'
+trans.customFieldType.SELECT_SINGLE: 'Single selection field'
+trans.customFieldType.YEAR_RANGE: 'Field with year'
+trans.customFieldType.INTEGER_RANGE: 'Field with integer'
+trans.customFieldType.CHECKBOX_MULTIPLE: 'Multiple checkboxes'
 
 trans.listing.status.STATUS_PENDING: 'Pending'
 trans.listing.status.STATUS_ACTIVE: 'Active'
@@ -577,6 +577,15 @@ trans.max: max
 'trans.Payments - PayPal Client secret': 'Payments - PayPal Client secret'
 trans.paypal.sandbox: paypal.sandbox
 trans.paypal.live: paypal.live
+'trans.Przelewy24 mode': 'Przelewy24 mode'
+'trans.Przelewy24 - Merchant id': 'Przelewy24 - Merchant id'
+'trans.Przelewy24 - Pos id': 'Przelewy24 - Pos id'
+'trans.Przelewy24 - CRC': 'Przelewy24 - CRC'
+'trans.usually same as Merchant id, shop id, p24_pos_id': 'usually same as Merchant id, shop id, p24_pos_id'
+'trans.CRC key from account details': 'CRC key from account details'
+'trans.account login, seller id, p24_merchant_id, digits': 'account login, seller id, p24_merchant_id, digits'
+trans.przelewy24.sandbox: 'sandbox'
+trans.przelewy24.live: 'live '
 trans.Date: Date
 'trans.Balance difference': 'Balance difference'
 'trans.Balance after change': 'Balance after change'

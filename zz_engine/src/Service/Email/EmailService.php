@@ -76,7 +76,7 @@ class EmailService
         $email = new TemplatedEmail();
         $email->subject($this->trans->trans('trans.Verification of the correctness of the new email address'));
         $email->from(new Address($this->getEmailFromAddress(), $this->getEmailFromName()));
-        $email->to($user->getEmail());
+        $email->to($newEmail);
         $email->replyTo($this->getEmailReplyTo());
 
         $email->htmlTemplate('email/change_email_new_email_notification.html.twig');

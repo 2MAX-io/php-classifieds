@@ -9,7 +9,7 @@ use Twig\Extension\RuntimeExtensionInterface;
 
 class TwigAdvert implements RuntimeExtensionInterface
 {
-    public const DEFAULT_ZONE = 29;
+    public const DEFAULT_ZONE = 54;
     public const MOTO = 100;
     public const CONSTRUCTION = 1200;
     public const MOTO_PARTS = 107;

@@ -41,7 +41,7 @@ class User implements UserInterface, RoleInterface, EnablableInterface, EncoderA
     private $email;
 
     /**
-     * @ORM\Column(type="string", nullable=false, length=255)
+     * @ORM\Column(type="json", nullable=false)
      */
     private $roles = [];
 

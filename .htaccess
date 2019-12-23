@@ -572,7 +572,7 @@ IndexIgnore *
     RewriteCond %{QUERY_STRING} (^|&)kat\=12($|&)
     RewriteRule ^kategoria\.php$ https://www.ogloszenia.jaslo4u.pl/c/dom\-ogrod\-meble? [L,R=301]
 
-    Redirect 301 /wyszukiwarka.php /listing/list
+    Redirect 301 /wyszukiwarka.php https://www.ogloszenia.jaslo4u.pl/listing/search
     Redirect 301 /uzytkownik/rejestracja.php /register
     Redirect 301 /strony/regulamin.php /p/regulamin
     Redirect 301 /strony/kontakt.php /p/kontakt

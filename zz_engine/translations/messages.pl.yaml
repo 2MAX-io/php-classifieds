@@ -608,6 +608,7 @@ trans:
   Delivered?: 'Dostarczone?'
   Destination page not found, if you have been charged and did not receive service, please contact us: 'Strona docelowa nie została znaleziona, jeżeli zapłaciłeś i nie otrzymałeś usługi, prosimy o kontakt z nami'
   Payment gateway - mode: 'Bramka płatności - tryb'
+  Email or Login: 'Email lub Login'
 
 'trans.Remove non standard characters in listing - Enabled': 'Usuń niestandardowe znaki z ogłoszenia - Włączone'
 'trans.Remove non standard characters in listing - List of allowed characters': 'Usuń niestandardowe znaki z ogłoszenia - Lista dozwolonych znaków'

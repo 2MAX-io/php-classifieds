@@ -657,3 +657,4 @@ trans.Preview: Preview
 'trans.allows to remove all non standard characters from listing, except those which are white listed bellow': 'allows to remove all non standard characters from listing, except those which are white listed bellow'
 'trans.payment_gateway.paypal': 'PayPal'
 'trans.payment_gateway.przelewy24': 'Przelewy24'
+'Email or Login': 'Email or Login'

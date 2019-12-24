@@ -5,6 +5,10 @@
     <option name="directoryToWeb" value="." />
     <option name="directoryToApp" value="zz_engine/config" />
     <option name="pluginEnabled" value="true" />
+    <option name="codeFoldingPhpRoute" value="false" />
+    <option name="codeFoldingPhpTemplate" value="false" />
+    <option name="codeFoldingTwigRoute" value="false" />
+    <option name="codeFoldingTwigTemplate" value="false" />
     <option name="profilerCsvPath" value="" />
     <option name="profilerHttpUrl" value="https://classifieds.localhost" />
     <option name="lastServiceGeneratorLanguage" value="yaml" />

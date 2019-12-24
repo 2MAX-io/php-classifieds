@@ -158,6 +158,14 @@
                     </li>
                 {% endif %}
 
+                {%- if app.user -%}
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-outline-success" href="{{ path('app_user_listing_index') }}">
+                            {{- 'trans.My listings' | trans -}}
+                        </a>
+                    </li>
+                {% endif %}
+
                 {% if lowSecurityCheckIsAdminInPublic() %}
                     <li class="nav-item">
                         <a class="nav-link btn btn-outline-danger" href="{{ path('app_admin_index') }}">

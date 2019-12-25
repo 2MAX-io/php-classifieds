@@ -6,15 +6,21 @@
     <!-- cat header -->
     <div class="container mt-2 mt-md-3 mb-2">
         <div class="d-flex flex-row">
-            <div class="flex-grow-1">
+            <div class="flex-grow-1 d-none d-sm-block">
                 <h2>{{ 'trans.Categories' | trans }}</h2>
             </div>
-            <div class="d-sm-none">
+            <div class="d-md-none">
                 <a href="{{ path('app_category_view_all') }}" class="btn btn-light">
-                    {{ 'trans.View all' | trans }}
+                    {{ 'trans.All categories' | trans }}
+                </a>
+                <a href="{{ path('app_last_added') }}" class="btn btn-light">
+                    {{ 'trans.Last added' | trans }}
                 </a>
             </div>
-            <div class="d-none d-sm-block">
+            <div class="d-none d-md-block">
+                <a href="{{ path('app_last_added') }}" class="btn btn-light">
+                    {{ 'trans.Last added' | trans }}
+                </a>
                 <a href="{{ path('app_category_view_all') }}" class="btn btn-light">
                     {{ 'trans.View all categories' | trans }}
                 </a>

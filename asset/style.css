@@ -428,3 +428,7 @@ input.form-control, textarea.form-control, select.form-control {
 .menu-top-item {
     border-bottom: 1px dashed #cecece;
 }
+
+.app-icon {
+    width: 16px;
+}

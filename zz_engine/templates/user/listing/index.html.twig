@@ -52,14 +52,14 @@
                         <tr>
                             <td>
                                 <div>
-                                    <a title="{{ listing.title }}" href="{{ path('app_listing_show', {id: listing.id, 'slug': listing.slug}) }}">
+                                    <a title="{{ listing.title }}" href="{{ path('app_listing_show', {id: listing.id, 'slug': listing.slug, 'showPreviewForOwner': 1}) }}">
                                         <img class="rounded list-small-img" alt="{{ listing.title }}" src="{{ asset(listing.mainImageInListSize | default('static/system/blank.png')) }}">
                                     </a>
                                 </div>
                             </td>
                             <td>
                                 <div>
-                                    <a href="{{ path('app_listing_show', {"id": listing.id, 'slug': listing.slug}) }}">{{ listing.title }}</a>
+                                    <a href="{{ path('app_listing_show', {"id": listing.id, 'slug': listing.slug, 'showPreviewForOwner': 1}) }}">{{ listing.title }}</a>
                                 </div>
                                 <div>
                                     <span class="mr-2">

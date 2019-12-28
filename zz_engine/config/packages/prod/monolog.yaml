@@ -10,6 +10,12 @@ monolog:
             path: "%kernel.logs_dir%/%kernel.environment%.log"
             level: debug
             include_stacktraces: true
+        error_only:
+            type: rotating_file
+            path: "%kernel.logs_dir%/%kernel.environment%_error_only.log"
+            level: error
+            include_stacktraces: true
+            channels: ["!event"]
         console:
             type: console
             process_psr_3_messages: false

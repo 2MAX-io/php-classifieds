@@ -13,7 +13,7 @@ class PriceForType extends AbstractType
 {
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefault('placeholder', 'trans.not required');
+        $resolver->setDefault('placeholder', '—');
         $resolver->setDefault('choices', [
             'trans.priceFor.PRICE_FOR_WHOLE' => Listing::PRICE_FOR_WHOLE,
             'trans.priceFor.PRICE_FOR_ITEM' => Listing::PRICE_FOR_ITEM,

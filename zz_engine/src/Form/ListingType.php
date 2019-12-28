@@ -133,6 +133,7 @@ class ListingType extends AbstractType
             ],
         ]);
         $builder->add('priceNegotiable', BoolType::class, [
+            'placeholder' => '—',
             'label' => 'trans.Amount is negotiable?',
             'required' => false,
         ]);

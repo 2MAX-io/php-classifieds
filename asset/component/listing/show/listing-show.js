@@ -11,7 +11,7 @@ $('[data-fancybox="file"]').fancybox({
     hash: false
 });
 
-$('.onClickShowContactInformation').on('click', function (event) {
+$('.js__onClickShowContactInformation').on('click', function (event) {
     if (!preventDoubleClick(this, event)) {
         return;
     }
@@ -29,10 +29,17 @@ $('.onClickShowContactInformation').on('click', function (event) {
             listingId: listingId
         }
     ).done(function (response) {
-        $('.listing-contact-data').remove();
+        if (true !== response.success) {
+            return;
+        }
+
+        $('.js__listing-contact-data').remove();
 
         $button.before(response.html);
-        $button.remove();
+        $button.hide();
+    }).fail(function () {
+        $('.js__listing-contact-data').remove();
+        $button.show();
     });
 });
 

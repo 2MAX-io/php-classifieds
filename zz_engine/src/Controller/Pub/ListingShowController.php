@@ -105,6 +105,7 @@ class ListingShowController extends AbstractController
         }
 
         return $this->json([
+            'success' => true,
             'html' => $twig->render('listing_show_contact.html.twig', [
                 'listing' => $listingShowDto->getListing(),
             ])

@@ -616,3 +616,4 @@ trans:
 'trans.allows to remove all non standard characters from listing, except those which are white listed bellow': 'pozwala na usunięcie wszystkich niestandardowych znaków z ogłoszenia, za wyjątkiem tych wpisanych poniżej'
 'trans.payment_gateway.paypal': 'PayPal'
 'trans.payment_gateway.przelewy24': 'Przelewy24'
+'trans.Share your email address to log in': 'Udostępnij swój adres email aby się zalogować'

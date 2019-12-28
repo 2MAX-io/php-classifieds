@@ -6,6 +6,7 @@ namespace App\Controller\User\Account;
 
 use App\Controller\User\Base\AbstractUserController;
 use App\Entity\User;
+use App\Exception\UserVisibleException;
 use App\Helper\ExceptionHelper;
 use App\Helper\Str;
 use App\Security\LoginUserProgrammaticallyService;
@@ -72,6 +73,12 @@ class LoginOauthController extends AbstractUserController
             $adapter = $hybridAuth->authenticate($oauthProviderName);
             $userProfile = $adapter->getUserProfile();
             $email = Str::emptyTrim($userProfile->emailVerified) ? $userProfile->email : $userProfile->emailVerified;
+            if (null === $email) {
+                $logger->error('could not find email address in oauth response');
+                
+                throw new UserVisibleException('trans.Share your email address to log in');
+            }
+            
             $user = $em->getRepository(User::class)->findOneBy(['email' => $email]);
             if ($user === null) {
                 $user = $createUserService->registerUser($email);

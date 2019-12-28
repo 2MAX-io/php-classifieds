@@ -86,8 +86,8 @@ class ListingType extends AbstractType
                     'choices' => $this->validUntilSetService->getValidityTimeDaysChoices()
                 ]),
             ],
-            'label' => 'trans.Validity time',
-            'empty_data' => 9,
+            'label' => 'trans.For how long listing should be published?',
+            'data' => 14,
         ]);
         $builder->add('phone', TextType::class, [
             'label' => 'trans.Phone',

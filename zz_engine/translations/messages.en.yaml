@@ -31,7 +31,6 @@ trans:
   'Cancel': 'Cancel'
   'Confirm': 'Confirm'
   'Select category': 'Select category'
-  'Validity time': 'Validity time'
   'Show email?': 'Show email?'
   'Amount per': 'Amount per'
   'Amount is negotiable?': 'Amount is negotiable?'
@@ -239,7 +238,7 @@ trans.Register: Register
 trans.Description: Description
 trans.City: City
 trans.Pictures: Pictures
-'trans.Validity time': 'Validity time'
+'trans.For how long listing should be published?': 'For how long listing should be published?'
 'trans.1 week': '1 week'
 'trans.2 weeks': '2 weeks'
 'trans.3 weeks': '3 weeks'

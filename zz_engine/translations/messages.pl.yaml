@@ -94,6 +94,7 @@ trans:
   City: 'Miejscowość'
   Pictures: 'Zdjęcia'
   Validity time: 'Czas trwania'
+  For how long listing should be published?: 'Na jak długo opublikować ogłoszenie?'
   1 week: 'tydzień'
   2 weeks: '2 tygodnie'
   3 weeks: '3 tygodnie'

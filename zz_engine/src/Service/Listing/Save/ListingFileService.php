@@ -33,11 +33,11 @@ class ListingFileService
 
     public function processListingFiles(Listing $listing, array $fileUploaderList): void
     {
-        $sortForExisting = [];
+        $fileIdToSortIndexMap = [];
         foreach ($fileUploaderList as $fileUploaderListElement) {
             if (isset($fileUploaderListElement['data']['listingFileId'])) {
                 $listingId = (int) $fileUploaderListElement['data']['listingFileId'];
-                $sortForExisting[$listingId] = (int) $fileUploaderListElement['index'];
+                $fileIdToSortIndexMap[$listingId] = (int) $fileUploaderListElement['index'];
                 continue;
             }
             if (!isset($fileUploaderListElement['data']['tmpFilePath'])) {
@@ -67,10 +67,10 @@ class ListingFileService
         }
 
         foreach ($listing->getListingFiles() as $listingFile) {
-            if (!isset($sortForExisting[$listingFile->getId()])) {
+            if (!isset($fileIdToSortIndexMap[$listingFile->getId()])) {
                 continue;
             }
-            $listingFile->setSort($sortForExisting[$listingFile->getId()]);
+            $listingFile->setSort($fileIdToSortIndexMap[$listingFile->getId()]);
             $this->em->persist($listingFile);
         }
 

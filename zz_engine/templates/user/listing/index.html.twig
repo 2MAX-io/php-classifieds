@@ -84,6 +84,7 @@
                                         </a>
                                     </div>
                                 {% endif %}
+                                {% if listing.status in [constant('\App\\Entity\\Listing::STATUS_ACTIVE'), constant('\App\\Entity\\Listing::STATUS_ACTIVE_FEATURED')] %}
                                 <div>
                                     <a
                                             href="{{ path('app_user_feature_listing_by_sms', {"id": listing.id}) }}"
@@ -92,6 +93,7 @@
                                         {{ 'trans.Feature this listing' | trans }}
                                     </a>
                                 </div>
+                                {% endif %}
                             </td>
                             <td>
                                 {{ listing.lastEditDate | date('d.m.Y') }}

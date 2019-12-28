@@ -578,6 +578,7 @@ IndexIgnore *
     Redirect 301 /strony/kontakt.php /p/kontakt
     Redirect 301 /uzytkownik/przypomnij.php /remind-password
     Redirect 301 /ostatnio_dodane.php /last-added
+    Redirect 301 /szukaj.php https://www.ogloszenia.jaslo4u.pl/listing/search
     # REDIRECT OLD - END
 
 # CUSTOM HTACCESS END - do not remove this line

@@ -121,6 +121,7 @@ TAG
 UPDATE listing
     JOIN listing_file
     ON listing.id = listing_file.listing_id
+       && listing_file.user_removed = 0
     JOIN (
         SELECT 
             listing_id
@@ -129,10 +130,10 @@ UPDATE listing
         FROM listing_file 
         WHERE listing_file.user_removed = 0
         GROUP BY listing_id
-    ) minSortJoin
+    ) listingWithMinSort
     ON 
-        minSortJoin.listing_id = listing_file.listing_id 
-        && listing_file.sort = minSortJoin.minSort
+        listing_file.listing_id = listingWithMinSort.listing_id
+        && listing_file.sort = listingWithMinSort.minSort
 SET listing.main_image = listing_file.path
 WHERE 1
 TAG

@@ -122,9 +122,17 @@ UPDATE listing
     JOIN listing_file
     ON listing.id = listing_file.listing_id
     JOIN (
-        SELECT listing_id, MIN(sort) minSort, path FROM listing_file GROUP BY listing_id
+        SELECT 
+            listing_id
+             , MIN(sort) minSort
+             , path 
+        FROM listing_file 
+        WHERE listing_file.user_removed = 0
+        GROUP BY listing_id
     ) minSortJoin
-    ON minSortJoin.listing_id = listing_file.listing_id && listing_file.sort = minSortJoin.minSort
+    ON 
+        minSortJoin.listing_id = listing_file.listing_id 
+        && listing_file.sort = minSortJoin.minSort
 SET listing.main_image = listing_file.path
 WHERE 1
 TAG

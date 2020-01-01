@@ -53,6 +53,11 @@ class ListingListController extends AbstractController
             $listingListDto->setCategory($category);
         }
 
+        if (null === $listingListDto->getCategory() && $listingListDto->getRoute() === 'app_category') {
+            // category not found, redirect to last added to prevent error
+            return $this->redirectToRoute('app_last_added');
+        }
+
         if ($request->query->has('user') && !\ctype_digit($request->query->get('user', false))) {
             throw $this->createNotFoundException();
         }

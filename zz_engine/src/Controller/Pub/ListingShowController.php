@@ -76,6 +76,9 @@ class ListingShowController extends AbstractController
                 'categoryBreadcrumbs' => $categoryListService->getBreadcrumbs(
                     $listingShowDto->getListing()->getCategory()
                 ),
+                ParamEnum::JSON_DATA => [
+                    'showPreviewForOwner' => $request->query->get('showPreviewForOwner'),
+                ],
             ]
         );
     }

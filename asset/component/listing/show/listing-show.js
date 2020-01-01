@@ -1,7 +1,5 @@
 "use strict";
 
-var showPreviewForOwner = app.getJsonDataCached()['showPreviewForOwner'];
-
 $('[data-fancybox="file"]').fancybox({
     buttons: [
         "zoom",
@@ -19,8 +17,9 @@ $('.js__onClickShowContactInformation').on('click', function (event) {
     var $button = $(this);
     var listingId = $(this).data('listing-id');
     var params = {};
-    if (showPreviewForOwner !== '') {
-        params.showPreviewForOwner = 1;
+    var showPreviewForOwner = app.getJsonDataCached()['showPreviewForOwner'];
+    if (showPreviewForOwner !== undefined) {
+        params.showPreviewForOwner = app.getJsonDataCached()['showPreviewForOwner'];
     }
 
     $.post(

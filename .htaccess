@@ -43,6 +43,9 @@ IndexIgnore *
 
 #     put custom htaccess HERE - you can delete this line
 
+    RewriteCond %{HTTP_HOST} !^www\. [NC]
+    RewriteRule ^(.*)$ http://www.%{HTTP_HOST}/$1 [R=301,L]
+
     # REDIRECT OLD - START
     RewriteCond %{REQUEST_URI} ^/ogloszenie.php
     RewriteCond %{QUERY_STRING} id=(\d+) [NC]

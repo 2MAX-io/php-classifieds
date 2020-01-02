@@ -12,6 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\LessThan;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 class AdminListingAdvancedEditType extends AbstractType
@@ -38,6 +39,7 @@ class AdminListingAdvancedEditType extends AbstractType
             'label' => 'trans.Date of last raising',
             'constraints' => [
                 new NotBlank(),
+                new LessThan('+2 day'),
             ],
         ]);
         $builder->add('validUntilDate', AppDateTimeType::class, [

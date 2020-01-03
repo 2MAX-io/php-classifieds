@@ -52,6 +52,7 @@ class AdminListingAdvancedEditType extends AbstractType
             'label' => 'trans.Date added',
             'constraints' => [
                 new NotBlank(),
+                new LessThan('+2 day'),
             ],
         ]);
         $builder->add('lastEditDate', AppDateTimeType::class, [

@@ -192,7 +192,7 @@ class ListingListService
         $qb->addOrderBy('listing.id', 'DESC');
 
         if ($listingListDto->isLastAddedListFlag()) {
-            $qb->orderBy('listing.orderByDate', 'DESC');
+            $qb->orderBy('listing.firstCreatedDate', 'DESC');
         }
 
         $qb->groupBy('listing.id');

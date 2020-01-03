@@ -39,7 +39,7 @@ class ValidUntilSetService
     {
         $listing->setUserDeactivated(false);
 
-        if (Date::olderThanDays(10, $listing->getOrderByDate())) {
+        if (Date::olderThanDays(40, $listing->getOrderByDate())) {
             $listing->setOrderByDate(new \DateTime());
         }
     }

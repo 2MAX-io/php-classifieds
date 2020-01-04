@@ -10,8 +10,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Zend\Feed\Writer\Feed;
-use Zend\Feed\Writer\Writer;
+use Laminas\Feed\Writer\Feed;
+use Laminas\Feed\Writer\Writer;
 
 class RssController extends AbstractController
 {

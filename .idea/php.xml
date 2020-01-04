@@ -131,11 +131,8 @@
       <path value="$PROJECT_DIR$/zz_engine/vendor/psr/log" />
       <path value="$PROJECT_DIR$/zz_engine/vendor/composer" />
       <path value="$PROJECT_DIR$/zz_engine/vendor/friendsofsymfony/jsrouting-bundle" />
-      <path value="$PROJECT_DIR$/zz_engine/vendor/zendframework/zend-escaper" />
       <path value="$PROJECT_DIR$/zz_engine/vendor/zendframework/zend-eventmanager" />
       <path value="$PROJECT_DIR$/zz_engine/vendor/zendframework/zend-code" />
-      <path value="$PROJECT_DIR$/zz_engine/vendor/zendframework/zend-stdlib" />
-      <path value="$PROJECT_DIR$/zz_engine/vendor/zendframework/zend-feed" />
       <path value="$PROJECT_DIR$/zz_engine/vendor/intervention/image" />
       <path value="$PROJECT_DIR$/zz_engine/vendor/willdurand/jsonp-callback-validator" />
       <path value="$PROJECT_DIR$/zz_engine/vendor/willdurand/js-translation-bundle" />
@@ -181,6 +178,10 @@
       <path value="$PROJECT_DIR$/zz_engine/vendor/doctrine/persistence" />
       <path value="$PROJECT_DIR$/zz_engine/vendor/psr/http-factory" />
       <path value="$PROJECT_DIR$/zz_engine/vendor/http-interop/http-factory-guzzle" />
+      <path value="$PROJECT_DIR$/zz_engine/vendor/laminas/laminas-feed" />
+      <path value="$PROJECT_DIR$/zz_engine/vendor/laminas/laminas-zendframework-bridge" />
+      <path value="$PROJECT_DIR$/zz_engine/vendor/laminas/laminas-escaper" />
+      <path value="$PROJECT_DIR$/zz_engine/vendor/laminas/laminas-stdlib" />
     </include_path>
   </component>
   <component name="PhpInterpreters">

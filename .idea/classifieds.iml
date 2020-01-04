@@ -47,6 +47,10 @@
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/hybridauth/hybridauth" />
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/intervention/image" />
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/jdorn/sql-formatter" />
+      <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/laminas/laminas-escaper" />
+      <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/laminas/laminas-feed" />
+      <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/laminas/laminas-stdlib" />
+      <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/laminas/laminas-zendframework-bridge" />
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/league/flysystem" />
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/league/glide" />
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/league/glide-symfony" />
@@ -160,10 +164,7 @@
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/willdurand/js-translation-bundle" />
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/willdurand/jsonp-callback-validator" />
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/zendframework/zend-code" />
-      <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/zendframework/zend-escaper" />
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/zendframework/zend-eventmanager" />
-      <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/zendframework/zend-feed" />
-      <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/zendframework/zend-stdlib" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

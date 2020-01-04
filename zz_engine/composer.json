@@ -56,7 +56,7 @@
         "twig/twig": "^2.0",
         "webmozart/path-util": "^2.3",
         "willdurand/js-translation-bundle": "^2.6",
-        "zendframework/zend-feed": "^2.12"
+        "laminas/laminas-feed": "^2.12"
     },
     "require-dev": {
         "fzaninotto/faker": "^1.8",

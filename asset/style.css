@@ -224,6 +224,11 @@ a.use-visited-color:visited {
     border-top-right-radius: 0.25rem;
 }
 
+.listing-list-img-blank {
+    height: 120px;
+    width: 120px;
+}
+
 *::-ms-backdrop,.listing-list-img {
     max-width: 260px; /* ie 11 not respecting max-width and expands parent */
 }

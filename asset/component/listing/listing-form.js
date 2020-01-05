@@ -22,7 +22,13 @@ new Cleave('.input-money', {
 autosize($('.textarea-autosize'));
 
 var isUploadFinished = function () {
-    return $.fileuploader.getInstance('#listing_file').getChoosedFiles()[0].uploaded;
+    var chosenFiles = $.fileuploader.getInstance('#listing_file').getChoosedFiles();
+    var noFilesUploaded = chosenFiles[0] === undefined;
+    if (noFilesUploaded) {
+        return true;
+    }
+
+    return chosenFiles[0].uploaded;
 };
 
 var onListingSaveFormSubmit = function (button, event) {

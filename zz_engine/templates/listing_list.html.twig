@@ -314,7 +314,7 @@
                             <div class="container-fluid">
                                 <div class="row py-md-1">
                                     <div class="col-12 col-md-4 p-0 px-md-1 {% if listing.mainImage is empty %}d-none-soft{% endif %} d-md-block">
-                                        <a title="{{ listing.title }}" href="{{ path('app_listing_show', {id: listing.id, 'slug': listing.slug}) }}">
+                                        <a class="d-block text-center" title="{{ listing.title }}" href="{{ path('app_listing_show', {id: listing.id, 'slug': listing.slug}) }}">
                                             <img class="listing-list-img {% if listing.mainImageInListSize is empty %}listing-list-img-blank{% endif %}" alt="{{ listing.title }}" src="{{ asset(listing.mainImageInListSize | default('static/system/blank.png')) }}">
                                         </a>
                                     </div>

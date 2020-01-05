@@ -274,6 +274,7 @@
 {{ settings.customCss | raw }}
 
 {% block javascripts %}
+    {{ nelmio_js_error_logger() }}
     <script type="application/json" id="js__jsonData">{{ jsonData | default([]) | inlineJson }}</script>
     <script src="{{ asset('asset/build/app.js') }}"></script>
     <script src="{{ asset('asset/lib/cleave/addons/cleave-phone.'~ settings.languageTwoLetters | lower ~'.js') }}"></script>

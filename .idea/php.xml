@@ -182,6 +182,7 @@
       <path value="$PROJECT_DIR$/zz_engine/vendor/laminas/laminas-zendframework-bridge" />
       <path value="$PROJECT_DIR$/zz_engine/vendor/laminas/laminas-escaper" />
       <path value="$PROJECT_DIR$/zz_engine/vendor/laminas/laminas-stdlib" />
+      <path value="$PROJECT_DIR$/zz_engine/vendor/nelmio/js-logger-bundle" />
     </include_path>
   </component>
   <component name="PhpInterpreters">

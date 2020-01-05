@@ -171,6 +171,9 @@
     "monolog/monolog": {
         "version": "1.24.0"
     },
+    "nelmio/js-logger-bundle": {
+        "version": "1.5.0"
+    },
     "nesbot/carbon": {
         "version": "2.16.3"
     },

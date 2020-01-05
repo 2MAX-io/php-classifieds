@@ -4,3 +4,7 @@
 
 _bazinga_jstranslation:
   resource: "@BazingaJsTranslationBundle/Resources/config/routing/routing.yml"
+
+NelmioJsLoggerBundle:
+  resource: "@NelmioJsLoggerBundle/Resources/config/routing.xml"
+  prefix:   /nelmio-js-logger

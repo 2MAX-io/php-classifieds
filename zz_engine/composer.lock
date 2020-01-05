@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "cc6010851bf1dfa4abfdca90c09d5914",
+    "content-hash": "2a4a6d0b6bc1d4969da4c6c7ccabb3c6",
     "packages": [
         {
             "name": "ausi/slug-generator",
@@ -2709,6 +2709,67 @@
                 "psr-3"
             ],
             "time": "2019-12-20T14:15:16+00:00"
+        },
+        {
+            "name": "nelmio/js-logger-bundle",
+            "version": "1.5.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nelmio/NelmioJsLoggerBundle.git",
+                "reference": "4d6cfc63312b447cc5d15aedc94fcd9c57ca2a02"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/nelmio/NelmioJsLoggerBundle/zipball/4d6cfc63312b447cc5d15aedc94fcd9c57ca2a02",
+                "reference": "4d6cfc63312b447cc5d15aedc94fcd9c57ca2a02",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "php": ">=7",
+                "psr/log": "^1.0",
+                "symfony/config": "^3.4 || ^4.2",
+                "symfony/dependency-injection": "^3.4 || ^4.2",
+                "symfony/framework-bundle": "^3.4 || ^4.2",
+                "symfony/http-foundation": "^3.4 || ^4.2",
+                "symfony/http-kernel": "^3.4 || ^4.2"
+            },
+            "require-dev": {
+                "twig/twig": "^1.40 || ^2.10"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.5.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Nelmio\\JsLoggerBundle\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nelmio",
+                    "homepage": "http://nelm.io"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://github.com/nelmio/NelmioJsLoggerBundle/contributors"
+                }
+            ],
+            "description": "Adds logging of JS errors in your Symfony application",
+            "keywords": [
+                "JS",
+                "javascript",
+                "log",
+                "logging"
+            ],
+            "time": "2019-08-22T13:21:44+00:00"
         },
         {
             "name": "nesbot/carbon",

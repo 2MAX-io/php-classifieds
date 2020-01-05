@@ -180,6 +180,7 @@
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css">
 
 {% block javascripts %}
+    {{ nelmio_js_error_logger() }}
     <script type="application/json" id="js__jsonData">{{ jsonData | default([]) | inlineJson }}</script>
     <script src="{{ asset('asset/build/admin.js') }}"></script>
 

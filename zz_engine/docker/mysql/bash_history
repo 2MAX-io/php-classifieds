@@ -120,3 +120,4 @@ mysql -e "DROP DATABASE IF EXISTS admin_ogloszenia; CREATE DATABASE admin_oglosz
 mysql admin_ogloszenia < /var/www/html/zz_engine/var/mysql/admin_ogloszenia.sql 
 mysql admin_ogloszenia < /var/www/html/zz_engine/var/mysql/admin_ogloszenia.sql 
 mysql admin_ogloszenia < /var/www/html/zz_engine/var/mysql/admin_ogloszenia.sql 
+mysql classifieds < /var/www/html/zz_engine/var/mysql/j4u_ogloszenia.sql

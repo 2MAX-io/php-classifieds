@@ -1,7 +1,7 @@
 "use strict";
 
 var cascader = {};
-cascader.$mainElement = $('#cascader-category-select');
+cascader.$mainElement = $('#js__cascader-category-select');
 cascader.currentLevel = 0;
 cascader.clickedLevel = 0;
 
@@ -86,7 +86,7 @@ cascader.onFormChangeUpdateCascader = function() {
     });
 };
 
-if ($(window).width() >= 768) {
+if ($(window).width() >= 768 && cascader.$mainElement.length) {
     cascader.$mainElement.show();
     cascader.$mainElement.find('.cascader-branch-list').first().show();
     cascader.selectValueFromForm();

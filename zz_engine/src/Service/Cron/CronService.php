@@ -13,7 +13,7 @@ use Carbon\Carbon;
 use Doctrine\ORM\EntityManagerInterface;
 use GuzzleHttp\Client;
 use GuzzleHttp\RequestOptions;
-use Symfony\Component\Lock\Factory;
+use Symfony\Component\Lock\LockFactory;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class CronService
@@ -29,7 +29,7 @@ class CronService
     private $systemLogService;
 
     /**
-     * @var Factory
+     * @var LockFactory
      */
     private $lockFactory;
 
@@ -48,7 +48,7 @@ class CronService
         UrlGeneratorInterface $urlGenerator,
         SystemLogService $systemLogService,
         RunEveryService $runEveryService,
-        Factory $lockFactory
+        LockFactory $lockFactory
     ) {
         $this->em = $em;
         $this->systemLogService = $systemLogService;
@@ -70,6 +70,7 @@ class CronService
             $this->deactivateExpired();
             $this->setMainImage();
             $this->openIndexPage();
+            $this->squashListingViews();
 
             $this->systemLogService->addSystemLog(SystemLog::CRON_RUN_TYPE, 'cron executed');
         } finally {
@@ -138,6 +139,52 @@ SET listing.main_image = listing_file.path
 WHERE 1
 TAG
         );
+    }
+
+    private function squashListingViews(): void
+    {
+        if (!$this->runEveryService->canRunAgain(AppCacheEnum::CRON_SQUASH_LISTING_VIEWS, 60 * 60 * 6)) {
+            return;
+        }
+
+        /** @var \PDO $pdo */
+        $pdo = $this->em->getConnection();
+
+        $stmt = $pdo->query('SELECT id FROM listing_view ORDER BY id DESC');
+        $maxListingViewId = (int) $stmt->fetchColumn();
+
+        $stmt = $pdo->prepare(<<<'TAG'
+UPDATE listing_view JOIN (
+    SELECT
+        MIN(id) AS minListingViewId
+        , listing_id
+        , SUM(view_count) AS sumViewCount
+        , MAX(datetime) AS maxDatetime
+    FROM listing_view
+    WHERE id <= :maxListingViewId
+    GROUP BY listing_id
+) viewCountSum
+ON 
+    listing_view.id = viewCountSum.minListingViewId 
+    && listing_view.listing_id = viewCountSum.listing_id
+SET
+    view_count = sumViewCount
+    , datetime = maxDatetime
+WHERE 1
+TAG);
+        $stmt->bindValue(':maxListingViewId', $maxListingViewId);
+        $stmt->execute();
+
+        $stmt = $pdo->prepare(<<<'TAG'
+DELETE listing_view FROM listing_view JOIN (
+    SELECT listing_id FROM listing_view GROUP BY listing_id HAVING count(1) > 1
+) listingWithMoreThanOneView ON listing_view.listing_id = listingWithMoreThanOneView.listing_id
+WHERE 
+    view_count = 1 
+    && id <= :maxListingViewId
+TAG);
+        $stmt->bindValue(':maxListingViewId', $maxListingViewId);
+        $stmt->execute();
     }
 
     private function openIndexPage(): void

@@ -14,6 +14,7 @@ interface AppCacheEnum
     public const CRON_EXPIRE_FEATURED = 'CRON_EXPIRE_FEATURED';
     public const CRON_DEACTIVATE_EXPIRED = 'CRON_DEACTIVATE_EXPIRED';
     public const CRON_SET_MAIN_IMAGE = 'CRON_SET_MAIN_IMAGE';
+    public const CRON_SQUASH_LISTING_VIEWS = 'CRON_SQUASH_LISTING_VIEWS';
     public const CRON_OPEN_INDEX = 'CRON_OPEN_INDEX';
     public const SETTINGS = 'SETTINGS';
 }

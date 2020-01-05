@@ -122,9 +122,11 @@
                     </div>
                 </div>
 
-                <a class="nav-link btn btn-outline-success d-sm-none" href="{{ path('app_user_listing_index') }}">
-                    {{- 'trans.My listings' | trans -}}
-                </a>
+                {%- if app.user -%}
+                    <a class="nav-link btn btn-outline-success d-sm-none" href="{{ path('app_user_listing_index') }}">
+                        {{- 'trans.My listings' | trans -}}
+                    </a>
+                {% endif %}
             </div>
         </nav>
     </div>

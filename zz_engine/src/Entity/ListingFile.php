@@ -21,11 +21,6 @@ class ListingFile
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=false)
-     */
-    private $path;
-
-    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Listing", inversedBy="listingFiles")
      * @ORM\JoinColumn(nullable=false)
      */
@@ -34,7 +29,19 @@ class ListingFile
     /**
      * @ORM\Column(type="string", length=255, nullable=false)
      */
+    private $path;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=false)
+     */
     private $filename;
+
+    /**
+     * @var null|string
+     *
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $userOriginalFilename;
 
     /**
      * @ORM\Column(type="string", length=100, nullable=false)
@@ -158,5 +165,15 @@ class ListingFile
         $this->sizeBytes = $sizeBytes;
 
         return $this;
+    }
+
+    public function getUserOriginalFilename(): ?string
+    {
+        return $this->userOriginalFilename;
+    }
+
+    public function setUserOriginalFilename(?string $userOriginalFilename): void
+    {
+        $this->userOriginalFilename = $userOriginalFilename;
     }
 }

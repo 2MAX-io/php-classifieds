@@ -8,13 +8,16 @@ use App\Entity\Listing;
 use App\Entity\ListingFile;
 use App\Helper\FileHelper;
 use App\Helper\FilePath;
+use App\Helper\Random;
 use App\Service\Event\FileModificationEventService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\File\File;
 use Webmozart\PathUtil\Path;
 
-class ListingFileService
+class ListingFileUploadService
 {
+    public const MAX_FILE_NAME_LENGTH = 70;
+
     /**
      * @var EntityManagerInterface
      */
@@ -60,6 +63,7 @@ class ListingFileService
             $listingFile->setFilename(\basename($listingFile->getPath()));
             $listingFile->setMimeType(\mime_content_type($listingFile->getPath()));
             $listingFile->setSizeBytes(\filesize($listingFile->getPath()));
+            $listingFile->setUserOriginalFilename(\mb_substr($fileUploadDto->getOriginalFilename(), 255));
             $listingFile->setSort($fileUploadDto->getSort());
             $this->em->persist($listingFile);
 
@@ -86,8 +90,9 @@ class ListingFileService
 
         FileHelper::throwExceptionIfPathOutsideDir($destinationPath, FilePath::getListingFilePath());
         $destinationPath = Path::canonicalize($destinationPath);
-        $destinationPath = FileHelper::reduceFilenameLength($destinationPath, 70);
+        $destinationPath = FileHelper::reduceFilenameLength($destinationPath, self::MAX_FILE_NAME_LENGTH);
         $destinationPath = FileHelper::reducePathLength($destinationPath);
+
         return $destinationPath;
     }
 
@@ -106,8 +111,18 @@ class ListingFileService
 
     private function getDestinationFileName(ListingFileUploadDto $fileUploadDto): string
     {
-        return FileHelper::getFilenameValidCharacters($fileUploadDto->getOriginalFilename())
-        . '.'
-        . \pathinfo($fileUploadDto->getOriginalFilename(), \PATHINFO_EXTENSION);
+        $filenameValidCharacters = FileHelper::getFilenameValidCharacters($fileUploadDto->getOriginalFilename());
+        $extensionSuffix = '.' . \pathinfo($fileUploadDto->getOriginalFilename(), \PATHINFO_EXTENSION);
+        $extensionSuffixLength = \strlen($extensionSuffix);
+        $fileNameSuffix = '_' . Random::string(10);
+        $fileNameSuffixLength = \strlen($fileNameSuffix);
+        $fileNameWithReducedLength = \substr(
+            $filenameValidCharacters,
+            0,
+            static::MAX_FILE_NAME_LENGTH - $fileNameSuffixLength - $extensionSuffixLength
+        );
+        $fileNameWithReducedLength = \trim($fileNameWithReducedLength, '_');
+
+        return \basename($fileNameWithReducedLength . $fileNameSuffix . $extensionSuffix);
     }
 }

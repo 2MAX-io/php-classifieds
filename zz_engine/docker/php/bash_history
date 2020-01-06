@@ -149,7 +149,6 @@ php zz_engine/bin/console doctrine:schema:create --help
 php zz_engine/bin/console doctrine:schema:create --dump-sql
 php zz_engine/bin/console doctrine:schema:create --dump-sql > install/_schema.sql
 php zz_engine/bin/console doctrine:schema:create --dump-sql > install/data/_schema.sql
-php zz_engine/bin/console doctrine:schema:create --dump-sql
 php zz_engine/bin/console doctrine:schema:create --dump-sql --no-debug
 composer require-dev -d zz_engine symfony/requirements-checker
 composer require -dev -d zz_engine symfony/requirements-checker
@@ -162,33 +161,13 @@ zip -rq installer_$(date +%Y-%m-%d_%H%M%S).zip .
 php zz_engine/bin/console assets:install
 php zz_engine/bin/console assets:install asset/bundles
 php zz_engine/bin/console assets:install asset
-composer install -d zz_engine
-composer install --help
-composer install -d zz_engine
 php zz_engine/bin/console doctrine:migrations:migrate
 php zz_engine/bin/console doctrine:migrations:dump-schema
-php zz_engine/bin/console doctrine:migrations:migrate
-php zz_engine/bin/console doctrine:migrations:migrate
-php zz_engine/bin/console make:entity
-php zz_engine/bin/console doctrine:migrations:dump-schema
-php zz_engine/bin/console doctrine:schema:update --force
-php zz_engine/bin/console doctrine:schema:create --dump-sql > install/data/_schema.sql
-php zz_engine/bin/console make:entity --regenerate "App\Entity"
-php zz_engine/bin/console doctrine:schema:create --dump-sql > install/data/_schema.sql
 php zz_engine/bin/console doctrine:migrations:dump-schema --help
-php zz_engine/bin/console doctrine:schema:update --force
 php zz_engine/bin/console debug:container | grep assets._default_package
-php zz_engine/bin/console debug:container | grep assets._default_package
-composer update -d zz_engine
-composer dump-autoload --optimize -d zz_engine
-composer install -d zz_engine
 php /var/www/html/zz_engine/bin/console app:cron:secondary
 /var/www/html/zz_engine/bin/console app:cron:secondary
 cat /usr/local/etc/php/php.ini
-/var/www/html/zz_engine/bin/console app:cron:secondary
-/var/www/html/zz_engine/bin/console app:cron:secondary
-/var/www/html/zz_engine/bin/console app:cron:secondary
-/var/www/html/zz_engine/bin/console app:cron:secondary
 ls -la zz_engine/src/Controller/
 chmod -R 000 zz_engine/src/Controller/
 chmod -R 000 zz_engine/src/Service
@@ -196,111 +175,22 @@ chmod -R 000 zz_engine/src/Repository/CustomFieldRepository.php
 stat zz_engine/src/System/Localization/AppNumberFormatter.php
 stat zz_engine/src/System/Localization
 find /var/www/html -type d -exec chmod 750 {} \;
-find /var/www/html -type d -exec chmod 750 {} \;
 find /var/www/html -type d -exec chmod 775 {} \;
-chmod -R 000 zz_engine/src/Repository/CustomFieldRepository.php
 chmod -R 655 zz_engine/src/Repository/CustomFieldRepository.php
 chmod -R 660 zz_engine/src/Repository/CustomFieldRepository.php
-composer install -d zz_engine
-exit
-composer install -d zz_engine
-composer update -d zz_engine
-php zz_engine/bin/console make:entity --regenerate "App\Entity"
-composer install -d zz_engine
-php zz_engine/bin/console make:entity --regenerate "App\Entity"
-composer install -d zz_engine
-php zz_engine/bin/console make:entity --regenerate "App\Entity"
-composer dump-autoload --optimize -d zz_engine
-php zz_engine/bin/console make:entity --regenerate "App\Entity"
-php zz_engine/bin/console make:entity --regenerate "App\Entity"
-php zz_engine/bin/console doctrine:schema:update --force
-php zz_engine/bin/console make:entity --regenerate "App\Entity"
-php zz_engine/bin/console doctrine:schema:update --force
 php zz_engine/bin/console doctrine:schema:create --dump-sql 
-php zz_engine/bin/console doctrine:schema:update --dump-sql 
 php zz_engine/bin/console doctrine:schema:update --dump-sql 
 php zz_engine/bin/console doctrine:schema:update --f
 php zz_engine/bin/console doctrine:schema:update -f
-php zz_engine/bin/console make:command
-php zz_engine/bin/console make:command
 composer require --dev -d zz_engine fzaninotto/faker
 /var/www/html/zz_engine/bin/console app:dev:generate-test-listings
-/var/www/html/zz_engine/bin/console app:dev:generate-test-listings
 /var/www/html/zz_engine/bin/console app:dev:generate-test-listings 100
-/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 100
-/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 100
-/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 100
-/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 100
-/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 100
-/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 100
-/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 100
-/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 100
-/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 100
-php zz_engine/bin/console doctrine:schema:update -f
-php zz_engine/bin/console doctrine:schema:update -f
-php zz_engine/bin/console doctrine:schema:update -f
-php zz_engine/bin/console doctrine:schema:update -f
-/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 100
-/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 100
-/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 100
-/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 100
-/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 100
-/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 100
-/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 100
-/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 100
-/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 100
-/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 100
-/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 100
-/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 100
-/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 100
-/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 100
-/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 100
-/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 100
-/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 100
-/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 100
-/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 100000
-/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 100000
-/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 100000
-/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 100000
-/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 100000
-/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 100000
 /var/www/html/zz_engine/bin/console app:dev:generate-test-listings 100000
 /var/www/html/zz_engine/bin/console app:dev:generate-test-listings 10000
-/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 100000
-/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 100000
-/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 10000
-/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 10000
-/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 10000
-php zz_engine/bin/console doctrine:schema:update --force
-php zz_engine/bin/console doctrine:schema:update --force
-php zz_engine/bin/console doctrine:schema:update --force
 git stash
-git stash
-php zz_engine/bin/console doctrine:schema:create --dump-sql > install/data/_schema.sql
-php zz_engine/bin/console doctrine:schema:update --force
-php zz_engine/bin/console doctrine:schema:update --force
-php zz_engine/bin/console doctrine:schema:create --dump-sql > install/data/_schema.sql
-php zz_engine/bin/console doctrine:schema:create --dump-sql > install/data/_schema.sql
-php zz_engine/bin/console doctrine:schema:update --force
-php zz_engine/bin/console doctrine:schema:update --force
-php zz_engine/bin/console doctrine:schema:create --dump-sql > install/data/_schema.sql
-composer update -d zz_engine
-composer update -d zz_engine
 composer update "symfony/*" --with-all-dependencies -d zz_engine
 composer update symfony/symfony --with-all-dependencies -d zz_engine
-composer update "symfony/*" --with-all-dependencies -d zz_engine
-composer update "symfony/*" --with-all-dependencies -d zz_engine
-composer update -d zz_engine
-composer update -d zz_engine
-composer install -d zz_engine
-composer install -d zz_engine
 composer require psr/simple-cache -d zz_engine
-composer update -d zz_engine
-composer require psr/simple-cache -d zz_engine
-php zz_engine/bin/console doctrine:schema:update --force
-php zz_engine/bin/console doctrine:schema:update --force
-composer update -d zz_engine
-composer --help
 composer help list
 composer list
 composer help check-platform-reqs
@@ -308,115 +198,24 @@ composer slevomat/coding-standard -d zz_engine
 composer require slevomat/coding-standard -d zz_engine
 composer require --dev -d zz_engine the "contrib" repository, which is open to community contributions.
 composer require --dev -d zz_engine slevomat/coding-standard
-php zz_engine/bin/console list
 php zz_engine/bin/console router:match
 php zz_engine/bin/console debug:router
-php zz_engine/bin/console debug:router
-php zz_engine/bin/console debug:router
-composer install -d zz_engine
-composer install -d zz_engine
-php zz_engine/bin/console debug:router
-php zz_engine/bin/console debug:router
-php zz_engine/bin/console debug:router > /var/www/html/out.txt
 php zz_engine/bin/console debug:router > /var/www/html/out.txt
 php zz_engine/bin/console debug:router --help
 php zz_engine/bin/console debug:router --raw > /var/www/html/out.txt
-php zz_engine/bin/console debug:router > /var/www/html/out.txt
-php zz_engine/bin/console debug:router > /var/www/html/out.txt
-/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 10000
-/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 10000
 php zz_engine/bin/console debug:container | grep cache
-php zz_engine/bin/console debug:container | grep cache
-php zz_engine/bin/console debug:container | grep Psr16Cache
-php zz_engine/bin/console debug:container | grep Psr16Cache
 php zz_engine/bin/console debug:container | grep Psr16Cache
 php zz_engine/bin/console debug:container | grep cache.app.simple
-/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 10000
-/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 10000
 /var/www/html/zz_engine/bin/console app:dev:generate-test-listings 1
-/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 1
-/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 1
-/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 10000
-/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 100
-/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 100
-/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 100
-/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 100
 composer install -d zz_engine --optimize
-composer install --help
 composer install -d zz_engine --optimize-autoloader
 /var/www/html/zz_engine/bin/console app:dev:generate-test-listings 30000
-/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 30000
-php zz_engine/bin/console app:cron:main
 /var/www/html/zz_engine/bin/console app:dev:generate-test-listings 5000
-/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 5000
-/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 5000
-/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 5000
-/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 5000
-/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 5000
-/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 5000
-/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 5000
-/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 5000
-php zz_engine/bin/console app:cron:main
-php zz_engine/bin/console doctrine:schema:update --force
-php zz_engine/bin/console doctrine:schema:update --force
-php zz_engine/bin/console doctrine:schema:create --dump-sql > install/data/_schema.sql
-php zz_engine/bin/console make:entity --regenerate "App\Entity"
-php zz_engine/bin/console make:entity --regenerate "App\Entity"
-php zz_engine/bin/console doctrine:schema:create --dump-sql > install/data/_schema.sql
-php zz_engine/bin/console doctrine:schema:update --force
-php zz_engine/bin/console doctrine:schema:create --dump-sql > install/data/_schema.sql
-php zz_engine/bin/console make:entity --regenerate "App\Entity"
-php zz_engine/bin/console make:entity --regenerate "App\Entity"
-php zz_engine/bin/console make:entity --regenerate "App\Entity"
-php zz_engine/bin/console doctrine:schema:update --force
-php zz_engine/bin/console doctrine:schema:update --force
-php zz_engine/bin/console doctrine:schema:create --dump-sql > install/data/_schema.sql
-php zz_engine/bin/console doctrine:schema:update --force
-php zz_engine/bin/console doctrine:schema:update --force
-php zz_engine/bin/console doctrine:schema:create --dump-sql > install/data/_schema.sql
-/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 5000
-/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 5000
-php zz_engine/bin/console doctrine:schema:update --force
-php zz_engine/bin/console doctrine:schema:create --dump-sql > install/data/_schema.sql
-php zz_engine/bin/console app:cron:main
-composer install -d zz_engine --optimize-autoloader
-composer install -d zz_engine --optimize-autoloader
-composer update -d zz_engine
 composer update --help
 composer update -d zz_engine --optimize-autoloader
-composer install -d zz_engine --optimize-autoloader
-php zz_engine/bin/console doctrine:schema:update --force
-php zz_engine/bin/console doctrine:schema:create --dump-sql > install/data/_schema.sql
-php zz_engine/bin/console doctrine:schema:create --dump-sql > install/data/_schema.sql
-php zz_engine/bin/console doctrine:schema:create --dump-sql > install/data/_schema.sql
-php zz_engine/bin/console doctrine:schema:update --force
-php zz_engine/bin/console doctrine:schema:create --dump-sql > install/data/_schema.sql
-php zz_engine/bin/console doctrine:schema:update --force
-php zz_engine/bin/console doctrine:schema:create --dump-sql > install/data/_schema.sql
-php zz_engine/bin/console doctrine:schema:update --force
-php zz_engine/bin/console doctrine:schema:update --force
-php zz_engine/bin/console doctrine:schema:create --dump-sql > install/data/_schema.sql
-php zz_engine/bin/console doctrine:schema:create --dump-sql > install/data/_schema.sql
-composer update -d zz_engine --optimize-autoloader
 composer require --dev -d zz_engine stesie/phpcs-doctrine-annotation-rules
-php zz_engine/bin/console make:entity --regenerate "App\Entity"
-composer install -d zz_engine --optimize-autoloader
-php zz_engine/bin/console debug:router > /var/www/html/out.txt
-composer update -d zz_engine --optimize-autoloader
-php zz_engine/bin/console doctrine:schema:update --force
-php zz_engine/bin/console doctrine:schema:create --dump-sql > install/data/_schema.sql
-php zz_engine/bin/console debug:router > /var/www/html/out.txt
-php zz_engine/bin/console doctrine:schema:update --force
-php zz_engine/bin/console doctrine:schema:create --dump-sql > install/data/_schema.sql
-php zz_engine/bin/console doctrine:schema:update --force
-php zz_engine/bin/console security:encode-password
 composer require --dev -d zz_engine paragonie/sodium_compat
 composer require -d zz_engine paragonie/sodium_compat
-php zz_engine/bin/console debug:container | grep cache.app.simple
-php zz_engine/bin/console debug:container | grep array
-php zz_engine/bin/console debug:container | grep cache
-composer update -d zz_engine --optimize-autoloader
-composer update -d zz_engine --optimize-autoloader
 uname -r
 uname -d
 uname --help
@@ -426,148 +225,37 @@ apt install wget
 ping https://classifieds.localhost/
 trace https://classifieds.localhost/
 cat /var/log/apache2/error.log 
-composer update -d zz_engine --optimize-autoloader
-composer install -d zz_engine --optimize-autoloader
 /var/www/html/zz_engine/bin/console app:dev:generate-test-listings 15000
-/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 15000
-composer install -d zz_engine --optimize-autoloader
-php zz_engine/bin/console doctrine:schema:create --dump-sql > install/data/_schema.sql
 /var/www/html/zz_engine/bin/console app:dev:generate-test-listings 2000
-/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 2000
-composer update -d zz_engine --optimize-autoloader
-php zz_engine/bin/console doctrine:schema:update --force
-php zz_engine/bin/console doctrine:schema:create --dump-sql > install/data/_schema.sql
-php zz_engine/bin/console doctrine:schema:update --force
-composer update -d zz_engine --optimize-autoloader
-composer install -d zz_engine --optimize-autoloader
 composer require -w zz_engine "hybridauth/hybridauth" : "~3.0"
 composer require -d zz_engine 
 composer require -d zz_engine hybridauth/hybridauth ~3.0
-composer update -d zz_engine --optimize-autoloader
-ls
 pwd
-composer install -d zz_engine --optimize-autoloader
-find /var/www/html -type d -exec chmod 750 {} \;
-find /var/www/html -type f -exec chmod 640 {} \;
-find /var/www/html -type d -exec chmod 750 {} \;
 find /var/www/html -type f -exec chmod 640 {} \;
 chmod +x /var/www/html/zz_engine/bin/console;
         
 composer update
-cd zz_engine/
-composer update
-composer install
-composer install
-cd zz_engine/
 composer install
 composer require league/omnipay:^3 omnipay/paypal
-cd zz_engine/
-composer require league/omnipay:^3 omnipay/paypal
-composer require league/omnipay:^3 omnipay/paypal
-cd zz_engine/
 composer require symfony/mailer
-composer update
-composer require ticketswap/omnipay-przelewy24
-composer require ticketswap/omnipay-przelewy24
-cd zz_engine/
 composer require ticketswap/omnipay-przelewy24
 ping wp.pl
-composer require ticketswap/omnipay-przelewy24
-composer update
-cd zz_engine/
-composer update
-php zz_engine/bin/console app:cron:main
-cd ..
-php zz_engine/bin/console app:cron:main
-cd zz_engine/
-composer require ticketswap/omnipay-przelewy24
-php zz_engine/bin/console make:entity --regenerate "App\Entity"
-php zz_engine/bin/console make:entity --regenerate "App\Entity"
 composer require symfony/maker-bundle --dev
-cd zz_engine/
-composer require symfony/maker-bundle --dev
-php zz_engine/bin/console make:entity --regenerate "App\Entity"
-cd ..
-php zz_engine/bin/console make:entity --regenerate "App\Entity"
-cd zz_engine/
 php bin/console make:entity --regenerate App
 php bin/console make:entity --regenerate "App\Entity"
 php bin/console make:entity --regenerate "App"
 php bin/console make:entity --help
-php bin/console make:entity --regenerate "App"
-php bin/console make:entity --regenerate "App\Entity"
-php bin/console list
-php zz_engine/bin/console make:entity --regenerate "App\Entity"
-php zz_engine/bin/console doctrine:schema:update --force
-composer update -d zz_engine --optimize-autoloader
-php zz_engine/bin/console make:entity --regenerate "App\Entity"
-php zz_engine/bin/console make:entity --regenerate "App\Entity"
-php zz_engine/bin/console make:entity --regenerate "App\Entity"
-php zz_engine/bin/console make:entity --regenerate "App\Entity"
-php zz_engine/bin/console make:entity --regenerate "App\Entity"
-php zz_engine/bin/console doctrine:schema:update --force
-php zz_engine/bin/console doctrine:schema:update --force
-php zz_engine/bin/console doctrine:schema:update --force
-php zz_engine/bin/console make:entity --regenerate "App\Entity"
-php zz_engine/bin/console list
-php zz_engine/bin/console help
-php zz_engine/bin/console list
 php zz_engine/bin/console list | grep config
 php zz_engine/bin/console debug:config profiler
 php zz_engine/bin/console debug:config web_profiler
-php zz_engine/bin/console doctrine:schema:update --force
-php zz_engine/bin/console doctrine:schema:update --force
-php zz_engine/bin/console make:entity --regenerate "App\Entity"
-php zz_engine/bin/console make:entity --regenerate "App\Entity"
-php zz_engine/bin/console doctrine:schema:update --force
-php zz_engine/bin/console doctrine:schema:update --force
-composer update -d zz_engine --optimize-autoloader
-composer update -d zz_engine --optimize-autoloader
-composer update -d zz_engine --optimize-autoloader
-composer update -d zz_engine --optimize-autoloader
-composer update -d zz_engine --optimize-autoloader
-composer update -d zz_engine --optimize-autoloader
-composer update -d zz_engine --optimize-autoloader
-composer update -d zz_engine --optimize-autoloader
-composer update -d zz_engine --optimize-autoloader
-composer update -d zz_engine --optimize-autoloader
-composer update -d zz_engine --optimize-autoloader
-composer update -d zz_engine --optimize-autoloader
-composer update -d zz_engine --optimize-autoloader
-composer update -d zz_engine --optimize-autoloader
-composer update -d zz_engine --optimize-autoloader
-composer update -d zz_engine --optimize-autoloader
 php zz_engine/bin/console make:entity 
-php zz_engine/bin/console make:entity 
-php zz_engine/bin/console doctrine:schema:update --force
-composer require php-http/curl-client guzzlehttp/psr7 php-http/message
-cd zz_engine/
 composer require php-http/curl-client guzzlehttp/psr7 php-http/message
 composer require http
 composer require symfony/psr-http-message-bridge
-composer install -d zz_engine --optimize-autoloader
-cd ..
-composer install -d zz_engine --optimize-autoloader
-composer install -d zz_engine --optimize-autoloader
-php zz_engine/bin/console doctrine:schema:update --force
-composer update -d zz_engine --optimize-autoloader
 composer require guzzlehttp/guzzle
 composer require -d zz_engine guzzlehttp/guzzle
 composer require -d zz_engine php-http/curl-client guzzlehttp/psr7 php-http/message
 composer require -d zz_engine http-factory-guzzle
 composer require -d zz_engine http-interop/http-factory-guzzle
-composer update -d zz_engine --optimize-autoloader
-php zz_engine/bin/console doctrine:schema:update --force
-php zz_engine/bin/console doctrine:schema:update --force
-php zz_engine/bin/console doctrine:schema:update --force
-php zz_engine/bin/console doctrine:schema:update --force
-php zz_engine/bin/console doctrine:schema:update --dump-sql 
-php zz_engine/bin/console doctrine:schema:update --force
-php zz_engine/bin/console doctrine:schema:update --force
-php zz_engine/bin/console doctrine:schema:update --force
-php zz_engine/bin/console doctrine:schema:update --dump-sql 
-php zz_engine/bin/console doctrine:schema:update --dump-sql 
-php zz_engine/bin/console doctrine:schema:update --force
-php zz_engine/bin/console doctrine:schema:update --force
-php zz_engine/bin/console doctrine:schema:update --force
-composer update -d zz_engine --optimize-autoloader
+composer require nelmio/js-logger-bundle
+awk '!visited[$0]++' zz_engine/docker/php/bash_history > zz_engine/docker/php/bash_history.temp && mv zz_engine/docker/php/bash_history.temp zz_engine/docker/php/bash_history

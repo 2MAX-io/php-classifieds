@@ -144,7 +144,7 @@ class SaveListingService
         $returnFiles = [];
         foreach ($listing->getListingFiles() as $listingFile) {
             $returnFiles[] = [
-                'name' => $listingFile->getFilename(),
+                'name' => $listingFile->getUserOriginalFilename() ?? $listingFile->getFilename(),
                 'type' => $listingFile->getMimeType(),
                 'size' => $listingFile->getSizeBytes(),
                 'file' => $this->packages->getUrl($listingFile->getPathInListSize()),

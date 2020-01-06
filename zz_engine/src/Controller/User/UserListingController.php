@@ -12,7 +12,7 @@ use App\Helper\Json;
 use App\Service\Category\CategoryListService;
 use App\Service\Listing\CustomField\ListingCustomFieldsService;
 use App\Service\Listing\Save\SaveListingService;
-use App\Service\Listing\Save\ListingFileService;
+use App\Service\Listing\Save\ListingFileUploadService;
 use App\Service\Log\PoliceLogIpService;
 use App\Service\System\Routing\RefererService;
 use App\Service\User\Listing\UserListingListService;
@@ -48,7 +48,7 @@ class UserListingController extends AbstractUserController
      */
     public function new(
         Request $request,
-        ListingFileService $listingFileService,
+        ListingFileUploadService $listingFileService,
         SaveListingService $createListingService,
         ListingCustomFieldsService $listingCustomFieldsService,
         PoliceLogIpService $logIpService,
@@ -104,7 +104,7 @@ class UserListingController extends AbstractUserController
         Request $request,
         Listing $listing,
         ListingCustomFieldsService $listingCustomFieldsService,
-        ListingFileService $listingFileService,
+        ListingFileUploadService $listingFileService,
         SaveListingService $createListingService,
         PoliceLogIpService $logIpService,
         CategoryListService $categoryListService,

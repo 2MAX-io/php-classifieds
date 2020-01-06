@@ -119,7 +119,7 @@
                     <th></th>
                     <th style="min-width: 20rem;">{{ 'trans.Title' | trans }}</th>
                     <th style="min-width: 8rem;">{{ 'trans.Status' | trans }}</th>
-                    <th style="min-width: 8rem;">{{ 'trans.Valid until' | trans }}</th>
+                    <th style="min-width: 8rem;">{{ 'trans.Date added' | trans }}</th>
                     <th>{{ 'trans.Actions' | trans }}</th>
                 </tr>
                 </thead>
@@ -178,13 +178,14 @@
 
                         <!-- status -->
                         <td>
-                            <span class="{{ getListingStatusClass(listing) }}">{{ getListingStatus(listing) }}</span>
+                            <span class="{{ getListingStatusClass(listing) }} text-break d-inline-block" style="max-width: 15rem;">{{ getListingStatus(listing) }}</span>
                         </td>
 
                         <!-- date -->
                         <td>
+                            <div>{{- listing.firstCreatedDate | date -}}</div>
                             <div class="{{ listing.validUntilDate | isExpired | displayTextWarning }}">
-                                {{- listing.validUntilDate | date -}}
+                                {{ 'trans.Valid until' | trans }}:{{ ' ' }}{{- listing.validUntilDate | date -}}
                             </div>
                         </td>
 

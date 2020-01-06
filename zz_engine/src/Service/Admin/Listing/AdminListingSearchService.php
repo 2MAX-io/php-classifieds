@@ -9,6 +9,7 @@ use App\Entity\Listing;
 use App\Helper\Search;
 use App\Helper\Str;
 use App\Service\System\Pagination\PaginationService;
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,7 +18,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
 class AdminListingSearchService
 {
     /**
-     * @var EntityManagerInterface
+     * @var EntityManagerInterface|EntityManager
      */
     private $em;
 

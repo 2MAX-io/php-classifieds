@@ -6,7 +6,7 @@ namespace App\Repository;
 
 use App\Entity\Listing;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @method Listing|null find($id, $lockMode = null, $lockVersion = null)

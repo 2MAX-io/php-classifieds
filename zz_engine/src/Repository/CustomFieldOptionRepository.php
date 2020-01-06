@@ -7,7 +7,7 @@ namespace App\Repository;
 use App\Entity\Category;
 use App\Entity\CustomFieldOption;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @method CustomFieldOption|null find($id, $lockMode = null, $lockVersion = null)

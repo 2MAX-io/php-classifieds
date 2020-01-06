@@ -70,7 +70,7 @@
                     <div class="row">
                         {% if settings.facebookSignInEnabled %}
                             <div class="col-md-6 mb-2">
-                                <a href="{{ path('app_login_oauth', {'provider': constant('\App\\Controller\\User\\Account\\LoginOauthController::FACEBOOK_PROVIDER')}) }}" class="btn btn-secondary btn-block preventDoubleClick">
+                                <a href="{{ path('app_login_oauth', {'provider': constant('\App\\Controller\\User\\Account\\LoginOauthController::FACEBOOK_PROVIDER')}) }}" class="btn btn-secondary btn-block preventDoubleClick" rel="nofollow">
                                     <i class="fab fa-facebook-f"></i> {{ 'trans.Facebook' | trans }}
                                 </a>
                             </div>
@@ -78,7 +78,7 @@
 
                         {% if settings.googleSignInEnabled %}
                             <div class="col-md-6 mb-2">
-                                <a href="{{ path('app_login_oauth', {'provider': constant('\App\\Controller\\User\\Account\\LoginOauthController::GOOGLE_PROVIDER')}) }}" class="btn btn-secondary btn-block preventDoubleClick">
+                                <a href="{{ path('app_login_oauth', {'provider': constant('\App\\Controller\\User\\Account\\LoginOauthController::GOOGLE_PROVIDER')}) }}" class="btn btn-secondary btn-block preventDoubleClick" rel="nofollow">
                                     <i class="fab fa-google"></i> {{ 'trans.Google' | trans }}
                                 </a>
                             </div>

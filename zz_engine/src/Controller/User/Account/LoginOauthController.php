@@ -27,7 +27,7 @@ class LoginOauthController extends AbstractUserController
     public const FACEBOOK_PROVIDER = 'Facebook';
 
     /**
-     * @Route("/login/oauth/{provider}", name="app_login_oauth")
+     * @Route("/private/login/oauth/{provider}", name="app_login_oauth")
      */
     public function oauthLogin(
         Request $request,

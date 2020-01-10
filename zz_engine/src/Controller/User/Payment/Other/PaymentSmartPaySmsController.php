@@ -42,8 +42,11 @@ class PaymentSmartPaySmsController extends AbstractController
             /** @var Listing $listing */
             $listing = $em->getRepository(Listing::class)->find($listingId);
             if (null === $listing) {
-                $logger->alert('listing not found');
-                throw new UserVisibleException('Listing not found');
+                $logger->alert('[Featured Listing] IMPORTANT! listing not found, SMS text: {smsText}', [
+                    'smsText' => $smsText,
+                ]);
+
+                return new Response('OK');
             }
 
             $featuredListingService->makeFeatured($listing, $featuredTimeDays * 3600*24);

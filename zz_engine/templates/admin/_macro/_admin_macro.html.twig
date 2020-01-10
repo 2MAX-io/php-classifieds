@@ -1,9 +1,17 @@
 {% macro listingInfo(listing) %}
+    {# @var settings \App\Service\Setting\SettingsDto #}
+    {%- set settings = settings() -%}
     {# @var listing \App\Entity\Listing #}
 
     <div class="col-md-4">
-        {{ 'trans.Admin last activation' | trans }}:
-        {{ listing.adminLastActivationDate | date }}
+        {% if listing.adminLastActivationDate %}
+            {{ 'trans.Admin last activation' | trans }}:
+            {{- listing.adminLastActivationDate | date -}}
+        {% else %}
+            <span class="{% if settings.requireListingAdminActivation %}text-warning-color{% endif %}">
+                {{ 'trans.Admin last activation' | trans }}:{{ ' ' }}{{- 'trans.none' | trans -}}
+            </span>
+        {% endif %}
     </div>
     <div class="col-md-4">
         {{ 'trans.Featured until' | trans }}:

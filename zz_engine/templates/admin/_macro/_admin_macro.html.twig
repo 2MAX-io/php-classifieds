@@ -5,8 +5,7 @@
 
     <div class="col-md-4">
         {% if listing.adminLastActivationDate %}
-            {{ 'trans.Admin last activation' | trans }}:
-            {{- listing.adminLastActivationDate | date -}}
+            {{ 'trans.Admin last activation' | trans }}:{{ ' ' }}{{- listing.adminLastActivationDate | date -}}
         {% else %}
             <span class="{% if settings.requireListingAdminActivation %}text-warning-color{% endif %}">
                 {{ 'trans.Admin last activation' | trans }}:{{ ' ' }}{{- 'trans.none' | trans -}}

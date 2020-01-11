@@ -55,6 +55,7 @@
         "symfony/web-link": "4.4.*",
         "symfony/yaml": "4.4.*",
         "ticketswap/omnipay-przelewy24": "^2.0",
+        "twig/twig": "^2.0",
         "webmozart/path-util": "^2.3",
         "willdurand/js-translation-bundle": "^2.6"
     },

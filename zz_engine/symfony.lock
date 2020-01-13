@@ -165,6 +165,9 @@
     "minwork/array": {
         "version": "v1.3.0"
     },
+    "misd/linkify": {
+        "version": "v1.1.4"
+    },
     "moneyphp/money": {
         "version": "v3.2.1"
     },

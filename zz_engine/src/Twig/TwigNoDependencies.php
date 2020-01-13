@@ -8,6 +8,7 @@ use App\Helper\Str;
 use App\System\Localization\AppNumberFormatter;
 use Carbon\Carbon;
 use DateTimeInterface;
+use Misd\Linkify\Linkify;
 use Twig\Extension\RuntimeExtensionInterface;
 
 class TwigNoDependencies implements RuntimeExtensionInterface
@@ -131,5 +132,12 @@ class TwigNoDependencies implements RuntimeExtensionInterface
         $diffInSeconds = Carbon::instance($dateTime)->diffInSeconds(Carbon::now(), false);
 
         return $maxSecondsLeft < $diffInSeconds && $diffInSeconds < $maxSecondsRight;
+    }
+
+    public function linkify(?string $text): ?string
+    {
+        $linkify = new Linkify();
+
+        return $linkify->process($text, ['rel' => 'nofollow']);
     }
 }

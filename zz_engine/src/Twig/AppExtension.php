@@ -35,6 +35,7 @@ class AppExtension extends AbstractExtension
         return [
             new TwigFilter('inlineJson', [InlineJson::class, 'inlineJson'], ['is_safe' => ['html']]),
             new TwigFilter('normalizeWhitespace', [TwigNoDependencies::class, 'normalizeWhitespace'], ['is_safe' => ['html']]),
+            new TwigFilter('linkify', [TwigNoDependencies::class, 'linkify'], ['is_safe' => ['html']]),
 
             new TwigFilter('boolText', [TwigNoDependencies::class, 'boolText']),
             new TwigFilter('displayTextWarning', [TwigNoDependencies::class, 'displayTextWarning']),

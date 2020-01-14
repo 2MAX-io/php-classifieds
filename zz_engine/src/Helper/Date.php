@@ -12,4 +12,15 @@ class Date
     {
         return $dateTime < Carbon::now()->subDays($days);
     }
+
+    public static function fromMicroTimeFloat(float $microTimeFloat): \DateTimeInterface
+    {
+        $microTimeFloatString = (string) $microTimeFloat;
+
+        if (\is_numeric($microTimeFloat) && \strpos($microTimeFloatString, '.')) {
+            return \DateTime::createFromFormat('U.u', $microTimeFloatString);
+        }
+
+        return \DateTime::createFromFormat('U', $microTimeFloatString);
+    }
 }

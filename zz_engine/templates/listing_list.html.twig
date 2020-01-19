@@ -329,18 +329,17 @@
                                         </h5>
 
                                         <div>
-                                            {% if listing.featured %}
-                                                <span class="badge badge-pill badge-warning mr-2">{{ 'trans.Recommended' | trans }}</span>
-                                            {% endif %}
                                             {% if listing.city is not empty %}
                                                 <span class="mr-1">
                                                     <i class="fas fa-map-marker-alt text-danger d-inline"></i>&nbsp;{{ listing.city }}
                                                 </span>
                                             {% endif %}
-
                                             <span class="mr-1 text-nowrap">
                                                 <i class="fas fa-calendar text-black-50"></i> {{ listing.orderByDate | date }}
                                             </span>
+                                            {%- if listing.featured -%}
+                                                <span class="badge badge-pill badge-warning mr-2">{{ 'trans.Featured' | trans }}</span>
+                                            {%- endif -%}
                                         </div>
 
                                         {% if listing.price is not empty %}

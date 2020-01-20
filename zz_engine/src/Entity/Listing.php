@@ -159,7 +159,7 @@ class Listing
     private $title;
 
     /**
-     * @ORM\Column(type="string", length=10100, nullable=false)
+     * @ORM\Column(type="string", length=12000, nullable=false)
      */
     private $description;
 

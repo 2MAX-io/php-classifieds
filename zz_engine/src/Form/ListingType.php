@@ -33,6 +33,7 @@ class ListingType extends AbstractType
 {
     public const LISTING_FIELD = 'listing';
     public const CATEGORY_FIELD = 'category';
+    public const DESCRIPTION_MAX_LENGTH = 10000;
 
     /**
      * @var ValidUntilSetService
@@ -63,11 +64,11 @@ class ListingType extends AbstractType
             'attr' => [
                 'class' => 'form-listing-description-textarea textarea-autosize',
                 'minlength' => 10,
-                'maxlength' => 10000,
+                'maxlength' => static::DESCRIPTION_MAX_LENGTH,
             ],
             'constraints' => [
                 new NotBlank(),
-                new Length(['min' => 10, 'max' => 10000]),
+                new Length(['min' => 10, 'max' => static::DESCRIPTION_MAX_LENGTH + 1000, 'maxMessage' => 'This value is too long. It should have 10 000 character or less.|This value is too long. It should have 10 000 characters or less.']),
                 new HasLetterNumber(),
             ],
             'empty_data' => '',

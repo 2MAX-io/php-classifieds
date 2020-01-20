@@ -8,3 +8,4 @@ This custom field is already assigned to this category: 'This custom field is al
 'Contains not allowed characters. Allowed characters: plain letters, numbers, minus character, underscore character': 'Contains not allowed characters. Allowed characters: plain letters, numbers, minus character, underscore character'
 'Repeated value does note match': 'Repeated value does note match'
 'Must contain letters or numbers': 'Must contain letters or numbers'
+'This value is too long. It should have 10 000 character or less.|This value is too long. It should have 10 000 characters or less.': 'This value is too long. It should have 10 000 character or less.|This value is too long. It should have 10 000 characters or less.'

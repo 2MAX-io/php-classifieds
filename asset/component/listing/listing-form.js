@@ -19,7 +19,7 @@ new Cleave('.input-money', {
 //     numeralDecimalMark: app.getJsonDataCached()['cleaveConfig']['numeralDecimalMark']
 // });
 
-autosize($('.textarea-autosize'));
+// autosize($('.textarea-autosize'));
 
 var isUploadFinished = function () {
     var chosenFiles = $.fileuploader.getInstance('#listing_file').getChoosedFiles();

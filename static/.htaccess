@@ -21,4 +21,4 @@ ExpiresByType text/x-javascript "access 1 year"
 # for development, load missing files from remote
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{HTTP_HOST} .localhost$
-RewriteRule ^(.+)$ https://www.ogloszenia.jaslo4u.pl/static/$1 [L,R=301,NE]
+RewriteRule ^(.+)$ https://www.ogloszenia.jaslo4u.pl/static/$1? [L,R=301,NE]

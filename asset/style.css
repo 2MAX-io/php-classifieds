@@ -97,7 +97,8 @@ a.use-visited-color:visited {
 }
 
 .form-listing-description-textarea {
-    min-height: 17rem;
+    min-height: 20rem;
+    max-height: 80vh;
 }
 
 .cascader-main {

@@ -11,15 +11,6 @@ new Cleave('.input-money', {
     delimiter: app.getJsonDataCached()['cleaveConfig']['delimiter'],
     numeralDecimalMark: app.getJsonDataCached()['cleaveConfig']['numeralDecimalMark']
 });
-// new Cleave('.input-number', {
-//     numeral: true,
-//     numeralThousandsGroupStyle: 'thousand',
-//     numeralPositiveOnly: true,
-//     delimiter: ' ',
-//     numeralDecimalMark: app.getJsonDataCached()['cleaveConfig']['numeralDecimalMark']
-// });
-
-// autosize($('.textarea-autosize'));
 
 var isUploadFinished = function () {
     var chosenFiles = $.fileuploader.getInstance('#listing_file').getChoosedFiles();

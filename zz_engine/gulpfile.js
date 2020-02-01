@@ -90,7 +90,6 @@ function js() {
     'asset/bundles/bazingajstranslation/js/translator.min.js',
     'asset/lib/fancybox/jquery.fancybox.js',
     'asset/lib/cleave/cleave.js',
-    'asset/lib/autosize/autosize.js',
     'asset/lib/bootstrap/bootstrap.bundle.js',
     'asset/main.js',
   ])
@@ -118,7 +117,6 @@ function adminJs() {
     'asset/lib/sortable_js/Sortable.min.js',
     'asset/lib/sortable_js/jquery-sortable.js',
     'asset/lib/cleave/cleave.js',
-    'asset/lib/autosize/autosize.js',
     'asset/lib/bootstrap/bootstrap.bundle.js',
     'asset/main.js',
     'asset/main_admin.js',

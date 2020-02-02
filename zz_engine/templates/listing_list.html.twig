@@ -306,6 +306,20 @@
 
             <!-- listing list -->
             <div class="col-md-9">
+                {% if category.children is not empty %}
+                    <div class="mb-2">
+                        <span class="align-top d-inline-block">{{ 'trans.Subcategories' | trans }}:&nbsp;</span>
+                        {%- apply normalizeWhitespace -%}
+                            {%- for category in categoryList -%}
+                                <a
+                                        href="{{ path('app_category', {'categorySlug': category.slug} | merge(queryParameters)) }}"
+                                        class="w-100-small d-inline-block mr-3 text-truncate"
+                                >{{- category.name -}}</a>
+                            {%- endfor -%}
+                        {%- endapply -%}
+                    </div>
+                {% endif %}
+
                 <!-- listing -->
                 <div class="listing-list">
                     {%- apply spaceless -%}

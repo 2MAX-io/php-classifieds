@@ -379,4 +379,9 @@ class Category
 
         return $this;
     }
+
+    public function hasChildren(): bool
+    {
+        return $this->getRgt() - $this->getLft() !== 1;
+    }
 }

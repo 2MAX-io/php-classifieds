@@ -7,11 +7,11 @@
 {% block body %}
     <div class="container mt-3">
         <div>
-            <h1>{{ 'trans.Edit listing' | trans }}:
+            <h4>{{ 'trans.Edit listing' | trans }}:
                 <a target="_blank" href="{{ path('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}" class="text-break">
                     {{- listing.title -}}
                 </a>
-            </h1>
+            </h4>
         </div>
 
         <div>

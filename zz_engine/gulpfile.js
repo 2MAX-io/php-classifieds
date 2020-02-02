@@ -91,6 +91,7 @@ function js() {
     'asset/lib/fancybox/jquery.fancybox.js',
     'asset/lib/cleave/cleave.js',
     'asset/lib/bootstrap/bootstrap.bundle.js',
+    'asset/component/textarea_autosize/textarea-autosize.js',
     'asset/main.js',
   ])
     .pipe(sourcemaps.init())
@@ -118,8 +119,9 @@ function adminJs() {
     'asset/lib/sortable_js/jquery-sortable.js',
     'asset/lib/cleave/cleave.js',
     'asset/lib/bootstrap/bootstrap.bundle.js',
+    'asset/component/textarea_autosize/textarea-autosize.js',
     'asset/main.js',
-    'asset/main_admin.js',
+    'asset/main-admin.js',
   ])
     .pipe(sourcemaps.init())
     .pipe(concat('admin.js'))

@@ -434,3 +434,7 @@ input.form-control, textarea.form-control, select.form-control {
 .menu-top-item {
     border-bottom: 1px dashed #cecece;
 }
+
+.d-inline-block-soft {
+    display: inline-block;
+}

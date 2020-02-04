@@ -313,10 +313,12 @@
                             {%- for category in categoryList -%}
                                 <a
                                         href="{{ path('app_category', {'categorySlug': category.slug} | merge(queryParameters)) }}"
-                                        class="w-100-small d-inline-block-soft d-lg-inline-block pt-1 pb-2 py-lg-0 pr-3 align-top text-truncate {% if loop.index > 3 %}collapse{% endif %} show-more-subcategories"
+                                        class="{% if loop.index > 3 and loop.length > 4 %}collapse{% endif %} w-100-small d-inline-block-soft d-lg-inline-block pt-1 pb-2 py-lg-0 pr-3 align-top text-truncate show-more-subcategories"
                                 >{{- category.name -}}</a>
                             {%- endfor -%}
-                        <div class="w-100-small text-left btn btn-link d-inline-block d-lg-none px-0 pt-1 align-top cursor-pointer" data-toggle="collapse" data-target=".show-more-subcategories" onclick="$(this).remove()">{{ 'trans.show more' | trans }}</div>
+                            {% if categoryList | length > 4 %}
+                                <div class="w-100-small text-left btn btn-link d-inline-block d-lg-none px-0 pt-1 align-top cursor-pointer" data-toggle="collapse" data-target=".show-more-subcategories" onclick="$(this).remove()">{{ 'trans.show more' | trans }}</div>
+                            {% endif %}
                         {%- endapply -%}
                     </div>
                 {% endif %}

@@ -611,6 +611,7 @@ trans:
   Payment gateway - mode: 'Bramka płatności - tryb'
   Email or Login: 'Email lub Login'
   Subcategories: 'Podkategorie'
+  Listing has expired, please do not contact listing author: 'Ogłoszenie wygasło, prosimy o powstrzymanie się przed kontaktem z ogłoszeniodawcą'
 
 'trans.Remove non standard characters in listing - Enabled': 'Usuń niestandardowe znaki z ogłoszenia - Włączone'
 'trans.Remove non standard characters in listing - List of allowed characters': 'Usuń niestandardowe znaki z ogłoszenia - Lista dozwolonych znaków'

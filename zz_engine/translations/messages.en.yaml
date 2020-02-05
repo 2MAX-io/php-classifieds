@@ -168,6 +168,7 @@ trans:
   Destination page not found, if you have been charged and did not receive service, please contact us: 'Destination page not found, if you have been charged and did not receive service, please contact us'
   Payment gateway - mode: 'Payment gateway - mode'
   Subcategories: 'Subcategories'
+  Listing has expired, please do not contact listing author: 'Listing has expired, please do not contact listing author'
 
 trans.customFieldType.SELECT_AS_CHECKBOXES: 'Checkboxes in filters, single select when editing'
 trans.customFieldType.SELECT_SINGLE: 'Single selection field'

@@ -49,6 +49,10 @@
                     {% if listing.status in [constant('\App\\Entity\\Listing::STATUS_ADMIN_REMOVED'), constant('\App\\Entity\\Listing::STATUS_USER_REMOVED')] %}
                         <h1>{{ 'trans.Listing has been deleted' | trans }}</h1>
                     {% endif %}
+
+                    {% if listing.status in [constant('\App\\Entity\\Listing::STATUS_EXPIRED')] %}
+                        <h1>{{ 'trans.Listing has expired' | trans }}</h1>
+                    {% endif %}
                     <div>
                         {{ 'trans.See other active listings in category' | trans }}:
                         <a href="{{ path('app_category', {'categorySlug': listing.category.slug}) }}">

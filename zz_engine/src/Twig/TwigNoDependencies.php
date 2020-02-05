@@ -140,4 +140,11 @@ class TwigNoDependencies implements RuntimeExtensionInterface
 
         return $linkify->process($text, ['attr' => ['rel' => 'nofollow']]);
     }
+
+    public function linkifyDoFollow(?string $text): ?string
+    {
+        $linkify = new Linkify();
+
+        return $linkify->process($text, ['attr' => []]);
+    }
 }

@@ -222,6 +222,20 @@
                         <span class="{{ getListingStatusClass(listing) }} text-nowrap">{{ getListingStatus(listing) }}</span>
                     {% endif %}
 
+                    {% if displayAsExpired(listing) %}
+                        <div class="alert alert-danger">
+                            <h1>{{ 'trans.Listing has expired' | trans }}</h1>
+                            <div>
+                                {{ 'trans.See other active listings in category' | trans }}:
+                                <a href="{{ path('app_category', {'categorySlug': listing.category.slug}) }}">
+                                    {{ listing.category.parent.name }}
+                                    ⇾
+                                    {{ listing.category.name }}
+                                </a>
+                            </div>
+                        </div>
+                    {% endif %}
+
                     {% if listing.price is not empty %}
                         <div class="my-1">
                             <h3 class="btn btn-dark btn-lg">
@@ -325,6 +339,20 @@
                     {% endif %}
                 </div>
 
+                {% if displayAsExpired(listing) %}
+                    <div class="alert alert-danger">
+                        <h1>{{ 'trans.Listing has expired' | trans }}</h1>
+                        <div>
+                            {{ 'trans.See other active listings in category' | trans }}:
+                            <a href="{{ path('app_category', {'categorySlug': listing.category.slug}) }}">
+                                {{ listing.category.parent.name }}
+                                ⇾
+                                {{ listing.category.name }}
+                            </a>
+                        </div>
+                    </div>
+                {% endif %}
+
                 <!-- photos side -->
                 {% if listing.listingFiles.count > 0 %}
                     <div class="card mb-3 d-none d-md-block">
@@ -345,6 +373,20 @@
                                     </a>
                                 </div>
                             {% endfor %}
+                        </div>
+                    </div>
+                {% endif %}
+
+                {% if displayAsExpired(listing) %}
+                    <div class="alert alert-danger">
+                        <h1>{{ 'trans.Listing has expired' | trans }}</h1>
+                        <div>
+                            {{ 'trans.See other active listings in category' | trans }}:
+                            <a href="{{ path('app_category', {'categorySlug': listing.category.slug}) }}">
+                                {{ listing.category.parent.name }}
+                                ⇾
+                                {{ listing.category.name }}
+                            </a>
                         </div>
                     </div>
                 {% endif %}

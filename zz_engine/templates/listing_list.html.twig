@@ -38,7 +38,10 @@
             <!-- filters -->
             <div class="col-md-3 d-none-soft d-md-block collapse" id="filters">
                 {% if categoryList is not empty %}
-                    <div class="card mb-3">
+                    <div class="btn btn-dark d-lg-none mb-2 cursor-pointer" data-toggle="collapse" data-target=".show-category-select" onclick="$(this).remove()">
+                        {{- 'trans.Select category' | trans -}}
+                    </div>
+                    <div class="card mb-3 show-category-select collapse d-lg-block">
                         <div class="card-header">
                             <strong>{{ 'trans.Category' | trans }}</strong>
                         </div>
@@ -317,7 +320,14 @@
                                 >{{- category.name -}}</a>
                             {%- endfor -%}
                             {% if categoryList | length > 4 %}
-                                <div class="w-100-small text-left btn btn-link d-inline-block d-lg-none px-0 pt-1 align-top cursor-pointer" data-toggle="collapse" data-target=".show-more-subcategories" onclick="$(this).remove()">{{ 'trans.show more' | trans }}</div>
+                                <div
+                                        class="w-100-small text-left btn btn-link d-inline-block d-lg-none px-0 pt-1 align-top cursor-pointer"
+                                        data-toggle="collapse"
+                                        data-target=".show-more-subcategories"
+                                        onclick="$(this).remove()"
+                                >
+                                    {{- 'trans.show more' | trans -}}
+                                </div>
                             {% endif %}
                         {%- endapply -%}
                     </div>

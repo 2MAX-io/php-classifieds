@@ -337,7 +337,8 @@
                 <div class="listing-list">
                     {%- apply spaceless -%}
                     {%- for listing in listingList -%}
-                        <div id="listing-{{ listing.id }}" class="listingListItemClick card listing-list-item cursor-pointer mb-2 {% if listing.featured %}listing-recommended{% endif %}">
+                        <div id="listing-{{ listing.id }}" class="clickableDiv card listing-list-item cursor-pointer mb-2 {% if listing.featured %}listing-recommended{% endif %}">
+                            <a class="clickableDivLink" title="{{ listing.title }}" href="{{ path('app_listing_show', {id: listing.id, 'slug': listing.slug}) }}"></a>
                             <div class="container-fluid">
                                 <div class="row py-md-1">
                                     <div class="col-12 col-md-4 p-0 px-md-1 {% if listing.mainImage is empty %}d-none-soft{% endif %} d-md-block">

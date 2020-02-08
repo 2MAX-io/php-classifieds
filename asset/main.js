@@ -133,11 +133,6 @@ $.fancyConfirm = function(opts) {
     });
 };
 
-$('.listingListItemClick').on('click', function () {
-    var $listingListItem = $(this);
-    window.location.href = $listingListItem.find('.listingListLink').attr('href');
-});
-
 function preventDoubleClick(element, event) {
     var $element = $(element);
     var previousClickTimestamp = $element.data('last-click-timestamp') || null;

@@ -8,6 +8,11 @@ class Search
 {
     public static function optimizeMatch(string $search): string
     {
+        $search = \rtrim($search, '-'); // fixes incorrect search value
+        if ('+' === $search) {
+            return ''; // fixes incorrect search value
+        }
+
         if (\preg_match('#^\S+@\S+\.\S+$#', \trim($search))) {
             return '"'. \trim($search) .'"';
         }

@@ -34,9 +34,9 @@ class PaymentSmartPaySmsController extends AbstractController
             $smsPaymentNumber = (string) \trim($request->get('number'));
             $listingId = \preg_replace('~\D+~', '', $smsText);
             $numberToDaysMap = [];
-            $numberToDaysMap['71068'] = 7;
-            $numberToDaysMap['72068'] = 21;
-            $numberToDaysMap['74068'] = 42;
+            $numberToDaysMap['71068'] = 3;
+            $numberToDaysMap['72068'] = 7;
+            $numberToDaysMap['74068'] = 21;
 
             $featuredTimeDays = $numberToDaysMap[$smsPaymentNumber];
             /** @var Listing $listing */

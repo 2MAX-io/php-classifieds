@@ -85,7 +85,19 @@ class SaveListingService
         return $listing;
     }
 
-    public function setListingProperties(Listing $listing, FormInterface $form): void
+    public function modifyListingPreFormSubmit(array $listingArray): array
+    {
+        $listingArray['description'] = $this->textService->normalizeUserInput($listingArray['description']);
+        $listingArray['title'] = $this->textService->normalizeUserInput($listingArray['title']);
+        $listingArray['title'] = $this->textService->removeWordsFromTitle($listingArray['title']);
+        $listingArray['city'] = \ucwords(
+            $this->textService->normalizeUserInput($listingArray['city']),
+        );
+
+        return $listingArray;
+    }
+
+    public function modifyListingPostFormSubmit(Listing $listing, FormInterface $form): void
     {
         if ($form->has('validityTimeDays')) {
             $this->validUntilSetService->setValidityDaysFromNow(
@@ -102,26 +114,6 @@ class SaveListingService
 
         if (!$listing->getUser()) { // set user when creating, if not set
             $listing->setUser($this->currentUserService->getUserOrNull());
-        }
-
-        $listing->setDescription(
-            $this->textService->normalizeUserInput($listing->getDescription())
-        );
-
-        $listing->setTitle(
-            $this->textService->normalizeUserInput($listing->getTitle())
-        );
-
-        $listing->setTitle(
-            $this->textService->removeWordsFromTitle($listing->getTitle())
-        );
-
-        if ($listing->getCity()) {
-            $listing->setCity(
-                \ucwords(
-                    $this->textService->normalizeUserInput($listing->getCity())
-                )
-            );
         }
     }
 

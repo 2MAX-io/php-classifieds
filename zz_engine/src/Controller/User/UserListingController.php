@@ -49,7 +49,7 @@ class UserListingController extends AbstractUserController
     public function new(
         Request $request,
         ListingFileUploadService $listingFileService,
-        SaveListingService $createListingService,
+        SaveListingService $saveListingService,
         ListingCustomFieldsService $listingCustomFieldsService,
         PoliceLogIpService $logIpService,
         CategoryListService $categoryListService,
@@ -57,16 +57,16 @@ class UserListingController extends AbstractUserController
     ): Response {
         $this->dennyUnlessUser();
 
-        $listing = $createListingService->createListingForForm();
+        $listing = $saveListingService->createListingForForm();
         $form = $this->createForm(ListingType::class, $listing);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $listingCustomFieldsService->saveCustomFieldsToListing(
                 $listing,
-                $createListingService->getCustomFieldValueListArrayFromRequest($request)
+                $saveListingService->getCustomFieldValueListArrayFromRequest($request)
             );
-            $createListingService->setListingProperties($listing, $form);
+            $saveListingService->modifyListingPostFormSubmit($listing, $form);
 
             $em->persist($listing);
             $em->flush();
@@ -90,7 +90,7 @@ class UserListingController extends AbstractUserController
                 'form' => $form->createView(),
                 'formCategorySelectList' => $categoryListService->getFormCategorySelectList(),
                 ParamEnum::JSON_DATA => [
-                    'listingFilesForJavascript' => $createListingService->getListingFilesForJavascript($listing),
+                    'listingFilesForJavascript' => $saveListingService->getListingFilesForJavascript($listing),
                     'listingId' => $listing->getId(),
                 ],
             ]
@@ -105,7 +105,7 @@ class UserListingController extends AbstractUserController
         Listing $listing,
         ListingCustomFieldsService $listingCustomFieldsService,
         ListingFileUploadService $listingFileService,
-        SaveListingService $createListingService,
+        SaveListingService $saveListingService,
         PoliceLogIpService $logIpService,
         CategoryListService $categoryListService,
         EntityManagerInterface $em
@@ -128,9 +128,9 @@ class UserListingController extends AbstractUserController
             }
             $listingCustomFieldsService->saveCustomFieldsToListing(
                 $listing,
-                $createListingService->getCustomFieldValueListArrayFromRequest($request)
+                $saveListingService->getCustomFieldValueListArrayFromRequest($request)
             );
-            $createListingService->setListingProperties($listing, $form);
+            $saveListingService->modifyListingPostFormSubmit($listing, $form);
             $logIpService->saveLog($listing);
 
             $em->flush();
@@ -150,7 +150,7 @@ class UserListingController extends AbstractUserController
                 'form' => $form->createView(),
                 'formCategorySelectList' => $categoryListService->getFormCategorySelectList(),
                 ParamEnum::JSON_DATA => [
-                    'listingFilesForJavascript' => $createListingService->getListingFilesForJavascript($listing),
+                    'listingFilesForJavascript' => $saveListingService->getListingFilesForJavascript($listing),
                     'listingId' => $listing->getId(),
                 ],
             ]

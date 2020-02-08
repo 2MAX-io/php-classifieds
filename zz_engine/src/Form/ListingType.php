@@ -9,6 +9,7 @@ use App\Form\Type\BoolType;
 use App\Form\Type\CategoryType;
 use App\Form\Type\AppMoneyType;
 use App\Form\Type\PriceForType;
+use App\Service\Listing\Save\SaveListingService;
 use App\Service\Listing\ValidityExtend\ValidUntilSetService;
 use App\Validator\Constraints\HasLetterNumber;
 use App\Validator\Constraints\Phone;
@@ -19,6 +20,8 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\Choice;
@@ -40,9 +43,15 @@ class ListingType extends AbstractType
      */
     private $validUntilSetService;
 
-    public function __construct(ValidUntilSetService $validUntilSetService)
+    /**
+     * @var SaveListingService
+     */
+    private $saveListingService;
+
+    public function __construct(ValidUntilSetService $validUntilSetService, SaveListingService $saveListingService)
     {
         $this->validUntilSetService = $validUntilSetService;
+        $this->saveListingService = $saveListingService;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -165,6 +174,12 @@ class ListingType extends AbstractType
                 ],
             ]
         );
+
+        $builder->addEventListener(FormEvents::PRE_SUBMIT, function(FormEvent $formEvent): void {
+            $listingArray = $formEvent->getData();
+
+            $formEvent->setData($this->saveListingService->modifyListingPreFormSubmit($listingArray));
+        });
     }
 
     public function configureOptions(OptionsResolver $resolver): void

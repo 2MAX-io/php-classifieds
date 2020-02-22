@@ -38,10 +38,10 @@
             <!-- filters -->
             <div class="col-md-3 d-none-soft d-md-block collapse" id="filters">
                 {% if categoryList is not empty %}
-                    <div class="btn btn-dark d-lg-none mb-2 cursor-pointer" data-toggle="collapse" data-target=".show-category-select" onclick="$(this).remove()">
+                    <div class="btn btn-dark mb-2 cursor-pointer" data-toggle="collapse" data-target=".show-category-select" onclick="$(this).remove()">
                         {{- 'trans.Select category' | trans -}}
                     </div>
-                    <div class="card mb-3 show-category-select collapse d-lg-block">
+                    <div class="card mb-3 show-category-select collapse">
                         <div class="card-header">
                             <strong>{{ 'trans.Category' | trans }}</strong>
                         </div>

@@ -24,7 +24,6 @@ services:
             COMPOSER_HOME: '/var/www/html/zz_engine/var/cache/zz_composer'
         stdin_open: true
         tty: true
-#        user: "1000:1000"
         networks:
             classifieds.localhost:
                 aliases:

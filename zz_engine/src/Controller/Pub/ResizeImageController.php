@@ -13,6 +13,7 @@ use League\Glide\Responses\SymfonyResponseFactory;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Webmozart\PathUtil\Path;
@@ -22,8 +23,9 @@ class ResizeImageController
     /**
      * @Route("/static/resized/{type}/{path}/{file}", name="app_resize_image", requirements={"path"=".+"})
      */
-    public function index(Request $request, string $path, string $type, string $file): Response
+    public function resizeImage(Request $request, SessionInterface $session, string $path, string $type, string $file): Response
     {
+        $session->save();
         if (IniHelper::returnBytes(\ini_get('memory_limit')) < Megabyte::toByes(256)) {
             \ini_set('memory_limit','256M'); // required to handle big images
         }

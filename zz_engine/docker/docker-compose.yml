@@ -8,6 +8,7 @@ services:
         ports: ['80:80', '443:443']
         volumes:
             - './../../:/var/www/html'
+            - './mysql/client_my.cnf:/var/www/.my.cnf'
             - './php/php.ini:/usr/local/etc/php/php.ini'
             - './php/xdebug_out:/tmp/xdebug_out'
             - './php/ssl/localhost.crt:/etc/ssl/certs/ssl-cert-snakeoil.pem'

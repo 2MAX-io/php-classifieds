@@ -147,6 +147,15 @@
     "jdorn/sql-formatter": {
         "version": "v1.2.17"
     },
+    "laminas/laminas-escaper": {
+        "version": "2.6.1"
+    },
+    "laminas/laminas-feed": {
+        "version": "2.12.0"
+    },
+    "laminas/laminas-stdlib": {
+        "version": "3.2.1"
+    },
     "laminas/laminas-zendframework-bridge": {
         "version": "1.0.0"
     },

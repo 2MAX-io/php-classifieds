@@ -1,7 +1,7 @@
 FROM php:7.3-apache
 
 RUN apt-get update -y \
-&& apt-get install --no-install-recommends -y git zip unzip libfreetype6-dev libjpeg62-turbo-dev libpng-dev zlib1g-dev libicu-dev g++
+&& apt-get install --no-install-recommends -y git zip unzip libfreetype6-dev libjpeg62-turbo-dev libpng-dev zlib1g-dev libicu-dev g++ default-mysql-client
 
 RUN pecl install xdebug \
 && docker-php-ext-enable xdebug \

@@ -259,3 +259,29 @@ composer require -d zz_engine http-factory-guzzle
 composer require -d zz_engine http-interop/http-factory-guzzle
 composer require nelmio/js-logger-bundle
 awk '!visited[$0]++' zz_engine/docker/php/bash_history > zz_engine/docker/php/bash_history.temp && mv zz_engine/docker/php/bash_history.temp zz_engine/docker/php/bash_history
+ls
+cd ..
+ls
+cd ..
+ls
+pwd
+cd www
+ls
+cd html/
+ls
+bash zz_engine/dev/bin/j4u_load_existing_db.sh 
+bash zz_engine/dev/bin/j4u_load_existing_db.sh 
+bash zz_engine/dev/bin/j4u_load_existing_db.sh 
+bash zz_engine/dev/bin/j4u_load_existing_db.sh 
+bash zz_engine/dev/bin/j4u_load_existing_db.sh 
+bash zz_engine/dev/bin/j4u_load_existing_db.sh 
+pwd
+bash zz_engine/dev/bin/j4u_load_existing_db.sh 
+cd ~
+pwd
+mysql classifieds
+bash zz_engine/dev/bin/j4u_load_existing_db.sh 
+composer install
+cd zz_engine/
+composer install
+composer install --optimize-autoloader

@@ -38,7 +38,7 @@ security:
             logout:
               path:   app_logout
         main:
-            anonymous: true
+            anonymous: lazy
             provider: app_user_provider
             guard:
                 authenticators:

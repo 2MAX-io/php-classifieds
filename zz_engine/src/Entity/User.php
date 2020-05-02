@@ -26,37 +26,37 @@ class User implements UserInterface, RoleInterface, EnablableInterface, EncoderA
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer", options={"unsigned"=true})
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
      *
      * @ORM\Column(type="string", length=70, unique=true, nullable=false)
      */
-    private $username;
+    protected $username;
 
     /**
      * @ORM\Column(type="string", length=70, unique=true, nullable=false)
      */
-    private $email;
+    protected $email;
 
     /**
      * @ORM\Column(type="json", nullable=false)
      */
-    private $roles = [];
+    protected $roles = [];
 
     /**
      * @var bool
      *
      * @ORM\Column(type="boolean", nullable=false)
      */
-    private $enabled;
+    protected $enabled;
 
     /**
      * @var string The hashed password
      * @ORM\Column(type="string", nullable=false)
      */
-    private $password;
+    protected $password;
 
     /**
      * @var string|null

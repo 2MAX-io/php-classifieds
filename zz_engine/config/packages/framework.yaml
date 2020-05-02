@@ -19,4 +19,4 @@ framework:
     php_errors:
         log: true
 
-    ide: 'phpstorm://open?file=%%f&line=%%l&/var/www/html/>/home/u/PhpstormProjects/classifieds/'
+    ide: 'phpstorm://open?file=%%f&line=%%l&/var/www/html/>/home/u/PhpstormProjects/priv/classified/'

@@ -1,7 +1,20 @@
 FROM php:7.3-apache
 
-RUN apt-get update -y \
-&& apt-get install --no-install-recommends -y git zip unzip libfreetype6-dev libjpeg62-turbo-dev libpng-dev zlib1g-dev libicu-dev g++ default-mysql-client
+RUN true \
+&& curl -sL https://deb.nodesource.com/setup_12.x | bash \
+&& apt-get update -y \
+&& apt-get install --no-install-recommends -y \
+zip \
+unzip \
+libfreetype6-dev \
+libjpeg62-turbo-dev \
+libpng-dev \
+zlib1g-dev \
+libicu-dev \
+g++ \
+default-mysql-client \
+nodejs \
+git
 
 RUN pecl install xdebug \
 && docker-php-ext-enable xdebug \
@@ -29,5 +42,7 @@ RUN mkdir /tmp/xdebug_out \
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 RUN useradd -u 1000 -g www-data -d /var/www www-data-docker-host
+
+RUN npm install --global gulp-cli
 
 EXPOSE 443

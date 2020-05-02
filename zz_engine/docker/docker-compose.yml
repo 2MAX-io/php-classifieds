@@ -5,6 +5,8 @@ services:
         build:
             context: './php/'
             dockerfile: Dockerfile
+            args:
+                - WITH_XDEBUG=${WITH_XDEBUG}
         ports: ['80:80', '443:443']
         volumes:
             - './../../:/var/www/html'
@@ -23,6 +25,7 @@ services:
             APACHE_RUN_USER: '#1000'
             APACHE_RUN_GROUP: '#33'
             COMPOSER_HOME: '/var/www/html/zz_engine/var/cache/zz_composer'
+            WITH_XDEBUG: 'false'
         stdin_open: true
         tty: true
         networks:

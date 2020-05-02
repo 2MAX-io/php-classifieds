@@ -25,7 +25,9 @@ class ResizeImageController
      */
     public function resizeImage(Request $request, SessionInterface $session, string $path, string $type, string $file): Response
     {
-        $session->save();
+        if ($session->isStarted()) {
+            $session->save();
+        }
         if (IniHelper::returnBytes(\ini_get('memory_limit')) < Megabyte::toByes(256)) {
             \ini_set('memory_limit','256M'); // required to handle big images
         }
@@ -91,11 +93,21 @@ class ResizeImageController
     private function getMakeImageParams(string $type): array
     {
         if ('list' === $type) {
-            return ['w' => 480, 'h' => 270, 'fit' => 'crop',];
+            return [
+                'w' => 480,
+                'h' => 270,
+                'fit' => 'crop',
+                'q' => 60,
+            ];
         }
 
         if ('normal' === $type) {
-            return ['w' => 1920, 'h' => 1080, 'fit' => 'max',];
+            return [
+                'w' => 1920,
+                'h' => 1080,
+                'fit' => 'max',
+                'q' => 75,
+            ];
         }
 
         throw new NotFoundHttpException();

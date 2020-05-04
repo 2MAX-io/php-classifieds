@@ -160,7 +160,6 @@
       <path value="$PROJECT_DIR$/zz_engine/vendor/ocramius/proxy-manager" />
       <path value="$PROJECT_DIR$/zz_engine/vendor/ocramius/package-versions" />
       <path value="$PROJECT_DIR$/zz_engine/vendor/moneyphp/money" />
-      <path value="$PROJECT_DIR$/zz_engine/vendor/easycorp/easy-log-handler" />
       <path value="$PROJECT_DIR$/zz_engine/vendor/doctrine/event-manager" />
       <path value="$PROJECT_DIR$/zz_engine/vendor/doctrine/reflection" />
       <path value="$PROJECT_DIR$/zz_engine/vendor/doctrine/cache" />

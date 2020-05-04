@@ -285,3 +285,5 @@ composer install
 cd zz_engine/
 composer install
 composer install --optimize-autoloader
+composer update -d zz_engine --optimize-autoloader
+gulp -f zz_engine/gulpfile.js --cwd=.

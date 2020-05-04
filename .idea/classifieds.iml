@@ -32,7 +32,6 @@
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/doctrine/orm" />
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/doctrine/persistence" />
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/doctrine/reflection" />
-      <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/easycorp/easy-log-handler" />
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/egulias/email-validator" />
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/friendsofsymfony/jsrouting-bundle" />
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/fzaninotto/faker" />

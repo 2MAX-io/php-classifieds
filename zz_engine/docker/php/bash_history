@@ -287,3 +287,4 @@ composer install
 composer install --optimize-autoloader
 composer update -d zz_engine --optimize-autoloader
 gulp -f zz_engine/gulpfile.js --cwd=.
+bash zz_engine/dev/bin/DEV_build_installer.sh

@@ -23,9 +23,9 @@
     {%- endblock -%}
     {% block css %}{% endblock %}
 
-{#    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('static/system/favicon/apple-touch-icon.png') }}">#}
-{#    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('static/system/favicon/favicon-32x32.png') }}">#}
-{#    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('static/system/favicon/favicon-16x16.png') }}">#}
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('static/system/favicon/apple-touch-icon.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('static/system/favicon/favicon-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('static/system/favicon/favicon-16x16.png') }}">
     <link rel='alternate' type='application/rss+xml' title='{{- settings.rssTitle }}' href='{{ url('app_rss') }}'/>
 
     {{ settings.customJavascriptInHead | raw }}
@@ -184,31 +184,6 @@
     </div>
 </nav>
 
-<div class="text-center my-2">
-    {% set zoneId = zoneId | default(categoryToAdvertZoneId(category | default(null))) %}
-    <script type='text/javascript'><!--//<![CDATA[
-        document.MAX_ct0 ='INSERT_CLICKURL_HERE';
-
-        var m3_u = (location.protocol=='https:'?'https://www.jaslo4u.pl/revive-adserver-4.1.4/www/delivery/ajs.php':'http://www.jaslo4u.pl/revive-adserver-4.1.4/www/delivery/ajs.php');
-        var m3_r = Math.floor(Math.random()*99999999999);
-        if (!document.MAX_used) document.MAX_used = ',';
-        document.write ("<scr"+"ipt type='text/javascript' src='"+m3_u);
-        document.write ("?zoneid={{ zoneId }}");
-        document.write ('&amp;cb=' + m3_r);
-        if (document.MAX_used != ',') document.write ("&amp;exclude=" + document.MAX_used);
-        document.write (document.charset ? '&amp;charset='+document.charset : (document.characterSet ? '&amp;charset='+document.characterSet : ''));
-        document.write ("&amp;loc=" + escape(window.location));
-        if (document.referrer) document.write ("&amp;referer=" + escape(document.referrer));
-        if (document.context) document.write ("&context=" + escape(document.context));
-        if ((typeof(document.MAX_ct0) != 'undefined') && (document.MAX_ct0.substring(0,4) == 'http')) {
-            document.write ("&amp;ct0=" + escape(document.MAX_ct0));
-        }
-        if (document.mmm_fo) document.write ("&amp;mmm_fo=1");
-        document.write ("'><\/scr"+"ipt>");
-        //]]>--></script><noscript><a href='http://www.jaslo4u.pl/revive-adserver-4.1.4/www/delivery/ck.php?n=ab5ccf51&amp;cb=INSERT_RANDOM_NUMBER_HERE' target='_blank'><img src='http://www.jaslo4u.pl/revive-adserver-4.1.4/www/delivery/avw.php?zoneid={{ zoneId }}&amp;cb=INSERT_RANDOM_NUMBER_HERE&amp;n=ab5ccf51&amp;ct0=INSERT_CLICKURL_HERE' border='0' alt='' /></a></noscript>
-</div>
-
-
 {% if not app.request.cookies.get('gdpr', false) %}
     <div id="gdpr" class="alert alert-info">
         <div class="container">
@@ -253,7 +228,7 @@
                 <h5>{{ 'trans.About' | trans }}</h5>
                 <ul class="list-unstyled text-small">
                     {%- if settings.linkAdvertisement -%}
-                        <li><a class="text-danger mobile-link" href="https://www.jaslo4u.pl/reklama/">Reklama Jasło</a></li>
+                        <li><a class="text-danger mobile-link" href="{{ path('app_page', {'slug': settings.linkAdvertisement}) }}">{{ 'trans.Advertisement' | trans }}</a></li>
                     {%- endif -%}
                     {%- if settings.linkTermsConditions -%}
                         <li><a class="text-muted mobile-link" href="{{ path('app_page', {'slug': settings.linkTermsConditions}) }}">{{ 'trans.Terms and conditions' | trans }}</a></li>

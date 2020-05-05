@@ -1,0 +1,35 @@
+Quick installation guide:
+- prepare empty MYSQL database with username and password,
+  create SMTP email account for sending emails,
+  prepare license file you got after purchase
+- check if your server meets requirements, main minimal requirements are PHP 7.3 and MYSQL 5.6,
+  full requirements: https://documentation.2max.io/display/CLAS/Requirements
+- put zip file in directory where you want it to be installed, public_html directory of domain or subdirectory of domain
+- unpack zip file, you can use web hosting's file manager to do that (cPanel's File Manager of DirectAdmin's Files)
+- remove zip file
+- go to example.com/install URL in your browser (change example.com to your domain).
+  If you have put classified app inside sub directory, you must add /install to URL relative to that directory,
+  for example: example.com/your-subdirectory/install
+- follow installation steps
+
+Complete installation guide can be found in documentation:
+https://documentation.2max.io/display/CLAS/Installation
+
+cPanel requirements guide:
+https://documentation.2max.io/display/CLAS/cPanel+configuration
+
+DirectAdmin requirements guide:
+https://documentation.2max.io/display/CLAS/DirectAdmin+configuration
+
+General requirements guide:
+https://documentation.2max.io/display/CLAS/Requirements
+
+Full documentation:
+https://documentation.2max.io/display/CLAS/2MAX.io+Classified+Ads+with+Custom+Fields+PHP+script
+
+_______________________________________________________________________________________________________________________
+2MAX.io Classified Ads
+Responsive Classified Ads with Custom Fields & Filters
+
+Licensed under Envato / Code Canyon Regular License
+https://codecanyon.net/licenses/terms/regular

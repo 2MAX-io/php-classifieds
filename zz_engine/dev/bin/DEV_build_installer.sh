@@ -16,9 +16,8 @@ rm ${INSTALLER_DIR}/perf.php
 rm ${INSTALLER_DIR}/echo.php
 rm ${INSTALLER_DIR}/echo.html
 rm ${INSTALLER_DIR}/.gitignore
-rm ${INSTALLER_DIR}/LICENSE_LICENCJA_J4U_UnRsurDMXRqbXu3XeNPys.txt
 
-#cp ${PROJECT_DIR}/install/data/example/listing.large.sql ${INSTALLER_DIR}/install/data/example/listing.large.sql
+cp ${PROJECT_DIR}/install/data/example/listing.large.sql ${INSTALLER_DIR}/install/data/example/listing.large.sql
 
 mkdir -p ${INSTALLER_DIR}/zz_engine/var/cache
 mkdir -p ${INSTALLER_DIR}/zz_engine/var/cache/upgrade
@@ -33,4 +32,6 @@ zip -rq9 ${INSTALLER_ZIP} .
 mv ${INSTALLER_ZIP} ${PROJECT_DIR}/zz_engine/var/installer
 rm -r ${PROJECT_DIR}/${INSTALLER_DIR}
 
-echo "CONSIDER IT DONE"
+GREEN='\033[0;32m'
+NC='\033[0m' # No Color
+printf "${GREEN}CONSIDER IT DONE${NC}\n"

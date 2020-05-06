@@ -287,4 +287,5 @@ composer install
 composer install --optimize-autoloader
 composer update -d zz_engine --optimize-autoloader
 gulp -f zz_engine/gulpfile.js --cwd=.
+php zz_engine/bin/console doctrine:schema:create --dump-sql > install/data/_schema.sql
 bash zz_engine/dev/bin/DEV_build_installer.sh

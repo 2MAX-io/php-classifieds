@@ -289,3 +289,8 @@ composer update -d zz_engine --optimize-autoloader
 gulp -f zz_engine/gulpfile.js --cwd=.
 php zz_engine/bin/console doctrine:schema:create --dump-sql > install/data/_schema.sql
 bash zz_engine/dev/bin/DEV_build_installer.sh
+composer require willdurand/js-translation-bundle
+composer require willdurand/js-translation-bundle
+composer require willdurand/js-translation-bundle
+cd zz_engine/
+composer require willdurand/js-translation-bundle

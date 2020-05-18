@@ -294,3 +294,12 @@ composer require willdurand/js-translation-bundle
 composer require willdurand/js-translation-bundle
 cd zz_engine/
 composer require willdurand/js-translation-bundle
+php zz_engine/bin/console make:entity 
+php zz_engine/bin/console make:form
+php zz_engine/bin/console make:form
+php bin/console make:entity --regenerate "App"
+php zz_engine/bin/console make:entity --regenerate "App"
+php zz_engine/bin/console doctrine:schema:update -f
+php zz_engine/bin/console make:entity --regenerate "App"
+php zz_engine/bin/console doctrine:schema:update -f
+php zz_engine/bin/console doctrine:schema:update -f

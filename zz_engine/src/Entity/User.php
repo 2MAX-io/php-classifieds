@@ -99,12 +99,20 @@ class User implements UserInterface, RoleInterface, EnablableInterface, EncoderA
      */
     private $payments;
 
+    /**
+     * @var UserInvoiceDetails[]|Collection
+     *
+     * @ORM\OneToMany(targetEntity="App\Entity\UserInvoiceDetails", mappedBy="user")
+     */
+    private $userInvoiceDetails;
+
     public function __construct()
     {
         $this->listings = new ArrayCollection();
         $this->userBalanceChanges = new ArrayCollection();
         $this->paymentForBalanceTopUpList = new ArrayCollection();
         $this->payments = new ArrayCollection();
+        $this->userInvoiceDetails = new ArrayCollection();
     }
 
     /**
@@ -394,6 +402,39 @@ class User implements UserInterface, RoleInterface, EnablableInterface, EncoderA
             // set the owning side to null (unless already changed)
             if ($payment->getUser() === $this) {
                 $payment->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getUserInvoiceDetails(): UserInvoiceDetails
+    {
+        return $this->userInvoiceDetails->last();
+    }
+
+    public function setUserInvoiceDetails(UserInvoiceDetails $userInvoiceDetails): void
+    {
+        $this->userInvoiceDetails = $userInvoiceDetails;
+    }
+
+    public function addUserInvoiceDetail(UserInvoiceDetails $userInvoiceDetail): self
+    {
+        if (!$this->userInvoiceDetails->contains($userInvoiceDetail)) {
+            $this->userInvoiceDetails[] = $userInvoiceDetail;
+            $userInvoiceDetail->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserInvoiceDetail(UserInvoiceDetails $userInvoiceDetail): self
+    {
+        if ($this->userInvoiceDetails->contains($userInvoiceDetail)) {
+            $this->userInvoiceDetails->removeElement($userInvoiceDetail);
+            // set the owning side to null (unless already changed)
+            if ($userInvoiceDetail->getUser() === $this) {
+                $userInvoiceDetail->setUser(null);
             }
         }
 

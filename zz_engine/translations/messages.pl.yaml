@@ -612,6 +612,9 @@ trans:
   Email or Login: 'Email lub Login'
   Subcategories: 'Podkategorie'
   Listing has expired, please do not contact listing author: 'Ogłoszenie wygasło, prosimy o powstrzymanie się przed kontaktem z ogłoszeniodawcą'
+  Invoice details: 'Dane do faktury'
+  Save Invoice Details: 'Zapisz dane do faktury'
+  Saved successfully: 'Zapisano poprawnie'
 
 'trans.Remove non standard characters in listing - Enabled': 'Usuń niestandardowe znaki z ogłoszenia - Włączone'
 'trans.Remove non standard characters in listing - List of allowed characters': 'Usuń niestandardowe znaki z ogłoszenia - Lista dozwolonych znaków'

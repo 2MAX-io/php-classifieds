@@ -11,8 +11,8 @@ gulp --gulpfile zz_engine/gulpfile.js --cwd .
 docker exec -it -u 1000 classifieds_php bash -c "bash zz_engine/dev/bin/DEV_build_installer.sh"
 
 tree -a --dirsfirst | COPY
-tree --dirsfirst -I 'vendor|node_modules|var' | COPY
-find . -type f | grep -v vendor/ | grep -v 'var/cache' | grep -v '/node_modules' | grep -v '/.git/' | COPY
+tree --dirsfirst -I 'vendor|node_modules|var|zz_engine/docker/mysql/data' | COPY
+find . -type f | grep -v vendor/ | grep -v 'var/cache' | grep -v '/node_modules' | grep -v '/zz_engine/docker/mysql/data' | grep -v '/asset/lib/cleave/addons' | grep -v '.idea' | grep -v '/.git/' | COPY
 
 
 

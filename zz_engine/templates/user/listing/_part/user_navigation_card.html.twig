@@ -28,5 +28,11 @@
                 <span>{{ 'trans.Top up account' | trans }}</span>
             </a>
         {% endif %}
+        {% if settings.paymentAllowed %}
+            <a href="{{ path('app_user_invoice_details') }}" class="link-list-item text-dark">
+                <i class="fas fa-envelope"></i>
+                <span>{{ 'trans.Invoice details' | trans }}</span>
+            </a>
+        {% endif %}
     </div>
 </div>

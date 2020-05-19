@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -62,6 +64,20 @@ class UserInvoiceDetails
      * @ORM\Column(type="string", length=50, nullable=true)
      */
     private $country;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(type="datetime")
+     */
+    private $createdDate;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(type="datetime")
+     */
+    private $updatedDate;
 
     public function getId(): ?int
     {
@@ -172,6 +188,30 @@ class UserInvoiceDetails
     public function setStreet(string $street): self
     {
         $this->street = $street;
+
+        return $this;
+    }
+
+    public function getCreatedDate(): ?\DateTimeInterface
+    {
+        return $this->createdDate;
+    }
+
+    public function setCreatedDate(\DateTimeInterface $createdDate): self
+    {
+        $this->createdDate = $createdDate;
+
+        return $this;
+    }
+
+    public function getUpdatedDate(): ?\DateTimeInterface
+    {
+        return $this->updatedDate;
+    }
+
+    public function setUpdatedDate(\DateTimeInterface $updatedDate): self
+    {
+        $this->updatedDate = $updatedDate;
 
         return $this;
     }

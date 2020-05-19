@@ -5,11 +5,9 @@ declare(strict_types=1);
 namespace App\Controller\User\Invoice;
 
 use App\Controller\User\Base\AbstractUserController;
-use App\Entity\UserInvoiceDetails;
 use App\Form\UserInvoiceDetailsType;
-use App\Repository\UserInvoiceDetailsRepository;
-use App\Security\CurrentUserService;
 use App\Service\FlashBag\FlashService;
+use App\Service\User\Invoice\UserInvoiceDetailsService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,19 +20,13 @@ class UserInvoiceDetailsController extends AbstractUserController
      */
     public function userInvoiceDetails(
         Request $request,
-        UserInvoiceDetailsRepository $userInvoiceDetailsRepository,
-        CurrentUserService $currentUserService,
+        UserInvoiceDetailsService $userInvoiceDetailsService,
         EntityManagerInterface $em,
         FlashService $flashService
     ): Response {
         $this->dennyUnlessUser();
 
-        $user = $currentUserService->getUser();
-        $userInvoiceDetails = $userInvoiceDetailsRepository->findByUser($user);
-        if (null === $userInvoiceDetails) {
-            $userInvoiceDetails = new UserInvoiceDetails();
-            $userInvoiceDetails->setUser($user);
-        }
+        $userInvoiceDetails = $userInvoiceDetailsService->getOrCreateUserInvoiceDetails();
         $form = $this->createForm(UserInvoiceDetailsType::class, $userInvoiceDetails);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {

@@ -9,12 +9,12 @@ use Ausi\SlugGenerator\SlugOptions;
 
 class SlugHelper
 {
-    public static function getSlug(string $sting): string
+    public static function getSlug(string $sting, string $delimiter = '-'): string
     {
         $generator = new SlugGenerator(
             (new SlugOptions)
                 ->setValidChars('a-z0-9')
-                ->setDelimiter('-')
+                ->setDelimiter($delimiter)
         );
 
         $slug = $generator->generate(\trim($sting));

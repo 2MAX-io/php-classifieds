@@ -33,7 +33,7 @@ class UserInvoiceDetails
     /**
      * @ORM\Column(type="string", length=50, nullable=true)
      */
-    private $taxId;
+    private $taxNumber;
 
     /**
      * @ORM\Column(type="string", length=100)
@@ -66,6 +66,11 @@ class UserInvoiceDetails
     private $country;
 
     /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $emailForInvoice;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(type="datetime")
@@ -96,14 +101,14 @@ class UserInvoiceDetails
         return $this;
     }
 
-    public function getTaxId(): ?string
+    public function getTaxNumber(): ?string
     {
-        return $this->taxId;
+        return $this->taxNumber;
     }
 
-    public function setTaxId(?string $taxId): self
+    public function setTaxNumber(?string $taxNumber): self
     {
-        $this->taxId = $taxId;
+        $this->taxNumber = $taxNumber;
 
         return $this;
     }
@@ -212,6 +217,18 @@ class UserInvoiceDetails
     public function setUpdatedDate(\DateTimeInterface $updatedDate): self
     {
         $this->updatedDate = $updatedDate;
+
+        return $this;
+    }
+
+    public function getEmailForInvoice(): ?string
+    {
+        return $this->emailForInvoice;
+    }
+
+    public function setEmailForInvoice(string $emailForInvoice): self
+    {
+        $this->emailForInvoice = $emailForInvoice;
 
         return $this;
     }

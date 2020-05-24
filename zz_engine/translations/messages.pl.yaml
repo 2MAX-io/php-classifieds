@@ -6,6 +6,12 @@ Minute: Minuta
 
 trans.paymentType.FOR_FEATURED_PACKAGE_TYPE: 'Za pakiet wyróżnienia'
 trans.paymentType.BALANCE_TOP_UP_TYPE: 'Doładowanie konta'
+
+trans.invoice_generation_strategy.auto: 'Automatycznie'
+trans.invoice_generation_strategy.manual: 'Ręcznie'
+trans.invoice_generation_strategy.external_system: 'Zewnętrzny system'
+trans.invoice_generation_strategy.infakt_pl: 'Infakt.pl'
+
 '{1}trans.Feature for one day for %price%: %listing%?|]1,Inf[ Feature for %featuredDays% days for %price%: %listing%?': '{1}Wyróżnić na jeden dzień za %price%: %listing%?|]1,Inf[ Wyróżnić na %featuredDays% dni za %price%: %listing%?'
 '{1}trans.Feature for one day for %price%|]1,Inf[ Feature for %featuredDays% days for %price%': '{1} Wyróżnij na jeden dzień za %price%|]1,Inf[ Wyróżnij na %featuredDays% dni za %price%'
 
@@ -615,6 +621,27 @@ trans:
   Invoice details: 'Dane do faktury'
   Save Invoice Details: 'Zapisz dane do faktury'
   Saved successfully: 'Zapisano poprawnie'
+  Invoices: 'Faktury'
+  Invoice number: 'Numer faktury'
+  Invoice: 'Faktura'
+  Tax ID: 'NIP / VAT ID'
+  Seller: 'Sprzedawca'
+  Client: 'Klient'
+  Quantity: 'Ilość'
+  Date on invoice: 'Data na fakturze'
+  Details: 'Szczegóły'
+  Client details: 'Dane klienta'
+  Seller details: 'Dane sprzedawcy'
+  Invoice generation strategy: 'Strategia generowania faktur'
+  Seller email on invoice: 'Email sprzedawcy na fakturze'
+  Invoice date: 'Data faktury'
+  Total: 'Suma'
+  Export date: 'Data eksportu'
+  Sent to user date: 'Data wysłania do użytkownika'
+  Display to user: 'Pokazuj użytkownikowi'
+  External system reference: 'Powiązanie z systemem zewnętrznym'
+  External system reference secondary: 'Powiązanie z systemem zewnętrznym, drugie'
+  Gateway Payment ID: 'Bramka płatności ID'
 
 'trans.Remove non standard characters in listing - Enabled': 'Usuń niestandardowe znaki z ogłoszenia - Włączone'
 'trans.Remove non standard characters in listing - List of allowed characters': 'Usuń niestandardowe znaki z ogłoszenia - Lista dozwolonych znaków'
@@ -622,3 +649,5 @@ trans:
 'trans.payment_gateway.paypal': 'PayPal'
 'trans.payment_gateway.przelewy24': 'Przelewy24'
 'trans.Share your email address to log in': 'Udostępnij swój adres email aby się zalogować'
+
+trans.invoice_file_prefix: 'faktura_ogloszenia_'

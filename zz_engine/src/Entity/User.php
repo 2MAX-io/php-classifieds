@@ -106,6 +106,13 @@ class User implements UserInterface, RoleInterface, EnablableInterface, EncoderA
      */
     private $userInvoiceDetails;
 
+    /**
+     * @var Invoice[]|Collection
+     *
+     * @ORM\OneToMany(targetEntity="App\Entity\Invoice", mappedBy="user")
+     */
+    private $invoices;
+
     public function __construct()
     {
         $this->listings = new ArrayCollection();
@@ -113,6 +120,7 @@ class User implements UserInterface, RoleInterface, EnablableInterface, EncoderA
         $this->paymentForBalanceTopUpList = new ArrayCollection();
         $this->payments = new ArrayCollection();
         $this->userInvoiceDetails = new ArrayCollection();
+        $this->invoices = new ArrayCollection();
     }
 
     /**
@@ -155,7 +163,7 @@ class User implements UserInterface, RoleInterface, EnablableInterface, EncoderA
     /**
      * prevents big session, when serializing user security token
      *
-     * @return array|mixed
+     * @return array
      */
     public function __sleep()
     {
@@ -435,6 +443,37 @@ class User implements UserInterface, RoleInterface, EnablableInterface, EncoderA
             // set the owning side to null (unless already changed)
             if ($userInvoiceDetail->getUser() === $this) {
                 $userInvoiceDetail->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Invoice[]
+     */
+    public function getInvoices(): Collection
+    {
+        return $this->invoices;
+    }
+
+    public function addInvoice(Invoice $invoice): self
+    {
+        if (!$this->invoices->contains($invoice)) {
+            $this->invoices[] = $invoice;
+            $invoice->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeInvoice(Invoice $invoice): self
+    {
+        if ($this->invoices->contains($invoice)) {
+            $this->invoices->removeElement($invoice);
+            // set the owning side to null (unless already changed)
+            if ($invoice->getUser() === $this) {
+                $invoice->setUser(null);
             }
         }
 

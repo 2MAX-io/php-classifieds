@@ -45,11 +45,11 @@
         </tr>
         <tr>
             <th>{{ 'trans.Registration date' | trans }}</th>
-            <td>{{ user.registrationDate ? user.registrationDate|date('Y-m-d H:i:s T') : '' }}</td>
+            <td>{{ user.registrationDate ? user.registrationDate|date(dateFormatYmdHis) : '' }}</td>
         </tr>
         <tr>
             <th>{{ 'trans.Last login' | trans }}</th>
-            <td>{{ user.lastLogin ? user.lastLogin|date('Y-m-d H:i:s T') : '' }}</td>
+            <td>{{ user.lastLogin ? user.lastLogin|date(dateFormatYmdHis) : '' }}</td>
         </tr>
         </tbody>
     </table>

@@ -20,7 +20,7 @@
         <tbody>
         {% for payment in payments %}
             <tr>
-                <td>{{ payment.datetime ? payment.datetime|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ payment.datetime ? payment.datetime|date(dateFormatYmdHis) : '' }}</td>
                 <td>{{ payment.amount | moneyPrecise }}</td>
                 <td>{{ payment.gatewayStatus }}</td>
                 <td>

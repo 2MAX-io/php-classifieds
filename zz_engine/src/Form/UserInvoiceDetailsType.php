@@ -14,13 +14,14 @@ class UserInvoiceDetailsType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add('companyName');
-        $builder->add('taxId');
+        $builder->add('taxNumber');
         $builder->add('street');
         $builder->add('buildingNumber');
         $builder->add('unitNumber');
         $builder->add('city');
         $builder->add('zipCode');
         $builder->add('country');
+        $builder->add('emailForInvoice');
     }
 
     public function configureOptions(OptionsResolver $resolver): void

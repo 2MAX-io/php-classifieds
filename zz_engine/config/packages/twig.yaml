@@ -5,6 +5,8 @@ parameters:
 twig:
     globals:
         dateFormatShort: '%twig_date_format_short%'
+        dateFormatYmd: 'Y-m-d'
+        dateFormatYmdHis: 'Y-m-d H:i:s'
     default_path: '%kernel.project_dir%/templates'
     debug: '%kernel.debug%'
     strict_variables: '%kernel.debug%'

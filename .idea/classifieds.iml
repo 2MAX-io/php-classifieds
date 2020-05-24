@@ -32,6 +32,7 @@
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/doctrine/orm" />
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/doctrine/persistence" />
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/doctrine/reflection" />
+      <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/dompdf/dompdf" />
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/egulias/email-validator" />
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/friendsofsymfony/jsrouting-bundle" />
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/fzaninotto/faker" />
@@ -67,6 +68,8 @@
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/pagerfanta/pagerfanta" />
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/paragonie/sodium_compat" />
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/paypal/rest-api-sdk-php" />
+      <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/phenx/php-font-lib" />
+      <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/phenx/php-svg-lib" />
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/php-http/discovery" />
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/php-http/guzzle6-adapter" />
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/php-http/httplug" />
@@ -83,6 +86,7 @@
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/psr/log" />
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/psr/simple-cache" />
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/ralouphie/getallheaders" />
+      <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/sabberworm/php-css-parser" />
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/sensio/framework-extra-bundle" />
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/slevomat/coding-standard" />
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/squizlabs/php_codesniffer" />
@@ -132,6 +136,7 @@
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/symfony/polyfill-mbstring" />
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/symfony/polyfill-php72" />
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/symfony/polyfill-php73" />
+      <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/symfony/polyfill-uuid" />
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/symfony/process" />
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/symfony/profiler-pack" />
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/symfony/property-access" />

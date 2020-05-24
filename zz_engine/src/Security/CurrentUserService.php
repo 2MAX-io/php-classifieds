@@ -128,8 +128,9 @@ class CurrentUserService
         /** @var TokenInterface $adminToken */
         $adminToken = SerializerHelper::safelyUnserialize($adminSerialized);
 
+        /** @var Admin $admin */
         $admin = $adminToken->getUser();
-        $admin = $this->em->merge($admin); // merge does refresh
+        $admin = $this->em->getRepository(Admin::class)->find($admin->getId());
 
         if (!$admin instanceof Admin) {
             return false;

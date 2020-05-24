@@ -183,17 +183,22 @@
       <path value="$PROJECT_DIR$/zz_engine/vendor/laminas/laminas-stdlib" />
       <path value="$PROJECT_DIR$/zz_engine/vendor/nelmio/js-logger-bundle" />
       <path value="$PROJECT_DIR$/zz_engine/vendor/misd/linkify" />
+      <path value="$PROJECT_DIR$/zz_engine/vendor/symfony/polyfill-uuid" />
+      <path value="$PROJECT_DIR$/zz_engine/vendor/phenx/php-font-lib" />
+      <path value="$PROJECT_DIR$/zz_engine/vendor/phenx/php-svg-lib" />
+      <path value="$PROJECT_DIR$/zz_engine/vendor/sabberworm/php-css-parser" />
+      <path value="$PROJECT_DIR$/zz_engine/vendor/dompdf/dompdf" />
     </include_path>
   </component>
   <component name="PhpInterpreters">
     <interpreters>
       <interpreter id="db13f681-6324-4916-a563-f4b8ea6e3438" name="php" home="docker-compose://DATA" debugger_id="php.debugger.XDebug">
-        <remote_data DOCKER_ACCOUNT_NAME="Docker" DOCKER_COMPOSE_SERVICE_NAME="php" DOCKER_REMOTE_PROJECT_PATH="/opt/project" INTERPRETER_PATH="php" HELPERS_PATH="/opt/.phpstorm_helpers" INITIALIZED="false" VALID="true" RUN_AS_ROOT_VIA_SUDO="false">
+        <remote_data INTERPRETER_PATH="php" HELPERS_PATH="/opt/.phpstorm_helpers" INITIALIZED="false" VALID="true" RUN_AS_ROOT_VIA_SUDO="false" DOCKER_ACCOUNT_NAME="Docker" DOCKER_COMPOSE_SERVICE_NAME="php" DOCKER_REMOTE_PROJECT_PATH="/opt/project">
+          <type_data command="RUN" />
           <dockerComposeConfigurationPaths>
             <item value="$PROJECT_DIR$/zz_engine/docker/docker-compose.yml" />
           </dockerComposeConfigurationPaths>
           <envs />
-          <type_data command="RUN" />
         </remote_data>
       </interpreter>
     </interpreters>

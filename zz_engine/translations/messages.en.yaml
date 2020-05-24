@@ -172,6 +172,28 @@ trans:
   Invoice details: 'Invoice details'
   Save Invoice Details: 'Save Invoice Details'
   Saved successfully: 'Saved successfully'
+  Invoices: 'Invoices'
+  Invoice number: 'Invoice number'
+  Invoice: 'Invoice'
+  Tax ID: 'Tax ID / VAT ID'
+  Seller: 'Seller'
+  Client: 'Client'
+  Quantity: 'Quantity'
+  Date on invoice: 'Date on invoice'
+  Details: 'Details'
+  Client details: 'Client details'
+  Seller details: 'Seller details'
+  Invoice generation strategy: 'Invoice generation strategy'
+  Seller email on invoice: 'Seller email on invoice'
+  Invoice date: 'Invoice date'
+  Total: 'Total'
+  Export date: 'Export date'
+  Sent to user date: 'Sent to user date'
+  Display to user: 'Display to user'
+  External system reference: 'External system reference'
+  External system reference secondary: 'External system reference secondary'
+  Gateway Payment ID: 'Gateway Payment ID'
+  Internal Payment ID: 'Internal Payment ID'
 
 trans.customFieldType.SELECT_AS_CHECKBOXES: 'Checkboxes in filters, single select when editing'
 trans.customFieldType.SELECT_SINGLE: 'Single selection field'
@@ -191,6 +213,11 @@ trans.listing.status.STATUS_DEACTIVATED: 'Deactivated'
 
 trans.paymentType.FOR_FEATURED_PACKAGE_TYPE: 'For featured package'
 trans.paymentType.BALANCE_TOP_UP_TYPE: 'Balance top up'
+
+trans.invoice_generation_strategy.auto: 'Automatically'
+trans.invoice_generation_strategy.manual: 'Manual'
+trans.invoice_generation_strategy.external_system: 'External system'
+trans.invoice_generation_strategy.infakt_pl: 'Infakt.pl'
 
 Year: Year
 Month: Month
@@ -663,3 +690,5 @@ trans.Preview: Preview
 'trans.payment_gateway.przelewy24': 'Przelewy24'
 'trans.Email or Login': 'Email or Login'
 'trans.Share your email address to log in': 'Share your email address to log in'
+
+trans.invoice_file_prefix: 'invoice_classifieds_'

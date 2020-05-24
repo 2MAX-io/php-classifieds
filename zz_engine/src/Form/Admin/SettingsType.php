@@ -8,6 +8,8 @@ use App\Form\Type\BoolRequiredType;
 use App\Form\Type\BoolType;
 use App\Form\Type\LanguageTwoLettersType;
 use App\Form\Type\PageType;
+use App\Service\Invoice\Enum\InvoiceGenerationStrategyEnum;
+use App\Service\Payment\Enum\GatewayModeEnum;
 use App\Service\Payment\Enum\PaymentGatewayEnum;
 use App\Service\Setting\SettingsDto;
 use Symfony\Component\Form\AbstractType;
@@ -278,8 +280,8 @@ class SettingsType extends AbstractType
             'required' => true,
             'placeholder' => 'trans.Select',
             'choices' => [
-                'trans.payment.przelewy24.sandbox' => 'sandbox',
-                'trans.payment.przelewy24.live' => 'live',
+                'trans.payment.przelewy24.sandbox' => GatewayModeEnum::SANDBOX,
+                'trans.payment.przelewy24.live' => GatewayModeEnum::LIVE,
             ],
             'constraints' => [
                 new NotBlank(),
@@ -351,6 +353,61 @@ class SettingsType extends AbstractType
         $builder->add('googleSignInClientSecret', TextType::class, [
             'label' => 'trans.Google Sign in Client Secret',
             'required' => true,
+        ]);
+        $builder->add('invoiceCompanyName', TextType::class, [
+            'label' => 'trans.Company name for invoice',
+            'required' => true,
+        ]);
+        $builder->add('invoiceTaxNumber', TextType::class, [
+            'label' => 'trans.Tax Number for invoice',
+            'required' => true,
+        ]);
+        $builder->add('invoiceCity', TextType::class, [
+            'label' => 'trans.City for invoice',
+            'required' => true,
+        ]);
+        $builder->add('invoiceStreet', TextType::class, [
+            'label' => 'trans.Street for invoice',
+            'required' => true,
+        ]);
+        $builder->add('invoiceBuildingNumber', TextType::class, [
+            'label' => 'trans.Building number for invoice',
+            'required' => true,
+        ]);
+        $builder->add('invoiceUnitNumber', TextType::class, [
+            'label' => 'trans.Unit number for invoice',
+            'required' => true,
+        ]);
+        $builder->add('invoiceZipCode', TextType::class, [
+            'label' => 'trans.Zip code for invoice',
+            'required' => true,
+        ]);
+        $builder->add('invoiceCountry', TextType::class, [
+            'label' => 'trans.Country for invoice',
+            'required' => true,
+        ]);
+        $builder->add('invoiceEmail', TextType::class, [
+            'label' => 'trans.Seller email on invoice',
+            'required' => true,
+        ]);
+        $builder->add('invoiceSoldItemDescription', TextType::class, [
+            'label' => 'trans.Sold item description for invoice',
+            'required' => true,
+        ]);
+        $builder->add('invoiceGenerationStrategy', ChoiceType::class, [
+            'label' => 'trans.Invoice generation strategy',
+            'required' => true,
+            'choices' => [
+                'trans.invoice_generation_strategy.auto' => InvoiceGenerationStrategyEnum::AUTO,
+                'trans.invoice_generation_strategy.manual' => InvoiceGenerationStrategyEnum::MANUAL,
+                'trans.invoice_generation_strategy.external_system' => InvoiceGenerationStrategyEnum::EXTERNAL_SYSTEM,
+                'trans.invoice_generation_strategy.infakt_pl' => InvoiceGenerationStrategyEnum::INFAKT_PL,
+            ],
+        ]);
+        $builder->add('invoiceNumberPrefix', TextType::class, [
+            'label' => 'trans.Invoice number prefix',
+            'help' => 'trans.can be empty',
+            'required' => false,
         ]);
     }
 

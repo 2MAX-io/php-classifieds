@@ -84,6 +84,9 @@
     "doctrine/reflection": {
         "version": "v1.0.0"
     },
+    "dompdf/dompdf": {
+        "version": "v0.8.5"
+    },
     "egulias/email-validator": {
         "version": "2.1.7"
     },
@@ -201,6 +204,12 @@
     "paypal/rest-api-sdk-php": {
         "version": "1.14.0"
     },
+    "phenx/php-font-lib": {
+        "version": "0.5.2"
+    },
+    "phenx/php-svg-lib": {
+        "version": "v0.3.3"
+    },
     "php": {
         "version": "7.3"
     },
@@ -254,6 +263,9 @@
     },
     "roave/security-advisories": {
         "version": "dev-master"
+    },
+    "sabberworm/php-css-parser": {
+        "version": "8.3.0"
     },
     "sensio/framework-extra-bundle": {
         "version": "5.2",
@@ -511,6 +523,9 @@
     },
     "symfony/polyfill-php73": {
         "version": "v1.11.0"
+    },
+    "symfony/polyfill-uuid": {
+        "version": "v1.17.0"
     },
     "symfony/process": {
         "version": "v4.4.0"

@@ -1,9 +1,9 @@
 {% extends 'admin/base.html.twig' %}
 
-{% block title %}{{ 'trans.Payment' | trans }}{% endblock %}
+{% block title %}{{ 'trans.Payment' | trans }} #{{ payment.id }}{% endblock %}
 
 {% block body %}
-    <h1>{{ 'trans.Payment' | trans }}</h1>
+    <h1>{{ 'trans.Payment' | trans }} #{{ payment.id }}</h1>
 
     <table class="table table-responsive-sm">
         <tbody>
@@ -29,7 +29,7 @@
             </tr>
             <tr>
                 <th>{{ 'trans.Date' | trans }}</th>
-                <td>{{ payment.datetime ? payment.datetime|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ payment.datetime ? payment.datetime|date(dateFormatYmdHis) : '' }}</td>
             </tr>
             <tr>
                 <th>{{ 'trans.Payment gateway - status' | trans }}</th>

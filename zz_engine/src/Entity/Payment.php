@@ -136,9 +136,17 @@ class Payment
      */
     private $userBalanceChanges;
 
+    /**
+     * @var Invoice[]|Collection
+     *
+     * @ORM\OneToMany(targetEntity="App\Entity\Invoice", mappedBy="payment")
+     */
+    private $invoices;
+
     public function __construct()
     {
         $this->userBalanceChanges = new ArrayCollection();
+        $this->invoices = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -411,5 +419,36 @@ class Payment
     public function setGatewayMode(string $gatewayMode): void
     {
         $this->gatewayMode = $gatewayMode;
+    }
+
+    /**
+     * @return Collection|Invoice[]
+     */
+    public function getInvoices(): Collection
+    {
+        return $this->invoices;
+    }
+
+    public function addInvoice(Invoice $invoice): self
+    {
+        if (!$this->invoices->contains($invoice)) {
+            $this->invoices[] = $invoice;
+            $invoice->setPayment($this);
+        }
+
+        return $this;
+    }
+
+    public function removeInvoice(Invoice $invoice): self
+    {
+        if ($this->invoices->contains($invoice)) {
+            $this->invoices->removeElement($invoice);
+            // set the owning side to null (unless already changed)
+            if ($invoice->getPayment() === $this) {
+                $invoice->setPayment(null);
+            }
+        }
+
+        return $this;
     }
 }

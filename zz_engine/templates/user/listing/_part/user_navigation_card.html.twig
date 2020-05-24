@@ -29,9 +29,9 @@
             </a>
         {% endif %}
         {% if settings.paymentAllowed %}
-            <a href="{{ path('app_user_invoice_details') }}" class="link-list-item text-dark">
+            <a href="{{ path('app_user_invoice_list') }}" class="link-list-item text-dark">
                 <i class="fas fa-envelope"></i>
-                <span>{{ 'trans.Invoice details' | trans }}</span>
+                <span>{{ 'trans.Invoices' | trans }}</span>
             </a>
         {% endif %}
     </div>

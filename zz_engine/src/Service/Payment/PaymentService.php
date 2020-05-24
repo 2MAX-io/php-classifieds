@@ -12,6 +12,7 @@ use App\Entity\PaymentForBalanceTopUp;
 use App\Entity\User;
 use App\Helper\Random;
 use App\Security\CurrentUserService;
+use App\Service\Invoice\CreateInvoiceService;
 use App\Service\Listing\Featured\FeaturedListingService;
 use App\Service\Money\UserBalanceService;
 use App\Service\Payment\Dto\CompletePurchaseDto;
@@ -72,8 +73,14 @@ class PaymentService
      */
     private $paymentGatewayService;
 
+    /**
+     * @var CreateInvoiceService
+     */
+    private $createInvoiceService;
+
     public function __construct(
         PaymentGatewayService $paymentGatewayService,
+        CreateInvoiceService $createInvoiceService,
         UserBalanceService $userBalanceService,
         FeaturedListingService $featuredListingService,
         SettingsService $settingsService,
@@ -92,6 +99,7 @@ class PaymentService
         $this->featuredListingService = $featuredListingService;
         $this->urlGenerator = $urlGenerator;
         $this->paymentGatewayService = $paymentGatewayService;
+        $this->createInvoiceService = $createInvoiceService;
     }
 
     public function createPaymentForFeaturedPackage(Listing $listing, FeaturedPackage $featuredPackage): PaymentDto
@@ -302,6 +310,8 @@ class PaymentService
             ])));
             $this->markDelivered($confirmPaymentDto);
 
+            $this->createInvoiceService->createInvoice($paymentEntity);
+
             return $completePaymentDto;
         }
 
@@ -317,6 +327,8 @@ class PaymentService
             $completePaymentDto->setIsSuccess(true);
             $completePaymentDto->setRedirectResponse(new RedirectResponse($this->urlGenerator->generate('app_user_balance_top_up')));
             $this->markDelivered($confirmPaymentDto);
+
+            $this->createInvoiceService->createInvoice($paymentEntity);
 
             return $completePaymentDto;
         }

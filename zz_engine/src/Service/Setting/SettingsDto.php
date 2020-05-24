@@ -243,6 +243,66 @@ class SettingsDto
      */
     private $googleSignInClientSecret;
 
+    /**
+     * @var string|null
+     */
+    private $invoiceCompanyName;
+
+    /**
+     * @var string|null
+     */
+    private $invoiceTaxNumber;
+
+    /**
+     * @var string|null
+     */
+    private $invoiceCity;
+
+    /**
+     * @var string|null
+     */
+    private $invoiceStreet;
+
+    /**
+     * @var string|null
+     */
+    private $invoiceBuildingNumber;
+
+    /**
+     * @var string|null
+     */
+    private $invoiceUnitNumber;
+
+    /**
+     * @var string|null
+     */
+    private $invoiceZipCode;
+
+    /**
+     * @var string|null
+     */
+    private $invoiceCountry;
+
+    /**
+     * @var string|null
+     */
+    private $invoiceEmail;
+
+    /**
+     * @var string|null
+     */
+    private $invoiceSoldItemDescription;
+
+    /**
+     * @var string|null
+     */
+    private $invoiceGenerationStrategy;
+
+    /**
+     * @var string|null
+     */
+    private $invoiceNumberPrefix;
+
     public function getIndexPageTitle(): ?string
     {
         return $this->indexPageTitle;
@@ -711,5 +771,125 @@ class SettingsDto
     public function setPaymentPrzelewy24Mode(?string $paymentPrzelewy24Mode): void
     {
         $this->paymentPrzelewy24Mode = $paymentPrzelewy24Mode;
+    }
+
+    public function getInvoiceCompanyName(): ?string
+    {
+        return $this->invoiceCompanyName;
+    }
+
+    public function setInvoiceCompanyName(?string $invoiceCompanyName): void
+    {
+        $this->invoiceCompanyName = $invoiceCompanyName;
+    }
+
+    public function getInvoiceTaxNumber(): ?string
+    {
+        return $this->invoiceTaxNumber;
+    }
+
+    public function setInvoiceTaxNumber(?string $invoiceTaxNumber): void
+    {
+        $this->invoiceTaxNumber = $invoiceTaxNumber;
+    }
+
+    public function getInvoiceCity(): ?string
+    {
+        return $this->invoiceCity;
+    }
+
+    public function setInvoiceCity(?string $invoiceCity): void
+    {
+        $this->invoiceCity = $invoiceCity;
+    }
+
+    public function getInvoiceStreet(): ?string
+    {
+        return $this->invoiceStreet;
+    }
+
+    public function setInvoiceStreet(?string $invoiceStreet): void
+    {
+        $this->invoiceStreet = $invoiceStreet;
+    }
+
+    public function getInvoiceBuildingNumber(): ?string
+    {
+        return $this->invoiceBuildingNumber;
+    }
+
+    public function setInvoiceBuildingNumber(?string $invoiceBuildingNumber): void
+    {
+        $this->invoiceBuildingNumber = $invoiceBuildingNumber;
+    }
+
+    public function getInvoiceUnitNumber(): ?string
+    {
+        return $this->invoiceUnitNumber;
+    }
+
+    public function setInvoiceUnitNumber(?string $invoiceUnitNumber): void
+    {
+        $this->invoiceUnitNumber = $invoiceUnitNumber;
+    }
+
+    public function getInvoiceZipCode(): ?string
+    {
+        return $this->invoiceZipCode;
+    }
+
+    public function setInvoiceZipCode(?string $invoiceZipCode): void
+    {
+        $this->invoiceZipCode = $invoiceZipCode;
+    }
+
+    public function getInvoiceCountry(): ?string
+    {
+        return $this->invoiceCountry;
+    }
+
+    public function setInvoiceCountry(?string $invoiceCountry): void
+    {
+        $this->invoiceCountry = $invoiceCountry;
+    }
+
+    public function getInvoiceEmail(): ?string
+    {
+        return $this->invoiceEmail;
+    }
+
+    public function setInvoiceEmail(?string $invoiceEmail): void
+    {
+        $this->invoiceEmail = $invoiceEmail;
+    }
+
+    public function getInvoiceSoldItemDescription(): ?string
+    {
+        return $this->invoiceSoldItemDescription;
+    }
+
+    public function setInvoiceSoldItemDescription(?string $invoiceSoldItemDescription): void
+    {
+        $this->invoiceSoldItemDescription = $invoiceSoldItemDescription;
+    }
+
+    public function getInvoiceGenerationStrategy(): ?string
+    {
+        return $this->invoiceGenerationStrategy;
+    }
+
+    public function setInvoiceGenerationStrategy(?string $invoiceGenerationStrategy): void
+    {
+        $this->invoiceGenerationStrategy = $invoiceGenerationStrategy;
+    }
+
+    public function getInvoiceNumberPrefix(): ?string
+    {
+        return $this->invoiceNumberPrefix;
+    }
+
+    public function setInvoiceNumberPrefix(?string $invoiceNumberPrefix): void
+    {
+        $this->invoiceNumberPrefix = $invoiceNumberPrefix;
     }
 }

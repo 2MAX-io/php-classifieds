@@ -27,9 +27,24 @@
                 {{ form_widget(form) }}
 
                 <button class="btn btn-primary">{{ button_label|default('trans.Reject' | trans) }}</button>
-                <button class="btn btn-dark float-right" onclick="window.close()">{{ 'trans.Close this page' | trans }}</button>
+
+                <div class="float-right">
+                    <button class="btn btn-dark" onclick="window.close()">{{ 'trans.Close this page' | trans }}</button>
+                </div>
 
                 {{ form_end(form) }}
+
+                <div class="float-right my-2">
+                    <form
+                            method="post"
+                            action="{{ path('app_admin_listing_action_redirect_next_waiting_activation') }}"
+                            class="d-inline"
+                    >
+                        <input type="hidden" name="_method" value="PATCH">
+                        <input type="hidden" name="_token" value="{{ csrf_token('adminRedirectNextWaitingActivation') }}">
+                        <button class="btn btn-outline-dark mb-1">{{ 'trans.Go to next waiting' | trans }}</button>
+                    </form>
+                </div>
             </div>
 
         </div>

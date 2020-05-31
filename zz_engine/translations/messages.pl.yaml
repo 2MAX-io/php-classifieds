@@ -566,8 +566,7 @@ trans:
   'To disable auto upgrade check documentation:': 'By wyłączyć automatyczną aktualizację sprawdź dokumentację:'
   'Disable auto upgrades': 'Wyłącz automatyczne aktualizacje'
   Current status: 'Aktualny status'
-  Click to preview how listing would look after activation: 'Kliknij aby zobaczyć jak wyglądało by ogłoszenie po aktywacji'
-  Show as visible to public: 'Pokaż jak wygląda publicznie'
+  Live view, click to preview how listing would look after activation: 'Kliknij aby zobaczyć jak wyglądało by ogłoszenie po aktywacji'
   Listing has been rejected: 'Ogłoszenie zostało odrzucone'
   Deactivated by user: 'Dezaktywowane przez użytkownika'
   Pagination: 'Stronicowanie'
@@ -644,6 +643,7 @@ trans:
   Gateway Payment ID: 'Bramka płatności ID'
   First waiting for Activation: 'Pierwsze oczekujące'
   Go to next waiting: 'Idź do następnego oczekującego'
+  Preview, click to display same as for ordinary user: 'Podgląd, kliknij aby wyświetlić tak jak zwykłemu użytkownikowi'
 
 'trans.Remove non standard characters in listing - Enabled': 'Usuń niestandardowe znaki z ogłoszenia - Włączone'
 'trans.Remove non standard characters in listing - List of allowed characters': 'Usuń niestandardowe znaki z ogłoszenia - Lista dozwolonych znaków'

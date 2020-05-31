@@ -119,8 +119,7 @@ trans:
   'To disable auto upgrade check documentation:': 'To disable auto upgrade check documentation:'
   'Disable auto upgrades': 'Disable auto upgrades'
   Current status: 'Current status'
-  Click to preview how listing would look after activation: 'Click to preview how listing would look after activation'
-  Show as visible to public: 'Show as visible to public'
+  Live view, click to preview how listing would look after activation: 'Live view, click to preview how listing would look after activation'
   Listing has been rejected: 'Listing has been rejected'
   Deactivated by user: 'Deactivated by user'
   Pagination: 'Pagination'
@@ -196,6 +195,7 @@ trans:
   Internal Payment ID: 'Internal Payment ID'
   First waiting for Activation: 'First waiting for Activation'
   Go to next waiting: 'Go to next waiting'
+  Preview, click to display same as for ordinary user: 'Preview, click to display same as for ordinary user'
 
 trans.customFieldType.SELECT_AS_CHECKBOXES: 'Checkboxes in filters, single select when editing'
 trans.customFieldType.SELECT_SINGLE: 'Single selection field'

@@ -27,12 +27,12 @@
                     {% if app.request.get('showPreviewForOwner', false) %}
                         <a href="{{ path('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}" class="btn btn-primary w-100 mb-2">
                             <div>{{- 'trans.Current status' | trans -}}: <span class="{{ getListingStatusClass(listing) }}">{{ getListingStatus(listing) }}</span>.</div>
-                            {{- 'trans.Show as visible to public' | trans -}}
+                            {{- 'trans.Preview, click to display same as for ordinary user' | trans -}}
                         </a>
                     {% else %}
                         <a href="{{ path('app_listing_show', {'id': listing.id, 'slug': listing.slug, 'showPreviewForOwner': 1}) }}" class="btn btn-primary w-100 mb-2">
                             <div>{{- 'trans.Current status' | trans -}}: <span class="{{ getListingStatusClass(listing) }}">{{ getListingStatus(listing) }}</span>.</div>
-                            {{- 'trans.Click to preview how listing would look after activation' | trans -}}
+                            {{- 'trans.Live view, Live view, click to preview how listing would look after activation' | trans -}}
                         </a>
                     {% endif %}
                 {% endif %}
@@ -235,6 +235,16 @@
                                     <input type="hidden" name="_token" value="{{ csrf_token('adminActivate' ~ listing.id) }}">
                                     <button class="btn btn-success mb-1">{{ 'trans.Activate' | trans }}</button>
                                 </form>
+                            {% endif %}
+
+                            {% if adminShowReject(listing) %}
+                                <a
+                                        href="{{ path('app_admin_listing_reject', {'id': listing.id}) }}"
+                                        target="_blank"
+                                        class="btn btn-warning mb-1"
+                                >
+                                    {{ 'trans.Reject' | trans }}
+                                </a>
                             {% endif %}
 
                             <form

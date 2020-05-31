@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Controller\Admin;
 
 use App\Controller\Admin\Base\AbstractAdminController;
-use App\Service\Admin\Listing\ListingActivateListService;
+use App\Service\Admin\Listing\ListingActivateService;
 use App\Service\Admin\ListingAction\ListingActionService;
 use App\Service\System\Routing\RefererService;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,11 +22,11 @@ class ListingActivateController extends AbstractAdminController
      */
     public function listingActivateList(
         Request $request,
-        ListingActivateListService $listingActivateListService
+        ListingActivateService $listingActivateService
     ): Response {
         $this->denyUnlessAdmin();
 
-        $adminListingListDto = $listingActivateListService->getToActivateListingList(
+        $adminListingListDto = $listingActivateService->getAwaitingActivationList(
             (int) $request->query->get('page', 1)
         );
 

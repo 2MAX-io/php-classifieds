@@ -6,6 +6,7 @@ namespace App\Controller\Admin;
 
 use App\Controller\Admin\Base\AbstractAdminController;
 use App\Entity\Listing;
+use App\Service\Admin\Listing\ListingNextWaitingService;
 use App\Service\Admin\ListingAction\ListingActionService;
 use App\Service\System\Routing\RefererService;
 use Carbon\Carbon;
@@ -22,13 +23,18 @@ class AdminListingActionController extends AbstractAdminController
         Request $request,
         Listing $listing,
         ListingActionService $listingActionService,
-        RefererService $refererService
+        RefererService $refererService,
+        ListingNextWaitingService $listingRedirectNextWaitingService
     ): Response {
         $this->denyUnlessAdmin();
 
         if ($this->isCsrfTokenValid('adminActivate'.$listing->getId(), $request->request->get('_token'))) {
             $listingActionService->activate([$listing]);
             $this->getDoctrine()->getManager()->flush();
+        }
+
+        if ($request->get('redirectToNextWaiting')) {
+            return $listingRedirectNextWaitingService->nextOneWaitingOrRefererRedirectResponse();
         }
 
         return $refererService->redirectToRefererResponse();
@@ -86,5 +92,24 @@ class AdminListingActionController extends AbstractAdminController
         }
 
         return $refererService->redirectToRefererResponse();
+    }
+    /**
+     * @Route(
+     *     "/admin/red5/listing/action/redirect-to-next-waiting-activation",
+     *     name="app_admin_listing_action_redirect_next_waiting_activation",
+     *     methods={"PATCH"},
+     * )
+     */
+    public function redirectToNextListingWaitingActivation(
+        Request $request,
+        ListingNextWaitingService $listingRedirectNextWaitingService
+    ): Response {
+        $this->denyUnlessAdmin();
+
+        if (!$this->isCsrfTokenValid('adminRedirectNextWaitingActivation', $request->request->get('_token'))) {
+            throw $this->createAccessDeniedException();
+        }
+
+        return $listingRedirectNextWaitingService->nextOneWaitingOrRefererRedirectResponse();
     }
 }

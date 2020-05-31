@@ -194,6 +194,8 @@ trans:
   External system reference secondary: 'External system reference secondary'
   Gateway Payment ID: 'Gateway Payment ID'
   Internal Payment ID: 'Internal Payment ID'
+  First waiting for Activation: 'First waiting for Activation'
+  Go to next waiting: 'Go to next waiting'
 
 trans.customFieldType.SELECT_AS_CHECKBOXES: 'Checkboxes in filters, single select when editing'
 trans.customFieldType.SELECT_SINGLE: 'Single selection field'

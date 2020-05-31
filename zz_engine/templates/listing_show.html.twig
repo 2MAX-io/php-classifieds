@@ -222,6 +222,33 @@
                         <span class="{{ getListingStatusClass(listing) }} text-nowrap">{{ getListingStatus(listing) }}</span>
                     {% endif %}
 
+                    {% if lowSecurityCheckIsAdminInPublic() %}
+                        <div>
+                            {%- if adminShowActivate(listing) -%}
+                                <form
+                                        method="post"
+                                        action="{{ path('app_admin_listing_activate', {'id': listing.id, 'redirectToNextWaiting': 1}) }}"
+                                        onsubmit="return confirm('{{ 'trans.Activate' | trans }}: {{ listing.title }}?');"
+                                        class="d-inline"
+                                >
+                                    <input type="hidden" name="_method" value="PATCH">
+                                    <input type="hidden" name="_token" value="{{ csrf_token('adminActivate' ~ listing.id) }}">
+                                    <button class="btn btn-success mb-1">{{ 'trans.Activate' | trans }}</button>
+                                </form>
+                            {% endif %}
+
+                            <form
+                                    method="post"
+                                    action="{{ path('app_admin_listing_action_redirect_next_waiting_activation') }}"
+                                    class="d-inline"
+                            >
+                                <input type="hidden" name="_method" value="PATCH">
+                                <input type="hidden" name="_token" value="{{ csrf_token('adminRedirectNextWaitingActivation') }}">
+                                <button class="btn btn-outline-dark mb-1">{{ 'trans.Go to next waiting' | trans }}</button>
+                            </form>
+                        </div>
+                    {% endif %}
+
                     {% if displayAsExpired(listing) %}
                         <div class="alert alert-danger">
                             <h1>{{ 'trans.Listing has expired' | trans }}</h1>

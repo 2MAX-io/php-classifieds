@@ -7,7 +7,7 @@ namespace App\Service\Admin\Other;
 use App\Entity\Listing;
 use App\Entity\ListingView;
 use App\Entity\User;
-use App\Service\Admin\Listing\ListingActivateListService;
+use App\Service\Admin\Listing\ListingActivateService;
 use App\Service\Listing\ListingPublicDisplayService;
 use App\System\Cache\AppCacheEnum;
 use Carbon\Carbon;
@@ -24,7 +24,7 @@ class AdminStatsService
     private $em;
 
     /**
-     * @var ListingActivateListService
+     * @var ListingActivateService
      */
     private $listingActivateListService;
 
@@ -40,7 +40,7 @@ class AdminStatsService
 
     public function __construct(
         EntityManagerInterface $em,
-        ListingActivateListService $listingActivateListService,
+        ListingActivateService $listingActivateListService,
         ListingPublicDisplayService $publicDisplayService,
         CacheInterface $cache
     ) {

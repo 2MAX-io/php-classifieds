@@ -5,11 +5,12 @@ declare(strict_types=1);
 namespace App\Service\Admin\Listing;
 
 use App\Entity\Listing;
+use App\Helper\Arr;
 use App\Service\System\Pagination\PaginationService;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
 
-class ListingActivateListService
+class ListingActivateService
 {
     /**
      * @var EntityManagerInterface
@@ -30,7 +31,7 @@ class ListingActivateListService
     /**
      * @return Listing[]
      */
-    public function getToActivateListingList(int $page): AdminListingListDto
+    public function getAwaitingActivationList(int $page): AdminListingListDto
     {
         $qb = $this->getQueryBuilder();
 
@@ -41,6 +42,14 @@ class ListingActivateListService
         $adminListingListDto = new AdminListingListDto($pager->getCurrentPageResults(), $pager);
 
         return $adminListingListDto;
+    }
+
+    public function getNextWaitingListing(): ?Listing
+    {
+        $qb = $this->getQueryBuilder();
+        $qb->setMaxResults(50);
+
+        return Arr::random($qb->getQuery()->getResult());
     }
 
     public function getQueryBuilder(): QueryBuilder

@@ -14,6 +14,17 @@
                 <a href="{{ path('app_admin_listing_activate_list') }}" class="btn btn-primary">
                     {{ 'trans.Activate' | trans }}
                 </a>
+                <div>
+                    <form
+                            method="post"
+                            action="{{ path('app_admin_listing_action_redirect_next_waiting_activation') }}"
+                            class="d-inline"
+                    >
+                        <input type="hidden" name="_method" value="PATCH">
+                        <input type="hidden" name="_token" value="{{ csrf_token('adminRedirectNextWaitingActivation') }}">
+                        <button class="btn btn-outline-dark mb-1">{{ 'trans.First waiting for Activation' | trans }}</button>
+                    </form>
+                </div>
             </div>
         </div>
         <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">

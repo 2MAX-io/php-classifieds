@@ -642,6 +642,8 @@ trans:
   External system reference: 'Powiązanie z systemem zewnętrznym'
   External system reference secondary: 'Powiązanie z systemem zewnętrznym, drugie'
   Gateway Payment ID: 'Bramka płatności ID'
+  First waiting for Activation: 'Pierwsze oczekujące'
+  Go to next waiting: 'Idź do następnego oczekującego'
 
 'trans.Remove non standard characters in listing - Enabled': 'Usuń niestandardowe znaki z ogłoszenia - Włączone'
 'trans.Remove non standard characters in listing - List of allowed characters': 'Usuń niestandardowe znaki z ogłoszenia - Lista dozwolonych znaków'

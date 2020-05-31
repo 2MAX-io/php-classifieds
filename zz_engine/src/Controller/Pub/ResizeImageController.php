@@ -8,6 +8,7 @@ use App\Helper\FileHelper;
 use App\Helper\FilePath;
 use App\Helper\IniHelper;
 use App\Helper\Megabyte;
+use App\System\EnvironmentService;
 use App\System\ImageManipulation\ImageManipulationFactory;
 use League\Glide\Responses\SymfonyResponseFactory;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -20,6 +21,16 @@ use Webmozart\PathUtil\Path;
 
 class ResizeImageController
 {
+    /**
+     * @var EnvironmentService
+     */
+    private $environmentService;
+
+    public function __construct(EnvironmentService $environmentService)
+    {
+        $this->environmentService = $environmentService;
+    }
+
     /**
      * @Route("/static/resized/{type}/{path}/{file}", name="app_resize_image", requirements={"path"=".+"})
      */
@@ -61,6 +72,10 @@ class ResizeImageController
         }
 
         if (!\file_exists(FilePath::getStaticPath() . '/' . $sourcePath)) {
+            if ($this->environmentService->getExternalImageUrlForDevelopment()) {
+                return new RedirectResponse($this->environmentService->getExternalImageUrlForDevelopment() . '/' . $sourcePath);
+            }
+
             return new RedirectResponse('/static/system/empty.png');
         }
 

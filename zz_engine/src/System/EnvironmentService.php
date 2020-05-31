@@ -55,4 +55,13 @@ class EnvironmentService
     {
         return $this->parameterBag->get('kernel.cache_dir');
     }
+
+    public function getExternalImageUrlForDevelopment(): ?string
+    {
+        if (!isset($_ENV['APP_DEV_EXTERNAL_IMAGE_URL'])) {
+            return null;
+        }
+
+        return $_ENV['APP_DEV_EXTERNAL_IMAGE_URL'];
+    }
 }

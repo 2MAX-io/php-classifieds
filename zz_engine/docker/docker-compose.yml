@@ -1,3 +1,5 @@
+# (export WITH_XDEBUG=false ; docker-compose up --build)
+# (export WITH_XDEBUG=true ; docker-compose up --build)
 version: "3.7"
 services:
     php:

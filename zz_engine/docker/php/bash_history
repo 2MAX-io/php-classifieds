@@ -322,3 +322,4 @@ composer update -d zz_engine --optimize-autoloader
 composer install --optimize-autoloader
 composer install -d zz_engine --optimize-autoloader
 composer update -d zz_engine --optimize-autoloader
+composer update -d zz_engine --lock

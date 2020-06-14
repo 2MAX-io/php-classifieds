@@ -460,3 +460,13 @@ div.clickableDiv a.clickableDivLink {
         padding: 0.25rem 1rem;
     }
 }
+
+.environment-local-dev .logo {
+    background-color: rgba(133, 234, 23, 0.5) !important;
+    border: 2px dashed greenyellow;
+}
+
+.environment-local-dev .logo-admin {
+    background-color: rgba(133, 234, 23, 0.5) !important;
+    border: 2px dashed greenyellow;
+}

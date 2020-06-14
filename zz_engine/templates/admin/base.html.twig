@@ -14,7 +14,7 @@
         <link rel="stylesheet" href="{{ asset('asset/build/admin.css') }}">
     {% endblock %}
 </head>
-<body>
+<body class="{{ environmentCssClass() }}">
 
 <div class="container-fluid d-lg-none">
     <div class="container container-remove-padding">
@@ -43,7 +43,7 @@
             <nav class="col-lg-3 col-xl-2 d-none-soft d-lg-block bg-light sidebar" id="adminSidebar">
                 <div class="sidebar-sticky">
 
-                    <div id="logo" class="sm-text-center mb-3 d-none d-lg-block">
+                    <div id="logo" class="sm-text-center mb-3 d-none d-lg-block logo-admin">
                         <a
                                 href="{{ path('app_admin_index') }}"
                                 title="{{ 'trans.Classifieds'|trans }}"

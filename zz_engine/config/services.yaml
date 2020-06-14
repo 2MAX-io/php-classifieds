@@ -14,6 +14,8 @@ parameters:
     upgrade_available_check_disabled: '%env(resolve:APP_UPGRADE_AVAILABLE_CHECK_DISABLED)%'
     env(APP_ASSET_VERSION): 1
     asset_version: '%env(resolve:APP_ASSET_VERSION)%'
+    env(APP_ENVIRONMENT_CSS_CLASS): ''
+    environment_css_class: '%env(resolve:APP_ENVIRONMENT_CSS_CLASS)%'
 
 
 services:

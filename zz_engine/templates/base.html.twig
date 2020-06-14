@@ -30,7 +30,7 @@
 
     {{ settings.customJavascriptInHead | raw }}
 </head>
-<body>
+<body class="{{ environmentCssClass() }}">
 <!-- top -->
 <div class="container-fluid page-top">
     <div class="container container-remove-padding">
@@ -133,7 +133,7 @@
 </div>
 
 <!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark d-none d-md-block">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark d-none d-md-block menu-secondary">
     <div class="container">
         <button
                 class="navbar-toggler"

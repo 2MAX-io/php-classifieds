@@ -64,4 +64,9 @@ class EnvironmentService
 
         return $_ENV['APP_DEV_EXTERNAL_IMAGE_URL'];
     }
+
+    public function getEnvironmentCssClass(): string
+    {
+        return $this->parameterBag->get('environment_css_class');
+    }
 }

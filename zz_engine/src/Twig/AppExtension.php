@@ -26,6 +26,7 @@ class AppExtension extends AbstractExtension
             new TwigFunction('optionAttr', [TwigForm::class, 'optionAttr'], ['is_safe' => ['html']]),
             new TwigFunction('returnPlusIfPositive', [TwigNoDependencies::class, 'returnPlusIfPositive']),
             new TwigFunction('diffToNowWithinSeconds', [TwigNoDependencies::class, 'diffToNowWithinSeconds']),
+            new TwigFunction('environmentCssClass', [TwigEnvironment::class, 'environmentCssClass']),
         ];
     }
 

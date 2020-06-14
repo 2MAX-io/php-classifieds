@@ -323,3 +323,9 @@ composer install --optimize-autoloader
 composer install -d zz_engine --optimize-autoloader
 composer update -d zz_engine --optimize-autoloader
 composer update -d zz_engine --lock
+gulp -f zz_engine/gulpfile.js --cwd=.
+gulp -f zz_engine/gulpfile.js --cwd=.
+gulp -f zz_engine/gulpfile.js --cwd=.
+gulp -f zz_engine/gulpfile.js --cwd=.
+gulp -f zz_engine/gulpfile.js --cwd=.
+php zz_engine/bin/console doctrine:schema:update -f

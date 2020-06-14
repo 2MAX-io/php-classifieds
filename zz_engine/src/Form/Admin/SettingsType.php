@@ -398,10 +398,11 @@ class SettingsType extends AbstractType
             'label' => 'trans.Invoice generation strategy',
             'required' => true,
             'choices' => [
+                'trans.invoice_generation_strategy.diabled' => InvoiceGenerationStrategyEnum::DISABLED,
                 'trans.invoice_generation_strategy.auto' => InvoiceGenerationStrategyEnum::AUTO,
-                'trans.invoice_generation_strategy.manual' => InvoiceGenerationStrategyEnum::MANUAL,
-                'trans.invoice_generation_strategy.external_system' => InvoiceGenerationStrategyEnum::EXTERNAL_SYSTEM,
-                'trans.invoice_generation_strategy.infakt_pl' => InvoiceGenerationStrategyEnum::INFAKT_PL,
+//                'trans.invoice_generation_strategy.manual' => InvoiceGenerationStrategyEnum::MANUAL,
+//                'trans.invoice_generation_strategy.external_system' => InvoiceGenerationStrategyEnum::EXTERNAL_SYSTEM,
+//                'trans.invoice_generation_strategy.infakt_pl' => InvoiceGenerationStrategyEnum::INFAKT_PL,
             ],
         ]);
         $builder->add('invoiceNumberPrefix', TextType::class, [

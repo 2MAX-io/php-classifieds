@@ -10,4 +10,5 @@ class InvoiceGenerationStrategyEnum
     public const MANUAL = 'manual';
     public const EXTERNAL_SYSTEM = 'external_system';
     public const INFAKT_PL = 'infakt_pl';
+    public const DISABLED = 'disabled';
 }

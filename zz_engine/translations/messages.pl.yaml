@@ -7,6 +7,7 @@ Minute: Minuta
 trans.paymentType.FOR_FEATURED_PACKAGE_TYPE: 'Za pakiet wyróżnienia'
 trans.paymentType.BALANCE_TOP_UP_TYPE: 'Doładowanie konta'
 
+trans.invoice_generation_strategy.diabled: 'Wyłączone'
 trans.invoice_generation_strategy.auto: 'Automatycznie'
 trans.invoice_generation_strategy.manual: 'Ręcznie'
 trans.invoice_generation_strategy.external_system: 'Zewnętrzny system'

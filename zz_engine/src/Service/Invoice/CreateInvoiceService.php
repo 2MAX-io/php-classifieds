@@ -50,6 +50,10 @@ class CreateInvoiceService
     {
         $settingsDto = $this->settingsService->getSettingsDtoWithoutCache();
         $invoiceGenerationStrategy = $settingsDto->getInvoiceGenerationStrategy();
+        if (InvoiceGenerationStrategyEnum::DISABLED === $invoiceGenerationStrategy) {
+            return;
+        }
+
         $user = $payment->getUser();
         if (null === $user) {
             throw new \UnexpectedValueException('user not found in payment when creating invoice');

@@ -216,6 +216,7 @@ trans.listing.status.STATUS_DEACTIVATED: 'Deactivated'
 trans.paymentType.FOR_FEATURED_PACKAGE_TYPE: 'For featured package'
 trans.paymentType.BALANCE_TOP_UP_TYPE: 'Balance top up'
 
+trans.invoice_generation_strategy.diabled: 'Disabled'
 trans.invoice_generation_strategy.auto: 'Automatically'
 trans.invoice_generation_strategy.manual: 'Manual'
 trans.invoice_generation_strategy.external_system: 'External system'

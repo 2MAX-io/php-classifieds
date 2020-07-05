@@ -20,6 +20,8 @@ class FilesystemChecker
         $finder->exclude([
             'static',
             'zz_engine/docker/',
+            'zz_engine/dev/sql/',
+            'zz_engine/var/mysql/',
         ]);
 
         $fileIterator = $finder->files()->getIterator();
@@ -50,6 +52,8 @@ class FilesystemChecker
         $finder->exclude([
             'static',
             'zz_engine/docker/',
+            'zz_engine/dev/sql/',
+            'zz_engine/var/mysql/',
         ]);
 
         $dirIterator = $finder->directories()->getIterator();
@@ -143,7 +147,7 @@ class FilesystemChecker
             FilePath::getProjectDir() . '/zz_engine/src/Kernel.php',
             FilePath::getProjectDir() . '/zz_engine/var/.gitkeep',
             FilePath::getProjectDir() . '/zz_engine/var/log/.gitkeep',
-            FilePath::getProjectDir() . '/zz_engine/src/Controller/Pub/IndexController.php',
+            FilePath::getProjectDir() . '/zz_engine/src/Controller/IndexController.php',
         ];
 
         foreach ($patchList as $patch) {

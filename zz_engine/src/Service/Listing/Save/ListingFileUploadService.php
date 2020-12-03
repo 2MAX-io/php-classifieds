@@ -63,6 +63,7 @@ class ListingFileUploadService
             $listingFile->setFilename(\basename($listingFile->getPath()));
             $listingFile->setMimeType(\mime_content_type($listingFile->getPath()));
             $listingFile->setSizeBytes(\filesize($listingFile->getPath()));
+            $listingFile->setFileHash(\hash_file('sha256', $listingFile->getPath()));
             $listingFile->setUserOriginalFilename(\mb_substr($fileUploadDto->getOriginalFilename(), 0, 255));
             $listingFile->setSort($fileUploadDto->getSort());
             $this->em->persist($listingFile);

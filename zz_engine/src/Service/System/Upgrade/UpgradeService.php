@@ -81,7 +81,7 @@ class UpgradeService
         $filename = \basename(
             'upgrade'
             . '_' . $id
-            . '_' . \md5($decodedContent)
+            . '_' . \hash('sha256', $decodedContent)
             . '_' . \date('Y_m_d__His')
             . '_' . Random::string(8)
             . '.php'

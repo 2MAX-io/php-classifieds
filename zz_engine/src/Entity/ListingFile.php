@@ -54,9 +54,21 @@ class ListingFile
     private $sizeBytes;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(type="string", length=64)
+     */
+    private $fileHash;
+
+    /**
      * @ORM\Column(type="boolean", nullable=false)
      */
     private $userRemoved = false;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=false)
+     */
+    private $fileDeleted = false;
 
     /**
      * @ORM\Column(type="smallint", nullable=false, options={"unsigned"=true})
@@ -175,5 +187,25 @@ class ListingFile
     public function setUserOriginalFilename(?string $userOriginalFilename): void
     {
         $this->userOriginalFilename = $userOriginalFilename;
+    }
+
+    public function getFileHash(): string
+    {
+        return $this->fileHash;
+    }
+
+    public function setFileHash(string $fileHash): void
+    {
+        $this->fileHash = $fileHash;
+    }
+
+    public function getFileDeleted(): bool
+    {
+        return $this->fileDeleted;
+    }
+
+    public function setFileDeleted(bool $fileDeleted): void
+    {
+        $this->fileDeleted = $fileDeleted;
     }
 }

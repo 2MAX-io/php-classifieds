@@ -27,6 +27,7 @@ class AppExtension extends AbstractExtension
             new TwigFunction('returnPlusIfPositive', [TwigNoDependencies::class, 'returnPlusIfPositive']),
             new TwigFunction('diffToNowWithinSeconds', [TwigNoDependencies::class, 'diffToNowWithinSeconds']),
             new TwigFunction('environmentCssClass', [TwigEnvironment::class, 'environmentCssClass']),
+            new TwigFunction('categoryToAdvertZoneId', [TwigAdvert::class, 'categoryToAdvertZoneId']),
         ];
     }
 

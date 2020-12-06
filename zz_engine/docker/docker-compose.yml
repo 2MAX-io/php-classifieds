@@ -37,7 +37,9 @@ services:
     mysql:
         container_name: classifieds_mysql
         command: mysqld --sql_mode="STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION"
-        image: mysql:5.7
+        build:
+            context: './mysql/'
+            dockerfile: Dockerfile
         ports: ['3306:3306']
         volumes:
             - './../../zz_engine/var/mysql:/var/www/html/zz_engine/var/mysql'

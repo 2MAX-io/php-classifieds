@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Service\Cron;
 
 use App\Entity\SystemLog;
+use App\Service\Cron\Dto\CronMainDto;
 use App\Service\System\RunEvery\RunEveryService;
 use App\Service\System\SystemLog\SystemLogService;
 use App\System\Cache\AppCacheEnum;
@@ -13,6 +14,7 @@ use Carbon\Carbon;
 use Doctrine\ORM\EntityManagerInterface;
 use GuzzleHttp\Client;
 use GuzzleHttp\RequestOptions;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\Lock\LockFactory;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
@@ -43,21 +45,28 @@ class CronService
      */
     private $runEveryService;
 
+    /**
+     * @var LoggerInterface
+     */
+    private $logger;
+
     public function __construct(
         EntityManagerInterface $em,
         UrlGeneratorInterface $urlGenerator,
         SystemLogService $systemLogService,
         RunEveryService $runEveryService,
-        LockFactory $lockFactory
+        LockFactory $lockFactory,
+        LoggerInterface $logger
     ) {
         $this->em = $em;
         $this->systemLogService = $systemLogService;
         $this->lockFactory = $lockFactory;
         $this->urlGenerator = $urlGenerator;
         $this->runEveryService = $runEveryService;
+        $this->logger = $logger;
     }
 
-    public function run(): void
+    public function run(CronMainDto $cronMainDto): void
     {
         $lock = $this->lockFactory->createLock(AppLockInterface::CRON, 3600);
 
@@ -66,11 +75,11 @@ class CronService
         }
 
         try {
-            $this->removeFeaturedWhenExpired();
-            $this->deactivateExpired();
-            $this->setMainImage();
-            $this->openIndexPage();
-            $this->squashListingViews();
+            $this->removeFeaturedWhenExpired($cronMainDto);
+            $this->deactivateExpired($cronMainDto);
+            $this->setMainImage($cronMainDto);
+            $this->openIndexPage($cronMainDto);
+            $this->squashListingViews($cronMainDto);
 
             $this->systemLogService->addSystemLog(SystemLog::CRON_RUN_TYPE, 'cron executed');
         } finally {
@@ -78,9 +87,9 @@ class CronService
         }
     }
 
-    private function removeFeaturedWhenExpired(): void
+    private function removeFeaturedWhenExpired(CronMainDto $cronMainDto): void
     {
-        if (!$this->runEveryService->canRunAgain(AppCacheEnum::CRON_EXPIRE_FEATURED, 60 * 5)) {
+        if (!$cronMainDto->getIgnoreDelay() && !$this->runEveryService->canRunAgain(AppCacheEnum::CRON_EXPIRE_FEATURED, 60 * 5)) {
             return;
         }
 
@@ -94,9 +103,9 @@ TAG
         $query->execute();
     }
 
-    private function deactivateExpired(): void
+    private function deactivateExpired(CronMainDto $cronMainDto): void
     {
-        if (!$this->runEveryService->canRunAgain(AppCacheEnum::CRON_DEACTIVATE_EXPIRED, 60 * 23)) {
+        if (!$cronMainDto->getIgnoreDelay() && !$this->runEveryService->canRunAgain(AppCacheEnum::CRON_DEACTIVATE_EXPIRED, 60 * 23)) {
             return;
         }
 
@@ -110,9 +119,9 @@ TAG
         $query->execute();
     }
 
-    private function setMainImage(): void
+    private function setMainImage(CronMainDto $cronMainDto): void
     {
-        if (!$this->runEveryService->canRunAgain(AppCacheEnum::CRON_SET_MAIN_IMAGE, 60 * 25)) {
+        if (!$cronMainDto->getIgnoreDelay() && !$this->runEveryService->canRunAgain(AppCacheEnum::CRON_SET_MAIN_IMAGE, 60 * 25)) {
             return;
         }
 
@@ -120,30 +129,32 @@ TAG
         $pdo = $this->em->getConnection();
         $pdo->exec(<<<'TAG'
 UPDATE listing
-    JOIN listing_file
+    LEFT JOIN listing_file
     ON listing.id = listing_file.listing_id
-       && listing_file.user_removed = 0
-    JOIN (
-        SELECT 
+        && listing_file.user_removed = 0
+    LEFT JOIN (
+        SELECT
             listing_id
-             , MIN(sort) minSort
-             , path 
-        FROM listing_file 
+          , MIN(sort) minSort
+          , path
+        FROM listing_file
         WHERE listing_file.user_removed = 0
         GROUP BY listing_id
     ) listingWithMinSort
-    ON 
+    ON
         listing_file.listing_id = listingWithMinSort.listing_id
         && listing_file.sort = listingWithMinSort.minSort
 SET listing.main_image = listing_file.path
 WHERE 1
 TAG
         );
+
+        $this->logger->debug('set main image executed');
     }
 
-    private function squashListingViews(): void
+    private function squashListingViews(CronMainDto $cronMainDto): void
     {
-        if (!$this->runEveryService->canRunAgain(AppCacheEnum::CRON_SQUASH_LISTING_VIEWS, 60 * 60 * 6)) {
+        if (!$cronMainDto->getIgnoreDelay() && !$this->runEveryService->canRunAgain(AppCacheEnum::CRON_SQUASH_LISTING_VIEWS, 60 * 60 * 6)) {
             return;
         }
 
@@ -187,9 +198,9 @@ TAG);
         $stmt->execute();
     }
 
-    private function openIndexPage(): void
+    private function openIndexPage(CronMainDto $cronMainDto): void
     {
-        if (!$this->runEveryService->canRunAgain(AppCacheEnum::CRON_OPEN_INDEX, 40)) {
+        if (!$cronMainDto->getIgnoreDelay() && !$this->runEveryService->canRunAgain(AppCacheEnum::CRON_OPEN_INDEX, 40)) {
             return;
         }
 

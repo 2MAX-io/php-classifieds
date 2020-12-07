@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Command\Cron;
 
+use App\Enum\ConsoleReturnEnum;
 use App\Service\Cron\CronService;
+use App\Service\Cron\Dto\CronMainDto;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -36,16 +38,23 @@ class CronCommand extends Command
     protected function configure(): void
     {
         $this->setDescription('Main cron');
+        $this->addOption('ignore-delay');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output): void
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
 
-        $this->cronService->run();
+        $cronMainDto = new CronMainDto();
+        if ($input->getOption('ignore-delay')) {
+            $cronMainDto->setIgnoreDelay(true);
+        }
+        $this->cronService->run($cronMainDto);
 
         $this->em->flush();
 
         $io->success('done');
+
+        return ConsoleReturnEnum::SUCCESS;
     }
 }

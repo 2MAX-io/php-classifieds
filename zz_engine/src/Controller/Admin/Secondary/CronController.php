@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller\Admin\Secondary;
 
 use App\Service\Cron\CronService;
+use App\Service\Cron\Dto\CronMainDto;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,7 +18,8 @@ class CronController extends AbstractController
      */
     public function adminIndex(CronService $cronService, EntityManagerInterface $em): Response
     {
-        $cronService->run();
+        $cronMainDto = new CronMainDto();
+        $cronService->run($cronMainDto);
 
         $em->flush();
 

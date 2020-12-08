@@ -67,7 +67,7 @@ class DeleteOldListingFilesService
         /** @var Listing[] $listingList */
         $listingList = $qb->getQuery()->getResult();
         foreach ($listingList as $listing) {
-            foreach ($listing->getListingFiles() as $listingFile) {
+            foreach ($listing->getListingFilesAll() as $listingFile) {
                 $fileAbsolutePath = Path::makeAbsolute($listingFile->getPath(), FilePath::getPublicDir());
 
                 if (!\file_exists($fileAbsolutePath)) {

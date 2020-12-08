@@ -256,6 +256,14 @@ class Listing
         );
     }
 
+    /**
+     * @return ArrayCollection|ListingFile[]
+     */
+    public function getListingFilesAll(): Collection
+    {
+        return $this->listingFiles;
+    }
+
     public function getMainImageNoCache(): ?ListingFile
     {
         return $this->getListingFiles()->first();

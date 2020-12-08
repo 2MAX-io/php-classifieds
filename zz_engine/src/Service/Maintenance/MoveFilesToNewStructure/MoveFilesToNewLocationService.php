@@ -71,7 +71,7 @@ class MoveFilesToNewLocationService
                         'validUntil' => $listing->getValidUntilDate()->format('Y-m-d H:i:s'),
                     ]);
 
-                    return;
+                    continue;
                 }
 
                 if (!StringHelper::startsWith($oldFilePath, FilePath::getListingFilePath())) {

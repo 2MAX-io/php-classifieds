@@ -55,6 +55,7 @@ class DeleteOldListingFilesService
         $qb->andWhere($qb->expr()->lt('listing.validUntilDate', ':removeBeforeDate'));
         $qb->setParameter(':removeBeforeDate', Carbon::now()->subDays($deleteOldListingFilesDto->getDeleteOlderThanInDays())->format('Y-m-d H:i:s'));
 
+        $qb->andWhere($qb->expr()->eq('listingFile.fileDeleted', 0));
         $qb->andWhere($qb->expr()->eq('listing.userDeactivated', 1));
 
         $qb->addOrderBy('listing.validUntilDate', Criteria::ASC);
@@ -75,8 +76,6 @@ class DeleteOldListingFilesService
                         'listingId' => $listing->getId(),
                         'validUntil' => $listing->getValidUntilDate()->format('Y-m-d H:i:s'),
                     ]);
-
-                    continue;
                 }
 
                 if (!StringHelper::startsWith($fileAbsolutePath, FilePath::getListingFilePath())) {

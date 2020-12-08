@@ -71,6 +71,13 @@ class ListingFile
     private $fileDeleted = false;
 
     /**
+     * @var \DateTimeInterface
+     *
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $uploadDate;
+
+    /**
      * @ORM\Column(type="smallint", nullable=false, options={"unsigned"=true})
      */
     private $sort = SortService::LAST_VALUE;
@@ -207,5 +214,15 @@ class ListingFile
     public function setFileDeleted(bool $fileDeleted): void
     {
         $this->fileDeleted = $fileDeleted;
+    }
+
+    public function getUploadDate(): \DateTimeInterface
+    {
+        return $this->uploadDate;
+    }
+
+    public function setUploadDate(\DateTimeInterface $uploadDate): void
+    {
+        $this->uploadDate = $uploadDate;
     }
 }

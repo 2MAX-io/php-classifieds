@@ -6,8 +6,13 @@ namespace App\Helper;
 
 use Carbon\Carbon;
 
-class Date
+class DateHelper
 {
+    public static function create(): \DateTimeInterface
+    {
+        return new \DateTime();
+    }
+
     public static function olderThanDays(int $days, \DateTimeInterface $dateTime): bool
     {
         return $dateTime < Carbon::now()->subDays($days);

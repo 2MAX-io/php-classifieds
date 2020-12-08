@@ -133,12 +133,12 @@ class DeleteOldListingFilesService
         }
 
         if ($mustContain && !\str_contains(\basename($parentDirectory), $mustContain)) {
-            $this->logger->error('path does not contain expected string', [
+            $this->logger->debug('path does not contain expected string', [
                 'path' => $path,
                 'mustContain' => $mustContain,
             ]);
 
-            throw new \UnexpectedValueException('path does not contain expected string');
+            return;
         }
 
         $finder = new Finder();

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Controller\User\Payment\Other;
 
 use App\Entity\Listing;
-use App\Exception\UserVisibleException;
 use App\Helper\ExceptionHelper;
 use App\Service\Listing\Featured\FeaturedListingService;
 use Doctrine\ORM\EntityManagerInterface;

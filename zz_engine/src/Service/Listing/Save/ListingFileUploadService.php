@@ -6,6 +6,7 @@ namespace App\Service\Listing\Save;
 
 use App\Entity\Listing;
 use App\Entity\ListingFile;
+use App\Helper\DateHelper;
 use App\Helper\FileHelper;
 use App\Helper\FilePath;
 use App\Helper\Random;
@@ -64,6 +65,7 @@ class ListingFileUploadService
             $listingFile->setMimeType(\mime_content_type($listingFile->getPath()));
             $listingFile->setSizeBytes(\filesize($listingFile->getPath()));
             $listingFile->setFileHash(\hash_file('sha256', $listingFile->getPath()));
+            $listingFile->setUploadDate(DateHelper::create());
             $listingFile->setUserOriginalFilename(\mb_substr($fileUploadDto->getOriginalFilename(), 0, 255));
             $listingFile->setSort($fileUploadDto->getSort());
             $this->em->persist($listingFile);

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Service\Listing\ValidityExtend;
 
 use App\Entity\Listing;
-use App\Helper\Date;
+use App\Helper\DateHelper;
 use Carbon\Carbon;
 use Carbon\CarbonInterval;
 use Doctrine\ORM\EntityManagerInterface;
@@ -39,7 +39,7 @@ class ValidUntilSetService
     {
         $listing->setUserDeactivated(false);
 
-        if (Date::olderThanDays(40, $listing->getOrderByDate())) {
+        if (DateHelper::olderThanDays(40, $listing->getOrderByDate())) {
             $listing->setOrderByDate(new \DateTime());
         }
     }

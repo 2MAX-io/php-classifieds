@@ -333,3 +333,4 @@ bash zz_engine/dev/bin/DEV_build_installer.sh
 php zz_engine/bin/console app:delete-old-listing-files 10
 php zz_engine/bin/console app:delete-old-listing-files 10 --limit 100 -vvv
 php zz_engine/bin/console app:cron:main --ignore-delay -vvv
+php zz_engine/bin/console app:delete-old-listing-files 10 --limit 100 -vvv --dry-run

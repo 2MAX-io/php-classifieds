@@ -70,6 +70,8 @@ class MoveFilesToNewLocationService
                         'listingId' => $listing->getId(),
                         'validUntil' => $listing->getValidUntilDate()->format('Y-m-d H:i:s'),
                     ]);
+
+                    return;
                 }
 
                 if (!StringHelper::startsWith($oldFilePath, FilePath::getListingFilePath())) {
@@ -103,6 +105,7 @@ class MoveFilesToNewLocationService
                     $listingFile->setPath(Path::makeRelative($newFilePath, FilePath::getPublicDir()));
 
                     $this->em->persist($listingFile);
+                    $this->em->flush();
                 } else {
                     $this->logger->debug('[MoveFilesToNewLocationService] dry run, real run would move files from listing id: {listingId}, valid until: {validUntil}, path: {oldFilePath} to: {newFilePath}', [
                         'oldFilePath' => $oldFilePath,
@@ -112,10 +115,6 @@ class MoveFilesToNewLocationService
                     ]);
                 }
             }
-        }
-
-        if ($moveFilesToNewLocationDto->getPerformMove()) {
-            $this->em->flush();
         }
     }
 }

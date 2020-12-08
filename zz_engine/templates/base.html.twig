@@ -23,9 +23,6 @@
     {%- endblock -%}
     {% block css %}{% endblock %}
 
-    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('static/system/favicon/apple-touch-icon.png') }}">
-    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('static/system/favicon/favicon-32x32.png') }}">
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('static/system/favicon/favicon-16x16.png') }}">
     <link rel='alternate' type='application/rss+xml' title='{{- settings.rssTitle }}' href='{{ url('app_rss') }}'/>
 
     {{ settings.customJavascriptInHead | raw }}

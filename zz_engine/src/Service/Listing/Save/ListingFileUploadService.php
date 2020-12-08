@@ -9,6 +9,7 @@ use App\Entity\ListingFile;
 use App\Helper\DateHelper;
 use App\Helper\FileHelper;
 use App\Helper\FilePath;
+use App\Helper\ListingFileHelper;
 use App\Helper\Random;
 use App\Service\Event\FileModificationEventService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -86,7 +87,7 @@ class ListingFileUploadService
 
     private function getDestinationPath(Listing $listing, ListingFileUploadDto $fileUploadDto): string
     {
-        $destinationPath = $this->getDestinationDirectory($listing)
+        $destinationPath = ListingFileHelper::getDestinationDirectory($listing)
             . '/'
             . \basename($this->getDestinationFileName($fileUploadDto));
 
@@ -97,19 +98,6 @@ class ListingFileUploadService
         $destinationPath = FileHelper::reducePathLength($destinationPath);
 
         return $destinationPath;
-    }
-
-    private function getDestinationDirectory(Listing $listing): string
-    {
-        $userDivider = \floor($listing->getUserNotNull()->getId() / 10000) + 1;
-
-        return FilePath::getListingFilePath()
-            . '/'
-            . $userDivider
-            . '/'
-            . 'user_' . $listing->getUserNotNull()->getId()
-            . '/'
-            . 'listing_' . $listing->getId();
     }
 
     private function getDestinationFileName(ListingFileUploadDto $fileUploadDto): string

@@ -187,6 +187,9 @@ class SaveListingService
         $searchText .= $listing->getSlug();
         $searchText .= ' ';
 
+        $searchText .= $listing->getid();
+        $searchText .= ' ';
+
         $listing->setSearchText($searchText);
     }
 

@@ -334,3 +334,4 @@ php zz_engine/bin/console app:delete-old-listing-files 10
 php zz_engine/bin/console app:delete-old-listing-files 10 --limit 100 -vvv
 php zz_engine/bin/console app:cron:main --ignore-delay -vvv
 php zz_engine/bin/console app:delete-old-listing-files 10 --limit 100 -vvv --dry-run
+composer install -d zz_engine --optimize-autoloader

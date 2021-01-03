@@ -202,7 +202,7 @@
         "version": "1.14.0"
     },
     "php": {
-        "version": "7.3"
+        "version": "7.4"
     },
     "php-http/discovery": {
         "version": "1.7.0"

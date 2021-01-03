@@ -41,6 +41,7 @@ services:
             context: './mysql/'
             dockerfile: Dockerfile
         ports: ['3306:3306']
+        user: '1000'
         volumes:
             - './../../zz_engine/var/mysql:/var/www/html/zz_engine/var/mysql'
             - './../../zz_engine/var/mysql:/sql'

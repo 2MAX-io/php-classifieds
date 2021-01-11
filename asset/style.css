@@ -476,3 +476,56 @@ div.clickableDiv a.clickableDivLink {
     border-color: #cecece;
     color: #585858;
 }
+
+.price-tag {
+    display: inline-block;
+
+    width: auto;
+    height: 38px;
+
+    background-color: #ffc107;
+    -webkit-border-radius: 3px 4px 4px 3px;
+    -moz-border-radius: 3px 4px 4px 3px;
+    border-radius: 3px 4px 4px 3px;
+
+    border-left: 1px solid #ffc107;
+
+    /* This makes room for the triangle */
+    margin-left: 19px;
+
+    position: relative;
+
+    color: black;
+    font-weight: 300;
+    font-size: 22px;
+    line-height: 38px;
+    font-family: "Courier New", monospace;
+
+    padding: 0 10px 0 10px;
+}
+
+/* Makes the triangle */
+.price-tag:before {
+    content: "";
+    position: absolute;
+    display: block;
+    left: -19px;
+    width: 0;
+    height: 0;
+    border-top: 19px solid transparent;
+    border-bottom: 19px solid transparent;
+    border-right: 19px solid #ffc107;
+}
+
+/* Makes the circle */
+.price-tag:after {
+    content: "";
+    background-color: white;
+    border-radius: 50%;
+    width: 4px;
+    height: 4px;
+    display: block;
+    position: absolute;
+    left: -9px;
+    top: 17px;
+}

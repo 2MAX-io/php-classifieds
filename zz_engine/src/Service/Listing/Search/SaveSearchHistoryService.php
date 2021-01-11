@@ -27,7 +27,7 @@ class SaveSearchHistoryService
         $this->eventDispatcher = $eventDispatcher;
     }
 
-    public function saveSearch(string $query): void
+    public function saveSearch(string $query, int $resultsCount): void
     {
         $query = \trim($query);
         if (empty($query) || \strlen($query) < 2) {
@@ -36,9 +36,10 @@ class SaveSearchHistoryService
 
         $this->eventDispatcher->addListener(
             KernelEvents::TERMINATE,
-            function () use ($query): void {
+            function () use ($query, $resultsCount): void {
                 $searchHistory = new SearchHistory();
                 $searchHistory->setQuery(mb_substr($query, 0, 250));
+                $searchHistory->setResultsCount($resultsCount);
                 $searchHistory->setDatetime(new \DateTime());
                 $this->em->persist($searchHistory);
                 $this->em->flush();

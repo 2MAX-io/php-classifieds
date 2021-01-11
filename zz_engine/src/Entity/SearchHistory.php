@@ -14,7 +14,7 @@ class SearchHistory
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", options={"unsigned"=true})
      */
     private $id;
 
@@ -22,6 +22,13 @@ class SearchHistory
      * @ORM\Column(type="string", length=255)
      */
     private $query;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(type="integer", options={"unsigned"=true})
+     */
+    private $resultsCount;
 
     /**
      * @ORM\Column(type="datetime")
@@ -55,5 +62,15 @@ class SearchHistory
         $this->datetime = $datetime;
 
         return $this;
+    }
+
+    public function getResultsCount(): int
+    {
+        return $this->resultsCount;
+    }
+
+    public function setResultsCount(int $resultsCount): void
+    {
+        $this->resultsCount = $resultsCount;
     }
 }

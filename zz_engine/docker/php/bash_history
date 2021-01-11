@@ -352,3 +352,7 @@ cd zz_engine/
 ls
 npm install
 gulp --gulpfile zz_engine/gulpfile.js --cwd .
+gulp --gulpfile zz_engine/gulpfile.js --cwd .
+gulp --gulpfile zz_engine/gulpfile.js --cwd .
+composer update -d zz_engine --optimize-autoloader
+gulp --gulpfile zz_engine/gulpfile.js --cwd .

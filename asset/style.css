@@ -470,3 +470,9 @@ div.clickableDiv a.clickableDivLink {
     background-color: rgba(133, 234, 23, 0.5) !important;
     border: 2px dashed greenyellow;
 }
+
+.btn-light-gray {
+    background-color: #e0e0e0;
+    border-color: #cecece;
+    color: #585858;
+}

@@ -300,9 +300,7 @@
 
                 <!-- info -->
                 <div class="card mb-3 w-100">
-                    <h5 class="card-header card-header-small">{{ 'trans.Informations' | trans }}</h5>
-
-                    <div class="card-body">
+                    <div class="card-body py-3">
                         {% if displayAsExpired(listing) %}
                             <div class="alert alert-warning">
                                 {{ 'trans.Listing has expired, please do not contact listing author' | trans }}
@@ -362,18 +360,26 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                    {% if not displayAsExpired(listing) %}
-                        <div class="card-footer">
-                            <a
-                                    href="{{ path('app_user_listings', {"user": listing.user.id}) }}"
-                                    class="btn btn-sm btn-dark btn-block mt-auto"
-                            >
-                                {{ 'trans.User listings' | trans }}
-                            </a>
+                        <div class="d-none d-md-block">
+                            <div class="row">
+                                <div class="col-sm-4 col-md-5">
+                                    {{ 'trans.User' | trans }}
+                                </div>
+
+                                <div class="col-sm-8 col-md-7">
+                                    {% if not displayAsExpired(listing) %}
+                                        <a
+                                                href="{{ path('app_user_listings', {"user": listing.user.id}) }}"
+                                                class="btn btn-sm btn-light-gray mt-auto"
+                                        >
+                                            {{ 'trans.User listings' | trans }}
+                                        </a>
+                                    {% endif %}
+                                </div>
+                            </div>
                         </div>
-                    {% endif %}
+                    </div>
                 </div>
 
                 {% if displayAsExpired(listing) %}

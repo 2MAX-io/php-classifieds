@@ -335,3 +335,20 @@ php zz_engine/bin/console app:delete-old-listing-files 10 --limit 100 -vvv
 php zz_engine/bin/console app:cron:main --ignore-delay -vvv
 php zz_engine/bin/console app:delete-old-listing-files 10 --limit 100 -vvv --dry-run
 composer install -d zz_engine --optimize-autoloader
+composer install -d zz_engine --optimize-autoloader
+php zz_engine/bin/console doctrine:schema:update -f
+gulp --gulpfile zz_engine/gulpfile.js --cwd .
+gulp --gulpfile zz_engine/gulpfile.js --cwd .
+gulp --help
+gulp --gulpfile zz_engine/gulpfile.js --cwd .
+ls
+npm install
+cd zz_engine/
+npm install
+ sudo chown -R 1000:33 "/var/www/.npm"
+chown -R 1000:33 "/var/www/.npm"
+ls -la /var/www/
+cd zz_engine/
+ls
+npm install
+gulp --gulpfile zz_engine/gulpfile.js --cwd .

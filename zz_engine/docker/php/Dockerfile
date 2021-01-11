@@ -50,4 +50,9 @@ fi;
 #COPY ./../../composer.json zz_engine
 #RUN bash -c "composer install -d /var/www/html/zz_engine --optimize-autoloader"
 
+RUN true \
+&& curl -sL https://deb.nodesource.com/setup_12.x | bash \
+&& npm install gulp \
+&& true
+
 EXPOSE 443

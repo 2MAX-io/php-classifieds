@@ -529,3 +529,8 @@ div.clickableDiv a.clickableDivLink {
     left: -9px;
     top: 17px;
 }
+
+.user-listings-table.table th {
+    border-top: 0;
+    padding-top: 0;
+}

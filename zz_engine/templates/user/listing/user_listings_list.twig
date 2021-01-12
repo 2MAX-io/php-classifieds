@@ -9,21 +9,25 @@
 
 {% block body %}
     <div class="container mt-4">
-        <nav class="nav nav-pills nav-justified mb-2 d-md-none">
-            <form class="mt-2 mt-md-0 w-100-small" role="search">
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <div class="input-group-text"><i class="fas fa-search"></i></div>
-                    </div>
-                    <input type="text" class="form-control" placeholder="{{ 'trans.keyword' | trans }}" name="query" value="{{ app.request.get('query') }}">
-                    <button type="submit" class="btn btn-primary ml-1">{{ 'trans.Search' | trans }}</button>
-                </div>
-            </form>
-        </nav>
-
         <div class="row">
-            <div class="col-md-12">
-                <table class="table table-responsive-md">
+            <div class="col-md-4 col-lg-3 mb-4">
+                {% include 'user/listing/_part/user_navigation_card.html.twig' %}
+            </div>
+
+            <div class="col-md-8 col-lg-9 pl-md-0">
+                <nav class="nav nav-pills nav-justified mb-2 d-md-none">
+                    <form class="mt-2 mt-md-0 w-100-small" role="search">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text"><i class="fas fa-search"></i></div>
+                            </div>
+                            <input type="text" class="form-control" placeholder="{{ 'trans.keyword' | trans }}" name="query" value="{{ app.request.get('query') }}">
+                            <button type="submit" class="btn btn-primary ml-1">{{ 'trans.Search' | trans }}</button>
+                        </div>
+                    </form>
+                </nav>
+
+                <table class="table table-responsive-md user-listings-table">
                     <thead>
                     <tr>
                         <th style="min-width: 14rem;" colspan="2">
@@ -42,7 +46,7 @@
                         <th>
                             <a href="{{ path('app_listing_new') }}" class="btn btn-dark btn-sm float-right">
                                 <i class="far fa-plus-square"></i>
-                                <span>{{ 'trans.Create Listing' | trans }}</span>
+                                <span>{{ 'trans.Add' | trans }}</span>
                             </a>
                         </th>
                     </tr>
@@ -62,13 +66,13 @@
                                     <a href="{{ path('app_listing_show', {"id": listing.id, 'slug': listing.slug, 'showPreviewForOwner': 1}) }}">{{ listing.title }}</a>
                                 </div>
                                 <div>
-                                    <span class="mr-2">
-                                        {{ listing.category.parent.name }}
-                                        ⇾
-                                        <a href="{{ path('app_category', {'categorySlug': listing.category.slug}) }}">
-                                            {{- listing.category.name -}}
-                                        </a>
-                                    </span>
+                            <span class="mr-2">
+                                {{ listing.category.parent.name }}
+                                ⇾
+                                <a href="{{ path('app_category', {'categorySlug': listing.category.slug}) }}">
+                                    {{- listing.category.name -}}
+                                </a>
+                            </span>
                                     {% if listing.featured %}
                                         <span class="badge badge-pill badge-warning">{{ 'trans.Featured' | trans }}</span>
                                     {% endif %}

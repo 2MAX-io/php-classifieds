@@ -646,6 +646,7 @@ trans:
   Go to next waiting: 'Idź do następnego oczekującego'
   Preview, click to display same as for ordinary user: 'Podgląd, kliknij aby wyświetlić tak jak zwykłemu użytkownikowi'
   Do you want to log out?: 'Chcesz się wylogować?'
+  Add: 'Dodaj'
 
 'trans.Remove non standard characters in listing - Enabled': 'Usuń niestandardowe znaki z ogłoszenia - Włączone'
 'trans.Remove non standard characters in listing - List of allowed characters': 'Usuń niestandardowe znaki z ogłoszenia - Lista dozwolonych znaków'

@@ -35,7 +35,7 @@ class UserListingController extends AbstractUserController
         $userListingListDto = $userListingListService->getList((int)$request->get('page', 1));
 
         return $this->render(
-            'user/listing/index.html.twig',
+            'user/listing/user_listings_list.twig',
             [
                 'listings' => $userListingListDto->getResults(),
                 'pager' => $userListingListDto->getPager(),

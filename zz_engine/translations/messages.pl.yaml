@@ -647,6 +647,7 @@ trans:
   Preview, click to display same as for ordinary user: 'Podgląd, kliknij aby wyświetlić tak jak zwykłemu użytkownikowi'
   Do you want to log out?: 'Chcesz się wylogować?'
   Add: 'Dodaj'
+  My account: 'Moje konto'
 
 'trans.Remove non standard characters in listing - Enabled': 'Usuń niestandardowe znaki z ogłoszenia - Włączone'
 'trans.Remove non standard characters in listing - List of allowed characters': 'Usuń niestandardowe znaki z ogłoszenia - Lista dozwolonych znaków'

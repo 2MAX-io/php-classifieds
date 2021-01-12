@@ -103,11 +103,7 @@
                     <div class="text-right mt-md-2">
                         <ul class="list-inline">
                             <li class="list-inline-item">
-                                {%- if app.user -%}
-                                    <a href="{{ path('app_logout') }}">{{ 'trans.Logout' | trans }}</a>
-                                {%- else -%}
-                                    <a href="{{ path('app_login') }}">{{ 'trans.Sign in' | trans }}</a>
-                                {%- endif -%}
+                                <a href="{{ path('app_user_listing_index') }}">{{ 'trans.My account' | trans }}</a>
                             </li>
                             <li class="list-inline-item">
                                 <a href="{{ path('app_listing_new') }}" class="btn btn-primary">

@@ -196,6 +196,7 @@ trans:
   First waiting for Activation: 'First waiting for Activation'
   Go to next waiting: 'Go to next waiting'
   Preview, click to display same as for ordinary user: 'Preview, click to display same as for ordinary user'
+  Do you want to log out?: 'Do you want to log out?'
 
 trans.customFieldType.SELECT_AS_CHECKBOXES: 'Checkboxes in filters, single select when editing'
 trans.customFieldType.SELECT_SINGLE: 'Single selection field'

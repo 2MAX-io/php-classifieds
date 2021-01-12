@@ -66,13 +66,9 @@
                                     <a href="{{ path('app_listing_show', {"id": listing.id, 'slug': listing.slug, 'showPreviewForOwner': 1}) }}">{{ listing.title }}</a>
                                 </div>
                                 <div>
-                            <span class="mr-2">
-                                {{ listing.category.parent.name }}
-                                ⇾
-                                <a href="{{ path('app_category', {'categorySlug': listing.category.slug}) }}">
-                                    {{- listing.category.name -}}
-                                </a>
-                            </span>
+                                    <span class="mr-2" title="{{ listing.category.parent.name }}⇾{{- listing.category.name -}}">
+                                        {{- listing.category.name -}}
+                                    </span>
                                     {% if listing.featured %}
                                         <span class="badge badge-pill badge-warning">{{ 'trans.Featured' | trans }}</span>
                                     {% endif %}

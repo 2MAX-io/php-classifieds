@@ -146,20 +146,24 @@
 
         <div class="collapse navbar-collapse" id="main-navbar">
             <ul class="navbar-nav justify-content-around w-100">
-                <li class="nav-item active">
-                    <a class="nav-link" href="{{ path('app_index') }}">{{ 'trans.Home page' | trans }}</a>
-                </li>
+                {% if settings.masterSiteLinkShow %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ settings.masterSiteUrl }}">{{ settings.masterSiteAnchorText }}</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{{ path('app_index') }}">{{ 'trans.Classifieds' | trans }}</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{{ path('app_index') }}">{{ 'trans.Home page' | trans }}</a>
+                    </li>
+                {% endif %}
                 <li class="nav-item">
                     <a class="nav-link" href="{{ path('app_category_view_all') }}">{{ 'trans.Categories' | trans }}</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ path('app_last_added') }}">{{ 'trans.Last added' | trans }}</a>
                 </li>
-                {% if settings.masterSiteLinkShow %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ settings.masterSiteUrl }}">{{ settings.masterSiteAnchorText }}</a>
-                    </li>
-                {% endif %}
 
                 {%- if app.user -%}
                     <li class="nav-item">

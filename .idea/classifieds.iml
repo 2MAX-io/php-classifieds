@@ -168,6 +168,15 @@
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/laminas/laminas-zendframework-bridge" />
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/clue/stream-filter" />
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/monolog/monolog" />
+      <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/webimpress/safe-writer" />
+      <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/laminas/laminas-eventmanager" />
+      <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/laminas/laminas-code" />
+      <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/firebase/php-jwt" />
+      <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/symfony/polyfill-intl-normalizer" />
+      <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/symfony/deprecation-contracts" />
+      <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/symfony/proxy-manager-bridge" />
+      <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/league/mime-type-detection" />
+      <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/phpseclib/phpseclib" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

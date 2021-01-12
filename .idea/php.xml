@@ -185,6 +185,15 @@
       <path value="$PROJECT_DIR$/zz_engine/vendor/laminas/laminas-zendframework-bridge" />
       <path value="$PROJECT_DIR$/zz_engine/vendor/clue/stream-filter" />
       <path value="$PROJECT_DIR$/zz_engine/vendor/monolog/monolog" />
+      <path value="$PROJECT_DIR$/zz_engine/vendor/webimpress/safe-writer" />
+      <path value="$PROJECT_DIR$/zz_engine/vendor/laminas/laminas-eventmanager" />
+      <path value="$PROJECT_DIR$/zz_engine/vendor/laminas/laminas-code" />
+      <path value="$PROJECT_DIR$/zz_engine/vendor/firebase/php-jwt" />
+      <path value="$PROJECT_DIR$/zz_engine/vendor/symfony/polyfill-intl-normalizer" />
+      <path value="$PROJECT_DIR$/zz_engine/vendor/symfony/deprecation-contracts" />
+      <path value="$PROJECT_DIR$/zz_engine/vendor/symfony/proxy-manager-bridge" />
+      <path value="$PROJECT_DIR$/zz_engine/vendor/league/mime-type-detection" />
+      <path value="$PROJECT_DIR$/zz_engine/vendor/phpseclib/phpseclib" />
     </include_path>
   </component>
   <component name="PhpInterpreters">

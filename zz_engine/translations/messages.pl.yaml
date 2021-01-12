@@ -648,6 +648,7 @@ trans:
   Do you want to log out?: 'Chcesz się wylogować?'
   Add: 'Dodaj'
   My account: 'Moje konto'
+  User name to display publicly: 'Nazwa użytkownika wyświetlana publicznie'
 
 'trans.Remove non standard characters in listing - Enabled': 'Usuń niestandardowe znaki z ogłoszenia - Włączone'
 'trans.Remove non standard characters in listing - List of allowed characters': 'Usuń niestandardowe znaki z ogłoszenia - Lista dozwolonych znaków'

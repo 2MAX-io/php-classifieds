@@ -199,6 +199,7 @@ trans:
   Do you want to log out?: 'Do you want to log out?'
   Add: 'Add'
   My account: 'My account'
+  User name to display publicly: 'User name to display publicly'
 
 trans.customFieldType.SELECT_AS_CHECKBOXES: 'Checkboxes in filters, single select when editing'
 trans.customFieldType.SELECT_SINGLE: 'Single selection field'

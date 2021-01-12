@@ -41,6 +41,13 @@ class User implements UserInterface, RoleInterface, EnablableInterface, EncoderA
     protected $email;
 
     /**
+     * @var string|null
+     *
+     * @ORM\Column(type="string", length=100, unique=true, nullable=true)
+     */
+    protected $displayUsername;
+
+    /**
      * @ORM\Column(type="json", nullable=false)
      */
     protected $roles = [];
@@ -478,5 +485,24 @@ class User implements UserInterface, RoleInterface, EnablableInterface, EncoderA
         }
 
         return $this;
+    }
+
+    public function getDisplayUsername(): ?string
+    {
+        return $this->displayUsername;
+    }
+
+    public function getDisplayUsernameWithFallback(): string
+    {
+        if (empty($this->displayUsername)) {
+            return "#{$this->getId()}";
+        }
+
+        return $this->displayUsername;
+    }
+
+    public function setDisplayUsername(?string $displayUsername): void
+    {
+        $this->displayUsername = $displayUsername;
     }
 }

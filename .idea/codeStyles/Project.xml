@@ -1,6 +1,8 @@
 <component name="ProjectCodeStyleConfiguration">
   <code_scheme name="Project" version="173">
-    <DB2CodeStyleSettings version="2">
+    <option name="LINE_SEPARATOR" value="&#10;" />
+    <DB2CodeStyleSettings version="5">
+      <option name="USE_GENERAL_STYLE" value="false" />
       <option name="SELECT_EL_WRAP" value="2" />
       <option name="SELECT_EL_COMMA" value="1" />
       <option name="SELECT_KEEP_N_ITEMS_IN_LINE" value="0" />
@@ -13,7 +15,8 @@
       <option name="WHERE_EL_WRAP" value="2" />
       <option name="WHERE_EL_BOUND" value="2" />
     </DB2CodeStyleSettings>
-    <DerbyCodeStyleSettings version="2">
+    <DerbyCodeStyleSettings version="5">
+      <option name="USE_GENERAL_STYLE" value="false" />
       <option name="SELECT_EL_WRAP" value="2" />
       <option name="SELECT_EL_COMMA" value="1" />
       <option name="SELECT_KEEP_N_ITEMS_IN_LINE" value="0" />
@@ -26,7 +29,8 @@
       <option name="WHERE_EL_WRAP" value="2" />
       <option name="WHERE_EL_BOUND" value="2" />
     </DerbyCodeStyleSettings>
-    <H2CodeStyleSettings version="2">
+    <H2CodeStyleSettings version="5">
+      <option name="USE_GENERAL_STYLE" value="false" />
       <option name="SELECT_EL_WRAP" value="2" />
       <option name="SELECT_EL_COMMA" value="1" />
       <option name="SELECT_KEEP_N_ITEMS_IN_LINE" value="0" />
@@ -39,7 +43,8 @@
       <option name="WHERE_EL_WRAP" value="2" />
       <option name="WHERE_EL_BOUND" value="2" />
     </H2CodeStyleSettings>
-    <HSQLCodeStyleSettings version="2">
+    <HSQLCodeStyleSettings version="5">
+      <option name="USE_GENERAL_STYLE" value="false" />
       <option name="SELECT_EL_WRAP" value="2" />
       <option name="SELECT_EL_COMMA" value="1" />
       <option name="SELECT_KEEP_N_ITEMS_IN_LINE" value="0" />
@@ -57,7 +62,8 @@
       <option name="HTML_NEWLINE_BEFORE_FIRST_ATTRIBUTE" value="When multiline" />
       <option name="HTML_NEWLINE_AFTER_LAST_ATTRIBUTE" value="When multiline" />
     </HTMLCodeStyleSettings>
-    <MSSQLCodeStyleSettings version="2">
+    <MSSQLCodeStyleSettings version="5">
+      <option name="USE_GENERAL_STYLE" value="false" />
       <option name="SELECT_EL_WRAP" value="2" />
       <option name="SELECT_EL_COMMA" value="1" />
       <option name="SELECT_KEEP_N_ITEMS_IN_LINE" value="0" />
@@ -70,9 +76,11 @@
       <option name="WHERE_EL_WRAP" value="2" />
       <option name="WHERE_EL_BOUND" value="2" />
     </MSSQLCodeStyleSettings>
-    <MySQLCodeStyleSettings version="2">
-      <option name="KEYWORD_CASE" value="0" />
-      <option name="TYPE_CASE" value="0" />
+    <MySQLCodeStyleSettings version="5">
+      <option name="USE_GENERAL_STYLE" value="false" />
+      <option name="KEYWORD_CASE" value="2" />
+      <option name="TYPE_CASE" value="2" />
+      <option name="CUSTOM_TYPE_CASE" value="2" />
       <option name="QUERY_EL_COMMA" value="2" />
       <option name="QUERY_IN_ONE_STRING" value="3" />
       <option name="INSERT_EL_COMMA" value="1" />
@@ -94,7 +102,8 @@
       <option name="ORDER_EL_COMMA" value="2" />
       <option name="IMP_COMMON_WRAP_EVERY_STATEMENT" value="true" />
     </MySQLCodeStyleSettings>
-    <OracleCodeStyleSettings version="2">
+    <OracleCodeStyleSettings version="5">
+      <option name="USE_GENERAL_STYLE" value="false" />
       <option name="SELECT_EL_WRAP" value="2" />
       <option name="SELECT_EL_COMMA" value="1" />
       <option name="SELECT_KEEP_N_ITEMS_IN_LINE" value="0" />
@@ -116,7 +125,8 @@
       <option name="BLANK_LINES_AFTER_OPENING_TAG" value="1" />
       <option name="FORCE_SHORT_DECLARATION_ARRAY_STYLE" value="true" />
     </PHPCodeStyleSettings>
-    <PostgresCodeStyleSettings version="2">
+    <PostgresCodeStyleSettings version="5">
+      <option name="USE_GENERAL_STYLE" value="false" />
       <option name="SELECT_EL_WRAP" value="2" />
       <option name="SELECT_EL_COMMA" value="1" />
       <option name="SELECT_KEEP_N_ITEMS_IN_LINE" value="0" />
@@ -129,7 +139,8 @@
       <option name="WHERE_EL_WRAP" value="2" />
       <option name="WHERE_EL_BOUND" value="2" />
     </PostgresCodeStyleSettings>
-    <SQLiteCodeStyleSettings version="2">
+    <SQLiteCodeStyleSettings version="5">
+      <option name="USE_GENERAL_STYLE" value="false" />
       <option name="SELECT_EL_WRAP" value="2" />
       <option name="SELECT_EL_COMMA" value="1" />
       <option name="SELECT_KEEP_N_ITEMS_IN_LINE" value="0" />
@@ -142,9 +153,10 @@
       <option name="WHERE_EL_WRAP" value="2" />
       <option name="WHERE_EL_BOUND" value="2" />
     </SQLiteCodeStyleSettings>
-    <SqlCodeStyleSettings version="2">
-      <option name="KEYWORD_CASE" value="0" />
+    <SqlCodeStyleSettings version="5">
+      <option name="KEYWORD_CASE" value="2" />
       <option name="TYPE_CASE" value="3" />
+      <option name="CUSTOM_TYPE_CASE" value="3" />
       <option name="SELECT_EL_WRAP" value="2" />
       <option name="SELECT_EL_COMMA" value="1" />
       <option name="SELECT_KEEP_N_ITEMS_IN_LINE" value="1" />
@@ -163,7 +175,8 @@
       <option name="ORDER_EL_COMMA" value="1" />
       <option name="IMP_COMMON_WRAP_EVERY_STATEMENT" value="true" />
     </SqlCodeStyleSettings>
-    <SybaseCodeStyleSettings version="2">
+    <SybaseCodeStyleSettings version="5">
+      <option name="USE_GENERAL_STYLE" value="false" />
       <option name="SELECT_EL_WRAP" value="2" />
       <option name="SELECT_EL_COMMA" value="1" />
       <option name="SELECT_KEEP_N_ITEMS_IN_LINE" value="0" />

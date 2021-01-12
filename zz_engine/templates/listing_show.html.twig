@@ -366,11 +366,9 @@
                                 </div>
 
                                 <div class="col-sm-8 col-md-7">
+                                    <div>{{ listing.user.displayUsernameWithFallback }}</div>
                                     {% if not displayAsExpired(listing) %}
-                                        <a
-                                                href="{{ path('app_public_listings_of_user', {"user": listing.user.id}) }}"
-                                                class="btn btn-sm btn-light-gray mt-auto"
-                                        >
+                                        <a href="{{ path('app_public_listings_of_user', {"user": listing.user.id}) }}">
                                             {{ 'trans.User listings' | trans }}
                                         </a>
                                     {% endif %}

@@ -24,9 +24,6 @@
         {{ form_row(form.emailFromName) }}
         {{ form_row(form.emailReplyTo) }}
 
-        <h2>{{ 'trans.Other' | trans }}</h2>
-        {{ form_rest(form) }}
-
         <button class="btn btn-primary">{{ button_label|default('trans.Save' | trans) }}</button>
         {{ form_end(form) }}
     </div>

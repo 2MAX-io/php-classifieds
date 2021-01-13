@@ -8,6 +8,7 @@
 
         <div class="mb-2">
             <a href="{{ path('app_admin_logo_upload') }}" class="btn btn-secondary">{{ 'trans.Upload logo' | trans }}</a>
+            <a href="{{ path('app_admin_settings_payment_invoice') }}" class="btn btn-secondary">{{ 'trans.Payment / Invoice Settings' | trans }}</a>
         </div>
 
         {{ form_start(form) }}
@@ -17,18 +18,6 @@
         {{ form_row(form.wordsToRemoveFromTitle) }}
         {{ form_row(form.allowedCharactersEnabled) }}
         {{ form_row(form.allowedCharacters) }}
-
-        <h2>{{ 'trans.Payments' | trans }}</h2>
-        {{ form_row(form.paymentAllowed) }}
-        {{ form_row(form.paymentGateway) }}
-        {{ form_row(form.paymentGatewayPaymentDescription) }}
-        {{ form_row(form.paymentPayPalMode) }}
-        {{ form_row(form.paymentPayPalClientId) }}
-        {{ form_row(form.paymentPayPalClientSecret) }}
-        {{ form_row(form.paymentPrzelewy24Mode) }}
-        {{ form_row(form.paymentPrzelewy24MerchantId) }}
-        {{ form_row(form.paymentPrzelewy24PosId) }}
-        {{ form_row(form.paymentPrzelewy24Crc) }}
 
         <h2>{{ 'trans.Pagination' | trans }}</h2>
         {{ form_row(form.itemsPerPageMax) }}

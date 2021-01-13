@@ -211,6 +211,7 @@ trans:
   Invoice number prefix: 'Invoice number prefix'
   can be empty: 'can be empty'
   Sold item description for invoice: 'Sold item description for invoice'
+  Payment / Invoice Settings: 'Payment / Invoice Settings'
 
 trans.customFieldType.SELECT_AS_CHECKBOXES: 'Checkboxes in filters, single select when editing'
 trans.customFieldType.SELECT_SINGLE: 'Single selection field'

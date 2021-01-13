@@ -355,35 +355,35 @@ class SettingsType extends AbstractType
             'required' => true,
         ]);
         $builder->add('invoiceCompanyName', TextType::class, [
-            'label' => 'trans.Company name for invoice',
+            'label' => 'trans.Company name',
             'required' => true,
         ]);
         $builder->add('invoiceTaxNumber', TextType::class, [
-            'label' => 'trans.Tax Number for invoice',
+            'label' => 'trans.Tax Number',
             'required' => true,
         ]);
         $builder->add('invoiceCity', TextType::class, [
-            'label' => 'trans.City for invoice',
+            'label' => 'trans.City',
             'required' => true,
         ]);
         $builder->add('invoiceStreet', TextType::class, [
-            'label' => 'trans.Street for invoice',
+            'label' => 'trans.Street',
             'required' => true,
         ]);
         $builder->add('invoiceBuildingNumber', TextType::class, [
-            'label' => 'trans.Building number for invoice',
+            'label' => 'trans.Building number',
             'required' => true,
         ]);
         $builder->add('invoiceUnitNumber', TextType::class, [
-            'label' => 'trans.Unit number for invoice',
+            'label' => 'trans.Unit number',
             'required' => true,
         ]);
         $builder->add('invoiceZipCode', TextType::class, [
-            'label' => 'trans.Zip code for invoice',
+            'label' => 'trans.Zip code',
             'required' => true,
         ]);
         $builder->add('invoiceCountry', TextType::class, [
-            'label' => 'trans.Country for invoice',
+            'label' => 'trans.Country',
             'required' => true,
         ]);
         $builder->add('invoiceEmail', TextType::class, [

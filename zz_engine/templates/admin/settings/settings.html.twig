@@ -4,12 +4,9 @@
 
 {% block body %}
     <div class="container mt-3">
-        <h1>{{ 'trans.Page settings' | trans }}</h1>
+        {% include 'admin/settings/_partial/_settings_menu.html.twig' %}
 
-        <div class="mb-2">
-            <a href="{{ path('app_admin_logo_upload') }}" class="btn btn-secondary">{{ 'trans.Upload logo' | trans }}</a>
-            <a href="{{ path('app_admin_settings_payment_invoice') }}" class="btn btn-secondary">{{ 'trans.Payment / Invoice Settings' | trans }}</a>
-        </div>
+        <h1>{{ 'trans.Settings' | trans }}</h1>
 
         {{ form_start(form) }}
 
@@ -56,17 +53,6 @@
         <h2>{{ 'trans.Localization' | trans }}</h2>
         {{ form_row(form.languageTwoLetters) }}
         {{ form_row(form.currency) }}
-
-        <h2>{{ 'trans.Social login' | trans }}</h2>
-        <h4>{{ 'trans.Google' | trans }}</h4>
-        {{ form_row(form.googleSignInEnabled) }}
-        {{ form_row(form.googleSignInClientId) }}
-        {{ form_row(form.googleSignInClientSecret) }}
-
-        <h4>{{ 'trans.Facebook' | trans }}</h4>
-        {{ form_row(form.facebookSignInEnabled) }}
-        {{ form_row(form.facebookSignInAppId) }}
-        {{ form_row(form.facebookSignInAppSecret) }}
 
         <h2>{{ 'trans.Other' | trans }}</h2>
         {{ form_rest(form) }}

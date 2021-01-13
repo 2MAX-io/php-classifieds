@@ -1,0 +1,30 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}{{ 'trans.Settings' | trans }}{% endblock %}
+
+{% block body %}
+    <div class="container mt-3">
+        {% include 'admin/settings/_partial/_settings_menu.html.twig' %}
+
+        <h1>{{ 'trans.Login Settings' | trans }}</h1>
+
+        {{ form_start(form) }}
+
+        <h2>{{ 'trans.Social login' | trans }}</h2>
+        <h4>{{ 'trans.Google' | trans }}</h4>
+        {{ form_row(form.googleSignInEnabled) }}
+        {{ form_row(form.googleSignInClientId) }}
+        {{ form_row(form.googleSignInClientSecret) }}
+
+        <h4>{{ 'trans.Facebook' | trans }}</h4>
+        {{ form_row(form.facebookSignInEnabled) }}
+        {{ form_row(form.facebookSignInAppId) }}
+        {{ form_row(form.facebookSignInAppSecret) }}
+
+        <h2>{{ 'trans.Other' | trans }}</h2>
+        {{ form_rest(form) }}
+
+        <button class="btn btn-primary">{{ button_label|default('trans.Save' | trans) }}</button>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

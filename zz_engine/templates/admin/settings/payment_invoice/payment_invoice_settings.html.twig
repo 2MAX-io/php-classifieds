@@ -4,11 +4,9 @@
 
 {% block body %}
     <div class="container mt-3">
-        <h1>{{ 'trans.Payment / Invoice Settings' | trans }}</h1>
+        {% include 'admin/settings/_partial/_settings_menu.html.twig' %}
 
-        <div class="mb-2">
-            <a href="{{ path('app_admin_settings') }}" class="btn btn-secondary">{{ 'trans.Settings' | trans }}</a>
-        </div>
+        <h1>{{ 'trans.Payment / Invoice Settings' | trans }}</h1>
 
         {{ form_start(form) }}
 

@@ -659,6 +659,9 @@ trans:
   Invoice number prefix: 'Prefix do numeru faktury'
   can be empty: 'może pozostać puste'
   Sold item description for invoice: 'Nazwa sprzedawanej usługi do faktury'
+  Payment / Invoice Settings: 'Ustawienia Płatności / Faktur'
+  Login Settings: 'Ustawienia Logowania'
+  Webpage Logo: 'Logo Strony'
 
 'trans.Remove non standard characters in listing - Enabled': 'Usuń niestandardowe znaki z ogłoszenia - Włączone'
 'trans.Remove non standard characters in listing - List of allowed characters': 'Usuń niestandardowe znaki z ogłoszenia - Lista dozwolonych znaków'

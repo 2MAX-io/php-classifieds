@@ -212,6 +212,8 @@ trans:
   can be empty: 'can be empty'
   Sold item description for invoice: 'Sold item description for invoice'
   Payment / Invoice Settings: 'Payment / Invoice Settings'
+  Login Settings: 'Login Settings'
+  Webpage Logo: 'Webpage Logo'
 
 trans.customFieldType.SELECT_AS_CHECKBOXES: 'Checkboxes in filters, single select when editing'
 trans.customFieldType.SELECT_SINGLE: 'Single selection field'

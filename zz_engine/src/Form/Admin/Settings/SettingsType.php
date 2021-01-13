@@ -246,30 +246,6 @@ class SettingsType extends AbstractType
             'help' => 'trans.put your code inside: <style type="text/css"></style>',
             'required' => true,
         ]);
-        $builder->add('facebookSignInEnabled', BoolType::class, [
-            'label' => 'trans.Facebook Sign in enabled?',
-            'required' => true,
-        ]);
-        $builder->add('facebookSignInAppId', TextType::class, [
-            'label' => 'trans.Facebook Sign in App ID',
-            'required' => true,
-        ]);
-        $builder->add('facebookSignInAppSecret', TextType::class, [
-            'label' => 'trans.Facebook Sign in App Secret',
-            'required' => true,
-        ]);
-        $builder->add('googleSignInEnabled', BoolType::class, [
-            'label' => 'trans.Google Sign in enabled?',
-            'required' => true,
-        ]);
-        $builder->add('googleSignInClientId', TextType::class, [
-            'label' => 'trans.Google Sign in Client ID',
-            'required' => true,
-        ]);
-        $builder->add('googleSignInClientSecret', TextType::class, [
-            'label' => 'trans.Google Sign in Client Secret',
-            'required' => true,
-        ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

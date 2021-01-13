@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Controller\Admin\Secondary;
+namespace App\Controller\Admin\Secondary\Settings;
 
 use App\Controller\Admin\Base\AbstractAdminController;
 use App\Form\Admin\Secondary\AdminLogoUploadType;
@@ -29,7 +29,7 @@ class LogoUploadController extends AbstractAdminController
              return $this->redirectToRoute('app_admin_logo_upload');
         }
 
-        return $this->render('admin/secondary/logo_upload/logo_upload.html.twig', [
+        return $this->render('admin/settings/logo_upload/logo_upload.html.twig', [
             'form' => $form->createView(),
             'logoPath' => $logoUploadService->getLogoPath(),
         ]);

@@ -534,3 +534,8 @@ div.clickableDiv a.clickableDivLink {
     border-top: 0;
     padding-top: 0;
 }
+
+.btn-outline-admin {
+    border-color: #ca472e;
+    border-style: dashed;
+}

@@ -67,7 +67,7 @@
                 </ul>
 
                 {% if lowSecurityCheckIsAdminInPublic() %}
-                    <a class="nav-link btn btn-outline-danger d-sm-none" href="{{ path('app_admin_index') }}">
+                    <a class="nav-link btn btn-outline-admin d-sm-none" href="{{ path('app_admin_index') }}">
                         {{- 'trans.Admin panel' | trans -}}
                     </a>
                 {%- endif -%}
@@ -116,7 +116,7 @@
                 </div>
 
                 {%- if app.user -%}
-                    <a class="nav-link btn btn-outline-success d-sm-none" href="{{ path('app_user_listing_index') }}">
+                    <a class="nav-link d-sm-none" href="{{ path('app_user_listing_index') }}">
                         {{- 'trans.My listings' | trans -}}
                     </a>
                 {% endif %}
@@ -163,7 +163,7 @@
 
                 {%- if app.user -%}
                     <li class="nav-item">
-                        <a class="nav-link btn btn-outline-success" href="{{ path('app_user_listing_index') }}">
+                        <a class="nav-link" href="{{ path('app_user_listing_index') }}">
                             {{- 'trans.My listings' | trans -}}
                         </a>
                     </li>
@@ -171,7 +171,7 @@
 
                 {% if lowSecurityCheckIsAdminInPublic() %}
                     <li class="nav-item">
-                        <a class="nav-link btn btn-outline-danger" href="{{ path('app_admin_index') }}">
+                        <a class="nav-link btn btn-outline-admin" href="{{ path('app_admin_index') }}">
                             {{- 'trans.Admin panel' | trans -}}
                         </a>
                     </li>

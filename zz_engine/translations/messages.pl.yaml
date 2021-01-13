@@ -662,6 +662,7 @@ trans:
   Payment / Invoice Settings: 'Ustawienia Płatności / Faktur'
   Login Settings: 'Ustawienia Logowania'
   Webpage Logo: 'Logo Strony'
+  Customization Settings: 'Personalizacja'
 
 'trans.Remove non standard characters in listing - Enabled': 'Usuń niestandardowe znaki z ogłoszenia - Włączone'
 'trans.Remove non standard characters in listing - List of allowed characters': 'Usuń niestandardowe znaki z ogłoszenia - Lista dozwolonych znaków'

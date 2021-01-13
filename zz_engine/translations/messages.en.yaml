@@ -214,6 +214,7 @@ trans:
   Payment / Invoice Settings: 'Payment / Invoice Settings'
   Login Settings: 'Login Settings'
   Webpage Logo: 'Webpage Logo'
+  Customization Settings: 'Customization Settings'
 
 trans.customFieldType.SELECT_AS_CHECKBOXES: 'Checkboxes in filters, single select when editing'
 trans.customFieldType.SELECT_SINGLE: 'Single selection field'

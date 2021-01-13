@@ -29,6 +29,15 @@ class PaymentInvoiceSettingsType extends AbstractType
                 new NotBlank(),
             ],
         ]);
+        $builder->add('currency', TextType::class, [
+            'label' => 'trans.Currency',
+            'help' => 'trans.3 letters, ISO 4217 code',
+            'required' => true,
+            'constraints' => [
+                new NotBlank(),
+                new Length(['max' => 4]),
+            ],
+        ]);
         $builder->add('paymentGateway', ChoiceType::class, [
             'label' => 'trans.Payment Gateway',
             'required' => true,

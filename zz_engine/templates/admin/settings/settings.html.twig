@@ -19,40 +19,10 @@
         <h2>{{ 'trans.Pagination' | trans }}</h2>
         {{ form_row(form.itemsPerPageMax) }}
 
-        <h2>{{ 'trans.Customization' | trans }}</h2>
-        {{ form_row(form.customCss) }}
-        {{ form_row(form.customJavascriptInHead) }}
-        {{ form_row(form.customJavascriptBottom) }}
-
-        <h2>{{ 'trans.Subpages' | trans }}</h2>
-        {{ form_row(form.linkTermsConditions) }}
-        {{ form_row(form.linkPrivacyPolicy) }}
-        {{ form_row(form.linkRejectionReason) }}
-        {{ form_row(form.linkContact) }}
-        {{ form_row(form.linkAdvertisement) }}
-
-        <h2>{{ 'trans.SEO and Metadata Settings' | trans }}</h2>
-        {{ form_row(form.indexPageTitle) }}
-        {{ form_row(form.pageTitleSuffix) }}
-        {{ form_row(form.footerSiteCopyright) }}
-        {{ form_row(form.metaDescription) }}
-        {{ form_row(form.metaKeywords) }}
-        {{ form_row(form.rssTitle) }}
-        {{ form_row(form.rssDescription) }}
-
-        <h2>{{ 'trans.Link to master site' | trans }}</h2>
-        {{ form_row(form.masterSiteLinkShow) }}
-        {{ form_row(form.masterSiteUrl) }}
-        {{ form_row(form.masterSiteAnchorText) }}
-
         <h2>{{ 'trans.Email' | trans }}</h2>
         {{ form_row(form.emailFromAddress) }}
         {{ form_row(form.emailFromName) }}
         {{ form_row(form.emailReplyTo) }}
-
-        <h2>{{ 'trans.Localization' | trans }}</h2>
-        {{ form_row(form.languageTwoLetters) }}
-        {{ form_row(form.currency) }}
 
         <h2>{{ 'trans.Other' | trans }}</h2>
         {{ form_rest(form) }}

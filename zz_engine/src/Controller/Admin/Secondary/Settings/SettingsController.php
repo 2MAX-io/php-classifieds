@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller\Admin\Secondary\Settings;
 
 use App\Controller\Admin\Base\AbstractAdminController;
+use App\Form\Admin\Settings\CustomizationSettingsType;
 use App\Form\Admin\Settings\LoginSettingsType;
 use App\Form\Admin\Settings\PaymentInvoiceSettingsType;
 use App\Form\Admin\Settings\SettingsType;
@@ -60,7 +61,7 @@ class SettingsController extends AbstractAdminController
     }
 
     /**
-     * @Route("/admin/red5/settings/lgoin-settings", name="app_admin_settings_login")
+     * @Route("/admin/red5/settings/login-settings", name="app_admin_settings_login")
      */
     public function loginSettings(Request $request, SettingsService $settingsSaveService): Response
     {
@@ -77,6 +78,28 @@ class SettingsController extends AbstractAdminController
         }
 
         return $this->render('admin/settings/login/login_settings.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/admin/red5/settings/customization-settings", name="app_admin_settings_customization")
+     */
+    public function customizationSettings(Request $request, SettingsService $settingsSaveService): Response
+    {
+        $this->denyUnlessAdmin();
+
+        $settingsDto = $settingsSaveService->getSettingsDtoWithoutCache();
+        $form = $this->createForm(CustomizationSettingsType::class, $settingsDto);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $settingsSaveService->save($settingsDto);
+
+            return $this->redirectToRoute($request->get('_route'));
+        }
+
+        return $this->render('admin/settings/customization/customization_settings.html.twig', [
             'form' => $form->createView(),
         ]);
     }

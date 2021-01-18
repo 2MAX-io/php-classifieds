@@ -20,7 +20,7 @@ services:
             - './php/bash_history:/root/.bash_history'
             - './php/bash_history:/var/www/.bash_history'
         environment:
-            XDEBUG_CONFIG: remote_host=192.168.205.1
+            XDEBUG_CONFIG: client_host=192.168.205.1
             PHP_IDE_CONFIG: serverName=classifieds.localhost
             APP_DEBUG: 1
             PROMPT_COMMAND: 'history -a'

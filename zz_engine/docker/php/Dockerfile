@@ -39,9 +39,9 @@ COPY --from=composer:1 /usr/bin/composer /usr/bin/composer
 
 ARG WITH_XDEBUG=false
 RUN if [ $WITH_XDEBUG = "true" ] ; then \
-    pecl install xdebug; \
+    pecl install xdebug-3.0.2; \
     docker-php-ext-enable xdebug; \
-    echo "xdebug.remote_enable=1" >> /usr/local/etc/php/php.ini; \
+#    echo "xdebug.mode=debug" >> /usr/local/etc/php/php.ini; \
     mkdir /tmp/xdebug_out; \
     chmod 777 /tmp/xdebug_out; \
     chown :www-data /tmp/xdebug_out/; \

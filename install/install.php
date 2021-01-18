@@ -137,8 +137,8 @@ if ($isDockerDevEnvironment) {
     $formDefaultValue['db_name'] = 'classifieds';
     $formDefaultValue['db_user'] = 'classifieds';
     $formDefaultValue['db_pass'] = 'classifieds';
-    $formDefaultValue['smtp_host'] = 'smtp.host.com';
-    $formDefaultValue['smtp_port'] = '465';
+    $formDefaultValue['smtp_host'] = 'mailhog';
+    $formDefaultValue['smtp_port'] = '1025';
     $formDefaultValue['smtp_username'] = 'username@mail.com';
     $formDefaultValue['smtp_password'] = 'passwordHere';
     $formDefaultValue['email_from_address'] = $formDefaultValue['smtp_username'];

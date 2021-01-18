@@ -5,9 +5,6 @@ declare(strict_types=1);
 namespace App\Form\Admin\Settings;
 
 use App\Form\Type\BoolRequiredType;
-use App\Form\Type\BoolType;
-use App\Form\Type\LanguageTwoLettersType;
-use App\Form\Type\PageType;
 use App\Service\Setting\SettingsDto;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -21,7 +18,6 @@ use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\GreaterThan;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\Url;
 
 class SettingsType extends AbstractType
 {
@@ -92,6 +88,12 @@ class SettingsType extends AbstractType
         ]);
         $builder->add('wordsToRemoveFromTitle', TextareaType::class, [
             'label' => 'trans.Words to remove from listing title, separated by new line',
+            'required' => true,
+            'constraints' => [
+            ],
+        ]);
+        $builder->add('messageSystemEnabled', CheckboxType::class, [
+            'label' => 'trans.Message system between users enabled',
             'required' => true,
             'constraints' => [
             ],

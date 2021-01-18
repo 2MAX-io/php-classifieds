@@ -60,6 +60,16 @@ services:
             classifieds.localhost:
                 aliases:
                     - "mysql"
+    mailhog:
+        image: mailhog/mailhog
+        container_name: classifieds_mail
+        ports:
+            - 1025:1025 # smtp server
+            - 8025:8025 # web ui
+        networks:
+            classifieds.localhost:
+                aliases:
+                    - "mailhog"
 networks:
     classifieds.localhost:
         name: "classifieds.localhost"

@@ -26,12 +26,12 @@ RUN true \
 && docker-php-ext-configure intl \
 && docker-php-ext-install intl \
 && docker-php-ext-install opcache \
-
+&& true \
 && a2enmod rewrite \
 && a2enmod ssl \
 && a2enmod expires \
 && a2ensite default-ssl \
-
+&& true \
 && useradd -u 1000 -g www-data -d /var/www www-data-docker-host \
 && true
 

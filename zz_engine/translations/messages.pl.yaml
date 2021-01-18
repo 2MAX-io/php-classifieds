@@ -663,6 +663,9 @@ trans:
   Login Settings: 'Ustawienia Logowania'
   Webpage Logo: 'Logo Strony'
   Customization Settings: 'Personalizacja'
+  Messages: 'Wiadomości'
+  Message system between users enabled: 'Wiadomości pomiędzy użytkownikami włączone'
+  Write Message: 'Napisz Wiadomość'
 
 'trans.Remove non standard characters in listing - Enabled': 'Usuń niestandardowe znaki z ogłoszenia - Włączone'
 'trans.Remove non standard characters in listing - List of allowed characters': 'Usuń niestandardowe znaki z ogłoszenia - Lista dozwolonych znaków'

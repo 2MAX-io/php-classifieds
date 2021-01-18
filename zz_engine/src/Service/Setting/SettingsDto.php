@@ -303,6 +303,11 @@ class SettingsDto
      */
     private $invoiceNumberPrefix;
 
+    /**
+     * @var bool|null
+     */
+    private $messageSystemEnabled;
+
     public function getIndexPageTitle(): ?string
     {
         return $this->indexPageTitle;
@@ -891,5 +896,15 @@ class SettingsDto
     public function setInvoiceNumberPrefix(?string $invoiceNumberPrefix): void
     {
         $this->invoiceNumberPrefix = $invoiceNumberPrefix;
+    }
+
+    public function getMessageSystemEnabled(): ?bool
+    {
+        return $this->messageSystemEnabled;
+    }
+
+    public function setMessageSystemEnabled(?bool $messageSystemEnabled): void
+    {
+        $this->messageSystemEnabled = $messageSystemEnabled;
     }
 }

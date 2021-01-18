@@ -539,3 +539,17 @@ div.clickableDiv a.clickableDivLink {
     border-color: #ca472e;
     border-style: dashed;
 }
+
+.border-gray {
+    border: 1px solid rgba(0,0,0,.125);
+}
+
+.message-list {
+    max-height: 20em;
+    overflow-y: auto;
+}
+
+.message-thread-list {
+    max-height: 20em;
+    overflow-y: auto;
+}

@@ -371,3 +371,6 @@ gulp --gulpfile zz_engine/gulpfile.js --cwd .
 gulp --gulpfile zz_engine/gulpfile.js --cwd .
 gulp --gulpfile zz_engine/gulpfile.js --cwd .
 gulp --gulpfile zz_engine/gulpfile.js --cwd .
+php zz_engine/bin/console doctrine:schema:update -f
+php zz_engine/bin/console doctrine:schema:update -f
+php zz_engine/bin/console doctrine:schema:update -f

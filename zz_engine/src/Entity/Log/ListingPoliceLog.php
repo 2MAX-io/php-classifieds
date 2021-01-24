@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App\Entity;
+namespace App\Entity\Log;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ListingPoliceLogRepository")
- * @ORM\Table(name="zzzz_listing_police_log")
+ * @ORM\Table(name="zzzz_police_log_listing")
  */
 class ListingPoliceLog
 {

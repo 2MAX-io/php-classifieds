@@ -218,6 +218,7 @@ trans:
   Messages: 'Messages'
   Message system between users enabled: 'Message system between users enabled'
   Write Message: 'Write Message'
+  Enter your message here: 'Enter your message here'
 
 trans.customFieldType.SELECT_AS_CHECKBOXES: 'Checkboxes in filters, single select when editing'
 trans.customFieldType.SELECT_SINGLE: 'Single selection field'

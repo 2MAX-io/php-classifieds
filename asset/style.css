@@ -553,3 +553,7 @@ div.clickableDiv a.clickableDivLink {
     max-height: 20em;
     overflow-y: auto;
 }
+
+.user-message-textarea::placeholder {
+    color: #b1b1b1;
+}

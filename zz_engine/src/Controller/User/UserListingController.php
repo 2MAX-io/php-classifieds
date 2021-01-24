@@ -24,7 +24,8 @@ use Symfony\Component\Routing\Annotation\Route;
 class UserListingController extends AbstractUserController
 {
     /**
-     * @Route("/user/listing/", name="app_user_listing_index", methods={"GET"})
+     * @Route("/user/listing/", name="app_user_listing_list")
+     * @Route("/user/my-account/", name="app_my_account")
      */
     public function index(
         Request $request,
@@ -174,7 +175,7 @@ class UserListingController extends AbstractUserController
         }
 
         if ($refererService->refererIsRoute('app_listing_edit')) {
-            return $this->redirectToRoute('app_user_listing_index');
+            return $this->redirectToRoute('app_user_listing_list');
         }
 
         return $refererService->redirectToRefererResponse();

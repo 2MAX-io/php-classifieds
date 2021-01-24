@@ -666,6 +666,7 @@ trans:
   Messages: 'Wiadomości'
   Message system between users enabled: 'Wiadomości pomiędzy użytkownikami włączone'
   Write Message: 'Napisz Wiadomość'
+  Enter your message here: 'Napisz tutaj swoją wiadomość'
 
 'trans.Remove non standard characters in listing - Enabled': 'Usuń niestandardowe znaki z ogłoszenia - Włączone'
 'trans.Remove non standard characters in listing - List of allowed characters': 'Usuń niestandardowe znaki z ogłoszenia - Lista dozwolonych znaków'

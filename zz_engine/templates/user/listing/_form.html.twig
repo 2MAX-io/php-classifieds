@@ -71,6 +71,25 @@
 
 {{ form_widget(form) }}
 
+{% if settings.mapEnabled %}
+    <div class="form-group">
+        <label>{{ 'trans.Approximate location on the map' | trans }}</label>
+
+        <div class="listing-edit-location-map {% if not listing.hasLocationOnMap %}d-none-soft{% else %}js__listing-edit-map-enabled{% endif %} js__listing-edit-location-map"></div>
+        {% if not listing.hasLocationOnMap %}
+            <div class="btn btn-outline-secondary cursor-pointer js__add-location-to-the-map-button">
+                {{ 'trans.Add location to the map' | trans }}
+            </div>
+        {% endif %}
+        <div class="alert alert-info mt-1">
+            {{ 'trans.map_approximate_location_info' | trans }}
+        </div>
+
+        {{ form_row(form.locationLatitude) }}
+        {{ form_row(form.locationLongitude) }}
+    </div>
+{% endif %}
+
 <label>{{ 'trans.Pictures' | trans }}</label>
 <input id="listing_file" type="file" multiple="multiple" name="files">
 

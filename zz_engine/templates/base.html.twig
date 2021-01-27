@@ -50,20 +50,25 @@
 
             <div class="collapse navbar-collapse" id="navbarPageTop">
                 <ul class="navbar-nav justify-content-around d-sm-none mb-2">
+                    {% if settings.masterSiteLinkShow %}
+                        <li class="nav-item menu-top-item">
+                            <a class="nav-link" href="{{ settings.masterSiteUrl }}">{{ settings.masterSiteAnchorText }}</a>
+                        </li>
+                    {%- endif -%}
                     <li class="nav-item">
                         <a class="nav-link menu-top-item" href="{{ path('app_index') }}">{{ 'trans.Home page' | trans }}</a>
                     </li>
+                    {% if settings.mapEnabled %}
+                        <li class="nav-item">
+                            <a class="nav-link menu-top-item" href="{{ path('app_map_with_listings') }}">{{ 'trans.Map' | trans }}</a>
+                        </li>
+                    {% endif %}
                     <li class="nav-item">
                         <a class="nav-link menu-top-item" href="{{ path('app_category_view_all') }}">{{ 'trans.Categories' | trans }}</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link menu-top-item" href="{{ path('app_last_added') }}">{{ 'trans.Last added' | trans }}</a>
                     </li>
-                    {% if settings.masterSiteLinkShow %}
-                    <li class="nav-item menu-top-item">
-                        <a class="nav-link" href="{{ settings.masterSiteUrl }}">{{ settings.masterSiteAnchorText }}</a>
-                    </li>
-                    {%- endif -%}
                 </ul>
 
                 {% if lowSecurityCheckIsAdminInPublic() %}
@@ -146,7 +151,7 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ settings.masterSiteUrl }}">{{ settings.masterSiteAnchorText }}</a>
                     </li>
-                    <li class="nav-item active">
+                    <li class="nav-item">
                         <a class="nav-link" href="{{ path('app_index') }}">{{ 'trans.Classifieds' | trans }}</a>
                     </li>
                 {% else %}
@@ -157,6 +162,11 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ path('app_category_view_all') }}">{{ 'trans.Categories' | trans }}</a>
                 </li>
+                {% if settings.mapEnabled %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_map_with_listings') }}">{{ 'trans.Map' | trans }}</a>
+                    </li>
+                {% endif %}
                 <li class="nav-item">
                     <a class="nav-link" href="{{ path('app_last_added') }}">{{ 'trans.Last added' | trans }}</a>
                 </li>
@@ -250,7 +260,7 @@
 
 {% block javascripts %}
     {{ nelmio_js_error_logger() }}
-    <script type="application/json" id="js__jsonData">{{ jsonData | default([]) | inlineJson }}</script>
+    <script type="application/json" id="js__dataForJs">{{ dataForJs | default([]) | inlineJson | base64_encode }}</script>
     <script src="{{ asset('asset/build/app.js') }}"></script>
     <script src="{{ asset('asset/lib/cleave/addons/cleave-phone.'~ settings.languageTwoLetters | lower ~'.js') }}"></script>
     <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData', version: asset_version(path('fos_js_routing_js')) }) }}"></script>

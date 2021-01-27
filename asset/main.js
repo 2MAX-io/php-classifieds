@@ -1,25 +1,22 @@
 "use strict";
 
-var app = {
-    jsonDataCache: null,
-};
+app.dataForJsCache = null;
 
-app.getJsonDataCached = function () {
-    if (app.jsonDataCache === null) {
-        app.jsonDataCache = app.getJsonData();
+app.getDataForJs = function () {
+    if (app.dataForJsCache === null) {
+        app.dataForJsCache = app.getDataForJsNoCache();
     }
 
-    return app.jsonDataCache;
+    return app.dataForJsCache;
 };
 
-app.getJsonData = function () {
-    var $jsonData = $('#js__jsonData');
-
-    if ($jsonData.length < 1) {
+app.getDataForJsNoCache = function () {
+    var $dataForJs = $('#js__dataForJs');
+    if ($dataForJs.length < 1) {
         return [];
     }
 
-    return JSON.parse($jsonData[0].textContent);
+    return JSON.parse(atob($dataForJs[0].textContent));
 };
 
 app.debugLog = function (message) {

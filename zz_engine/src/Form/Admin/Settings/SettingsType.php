@@ -10,6 +10,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -23,7 +24,6 @@ class SettingsType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-
         $builder->add('emailFromAddress', EmailType::class, [
             'label' => 'trans.Email address used in from field of email message',
             'help' => 'trans.Must match email from which you send messages',
@@ -97,6 +97,28 @@ class SettingsType extends AbstractType
             'required' => true,
             'constraints' => [
             ],
+        ]);
+        $builder->add('mapEnabled', CheckboxType::class, [
+            'label' => 'trans.Map enabled?',
+            'required' => true,
+        ]);
+        $builder->add('mapDefaultLatitude', NumberType::class, [
+            'scale' => 12,
+            'label' => 'trans.Map default latitude',
+            'required' => true,
+        ]);
+        $builder->add('mapDefaultLongitude', NumberType::class, [
+            'scale' => 12,
+            'label' => 'trans.Map default longitude',
+            'required' => true,
+        ]);
+        $builder->add('mapDefaultZoom', IntegerType::class, [
+            'label' => 'trans.Map default zoom',
+            'required' => true,
+        ]);
+        $builder->add('mapDefaultZoomSingleListing', IntegerType::class, [
+            'label' => 'trans.Default zoom for map on single listing show',
+            'required' => true,
         ]);
     }
 

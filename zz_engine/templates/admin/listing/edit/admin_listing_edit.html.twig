@@ -37,6 +37,29 @@
         {{ form_start(form) }}
         {{ form_widget(form) }}
 
+        {% if settings.mapEnabled %}
+            <div class="form-group">
+                <div>
+                    {{ 'trans.Location on the map' | trans }}:
+                    {% if listing.hasLocationOnMap %}
+                        {{ 'trans.Latitude' | trans }}: {{ listing.locationLatitude }}
+                        {{- ', ' -}}
+                        {{ 'trans.Longitude' | trans }}: {{ listing.locationLongitude }}
+                    {% else %}
+                        {{ 'trans.Not set' | trans }}
+                    {% endif %}
+                    <div class="btn btn-outline-secondary btn-sm cursor-pointer js__add-location-to-the-map-button">
+                        {{ 'trans.Edit location to the map' | trans }}
+                    </div>
+                </div>
+
+                <div class="listing-edit-location-map d-none-soft js__listing-edit-location-map"></div>
+
+                {{ form_row(form.locationLatitude) }}
+                {{ form_row(form.locationLongitude) }}
+            </div>
+        {% endif %}
+
         <button class="btn btn-primary mb-4">{{ button_label|default('trans.Save' | trans) }}</button>
         {{ form_end(form) }}
 
@@ -65,4 +88,10 @@
 
 {% block js %}
     <script src="{{ asset('asset/page/listing/listing-custom-fields.js') }}"></script>
+    <link rel="stylesheet" href="{{ asset('asset/lib/leaflet/leaflet.css') }}">
+    <script src="{{ asset('asset/lib/leaflet/leaflet.js') }}"></script>
+    <link rel="stylesheet" href="{{ asset('asset/lib/leaflet/locate/L.Control.Locate.min.css') }}">
+    <script src="{{ asset('asset/lib/leaflet/locate/L.Control.Locate.min.js') }}"></script>
+
+    <script src="{{ asset('asset/page/listing/listing-edit-map.js') }}"></script>
 {% endblock %}

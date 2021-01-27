@@ -1,3 +1,3 @@
 $('#policeLogCopyToClipboard').click(function() {
-    copyTextToClipboard(app.getJsonDataCached()['policeLogText']);
+    copyTextToClipboard(app.getDataForJs()['policeLogText']);
 });

@@ -424,6 +424,18 @@
                     </div>
                 {% endif %}
 
+                <!-- map -->
+                {% if settings.mapEnabled and listing.hasLocationOnMap  %}
+                    <div class="card mb-3">
+                        <h5 class="card-header card-header-small">{{ 'trans.Location' | trans }}</h5>
+
+                        <div class="card-body js__show-on-map-button-wrapper">
+                            <button class="btn btn-outline-secondary js__show-on-map-button w-100">{{ 'trans.Show on map' | trans }}</button>
+                        </div>
+                        <div class="d-none-soft listing-show-single-map js__listing-show-single-map"></div>
+                    </div>
+                {% endif %}
+
                 {% if displayAsExpired(listing) %}
                     <div class="alert alert-danger">
                         <h1>{{ 'trans.Listing has expired' | trans }}</h1>
@@ -479,4 +491,6 @@
 
 {% block js %}
     <script src="{{ asset('asset/page/listing/show/listing-show.js') }}"></script>
+    <link rel="stylesheet" href="{{ asset('asset/lib/leaflet/leaflet.css') }}">
+    <script src="{{ asset('asset/lib/leaflet/leaflet.js') }}"></script>
 {% endblock %}

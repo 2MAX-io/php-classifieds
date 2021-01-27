@@ -27,6 +27,6 @@ class InlineJson implements RuntimeExtensionInterface
         $array['cleaveConfig']['numeralDecimalMark'] = AppNumberFormatter::getDecimalSeparator();
         $array['cleaveConfig']['languageTwoLetters'] = $this->settingsService->getLanguageTwoLetters();
 
-        return \htmlspecialchars(Json::toString($array), \ENT_NOQUOTES);
+        return Json::toString($array);
     }
 }

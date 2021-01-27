@@ -19,9 +19,9 @@ use Twig\Environment;
 class ListingShowController extends AbstractController
 {
     /**
-     * @Route("/l/{id}/{slug}", name="app_listing_show")
+     * @Route("/l/{id}/{slug}", name="app_listing_show", options={"expose": true})
      */
-    public function show(
+    public function showSingleListing(
         Request $request,
         int $id,
         string $slug,
@@ -31,28 +31,30 @@ class ListingShowController extends AbstractController
         EventDispatcherInterface $eventDispatcher
     ): Response {
         $listingShowDto = $listingShowSingleService->getSingle($id);
+        $listing = $listingShowDto->getListing();
         if (!$listingShowDto) {
             throw $this->createNotFoundException();
         }
 
-        if ($slug !== $listingShowDto->getListing()->getSlug()) {
+        if ($slug !== $listing->getSlug()) {
             return $this->redirectToRoute($request->get('_route'), [
                 'id' => $id,
-                'slug' => $listingShowDto->getListing()->getSlug(),
+                'slug' => $listing->getSlug(),
             ]);
         }
 
-        if (!$listingPublicDisplayService->canDisplay($listingShowDto->getListing())) {
+        if (!$listingPublicDisplayService->canDisplay($listing)) {
+            // render listing removed view
             return $this->render(
                 'listing_show_when_removed.html.twig',
                 [
                     'listingShowDto' => $listingShowDto,
-                    'listing' => $listingShowDto->getListing(),
-                    'category' => $listingShowDto->getListing()->getCategory(),
+                    'listing' => $listing,
+                    'category' => $listing->getCategory(),
                     'categoryBreadcrumbs' => $categoryListService->getBreadcrumbs(
-                        $listingShowDto->getListing()->getCategory()
+                        $listing->getCategory()
                     ),
-                    ParamEnum::JSON_DATA => [
+                    ParamEnum::DATA_FOR_JS => [
                         'showPreviewForOwner' => $request->query->get('showPreviewForOwner'),
                     ],
                 ]
@@ -70,13 +72,17 @@ class ListingShowController extends AbstractController
             'listing_show.html.twig',
             [
                 'listingShowDto' => $listingShowDto,
-                'listing' => $listingShowDto->getListing(),
-                'category' => $listingShowDto->getListing()->getCategory(),
+                'listing' => $listing,
+                'category' => $listing->getCategory(),
                 'categoryBreadcrumbs' => $categoryListService->getBreadcrumbs(
-                    $listingShowDto->getListing()->getCategory()
+                    $listing->getCategory()
                 ),
-                ParamEnum::JSON_DATA => [
+                ParamEnum::DATA_FOR_JS => [
                     'showPreviewForOwner' => $request->query->get('showPreviewForOwner'),
+                    ParamEnum::MAP_LOCATION_COORDINATES => [
+                        ParamEnum::LONGITUDE => $listing->getLocationLongitude(),
+                        ParamEnum::LATITUDE => $listing->getLocationLatitude(),
+                    ],
                 ],
             ]
         );

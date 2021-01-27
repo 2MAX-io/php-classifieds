@@ -24,7 +24,7 @@ class PaymentWaitController extends AbstractController
         string $paymentAppToken
     ): Response {
         return $this->render('payment/payment_wait.html.twig', [
-            ParamEnum::JSON_DATA => [
+            ParamEnum::DATA_FOR_JS => [
                 'paymentAppToken' => $paymentAppToken,
             ],
         ]);

@@ -308,6 +308,31 @@ class SettingsDto
      */
     private $messageSystemEnabled;
 
+    /**
+     * @var boolean|null
+     */
+    private $mapEnabled;
+
+    /**
+     * @var float|null
+     */
+    private $mapDefaultLatitude;
+
+    /**
+     * @var float|null
+     */
+    private $mapDefaultLongitude;
+
+    /**
+     * @var int|null
+     */
+    private $mapDefaultZoom;
+
+    /**
+     * @var int|null
+     */
+    private $mapDefaultZoomSingleListing;
+
     public function getIndexPageTitle(): ?string
     {
         return $this->indexPageTitle;
@@ -906,5 +931,55 @@ class SettingsDto
     public function setMessageSystemEnabled(?bool $messageSystemEnabled): void
     {
         $this->messageSystemEnabled = $messageSystemEnabled;
+    }
+
+    public function getMapDefaultLatitude(): ?float
+    {
+        return $this->mapDefaultLatitude;
+    }
+
+    public function setMapDefaultLatitude(?float $mapDefaultLatitude): void
+    {
+        $this->mapDefaultLatitude = $mapDefaultLatitude;
+    }
+
+    public function getMapDefaultLongitude(): ?float
+    {
+        return $this->mapDefaultLongitude;
+    }
+
+    public function setMapDefaultLongitude(?float $mapDefaultLongitude): void
+    {
+        $this->mapDefaultLongitude = $mapDefaultLongitude;
+    }
+
+    public function getMapDefaultZoom(): ?int
+    {
+        return $this->mapDefaultZoom;
+    }
+
+    public function setMapDefaultZoom(?int $mapDefaultZoom): void
+    {
+        $this->mapDefaultZoom = $mapDefaultZoom;
+    }
+
+    public function getMapEnabled(): ?bool
+    {
+        return $this->mapEnabled;
+    }
+
+    public function setMapEnabled(?bool $mapEnabled): void
+    {
+        $this->mapEnabled = $mapEnabled;
+    }
+
+    public function getMapDefaultZoomSingleListing(): ?int
+    {
+        return $this->mapDefaultZoomSingleListing;
+    }
+
+    public function setMapDefaultZoomSingleListing(?int $mapDefaultZoomSingleListing): void
+    {
+        $this->mapDefaultZoomSingleListing = $mapDefaultZoomSingleListing;
     }
 }

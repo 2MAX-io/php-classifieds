@@ -37,7 +37,7 @@ class CustomFieldController extends AbstractAdminController
 
         return $this->render('admin/custom_field/index.html.twig', [
             'custom_fields' => $customFieldRepository->findBy([], ['sort' => 'ASC']),
-            ParamEnum::JSON_DATA => [
+            ParamEnum::DATA_FOR_JS => [
                 'adminCustomFieldsSaveSortCsrfToken' => $csrfTokenManager->getToken('adminCustomFieldsSaveSortCsrfToken')->getValue(),
             ],
         ]);
@@ -123,7 +123,7 @@ class CustomFieldController extends AbstractAdminController
             'categorySelectionList' => $customFieldCategorySelectionService->getCategorySelectionList($customField),
             'custom_field' => $customField,
             'form' => $form->createView(),
-            ParamEnum::JSON_DATA => [
+            ParamEnum::DATA_FOR_JS => [
                 'adminCustomFieldOptionsOrderCsrfToken' => $csrfTokenManager->getToken('adminCustomFieldOptionsOrderCsrfToken')->getValue(),
             ],
         ]);

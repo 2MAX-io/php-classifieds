@@ -557,3 +557,18 @@ div.clickableDiv a.clickableDivLink {
 .user-message-textarea::placeholder {
     color: #b1b1b1;
 }
+
+.listing-edit-location-map {
+    width: 100%;
+    height: 36vh;
+}
+
+.listing-show-single-map {
+    width: 100%;
+    height: 36vh;
+}
+
+.map-with-listings {
+    width: 100%;
+    height: 80vh;
+}

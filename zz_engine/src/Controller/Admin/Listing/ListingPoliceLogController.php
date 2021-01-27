@@ -23,7 +23,7 @@ class ListingPoliceLogController extends AbstractAdminController
         return $this->render('admin/listing/other/listing_police_log.html.twig', [
             'listing' => $listing,
             'policeLogText' => $policeLogIpService->prepareOutput($listing),
-            ParamEnum::JSON_DATA => [
+            ParamEnum::DATA_FOR_JS => [
                 'policeLogText' => $policeLogIpService->prepareOutput($listing),
             ],
         ]);

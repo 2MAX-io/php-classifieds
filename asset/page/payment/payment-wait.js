@@ -5,7 +5,7 @@ app.paymentWait.init = function () {
 };
 
 app.paymentWait.refresh = function () {
-    var paymentAppToken = app.getJsonDataCached()['paymentAppToken'];
+    var paymentAppToken = app.getDataForJs()['paymentAppToken'];
     $.ajax(Routing.generate('app_payment_wait_refresh_ajax', []), {
         type: 'POST',
         dataType: 'json',

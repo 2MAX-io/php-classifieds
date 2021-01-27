@@ -14,6 +14,7 @@ use App\Service\Listing\CustomField\ListingCustomFieldsService;
 use App\Service\Listing\Save\SaveListingService;
 use App\Service\Listing\Save\ListingFileUploadService;
 use App\Service\Log\PoliceLogIpService;
+use App\Service\Setting\SettingsService;
 use App\Service\System\Routing\RefererService;
 use App\Service\User\Listing\UserListingListService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -54,6 +55,7 @@ class UserListingController extends AbstractUserController
         ListingCustomFieldsService $listingCustomFieldsService,
         PoliceLogIpService $logIpService,
         CategoryListService $categoryListService,
+        SettingsService $settingsService,
         EntityManagerInterface $em
     ): Response {
         $this->dennyUnlessUser();
@@ -90,9 +92,12 @@ class UserListingController extends AbstractUserController
                 'listing' => $listing,
                 'form' => $form->createView(),
                 'formCategorySelectList' => $categoryListService->getFormCategorySelectList(),
-                ParamEnum::JSON_DATA => [
+                ParamEnum::DATA_FOR_JS => [
                     'listingFilesForJavascript' => $saveListingService->getListingFilesForJavascript($listing),
                     'listingId' => $listing->getId(),
+                    ParamEnum::MAP_DEFAULT_LATITUDE => $settingsService->getSettingsDto()->getMapDefaultLatitude(),
+                    ParamEnum::MAP_DEFAULT_LONGITUDE => $settingsService->getSettingsDto()->getMapDefaultLongitude(),
+                    ParamEnum::MAP_DEFAULT_ZOOM => $settingsService->getSettingsDto()->getMapDefaultZoom(),
                 ],
             ]
         );
@@ -109,6 +114,7 @@ class UserListingController extends AbstractUserController
         SaveListingService $saveListingService,
         PoliceLogIpService $logIpService,
         CategoryListService $categoryListService,
+        SettingsService $settingsService,
         EntityManagerInterface $em
     ): Response {
         $this->dennyUnlessCurrentUserAllowed($listing);
@@ -150,9 +156,16 @@ class UserListingController extends AbstractUserController
                 'listing' => $listing,
                 'form' => $form->createView(),
                 'formCategorySelectList' => $categoryListService->getFormCategorySelectList(),
-                ParamEnum::JSON_DATA => [
+                ParamEnum::DATA_FOR_JS => [
                     'listingFilesForJavascript' => $saveListingService->getListingFilesForJavascript($listing),
                     'listingId' => $listing->getId(),
+                    ParamEnum::MAP_LOCATION_COORDINATES => [
+                        ParamEnum::LATITUDE => $listing->getLocationLatitude(),
+                        ParamEnum::LONGITUDE => $listing->getLocationLongitude(),
+                    ],
+                    ParamEnum::MAP_DEFAULT_LATITUDE => $settingsService->getSettingsDto()->getMapDefaultLatitude(),
+                    ParamEnum::MAP_DEFAULT_LONGITUDE => $settingsService->getSettingsDto()->getMapDefaultLongitude(),
+                    ParamEnum::MAP_DEFAULT_ZOOM => $settingsService->getSettingsDto()->getMapDefaultZoom(),
                 ],
             ]
         );

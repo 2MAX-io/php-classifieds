@@ -2,7 +2,7 @@
 
 $.ajaxSetup({
     headers: {
-        'X-CSRF-Token': app.getJsonDataCached()['adminCustomFieldsSaveSortCsrfToken']
+        'X-CSRF-Token': app.getDataForJs()['adminCustomFieldsSaveSortCsrfToken']
     }
 });
 

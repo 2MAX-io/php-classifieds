@@ -60,7 +60,7 @@ $('#listing_file').fileuploader({
     limit: 10,
     addMore: true,
     enableApi: true,
-    files: app.getJsonDataCached()['listingFilesForJavascript'],
+    files: app.getDataForJs()['listingFilesForJavascript'],
     thumbnails: {
         popup: {
             onShow: function(item) {

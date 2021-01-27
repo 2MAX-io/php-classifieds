@@ -374,3 +374,39 @@ gulp --gulpfile zz_engine/gulpfile.js --cwd .
 php zz_engine/bin/console doctrine:schema:update -f
 php zz_engine/bin/console doctrine:schema:update -f
 php zz_engine/bin/console doctrine:schema:update -f
+gulp --gulpfile zz_engine/gulpfile.js --cwd .
+gulp --gulpfile zz_engine/gulpfile.js --cwd .
+php zz_engine/bin/console doctrine:schema:update -f
+php zz_engine/bin/console doctrine:schema:update -f
+gulp --gulpfile zz_engine/gulpfile.js --cwd .
+php zz_engine/bin/console app:dev:generate-param-enum-for-js
+export XDEBUG_CONFIG="mode=debug client_host=192.168.205.1 start_with_request=yes"
+php zz_engine/bin/console app:dev:generate-param-enum-for-js
+php zz_engine/bin/console app:dev:generate-param-enum-for-js
+php zz_engine/bin/console app:dev:generate-param-enum-for-js
+env
+php zz_engine/bin/console app:dev:generate-param-enum-for-js
+php -r "xdebug_info();"
+export XDEBUG_CONFIG="mode=debug client_host=192.168.205.1 client_port=9003 start_with_request=yes"
+php -r "xdebug_info();"
+php zz_engine/bin/console app:dev:generate-param-enum-for-js
+php -r "xdebug_info();"
+php -r "xdebug_info();"
+php zz_engine/bin/console app:dev:generate-param-enum-for-js
+php zz_engine/bin/console app:dev:generate-param-enum-for-js
+php zz_engine/bin/console app:dev:generate-param-enum-for-js
+gulp --gulpfile zz_engine/gulpfile.js --cwd .
+gulp --gulpfile zz_engine/gulpfile.js --cwd .
+php zz_engine/bin/console app:dev:generate-param-enum-for-js
+gulp --gulpfile zz_engine/gulpfile.js --cwd .
+php zz_engine/bin/console app:dev:generate-param-enum-for-js
+php zz_engine/bin/console app:dev:generate-param-enum-for-js
+gulp --gulpfile zz_engine/gulpfile.js --cwd .
+php zz_engine/bin/console app:dev:generate-param-enum-for-js
+gulp --gulpfile zz_engine/gulpfile.js --cwd .
+gulp --gulpfile zz_engine/gulpfile.js --cwd .
+gulp --gulpfile zz_engine/gulpfile.js --cwd .
+php zz_engine/bin/console app:dev:generate-param-enum-for-js
+gulp --gulpfile zz_engine/gulpfile.js --cwd .
+gulp --gulpfile zz_engine/gulpfile.js --cwd .
+gulp --gulpfile zz_engine/gulpfile.js --cwd .

@@ -103,7 +103,8 @@ if (!empty($_POST)) {
         $crontabText =<<<EOT
 * * * * * $projectRootPath/zz_engine/bin/console app:cron:main >/dev/null 2>&1
 * * * * * $projectRootPath/zz_engine/bin/console app:cron:secondary >/dev/null 2>&1
-* * * * * $projectRootPath/zz_engine/bin/console messenger:consume async --time-limit=55 >/dev/null 2>&1
+* * * * * $projectRootPath/zz_engine/bin/console messenger:consume async --time-limit=55 --memory-limit=128M >/dev/null 2>&1
+* * * * * $projectRootPath/zz_engine/bin/console messenger:consume one_at_time --time-limit=55 --limit=1 >/dev/null 2>&1
 EOT;
         include 'view/success.php';
         exit;

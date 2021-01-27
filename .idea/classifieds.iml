@@ -177,6 +177,7 @@
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/symfony/proxy-manager-bridge" />
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/league/mime-type-detection" />
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/phpseclib/phpseclib" />
+      <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/symfony/messenger" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

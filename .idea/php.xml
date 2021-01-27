@@ -194,6 +194,7 @@
       <path value="$PROJECT_DIR$/zz_engine/vendor/symfony/proxy-manager-bridge" />
       <path value="$PROJECT_DIR$/zz_engine/vendor/league/mime-type-detection" />
       <path value="$PROJECT_DIR$/zz_engine/vendor/phpseclib/phpseclib" />
+      <path value="$PROJECT_DIR$/zz_engine/vendor/symfony/messenger" />
     </include_path>
   </component>
   <component name="PhpInterpreters">

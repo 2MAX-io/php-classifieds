@@ -410,3 +410,4 @@ php zz_engine/bin/console app:dev:generate-param-enum-for-js
 gulp --gulpfile zz_engine/gulpfile.js --cwd .
 gulp --gulpfile zz_engine/gulpfile.js --cwd .
 gulp --gulpfile zz_engine/gulpfile.js --cwd .
+composer require -d zz_engine symfony/messenger

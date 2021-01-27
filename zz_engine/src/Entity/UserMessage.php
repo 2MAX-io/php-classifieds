@@ -47,6 +47,41 @@ class UserMessage
      */
     private $message;
 
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(type="boolean", nullable=false)
+     */
+    private $notSpamChecked = false;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(type="boolean", nullable=false)
+     */
+    private $spam = false;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(type="boolean", nullable=false)
+     */
+    private $recipientNotified = false;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(type="boolean", nullable=false)
+     */
+    private $recipientSeen = false;
+
+    /**
+     * @var \DateTimeInterface|null
+     *
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $recipientSeenDatetime;
+
     public function getAllUsersArray(): array
     {
         return [$this->getSenderUser(), $this->getRecipientUser()];
@@ -132,5 +167,55 @@ class UserMessage
         $this->listing = $listing;
 
         return $this;
+    }
+
+    public function isNotSpamChecked(): bool
+    {
+        return $this->notSpamChecked;
+    }
+
+    public function setNotSpamChecked(bool $notSpamChecked): void
+    {
+        $this->notSpamChecked = $notSpamChecked;
+    }
+
+    public function isSpam(): bool
+    {
+        return $this->spam;
+    }
+
+    public function setSpam(bool $spam): void
+    {
+        $this->spam = $spam;
+    }
+
+    public function isRecipientNotified(): bool
+    {
+        return $this->recipientNotified;
+    }
+
+    public function setRecipientNotified(bool $recipientNotified): void
+    {
+        $this->recipientNotified = $recipientNotified;
+    }
+
+    public function isRecipientSeen(): bool
+    {
+        return $this->recipientSeen;
+    }
+
+    public function setRecipientSeen(bool $recipientSeen): void
+    {
+        $this->recipientSeen = $recipientSeen;
+    }
+
+    public function getRecipientSeenDatetime(): ?\DateTimeInterface
+    {
+        return $this->recipientSeenDatetime;
+    }
+
+    public function setRecipientSeenDatetime(?\DateTimeInterface $recipientSeenDatetime): void
+    {
+        $this->recipientSeenDatetime = $recipientSeenDatetime;
     }
 }

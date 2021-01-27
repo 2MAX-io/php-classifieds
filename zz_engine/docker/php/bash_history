@@ -411,3 +411,6 @@ gulp --gulpfile zz_engine/gulpfile.js --cwd .
 gulp --gulpfile zz_engine/gulpfile.js --cwd .
 gulp --gulpfile zz_engine/gulpfile.js --cwd .
 composer require -d zz_engine symfony/messenger
+composer install -d zz_engine --optimize-autoloader
+composer dump-env dev -d zz_engine
+php zz_engine/bin/console messenger:consume async --time-limit=55

@@ -27,14 +27,11 @@
                                             <div class="media">
                                                 <div class="media-body">
                                                     <div class="d-flex align-items-center justify-content-between mb-1">
-                                                        <h6 class="mb-0">{{ thread.replyToName(currentUser) | default(thread.replyToUserId(currentUser)) }}</h6>
+                                                        <h6 class="mb-0">{{ 'trans.From' | trans }}: {{ thread.replyToName(currentUser) | default(thread.replyToUserId(currentUser)) }}</h6>
                                                         <small class="small font-weight-bold">{{ thread.datetime | date }}</small>
                                                     </div>
                                                     <p class="font-italic mb-0 text-small {% if not active %}text-muted{% endif %}">
-{#                                                        <a href="{{ path('app_listing_show', {'id': thread.listingId, 'slug': thread.listingSlug}) }}">#}
-{#                                                            {{ thread.listingTitle }}#}
-{#                                                        </a>#}
-                                                        {{ thread.listingTitle }}
+                                                        {{ 'trans.Listing' | trans }}: {{ thread.listingTitle }}
                                                     </p>
                                                 </div>
                                             </div>
@@ -45,47 +42,57 @@
                         </div>
                     </div>
                     <!-- Messages Box-->
-                    <div class="col-12 col-md-7 px-0">
-                        {% if messageList %}
-                        <div class="px-4 pt-5 mb-2 bg-white message-list js__message-list">
-                            <div class="js__message-list-all">
-                                {% for message in messageList %}
-                                    {% if message.isUserSender(currentUser) %}
-                                        <!-- Receiver Message-->
-                                        <div class="media w-50 ml-auto mb-3">
-                                            <div class="media-body">
-                                                <div class="bg-primary rounded py-2 px-3 mb-1">
-                                                    <p class="text-small mb-0 text-white">{{ message.message }}</p>
-                                                </div>
-                                                <div class="small text-muted">{{ message.datetime | date() }}</div>
-                                            </div>
-                                        </div>
-                                    {% else %}
-                                        <!-- Sender Message-->
-                                        <div class="media w-50 mb-3">
-                                            <div class="media-body">
-                                                <div class="bg-light rounded py-2 px-3 mb-1">
-                                                    <p class="text-small mb-0 text-muted">{{ message.message }}</p>
-                                                </div>
-                                                <div class="small text-muted">{{ message.datetime | date() }}</div>
-                                            </div>
-                                        </div>
+                    <div class="col-12 col-md-7 px-0 bg-white">
+                        <div class="pl-md-1">
+                            {% if messageList or (sendingFirstMessage is defined and sendingFirstMessage) %}
+                                <div class="px-4 py-2">
+                                    {% if currentListing %}
+                                        <span>{{ 'trans.Listing' | trans }}: </span>
+                                        <a href="{{ path('app_listing_show', {'id': currentListing.id, 'slug': currentListing.slug}) }}">
+                                            {{ currentListing.title }}
+                                        </a>
                                     {% endif %}
-                                {% endfor %}
-                            </div>
-                        </div>
-                        <!-- Typing area -->
-                        <div>
-                            {{ form_start(form) }}
-                            <div class="input-group">
-                                {{ form_widget(form.message) }}
-                                <div class="input-group-append">
-                                    <button id="button-addon2" type="submit" class="btn btn-link"> <i class="fa fa-paper-plane"></i></button>
                                 </div>
-                            </div>
-                            {{ form_end(form) }}
+                                <div class="px-4 pt-5 mb-2 bg-white message-list js__message-list">
+                                    <div class="js__message-list-all">
+                                        {% for message in messageList %}
+                                            {% if message.isUserSender(currentUser) %}
+                                                <!-- Receiver Message-->
+                                                <div class="media w-50 ml-auto mb-3">
+                                                    <div class="media-body">
+                                                        <div class="bg-primary rounded py-2 px-3 mb-1">
+                                                            <p class="text-small mb-0 text-white">{{ message.message }}</p>
+                                                        </div>
+                                                        <div class="small text-muted">{{ message.datetime | date() }}</div>
+                                                    </div>
+                                                </div>
+                                            {% else %}
+                                                <!-- Sender Message-->
+                                                <div class="media w-50 mb-3">
+                                                    <div class="media-body">
+                                                        <div class="bg-gray rounded py-2 px-3 mb-1">
+                                                            <p class="text-small mb-0 text-black">{{ message.message }}</p>
+                                                        </div>
+                                                        <div class="small text-muted">{{ message.datetime | date() }}</div>
+                                                    </div>
+                                                </div>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                                <!-- Typing area -->
+                                <div>
+                                    {{ form_start(form) }}
+                                    <div class="input-group">
+                                        {{ form_widget(form.message) }}
+                                        <div class="input-group-append">
+                                            <button id="button-addon2" type="submit" class="btn btn-link"> <i class="fa fa-paper-plane"></i></button>
+                                        </div>
+                                    </div>
+                                    {{ form_end(form) }}
+                                </div>
+                            {% endif %}{# messageList end #}
                         </div>
-                        {% endif %}
                     </div>
                 </div>
             </div>

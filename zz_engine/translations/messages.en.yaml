@@ -231,6 +231,7 @@ trans:
   Longitude: 'Longitude'
   Edit location to the map: 'Edit location to the map'
   Not set: 'Not set'
+  From: 'From'
 
 trans.customFieldType.SELECT_AS_CHECKBOXES: 'Checkboxes in filters, single select when editing'
 trans.customFieldType.SELECT_SINGLE: 'Single selection field'

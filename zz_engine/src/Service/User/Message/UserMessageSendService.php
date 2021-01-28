@@ -51,32 +51,32 @@ class UserMessageSendService
 
     public function sendMessage(SendUserMessageDto $sendUserMessageDto): void
     {
+        $userMessage = new UserMessage();
+        $userMessage->setMessage($sendUserMessageDto->getMessage());
+        $userMessage->setSenderUser($sendUserMessageDto->getCurrentUser());
+        if ($sendUserMessageDto->getUserMessage()) {
+            $userMessage->setRecipientUser($sendUserMessageDto->getUserMessage()->getOtherUser($sendUserMessageDto->getCurrentUser()));
+        } else {
+            $userMessage->setRecipientUser($sendUserMessageDto->getListing()->getUser());
+        }
+        $userMessage->setListing($sendUserMessageDto->getListing());
+        $userMessage->setDatetime(DateHelper::create());
+        if ($userMessage->getSenderUser()->getId() === $userMessage->getRecipientUser()->getId()) {
+            $this->logger->error('sender and recipient should not be the same', [
+                'getSenderUser' => $userMessage->getSenderUser()->getId(),
+                'getRecipientUser' => $userMessage->getRecipientUser()->getId(),
+            ]);
+        }
+        if (!$sendUserMessageDto->getUserMessage()) {
+            $sendUserMessageDto->setUserMessage($userMessage);
+        }
+
         if (!$this->allowedToSendMessage($sendUserMessageDto)) {
             $this->logger->error('user can not sent this message', [
                 $sendUserMessageDto,
             ]);
 
             throw new UnauthorizedHttpException('user can not send this message');
-        }
-
-        $userMessage = new UserMessage();
-        $userMessage->setMessage($sendUserMessageDto->getMessage());
-        $userMessage->setSenderUser($sendUserMessageDto->getCurrentUser());
-
-        if ($sendUserMessageDto->getUserMessage()) {
-            $userMessage->setRecipientUser($sendUserMessageDto->getUserMessage()->getOtherUser($sendUserMessageDto->getCurrentUser()));
-        } else {
-            $userMessage->setRecipientUser($sendUserMessageDto->getListing()->getUser());
-        }
-
-        $userMessage->setListing($sendUserMessageDto->getListing());
-        $userMessage->setDatetime(DateHelper::create());
-
-        if ($userMessage->getSenderUser()->getId() === $userMessage->getRecipientUser()->getId()) {
-            $this->logger->error('sender and recipient should not be the same', [
-                'getSenderUser' => $userMessage->getSenderUser()->getId(),
-                'getRecipientUser' => $userMessage->getRecipientUser()->getId(),
-            ]);
         }
 
         $this->em->persist($userMessage);

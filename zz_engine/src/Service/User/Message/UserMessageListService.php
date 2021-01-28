@@ -78,6 +78,7 @@ class UserMessageListService
                 || user_message.recipient_user_id = :user_id
             )
             GROUP BY user_message.listing_id
+            ORDER BY user_message.datetime DESC
         ');
         $stmt->bindValue(':user_id', $user->getId());
         $stmt->setFetchMode(\PDO::FETCH_CLASS, UserMessageThreadDto::class);

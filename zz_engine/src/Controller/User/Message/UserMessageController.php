@@ -102,6 +102,7 @@ class UserMessageController extends AbstractUserController
             'threadList' => $userMessageListService->getThreadsForUser($sendUserMessageDto->getCurrentUser()),
             'currentUser' => $sendUserMessageDto->getCurrentUser(),
             'currentListing' => $listing,
+            'sendingFirstMessage' => true,
             'form' => $form->createView(),
         ]);
     }

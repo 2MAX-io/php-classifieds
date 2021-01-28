@@ -572,3 +572,7 @@ div.clickableDiv a.clickableDivLink {
     width: 100%;
     height: 80vh;
 }
+
+.bg-gray {
+    background-color: #e4e6eb;
+}

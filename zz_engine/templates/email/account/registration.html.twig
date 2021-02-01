@@ -12,19 +12,19 @@
 <div>
     <strong>{{ 'trans.Password' | trans }}</strong>:
 </div>
-<pre>{{- user.plainPassword -}}</pre>
-
+<pre>{{- plainPassword -}}</pre>
 
 <p>
     {{ 'trans.Confirm registration by clicking link bellow' | trans }}
 </p>
 
 <div>
-    <a href="{{ url('app_register_confirm', {'token': token}) }}">{{ 'trans.I confirm registration' | trans }}</a>
+    {% set confirmRegisterUrl = url('app_register_confirm', {'token': token, 'username': user.username}) %}
+    <a href="{{ confirmRegisterUrl }}">{{ 'trans.I confirm registration' | trans }}</a>
 
     <p>
         {{ 'trans.If the link above does not work, try to copy the link below to your browser' | trans }}:
     </p>
 
-    <pre>{{ url('app_register_confirm', {'token': token}) }}</pre>
+    <pre>{{ confirmRegisterUrl }}</pre>
 </div>

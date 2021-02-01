@@ -7,7 +7,6 @@ namespace App\Service\User\Account;
 use App\Entity\Token;
 use App\Entity\TokenField;
 use App\Entity\User;
-use App\Service\Email\EmailService;
 use App\Service\System\Token\TokenService;
 use Carbon\Carbon;
 use Doctrine\ORM\EntityManagerInterface;
@@ -29,20 +28,20 @@ class ChangePasswordService
      */
     private $tokenService;
     /**
-     * @var EmailService
+     * @var UserAccountEmailService
      */
-    private $emailService;
+    private $userAccountEmailService;
 
     public function __construct(
         EntityManagerInterface $em,
         EncodePasswordService $encodePasswordService,
         TokenService $tokenService,
-        EmailService $emailService
+        UserAccountEmailService $userAccountEmailService
     ) {
         $this->em = $em;
         $this->encodePasswordService = $encodePasswordService;
         $this->tokenService = $tokenService;
-        $this->emailService = $emailService;
+        $this->userAccountEmailService = $userAccountEmailService;
     }
 
     public function sendConfirmation(User $user, string $newPassword): void
@@ -57,7 +56,7 @@ class ChangePasswordService
         );
         $token->addField(TokenField::USER_ID_FIELD, (string) $user->getId());
         $token->addField(TokenField::CHANGED_NEW_HASHED_PASSWORD, $hashedPassword);
-        $this->emailService->changePasswordConfirmation($user, $token->getTokenEntity()->getTokenString());
+        $this->userAccountEmailService->changePasswordConfirmation($user, $token->getTokenEntity()->getTokenString());
 
         $this->em->persist($token->getTokenEntity());
     }

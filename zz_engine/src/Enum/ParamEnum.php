@@ -17,4 +17,5 @@ class ParamEnum
     public const MAP_DEFAULT_LONGITUDE = 'mapDefaultLongitude';
     public const MAP_DEFAULT_ZOOM = 'mapDefaultZoom';
     public const LISTING_LIST = 'listingList';
+    public const USERNAME = 'username';
 }

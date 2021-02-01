@@ -7,7 +7,6 @@ namespace App\Service\User\Account;
 use App\Entity\Token;
 use App\Entity\TokenField;
 use App\Entity\User;
-use App\Service\Email\EmailService;
 use App\Service\System\Token\TokenService;
 use Carbon\Carbon;
 use Doctrine\ORM\EntityManagerInterface;
@@ -30,9 +29,9 @@ class RemindPasswordService
     private $tokenService;
 
     /**
-     * @var EmailService
+     * @var UserAccountEmailService
      */
-    private $emailService;
+    private $userAccountEmailService;
     /**
      * @var PasswordGenerateService
      */
@@ -43,12 +42,12 @@ class RemindPasswordService
         EncodePasswordService $encodePasswordService,
         TokenService $tokenService,
         PasswordGenerateService $passwordGenerateService,
-        EmailService $emailService
+        UserAccountEmailService $userAccountEmailService
     ) {
         $this->em = $em;
         $this->encodePasswordService = $encodePasswordService;
         $this->tokenService = $tokenService;
-        $this->emailService = $emailService;
+        $this->userAccountEmailService = $userAccountEmailService;
         $this->passwordGenerateService = $passwordGenerateService;
     }
 
@@ -69,7 +68,7 @@ class RemindPasswordService
 
         $this->em->persist($tokenDto->getTokenEntity());
 
-        $this->emailService->remindPasswordConfirmation($user, $tokenDto->getTokenEntity()->getTokenString());
+        $this->userAccountEmailService->remindPasswordConfirmation($user, $tokenDto->getTokenEntity()->getTokenString());
     }
 
     public function setHashedPassword(User $user, string $newPasswordHash): void

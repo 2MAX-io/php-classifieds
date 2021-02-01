@@ -16,6 +16,9 @@ parameters:
     asset_version: '%env(resolve:APP_ASSET_VERSION)%'
     env(APP_ENVIRONMENT_CSS_CLASS): ''
     environment_css_class: '%env(resolve:APP_ENVIRONMENT_CSS_CLASS)%'
+    router.request_context.host: '%env(resolve:APP_HTTP_HOST)%'
+    router.request_context.scheme: '%env(resolve:APP_HTTP_SCHEME)%'
+    router.request_context.base_url: '%env(resolve:APP_HTTP_BASE_URL)%'
 
 
 services:

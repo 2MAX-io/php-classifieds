@@ -555,7 +555,7 @@ div.clickableDiv a.clickableDivLink {
 }
 
 .user-message-textarea::placeholder {
-    color: #b1b1b1;
+    color: #dadde2;
 }
 
 .listing-edit-location-map {
@@ -575,4 +575,8 @@ div.clickableDiv a.clickableDivLink {
 
 .bg-gray {
     background-color: #e4e6eb;
+}
+
+.user-message-date {
+    font-size: 70%;
 }

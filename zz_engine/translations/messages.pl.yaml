@@ -650,6 +650,11 @@ trans:
     Write Message: 'Napisz Wiadomość'
     Enter your message here: 'Napisz tutaj swoją wiadomość'
     Location: 'Lokalizacja'
+    Map enabled?: 'Mapa włączona?'
+    Map default latitude: 'Mapa domyślna szerokość'
+    Map default longitude: 'Mapa domyślna długość'
+    Map default zoom: 'Mapa domyślny zoom'
+    Default zoom for map on single listing: 'Domyślny zoom dla mapy na pojedynczym ogłoszeniu'
     Show on map: 'Pokaż na mapie'
     Map: 'Mapa'
     Your web browser denied access to geolocation: 'Twoja przeglądarka odmówiła dostępu do geolokalizacji'
@@ -662,7 +667,16 @@ trans:
     Edit location to the map: 'Edytuj lokalizacje na mapie'
     Not set: 'Brak'
     From: 'Od'
+    Reply to this message: 'Odpowiedz na wiadomość'
+    Message for listing: 'Wiadomość dotycząca ogłoszenia'
+    'Private message for listing: {listingTitle}': 'Wiadomość prywatna do ogłoszenia: {listingTitle}'
+    Send message: 'Wyślij wiadomość'
+    There are no messages: 'Nie ma wiadomości'
+    Error, you are trying to send message to yourself: 'Wystąpił błąd, próbujesz wysłać wiadomość do samego siebie'
+    Select thread to see messages: 'Wybierz wątek aby zobaczyć wiadomości'
 
+
+'—': '—'
 Year: Rok
 Month: Miesiąc
 Day: Dzień

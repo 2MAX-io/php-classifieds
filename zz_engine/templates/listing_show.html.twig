@@ -309,13 +309,13 @@
                                     {{ 'trans.Show contact information' | trans }}
                                 </button>
                             {% endif %}
-
-                            {% if settings.messageSystemEnabled %}
-                                <a href="{{ path('app_user_message_send', {'listing': listing.id}) }}" class="btn btn-dark mt-1">
-                                    {{ 'trans.Write Message' | trans }}
-                                </a>
-                            {% endif %}
                         </div>
+
+                        {% if settings.messageSystemEnabled and not isCurrentUserListing(listing) %}
+                            <a class="btn btn-dark mb-3 d-block" href="{{ path('app_user_message_respond_to_listing', {'listing': listing.id}) }}">
+                                {{ 'trans.Write Message' | trans }}
+                            </a>
+                        {% endif %}
 
                         {% if listing.city is not empty and not displayAsExpired(listing) %}
                             <div class="mb-3">
@@ -330,6 +330,23 @@
                                 </div>
                             </div>
                         {% endif %}
+
+                        <div class="mb-3">
+                            <div class="row">
+                                <div class="col-sm-4 col-md-5">
+                                    {{ 'trans.User' | trans }}
+                                </div>
+
+                                <div class="col-sm-8 col-md-7">
+                                    <span>{{ listing.user | displayUserName }}</span>
+                                    {% if not displayAsExpired(listing) %}
+                                        (<a href="{{ path('app_public_listings_of_user', {"user": listing.user.id}) }}">
+                                            {{- 'trans.User listings' | trans -}}
+                                        </a>)
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
 
                         <div class="mb-3">
                             <div class="row">
@@ -351,35 +368,6 @@
 
                                 <div class="col-sm-8 col-md-7">
                                     {{ listing.validUntilDate | date(dateFormatShort) }}
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="mb-3 d-none d-md-block">
-                            <div class="row">
-                                <div class="col-sm-4 col-md-5">
-                                    {{ 'trans.Views' | trans }}
-                                </div>
-
-                                <div class="col-sm-8 col-md-7">
-                                    {{ (listingShowDto.viewsCount+1) | thousandsSeparate }}
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="d-none d-md-block">
-                            <div class="row">
-                                <div class="col-sm-4 col-md-5">
-                                    {{ 'trans.User' | trans }}
-                                </div>
-
-                                <div class="col-sm-8 col-md-7">
-                                    <div>{{ listing.user.displayUsernameWithFallback }}</div>
-                                    {% if not displayAsExpired(listing) %}
-                                        <a href="{{ path('app_public_listings_of_user', {"user": listing.user.id}) }}">
-                                            {{ 'trans.User listings' | trans }}
-                                        </a>
-                                    {% endif %}
                                 </div>
                             </div>
                         </div>

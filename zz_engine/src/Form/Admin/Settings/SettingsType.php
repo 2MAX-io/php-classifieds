@@ -117,7 +117,7 @@ class SettingsType extends AbstractType
             'required' => true,
         ]);
         $builder->add('mapDefaultZoomSingleListing', IntegerType::class, [
-            'label' => 'trans.Default zoom for map on single listing show',
+            'label' => 'trans.Default zoom for map on single listing',
             'required' => true,
         ]);
     }

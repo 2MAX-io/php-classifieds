@@ -12,7 +12,7 @@ class UserMessageThreadDto
     /**
      * @var int|null
      */
-    private $userMessageId;
+    private $userMessageThreadId;
 
     /**
      * @var int|null
@@ -50,9 +50,24 @@ class UserMessageThreadDto
     private $listingTitle;
 
     /**
+     * @var int|null
+     */
+    private $unreadCount;
+
+    /**
      * @var string|\DateTimeInterface
      */
     private $datetime;
+
+    public function __construct()
+    {
+        $this->userMessageThreadId = (int) $this->userMessageThreadId;
+        $this->unreadCount = (int) $this->unreadCount;
+        $this->listingId = (int) $this->listingId;
+        $this->senderUserId = (int) $this->senderUserId;
+        $this->recipientUserId = (int) $this->recipientUserId;
+        $this->datetime = DateHelper::createFromSqlString($this->datetime);
+    }
 
     public function getReplyToName(User $currentUser): ?string
     {
@@ -74,20 +89,18 @@ class UserMessageThreadDto
         if ($currentUser->getId() === $this->getRecipientUserId()) {
             return $this->getSenderUserId();
         }
+
+        throw new \RuntimeException('reply to user id not found');
     }
 
-    public function __construct()
+    public function getUserMessageThreadId(): ?int
     {
-        $this->userMessageId = (int) $this->userMessageId;
-        $this->listingId = (int) $this->listingId;
-        $this->senderUserId = (int) $this->senderUserId;
-        $this->recipientUserId = (int) $this->recipientUserId;
-        $this->datetime = DateHelper::createFromSqlString($this->datetime);
+        return $this->userMessageThreadId;
     }
 
-    public function getUserMessageId(): ?int
+    public function setUserMessageThreadId(?int $userMessageThreadId): void
     {
-        return $this->userMessageId;
+        $this->userMessageThreadId = $userMessageThreadId;
     }
 
     public function getSenderUserId(): ?int
@@ -128,5 +141,15 @@ class UserMessageThreadDto
     public function getListingSlug(): ?string
     {
         return $this->listingSlug;
+    }
+
+    public function getUnreadCount(): ?int
+    {
+        return $this->unreadCount;
+    }
+
+    public function setUnreadCount(?int $unreadCount): void
+    {
+        $this->unreadCount = $unreadCount;
     }
 }

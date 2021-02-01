@@ -6,12 +6,13 @@ namespace App\Controller\User\Message;
 
 use App\Controller\User\Base\AbstractUserController;
 use App\Entity\Listing;
-use App\Entity\UserMessage;
+use App\Entity\UserMessageThread;
 use App\Form\User\Message\Dto\SendUserMessageDto;
 use App\Form\User\Message\SendUserMessageType;
 use App\Security\CurrentUserService;
 use App\Service\User\Message\UserMessageListService;
 use App\Service\User\Message\UserMessageSendService;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
@@ -20,24 +21,37 @@ use Symfony\Component\Routing\Annotation\Route;
 class UserMessageController extends AbstractUserController
 {
     /**
-     * @Route("/user/message/list/{userMessage}", name="app_user_message_list")
+     * @var EntityManagerInterface
+     */
+    private $em;
+
+    public function __construct(EntityManagerInterface $em)
+    {
+        $this->em = $em;
+    }
+
+    /**
+     * @Route("/user/message/list/", name="app_user_message_list")
+     * @Route("/user/message/list/thread/{userMessageThread}", name="app_user_message_list_thread")
      */
     public function userMessageList(
         Request $request,
         UserMessageListService $userMessageListService,
         UserMessageSendService $userMessageSendService,
         CurrentUserService $currentUserService,
-        UserMessage $userMessage = null
+        UserMessageThread $userMessageThread = null
     ): Response {
         $this->dennyUnlessUser();
 
-        $listing = $userMessage ? $userMessage->getListing() : null;
+        /** @var Listing|null $listing */
+        $listing = $userMessageThread ? $userMessageThread->getListing() : null;
+        $currentUser = $currentUserService->getUser();
 
         $sendUserMessageDto = new SendUserMessageDto();
         $sendUserMessageDto->setListing($listing);
-        $sendUserMessageDto->setUserMessage($userMessage);
-        $sendUserMessageDto->setCurrentUser($currentUserService->getUser());
-        if ($sendUserMessageDto->getUserMessage() && !$userMessageSendService->allowedToSendMessage($sendUserMessageDto)) {
+        $sendUserMessageDto->setUserMessageThread($userMessageThread);
+        $sendUserMessageDto->setCurrentUser($currentUser);
+        if ($userMessageThread && !$userMessageSendService->allowedToSendMessage($sendUserMessageDto)) {
             throw new UnauthorizedHttpException('user can not send this message');
         }
 
@@ -45,33 +59,34 @@ class UserMessageController extends AbstractUserController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $userMessageSendService->sendMessage($sendUserMessageDto);
+            $this->em->flush();
 
-            $this->getDoctrine()->getManager()->flush();
-
-            return $this->redirectToRoute($request->get('_route'), ['userMessage' => $userMessage->getId()]);
+            return $this->redirectToRoute($request->get('_route'), [
+                'userMessageThread' => $userMessageThread->getId()
+            ]);
         }
 
         $messageList = [];
-        if ($listing) {
-            $messageList = $userMessageListService->getMessageListForUser(
-                $listing,
-                $sendUserMessageDto->getCurrentUser()
-            );
+        if ($userMessageThread) {
+            $messageList = $userMessageListService->getMessageListForThread($userMessageThread);
+            $userMessageListService->markReadByRecipient($messageList);
+            $this->em->flush();
         }
 
         return $this->render('user/message/user_message.html.twig', [
+            'threadList' => $userMessageListService->getUserMessageThreadList($currentUser),
             'messageList' => $messageList,
-            'threadList' => $userMessageListService->getThreadsForUser($sendUserMessageDto->getCurrentUser()),
-            'currentUser' => $sendUserMessageDto->getCurrentUser(),
+            'currentUser' => $currentUser,
             'currentListing' => $listing,
+            'userMessageThread' => $userMessageThread,
             'form' => $form->createView(),
         ]);
     }
 
     /**
-     * @Route("/user/message/send-message-to-user/{listing}", name="app_user_message_send")
+     * @Route("/user/message/respond-to-listing/{listing}", name="app_user_message_respond_to_listing")
      */
-    public function sendMessageToUser(
+    public function respondToListing(
         Request $request,
         Listing $listing,
         UserMessageListService $userMessageListService,
@@ -79,30 +94,37 @@ class UserMessageController extends AbstractUserController
         CurrentUserService $currentUserService
     ): Response {
         $this->dennyUnlessUser();
+        $currentUser = $currentUserService->getUser();
+
+        if ($listing->getUser()->getId() === $currentUser->getId()) {
+            return $this->render('user/message/error/message_to_yourself_error.html.twig');
+        }
+
+        $previousThread = $userMessageListService->getExistingUserThreadForListing($listing, $currentUser);
+        if ($previousThread) {
+            return $this->redirectToRoute('app_user_message_list_thread', [
+                'userMessageThread' => $previousThread->getId()
+            ]);
+        }
 
         $sendUserMessageDto = new SendUserMessageDto();
+        $sendUserMessageDto->setCreateThread(true);
         $sendUserMessageDto->setListing($listing);
-        $sendUserMessageDto->setCurrentUser($currentUserService->getUser());
+        $sendUserMessageDto->setCurrentUser($currentUser);
 
         $form = $this->createForm(SendUserMessageType::class, $sendUserMessageDto);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $userMessageSendService->sendMessage($sendUserMessageDto);
+            $this->em->flush();
 
-            $this->getDoctrine()->getManager()->flush();
-
-            return $this->redirectToRoute($request->get('_route'), ['listing' => $listing->getId()]);
+            return $this->redirectToRoute('app_user_message_list_thread', [
+                'userMessageThread' => $sendUserMessageDto->getUserMessageThread()->getId(),
+            ]);
         }
 
-        return $this->render('user/message/user_message.html.twig', [
-            'messageList' => $userMessageListService->getMessageListForUser(
-                $listing,
-                $sendUserMessageDto->getCurrentUser()
-            ),
-            'threadList' => $userMessageListService->getThreadsForUser($sendUserMessageDto->getCurrentUser()),
-            'currentUser' => $sendUserMessageDto->getCurrentUser(),
+        return $this->render('user/message/user_message_respond_to_listing.html.twig', [
             'currentListing' => $listing,
-            'sendingFirstMessage' => true,
             'form' => $form->createView(),
         ]);
     }

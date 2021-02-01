@@ -220,6 +220,11 @@ trans:
     Write Message: 'Write Message'
     Enter your message here: 'Enter your message here'
     Location: 'Location'
+    Map enabled?: 'Map enabled?'
+    Map default latitude: 'Map default latitude'
+    Map default longitude: 'Map default longitude'
+    Map default zoom: 'Map default zoom'
+    Default zoom for map on single listing: 'Default zoom for map on single listing'
     Show on map: 'Show on map'
     Map: 'Map'
     Your web browser denied access to geolocation: 'Your web browser denied access to geolocation'
@@ -232,6 +237,13 @@ trans:
     Edit location to the map: 'Edit location to the map'
     Not set: 'Not set'
     From: 'From'
+    Reply to this message: 'Reply to this message'
+    Message for listing: 'Message for listing'
+    'Private message for listing: {listingTitle}': 'Private message for listing: {listingTitle}'
+    Send message: 'Send message'
+    There are no messages: 'Message inbox is empty'
+    Error, you are trying to send message to yourself: 'Error, you are trying to send message to yourself'
+    Select thread to see messages: 'Select thread to see messages'
 
 trans.customFieldType.SELECT_AS_CHECKBOXES: 'Checkboxes in filters, single select when editing'
 trans.customFieldType.SELECT_SINGLE: 'Single selection field'
@@ -258,6 +270,7 @@ trans.invoice_generation_strategy.manual: 'Manual'
 trans.invoice_generation_strategy.external_system: 'External system'
 trans.invoice_generation_strategy.infakt_pl: 'Infakt.pl'
 
+'—': '—'
 Year: Year
 Month: Month
 Day: Day

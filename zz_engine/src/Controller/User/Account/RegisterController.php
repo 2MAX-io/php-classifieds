@@ -8,6 +8,7 @@ use App\Controller\User\Base\AbstractUserController;
 use App\Entity\Token;
 use App\Entity\TokenField;
 use App\Entity\User;
+use App\Enum\ParamEnum;
 use App\Form\User\Account\RegisterType;
 use App\Repository\UserRepository;
 use App\Service\FlashBag\FlashService;
@@ -17,6 +18,7 @@ use App\Service\User\Account\CreateUserService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Security;
 
 class RegisterController extends AbstractUserController
 {
@@ -52,6 +54,7 @@ class RegisterController extends AbstractUserController
      * @Route("/register/confirm/{token}", name="app_register_confirm")
      */
     public function registerConfirm(
+        Request $request,
         string $token,
         RegisterConfirmService $registerConfirmService,
         FlashService $flashService,
@@ -106,6 +109,8 @@ class RegisterController extends AbstractUserController
                 FlashService::SUCCESS_ABOVE_FORM,
                 'trans.You have been successfully registered. Now you can add some listings.'
             );
+
+            $request->getSession()->set(Security::LAST_USERNAME, $request->get(ParamEnum::USERNAME));
         }
 
         return $this->redirectToRoute('app_listing_new');

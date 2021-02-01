@@ -11,20 +11,9 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
 class SendUserMessageType extends AbstractType
 {
-    /**
-     * @var TranslatorInterface
-     */
-    private $trans;
-
-    public function __construct(TranslatorInterface $trans)
-    {
-        $this->trans = $trans;
-    }
-
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add('message', TextareaType::class, [
@@ -36,7 +25,7 @@ class SendUserMessageType extends AbstractType
             ],
             'attr' => [
                 'class' => 'form-control border-0 py-2 bg-primary rounded text-white user-message-textarea js__message-textarea',
-                'placeholder' => $this->trans->trans('trans.Enter your message here'),
+                'placeholder' => 'trans.Enter your message here',
             ],
         ]);
     }

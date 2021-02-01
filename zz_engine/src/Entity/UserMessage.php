@@ -32,10 +32,12 @@ class UserMessage
     private $recipientUser;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Listing")
-     * @ORM\JoinColumn(nullable=true)
+     * @var UserMessageThread
+     *
+     * @ORM\ManyToOne(targetEntity="App\Entity\UserMessageThread")
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $listing;
+    private $userMessageThread;
 
     /**
      * @ORM\Column(type="datetime", nullable=false)
@@ -52,7 +54,7 @@ class UserMessage
      *
      * @ORM\Column(type="boolean", nullable=false)
      */
-    private $notSpamChecked = false;
+    private $spamChecked = false;
 
     /**
      * @var boolean
@@ -73,14 +75,14 @@ class UserMessage
      *
      * @ORM\Column(type="boolean", nullable=false)
      */
-    private $recipientSeen = false;
+    private $recipientRead = false;
 
     /**
      * @var \DateTimeInterface|null
      *
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $recipientSeenDatetime;
+    private $recipientReadDatetime;
 
     public function getAllUsersArray(): array
     {
@@ -90,6 +92,11 @@ class UserMessage
     public function getIsUserSender(User $user): bool
     {
         return $this->getSenderUser()->getId() === $user->getId();
+    }
+
+    public function getIsUserRecipient(User $user): bool
+    {
+        return $this->getRecipientUser()->getId() === $user->getId();
     }
 
     public function getOtherUser(User $user): User
@@ -157,26 +164,14 @@ class UserMessage
         return $this;
     }
 
-    public function getListing(): ?Listing
+    public function isSpamChecked(): bool
     {
-        return $this->listing;
+        return $this->spamChecked;
     }
 
-    public function setListing(?Listing $listing): self
+    public function setSpamChecked(bool $spamChecked): void
     {
-        $this->listing = $listing;
-
-        return $this;
-    }
-
-    public function isNotSpamChecked(): bool
-    {
-        return $this->notSpamChecked;
-    }
-
-    public function setNotSpamChecked(bool $notSpamChecked): void
-    {
-        $this->notSpamChecked = $notSpamChecked;
+        $this->spamChecked = $spamChecked;
     }
 
     public function isSpam(): bool
@@ -199,23 +194,33 @@ class UserMessage
         $this->recipientNotified = $recipientNotified;
     }
 
-    public function isRecipientSeen(): bool
+    public function getRecipientRead(): bool
     {
-        return $this->recipientSeen;
+        return $this->recipientRead;
     }
 
-    public function setRecipientSeen(bool $recipientSeen): void
+    public function setRecipientRead(bool $recipientRead): void
     {
-        $this->recipientSeen = $recipientSeen;
+        $this->recipientRead = $recipientRead;
     }
 
-    public function getRecipientSeenDatetime(): ?\DateTimeInterface
+    public function getRecipientReadDatetime(): ?\DateTimeInterface
     {
-        return $this->recipientSeenDatetime;
+        return $this->recipientReadDatetime;
     }
 
-    public function setRecipientSeenDatetime(?\DateTimeInterface $recipientSeenDatetime): void
+    public function setRecipientReadDatetime(?\DateTimeInterface $recipientReadDatetime): void
     {
-        $this->recipientSeenDatetime = $recipientSeenDatetime;
+        $this->recipientReadDatetime = $recipientReadDatetime;
+    }
+
+    public function getUserMessageThread(): UserMessageThread
+    {
+        return $this->userMessageThread;
+    }
+
+    public function setUserMessageThread(UserMessageThread $userMessageThread): void
+    {
+        $this->userMessageThread = $userMessageThread;
     }
 }

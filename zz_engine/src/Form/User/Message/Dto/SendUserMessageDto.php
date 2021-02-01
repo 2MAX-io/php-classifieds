@@ -6,7 +6,7 @@ namespace App\Form\User\Message\Dto;
 
 use App\Entity\Listing;
 use App\Entity\User;
-use App\Entity\UserMessage;
+use App\Entity\UserMessageThread;
 
 class SendUserMessageDto
 {
@@ -21,14 +21,19 @@ class SendUserMessageDto
     private $listing;
 
     /**
-     * @var UserMessage|null
-     */
-    private $userMessage;
-
-    /**
      * @var User|null
      */
     private $currentUser;
+
+    /**
+     * @var bool|null
+     */
+    private $createThread;
+
+    /**
+     * @var UserMessageThread|null
+     */
+    private $userMessageThread;
 
     public function getMessage(): ?string
     {
@@ -60,13 +65,23 @@ class SendUserMessageDto
         $this->currentUser = $currentUser;
     }
 
-    public function getUserMessage(): ?UserMessage
+    public function getCreateThread(): ?bool
     {
-        return $this->userMessage;
+        return $this->createThread;
     }
 
-    public function setUserMessage(?UserMessage $userMessage): void
+    public function setCreateThread(?bool $createThread): void
     {
-        $this->userMessage = $userMessage;
+        $this->createThread = $createThread;
+    }
+
+    public function getUserMessageThread(): ?UserMessageThread
+    {
+        return $this->userMessageThread;
+    }
+
+    public function setUserMessageThread(?UserMessageThread $userMessageThread): void
+    {
+        $this->userMessageThread = $userMessageThread;
     }
 }

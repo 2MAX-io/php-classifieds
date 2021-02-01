@@ -6,13 +6,17 @@ namespace App\Service\User\Message;
 
 use App\Entity\Log\UserMessagePoliceLog;
 use App\Entity\UserMessage;
+use App\Entity\UserMessageThread;
 use App\Form\User\Message\Dto\SendUserMessageDto;
 use App\Helper\DateHelper;
 use App\Helper\ServerHelper;
 use App\Security\CurrentUserService;
+use App\Service\User\Message\Messenger\SendNotification\SendNotificationMessage;
+use App\System\Messenger\MessengerHelperService;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
+use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class UserMessageSendService
@@ -37,8 +41,20 @@ class UserMessageSendService
      */
     private $urlGenerator;
 
+    /**
+     * @var MessageBusInterface
+     */
+    private $messageBus;
+
+    /**
+     * @var MessengerHelperService
+     */
+    private $messengerHelperService;
+
     public function __construct(
         CurrentUserService $currentUserService,
+        MessengerHelperService $messengerHelperService,
+        MessageBusInterface $messageBus,
         UrlGeneratorInterface $urlGenerator,
         EntityManagerInterface $em,
         LoggerInterface $logger
@@ -47,28 +63,41 @@ class UserMessageSendService
         $this->logger = $logger;
         $this->currentUserService = $currentUserService;
         $this->urlGenerator = $urlGenerator;
+        $this->messageBus = $messageBus;
+        $this->messengerHelperService = $messengerHelperService;
     }
 
     public function sendMessage(SendUserMessageDto $sendUserMessageDto): void
     {
+        $userMessageThread = $sendUserMessageDto->getUserMessageThread();
+        $currentDatetime = DateHelper::create();
+        if ($sendUserMessageDto->getCreateThread()) {
+            $userMessageThread = new UserMessageThread();
+            $userMessageThread->setListing($sendUserMessageDto->getListing());
+            $userMessageThread->setCreatedByUser($sendUserMessageDto->getCurrentUser());
+            $userMessageThread->setCreatedDatetime($currentDatetime);
+            $userMessageThread->setLatestMessageDatetime($currentDatetime);
+            $sendUserMessageDto->setUserMessageThread($userMessageThread);
+        }
+
+        if (null === $userMessageThread) {
+            throw new \RuntimeException('can not find thread when sending message');
+        }
+
         $userMessage = new UserMessage();
         $userMessage->setMessage($sendUserMessageDto->getMessage());
         $userMessage->setSenderUser($sendUserMessageDto->getCurrentUser());
-        if ($sendUserMessageDto->getUserMessage()) {
-            $userMessage->setRecipientUser($sendUserMessageDto->getUserMessage()->getOtherUser($sendUserMessageDto->getCurrentUser()));
-        } else {
-            $userMessage->setRecipientUser($sendUserMessageDto->getListing()->getUser());
-        }
-        $userMessage->setListing($sendUserMessageDto->getListing());
-        $userMessage->setDatetime(DateHelper::create());
+        $userMessage->setRecipientUser($userMessageThread->getOtherUser($sendUserMessageDto->getCurrentUser()));
+        $userMessage->setUserMessageThread($userMessageThread);
+        $userMessage->setDatetime($currentDatetime);
+        $userMessageThread->setLatestMessageDatetime($currentDatetime);
         if ($userMessage->getSenderUser()->getId() === $userMessage->getRecipientUser()->getId()) {
             $this->logger->error('sender and recipient should not be the same', [
                 'getSenderUser' => $userMessage->getSenderUser()->getId(),
                 'getRecipientUser' => $userMessage->getRecipientUser()->getId(),
             ]);
-        }
-        if (!$sendUserMessageDto->getUserMessage()) {
-            $sendUserMessageDto->setUserMessage($userMessage);
+
+            throw new \RuntimeException('sender and recipient should not be the same');
         }
 
         if (!$this->allowedToSendMessage($sendUserMessageDto)) {
@@ -79,23 +108,29 @@ class UserMessageSendService
             throw new UnauthorizedHttpException('user can not send this message');
         }
 
+        $this->em->persist($userMessageThread);
         $this->em->persist($userMessage);
         $this->em->flush();
         $this->saveUserMessagePoliceLog($userMessage);
         $this->em->flush();
+
+        if ($this->messengerHelperService->countMessages(SendNotificationMessage::class) < 3) {
+            $this->messageBus->dispatch(new SendNotificationMessage());
+        }
     }
 
     public function allowedToSendMessage(SendUserMessageDto $sendUserMessageDto): bool
     {
         return \in_array(
             $sendUserMessageDto->getCurrentUser(),
-            $sendUserMessageDto->getUserMessage()->getAllUsersArray(),
+            $sendUserMessageDto->getUserMessageThread()->getAllUsersArray(),
+            true
         );
     }
 
     private function saveUserMessagePoliceLog(UserMessage $userMessage): void
     {
-        $listing = $userMessage->getListing();
+        $listing = $userMessage->getUserMessageThread()->getListing();
         $listingUrl = $this->urlGenerator->generate(
             'app_listing_show',
             [

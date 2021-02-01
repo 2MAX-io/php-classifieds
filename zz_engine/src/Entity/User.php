@@ -492,15 +492,6 @@ class User implements UserInterface, RoleInterface, EnablableInterface, EncoderA
         return $this->displayUsername;
     }
 
-    public function getDisplayUsernameWithFallback(): string
-    {
-        if (empty($this->displayUsername)) {
-            return "#{$this->getId()}";
-        }
-
-        return $this->displayUsername;
-    }
-
     public function setDisplayUsername(?string $displayUsername): void
     {
         $this->displayUsername = $displayUsername;

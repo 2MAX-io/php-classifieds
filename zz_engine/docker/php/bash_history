@@ -420,3 +420,5 @@ gulp --gulpfile zz_engine/gulpfile.js --cwd .
 php zz_engine/bin/console messenger:consume async --time-limit=55
 composer dump-env dev -d zz_engine
 php zz_engine/bin/console messenger:consume async -vvv
+php zz_engine/bin/console doctrine:schema:update --dump-sql 
+php zz_engine/bin/console doctrine:schema:update --dump-sql 

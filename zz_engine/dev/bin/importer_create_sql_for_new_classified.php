@@ -251,5 +251,5 @@ function savePoliceLog(array $csvRow, $sqlHandle): void {
         'zzzz_listing_police_log.user_id' => $csvRow['user_id'],
     ];
 
-    saveSql('INSERT INTO zzzz_listing_police_log SET '.arrayToSqlSetString($fileRow).';', $sqlHandle);
+    saveSql('INSERT INTO zzzz_police_log_listing SET '.arrayToSqlSetString($fileRow).';', $sqlHandle);
 }

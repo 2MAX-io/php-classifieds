@@ -43,7 +43,7 @@ class User implements UserInterface, RoleInterface, EnablableInterface, EncoderA
     /**
      * @var string|null
      *
-     * @ORM\Column(type="string", length=100, unique=true, nullable=true)
+     * @ORM\Column(type="string", length=100, nullable=true)
      */
     protected $displayUsername;
 

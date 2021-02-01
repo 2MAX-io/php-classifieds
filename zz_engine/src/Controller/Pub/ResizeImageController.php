@@ -73,7 +73,10 @@ class ResizeImageController
 
         if (!\file_exists(FilePath::getStaticPath() . '/' . $sourcePath)) {
             if ($this->environmentService->getExternalImageUrlForDevelopment()) {
-                return new RedirectResponse($this->environmentService->getExternalImageUrlForDevelopment() . '/' . $sourcePath);
+                return new RedirectResponse(
+                    \rtrim($this->environmentService->getExternalImageUrlForDevelopment(), '/')
+                    . '/' . $request->getRequestUri()
+                );
             }
 
             return new RedirectResponse('/static/system/empty.png');

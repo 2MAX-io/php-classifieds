@@ -334,3 +334,89 @@ php zz_engine/bin/console app:delete-old-listing-files 10
 php zz_engine/bin/console app:delete-old-listing-files 10 --limit 100 -vvv
 php zz_engine/bin/console app:cron:main --ignore-delay -vvv
 php zz_engine/bin/console app:delete-old-listing-files 10 --limit 100 -vvv --dry-run
+composer install -d zz_engine --optimize-autoloader
+composer install -d zz_engine --optimize-autoloader
+php zz_engine/bin/console doctrine:schema:update -f
+gulp --gulpfile zz_engine/gulpfile.js --cwd .
+gulp --gulpfile zz_engine/gulpfile.js --cwd .
+gulp --help
+gulp --gulpfile zz_engine/gulpfile.js --cwd .
+ls
+npm install
+cd zz_engine/
+npm install
+ sudo chown -R 1000:33 "/var/www/.npm"
+chown -R 1000:33 "/var/www/.npm"
+ls -la /var/www/
+cd zz_engine/
+ls
+npm install
+gulp --gulpfile zz_engine/gulpfile.js --cwd .
+gulp --gulpfile zz_engine/gulpfile.js --cwd .
+gulp --gulpfile zz_engine/gulpfile.js --cwd .
+composer update -d zz_engine --optimize-autoloader
+gulp --gulpfile zz_engine/gulpfile.js --cwd .
+php zz_engine/bin/console doctrine:schema:update -f
+php zz_engine/bin/console doctrine:schema:update -f
+php zz_engine/bin/console doctrine:schema:update -f
+php zz_engine/bin/console make:entity --regenerate "App"
+php zz_engine/bin/console make:entity --regenerate "App"
+php zz_engine/bin/console doctrine:schema:update -f
+gulp --gulpfile zz_engine/gulpfile.js --cwd .
+php zz_engine/bin/console doctrine:schema:update -f
+gulp --gulpfile zz_engine/gulpfile.js --cwd .
+gulp --gulpfile zz_engine/gulpfile.js --cwd .
+gulp --gulpfile zz_engine/gulpfile.js --cwd .
+gulp --gulpfile zz_engine/gulpfile.js --cwd .
+gulp --gulpfile zz_engine/gulpfile.js --cwd .
+gulp --gulpfile zz_engine/gulpfile.js --cwd .
+gulp --gulpfile zz_engine/gulpfile.js --cwd .
+php zz_engine/bin/console doctrine:schema:update -f
+php zz_engine/bin/console doctrine:schema:update -f
+php zz_engine/bin/console doctrine:schema:update -f
+gulp --gulpfile zz_engine/gulpfile.js --cwd .
+gulp --gulpfile zz_engine/gulpfile.js --cwd .
+php zz_engine/bin/console doctrine:schema:update -f
+php zz_engine/bin/console doctrine:schema:update -f
+gulp --gulpfile zz_engine/gulpfile.js --cwd .
+php zz_engine/bin/console app:dev:generate-param-enum-for-js
+export XDEBUG_CONFIG="mode=debug client_host=192.168.205.1 start_with_request=yes"
+php zz_engine/bin/console app:dev:generate-param-enum-for-js
+php zz_engine/bin/console app:dev:generate-param-enum-for-js
+php zz_engine/bin/console app:dev:generate-param-enum-for-js
+env
+php zz_engine/bin/console app:dev:generate-param-enum-for-js
+php -r "xdebug_info();"
+export XDEBUG_CONFIG="mode=debug client_host=192.168.205.1 client_port=9003 start_with_request=yes"
+php -r "xdebug_info();"
+php zz_engine/bin/console app:dev:generate-param-enum-for-js
+php -r "xdebug_info();"
+php -r "xdebug_info();"
+php zz_engine/bin/console app:dev:generate-param-enum-for-js
+php zz_engine/bin/console app:dev:generate-param-enum-for-js
+php zz_engine/bin/console app:dev:generate-param-enum-for-js
+gulp --gulpfile zz_engine/gulpfile.js --cwd .
+gulp --gulpfile zz_engine/gulpfile.js --cwd .
+php zz_engine/bin/console app:dev:generate-param-enum-for-js
+gulp --gulpfile zz_engine/gulpfile.js --cwd .
+php zz_engine/bin/console app:dev:generate-param-enum-for-js
+php zz_engine/bin/console app:dev:generate-param-enum-for-js
+gulp --gulpfile zz_engine/gulpfile.js --cwd .
+php zz_engine/bin/console app:dev:generate-param-enum-for-js
+gulp --gulpfile zz_engine/gulpfile.js --cwd .
+gulp --gulpfile zz_engine/gulpfile.js --cwd .
+gulp --gulpfile zz_engine/gulpfile.js --cwd .
+php zz_engine/bin/console app:dev:generate-param-enum-for-js
+gulp --gulpfile zz_engine/gulpfile.js --cwd .
+gulp --gulpfile zz_engine/gulpfile.js --cwd .
+gulp --gulpfile zz_engine/gulpfile.js --cwd .
+composer require -d zz_engine symfony/messenger
+composer install -d zz_engine --optimize-autoloader
+composer dump-env dev -d zz_engine
+php zz_engine/bin/console messenger:consume async --time-limit=55
+php zz_engine/bin/console messenger:consume one_at_time --time-limit=55 --limit=1
+gulp --gulpfile zz_engine/gulpfile.js --cwd .
+gulp --gulpfile zz_engine/gulpfile.js --cwd .
+php zz_engine/bin/console messenger:consume async --time-limit=55
+composer dump-env dev -d zz_engine
+php zz_engine/bin/console messenger:consume async -vvv

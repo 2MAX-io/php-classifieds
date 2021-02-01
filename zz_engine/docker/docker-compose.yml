@@ -20,7 +20,7 @@ services:
             - './php/bash_history:/root/.bash_history'
             - './php/bash_history:/var/www/.bash_history'
         environment:
-            XDEBUG_CONFIG: remote_host=192.168.205.1
+            XDEBUG_CONFIG: client_host=192.168.205.1
             PHP_IDE_CONFIG: serverName=classifieds.localhost
             APP_DEBUG: 1
             PROMPT_COMMAND: 'history -a'
@@ -41,6 +41,7 @@ services:
             context: './mysql/'
             dockerfile: Dockerfile
         ports: ['3306:3306']
+        user: '1000'
         volumes:
             - './../../zz_engine/var/mysql:/var/www/html/zz_engine/var/mysql'
             - './../../zz_engine/var/mysql:/sql'
@@ -59,6 +60,16 @@ services:
             classifieds.localhost:
                 aliases:
                     - "mysql"
+    mailhog:
+        image: mailhog/mailhog
+        container_name: classifieds_mail
+        ports:
+            - 1025:1025 # smtp server
+            - 8025:8025 # web ui
+        networks:
+            classifieds.localhost:
+                aliases:
+                    - "mailhog"
 networks:
     classifieds.localhost:
         name: "classifieds.localhost"

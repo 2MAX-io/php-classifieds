@@ -1,0 +1,54 @@
+{# @var settings \App\Service\Setting\SettingsDto #}
+{%- set settings = settings() -%}
+
+<div class="card mb-2">
+    <div class="card-header">{{ 'trans.User Dashboard' | trans }}</div>
+
+    <div class="text-dark">
+        <a href="{{ path('app_user_listing_list') }}" class="link-list-item text-dark">
+            <i class="fas fa-list-ul"></i>
+            <span>{{ 'trans.Listings' | trans }}</span>
+        </a>
+        <a href="{{ path('app_listing_new') }}" class="link-list-item text-dark">
+            <i class="far fa-plus-square"></i>
+            <span>{{ 'trans.Create Listing' | trans }}</span>
+        </a>
+        {% if settings.messageSystemEnabled %}
+            <a href="{{ path('app_user_message_list') }}" class="link-list-item text-dark">
+                <i class="fas fa-inbox"></i>
+                <span>{{ 'trans.Messages' | trans }}</span>
+            </a>
+        {% endif %}
+        {% if settings.paymentAllowed %}
+            <a href="{{ path('app_user_balance_top_up') }}" class="link-list-item text-dark">
+                <i class="fas fa-money-check-alt"></i>
+                <span>{{ 'trans.Top up account' | trans }}</span>
+            </a>
+        {% endif %}
+        {% if settings.paymentAllowed %}
+            <a href="{{ path('app_user_invoice_list') }}" class="link-list-item text-dark">
+                <i class="fas fa-envelope"></i>
+                <span>{{ 'trans.Invoices' | trans }}</span>
+            </a>
+        {% endif %}
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">{{ 'trans.Other' | trans }}</div>
+
+    <div class="text-dark">
+        <a href="{{ path('app_user_settings') }}" class="link-list-item text-dark">
+            <i class="fas fa-cogs"></i>
+            <span>{{ 'trans.Settings' | trans }}</span>
+        </a>
+        <a
+                href="{{ path('app_logout') }}"
+                onclick="return confirm('{{ 'trans.Do you want to log out?' | trans }}')"
+                class="link-list-item text-dark"
+        >
+            <i class="fas fa-sign-out-alt"></i>
+            <span>{{ 'trans.Logout' | trans }}</span>
+        </a>
+    </div>
+</div>

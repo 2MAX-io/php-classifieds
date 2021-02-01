@@ -7,7 +7,6 @@ namespace App\Service\User\Account;
 use App\Entity\Token;
 use App\Entity\TokenField;
 use App\Entity\User;
-use App\Service\Email\EmailService;
 use App\Service\System\Token\TokenService;
 use Carbon\Carbon;
 use Doctrine\ORM\EntityManagerInterface;
@@ -20,19 +19,22 @@ class ChangeEmailService
     private $em;
 
     /**
-     * @var EmailService
+     * @var UserAccountEmailService
      */
-    private $emailService;
+    private $userAccountEmailService;
 
     /**
      * @var TokenService
      */
     private $tokenService;
 
-    public function __construct(EntityManagerInterface $em, EmailService $emailService, TokenService $tokenService)
-    {
+    public function __construct(
+        EntityManagerInterface $em,
+        UserAccountEmailService $userAccountEmailService,
+        TokenService $tokenService
+    ) {
         $this->em = $em;
-        $this->emailService = $emailService;
+        $this->userAccountEmailService = $userAccountEmailService;
         $this->tokenService = $tokenService;
     }
 
@@ -45,8 +47,8 @@ class ChangeEmailService
         $token->addField(TokenField::USER_NEW_EMAIL_FIELD, $newEmail);
         $token->addField(TokenField::USER_ID_FIELD, (string) $user->getId());
 
-        $this->emailService->sendEmailChangeConfirmationToPreviousEmail($user, $newEmail, $token->getTokenEntity()->getTokenString());
-        $this->emailService->sendEmailChangeNotificationToNewEmail($user, $newEmail, $token->getTokenEntity()->getTokenString());
+        $this->userAccountEmailService->sendEmailChangeConfirmationToPreviousEmail($user, $newEmail, $token->getTokenEntity()->getTokenString());
+        $this->userAccountEmailService->sendEmailChangeNotificationToNewEmail($user, $newEmail, $token->getTokenEntity()->getTokenString());
 
         $this->em->persist($token->getTokenEntity());
     }

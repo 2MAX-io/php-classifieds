@@ -36,7 +36,7 @@ class AdminCategoryController extends AbstractAdminController
 
         return $this->render('admin/category/index.html.twig', [
             'categoryList' => $categoryService->getCategoryList(),
-            ParamEnum::JSON_DATA => [
+            ParamEnum::DATA_FOR_JS => [
                 'adminCategorySaveSort' => $csrfTokenManager->getToken('adminCategorySaveSort')->getValue(),
             ],
         ]);
@@ -141,7 +141,7 @@ class AdminCategoryController extends AbstractAdminController
         return $this->render('admin/category/edit.html.twig', [
             'category' => $category,
             'form' => $form->createView(),
-            ParamEnum::JSON_DATA => [
+            ParamEnum::DATA_FOR_JS => [
                 'adminCustomFieldsInCategorySaveSort' => $csrfTokenManager->getToken('adminCustomFieldsInCategorySaveSort')->getValue(),
             ],
         ]);

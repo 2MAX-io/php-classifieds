@@ -1,0 +1,22 @@
+{# @var newestUserMessage \App\Entity\UserMessage #}
+<div>
+    {{ 'trans.Message for listing' | trans }}:
+    <a href="{{ url('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}">{{ listing.title }}</a>
+</div>
+
+<div>---------</div>
+{% for userMessage in userMessageList %}
+    <div>
+        {{ userMessage.message }}
+    </div>
+{% endfor %}
+<div>---------</div>
+
+<a href="{{ url('app_user_message_list_thread', {'userMessageThread': newestUserMessage.userMessageThread.id}) }}">
+    {{- 'trans.Reply to this message' | trans -}}
+</a>
+
+<p>
+    {{ 'trans.If the link above does not work, try to copy the link below to your browser' | trans }}:
+</p>
+<pre>{{ url('app_user_message_list_thread', {'userMessageThread': newestUserMessage.userMessageThread.id}) }}</pre>

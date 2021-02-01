@@ -199,6 +199,22 @@ class Listing
     private $city;
 
     /**
+     * @var float|null
+     *
+     * @ORM\Column(type="float", nullable=true)
+     * @Assert\Type(type="numeric")
+     */
+    private $locationLatitude;
+
+    /**
+     * @var float|null
+     *
+     * @ORM\Column(type="float", nullable=true)
+     * @Assert\Type(type="numeric")
+     */
+    private $locationLongitude;
+
+    /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $mainImage;
@@ -763,5 +779,30 @@ class Listing
         }
 
         return $this;
+    }
+
+    public function getLocationLongitude(): ?float
+    {
+        return $this->locationLongitude;
+    }
+
+    public function setLocationLongitude(?float $locationLongitude): void
+    {
+        $this->locationLongitude = $locationLongitude;
+    }
+
+    public function getLocationLatitude(): ?float
+    {
+        return $this->locationLatitude;
+    }
+
+    public function setLocationLatitude(?float $locationLatitude): void
+    {
+        $this->locationLatitude = $locationLatitude;
+    }
+
+    public function getHasLocationOnMap(): bool
+    {
+        return $this->getLocationLatitude() && $this->getLocationLongitude();
     }
 }

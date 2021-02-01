@@ -5,7 +5,7 @@ customFields.loadedCategory = null;
 customFields.formArray = [];
 
 customFields.loadFromBackend = function() {
-    var listingId = app.getJsonDataCached()['listingId'];
+    var listingId = app.getDataForJs()['listingId'];
     var categoryId = parseInt($('.formCategory').val());
     customFields.loadedCategory = categoryId;
     $.get(Routing.generate('app_listing_get_custom_fields', {listingId: listingId, categoryId: categoryId}), function (html) {

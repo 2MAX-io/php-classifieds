@@ -92,6 +92,8 @@ function js() {
     'asset/lib/cleave/cleave.js',
     'asset/lib/bootstrap/bootstrap.bundle.js',
     'asset/component/textarea_autosize/textarea-autosize.js',
+    'asset/app-global.js',
+    'asset/enum/ParamEnum.js',
     'asset/main.js',
   ])
     .pipe(sourcemaps.init())
@@ -120,6 +122,8 @@ function adminJs() {
     'asset/lib/cleave/cleave.js',
     'asset/lib/bootstrap/bootstrap.bundle.js',
     'asset/component/textarea_autosize/textarea-autosize.js',
+    'asset/admin-app-global.js',
+    'asset/enum/ParamEnum.js',
     'asset/main.js',
     'asset/main-admin.js',
   ])

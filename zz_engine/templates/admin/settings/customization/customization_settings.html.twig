@@ -1,0 +1,47 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}{{ 'trans.Customization Settings' | trans }}{% endblock %}
+
+{% block body %}
+    <div class="container mt-3">
+        {% include 'admin/settings/_partial/_settings_menu.html.twig' %}
+
+        <h1>{{ 'trans.Customization Settings' | trans }}</h1>
+
+        {{ form_start(form) }}
+
+        {{ form_row(form.indexPageTitle) }}
+        {{ form_row(form.pageTitleSuffix) }}
+        {{ form_row(form.footerSiteCopyright) }}
+        {{ form_row(form.searchPlaceholder) }}
+
+        <h2>{{ 'trans.Language' | trans }}</h2>
+        {{ form_row(form.languageTwoLetters) }}
+
+        <h2>{{ 'trans.SEO and Metadata Settings' | trans }}</h2>
+        {{ form_row(form.metaDescription) }}
+        {{ form_row(form.metaKeywords) }}
+        {{ form_row(form.rssTitle) }}
+        {{ form_row(form.rssDescription) }}
+
+        <h2>{{ 'trans.Link to master site' | trans }}</h2>
+        {{ form_row(form.masterSiteLinkShow) }}
+        {{ form_row(form.masterSiteUrl) }}
+        {{ form_row(form.masterSiteAnchorText) }}
+
+        <h2>{{ 'trans.Subpages' | trans }}</h2>
+        {{ form_row(form.linkTermsConditions) }}
+        {{ form_row(form.linkPrivacyPolicy) }}
+        {{ form_row(form.linkRejectionReason) }}
+        {{ form_row(form.linkContact) }}
+        {{ form_row(form.linkAdvertisement) }}
+
+        <h2>{{ 'trans.Customization' | trans }}</h2>
+        {{ form_row(form.customCss) }}
+        {{ form_row(form.customJavascriptInHead) }}
+        {{ form_row(form.customJavascriptBottom) }}
+
+        <button class="btn btn-primary">{{ button_label|default('trans.Save' | trans) }}</button>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

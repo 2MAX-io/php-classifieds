@@ -28,4 +28,9 @@ class DateHelper
 
         return \DateTime::createFromFormat('U', $microTimeFloatString);
     }
+
+    public static function createFromSqlString(string $datetime): \DateTimeInterface
+    {
+        return new \DateTime($datetime);
+    }
 }

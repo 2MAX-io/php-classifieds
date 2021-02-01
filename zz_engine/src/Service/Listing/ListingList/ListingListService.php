@@ -93,8 +93,6 @@ class ListingListService
         if ($request->get('query', false)) {
             $qb->andWhere('MATCH (listing.searchText) AGAINST (:query BOOLEAN) > 0');
             $qb->setParameter(':query', Search::optimizeMatch($request->get('query', false)));
-
-            $this->saveSearchHistory->saveSearch($request->get('query', false));
         }
 
         if ($request->get('user', false)) {
@@ -207,6 +205,13 @@ class ListingListService
 
         $listingListDto->setPager($pager);
         $listingListDto->setResults($pager->getCurrentPageResults());
+
+        if ($request->get('query', false)) {
+            $this->saveSearchHistory->saveSearch(
+                $request->get('query', false),
+                $listingListDto->getPager()->getNbResults()
+            );
+        }
 
         return $listingListDto;
     }

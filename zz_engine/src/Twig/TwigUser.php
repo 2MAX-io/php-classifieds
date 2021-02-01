@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace App\Twig;
 
 use App\Entity\Listing;
+use App\Entity\User;
 use App\Security\CurrentUserService;
 use App\Service\Setting\SettingsService;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Extension\RuntimeExtensionInterface;
 
 class TwigUser implements RuntimeExtensionInterface
@@ -27,14 +29,21 @@ class TwigUser implements RuntimeExtensionInterface
      */
     private $requestStack;
 
+    /**
+     * @var TranslatorInterface
+     */
+    private $trans;
+
     public function __construct(
         CurrentUserService $currentUserService,
         SettingsService $settingsService,
-        RequestStack $requestStack
+        RequestStack $requestStack,
+        TranslatorInterface $trans
     ) {
         $this->currentUserService = $currentUserService;
         $this->settingsService = $settingsService;
         $this->requestStack = $requestStack;
+        $this->trans = $trans;
     }
 
     public function lowSecurityCheckIsAdminInPublic(): bool
@@ -72,5 +81,14 @@ class TwigUser implements RuntimeExtensionInterface
             || $listing->getAdminRejected()
             || (!$listing->getAdminActivated() && $this->settingsService->getSettingsDto()->getRequireListingAdminActivation())
             || $listing->isExpired();
+    }
+
+    public function displayUserName(User $user): string
+    {
+        if (!$user->getDisplayUsername()) {
+            return $this->trans->trans('trans.User') . ' #' .$user->getId();
+        }
+
+        return $user->getDisplayUsername();
     }
 }

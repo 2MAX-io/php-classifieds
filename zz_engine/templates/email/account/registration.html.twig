@@ -1,0 +1,30 @@
+{# @var user \App\Entity\User #}
+
+<p>
+    <strong>{{ 'trans.Account credentials' | trans }}</strong>:
+</p>
+
+<div>
+    <strong>{{ 'trans.Login' | trans }}</strong>:
+</div>
+<pre>{{- user.username -}}</pre>
+
+<div>
+    <strong>{{ 'trans.Password' | trans }}</strong>:
+</div>
+<pre>{{- plainPassword -}}</pre>
+
+<p>
+    {{ 'trans.Confirm registration by clicking link bellow' | trans }}
+</p>
+
+<div>
+    {% set confirmRegisterUrl = url('app_register_confirm', {'token': token, 'username': user.username}) %}
+    <a href="{{ confirmRegisterUrl }}">{{ 'trans.I confirm registration' | trans }}</a>
+
+    <p>
+        {{ 'trans.If the link above does not work, try to copy the link below to your browser' | trans }}:
+    </p>
+
+    <pre>{{ confirmRegisterUrl }}</pre>
+</div>

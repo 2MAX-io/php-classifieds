@@ -14,6 +14,7 @@ use App\Service\Listing\CustomField\ListingCustomFieldsService;
 use App\Service\Listing\Save\SaveListingService;
 use App\Service\Listing\Save\ListingFileUploadService;
 use App\Service\Log\PoliceLogIpService;
+use App\Service\Setting\SettingsService;
 use App\Service\System\Routing\RefererService;
 use App\Service\User\Listing\UserListingListService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -24,7 +25,8 @@ use Symfony\Component\Routing\Annotation\Route;
 class UserListingController extends AbstractUserController
 {
     /**
-     * @Route("/user/listing/", name="app_user_listing_index", methods={"GET"})
+     * @Route("/user/listing/", name="app_user_listing_list")
+     * @Route("/user/my-account/", name="app_my_account")
      */
     public function index(
         Request $request,
@@ -35,7 +37,7 @@ class UserListingController extends AbstractUserController
         $userListingListDto = $userListingListService->getList((int)$request->get('page', 1));
 
         return $this->render(
-            'user/listing/index.html.twig',
+            'user/listing/user_listings_list.twig',
             [
                 'listings' => $userListingListDto->getResults(),
                 'pager' => $userListingListDto->getPager(),
@@ -53,6 +55,7 @@ class UserListingController extends AbstractUserController
         ListingCustomFieldsService $listingCustomFieldsService,
         PoliceLogIpService $logIpService,
         CategoryListService $categoryListService,
+        SettingsService $settingsService,
         EntityManagerInterface $em
     ): Response {
         $this->dennyUnlessUser();
@@ -89,9 +92,12 @@ class UserListingController extends AbstractUserController
                 'listing' => $listing,
                 'form' => $form->createView(),
                 'formCategorySelectList' => $categoryListService->getFormCategorySelectList(),
-                ParamEnum::JSON_DATA => [
+                ParamEnum::DATA_FOR_JS => [
                     'listingFilesForJavascript' => $saveListingService->getListingFilesForJavascript($listing),
                     'listingId' => $listing->getId(),
+                    ParamEnum::MAP_DEFAULT_LATITUDE => $settingsService->getSettingsDto()->getMapDefaultLatitude(),
+                    ParamEnum::MAP_DEFAULT_LONGITUDE => $settingsService->getSettingsDto()->getMapDefaultLongitude(),
+                    ParamEnum::MAP_DEFAULT_ZOOM => $settingsService->getSettingsDto()->getMapDefaultZoom(),
                 ],
             ]
         );
@@ -108,6 +114,7 @@ class UserListingController extends AbstractUserController
         SaveListingService $saveListingService,
         PoliceLogIpService $logIpService,
         CategoryListService $categoryListService,
+        SettingsService $settingsService,
         EntityManagerInterface $em
     ): Response {
         $this->dennyUnlessCurrentUserAllowed($listing);
@@ -149,9 +156,16 @@ class UserListingController extends AbstractUserController
                 'listing' => $listing,
                 'form' => $form->createView(),
                 'formCategorySelectList' => $categoryListService->getFormCategorySelectList(),
-                ParamEnum::JSON_DATA => [
+                ParamEnum::DATA_FOR_JS => [
                     'listingFilesForJavascript' => $saveListingService->getListingFilesForJavascript($listing),
                     'listingId' => $listing->getId(),
+                    ParamEnum::MAP_LOCATION_COORDINATES => [
+                        ParamEnum::LATITUDE => $listing->getLocationLatitude(),
+                        ParamEnum::LONGITUDE => $listing->getLocationLongitude(),
+                    ],
+                    ParamEnum::MAP_DEFAULT_LATITUDE => $settingsService->getSettingsDto()->getMapDefaultLatitude(),
+                    ParamEnum::MAP_DEFAULT_LONGITUDE => $settingsService->getSettingsDto()->getMapDefaultLongitude(),
+                    ParamEnum::MAP_DEFAULT_ZOOM => $settingsService->getSettingsDto()->getMapDefaultZoom(),
                 ],
             ]
         );
@@ -174,7 +188,7 @@ class UserListingController extends AbstractUserController
         }
 
         if ($refererService->refererIsRoute('app_listing_edit')) {
-            return $this->redirectToRoute('app_user_listing_index');
+            return $this->redirectToRoute('app_user_listing_list');
         }
 
         return $refererService->redirectToRefererResponse();

@@ -147,4 +147,9 @@ class TwigNoDependencies implements RuntimeExtensionInterface
 
         return $linkify->process($text, ['attr' => []]);
     }
+
+    public function base64_encode(string $value): string
+    {
+        return \base64_encode($value);
+    }
 }

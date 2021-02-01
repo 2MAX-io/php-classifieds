@@ -134,6 +134,20 @@ class SettingsRequiredHealthChecker implements HealthCheckerInterface
             'facebookSignInAppSecret',
             'googleSignInClientId',
             'googleSignInClientSecret',
+            'invoiceCompanyName',
+            'invoiceTaxNumber',
+            'invoiceCity',
+            'invoiceStreet',
+            'invoiceBuildingNumber',
+            'invoiceUnitNumber',
+            'invoiceZipCode',
+            'invoiceCountry',
+            'invoiceEmail',
+            'paymentPrzelewy24MerchantId',
+            'paymentPrzelewy24PosId',
+            'paymentPrzelewy24Crc',
+            'invoiceSoldItemDescription',
+            'invoiceNumberPrefix',
         ];
     }
 

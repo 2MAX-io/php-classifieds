@@ -29,7 +29,7 @@ class ListingListController extends AbstractController
     /**
      * @Route("/listing/search", name="app_listing_search")
      * @Route("/last-added", name="app_last_added")
-     * @Route("/listings-of-user", name="app_user_listings")
+     * @Route("/listings-of-user", name="app_public_listings_of_user")
      * @Route("/c/{categorySlug}", name="app_category")
      */
     public function index(
@@ -118,7 +118,7 @@ class ListingListController extends AbstractController
         $map = [
             'app_listing_search' => $this->trans->trans('trans.Search Engine'),
             'app_last_added' => $this->trans->trans('trans.Last added'),
-            'app_user_listings' => $this->trans->trans('trans.Listings of user'),
+            'app_public_listings_of_user' => $this->trans->trans('trans.Listings of user'),
             'app_category' => static function() use ($listingListDto) {
                 return $listingListDto->getCategoryNotNull()->getName();
             },
@@ -141,7 +141,7 @@ class ListingListController extends AbstractController
         $map = [
             'app_listing_search' => $this->trans->trans('trans.Search Engine'),
             'app_last_added' => $this->trans->trans('trans.Last added'),
-            'app_user_listings' => $this->trans->trans('trans.Listings of user'),
+            'app_public_listings_of_user' => $this->trans->trans('trans.Listings of user'),
         ];
 
         return $map[$route] ?? null;

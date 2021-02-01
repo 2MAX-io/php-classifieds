@@ -8,6 +8,7 @@ use App\Controller\User\Base\AbstractUserController;
 use App\Entity\Token;
 use App\Entity\TokenField;
 use App\Entity\User;
+use App\Enum\ParamEnum;
 use App\Form\User\Account\RemindPasswordType;
 use App\Service\FlashBag\FlashService;
 use App\Service\System\Token\TokenService;
@@ -15,6 +16,7 @@ use App\Service\User\Account\RemindPasswordService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Security;
 
 class RemindPasswordController extends AbstractUserController
 {
@@ -52,6 +54,7 @@ class RemindPasswordController extends AbstractUserController
      * @Route("/remind-password/confirm/{token}", name="app_remind_password_confirm")
      */
     public function remindPasswordConfirm(
+        Request $request,
         string $token,
         RemindPasswordService $remindPasswordService,
         TokenService $tokenService,
@@ -108,6 +111,7 @@ class RemindPasswordController extends AbstractUserController
             FlashService::SUCCESS_ABOVE_FORM,
             'trans.Password reset has been successful'
         );
+        $request->getSession()->set(Security::LAST_USERNAME, $request->get(ParamEnum::USERNAME));
 
         return $this->redirectToRoute('app_login');
     }

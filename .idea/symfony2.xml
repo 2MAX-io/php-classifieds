@@ -2,7 +2,7 @@
 <project version="4">
   <component name="Symfony2PluginSettings">
     <option name="pathToTranslation" value="zz_engine/var/cache/dev/translations" />
-    <option name="directoryToWeb" value="" />
+    <option name="directoryToWeb" value="/" />
     <option name="directoryToApp" value="zz_engine/config" />
     <option name="pluginEnabled" value="true" />
     <option name="codeFoldingPhpRoute" value="false" />

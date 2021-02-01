@@ -7,7 +7,6 @@ namespace App\Service\User\Account;
 use App\Entity\Token;
 use App\Entity\TokenField;
 use App\Entity\User;
-use App\Service\Email\EmailService;
 use App\Service\System\Token\TokenService;
 use Carbon\Carbon;
 use Doctrine\ORM\EntityManagerInterface;
@@ -31,9 +30,9 @@ class CreateUserService
     private $passwordEncoder;
 
     /**
-     * @var EmailService
+     * @var UserAccountEmailService
      */
-    private $emailService;
+    private $userAccountEmailService;
 
     /**
      * @var TokenService
@@ -45,12 +44,12 @@ class CreateUserService
         PasswordGenerateService $passwordGenerateService,
         UserPasswordEncoderInterface $passwordEncoder,
         TokenService $tokenService,
-        EmailService $emailService
+        UserAccountEmailService $userAccountEmailService
     ) {
         $this->em = $em;
         $this->passwordGenerateService = $passwordGenerateService;
         $this->passwordEncoder = $passwordEncoder;
-        $this->emailService = $emailService;
+        $this->userAccountEmailService = $userAccountEmailService;
         $this->tokenService = $tokenService;
     }
 
@@ -79,7 +78,7 @@ class CreateUserService
         $this->em->persist($tokenDto->getTokenEntity());
         $this->em->persist($user);
 
-        $this->emailService->sendRegisterEmail($user, $tokenDto->getTokenEntity()->getTokenString());
+        $this->userAccountEmailService->sendRegisterEmail($user, $tokenDto->getTokenEntity()->getTokenString());
 
         return $user;
     }

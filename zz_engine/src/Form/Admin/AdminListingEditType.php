@@ -13,6 +13,7 @@ use App\Form\Type\PriceForType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -83,6 +84,20 @@ class AdminListingEditType extends AbstractType
             ],
             'form_group_attr' => [
                 'class' => 'mb-0',
+            ],
+        ]);
+        $builder->add('locationLatitude', HiddenType::class, [
+            'label' => false,
+            'required' => false,
+            'attr' => [
+                'class' => 'js__location-latitude',
+            ],
+        ]);
+        $builder->add('locationLongitude', HiddenType::class, [
+            'label' => false,
+            'required' => false,
+            'attr' => [
+                'class' => 'js__location-longitude',
             ],
         ]);
     }

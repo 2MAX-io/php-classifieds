@@ -470,3 +470,113 @@ div.clickableDiv a.clickableDivLink {
     background-color: rgba(133, 234, 23, 0.5) !important;
     border: 2px dashed greenyellow;
 }
+
+.btn-light-gray {
+    background-color: #e0e0e0;
+    border-color: #cecece;
+    color: #585858;
+}
+
+.price-tag {
+    display: inline-block;
+
+    width: auto;
+    height: 38px;
+
+    background-color: #ffc107;
+    -webkit-border-radius: 3px 4px 4px 3px;
+    -moz-border-radius: 3px 4px 4px 3px;
+    border-radius: 3px 4px 4px 3px;
+
+    border-left: 1px solid #ffc107;
+
+    /* This makes room for the triangle */
+    margin-left: 19px;
+
+    position: relative;
+
+    color: black;
+    font-weight: 300;
+    font-size: 22px;
+    line-height: 38px;
+    font-family: "Courier New", monospace;
+
+    padding: 0 10px 0 10px;
+}
+
+/* Makes the triangle */
+.price-tag:before {
+    content: "";
+    position: absolute;
+    display: block;
+    left: -19px;
+    width: 0;
+    height: 0;
+    border-top: 19px solid transparent;
+    border-bottom: 19px solid transparent;
+    border-right: 19px solid #ffc107;
+}
+
+/* Makes the circle */
+.price-tag:after {
+    content: "";
+    background-color: white;
+    border-radius: 50%;
+    width: 4px;
+    height: 4px;
+    display: block;
+    position: absolute;
+    left: -9px;
+    top: 17px;
+}
+
+.user-listings-table.table th {
+    border-top: 0;
+    padding-top: 0;
+}
+
+.btn-outline-admin {
+    border-color: #ca472e;
+    border-style: dashed;
+}
+
+.border-gray {
+    border: 1px solid rgba(0,0,0,.125);
+}
+
+.message-list {
+    max-height: 20em;
+    overflow-y: auto;
+}
+
+.message-thread-list {
+    max-height: 20em;
+    overflow-y: auto;
+}
+
+.user-message-textarea::placeholder {
+    color: #dadde2;
+}
+
+.listing-edit-location-map {
+    width: 100%;
+    height: 36vh;
+}
+
+.listing-show-single-map {
+    width: 100%;
+    height: 36vh;
+}
+
+.map-with-listings {
+    width: 100%;
+    height: 80vh;
+}
+
+.bg-gray {
+    background-color: #e4e6eb;
+}
+
+.user-message-date {
+    font-size: 70%;
+}

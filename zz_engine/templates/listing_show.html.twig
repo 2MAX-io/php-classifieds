@@ -275,9 +275,7 @@
 
                     {% if listing.price is not empty %}
                         <div class="my-1">
-                            <h3 class="btn btn-dark btn-lg">
-                                {{ 'trans.Price' | trans }}: {{ listing.price | money }}
-                            </h3>
+                            <div class="price-tag">{{ 'trans.Price' | trans }}: {{ listing.price | money }}</div>
 
                             {% if listing.priceFor %}
                                 <span>{{ ('trans.priceFor.'~listing.priceFor) | trans }}</span>
@@ -300,17 +298,23 @@
 
                 <!-- info -->
                 <div class="card mb-3 w-100">
-                    <h5 class="card-header card-header-small">{{ 'trans.Informations' | trans }}</h5>
+                    <div class="card-body py-3">
+                        <div class="mb-3">
+                            {% if displayAsExpired(listing) %}
+                                <div class="alert alert-warning">
+                                    {{ 'trans.Listing has expired, please do not contact listing author' | trans }}
+                                </div>
+                            {% else %}
+                                <button class="btn btn-success w-100 js__onClickShowContactInformation" data-listing-id="{{ listing.id }}">
+                                    {{ 'trans.Show contact information' | trans }}
+                                </button>
+                            {% endif %}
+                        </div>
 
-                    <div class="card-body">
-                        {% if displayAsExpired(listing) %}
-                            <div class="alert alert-warning">
-                                {{ 'trans.Listing has expired, please do not contact listing author' | trans }}
-                            </div>
-                        {% else %}
-                            <button class="btn btn-success w-100 mb-3 js__onClickShowContactInformation" data-listing-id="{{ listing.id }}">
-                                {{ 'trans.Show contact information' | trans }}
-                            </button>
+                        {% if settings.messageSystemEnabled and not isCurrentUserListing(listing) %}
+                            <a class="btn btn-dark mb-3 d-block" href="{{ path('app_user_message_respond_to_listing', {'listing': listing.id}) }}">
+                                {{ 'trans.Write Message' | trans }}
+                            </a>
                         {% endif %}
 
                         {% if listing.city is not empty and not displayAsExpired(listing) %}
@@ -326,6 +330,23 @@
                                 </div>
                             </div>
                         {% endif %}
+
+                        <div class="mb-3">
+                            <div class="row">
+                                <div class="col-sm-4 col-md-5">
+                                    {{ 'trans.User' | trans }}
+                                </div>
+
+                                <div class="col-sm-8 col-md-7">
+                                    <span>{{ listing.user | displayUserName }}</span>
+                                    {% if not displayAsExpired(listing) %}
+                                        (<a href="{{ path('app_public_listings_of_user', {"user": listing.user.id}) }}">
+                                            {{- 'trans.User listings' | trans -}}
+                                        </a>)
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
 
                         <div class="mb-3">
                             <div class="row">
@@ -350,30 +371,7 @@
                                 </div>
                             </div>
                         </div>
-
-                        <div class="mb-3 d-none d-md-block">
-                            <div class="row">
-                                <div class="col-sm-4 col-md-5">
-                                    {{ 'trans.Views' | trans }}
-                                </div>
-
-                                <div class="col-sm-8 col-md-7">
-                                    {{ (listingShowDto.viewsCount+1) | thousandsSeparate }}
-                                </div>
-                            </div>
-                        </div>
                     </div>
-
-                    {% if not displayAsExpired(listing) %}
-                        <div class="card-footer">
-                            <a
-                                    href="{{ path('app_user_listings', {"user": listing.user.id}) }}"
-                                    class="btn btn-sm btn-dark btn-block mt-auto"
-                            >
-                                {{ 'trans.User listings' | trans }}
-                            </a>
-                        </div>
-                    {% endif %}
                 </div>
 
                 {% if displayAsExpired(listing) %}
@@ -411,6 +409,18 @@
                                 </div>
                             {% endfor %}
                         </div>
+                    </div>
+                {% endif %}
+
+                <!-- map -->
+                {% if settings.mapEnabled and listing.hasLocationOnMap  %}
+                    <div class="card mb-3">
+                        <h5 class="card-header card-header-small">{{ 'trans.Location' | trans }}</h5>
+
+                        <div class="card-body js__show-on-map-button-wrapper">
+                            <button class="btn btn-outline-secondary js__show-on-map-button w-100">{{ 'trans.Show on map' | trans }}</button>
+                        </div>
+                        <div class="d-none-soft listing-show-single-map js__listing-show-single-map"></div>
                     </div>
                 {% endif %}
 
@@ -469,4 +479,6 @@
 
 {% block js %}
     <script src="{{ asset('asset/page/listing/show/listing-show.js') }}"></script>
+    <link rel="stylesheet" href="{{ asset('asset/lib/leaflet/leaflet.css') }}">
+    <script src="{{ asset('asset/lib/leaflet/leaflet.js') }}"></script>
 {% endblock %}

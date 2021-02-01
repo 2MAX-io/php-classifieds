@@ -1,0 +1,43 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}{{ 'trans.Payment / Invoice Settings' | trans }}{% endblock %}
+
+{% block body %}
+    <div class="container mt-3">
+        {% include 'admin/settings/_partial/_settings_menu.html.twig' %}
+
+        <h1>{{ 'trans.Payment / Invoice Settings' | trans }}</h1>
+
+        {{ form_start(form) }}
+
+        <h2>{{ 'trans.Payments' | trans }}</h2>
+        {{ form_row(form.paymentAllowed) }}
+        {{ form_row(form.currency) }}
+        {{ form_row(form.paymentGateway) }}
+        {{ form_row(form.paymentGatewayPaymentDescription) }}
+        {{ form_row(form.paymentPayPalMode) }}
+        {{ form_row(form.paymentPayPalClientId) }}
+        {{ form_row(form.paymentPayPalClientSecret) }}
+        {{ form_row(form.paymentPrzelewy24Mode) }}
+        {{ form_row(form.paymentPrzelewy24MerchantId) }}
+        {{ form_row(form.paymentPrzelewy24PosId) }}
+        {{ form_row(form.paymentPrzelewy24Crc) }}
+
+        <h2>{{ 'trans.Invoice' | trans }}</h2>
+        {{ form_row(form.invoiceCompanyName) }}
+        {{ form_row(form.invoiceTaxNumber) }}
+        {{ form_row(form.invoiceCity) }}
+        {{ form_row(form.invoiceStreet) }}
+        {{ form_row(form.invoiceBuildingNumber) }}
+        {{ form_row(form.invoiceUnitNumber) }}
+        {{ form_row(form.invoiceZipCode) }}
+        {{ form_row(form.invoiceCountry) }}
+        {{ form_row(form.invoiceEmail) }}
+        {{ form_row(form.invoiceSoldItemDescription) }}
+        {{ form_row(form.invoiceGenerationStrategy) }}
+        {{ form_row(form.invoiceNumberPrefix) }}
+
+        <button class="btn btn-primary">{{ button_label|default('trans.Save' | trans) }}</button>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

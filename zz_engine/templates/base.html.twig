@@ -50,24 +50,29 @@
 
             <div class="collapse navbar-collapse" id="navbarPageTop">
                 <ul class="navbar-nav justify-content-around d-sm-none mb-2">
+                    {% if settings.masterSiteLinkShow %}
+                        <li class="nav-item menu-top-item">
+                            <a class="nav-link" href="{{ settings.masterSiteUrl }}">{{ settings.masterSiteAnchorText }}</a>
+                        </li>
+                    {%- endif -%}
                     <li class="nav-item">
                         <a class="nav-link menu-top-item" href="{{ path('app_index') }}">{{ 'trans.Home page' | trans }}</a>
                     </li>
+                    {% if settings.mapEnabled %}
+                        <li class="nav-item">
+                            <a class="nav-link menu-top-item" href="{{ path('app_map_with_listings') }}">{{ 'trans.Map' | trans }}</a>
+                        </li>
+                    {% endif %}
                     <li class="nav-item">
                         <a class="nav-link menu-top-item" href="{{ path('app_category_view_all') }}">{{ 'trans.Categories' | trans }}</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link menu-top-item" href="{{ path('app_last_added') }}">{{ 'trans.Last added' | trans }}</a>
                     </li>
-                    {% if settings.masterSiteLinkShow %}
-                    <li class="nav-item menu-top-item">
-                        <a class="nav-link" href="{{ settings.masterSiteUrl }}">{{ settings.masterSiteAnchorText }}</a>
-                    </li>
-                    {%- endif -%}
                 </ul>
 
                 {% if lowSecurityCheckIsAdminInPublic() %}
-                    <a class="nav-link btn btn-outline-danger d-sm-none" href="{{ path('app_admin_index') }}">
+                    <a class="nav-link btn btn-outline-admin d-sm-none" href="{{ path('app_admin_index') }}">
                         {{- 'trans.Admin panel' | trans -}}
                     </a>
                 {%- endif -%}
@@ -103,11 +108,7 @@
                     <div class="text-right mt-md-2">
                         <ul class="list-inline">
                             <li class="list-inline-item">
-                                {%- if app.user -%}
-                                    <a href="{{ path('app_logout') }}">{{ 'trans.Logout' | trans }}</a>
-                                {%- else -%}
-                                    <a href="{{ path('app_login') }}">{{ 'trans.Sign in' | trans }}</a>
-                                {%- endif -%}
+                                <a href="{{ path('app_my_account') }}">{{ 'trans.My account' | trans }}</a>
                             </li>
                             <li class="list-inline-item">
                                 <a href="{{ path('app_listing_new') }}" class="btn btn-primary">
@@ -120,7 +121,7 @@
                 </div>
 
                 {%- if app.user -%}
-                    <a class="nav-link btn btn-outline-success d-sm-none" href="{{ path('app_user_listing_index') }}">
+                    <a class="nav-link d-sm-none" href="{{ path('app_user_listing_list') }}">
                         {{- 'trans.My listings' | trans -}}
                     </a>
                 {% endif %}
@@ -146,24 +147,33 @@
 
         <div class="collapse navbar-collapse" id="main-navbar">
             <ul class="navbar-nav justify-content-around w-100">
-                <li class="nav-item active">
-                    <a class="nav-link" href="{{ path('app_index') }}">{{ 'trans.Home page' | trans }}</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ path('app_category_view_all') }}">{{ 'trans.Categories' | trans }}</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ path('app_last_added') }}">{{ 'trans.Last added' | trans }}</a>
-                </li>
                 {% if settings.masterSiteLinkShow %}
                     <li class="nav-item">
                         <a class="nav-link" href="{{ settings.masterSiteUrl }}">{{ settings.masterSiteAnchorText }}</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_index') }}">{{ 'trans.Classifieds' | trans }}</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{{ path('app_index') }}">{{ 'trans.Home page' | trans }}</a>
+                    </li>
                 {% endif %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('app_category_view_all') }}">{{ 'trans.Categories' | trans }}</a>
+                </li>
+                {% if settings.mapEnabled %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_map_with_listings') }}">{{ 'trans.Map' | trans }}</a>
+                    </li>
+                {% endif %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('app_last_added') }}">{{ 'trans.Last added' | trans }}</a>
+                </li>
 
                 {%- if app.user -%}
                     <li class="nav-item">
-                        <a class="nav-link btn btn-outline-success" href="{{ path('app_user_listing_index') }}">
+                        <a class="nav-link" href="{{ path('app_user_listing_list') }}">
                             {{- 'trans.My listings' | trans -}}
                         </a>
                     </li>
@@ -171,7 +181,7 @@
 
                 {% if lowSecurityCheckIsAdminInPublic() %}
                     <li class="nav-item">
-                        <a class="nav-link btn btn-outline-danger" href="{{ path('app_admin_index') }}">
+                        <a class="nav-link btn btn-outline-admin" href="{{ path('app_admin_index') }}">
                             {{- 'trans.Admin panel' | trans -}}
                         </a>
                     </li>
@@ -243,6 +253,7 @@
                 <ul class="list-unstyled text-small">
                     <li><a class="text-muted mobile-link" href="{{ path('app_index') }}">{{ 'trans.Home page' | trans }}</a></li>
                     <li><a class="text-muted mobile-link" href="{{ path('app_listing_new') }}">{{ 'trans.Add listing' | trans }}</a></li>
+                    <li><a class="text-muted mobile-link" href="{{ path('app_my_account') }}">{{ 'trans.Add listing' | trans }}</a></li>
                     <li><a class="text-muted mobile-link" href="{{ path('app_last_added') }}">{{ 'trans.Last added' | trans }}</a></li>
                 </ul>
             </div>
@@ -274,7 +285,7 @@
 
 {% block javascripts %}
     {{ nelmio_js_error_logger() }}
-    <script type="application/json" id="js__jsonData">{{ jsonData | default([]) | inlineJson }}</script>
+    <script type="application/json" id="js__dataForJs">{{ dataForJs | default([]) | inlineJson | base64_encode }}</script>
     <script src="{{ asset('asset/build/app.js') }}"></script>
     <script src="{{ asset('asset/lib/cleave/addons/cleave-phone.'~ settings.languageTwoLetters | lower ~'.js') }}"></script>
     <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData', version: asset_version(path('fos_js_routing_js')) }) }}"></script>

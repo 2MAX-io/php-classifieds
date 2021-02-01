@@ -123,3 +123,6 @@ mysql admin_ogloszenia < /var/www/html/zz_engine/var/mysql/admin_ogloszenia.sql
 mysql classifieds < /var/www/html/zz_engine/var/mysql/j4u_ogloszenia.sql
 time mysqldump classifieds > /var/www/html/zz_engine/var/mysql/db_backup_$(date +%Y-%m-%d_%H%M%S).sql && chown -R 1000:1000 /var/www/html/zz_engine/var/mysql/
 mysql classifieds < /var/www/html/zz_engine/var/mysql/j4u_ogloszenia.sql
+mysql classifieds < /var/www/html/zz_engine/var/mysql/j4u_ogloszenia.sql
+time mysqldump classifieds > /var/www/html/zz_engine/var/mysql/db_backup_$(date +%Y-%m-%d_%H%M%S).sql && chown -R 1000:1000 /var/www/html/zz_engine/var/mysql/
+mysql classifieds < /var/www/html/zz_engine/var/mysql/j4u_ogloszenia.sql

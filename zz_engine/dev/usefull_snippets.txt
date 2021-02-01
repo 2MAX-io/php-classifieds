@@ -25,3 +25,7 @@ $('#settings_paymentPayPalClientSecret').val('EGnHDxD_qRPdaLdZz8iCr8N7_MzF-YHPTk
         {{ customFieldValue.customField.name }}: {{ customFieldValue.value }}
     </div>
 {% endfor %}
+
+docker exec -it -u 1000 -e XDEBUG_CONFIG="mode=debug client_host=192.168.205.1 client_port=9003 start_with_request=yes" classifieds_php bash
+docker exec -it -u 1000 classifieds_php bash
+docker exec -it -u 1000 classifieds_mysql bash

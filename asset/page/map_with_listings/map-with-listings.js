@@ -2,7 +2,7 @@
 
 let mapLatLng = new L.LatLng(
     app.getDataForJs()[app.ParamEnum.MAP_DEFAULT_LATITUDE],
-    app.getDataForJs()[app.ParamEnum.MAP_DEFAULT_LONGITUDE],
+    app.getDataForJs()[app.ParamEnum.MAP_DEFAULT_LONGITUDE]
 );
 let map = L.map(document.querySelector('.js__map-with-listings'))
     .setView(mapLatLng, app.getDataForJs()[app.ParamEnum.MAP_DEFAULT_ZOOM])
@@ -17,7 +17,7 @@ L.control.locate({
     drawCircle: false,
     returnToPrevBounds: true,
     locateOptions: {
-        maxZoom: 15,
+        maxZoom: 15
     },
     onLocationError: () => {
         alert(Translator.trans('trans.Your web browser denied access to geolocation'));

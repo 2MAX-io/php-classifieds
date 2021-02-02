@@ -92,6 +92,10 @@ class Str
             return true;
         }
 
+        if (\is_numeric($value)) {
+            return empty($value);
+        }
+
         return empty($value) || empty(\trim($value));
     }
 

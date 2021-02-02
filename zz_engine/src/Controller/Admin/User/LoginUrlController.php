@@ -18,7 +18,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 class LoginUrlController extends AbstractAdminController
 {
     /**
-     * @Route("/admin/login-url/{adminLoginUrlSecret}}/login-url", name="app_admin_login_url", methods={"GET"})
+     * @Route("/admin/login-url/{adminLoginUrlSecret}/login-url", name="app_admin_login_url", methods={"GET"})
      */
     public function adminLoginUtl(
         string $adminLoginUrlSecret,

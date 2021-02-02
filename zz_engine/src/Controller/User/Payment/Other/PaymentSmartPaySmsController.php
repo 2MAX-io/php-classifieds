@@ -20,14 +20,26 @@ use Symfony\Component\Routing\Annotation\Route;
 class PaymentSmartPaySmsController extends AbstractController
 {
     /**
-     * @Route("/payment/smartpay/Lufn4twHDxDzzfHfiFzKL", name="app_payment_smartpay_sms")
+     * @Route("/payment/smartpay/{smartpayPlUrlSecret}", name="app_payment_smartpay_sms")
      */
     public function paymentSmartPaySms(
+        string $smartpayPlUrlSecret,
         Request $request,
         FeaturedListingService $featuredListingService,
         LoggerInterface $logger,
         EntityManagerInterface $em
     ): Response {
+        if (!isset($_ENV['APP_SMARTPAY_PL_URL_SECRET'])) {
+            $logger->critical('ENV variable APP_SMARTPAY_PL_URL_SECRET not found');
+            return new Response('ENV variable APP_SMARTPAY_PL_URL_SECRET not found');
+        }
+
+        if ($smartpayPlUrlSecret !== $_ENV['APP_SMARTPAY_PL_URL_SECRET']) {
+            $logger->critical('ENV variable APP_SMARTPAY_PL_URL_SECRET not found');
+
+            return new Response('{smartpayPlUrlSecret} does not match APP_SMARTPAY_PL_URL_SECRET');
+        }
+
         try {
             $smsText = \trim($request->get('text'));
             $smsPaymentNumber = (string) \trim($request->get('number'));

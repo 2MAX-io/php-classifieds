@@ -9,6 +9,7 @@ use App\Entity\Admin;
 use App\Exception\UserVisibleException;
 use App\Security\LoginUserProgrammaticallyService;
 use Doctrine\ORM\EntityManagerInterface;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -16,17 +17,30 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class LoginUrlController extends AbstractAdminController
 {
-    private const LOGIN_URL_SECRET = 'classified_login_url_secret_JpPXL7g5wmu2HteisEL9egug2DKkjpPnYERn3TnsbYhiyYR9CM55L';
-
     /**
-     * @Route("/admin/login-url/vEKT97WD3L9PJU62mv2fW/login-url", name="app_admin_login_url", methods={"GET"})
+     * @Route("/admin/login-url/{adminLoginUrlSecret}}/login-url", name="app_admin_login_url", methods={"GET"})
      */
     public function adminLoginUtl(
+        string $adminLoginUrlSecret,
         Request $request,
         LoginUserProgrammaticallyService $loginUserProgrammaticallyService,
-        EntityManagerInterface $em
+        EntityManagerInterface $em,
+        LoggerInterface $logger
     ): Response {
-        $secret = self::LOGIN_URL_SECRET;
+        if (!isset($_ENV['APP_ADMIN_LOGIN_URL_SECRET'])) {
+            $logger->critical('ENV variable APP_ADMIN_LOGIN_URL_SECRET not found');
+            throw new UserVisibleException('ENV variable APP_ADMIN_LOGIN_URL_SECRET not found');
+        }
+        if (!isset($_ENV['APP_ADMIN_LOGIN_HASH_SECRET'])) {
+            $logger->critical('ENV variable APP_ADMIN_LOGIN_HASH_SECRET not found');
+            throw new UserVisibleException('ENV variable APP_ADMIN_LOGIN_HASH_SECRET not found');
+        }
+        if ($adminLoginUrlSecret !== $_ENV['APP_ADMIN_LOGIN_URL_SECRET']) {
+            $logger->critical('{adminLoginUrlSecret} does not match ENV APP_ADMIN_LOGIN_URL_SECRET');
+            throw new UserVisibleException('{adminLoginUrlSecret} does not match ENV APP_ADMIN_LOGIN_URL_SECRET');
+        }
+
+        $secret = $_ENV['APP_ADMIN_LOGIN_HASH_SECRET'];
         $time = $request->get('time');
         $hash = $request->get('hash');
         $unique = $request->get('unique');
@@ -58,18 +72,38 @@ class LoginUrlController extends AbstractAdminController
     /**
      * @Route("/admin/red5/administrator-user/login-url-generate", name="app_admin_administrator_login_url_generate")
      */
-    public function administratorLoginUrlGenerate(UrlGeneratorInterface $urlGenerator): Response
+    public function administratorLoginUrlGenerate(
+        UrlGeneratorInterface $urlGenerator,
+        EntityManagerInterface $em,
+        LoggerInterface $logger
+    ): Response
     {
         $this->denyUnlessAdmin();
 
-        $userEmail = 'jaslo4u.pl@gmail.com';
-        $secret = self::LOGIN_URL_SECRET;
+        if (!isset($_ENV['APP_ADMIN_LOGIN_URL_SECRET'])) {
+            $logger->critical('ENV variable APP_ADMIN_LOGIN_URL_SECRET not found');
+            throw new UserVisibleException('ENV variable APP_ADMIN_LOGIN_URL_SECRET not found');
+        }
+        if (!isset($_ENV['APP_ADMIN_LOGIN_HASH_SECRET'])) {
+            $logger->critical('ENV variable APP_ADMIN_LOGIN_HASH_SECRET not found');
+            throw new UserVisibleException('ENV variable APP_ADMIN_LOGIN_HASH_SECRET not found');
+        }
+
+        $admin = $em->getRepository(Admin::class)->findOneBy([], ['id' => 'DESC']);
+        if (!$admin instanceof Admin) {
+            $logger->critical('admin user not found');
+            throw new UserVisibleException('admin user not found');
+        }
+
+        $userEmail = $admin->getEmail();
+        $secret = $_ENV['APP_ADMIN_LOGIN_HASH_SECRET'];
         $time = \time();
         $unique = \sha1(\uniqid('classified_login_unique_', true));
 
         $loginUrl = $urlGenerator->generate(
             'app_admin_login_url',
             [
+                'adminLoginUrlSecret' => $_ENV['APP_ADMIN_LOGIN_URL_SECRET'],
                 'time' => $time,
                 'unique' => $unique,
                 'userEmail' => $userEmail,

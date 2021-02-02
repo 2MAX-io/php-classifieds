@@ -340,9 +340,11 @@
                                 <div class="col-sm-8 col-md-7">
                                     <span>{{ listing.user | displayUserName }}</span>
                                     {% if not displayAsExpired(listing) %}
-                                        (<a href="{{ path('app_public_listings_of_user', {"user": listing.user.id}) }}">
-                                            {{- 'trans.User listings' | trans -}}
-                                        </a>)
+                                        <div>
+                                            <a href="{{ path('app_public_listings_of_user', {"user": listing.user.id}) }}">
+                                                {{- 'trans.other listings' | trans -}}
+                                            </a>
+                                        </div>
                                     {% endif %}
                                 </div>
                             </div>

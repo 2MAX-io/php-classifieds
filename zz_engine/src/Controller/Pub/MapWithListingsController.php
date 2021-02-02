@@ -29,6 +29,7 @@ class MapWithListingsController extends AbstractController
         }
 
         return $this->render('map_with_listings.html.twig', [
+            'displayTopAdvert' => false,
             ParamEnum::DATA_FOR_JS => [
                 ParamEnum::LISTING_LIST => $mapWithListingsService->getListingsOnMap(),
                 ParamEnum::MAP_DEFAULT_LATITUDE => $mapDefaultConfig->getLatitude(),

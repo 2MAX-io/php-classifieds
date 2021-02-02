@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Service\System\HealthCheck\HealthChecker\Settings;
 
 use App\Entity\Setting;
-use App\Form\Admin\SettingsType;
+use App\Form\Admin\Settings\SettingsType;
 use App\Helper\Arr;
 use App\Helper\ExceptionHelper;
 use App\Helper\Helper;

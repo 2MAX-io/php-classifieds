@@ -390,7 +390,7 @@
 
                 <!-- photos side -->
                 {% if listing.listingFiles.count > 0 %}
-                    <div class="card mb-3 d-none d-md-block">
+                    <div class="card mb-3 d-none d-md-block d-print-none">
                         <h5 class="card-header card-header-small">{{ 'trans.Photos' | trans }}</h5>
 
                         <div class="card-body">
@@ -440,7 +440,7 @@
 
                 <!-- share listing -->
                 {% if not displayAsExpired(listing) %}
-                    <div class="card mb-3 d-none d-md-block">
+                    <div class="card mb-3 d-none d-md-block d-print-none">
                         <h5 class="card-header card-header-small">{{ 'trans.Share This Listing' | trans }}</h5>
 
                         <div class="card-body">

@@ -1,6 +1,6 @@
 "use strict";
 
-let $messageTextarea = $('.js__message-textarea');
+var $messageTextarea = $('.js__message-textarea');
 $messageTextarea.on('keypress', function (event) {
     if(event["which"] === 13 && !event.shiftKey && $messageTextarea.val().trim() !== ''){
         $(event.target.form).submit();

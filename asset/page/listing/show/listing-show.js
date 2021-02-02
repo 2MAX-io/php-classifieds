@@ -53,7 +53,7 @@ $('.js__show-on-map-button').on('click', function () {
 
     let mapLatLng = new L.LatLng(
         app.getDataForJs()[app.ParamEnum.MAP_LOCATION_COORDINATES][app.ParamEnum.LATITUDE],
-        app.getDataForJs()[app.ParamEnum.MAP_LOCATION_COORDINATES][app.ParamEnum.LONGITUDE],
+        app.getDataForJs()[app.ParamEnum.MAP_LOCATION_COORDINATES][app.ParamEnum.LONGITUDE]
     );
     let map = L.map(document.querySelector('.js__listing-show-single-map')).setView(mapLatLng, 12);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {

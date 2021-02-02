@@ -15,12 +15,18 @@ monolog:
             action_level: error
             handler: error_only_rotating_file
             excluded_http_codes: [403, 404, 405]
+            channels: ["!event", "!frontend"]
         error_only_rotating_file:
             type: rotating_file
             path: "%kernel.logs_dir%/%kernel.environment%_error_only.log"
             level: error
             include_stacktraces: true
-            channels: ["!event"]
+        frontend:
+            type: rotating_file
+            path: "%kernel.logs_dir%/%kernel.environment%_frontend.log"
+            level: error
+            include_stacktraces: true
+            channels: ["frontend"]
         console:
             type: console
             process_psr_3_messages: false

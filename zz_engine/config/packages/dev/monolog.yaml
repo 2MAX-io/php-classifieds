@@ -15,13 +15,19 @@ monolog:
             path: "%kernel.logs_dir%/%kernel.environment%_error_only.log"
             level: error
             include_stacktraces: true
-            channels: ["!event"]
+            channels: ["!event", "!frontend"]
         debug_all:
             type: rotating_file
             path: "%kernel.logs_dir%/%kernel.environment%_debug_all.log"
             level: debug
             include_stacktraces: true
             channels: ["!event"]
+        frontend:
+            type: rotating_file
+            path: "%kernel.logs_dir%/%kernel.environment%_frontend.log"
+            level: error
+            include_stacktraces: true
+            channels: ["frontend"]
         # uncomment to get logging in your browser
         # you may have to allow bigger header sizes in your Web server configuration
         #firephp:

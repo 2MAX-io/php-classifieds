@@ -674,6 +674,7 @@ trans:
     There are no messages: 'Nie ma wiadomości'
     Error, you are trying to send message to yourself: 'Wystąpił błąd, próbujesz wysłać wiadomość do samego siebie'
     Select thread to see messages: 'Wybierz wątek aby zobaczyć wiadomości'
+    other listings: 'pozostałe ogłoszenia »'
 
 
 '—': '—'

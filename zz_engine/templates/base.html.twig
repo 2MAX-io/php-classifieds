@@ -29,7 +29,7 @@
 </head>
 <body>
 <!-- top -->
-<div class="container-fluid page-top">
+<div class="container-fluid page-top d-print-none">
     <div class="container container-remove-padding">
         <nav class="navbar navbar-top navbar-expand-lg navbar-light">
             <a class="navbar-brand" href="{{ path('app_index') }}" title="{{ settings.indexPageTitle }}">
@@ -131,7 +131,7 @@
 </div>
 
 <!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark d-none d-md-block menu-secondary">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark d-none d-md-block menu-secondary d-print-none">
     <div class="container">
         <button
                 class="navbar-toggler"
@@ -192,7 +192,7 @@
 </nav>
 
 {% if displayTopAdvert ?? true %}
-    <div class="text-center my-2">
+    <div class="text-center my-2 d-print-none">
         {% set zoneId = zoneId | default(categoryToAdvertZoneId(category | default(null))) %}
         <script type='text/javascript'><!--//<![CDATA[
             document.MAX_ct0 ='INSERT_CLICKURL_HERE';
@@ -218,7 +218,7 @@
 {% endif %}
 
 {% if not app.request.cookies.get('gdpr', false) %}
-    <div id="gdpr" class="alert alert-info">
+    <div id="gdpr" class="alert alert-info d-print-none">
         <div class="container">
             {{ 'trans.We use cookies to improve your experience on our site. To find out more, read our' | trans }}
 
@@ -243,7 +243,7 @@
 {% block body %}{% endblock body %}
 
 <!-- footer -->
-<div class="container mt-1 mt-md-2">
+<div class="container mt-1 mt-md-2 d-print-none">
     <footer class="pt-1 pt-md-3 border-top">
         <div class="row">
             <div class="col-12 col-md">

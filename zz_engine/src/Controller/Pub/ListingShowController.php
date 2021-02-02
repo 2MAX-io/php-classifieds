@@ -31,10 +31,10 @@ class ListingShowController extends AbstractController
         EventDispatcherInterface $eventDispatcher
     ): Response {
         $listingShowDto = $listingShowSingleService->getSingle($id);
-        $listing = $listingShowDto->getListing();
         if (!$listingShowDto) {
             throw $this->createNotFoundException();
         }
+        $listing = $listingShowDto->getListing();
 
         if ($slug !== $listing->getSlug()) {
             return $this->redirectToRoute($request->get('_route'), [

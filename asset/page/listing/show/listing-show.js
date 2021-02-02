@@ -51,11 +51,11 @@ $('.js__show-on-map-button').on('click', function () {
     $('.js__listing-show-single-map').show();
     $('.js__show-on-map-button-wrapper').hide();
 
-    let mapLatLng = new L.LatLng(
+    var mapLatLng = new L.LatLng(
         app.getDataForJs()[app.ParamEnum.MAP_LOCATION_COORDINATES][app.ParamEnum.LATITUDE],
         app.getDataForJs()[app.ParamEnum.MAP_LOCATION_COORDINATES][app.ParamEnum.LONGITUDE]
     );
-    let map = L.map(document.querySelector('.js__listing-show-single-map')).setView(mapLatLng, 12);
+    var map = L.map(document.querySelector('.js__listing-show-single-map')).setView(mapLatLng, 12);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);

@@ -18,7 +18,7 @@ app.paymentWait.refresh = function () {
         $('#js__lastRefreshTime').text(data['lastRefreshTime']);
 
         if (data['paymentComplete'] === true) {
-            let $jsPaymentStatus = $('#js__paymentStatus');
+            var $jsPaymentStatus = $('#js__paymentStatus');
             $jsPaymentStatus.addClass('text-success');
             $jsPaymentStatus.removeClass('text-danger');
             $jsPaymentStatus.text(Translator.trans('trans.Success, redirecting...'));

@@ -1,10 +1,10 @@
 "use strict";
 
-let mapLatLng = new L.LatLng(
+var mapLatLng = new L.LatLng(
     app.getDataForJs()[app.ParamEnum.MAP_DEFAULT_LATITUDE],
     app.getDataForJs()[app.ParamEnum.MAP_DEFAULT_LONGITUDE]
 );
-let map = L.map(document.querySelector('.js__map-with-listings'))
+var map = L.map(document.querySelector('.js__map-with-listings'))
     .setView(mapLatLng, app.getDataForJs()[app.ParamEnum.MAP_DEFAULT_ZOOM])
 ;
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -33,7 +33,7 @@ map.on('moveend', function () {
 });
 
 app.getDataForJs()[app.ParamEnum.LISTING_LIST].forEach(listingOnMap => {
-    let url = Routing.generate('app_listing_show', {id: listingOnMap.listingId, slug: listingOnMap.listingSlug});
+    var url = Routing.generate('app_listing_show', {id: listingOnMap.listingId, slug: listingOnMap.listingSlug});
 
     new L.marker(new L.LatLng(listingOnMap.latitude, listingOnMap.longitude))
         .bindPopup(`

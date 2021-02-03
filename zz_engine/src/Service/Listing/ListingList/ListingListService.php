@@ -96,9 +96,9 @@ class ListingListService
             $qb->setParameter(':query', Search::optimizeMatch($request->get('query', false)));
         }
 
-        if ($request->get('user', false)) {
+        if ($listingListDto->getFilterByUser()) {
             $qb->andWhere($qb->expr()->eq('listing.user', ':user'));
-            $qb->setParameter(':user', (int) $request->get('user', false));
+            $qb->setParameter(':user', $listingListDto->getFilterByUser()->getId());
         }
 
         $this->listingPublicDisplayService->applyPublicDisplayConditions($qb);

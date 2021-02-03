@@ -7,6 +7,7 @@ namespace App\Service\Listing\ListingList;
 use App\Entity\Category;
 use App\Entity\CustomField;
 use App\Entity\Listing;
+use App\Entity\User;
 use Pagerfanta\Pagerfanta;
 
 class ListingListDto
@@ -50,6 +51,11 @@ class ListingListDto
      * @var CustomField[]
      */
     private $customFieldForCategoryList;
+
+    /**
+     * @var User|null
+     */
+    private $filterByUser;
 
     /**
      * @return \Traversable|Listing[]
@@ -140,5 +146,15 @@ class ListingListDto
     public function setCustomFieldForCategoryList(array $customFieldForCategoryList): void
     {
         $this->customFieldForCategoryList = $customFieldForCategoryList;
+    }
+
+    public function getFilterByUser(): ?User
+    {
+        return $this->filterByUser;
+    }
+
+    public function setFilterByUser(?User $filterByUser): void
+    {
+        $this->filterByUser = $filterByUser;
     }
 }

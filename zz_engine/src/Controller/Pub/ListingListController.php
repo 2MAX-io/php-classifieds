@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace App\Controller\Pub;
 
+use App\Entity\User;
 use App\Repository\CategoryRepository;
 use App\Service\Category\CategoryListService;
 use App\Service\Listing\ListingList\ListingListDto;
 use App\Service\Listing\ListingList\ListingListService;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,9 +23,15 @@ class ListingListController extends AbstractController
      */
     private $trans;
 
-    public function __construct(TranslatorInterface $trans)
+    /**
+     * @var EntityManagerInterface
+     */
+    private $em;
+
+    public function __construct(TranslatorInterface $trans, EntityManagerInterface $em)
     {
         $this->trans = $trans;
+        $this->em = $em;
     }
 
     /**
@@ -58,8 +66,14 @@ class ListingListController extends AbstractController
             return $this->redirectToRoute('app_last_added');
         }
 
-        if ($request->query->has('user') && !\ctype_digit($request->query->get('user', false))) {
-            throw $this->createNotFoundException();
+        if ($request->query->has('user')) {
+            $userId = (int) $request->query->get('user');
+            $user = $this->em->getRepository(User::class)->findOneBy(['id' => $userId]);
+            if (!$user) {
+                throw $this->createNotFoundException();
+            }
+
+            $listingListDto->setFilterByUser($user);
         }
 
         if ($listingListDto->getRoute() === 'app_last_added') {

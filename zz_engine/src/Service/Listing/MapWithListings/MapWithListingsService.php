@@ -73,7 +73,7 @@ class MapWithListingsService
         $mapDefaultConfigDto->setLongitude($this->settingsService->getSettingsDto()->getMapDefaultLongitude());
         $mapDefaultConfigDto->setZoom($this->settingsService->getSettingsDto()->getMapDefaultZoom());
 
-        $hasLocationInRequest = null !== $request->get(ParamEnum::LATITUDE, null);
+        $hasLocationInRequest = null !== $request->get(ParamEnum::LATITUDE);
         if ($hasLocationInRequest) {
             $mapDefaultConfigDto->setLatitude((float) $request->get(ParamEnum::LATITUDE));
             $mapDefaultConfigDto->setLongitude((float) $request->get(ParamEnum::LONGITUDE));

@@ -21,7 +21,7 @@ class MessageToUserAggregateDto
 
     public function getNewestUserMessage(): UserMessage
     {
-        return end($this->userMessageList);
+        return \end($this->userMessageList);
     }
 
     public function getUserMessageList(): array

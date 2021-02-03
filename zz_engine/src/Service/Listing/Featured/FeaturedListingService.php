@@ -9,6 +9,7 @@ use App\Entity\FeaturedPackageForCategory;
 use App\Entity\Listing;
 use App\Entity\Payment;
 use App\Entity\UserBalanceChange;
+use App\Exception\UserVisibleException;
 use App\Security\CurrentUserService;
 use App\Service\Listing\ValidityExtend\ValidUntilSetService;
 use App\Service\Money\UserBalanceService;
@@ -53,13 +54,17 @@ class FeaturedListingService
     public function makeFeatured(Listing $listing, int $featuredTimeSeconds): void
     {
         $featuredUntilDate = $listing->getFeaturedUntilDate();
-        $baseDatetimeToAddFeaturedInterval = Carbon::now();
-        if (null !== $featuredUntilDate && $featuredUntilDate > Carbon::now()) {
-            $baseDatetimeToAddFeaturedInterval = $featuredUntilDate;
+        $baseFeaturedUntilDate = Carbon::now();
+        $hasFeaturedUntilDate = null !== $featuredUntilDate;
+        $isFeatured = $featuredUntilDate > Carbon::now();
+        if ($hasFeaturedUntilDate && $isFeatured) {
+            $baseFeaturedUntilDate = $featuredUntilDate;
         }
 
-        $newFeaturedUntilDate = Carbon::instance($baseDatetimeToAddFeaturedInterval)->addSeconds($featuredTimeSeconds);
-        if ($newFeaturedUntilDate > Carbon::now()->addHour(16)) {
+        $newFeaturedUntilDate = Carbon::instance($baseFeaturedUntilDate)->addSeconds($featuredTimeSeconds);
+        $setFeaturedDateToTheEndOfTheDay = $featuredTimeSeconds > 20*3600
+        && $newFeaturedUntilDate > Carbon::now()->addHours(16);
+        if ($setFeaturedDateToTheEndOfTheDay) {
             $newFeaturedUntilDate->setTime(23, 59, 59);
         }
 
@@ -79,8 +84,11 @@ class FeaturedListingService
         }
     }
 
-    public function makeFeaturedByBalance(Listing $listing, FeaturedPackage $featuredPackage, Payment $payment = null): UserBalanceChange
-    {
+    public function makeFeaturedByBalance(
+        Listing $listing,
+        FeaturedPackage $featuredPackage,
+        Payment $payment = null
+    ): UserBalanceChange {
         $this->em->beginTransaction();
 
         $paymentAndListingHasSameUser = $payment && $listing->getUser() === $payment->getUser();
@@ -97,7 +105,7 @@ class FeaturedListingService
         try {
             $cost = $featuredPackage->getPrice();
             if (!$this->userBalanceService->hasAmount($cost, $listing->getUser())) {
-                return null;
+                throw new UserVisibleException('trans.error, not enough funds to pay');
             }
 
             $this->makeFeatured($listing, $featuredPackage->getDaysFeaturedExpire() * 3600 * 24);

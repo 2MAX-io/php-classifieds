@@ -98,6 +98,11 @@ class UserMessageThread
         return $this->listing;
     }
 
+    public function getListingNotNull(): Listing
+    {
+        return $this->listing;
+    }
+
     public function setListing(?Listing $listing): void
     {
         $this->listing = $listing;

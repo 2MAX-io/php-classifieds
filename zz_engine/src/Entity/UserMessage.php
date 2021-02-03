@@ -118,7 +118,7 @@ class UserMessage
             return $this->getSenderUser();
         }
 
-        throw new \RuntimeException('other user not found for ' . $user);
+        throw new \RuntimeException("other user not found for user message {$this->getId()} for user {$user->getId()}");
     }
 
     public function getId(): ?int
@@ -150,7 +150,7 @@ class UserMessage
         return $this;
     }
 
-    public function getSenderUser(): ?User
+    public function getSenderUser(): User
     {
         return $this->senderUser;
     }
@@ -162,7 +162,7 @@ class UserMessage
         return $this;
     }
 
-    public function getRecipientUser(): ?User
+    public function getRecipientUser(): User
     {
         return $this->recipientUser;
     }

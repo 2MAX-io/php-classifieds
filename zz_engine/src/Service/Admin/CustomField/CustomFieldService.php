@@ -39,7 +39,7 @@ class CustomFieldService
         $pdo = $this->em->getConnection();
         $stmt = $pdo->prepare('SET @count = :count');
         $stmt->execute([':count' => SortService::START_REORDER_FROM]);
-        $pdo->query('UPDATE custom_field SET sort = @count:= @count + 1 WHERE 1 ORDER BY sort ASC;');
+        $pdo->executeQuery('UPDATE custom_field SET sort = @count:= @count + 1 WHERE 1 ORDER BY sort ASC;');
     }
 
     public function deleteValueFromListings(CustomField $customField): void

@@ -22,7 +22,9 @@ var isUploadFinished = function () {
     return chosenFiles[0].uploaded;
 };
 
-var onListingSaveFormSubmit = function (button, event) {
+$('.js__listingFormSaveButton').on('click', function (event) {
+    var button = this;
+
     if (!preventDoubleClick(button, event)) {
         return;
     }
@@ -53,4 +55,4 @@ var onListingSaveFormSubmit = function (button, event) {
             });
         }
     }, 1000);
-};
+});

@@ -12,7 +12,7 @@ use Pagerfanta\Pagerfanta;
 class ListingListDto
 {
     /**
-     * @var \Traversable
+     * @var Listing[]|iterable
      */
     private $results;
 
@@ -84,7 +84,10 @@ class ListingListDto
         $this->pager = $pager;
     }
 
-    public function setResults(\Traversable $results): void
+    /**
+     * @param Listing[]|iterable $results
+     */
+    public function setResults(iterable $results): void
     {
         $this->results = $results;
     }

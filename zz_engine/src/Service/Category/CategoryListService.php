@@ -90,13 +90,13 @@ class CategoryListService
         $qb->setParameter(':category', $category);
 
         /** @var Category $category */
-        $category = $qb->getQuery()->getOneOrNullResult();
+        $currentCategoryLevel = $qb->getQuery()->getOneOrNullResult();
 
-        $result = [$category];
-        while($category) {
-            $category = $category->getParent();
-            if ($category && $category->getLvl() > 0) {
-                $result[] = $category;
+        $result = [$currentCategoryLevel];
+        while($currentCategoryLevel) {
+            $currentCategoryLevel = $currentCategoryLevel->getParent();
+            if ($currentCategoryLevel && $currentCategoryLevel->getLvl() > 0) {
+                $result[] = $currentCategoryLevel;
             }
         }
 

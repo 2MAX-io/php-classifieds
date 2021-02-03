@@ -245,6 +245,8 @@ trans:
     Error, you are trying to send message to yourself: 'Error, you are trying to send message to yourself'
     Select thread to see messages: 'Select thread to see messages'
     other listings: 'other listings »'
+    error, not enough funds to pay: 'error, not enough funds to pay'
+    email address not found: 'email address not found'
 
 trans.customFieldType.SELECT_AS_CHECKBOXES: 'Checkboxes in filters, single select when editing'
 trans.customFieldType.SELECT_SINGLE: 'Single selection field'

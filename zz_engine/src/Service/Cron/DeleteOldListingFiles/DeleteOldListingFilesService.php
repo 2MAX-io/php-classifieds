@@ -74,7 +74,7 @@ class DeleteOldListingFilesService
                     $this->logger->error('[RemoveOldListingFilesService] file does not exists, from listing id: {listingId}, valid until: {validUntil}, path: {path}', [
                         'path' => $fileAbsolutePath,
                         'listingId' => $listing->getId(),
-                        'validUntil' => $listing->getValidUntilDate()->format('Y-m-d H:i:s'),
+                        'validUntil' => $listing->getValidUntilDateStringOrNull(),
                     ]);
                 }
 
@@ -86,7 +86,7 @@ class DeleteOldListingFilesService
                     $this->logger->info('[RemoveOldListingFilesService] deleting files from listing id: {listingId}, valid until: {validUntil}, path: {path}', [
                         'path' => $fileAbsolutePath,
                         'listingId' => $listing->getId(),
-                        'validUntil' => $listing->getValidUntilDate()->format('Y-m-d H:i:s'),
+                        'validUntil' => $listing->getValidUntilDateStringOrNull(),
                     ]);
 
                     $this->filesystem->remove($fileAbsolutePath);
@@ -111,7 +111,7 @@ class DeleteOldListingFilesService
                     $this->logger->debug('[RemoveOldListingFilesService] dry run, real run would delete files from listing id: {listingId}, valid until: {validUntil}, path: {path}', [
                         'path' => $fileAbsolutePath,
                         'listingId' => $listing->getId(),
-                        'validUntil' => $listing->getValidUntilDate()->format('Y-m-d H:i:s'),
+                        'validUntil' => $listing->getValidUntilDateStringOrNull(),
                     ]);
                 }
             }

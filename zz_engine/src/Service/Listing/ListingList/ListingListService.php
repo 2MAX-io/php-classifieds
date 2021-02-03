@@ -13,6 +13,7 @@ use App\Helper\Str;
 use App\Service\Listing\ListingPublicDisplayService;
 use App\Service\Listing\Search\SaveSearchHistoryService;
 use App\Service\System\Pagination\PaginationService;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr\Join;
@@ -129,7 +130,7 @@ class ListingListService
                         $qb->setParameter(
                             ':customFieldValueMin_' . $sqlParamId,
                             $customFieldFormValueArray['range']['min'],
-                            \Doctrine\DBAL\Types\Types::INTEGER
+                            Types::INTEGER
                         );
                     }
 
@@ -138,7 +139,7 @@ class ListingListService
                         $qb->setParameter(
                             ':customFieldValueMax_' . $sqlParamId,
                             $customFieldFormValueArray['range']['max'],
-                            \Doctrine\DBAL\Types\Types::INTEGER
+                            Types::INTEGER
                         );
                     }
 

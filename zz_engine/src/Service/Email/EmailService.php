@@ -6,17 +6,11 @@ namespace App\Service\Email;
 
 use App\Service\Setting\SettingsService;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
-use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class EmailService
 {
-    /**
-     * @var MailerInterface
-     */
-    private $mailer;
-
     /**
      * @var TranslatorInterface
      */
@@ -28,11 +22,9 @@ class EmailService
     private $settingsService;
 
     public function __construct(
-        MailerInterface $mailer,
         SettingsService $settingsService,
         TranslatorInterface $trans
     ) {
-        $this->mailer = $mailer;
         $this->trans = $trans;
         $this->settingsService = $settingsService;
     }
@@ -53,11 +45,7 @@ class EmailService
     {
         $emailFromName = $this->settingsService->getSettingsDto()->getEmailFromName();
 
-        if (null === $emailFromName) {
-            return $this->trans->trans('trans.Classifieds');
-        }
-
-        return $emailFromName;
+        return $emailFromName ?? $this->trans->trans('trans.Classifieds');
     }
 
     public function getEmailFromAddress(): ?string

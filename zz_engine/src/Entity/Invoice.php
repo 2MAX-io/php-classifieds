@@ -590,92 +590,92 @@ class Invoice
         $this->totalTaxMoney = $totalTaxMoney;
     }
 
-    public function getSellerCompanyName()
+    public function getSellerCompanyName(): string
     {
         return $this->sellerCompanyName;
     }
 
-    public function setSellerCompanyName($sellerCompanyName): void
+    public function setSellerCompanyName(string $sellerCompanyName): void
     {
         $this->sellerCompanyName = $sellerCompanyName;
     }
 
-    public function getSellerTaxNumber()
+    public function getSellerTaxNumber(): string
     {
         return $this->sellerTaxNumber;
     }
 
-    public function setSellerTaxNumber($sellerTaxNumber): void
+    public function setSellerTaxNumber(string $sellerTaxNumber): void
     {
         $this->sellerTaxNumber = $sellerTaxNumber;
     }
 
-    public function getSellerCity()
+    public function getSellerCity(): string
     {
         return $this->sellerCity;
     }
 
-    public function setSellerCity($sellerCity): void
+    public function setSellerCity(string $sellerCity): void
     {
         $this->sellerCity = $sellerCity;
     }
 
-    public function getSellerStreet()
+    public function getSellerStreet(): string
     {
         return $this->sellerStreet;
     }
 
-    public function setSellerStreet($sellerStreet): void
+    public function setSellerStreet(string $sellerStreet): void
     {
         $this->sellerStreet = $sellerStreet;
     }
 
-    public function getSellerBuildingNumber()
+    public function getSellerBuildingNumber(): string
     {
         return $this->sellerBuildingNumber;
     }
 
-    public function setSellerBuildingNumber($sellerBuildingNumber): void
+    public function setSellerBuildingNumber(string $sellerBuildingNumber): void
     {
         $this->sellerBuildingNumber = $sellerBuildingNumber;
     }
 
-    public function getSellerUnitNumber()
+    public function getSellerUnitNumber(): string
     {
         return $this->sellerUnitNumber;
     }
 
-    public function setSellerUnitNumber($sellerUnitNumber): void
+    public function setSellerUnitNumber(string $sellerUnitNumber): void
     {
         $this->sellerUnitNumber = $sellerUnitNumber;
     }
 
-    public function getSellerZipCode()
+    public function getSellerZipCode(): string
     {
         return $this->sellerZipCode;
     }
 
-    public function setSellerZipCode($sellerZipCode): void
+    public function setSellerZipCode(string $sellerZipCode): void
     {
         $this->sellerZipCode = $sellerZipCode;
     }
 
-    public function getSellerCountry()
+    public function getSellerCountry(): string
     {
         return $this->sellerCountry;
     }
 
-    public function setSellerCountry($sellerCountry): void
+    public function setSellerCountry(string $sellerCountry): void
     {
         $this->sellerCountry = $sellerCountry;
     }
 
-    public function getSellerEmail()
+    public function getSellerEmail(): string
     {
         return $this->sellerEmail;
     }
 
-    public function setSellerEmail($sellerEmail): void
+    public function setSellerEmail(string $sellerEmail): void
     {
         $this->sellerEmail = $sellerEmail;
     }

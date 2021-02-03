@@ -31,7 +31,7 @@ class UniqueValueValidator extends ConstraintValidator
     public function validate($fieldValue, Constraint $constraint): void
     {
         if (!$constraint instanceof UniqueValue) {
-            throw new UnexpectedTypeException($constraint, __NAMESPACE__.'\UniqueValue');
+            throw new UnexpectedTypeException($constraint, UniqueValue::class);
         }
 
         if (!\is_array($constraint->fields) && !\is_string($constraint->fields)) {

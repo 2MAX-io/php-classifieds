@@ -68,7 +68,7 @@ class MoveFilesToNewLocationService
                     $this->logger->error('[MoveFilesToNewLocationService] file does not exists, from listing id: {listingId}, valid until: {validUntil}, path: {path}', [
                         'path' => $oldFilePath,
                         'listingId' => $listing->getId(),
-                        'validUntil' => $listing->getValidUntilDate()->format('Y-m-d H:i:s'),
+                        'validUntil' => $listing->getValidUntilDateStringOrNull(),
                     ]);
 
                     continue;
@@ -78,7 +78,7 @@ class MoveFilesToNewLocationService
                     $this->logger->debug('[MoveFilesToNewLocationService] file not in listing file path', [
                         'path' => $oldFilePath,
                         'listingId' => $listing->getId(),
-                        'validUntil' => $listing->getValidUntilDate()->format('Y-m-d H:i:s'),
+                        'validUntil' => $listing->getValidUntilDateStringOrNull(),
                     ]);
 
                     continue;
@@ -86,7 +86,7 @@ class MoveFilesToNewLocationService
                 $this->logger->debug('[MoveFilesToNewLocationService] generating target path for listing id: {listingId}, valid until: {validUntil}, path: {path}', [
                     'path' => $oldFilePath,
                     'listingId' => $listing->getId(),
-                    'validUntil' => $listing->getValidUntilDate()->format('Y-m-d H:i:s'),
+                    'validUntil' => $listing->getValidUntilDateStringOrNull(),
                 ]);
                 $newFilePath = ListingFileHelper::getDestinationDirectory($listing) . \DIRECTORY_SEPARATOR . \basename($oldFilePath);
                 FileHelper::throwExceptionIfPathOutsideDir($newFilePath, FilePath::getListingFilePath());
@@ -97,7 +97,7 @@ class MoveFilesToNewLocationService
                         'oldFilePath' => $oldFilePath,
                         'newFilePath' => $newFilePath,
                         'listingId' => $listing->getId(),
-                        'validUntil' => $listing->getValidUntilDate()->format('Y-m-d H:i:s'),
+                        'validUntil' => $listing->getValidUntilDateStringOrNull(),
                     ]);
 
                     $this->filesystem->copy($oldFilePath, $newFilePath);
@@ -111,7 +111,7 @@ class MoveFilesToNewLocationService
                         'oldFilePath' => $oldFilePath,
                         'newFilePath' => $newFilePath,
                         'listingId' => $listing->getId(),
-                        'validUntil' => $listing->getValidUntilDate()->format('Y-m-d H:i:s'),
+                        'validUntil' => $listing->getValidUntilDateStringOrNull(),
                     ]);
                 }
             }

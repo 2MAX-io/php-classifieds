@@ -654,6 +654,15 @@ class Listing
         return $this->validUntilDate;
     }
 
+    public function getValidUntilDateStringOrNull(): ?string
+    {
+        if (!$this->getValidUntilDate()) {
+            return null;
+        }
+
+        return $this->getValidUntilDate()->format('Y-m-d H:i:s');
+    }
+
     public function setValidUntilDate(\DateTimeInterface $validUntilDate): self
     {
         $this->validUntilDate = $validUntilDate;

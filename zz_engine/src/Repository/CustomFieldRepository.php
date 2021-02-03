@@ -7,6 +7,7 @@ namespace App\Repository;
 use App\Entity\Category;
 use App\Entity\CustomField;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\DBAL\Connection;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -38,7 +39,7 @@ class CustomFieldRepository extends ServiceEntityRepository
 
         $qb = $this->createQueryBuilder('customField');
         $qb->andWhere($qb->expr()->in('customField.id', ':ids'));
-        $qb->setParameter('ids', $ids, \Doctrine\DBAL\Connection::PARAM_INT_ARRAY);
+        $qb->setParameter('ids', $ids, Connection::PARAM_INT_ARRAY);
         $qb->indexBy('customField', 'customField.id');
 
         return $qb->getQuery()->getResult();

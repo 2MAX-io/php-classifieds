@@ -9,7 +9,7 @@ use App\Helper\Search;
 use App\Security\CurrentUserService;
 use App\Service\System\Pagination\PaginationService;
 use Doctrine\ORM\EntityManagerInterface;
-use Pagerfanta\Adapter\DoctrineORMAdapter;
+use Pagerfanta\Doctrine\ORM\QueryAdapter;
 use Pagerfanta\Pagerfanta;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -72,7 +72,7 @@ class UserListingListService
 
         $qb->orderBy('listing.lastEditDate', 'DESC');
 
-        $adapter = new DoctrineORMAdapter($qb, false, $qb->getDQLPart('having') !== null);
+        $adapter = new QueryAdapter($qb, false, $qb->getDQLPart('having') !== null);
         $pager = new Pagerfanta($adapter);
         $pager->setNormalizeOutOfRangePages(true);
         $pager->setMaxPerPage($this->paginationService->getMaxPerPage());

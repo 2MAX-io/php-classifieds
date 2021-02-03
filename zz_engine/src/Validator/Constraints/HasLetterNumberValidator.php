@@ -28,7 +28,7 @@ class HasLetterNumberValidator extends ConstraintValidator
     public function validate($value, Constraint $constraint): void
     {
         if (!$constraint instanceof HasLetterNumber) {
-            throw new UnexpectedTypeException($constraint, __NAMESPACE__.'\HasLetterNumber');
+            throw new UnexpectedTypeException($constraint, HasLetterNumber::class);
         }
 
         if (null === $value || '' === $value) {

@@ -6,7 +6,7 @@ namespace App\Service\System\Pagination;
 
 use App\Service\Setting\SettingsService;
 use Doctrine\ORM\QueryBuilder;
-use Pagerfanta\Adapter\DoctrineORMAdapter;
+use Pagerfanta\Doctrine\ORM\QueryAdapter;
 use Pagerfanta\Pagerfanta;
 use Symfony\Component\HttpFoundation\RequestStack;
 
@@ -30,7 +30,7 @@ class PaginationService
 
     public function createPaginationForQb(QueryBuilder $qb): Pagerfanta
     {
-        $adapter = new DoctrineORMAdapter($qb, true, $qb->getDQLPart('having') !== null);
+        $adapter = new QueryAdapter($qb, true, $qb->getDQLPart('having') !== null);
         $pager = new Pagerfanta($adapter);
         $pager->setMaxPerPage($this->getMaxPerPage());
         $pager->setNormalizeOutOfRangePages(true);

@@ -675,7 +675,8 @@ trans:
     Error, you are trying to send message to yourself: 'Wystąpił błąd, próbujesz wysłać wiadomość do samego siebie'
     Select thread to see messages: 'Wybierz wątek aby zobaczyć wiadomości'
     other listings: 'pozostałe ogłoszenia »'
-
+    error, not enough funds to pay: 'błąd, za mało środków aby zapłacić'
+    email address not found: 'nie znaleziono adresu email'
 
 '—': '—'
 Year: Rok

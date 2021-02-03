@@ -6,6 +6,7 @@ namespace App\Repository;
 
 use App\Entity\Category;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\DBAL\Connection;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -46,7 +47,7 @@ class CategoryRepository extends ServiceEntityRepository
 
         $qb = $this->createQueryBuilder('category');
         $qb->andWhere($qb->expr()->in('category.id', ':ids'));
-        $qb->setParameter('ids', $ids, \Doctrine\DBAL\Connection::PARAM_INT_ARRAY);
+        $qb->setParameter('ids', $ids, Connection::PARAM_INT_ARRAY);
         $qb->indexBy('category', 'category.id');
 
         return $qb->getQuery()->getResult();

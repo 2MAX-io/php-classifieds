@@ -18,9 +18,11 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Admin implements UserInterface, RoleInterface, EnablableInterface
 {
     /**
+     * @var int
+     *
      * @ORM\Id()
      * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer", options={"unsigned"=true})
+     * @ORM\Column(type="integer", options={"unsigned"=true}, nullable=false)
      */
     private $id;
 
@@ -34,7 +36,7 @@ class Admin implements UserInterface, RoleInterface, EnablableInterface
     /**
      * When modifying, change installation script
      *
-     * @var array
+     * @var string[]
      *
      * @ORM\Column(type="json", nullable=false)
      */

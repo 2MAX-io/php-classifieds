@@ -12,24 +12,32 @@ use Doctrine\ORM\Mapping as ORM;
 class ListingView
 {
     /**
+     * @var int
+     *
      * @ORM\Id()
      * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer", options={"unsigned"=true})
+     * @ORM\Column(type="integer", options={"unsigned"=true}, nullable=false)
      */
     private $id;
 
     /**
+     * @var Listing
+     *
      * @ORM\ManyToOne(targetEntity="App\Entity\Listing")
      * @ORM\JoinColumn(nullable=false)
      */
     private $listing;
 
     /**
+     * @var int
+     *
      * @ORM\Column(type="integer", nullable=false)
      */
     private $viewCount;
 
     /**
+     * @var \DateTimeInterface
+     *
      * @ORM\Column(type="datetime", nullable=false)
      */
     private $datetime;

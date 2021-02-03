@@ -12,23 +12,31 @@ use Doctrine\ORM\Mapping as ORM;
 class Setting
 {
     /**
+     * @var int
+     *
      * @ORM\Id()
      * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer", options={"unsigned"=true})
+     * @ORM\Column(type="integer", options={"unsigned"=true}, nullable=false)
      */
     private $id;
 
     /**
+     * @var string
+     *
      * @ORM\Column(type="string", length=70, nullable=false)
      */
     private $name;
 
     /**
+     * @var string
+     *
      * @ORM\Column(type="string", length=5000, nullable=false)
      */
     private $value;
 
     /**
+     * @var \DateTimeInterface
+     *
      * @ORM\Column(type="datetime", nullable=false)
      */
     private $lastUpdateDate;

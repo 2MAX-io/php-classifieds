@@ -13,19 +13,25 @@ use Doctrine\ORM\Mapping as ORM;
 class UserMessage
 {
     /**
+     * @var int
+     *
      * @ORM\Id()
      * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer", options={"unsigned"=true})
+     * @ORM\Column(type="integer", options={"unsigned"=true}, nullable=false)
      */
     private $id;
 
     /**
+     * @var User
+     *
      * @ORM\ManyToOne(targetEntity="App\Entity\User")
      * @ORM\JoinColumn(nullable=false)
      */
     private $senderUser;
 
     /**
+     * @var User
+     *
      * @ORM\ManyToOne(targetEntity="App\Entity\User")
      * @ORM\JoinColumn(nullable=false)
      */
@@ -40,11 +46,15 @@ class UserMessage
     private $userMessageThread;
 
     /**
+     * @var \DateTimeInterface
+     *
      * @ORM\Column(type="datetime", nullable=false)
      */
     private $datetime;
 
     /**
+     * @var string
+     *
      * @ORM\Column(type="string", length=3600, nullable=false)
      */
     private $message;

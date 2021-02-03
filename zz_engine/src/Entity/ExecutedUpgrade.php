@@ -13,23 +13,31 @@ use Doctrine\ORM\Mapping as ORM;
 class ExecutedUpgrade
 {
     /**
+     * @var int
+     *
      * @ORM\Id()
      * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer", options={"unsigned"=true})
+     * @ORM\Column(type="integer", options={"unsigned"=true}, nullable=false)
      */
     private $id;
 
     /**
+     * @var string
+     *
      * @ORM\Column(type="string", length=150, nullable=false)
      */
     private $name;
 
     /**
+     * @var int
+     *
      * @ORM\Column(type="integer", nullable=false)
      */
     private $upgradeId;
 
     /**
+     * @var \DateTimeInterface
+     *
      * @ORM\Column(type="datetime", nullable=false)
      */
     private $executedAt;

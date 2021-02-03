@@ -12,19 +12,25 @@ use Doctrine\ORM\Mapping as ORM;
 class FeaturedPackageForCategory
 {
     /**
+     * @var int
+     *
      * @ORM\Id()
      * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer", options={"unsigned"=true})
+     * @ORM\Column(type="integer", options={"unsigned"=true}, nullable=false)
      */
     private $id;
 
     /**
+     * @var Category
+     *
      * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="featuredPackages")
      * @ORM\JoinColumn(nullable=false)
      */
     private $category;
 
     /**
+     * @var FeaturedPackage
+     *
      * @ORM\ManyToOne(targetEntity="App\Entity\FeaturedPackage", inversedBy="featuredPackageForCategories")
      * @ORM\JoinColumn(nullable=false)
      */

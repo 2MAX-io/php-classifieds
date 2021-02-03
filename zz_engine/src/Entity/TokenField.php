@@ -19,24 +19,32 @@ class TokenField
     public const CHANGED_NEW_HASHED_PASSWORD = 'CHANGED_NEW_HASHED_PASSWORD';
 
     /**
+     * @var int
+     *
      * @ORM\Id()
      * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer", options={"unsigned"=true})
+     * @ORM\Column(type="integer", options={"unsigned"=true}, nullable=false)
      */
     private $id;
 
     /**
+     * @var Token
+     *
      * @ORM\ManyToOne(targetEntity="App\Entity\Token", inversedBy="fields")
      * @ORM\JoinColumn(nullable=false)
      */
     private $token;
 
     /**
+     * @var string
+     *
      * @ORM\Column(type="string", length=100, nullable=false)
      */
     private $name;
 
     /**
+     * @var string
+     *
      * @ORM\Column(type="text", nullable=false)
      */
     private $value;

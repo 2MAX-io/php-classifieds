@@ -20,9 +20,11 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 class CustomFieldJoinCategory
 {
     /**
+     * @var int
+     *
      * @ORM\Id()
      * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer", options={"unsigned"=true})
+     * @ORM\Column(type="integer", options={"unsigned"=true}, nullable=false)
      */
     private $id;
 

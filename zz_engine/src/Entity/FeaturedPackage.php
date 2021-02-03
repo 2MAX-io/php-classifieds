@@ -14,28 +14,38 @@ use Doctrine\ORM\Mapping as ORM;
 class FeaturedPackage
 {
     /**
+     * @var int
+     *
      * @ORM\Id()
      * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer", options={"unsigned"=true})
+     * @ORM\Column(type="integer", options={"unsigned"=true}, nullable=false)
      */
     private $id;
 
     /**
+     * @var string
+     *
      * @ORM\Column(type="string", length=50, nullable=false)
      */
     private $name;
 
     /**
+     * @var string
+     *
      * @ORM\Column(type="string", length=70, nullable=false)
      */
     private $adminName;
 
     /**
+     * @var bool
+     *
      * @ORM\Column(type="boolean", nullable=false)
      */
     private $defaultPackage;
 
     /**
+     * @var int
+     *
      * @ORM\Column(type="integer", nullable=false)
      */
     private $price;
@@ -51,22 +61,30 @@ class FeaturedPackage
     private $daysListingExpire;
 
     /**
+     * @var bool
+     *
      * @ORM\Column(type="boolean", nullable=false)
      */
     private $removed = false;
 
     /**
+     * @var string
+     *
      * @ORM\Column(type="string", length=10000, nullable=true)
      */
     private $description;
 
     /**
+     * @var FeaturedPackageForCategory[]|Collection
+     *
      * @ORM\OneToMany(targetEntity="App\Entity\FeaturedPackageForCategory", mappedBy="featuredPackage")
      */
     private $featuredPackageForCategories;
 
     /**
-     * @ORM\OneToMany(targetEntity="PaymentForFeaturedPackage", mappedBy="featuredPackage")
+     * @var PaymentForFeaturedPackage[]|Collection
+     *
+     * @ORM\OneToMany(targetEntity="App\Entity\PaymentForFeaturedPackage", mappedBy="featuredPackage")
      */
     private $paymentFeaturedPackage;
 

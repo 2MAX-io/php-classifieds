@@ -20,66 +20,88 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 class Category
 {
     /**
+     * @var int
+     *
      * @ORM\Id()
      * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer", options={"unsigned"=true})
+     * @ORM\Column(type="integer", options={"unsigned"=true}, nullable=false)
      */
     private $id;
 
     /**
+     * @var Category|null
+     *
      * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="children")
      * @ORM\JoinColumn(nullable=true)
      */
     private $parent;
 
     /**
+     * @var string
+     *
      * @ORM\Column(type="string", length=50, nullable=false)
      */
     private $name;
 
     /**
+     * @var int
+     *
      * @ORM\Column(name="lvl", type="smallint", nullable=false, options={"unsigned"=true})
      */
     private $lvl;
 
     /**
+     * @var int
+     *
      * @ORM\Column(name="lft", type="smallint", nullable=false, options={"unsigned"=true})
      */
     private $lft;
 
     /**
+     * @var int
+     *
      * @ORM\Column(name="rgt", type="smallint", nullable=false, options={"unsigned"=true})
      */
     private $rgt;
 
     /**
+     * @var int
+     *
      * @ORM\Column(type="smallint", nullable=false, options={"unsigned"=true})
      */
     private $sort;
 
     /**
+     * @var string
+     *
      * @ORM\Column(type="string", length=100, unique=true, nullable=false)
      */
     private $slug;
 
     /**
+     * @var string|null
+     *
      * @ORM\Column(type="string", length=100, nullable=true)
      */
     private $picture;
 
     /**
+     * @var Category[]|Collection
+     *
      * @ORM\OneToMany(targetEntity="App\Entity\Category", mappedBy="parent")
      * @ORM\OrderBy({"sort" = "ASC"})
      */
     private $children;
 
     /**
+     * @var Listing[]|Collection
+     *
      * @ORM\OneToMany(targetEntity="App\Entity\Listing", mappedBy="category", fetch="EXTRA_LAZY")
      */
     private $listings;
 
     /**
-     * @var CustomFieldJoinCategory[]
+     * @var CustomFieldJoinCategory[]|Collection
      *
      * @ORM\OneToMany(targetEntity="App\Entity\CustomFieldJoinCategory", mappedBy="category")
      * @ORM\OrderBy({"sort" = "ASC"})
@@ -87,6 +109,8 @@ class Category
     private $customFieldsJoin;
 
     /**
+     * @var FeaturedPackageForCategory[]|Collection
+     *
      * @ORM\OneToMany(targetEntity="App\Entity\FeaturedPackageForCategory", mappedBy="category")
      */
     private $featuredPackages;

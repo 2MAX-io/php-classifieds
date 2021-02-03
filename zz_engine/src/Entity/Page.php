@@ -14,28 +14,38 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 class Page
 {
     /**
+     * @var int
+     *
      * @ORM\Id()
      * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer", options={"unsigned"=true})
+     * @ORM\Column(type="integer", options={"unsigned"=true}, nullable=false)
      */
     private $id;
 
     /**
+     * @var string
+     *
      * @ORM\Column(type="string", length=100, unique=true, nullable=false)
      */
     private $slug;
 
     /**
+     * @var string
+     *
      * @ORM\Column(type="string", length=255, nullable=false)
      */
     private $title;
 
     /**
+     * @var string
+     *
      * @ORM\Column(type="text", nullable=false)
      */
     private $content;
 
     /**
+     * @var bool
+     *
      * @ORM\Column(type="boolean", nullable=false)
      */
     private $enabled;

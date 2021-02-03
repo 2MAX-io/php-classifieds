@@ -12,75 +12,96 @@ use Doctrine\ORM\Mapping as ORM;
 class UserInvoiceDetails
 {
     /**
+     * @var int
+     *
      * @ORM\Id()
      * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", options={"unsigned"=true}, nullable=false)
      */
     private $id;
 
     /**
-     * @var User
+     * @var User|null
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="userInvoiceDetails")
+     * @ORM\JoinColumn(nullable=true)
      */
     private $user;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @var string
+     *
+     * @ORM\Column(type="string", length=255, nullable=false)
      */
     private $companyName;
 
     /**
+     * @var string
+     *
      * @ORM\Column(type="string", length=50, nullable=true)
      */
     private $taxNumber;
 
     /**
-     * @ORM\Column(type="string", length=100)
+     * @var string
+     *
+     * @ORM\Column(type="string", length=100, nullable=false)
      */
     private $city;
 
     /**
+     * @var string
+     *
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $street;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @var string
+     *
+     * @ORM\Column(type="string", length=50, nullable=false)
      */
     private $buildingNumber;
 
     /**
+     * @var string
+     *
      * @ORM\Column(type="string", length=50, nullable=true)
      */
     private $unitNumber;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @var string
+     *
+     * @ORM\Column(type="string", length=50, nullable=false)
      */
     private $zipCode;
 
     /**
+     * @var string
+     *
      * @ORM\Column(type="string", length=50, nullable=true)
      */
     private $country;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @var string
+     *
+     * @ORM\Column(type="string", length=255, nullable=false)
      */
     private $emailForInvoice;
 
     /**
-     * @var \DateTime
+     * @var \DateTimeInterface
      *
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=false)
      */
     private $createdDate;
 
     /**
-     * @var \DateTime
+     * @var \DateTimeInterface
      *
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=false)
      */
     private $updatedDate;
 

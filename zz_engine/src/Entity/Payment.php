@@ -17,9 +17,11 @@ class Payment
     public const BALANCE_TOP_UP_TYPE = 'BALANCE_TOP_UP_TYPE';
 
     /**
+     * @var int
+     *
      * @ORM\Id()
      * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer", options={"unsigned"=true})
+     * @ORM\Column(type="integer", options={"unsigned"=true}, nullable=false)
      */
     private $id;
 
@@ -32,71 +34,99 @@ class Payment
     private $user;
 
     /**
+     * @var string
+     *
      * @ORM\Column(type="string", nullable=false)
      */
     private $type;
 
     /**
+     * @var string
+     *
      * @ORM\Column(type="string", nullable=false, length=255)
      */
     private $description;
 
     /**
+     * @var int
+     *
      * @ORM\Column(type="integer", nullable=false)
      */
     private $amount;
 
     /**
+     * @var int
+     *
      * @ORM\Column(type="integer", nullable=true)
      */
     private $gatewayAmountPaid;
 
     /**
+     * @var string
+     *
      * @ORM\Column(type="string", length=10, nullable=false)
      */
     private $currency;
 
     /**
+     * @var \DateTimeInterface
+     *
      * @ORM\Column(type="datetime", nullable=false)
      */
     private $datetime;
 
     /**
+     * @var string
+     *
      * @ORM\Column(type="string", length=255, nullable=false)
      */
     private $gatewayStatus;
 
     /**
+     * @var bool
+     *
      * @ORM\Column(type="boolean", nullable=false)
      */
     private $paid;
 
     /**
+     * @var bool
+     *
      * @ORM\Column(type="boolean", nullable=false)
      */
     private $delivered;
 
     /**
+     * @var bool
+     *
      * @ORM\Column(type="boolean", nullable=false)
      */
     private $canceled;
 
     /**
+     * @var string
+     *
      * @ORM\Column(type="string", length=255, nullable=false)
      */
     private $gatewayPaymentId;
 
     /**
+     * @var string
+     *
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $gatewayTransactionId;
 
     /**
+     * @var string
+     *
      * @ORM\Column(type="string", length=255, nullable=false)
      */
     private $gatewayToken;
 
     /**
+     * @var string
+     *
      * @ORM\Column(type="string", length=70, nullable=false)
      */
     private $appToken;

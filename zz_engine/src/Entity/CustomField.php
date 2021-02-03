@@ -20,35 +20,45 @@ class CustomField
     public const YEAR_RANGE = 'YEAR_RANGE';
 
     /**
+     * @var int
+     *
      * @ORM\Id()
      * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer", options={"unsigned"=true})
+     * @ORM\Column(type="integer", options={"unsigned"=true}, nullable=false)
      */
     private $id;
 
     /**
+     * @var string
+     *
      * @ORM\Column(type="string", length=40, nullable=false)
      */
     private $name;
 
     /**
-     * @var string
+     * @var string|null
      *
      * @ORM\Column(type="string", length=50, nullable=true)
      */
     private $nameForAdmin;
 
     /**
+     * @var string
+     *
      * @ORM\Column(type="string", length=40, nullable=false)
      */
     private $type;
 
     /**
+     * @var bool
+     *
      * @ORM\Column(type="boolean", nullable=false)
      */
     private $required;
 
     /**
+     * @var bool
+     *
      * @ORM\Column(type="boolean", nullable=false)
      */
     private $searchable;
@@ -61,22 +71,30 @@ class CustomField
     private $sort;
 
     /**
+     * @var string|null
+     *
      * @ORM\Column(type="string", length=25, nullable=true)
      */
     private $unit;
 
     /**
+     * @var CustomFieldOption[]|Collection
+     *
      * @ORM\OneToMany(targetEntity="App\Entity\CustomFieldOption", mappedBy="customField")
      * @ORM\OrderBy({"sort" = "ASC"})
      */
     private $customFieldOptions;
 
     /**
+     * @var ListingCustomFieldValue[]|Collection
+     *
      * @ORM\OneToMany(targetEntity="App\Entity\ListingCustomFieldValue", mappedBy="customField")
      */
     private $listingCustomFieldValues;
 
     /**
+     * @var CustomFieldJoinCategory[]|Collection
+     *
      * @ORM\OneToMany(targetEntity="App\Entity\CustomFieldJoinCategory", mappedBy="customField")
      */
     private $categoriesJoin;

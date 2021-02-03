@@ -20,38 +20,52 @@ class Token
     public const USER_PASSWORD_REMIND = 'USER_PASSWORD_REMIND';
 
     /**
+     * @var int
+     *
      * @ORM\Id()
      * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer", options={"unsigned"=true})
+     * @ORM\Column(type="integer", options={"unsigned"=true}, nullable=false)
      */
     private $id;
 
     /**
+     * @var string
+     *
      * @ORM\Column(type="string", length=100, nullable=false, unique=true)
      */
     private $tokenString;
 
     /**
+     * @var string
+     *
      * @ORM\Column(type="string", length=50, nullable=false)
      */
     private $type;
 
     /**
+     * @var \DateTimeInterface
+     *
      * @ORM\Column(type="datetime", nullable=false)
      */
     private $createdDate;
 
     /**
+     * @var bool
+     *
      * @ORM\Column(type="boolean", nullable=false)
      */
     private $used = false;
 
     /**
+     * @var \DateTimeInterface
+     *
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $validUntilDate;
 
     /**
+     * @var TokenField[]
+     *
      * @ORM\OneToMany(targetEntity="App\Entity\TokenField", mappedBy="token", indexBy="name", cascade={"all"})
      */
     private $fields;

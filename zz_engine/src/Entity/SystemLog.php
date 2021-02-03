@@ -15,23 +15,31 @@ class SystemLog
     public const CRON_RUN_TYPE = 'CRON_RUN_TYPE';
 
     /**
+     * @var int
+     *
      * @ORM\Id()
      * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer", options={"unsigned"=true})
+     * @ORM\Column(type="integer", options={"unsigned"=true}, nullable=false)
      */
     private $id;
 
     /**
+     * @var \DateTimeInterface
+     *
      * @ORM\Column(type="datetime", nullable=false)
      */
     private $date;
 
     /**
+     * @var string
+     *
      * @ORM\Column(type="string", length=70, nullable=false)
      */
     private $type;
 
     /**
+     * @var string
+     *
      * @ORM\Column(type="string", length=1000, nullable=true)
      */
     private $message;

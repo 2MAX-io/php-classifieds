@@ -12,26 +12,32 @@ use Doctrine\ORM\Mapping as ORM;
 class SearchHistory
 {
     /**
+     * @var int
+     *
      * @ORM\Id()
      * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer", options={"unsigned"=true})
+     * @ORM\Column(type="integer", options={"unsigned"=true}, nullable=false)
      */
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @var string
+     *
+     * @ORM\Column(type="string", length=255, nullable=false)
      */
     private $query;
 
     /**
      * @var int
      *
-     * @ORM\Column(type="integer", options={"unsigned"=true})
+     * @ORM\Column(type="integer", options={"unsigned"=true}, nullable=false)
      */
     private $resultsCount;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @var \DateTimeInterface
+     *
+     * @ORM\Column(type="datetime", nullable=false)
      */
     private $datetime;
 

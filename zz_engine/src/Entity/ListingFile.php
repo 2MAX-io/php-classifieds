@@ -14,24 +14,32 @@ use Doctrine\ORM\Mapping as ORM;
 class ListingFile
 {
     /**
+     * @var int
+     *
      * @ORM\Id()
      * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer", options={"unsigned"=true})
+     * @ORM\Column(type="integer", options={"unsigned"=true}, nullable=false)
      */
     private $id;
 
     /**
+     * @var Listing
+     *
      * @ORM\ManyToOne(targetEntity="App\Entity\Listing", inversedBy="listingFiles")
      * @ORM\JoinColumn(nullable=false)
      */
     private $listing;
 
     /**
+     * @var string
+     *
      * @ORM\Column(type="string", length=255, nullable=false)
      */
     private $path;
 
     /**
+     * @var string
+     *
      * @ORM\Column(type="string", length=255, nullable=false)
      */
     private $filename;
@@ -44,11 +52,15 @@ class ListingFile
     private $userOriginalFilename;
 
     /**
+     * @var string
+     *
      * @ORM\Column(type="string", length=100, nullable=false)
      */
     private $mimeType;
 
     /**
+     * @var int
+     *
      * @ORM\Column(type="integer", nullable=false)
      */
     private $sizeBytes;
@@ -56,16 +68,20 @@ class ListingFile
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=64)
+     * @ORM\Column(type="string", length=64, nullable=false)
      */
     private $fileHash;
 
     /**
+     * @var bool
+     *
      * @ORM\Column(type="boolean", nullable=false)
      */
     private $userRemoved = false;
 
     /**
+     * @var bool
+     *
      * @ORM\Column(type="boolean", nullable=false)
      */
     private $fileDeleted = false;
@@ -78,6 +94,8 @@ class ListingFile
     private $uploadDate;
 
     /**
+     * @var int
+     *
      * @ORM\Column(type="smallint", nullable=false, options={"unsigned"=true})
      */
     private $sort = SortService::LAST_VALUE;

@@ -118,7 +118,6 @@
       <path value="$PROJECT_DIR$/zz_engine/vendor/symfony/security-csrf" />
       <path value="$PROJECT_DIR$/zz_engine/vendor/symfony/twig-bridge" />
       <path value="$PROJECT_DIR$/zz_engine/vendor/symfony/polyfill-php80" />
-      <path value="$PROJECT_DIR$/zz_engine/vendor/ocramius/proxy-manager" />
       <path value="$PROJECT_DIR$/zz_engine/vendor/symfony/var-dumper" />
       <path value="$PROJECT_DIR$/zz_engine/vendor/stesie/phpcs-doctrine-annotation-rules" />
       <path value="$PROJECT_DIR$/zz_engine/vendor/symfony/var-exporter" />
@@ -185,7 +184,6 @@
       <path value="$PROJECT_DIR$/zz_engine/vendor/laminas/laminas-zendframework-bridge" />
       <path value="$PROJECT_DIR$/zz_engine/vendor/clue/stream-filter" />
       <path value="$PROJECT_DIR$/zz_engine/vendor/monolog/monolog" />
-      <path value="$PROJECT_DIR$/zz_engine/vendor/webimpress/safe-writer" />
       <path value="$PROJECT_DIR$/zz_engine/vendor/laminas/laminas-eventmanager" />
       <path value="$PROJECT_DIR$/zz_engine/vendor/laminas/laminas-code" />
       <path value="$PROJECT_DIR$/zz_engine/vendor/firebase/php-jwt" />
@@ -195,6 +193,11 @@
       <path value="$PROJECT_DIR$/zz_engine/vendor/league/mime-type-detection" />
       <path value="$PROJECT_DIR$/zz_engine/vendor/phpseclib/phpseclib" />
       <path value="$PROJECT_DIR$/zz_engine/vendor/symfony/messenger" />
+      <path value="$PROJECT_DIR$/zz_engine/vendor/friendsofphp/proxy-manager-lts" />
+      <path value="$PROJECT_DIR$/zz_engine/vendor/phenx/php-font-lib" />
+      <path value="$PROJECT_DIR$/zz_engine/vendor/phenx/php-svg-lib" />
+      <path value="$PROJECT_DIR$/zz_engine/vendor/sabberworm/php-css-parser" />
+      <path value="$PROJECT_DIR$/zz_engine/vendor/dompdf/dompdf" />
     </include_path>
   </component>
   <component name="PhpInterpreters">

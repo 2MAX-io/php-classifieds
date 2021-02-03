@@ -12,6 +12,7 @@
         "ext-zend-opcache": "*",
         "ausi/slug-generator": "^1.1",
         "beberlei/doctrineextensions": "^1.2",
+        "dompdf/dompdf": "^1.0",
         "friendsofsymfony/jsrouting-bundle": "^2.6",
         "giggsey/libphonenumber-for-php": "^8.12",
         "guzzlehttp/guzzle": "^6.5",
@@ -73,6 +74,9 @@
         "symfony/test-pack": "*"
     },
     "config": {
+        "platform": {
+            "php": "7.3"
+        },
         "preferred-install": {
             "*": "dist"
         },

@@ -27,7 +27,7 @@
 
     {{ settings.customJavascriptInHead | raw }}
 </head>
-<body>
+<body class="{{ environmentCssClass() }}">
 <!-- top -->
 <div class="container-fluid page-top d-print-none">
     <div class="container container-remove-padding">

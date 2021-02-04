@@ -82,8 +82,12 @@ class TwigUser implements RuntimeExtensionInterface
             || $listing->isExpired();
     }
 
-    public function displayUserName(User $user): string
+    public function displayUserName(?User $user): ?string
     {
+        if (null === $user) {
+            return null;
+        }
+
         if (!$user->getDisplayUsername()) {
             return $this->trans->trans('trans.User') . ' #' .$user->getId();
         }

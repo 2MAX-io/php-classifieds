@@ -22,7 +22,7 @@
             {{- ' > ' }} {{ breadcrumbLast }}
         {% endif %}
 
-        {% if app.request.get('_route') == 'app_public_listings_of_user' %}
+        {% if listingListDto.filterByUser %}
             {{- ' > ' -}}
             <a class="font-weight-bold" href="{{ path('app_public_listings_of_user', {"user": listingListDto.filterByUser.id}) }}">
                 {{ listingListDto.filterByUser | displayUserName }}

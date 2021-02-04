@@ -149,6 +149,11 @@ class PaymentDto
         return $this->user;
     }
 
+    public function getUserNotNull(): User
+    {
+        return $this->user;
+    }
+
     public function setUser(?User $user): void
     {
         $this->user = $user;

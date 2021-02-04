@@ -10,7 +10,7 @@ use Pagerfanta\Pagerfanta;
 class AdminListingListDto
 {
     /**
-     * @var \Traversable
+     * @var Listing[]|iterable
      */
     private $results;
 
@@ -19,16 +19,16 @@ class AdminListingListDto
      */
     private $pager;
 
-    public function __construct(\Traversable $results, Pagerfanta $pager)
+    public function __construct(iterable $results, Pagerfanta $pager)
     {
         $this->pager = $pager;
         $this->results = $results;
     }
 
     /**
-     * @return \Traversable|Listing[]
+     * @return iterable|Listing[]
      */
-    public function getResults(): \Traversable
+    public function getResults(): iterable
     {
         return $this->results;
     }

@@ -16,7 +16,7 @@ class UserBalanceChange
      *
      * @ORM\Id()
      * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer", options={"unsigned"=true})
+     * @ORM\Column(type="integer", options={"unsigned"=true}, nullable=false)
      */
     private $id;
 
@@ -27,11 +27,15 @@ class UserBalanceChange
     private $user;
 
     /**
+     * @var int
+     *
      * @ORM\Column(type="integer", nullable=false)
      */
     private $balanceChange;
 
     /**
+     * @var int
+     *
      * @ORM\Column(type="integer", nullable=false)
      */
     private $balanceFinal;
@@ -45,11 +49,15 @@ class UserBalanceChange
     private $payment;
 
     /**
+     * @var \DateTimeInterface
+     *
      * @ORM\Column(type="datetime", nullable=false)
      */
     private $datetime;
 
     /**
+     * @var string
+     *
      * @ORM\Column(type="string", length=5000, nullable=false)
      */
     private $description;

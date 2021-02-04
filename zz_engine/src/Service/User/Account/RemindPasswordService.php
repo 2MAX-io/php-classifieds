@@ -7,6 +7,7 @@ namespace App\Service\User\Account;
 use App\Entity\Token;
 use App\Entity\TokenField;
 use App\Entity\User;
+use App\Exception\UserVisibleException;
 use App\Service\System\Token\TokenService;
 use Carbon\Carbon;
 use Doctrine\ORM\EntityManagerInterface;
@@ -55,6 +56,9 @@ class RemindPasswordService
     {
         $newPassword = $this->passwordGenerateService->generatePassword();
         $user = $this->em->getRepository(User::class)->findOneBy(['email' => $email]);
+        if (!$user) {
+            throw new UserVisibleException('trans.email address not found');
+        }
         $hashedPassword = $this->encodePasswordService->getEncodedPassword($user, $newPassword);
 
         $user->setPlainPassword($newPassword);

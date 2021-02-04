@@ -22,9 +22,11 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class User implements UserInterface, RoleInterface, EnablableInterface, EncoderAwareInterface
 {
     /**
+     * @var int
+     *
      * @ORM\Id()
      * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer", options={"unsigned"=true})
+     * @ORM\Column(type="integer", options={"unsigned"=true}, nullable=false)
      */
     protected $id;
 
@@ -36,6 +38,8 @@ class User implements UserInterface, RoleInterface, EnablableInterface, EncoderA
     protected $username;
 
     /**
+     * @var string
+     *
      * @ORM\Column(type="string", length=70, unique=true, nullable=false)
      */
     protected $email;
@@ -48,6 +52,8 @@ class User implements UserInterface, RoleInterface, EnablableInterface, EncoderA
     protected $displayUsername;
 
     /**
+     * @var string[]
+     *
      * @ORM\Column(type="json", nullable=false)
      */
     protected $roles = [];
@@ -61,6 +67,7 @@ class User implements UserInterface, RoleInterface, EnablableInterface, EncoderA
 
     /**
      * @var string The hashed password
+     *
      * @ORM\Column(type="string", nullable=false)
      */
     protected $password;
@@ -71,16 +78,22 @@ class User implements UserInterface, RoleInterface, EnablableInterface, EncoderA
     private $plainPassword;
 
     /**
+     * @var \DateTimeInterface
+     *
      * @ORM\Column(type="datetime", nullable=false)
      */
     private $registrationDate;
 
     /**
+     * @var \DateTimeInterface
+     *
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $lastLogin;
 
     /**
+     * @var Listing[]
+     *
      * @ORM\OneToMany(targetEntity="App\Entity\Listing", mappedBy="user", fetch="EXTRA_LAZY")
      */
     private $listings;
@@ -170,7 +183,7 @@ class User implements UserInterface, RoleInterface, EnablableInterface, EncoderA
     /**
      * prevents big session, when serializing user security token
      *
-     * @return array
+     * @return array|mixed
      */
     public function __sleep()
     {

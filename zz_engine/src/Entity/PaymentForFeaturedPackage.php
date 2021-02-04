@@ -12,25 +12,33 @@ use Doctrine\ORM\Mapping as ORM;
 class PaymentForFeaturedPackage
 {
     /**
+     * @var int
+     *
      * @ORM\Id()
      * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer", options={"unsigned"=true})
+     * @ORM\Column(type="integer", options={"unsigned"=true}, nullable=false)
      */
     private $id;
 
     /**
+     * @var Payment
+     *
      * @ORM\OneToOne(targetEntity="App\Entity\Payment", inversedBy="paymentForFeaturedPackage")
      * @ORM\JoinColumn(nullable=false)
      */
     private $payment;
 
     /**
+     * @var FeaturedPackage
+     *
      * @ORM\ManyToOne(targetEntity="App\Entity\FeaturedPackage", inversedBy="paymentFeaturedPackage")
      * @ORM\JoinColumn(nullable=false)
      */
     private $featuredPackage;
 
     /**
+     * @var Listing
+     *
      * @ORM\ManyToOne(targetEntity="App\Entity\Listing", inversedBy="paymentFeaturedPackage")
      * @ORM\JoinColumn(nullable=false)
      */

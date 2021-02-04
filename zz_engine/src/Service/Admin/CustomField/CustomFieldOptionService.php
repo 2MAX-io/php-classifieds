@@ -51,7 +51,7 @@ class CustomFieldOptionService
         $pdo = $this->em->getConnection();
         $stmt = $pdo->prepare('SET @count = :count');
         $stmt->execute([':count' => SortService::START_REORDER_FROM]);
-        $pdo->query('UPDATE custom_field_option SET sort = @count:= @count + 1 WHERE 1 ORDER BY custom_field_id ASC, sort ASC;');
+        $pdo->executeQuery('UPDATE custom_field_option SET sort = @count:= @count + 1 WHERE 1 ORDER BY custom_field_id ASC, sort ASC;');
     }
 
     public function changeStringValue(CustomFieldOption $customFieldOption, string $replaceFrom, string $replaceTo): void

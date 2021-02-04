@@ -65,7 +65,6 @@ class TwigUser implements RuntimeExtensionInterface
     {
         $showPreviewForOwner = $this->requestStack->getMasterRequest()->query->get('showPreviewForOwner', $showPreviewForOwner);
 
-        /** @noinspection NotOptimalIfConditionsInspection */
         if ($showPreviewForOwner &&
             (
                 $this->currentUserService->getUserOrNull() === $listing->getUser()

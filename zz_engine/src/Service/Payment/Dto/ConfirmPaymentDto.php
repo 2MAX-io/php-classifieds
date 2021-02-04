@@ -93,6 +93,11 @@ class ConfirmPaymentDto
         return $this->paymentEntity;
     }
 
+    public function getPaymentEntityNotNull(): Payment
+    {
+        return $this->paymentEntity;
+    }
+
     public function setPaymentEntity(?Payment $paymentEntity): void
     {
         $this->paymentEntity = $paymentEntity;

@@ -9,7 +9,7 @@ use Pagerfanta\Pagerfanta;
 class PaginationDto
 {
     /**
-     * @var \Traversable
+     * @var iterable
      */
     private $results;
 
@@ -18,16 +18,16 @@ class PaginationDto
      */
     private $pager;
 
-    public function __construct(\Traversable $results, Pagerfanta $pager)
+    public function __construct(iterable $results, Pagerfanta $pager)
     {
         $this->pager = $pager;
         $this->results = $results;
     }
 
     /**
-     * @return \Traversable
+     * @return iterable
      */
-    public function getResults(): \Traversable
+    public function getResults(): iterable
     {
         return $this->results;
     }

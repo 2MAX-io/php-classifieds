@@ -9,6 +9,7 @@ use App\Helper\Str;
 use App\Service\Setting\SettingsService;
 use App\Service\System\HealthCheck\Base\HealthCheckerInterface;
 use App\Service\System\HealthCheck\HealthCheckResultDto;
+use Doctrine\DBAL\Connection;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -52,7 +53,7 @@ class InvalidLinkToPagesHealthChecker implements HealthCheckerInterface
         $qb = $this->em->getRepository(Page::class)->createQueryBuilder('page');
         $qb->select('COUNT(1)');
         $qb->andWhere($qb->expr()->in('page.slug', ':slugList'));
-        $qb->setParameter('slugList', $requiredPages, \Doctrine\DBAL\Connection::PARAM_STR_ARRAY);
+        $qb->setParameter('slugList', $requiredPages, Connection::PARAM_STR_ARRAY);
         $qb->andWhere($qb->expr()->eq('page.enabled', 1));
         $foundPagesCount = (int) $qb->getQuery()->getSingleScalarResult();
 

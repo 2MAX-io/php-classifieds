@@ -80,6 +80,11 @@ class SendUserMessageDto
         return $this->userMessageThread;
     }
 
+    public function getUserMessageThreadNotNull(): UserMessageThread
+    {
+        return $this->userMessageThread;
+    }
+
     public function setUserMessageThread(?UserMessageThread $userMessageThread): void
     {
         $this->userMessageThread = $userMessageThread;

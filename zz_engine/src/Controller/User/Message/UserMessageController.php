@@ -96,7 +96,7 @@ class UserMessageController extends AbstractUserController
         $this->dennyUnlessUser();
         $currentUser = $currentUserService->getUser();
 
-        if ($listing->getUser()->getId() === $currentUser->getId()) {
+        if ($listing->getUserNotNull()->getId() === $currentUser->getId()) {
             return $this->render('user/message/error/message_to_yourself_error.html.twig');
         }
 
@@ -119,7 +119,7 @@ class UserMessageController extends AbstractUserController
             $this->em->flush();
 
             return $this->redirectToRoute('app_user_message_list_thread', [
-                'userMessageThread' => $sendUserMessageDto->getUserMessageThread()->getId(),
+                'userMessageThread' => $sendUserMessageDto->getUserMessageThreadNotNull()->getId(),
             ]);
         }
 

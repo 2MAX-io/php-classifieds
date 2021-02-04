@@ -32,7 +32,7 @@
                     {% else %}
                         <a href="{{ path('app_listing_show', {'id': listing.id, 'slug': listing.slug, 'showPreviewForOwner': 1}) }}" class="btn btn-primary w-100 mb-2">
                             <div>{{- 'trans.Current status' | trans -}}: <span class="{{ getListingStatusClass(listing) }}">{{ getListingStatus(listing) }}</span>.</div>
-                            {{- 'trans.Live view, Live view, click to preview how listing would look after activation' | trans -}}
+                            {{- 'trans.Live view, click to preview how listing would look after activation' | trans -}}
                         </a>
                     {% endif %}
                 {% endif %}

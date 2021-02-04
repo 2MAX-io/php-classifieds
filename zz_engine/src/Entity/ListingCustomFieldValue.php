@@ -22,30 +22,40 @@ use Doctrine\ORM\Mapping\UniqueConstraint;
 class ListingCustomFieldValue
 {
     /**
+     * @var int
+     *
      * @ORM\Id()
      * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer", options={"unsigned"=true})
+     * @ORM\Column(type="integer", options={"unsigned"=true}, nullable=false)
      */
     private $id;
 
     /**
+     * @var Listing
+     *
      * @ORM\ManyToOne(targetEntity="App\Entity\Listing", inversedBy="listingCustomFieldValues")
      * @ORM\JoinColumn(nullable=false)
      */
     private $listing;
 
     /**
+     * @var string
+     *
      * @ORM\Column(type="string", length=70, nullable=false)
      */
     private $value;
 
     /**
+     * @var CustomField
+     *
      * @ORM\ManyToOne(targetEntity="App\Entity\CustomField", inversedBy="listingCustomFieldValues")
      * @ORM\JoinColumn(nullable=false)
      */
     private $customField;
 
     /**
+     * @var CustomFieldOption
+     *
      * @ORM\ManyToOne(targetEntity="App\Entity\CustomFieldOption")
      * @ORM\JoinColumn(nullable=true)
      */

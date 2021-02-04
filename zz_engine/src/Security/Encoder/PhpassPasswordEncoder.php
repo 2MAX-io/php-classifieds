@@ -14,7 +14,7 @@ class PhpassPasswordEncoder extends BasePasswordEncoder implements SelfSaltingEn
     /**
      * {@inheritdoc}
      */
-    public function encodePassword($raw, $salt)
+    public function encodePassword($raw, $salt): ?string
     {
         if ($this->isPasswordTooLong($raw)) {
             throw new BadCredentialsException('Invalid password.');

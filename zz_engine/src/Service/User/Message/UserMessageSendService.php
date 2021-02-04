@@ -123,14 +123,14 @@ class UserMessageSendService
     {
         return \in_array(
             $sendUserMessageDto->getCurrentUser(),
-            $sendUserMessageDto->getUserMessageThread()->getAllUsersArray(),
+            $sendUserMessageDto->getUserMessageThreadNotNull()->getAllUsersArray(),
             true
         );
     }
 
     private function saveUserMessagePoliceLog(UserMessage $userMessage): void
     {
-        $listing = $userMessage->getUserMessageThread()->getListing();
+        $listing = $userMessage->getUserMessageThread()->getListingNotNull();
         $listingUrl = $this->urlGenerator->generate(
             'app_listing_show',
             [

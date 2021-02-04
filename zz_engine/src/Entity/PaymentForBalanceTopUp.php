@@ -12,13 +12,17 @@ use Doctrine\ORM\Mapping as ORM;
 class PaymentForBalanceTopUp
 {
     /**
+     * @var int
+     *
      * @ORM\Id()
      * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer", options={"unsigned"=true})
+     * @ORM\Column(type="integer", options={"unsigned"=true}, nullable=false)
      */
     private $id;
 
     /**
+     * @var Payment
+     *
      * @ORM\OneToOne(targetEntity="App\Entity\Payment", inversedBy="paymentForBalanceTopUp")
      * @ORM\JoinColumn(nullable=false)
      */

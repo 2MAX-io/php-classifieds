@@ -252,12 +252,12 @@ class PaymentService
 
     public function isPaid(ConfirmPaymentDto $confirmPaymentDto): bool
     {
-        return $this->getPaymentEntity($confirmPaymentDto->getPaymentEntity()->getAppToken())->getPaid();
+        return $this->getPaymentEntity($confirmPaymentDto->getPaymentEntityNotNull()->getAppToken())->getPaid();
     }
 
     public function isDelivered(ConfirmPaymentDto $confirmPaymentDto): bool
     {
-        return $this->getPaymentEntity($confirmPaymentDto->getPaymentEntity()->getAppToken())->getDelivered();
+        return $this->getPaymentEntity($confirmPaymentDto->getPaymentEntityNotNull()->getAppToken())->getDelivered();
     }
 
     public function completePurchase(ConfirmPaymentDto $confirmPaymentDto): CompletePurchaseDto
@@ -338,7 +338,7 @@ class PaymentService
 
     public function markDelivered(ConfirmPaymentDto $confirmPaymentDto): void
     {
-        $paymentEntity = $this->getPaymentEntity($confirmPaymentDto->getPaymentEntity()->getAppToken());
+        $paymentEntity = $this->getPaymentEntity($confirmPaymentDto->getPaymentEntityNotNull()->getAppToken());
         $paymentEntity->setDelivered(true);
 
         $this->em->persist($paymentEntity);

@@ -13,19 +13,25 @@ use Doctrine\ORM\Mapping as ORM;
 class UserMessage
 {
     /**
+     * @var int
+     *
      * @ORM\Id()
      * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer", options={"unsigned"=true})
+     * @ORM\Column(type="integer", options={"unsigned"=true}, nullable=false)
      */
     private $id;
 
     /**
+     * @var User
+     *
      * @ORM\ManyToOne(targetEntity="App\Entity\User")
      * @ORM\JoinColumn(nullable=false)
      */
     private $senderUser;
 
     /**
+     * @var User
+     *
      * @ORM\ManyToOne(targetEntity="App\Entity\User")
      * @ORM\JoinColumn(nullable=false)
      */
@@ -40,11 +46,15 @@ class UserMessage
     private $userMessageThread;
 
     /**
+     * @var \DateTimeInterface
+     *
      * @ORM\Column(type="datetime", nullable=false)
      */
     private $datetime;
 
     /**
+     * @var string
+     *
      * @ORM\Column(type="string", length=3600, nullable=false)
      */
     private $message;
@@ -108,7 +118,7 @@ class UserMessage
             return $this->getSenderUser();
         }
 
-        throw new \RuntimeException('other user not found for ' . $user);
+        throw new \RuntimeException("other user not found for user message {$this->getId()} for user {$user->getId()}");
     }
 
     public function getId(): ?int
@@ -140,7 +150,7 @@ class UserMessage
         return $this;
     }
 
-    public function getSenderUser(): ?User
+    public function getSenderUser(): User
     {
         return $this->senderUser;
     }
@@ -152,7 +162,7 @@ class UserMessage
         return $this;
     }
 
-    public function getRecipientUser(): ?User
+    public function getRecipientUser(): User
     {
         return $this->recipientUser;
     }

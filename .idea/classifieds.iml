@@ -101,7 +101,6 @@
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/symfony/security-csrf" />
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/symfony/twig-bridge" />
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/symfony/polyfill-php80" />
-      <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/ocramius/proxy-manager" />
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/symfony/var-dumper" />
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/stesie/phpcs-doctrine-annotation-rules" />
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/symfony/var-exporter" />
@@ -168,7 +167,6 @@
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/laminas/laminas-zendframework-bridge" />
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/clue/stream-filter" />
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/monolog/monolog" />
-      <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/webimpress/safe-writer" />
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/laminas/laminas-eventmanager" />
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/laminas/laminas-code" />
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/firebase/php-jwt" />
@@ -178,6 +176,11 @@
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/league/mime-type-detection" />
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/phpseclib/phpseclib" />
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/symfony/messenger" />
+      <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/friendsofphp/proxy-manager-lts" />
+      <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/phenx/php-font-lib" />
+      <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/phenx/php-svg-lib" />
+      <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/sabberworm/php-css-parser" />
+      <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/dompdf/dompdf" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

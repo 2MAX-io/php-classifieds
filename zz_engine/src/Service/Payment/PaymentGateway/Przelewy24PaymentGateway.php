@@ -60,7 +60,7 @@ class Przelewy24PaymentGateway implements PaymentGatewayInterface
                 'notifyUrl' => $this->paymentHelperService->getPaymentNotifyUrl($paymentDto),
                 'cancelUrl' => $this->paymentHelperService->getCancelUrl($paymentDto),
                 'card' => [
-                    'email' => $paymentDto->getUser()->getEmail(),
+                    'email' => $paymentDto->getUserNotNull()->getEmail(),
                 ],
             ]);
             $response = $transaction->send();

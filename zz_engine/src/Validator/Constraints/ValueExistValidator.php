@@ -42,7 +42,7 @@ class ValueExistValidator extends ConstraintValidator
     public function validate($fieldValue, Constraint $constraint): void
     {
         if (!$constraint instanceof ValueExist) {
-            throw new UnexpectedTypeException($constraint, __NAMESPACE__.'\ValueExist');
+            throw new UnexpectedTypeException($constraint, ValueExist::class);
         }
 
         if (!\is_array($constraint->fields) && !\is_string($constraint->fields)) {

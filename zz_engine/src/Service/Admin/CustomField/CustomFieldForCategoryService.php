@@ -40,6 +40,6 @@ class CustomFieldForCategoryService
         $pdo = $this->em->getConnection();
         $stmt = $pdo->prepare('SET @count = :count');
         $stmt->execute([':count' => SortService::START_REORDER_FROM]);
-        $pdo->query('UPDATE custom_field_join_category SET sort = @count:= @count + 1 WHERE 1 ORDER BY category_id ASC, sort ASC;');
+        $pdo->executeQuery('UPDATE custom_field_join_category SET sort = @count:= @count + 1 WHERE 1 ORDER BY category_id ASC, sort ASC;');
     }
 }

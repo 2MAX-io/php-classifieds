@@ -14,24 +14,32 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 class CustomFieldOption
 {
     /**
+     * @var int
+     *
      * @ORM\Id()
      * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer", options={"unsigned"=true})
+     * @ORM\Column(type="integer", options={"unsigned"=true}, nullable=false)
      */
     private $id;
 
     /**
+     * @var CustomField
+     *
      * @ORM\ManyToOne(targetEntity="App\Entity\CustomField", inversedBy="customFieldOptions")
      * @ORM\JoinColumn(nullable=false)
      */
     private $customField;
 
     /**
+     * @var string
+     *
      * @ORM\Column(type="string", length=50, nullable=false)
      */
     private $name;
 
     /**
+     * @var string
+     *
      * @ORM\Column(type="string", length=50, nullable=false)
      */
     private $value;

@@ -64,7 +64,7 @@ class AdminStatsService
         $qb = $this->em->getRepository(Listing::class)->createQueryBuilder('listing');
         $qb->select($qb->expr()->count('listing.id'));
         $qb->andWhere($qb->expr()->gte('listing.firstCreatedDate', ':listingsFrom'));
-        $qb->setParameter('listingsFrom', Carbon::now()->subHours($hours)->setTime(1, 0, 0));
+        $qb->setParameter('listingsFrom', Carbon::now()->subHours($hours)->setTime(1, 0));
 
         return (int) $qb->getQuery()->getSingleScalarResult();
     }

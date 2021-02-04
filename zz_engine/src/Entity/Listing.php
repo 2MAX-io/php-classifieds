@@ -66,19 +66,25 @@ class Listing
     public const PRICE_FOR_YEAR = 'PRICE_FOR_YEAR';
 
     /**
+     * @var int
+     *
      * @ORM\Id()
      * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer", options={"unsigned"=true})
+     * @ORM\Column(type="integer", options={"unsigned"=true}, nullable=false)
      */
     private $id;
 
     /**
+     * @var Category
+     *
      * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="listings")
      * @ORM\JoinColumn(nullable=false)
      */
     private $category;
 
     /**
+     * @var User
+     *
      * @Assert\NotNull(groups={"zzzz"})
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="listings")
      * @ORM\JoinColumn(nullable=false)
@@ -86,47 +92,65 @@ class Listing
     private $user;
 
     /**
+     * @var \DateTimeInterface
+     *
      * @Assert\NotNull(groups={"zzzz"})
      * @ORM\Column(type="datetime", nullable=false)
      */
     private $validUntilDate;
 
     /**
+     * @var bool
+     *
      * @ORM\Column(type="boolean", nullable=false)
      */
     private $adminActivated = false;
 
     /**
+     * @var bool
+     *
      * @ORM\Column(type="boolean", nullable=false)
      */
     private $adminRejected = false;
 
     /**
+     * @var bool
+     *
      * @ORM\Column(type="boolean", nullable=false)
      */
     private $adminRemoved = false;
 
     /**
+     * @var bool
+     *
      * @ORM\Column(type="boolean", nullable=false)
      */
     private $userDeactivated = false;
 
     /**
+     * @var bool
+     *
      * @ORM\Column(type="boolean", nullable=false)
      */
     private $userRemoved = false;
 
     /**
+     * @var bool
+     *
      * @ORM\Column(type="boolean", nullable=false)
      */
     private $featured = false;
 
     /**
+     * @var \DateTimeInterface
+     *
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $featuredUntilDate;
 
     /**
+     * @var int
+     *
      * @ORM\Column(type="smallint", nullable=false)
      */
     private $featuredWeight = 0;
@@ -134,66 +158,92 @@ class Listing
     /**
      * used to sort listings
      *
+     * @var \DateTimeInterface
+     *
      * @ORM\Column(type="datetime", nullable=false)
      */
     private $orderByDate;
 
     /**
+     * @var \DateTimeInterface
+     *
      * @ORM\Column(type="datetime", nullable=false)
      */
     private $firstCreatedDate;
 
     /**
+     * @var \DateTimeInterface
+     *
      * @ORM\Column(type="datetime", nullable=false)
      */
     private $lastEditDate;
 
     /**
+     * @var \DateTimeInterface|null
+     *
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $adminLastActivationDate;
 
     /**
+     * @var string
+     *
      * @ORM\Column(type="string", length=70, nullable=false)
      */
     private $title;
 
     /**
+     * @var string
+     *
      * @ORM\Column(type="string", length=12000, nullable=false)
      */
     private $description;
 
     /**
+     * @var float|null
+     *
      * @ORM\Column(type="float", nullable=true)
      */
     private $price;
 
     /**
+     * @var string|null
+     *
      * @ORM\Column(type="string", length=40, nullable=true)
      */
     private $priceFor;
 
     /**
+     * @var bool|null
+     *
      * @ORM\Column(type="boolean", nullable=true)
      */
     private $priceNegotiable;
 
     /**
+     * @var string|null
+     *
      * @ORM\Column(type="string", length=20, nullable=true)
      */
     private $phone;
 
     /**
+     * @var string|null
+     *
      * @ORM\Column(type="string", length=70, nullable=true)
      */
     private $email;
 
     /**
+     * @var bool
+     *
      * @ORM\Column(type="boolean", nullable=false)
      */
     private $emailShow;
 
     /**
+     * @var string|null
+     *
      * @ORM\Column(type="string", length=30, nullable=true)
      */
     private $city;
@@ -215,28 +265,38 @@ class Listing
     private $locationLongitude;
 
     /**
+     * @var string|null
+     *
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $mainImage;
 
     /**
+     * @var string
+     *
      * @Assert\NotNull(groups={"zzzz"})
      * @ORM\Column(type="string", length=100, nullable=false, unique=false)
      */
     private $slug;
 
     /**
+     * @var string
+     *
      * @Assert\NotNull(groups={"zzzz"})
      * @ORM\Column(type="text", nullable=false)
      */
     private $searchText;
 
     /**
+     * @var string|null
+     *
      * @ORM\Column(type="string", length=150, nullable=true)
      */
     private $rejectionReason;
 
     /**
+     * @var PaymentForFeaturedPackage
+     *
      * @ORM\OneToMany(targetEntity="PaymentForFeaturedPackage", mappedBy="listing")
      */
     private $paymentFeaturedPackage;
@@ -249,6 +309,8 @@ class Listing
     private $listingCustomFieldValues;
 
     /**
+     * @var ListingFile[]
+     *
      * @ORM\OneToMany(targetEntity="App\Entity\ListingFile", mappedBy="listing")
      */
     private $listingFiles;
@@ -590,6 +652,15 @@ class Listing
     public function getValidUntilDate(): ?\DateTimeInterface
     {
         return $this->validUntilDate;
+    }
+
+    public function getValidUntilDateStringOrNull(): ?string
+    {
+        if (!$this->getValidUntilDate()) {
+            return null;
+        }
+
+        return $this->getValidUntilDate()->format('Y-m-d H:i:s');
     }
 
     public function setValidUntilDate(\DateTimeInterface $validUntilDate): self

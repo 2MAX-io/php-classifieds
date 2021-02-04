@@ -6,6 +6,7 @@ namespace App\Repository;
 
 use App\Entity\Listing;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\DBAL\Connection;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -37,7 +38,7 @@ class ListingRepository extends ServiceEntityRepository
 
         $qb = $this->createQueryBuilder('listing');
         $qb->andWhere($qb->expr()->in('listing.id', ':listingIds'));
-        $qb->setParameter('listingIds', $listingIds, \Doctrine\DBAL\Connection::PARAM_INT_ARRAY);
+        $qb->setParameter('listingIds', $listingIds, Connection::PARAM_INT_ARRAY);
 
         return $qb->getQuery()->getResult();
     }

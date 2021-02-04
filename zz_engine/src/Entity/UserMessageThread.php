@@ -18,7 +18,7 @@ class UserMessageThread
      *
      * @ORM\Id()
      * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer", options={"unsigned"=true})
+     * @ORM\Column(type="integer", options={"unsigned"=true}, nullable=false)
      */
     private $id;
 
@@ -94,6 +94,11 @@ class UserMessageThread
     }
 
     public function getListing(): ?Listing
+    {
+        return $this->listing;
+    }
+
+    public function getListingNotNull(): Listing
     {
         return $this->listing;
     }

@@ -13,48 +13,58 @@ use Doctrine\ORM\Mapping as ORM;
 class UserMessagePoliceLog
 {
     /**
+     * @var int
+     *
      * @ORM\Id()
      * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer", options={"unsigned"=true})
+     * @ORM\Column(type="integer", options={"unsigned"=true}, nullable=false)
      */
     private $id;
 
     /**
+     * @var \DateTimeInterface
+     *
      * @ORM\Column(type="datetime", nullable=false)
      */
     private $datetime;
 
     /**
+     * @var string
+     *
      * @ORM\Column(type="string", length=50, nullable=false)
      */
     private $sourceIp;
 
     /**
+     * @var string
+     *
      * @ORM\Column(type="string", length=50, nullable=false)
      */
     private $destinationIp;
 
     /**
+     * @var string
+     *
      * @ORM\Column(type="text", nullable=false)
      */
     private $text;
 
     /**
-     * @var int
+     * @var int|null
      *
      * @ORM\Column(type="integer", nullable=true, options={"unsigned"=true})
      */
     private $listingId;
 
     /**
-     * @var int
+     * @var int|null
      *
      * @ORM\Column(type="integer", nullable=true, options={"unsigned"=true})
      */
     private $userId;
 
     /**
-     * @var int
+     * @var int|null
      *
      * @ORM\Column(type="integer", nullable=true, options={"unsigned"=true})
      */

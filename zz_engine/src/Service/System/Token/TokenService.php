@@ -42,8 +42,8 @@ class TokenService
 
     public function getToken(string $tokenString, string $tokenType): ?Token
     {
+        /** @var Token $tokenEntity */
         $tokenEntity = $this->em->getRepository(Token::class)->findByToken($tokenString);
-
         if ($tokenEntity === null) {
             return null;
         }

@@ -6,6 +6,7 @@ namespace App\Service\Admin\Listing;
 
 use App\Entity\Category;
 use App\Entity\Listing;
+use App\Exception\UserVisibleException;
 use App\Helper\Search;
 use App\Helper\Str;
 use App\Service\System\Pagination\PaginationService;
@@ -101,6 +102,9 @@ class AdminListingSearchService
 
         if (!Str::emptyTrim($request->get('category'))) {
             $category = $this->em->getRepository(Category::class)->find($request->get('category'));
+            if (!$category) {
+                throw new UserVisibleException('category not found');
+            }
             $qb->join('listing.category', 'category');
             $qb->andWhere(
                 $qb->expr()->andX(

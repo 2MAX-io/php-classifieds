@@ -84,7 +84,7 @@ class SendNotificationService
     private function sendEmail(MessageToUserAggregateDto $messageToUserAggregateDto): void
     {
         $newestUserMessage = $messageToUserAggregateDto->getNewestUserMessage();
-        $listing = $newestUserMessage->getUserMessageThread()->getListing();
+        $listing = $newestUserMessage->getUserMessageThread()->getListingNotNull();
 
         $email = $this->emailService->getTemplatedEmail();
         $email->subject($this->trans->trans('trans.Private message for listing: {listingTitle}', [

@@ -6,6 +6,7 @@ namespace App\Repository;
 
 use App\Entity\CustomFieldJoinCategory;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\DBAL\Connection;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -37,7 +38,7 @@ class CustomFieldJoinCategoryRepository extends ServiceEntityRepository
 
         $qb = $this->createQueryBuilder('customFieldJoinCategory');
         $qb->andWhere($qb->expr()->in('customFieldJoinCategory.id', ':ids'));
-        $qb->setParameter('ids', $ids, \Doctrine\DBAL\Connection::PARAM_INT_ARRAY);
+        $qb->setParameter('ids', $ids, Connection::PARAM_INT_ARRAY);
         $qb->indexBy('customFieldJoinCategory', 'customFieldJoinCategory.id');
 
         return $qb->getQuery()->getResult();

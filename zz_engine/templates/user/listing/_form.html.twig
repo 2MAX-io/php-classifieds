@@ -10,9 +10,9 @@
     <div id="js__cascader-category-select" class="cascader-main collapse">
         <div class="row no-gutters">
             {%- apply normalizeWhitespace -%}
-            {% for levelId, level in formCategorySelectList %}
+            {% for levelId, categoryLevelList in selectFormCategoryList %}
                 <div class="col-lg-4 cascader-level cascader-level-{{ levelId }}" data-cascader-level="{{ levelId }}">
-                    {% for categoryLevel in level %}
+                    {% for categoryLevel in categoryLevelList %}
                         <div
                                 class="cascader-branch-list cascader-branch-list-{{ categoryLevel.id }} collapse"
                                 data-cascader-leaf="{{ categoryLevel.id }}"

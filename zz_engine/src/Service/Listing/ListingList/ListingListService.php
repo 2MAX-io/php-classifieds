@@ -7,6 +7,8 @@ namespace App\Service\Listing\ListingList;
 use App\Entity\Category;
 use App\Entity\CustomField;
 use App\Entity\Listing;
+use App\Entity\User;
+use App\Enum\ParamEnum;
 use App\Helper\Arr;
 use App\Helper\Search;
 use App\Helper\Str;
@@ -18,7 +20,8 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr\Join;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ListingListService
 {
@@ -38,33 +41,31 @@ class ListingListService
     private $paginationService;
 
     /**
-     * @var RequestStack
-     */
-    private $requestStack;
-
-    /**
      * @var SaveSearchHistoryService
      */
     private $saveSearchHistory;
 
+    /**
+     * @var TranslatorInterface
+     */
+    private $trans;
+
     public function __construct(
-        EntityManagerInterface $em,
         ListingPublicDisplayService $listingPublicDisplayService,
         SaveSearchHistoryService $saveSearchHistory,
-        RequestStack $requestStack,
-        PaginationService $paginationService
+        PaginationService $paginationService,
+        EntityManagerInterface $em,
+        TranslatorInterface $trans
     ) {
-        $this->em = $em;
         $this->listingPublicDisplayService = $listingPublicDisplayService;
         $this->paginationService = $paginationService;
-        $this->requestStack = $requestStack;
         $this->saveSearchHistory = $saveSearchHistory;
+        $this->trans = $trans;
+        $this->em = $em;
     }
 
-    public function getListings(ListingListDto $listingListDto): ListingListDto
+    public function getListings(Request $request, ListingListDto $listingListDto): ListingListDto
     {
-        /** @var Request $request */
-        $request = $this->requestStack->getMasterRequest();
         $qb = $this->em->getRepository(Listing::class)->createQueryBuilder('listing');
 
         if ($listingListDto->getCategory()) {
@@ -103,7 +104,7 @@ class ListingListService
 
         $this->listingPublicDisplayService->applyPublicDisplayConditions($qb);
 
-        if ($request->get('form_custom_field', false)) {
+        if ($request->get(ParamEnum::CUSTOM_FIELD, false)) {
             $customFieldForCategoryList = Arr::indexBy(
                 $listingListDto->getCustomFieldForCategoryList(),
                 static function (CustomField $customField) {
@@ -114,7 +115,7 @@ class ListingListService
             $sqlParamId = 0;
             $usedCustomFieldIdList = [];
             $customFieldConditionList = $qb->expr()->orX();
-            foreach ($request->get('form_custom_field') as $customFieldId => $customFieldFormValueArray) {
+            foreach ($request->get(ParamEnum::CUSTOM_FIELD) as $customFieldId => $customFieldFilter) {
                 $sqlParamId++;
                 /** @var CustomField $customField */
                 if (!isset($customFieldForCategoryList[$customFieldId])) {
@@ -122,23 +123,24 @@ class ListingListService
                 }
                 $customField = $customFieldForCategoryList[$customFieldId];
 
-                if (isset($customFieldFormValueArray['range'])) {
+                $isRangeFilter = isset($customFieldFilter['range']);
+                if ($isRangeFilter) {
                     $rangeCondition = $qb->expr()->andX();
 
-                    if (!empty($customFieldFormValueArray['range']['min'])) {
+                    if (!empty($customFieldFilter['range']['min'])) {
                         $rangeCondition->add($qb->expr()->gte('listingCustomFieldValue.value', ':customFieldValueMin_' . $sqlParamId));
                         $qb->setParameter(
                             ':customFieldValueMin_' . $sqlParamId,
-                            $customFieldFormValueArray['range']['min'],
+                            $customFieldFilter['range']['min'],
                             Types::INTEGER
                         );
                     }
 
-                    if (!empty($customFieldFormValueArray['range']['max'])) {
+                    if (!empty($customFieldFilter['range']['max'])) {
                         $rangeCondition->add($qb->expr()->lte('listingCustomFieldValue.value', ':customFieldValueMax_' . $sqlParamId));
                         $qb->setParameter(
                             ':customFieldValueMax_' . $sqlParamId,
-                            $customFieldFormValueArray['range']['max'],
+                            $customFieldFilter['range']['max'],
                             Types::INTEGER
                         );
                     }
@@ -153,8 +155,9 @@ class ListingListService
                     }
                 }
 
-                if (isset($customFieldFormValueArray['values'])) {
-                    foreach ($customFieldFormValueArray['values'] as $valueItem) {
+                $isMultipleValuesFilter = isset($customFieldFilter['values']);
+                if ($isMultipleValuesFilter) {
+                    foreach ($customFieldFilter['values'] as $valueItem) {
                         if (Str::emptyTrim($valueItem)) {
                             continue;
                         }
@@ -235,5 +238,68 @@ class ListingListService
         $qb->addOrderBy('categoryJoin.sort', 'ASC');
 
         return $qb->getQuery()->getResult();
+    }
+
+    public function getListingListDtoFromRequest(Request $request): ListingListDto
+    {
+        $listingListDto = new ListingListDto();
+        $listingListDto->setRoute($request->get('_route'));
+        $listingListDto->setCategorySlug($request->get('categorySlug'));
+        $listingListDto->setPageNumber((int) $request->get('page', 1));
+
+        $category = null;
+        if ($listingListDto->getCategorySlug()) {
+            $category = $this->em->getRepository(Category::class)->findOneBy(['slug' => $listingListDto->getCategorySlug()]);
+            if ($category === null) {
+                throw new NotFoundHttpException();
+            }
+            $listingListDto->setCategory($category);
+        }
+
+        if (null === $listingListDto->getCategory() && $listingListDto->getRoute() === 'app_category') {
+            // category not found, redirect to last added to prevent error
+            $listingListDto->setRedirectToRoute('app_last_added');
+
+            return $listingListDto;
+        }
+
+        if ($request->query->has('user')) {
+            $userId = (int) $request->query->get('user');
+            $user = $this->em->getRepository(User::class)->findOneBy(['id' => $userId]);
+            if (!$user) {
+                throw new NotFoundHttpException();
+            }
+
+            $listingListDto->setFilterByUser($user);
+        }
+
+        if ($listingListDto->getRoute() === 'app_last_added') {
+            $listingListDto->setLastAddedListFlag(true);
+        }
+
+        $listingListDto->setPageTitle($this->getPageTitleForRoute($listingListDto));
+
+        return $listingListDto;
+    }
+
+    private function getPageTitleForRoute(ListingListDto $listingListDto): string
+    {
+        $route = $listingListDto->getRoute();
+        $map = [
+            'app_listing_search' => $this->trans->trans('trans.Search Engine'),
+            'app_last_added' => $this->trans->trans('trans.Last added'),
+            'app_public_listings_of_user' => $this->trans->trans('trans.Listings of user'),
+            'app_category' => $listingListDto->getCategoryNotNull()->getName(),
+        ];
+
+        if (isset($map[$route])) {
+            if (\is_callable($map[$route])) {
+                return $map[$route]();
+            }
+
+            return $map[$route];
+        }
+
+        return $this->trans->trans('trans.Listings');
     }
 }

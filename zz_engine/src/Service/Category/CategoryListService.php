@@ -23,7 +23,7 @@ class CategoryListService
     /**
      * @return Category[]
      */
-    public function getLevelOfSubcategoriesToDisplayForCategory(?Category $category = null): array
+    public function getMenuCategoryList(?Category $category = null): array
     {
         $qb = $this->em->getRepository(Category::class)->createQueryBuilder('category');
 
@@ -59,7 +59,7 @@ class CategoryListService
     /**
      * @return Category[]
      */
-    public function getBreadcrumbs(?Category $category = null): array
+    public function getCategoryBreadcrumbs(?Category $category = null): array
     {
         if ($category === null) {
             return [];
@@ -106,7 +106,7 @@ class CategoryListService
     /**
      * @return Category[]
      */
-    public function getFormCategorySelectList(): array
+    public function getSelectFormCategoryList(): array
     {
         $qb = $this->em->getRepository(Category::class)->createQueryBuilder('category');
         $qb->addSelect('categoryChildren');

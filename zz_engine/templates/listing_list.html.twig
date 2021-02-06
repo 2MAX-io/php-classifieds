@@ -18,8 +18,14 @@
             {{- ' > ' -}} <a href="{{ path('app_category', {'categorySlug': category.slug}) }}">{{ category.name }}</a>
         {%- endfor -%}
 
-        {% if breadcrumbLast is not empty %}
-            {{- ' > ' }} {{ breadcrumbLast }}
+        {% if app.request.get('_route') == 'app_listing_search' %}
+            {{- ' > ' }} {{ 'trans.Search Engine' | trans }}
+        {% endif %}
+        {% if app.request.get('_route') == 'app_last_added' %}
+            {{- ' > ' }} {{ 'trans.Last added' | trans }}
+        {% endif %}
+        {% if app.request.get('_route') == 'app_public_listings_of_user' %}
+            {{- ' > ' }} {{ 'trans.Listings of user' | trans }}
         {% endif %}
 
         {% if app.request.get('_route') == 'app_public_listings_of_user' %}
@@ -145,11 +151,11 @@
                                     <div class="mb-3">
                                         <label class="text-break">{{ customField.name }}</label>
                                         {%- for customFieldOption in customField.customFieldOptions -%}
-                                            {%- set checked = customFieldOption.value in app.request.get('form_custom_field')[customField.id]['values'] | default([]) -%}
+                                            {%- set checked = customFieldOption.value in app.request.get('customField')[customField.id]['values'] | default([]) -%}
                                             <div class="custom-control custom-checkbox {% if loop.index > 5 and not checked %}collapse{% endif %} show-more-custom-field-{{ customField.id }}">
                                                 {%- apply normalizeWhitespace -%}
                                                 <input
-                                                    name="form_custom_field[{{ customField.id }}][values][]"
+                                                    name="customField[{{ customField.id }}][values][]"
                                                     value="{{ customFieldOption.value }}"
                                                     {% if checked %}{{- ' checked ' -}}{% endif %}
                                                     type="checkbox"
@@ -175,13 +181,13 @@
                                     <div class="mb-3">
                                         <label class="text-break">{{ customField.name }}</label>
                                         <div>
-                                            <select name="form_custom_field[{{ customField.id }}][values][]" class="custom-select">
+                                            <select name="customField[{{ customField.id }}][values][]" class="custom-select">
                                                 <option value="">{{ 'trans.Select' | trans }}</option>
                                                 {%- for customFieldOption in customField.customFieldOptions -%}
                                                     {%- apply normalizeWhitespace -%}
                                                     <option
                                                             value="{{ customFieldOption.value }}"
-                                                            {% if customFieldOption.value in app.request.get('form_custom_field')[customField.id]['values'] | default([]) %}
+                                                            {% if customFieldOption.value in app.request.get('customField')[customField.id]['values'] | default([]) %}
                                                                 {{- 'selected' -}}
                                                             {% endif %}
                                                     >
@@ -198,11 +204,11 @@
                                     <div class="mb-3">
                                         <label class="text-break">{{ customField.name }}</label>
                                         {%- for customFieldOption in customField.customFieldOptions -%}
-                                            {%- set checked = customFieldOption.value in app.request.get('form_custom_field')[customField.id]['values'] | default([]) -%}
+                                            {%- set checked = customFieldOption.value in app.request.get('customField')[customField.id]['values'] | default([]) -%}
                                             <div class="custom-control custom-checkbox {% if loop.index > 5 and not checked %}collapse{% endif %} show-more-custom-field-{{ customField.id }}">
                                                 {%- apply normalizeWhitespace -%}
                                                 <input
-                                                    name="form_custom_field[{{ customField.id }}][values][]"
+                                                    name="customField[{{ customField.id }}][values][]"
                                                     value="{{ customFieldOption.value }}"
                                                     {% if checked %}{{- ' checked ' -}}{% endif %}
                                                     type="checkbox"
@@ -233,8 +239,8 @@
                                         <div class="col-6">
                                             {%- apply normalizeWhitespace -%}
                                             <input
-                                                name="form_custom_field[{{ customField.id }}][range][min]"
-                                                value="{{ app.request.get('form_custom_field')[customField.id]['range']['min'] | default }}"
+                                                name="customField[{{ customField.id }}][range][min]"
+                                                value="{{ app.request.get('customField')[customField.id]['range']['min'] | default }}"
                                                 type="number"
                                                 placeholder="{{ 'trans.min' | trans }}"
                                                 class="form-control">
@@ -244,8 +250,8 @@
                                         <div class="col-6">
                                             {%- apply normalizeWhitespace -%}
                                             <input
-                                                name="form_custom_field[{{ customField.id }}][range][max]"
-                                                value="{{ app.request.get('form_custom_field')[customField.id]['range']['max'] | default }}"
+                                                name="customField[{{ customField.id }}][range][max]"
+                                                value="{{ app.request.get('customField')[customField.id]['range']['max'] | default }}"
                                                 type="number"
                                                 placeholder="{{ 'trans.max' | trans }}"
                                                 class="form-control"
@@ -264,7 +270,7 @@
                                         <div class="col-6">
                                             {%- apply normalizeWhitespace -%}
                                             <select
-                                                name="form_custom_field[{{ customField.id }}][range][min]"
+                                                name="customField[{{ customField.id }}][range][min]"
                                                 class="form-control"
                                             >
                                                 <option value=''>{{ 'trans.min' | trans }}</option>
@@ -273,7 +279,7 @@
                                                 {%- for year in startYear..1980 -%}
                                                     <option
                                                             value="{{- year -}}"
-                                                            {% if year == app.request.get('form_custom_field')[customField.id]['range']['min'] | default %}selected{% endif %}
+                                                            {% if year == app.request.get('customField')[customField.id]['range']['min'] | default %}selected{% endif %}
                                                     >
                                                         {{- year -}}
                                                     </option>
@@ -285,7 +291,7 @@
                                         <div class="col-6">
                                             {%- apply normalizeWhitespace -%}
                                             <select
-                                                name="form_custom_field[{{ customField.id }}][range][max]"
+                                                name="customField[{{ customField.id }}][range][max]"
                                                 class="form-control"
                                             >
                                                 <option value=''>{{ 'trans.max' | trans }}</option>
@@ -294,7 +300,7 @@
                                                 {%- for year in startYear..1980 -%}
                                                     <option
                                                             value="{{- year -}}"
-                                                            {% if year == app.request.get('form_custom_field')[customField.id]['range']['max'] | default %}selected{% endif %}
+                                                            {% if year == app.request.get('customField')[customField.id]['range']['max'] | default %}selected{% endif %}
                                                     >
                                                         {{ year }}
                                                     </option>

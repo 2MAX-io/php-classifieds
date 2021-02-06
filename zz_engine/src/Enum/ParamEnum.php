@@ -18,4 +18,5 @@ class ParamEnum
     public const MAP_DEFAULT_ZOOM = 'mapDefaultZoom';
     public const LISTING_LIST = 'listingList';
     public const USERNAME = 'username';
+    public const CUSTOM_FIELD = 'customField';
 }

@@ -58,6 +58,21 @@ class ListingListDto
     private $filterByUser;
 
     /**
+     * @var string|null
+     */
+    private $categorySlug;
+
+    /**
+     * @var string|null
+     */
+    private $redirectToRoute;
+
+    /**
+     * @var string
+     */
+    private $pageTitle;
+
+    /**
      * @return \Traversable|Listing[]
      */
     public function getResults(): \Traversable
@@ -156,5 +171,35 @@ class ListingListDto
     public function setFilterByUser(?User $filterByUser): void
     {
         $this->filterByUser = $filterByUser;
+    }
+
+    public function getCategorySlug(): ?string
+    {
+        return $this->categorySlug;
+    }
+
+    public function setCategorySlug(?string $categorySlug): void
+    {
+        $this->categorySlug = $categorySlug;
+    }
+
+    public function getRedirectToRoute(): ?string
+    {
+        return $this->redirectToRoute;
+    }
+
+    public function setRedirectToRoute(?string $redirectToRoute): void
+    {
+        $this->redirectToRoute = $redirectToRoute;
+    }
+
+    public function getPageTitle(): string
+    {
+        return $this->pageTitle;
+    }
+
+    public function setPageTitle(string $pageTitle): void
+    {
+        $this->pageTitle = $pageTitle;
     }
 }

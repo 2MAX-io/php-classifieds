@@ -51,7 +51,7 @@ class ListingShowController extends AbstractController
                     'listingShowDto' => $listingShowDto,
                     'listing' => $listing,
                     'category' => $listing->getCategory(),
-                    'categoryBreadcrumbs' => $categoryListService->getBreadcrumbs(
+                    'categoryBreadcrumbs' => $categoryListService->getCategoryBreadcrumbs(
                         $listing->getCategory()
                     ),
                     ParamEnum::DATA_FOR_JS => [
@@ -74,7 +74,7 @@ class ListingShowController extends AbstractController
                 'listingShowDto' => $listingShowDto,
                 'listing' => $listing,
                 'category' => $listing->getCategory(),
-                'categoryBreadcrumbs' => $categoryListService->getBreadcrumbs(
+                'categoryBreadcrumbs' => $categoryListService->getCategoryBreadcrumbs(
                     $listing->getCategory()
                 ),
                 ParamEnum::DATA_FOR_JS => [

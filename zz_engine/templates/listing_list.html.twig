@@ -3,7 +3,28 @@
 {# @var settings \App\Service\Setting\SettingsDto #}
 {% set settings = settings() %}
 
-{% block title %}{{ pageTitle }}{% endblock %}
+{% block title %}
+    {%- set titleSet = false -%}
+    {%- if app.request.get('_route') == 'app_listing_search' -%}
+        {%- set titleSet = true -%}
+        {{ 'trans.Search Engine' | trans }}
+    {%- endif -%}
+    {%- if app.request.get('_route') == 'app_last_added' -%}
+        {%- set titleSet = true -%}
+        {{ 'trans.Last added' | trans }}
+    {%- endif -%}
+    {%- if app.request.get('_route') == 'app_public_listings_of_user' -%}
+        {%- set titleSet = true -%}
+        {{ 'trans.Listings of user' | trans }}
+    {%- endif -%}
+    {%- if app.request.get('_route') == 'app_category' -%}
+        {%- set titleSet = true -%}
+        {{ listingListDto.category.name }}
+    {%- endif -%}
+    {%- if not titleSet -%}
+        {{ 'trans.Listings' | trans }}
+    {%- endif -%}
+{% endblock %}
 
 {% block body %}
     <div class="container mt-3 mb-3 text-break">

@@ -68,11 +68,6 @@ class ListingListDto
     private $redirectToRoute;
 
     /**
-     * @var string
-     */
-    private $pageTitle;
-
-    /**
      * @return \Traversable|Listing[]
      */
     public function getResults(): \Traversable
@@ -191,15 +186,5 @@ class ListingListDto
     public function setRedirectToRoute(?string $redirectToRoute): void
     {
         $this->redirectToRoute = $redirectToRoute;
-    }
-
-    public function getPageTitle(): string
-    {
-        return $this->pageTitle;
-    }
-
-    public function setPageTitle(string $pageTitle): void
-    {
-        $this->pageTitle = $pageTitle;
     }
 }

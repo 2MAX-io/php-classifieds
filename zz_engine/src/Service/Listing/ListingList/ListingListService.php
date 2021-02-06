@@ -21,7 +21,6 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr\Join;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ListingListService
 {
@@ -45,22 +44,15 @@ class ListingListService
      */
     private $saveSearchHistory;
 
-    /**
-     * @var TranslatorInterface
-     */
-    private $trans;
-
     public function __construct(
         ListingPublicDisplayService $listingPublicDisplayService,
         SaveSearchHistoryService $saveSearchHistory,
         PaginationService $paginationService,
-        EntityManagerInterface $em,
-        TranslatorInterface $trans
+        EntityManagerInterface $em
     ) {
         $this->listingPublicDisplayService = $listingPublicDisplayService;
         $this->paginationService = $paginationService;
         $this->saveSearchHistory = $saveSearchHistory;
-        $this->trans = $trans;
         $this->em = $em;
     }
 
@@ -256,13 +248,6 @@ class ListingListService
             $listingListDto->setCategory($category);
         }
 
-        if (null === $listingListDto->getCategory() && $listingListDto->getRoute() === 'app_category') {
-            // category not found, redirect to last added to prevent error
-            $listingListDto->setRedirectToRoute('app_last_added');
-
-            return $listingListDto;
-        }
-
         if ($request->query->has('user')) {
             $userId = (int) $request->query->get('user');
             $user = $this->em->getRepository(User::class)->findOneBy(['id' => $userId]);
@@ -277,29 +262,6 @@ class ListingListService
             $listingListDto->setLastAddedListFlag(true);
         }
 
-        $listingListDto->setPageTitle($this->getPageTitleForRoute($listingListDto));
-
         return $listingListDto;
-    }
-
-    private function getPageTitleForRoute(ListingListDto $listingListDto): string
-    {
-        $route = $listingListDto->getRoute();
-        $map = [
-            'app_listing_search' => $this->trans->trans('trans.Search Engine'),
-            'app_last_added' => $this->trans->trans('trans.Last added'),
-            'app_public_listings_of_user' => $this->trans->trans('trans.Listings of user'),
-            'app_category' => $listingListDto->getCategoryNotNull()->getName(),
-        ];
-
-        if (isset($map[$route])) {
-            if (\is_callable($map[$route])) {
-                return $map[$route]();
-            }
-
-            return $map[$route];
-        }
-
-        return $this->trans->trans('trans.Listings');
     }
 }

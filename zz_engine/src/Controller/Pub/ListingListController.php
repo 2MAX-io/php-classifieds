@@ -71,7 +71,6 @@ class ListingListController extends AbstractController
                     'max_price' => $request->query->get('max_price'),
                     ParamEnum::CUSTOM_FIELD => $request->query->get('custom_field'),
                 ],
-                'pageTitle' => $listingListDto->getPageTitle(),
             ]
         );
     }

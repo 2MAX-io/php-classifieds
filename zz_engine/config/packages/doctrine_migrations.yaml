@@ -5,5 +5,5 @@ doctrine_migrations:
     custom_template: '%kernel.project_dir%/config/packages/doctrine_migrations_template.txt'
     storage:
         table_storage:
-            version_column_length: 1024
+            version_column_length: 255
             table_name: 'zzzz_doctrine_migration_versions'

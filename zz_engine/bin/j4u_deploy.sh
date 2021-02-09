@@ -7,12 +7,12 @@ set -e
 
 cd /home/j4uoglosze/domains/ogloszenia.jaslo4u.pl/public_html
 git pull
-rm -r /home/j4uoglosze/domains/ogloszenia.jaslo4u.pl/public_html/zz_engine/var/cache/prod
-wget -O /dev/null https://www.ogloszenia.jaslo4u.pl/
+rm -r /home/j4uoglosze/domains/ogloszenia.jaslo4u.pl/public_html/zz_engine/var/cache/prod || true
+wget -O /dev/null https://www.ogloszenia.jaslo4u.pl/ || true
 
 /usr/local/php73/bin/php /home/j4uoglosze/domains/ogloszenia.jaslo4u.pl/public_html/zz_engine/composer.phar install -d zz_engine --classmap-authoritative
 /usr/local/php73/bin/php zz_engine/bin/console doctrine:migrations:migrate --all-or-nothing --no-interaction
 
-wget -O /dev/null https://www.ogloszenia.jaslo4u.pl/
+wget -O /dev/null https://www.ogloszenia.jaslo4u.pl/ || true
 
 printf "${GREEN}CONSIDER IT DONE${NC}\n"

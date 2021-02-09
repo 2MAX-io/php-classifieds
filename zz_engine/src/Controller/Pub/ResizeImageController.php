@@ -7,7 +7,7 @@ namespace App\Controller\Pub;
 use App\Helper\FileHelper;
 use App\Helper\FilePath;
 use App\Helper\IniHelper;
-use App\Helper\MegabyteHelper;
+use App\Helper\Megabyte;
 use App\Service\System\Image\Dto\ImageDto;
 use App\System\EnvironmentService;
 use App\System\ImageManipulation\ImageManipulationFactory;
@@ -50,7 +50,7 @@ class ResizeImageController
         if ($session->isStarted()) {
             $session->save();
         }
-        if (IniHelper::returnBytes(\ini_get('memory_limit')) < MegabyteHelper::toByes(256)) {
+        if (IniHelper::returnBytes(\ini_get('memory_limit')) < Megabyte::toByes(256)) {
             \ini_set('memory_limit','256M'); // required to handle big images
         }
 

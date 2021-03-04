@@ -5,13 +5,14 @@ declare(strict_types=1);
 namespace App\Controller\User\Account;
 
 use App\Controller\User\Base\AbstractUserController;
-use App\Entity\Token;
-use App\Entity\TokenField;
+use App\Entity\System\Token;
+use App\Entity\System\TokenField;
 use App\Form\User\Account\ChangePasswordType;
 use App\Security\CurrentUserService;
-use App\Service\FlashBag\FlashService;
+use App\Service\System\FlashBag\FlashService;
 use App\Service\System\Token\TokenService;
 use App\Service\User\Account\ChangePasswordService;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -19,7 +20,17 @@ use Symfony\Component\Routing\Annotation\Route;
 class ChangePasswordController extends AbstractUserController
 {
     /**
-     * @Route("/user/account/changePassword", name="app_user_change_password")
+     * @var EntityManagerInterface
+     */
+    private $em;
+
+    public function __construct(EntityManagerInterface $em)
+    {
+        $this->em = $em;
+    }
+
+    /**
+     * @Route("/user/account/change-password", name="app_user_change_password")
      */
     public function changePassword(
         Request $request,
@@ -34,10 +45,9 @@ class ChangePasswordController extends AbstractUserController
         if ($form->isSubmitted() && $form->isValid()) {
             $changePasswordService->sendConfirmation(
                 $currentUserService->getUser(),
-                $form->get(ChangePasswordType::FORM_NEW_PASSWORD)->getData()
+                $form->get(ChangePasswordType::FORM_NEW_PASSWORD)->getData(),
             );
-
-            $this->getDoctrine()->getManager()->flush();
+            $this->em->flush();
 
             $flashService->addFlash(
                 FlashService::SUCCESS_ABOVE_FORM,
@@ -62,7 +72,7 @@ class ChangePasswordController extends AbstractUserController
         FlashService $flashService
     ): Response {
         $tokenEntity = $tokenService->getToken($token, Token::USER_PASSWORD_CHANGE_TYPE);
-        if ($tokenEntity === null) {
+        if (null === $tokenEntity) {
             $flashService->addFlash(
                 FlashService::ERROR_ABOVE_FORM,
                 'trans.Confirmation link is invalid or expired, check if confirmation link is correct'
@@ -92,11 +102,10 @@ class ChangePasswordController extends AbstractUserController
 
         $changePasswordService->setHashedPassword(
             $tokenService->getUserFromToken($tokenEntity),
-            $newHashedPassword
+            $newHashedPassword,
         );
         $tokenService->markTokenUsed($tokenEntity);
-
-        $this->getDoctrine()->getManager()->flush();
+        $this->em->flush();
 
         $flashService->addFlash(
             FlashService::SUCCESS_ABOVE_FORM,

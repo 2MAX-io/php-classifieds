@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'trans.Logout confirmation' | trans }}{% endblock %}
+
+{% block body %}
+    <div class="container mt-3 mt-md-4">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <h3>{{- 'trans.Do you confirm logout?' | trans -}}</h3>
+                </div>
+                <div class="modal-footer">
+                    <span class="btn btn-secondary float-left js__goBackOnClick">
+                        {{- 'trans.Go to previous page' | trans -}}
+                    </span>
+                    <a href="{{ path('app_logout') }}" class="btn btn-primary">
+                        {{- 'trans.Logout' | trans -}}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

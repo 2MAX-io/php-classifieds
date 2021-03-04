@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Form\Admin;
 
 use App\Entity\Listing;
-use App\Form\ListingCustomFieldListType;
+use App\Form\ListingCustomFieldsType;
 use App\Form\ListingType;
 use App\Form\Type\BoolType;
 use App\Form\Type\CategoryType;
@@ -33,14 +33,14 @@ class AdminListingEditType extends AbstractType
             'constraints' => [
                 new NotBlank(),
             ],
-            'attr'=> [
+            'attr' => [
                 'maxlength' => 70,
-            ]
+            ],
         ]);
         $builder->add('description', TextareaType::class, [
             'label' => 'trans.Description',
             'attr' => [
-                'class' => 'form-listing-description-textarea'
+                'class' => 'edit-listing-description-textarea js__textareaAutosize',
             ],
             'required' => true,
             'empty_data' => '',
@@ -64,7 +64,7 @@ class AdminListingEditType extends AbstractType
             'label' => 'trans.Show email?',
         ]);
         $builder->add('price', IntegerType::class, [
-            'label' => 'trans.Amount or price'
+            'label' => 'trans.Amount or price',
         ]);
         $builder->add('priceFor', PriceForType::class, [
             'required' => false,
@@ -73,31 +73,34 @@ class AdminListingEditType extends AbstractType
             'label' => 'trans.Amount is negotiable?',
         ]);
         $builder->add('city', TextType::class, [
-            'label' => 'trans.City'
+            'label' => 'trans.City',
         ]);
         $builder->add(
-            ListingCustomFieldListType::CUSTOM_FIELD_LIST_FIELD, ListingCustomFieldListType::class, [
-            'listingEntity' => $options['data'],
-            'mapped' => false,
-            'attr' => [
-                'class' => 'formCustomFieldList'
-            ],
-            'form_group_attr' => [
-                'class' => 'mb-0',
-            ],
-        ]);
+            ListingCustomFieldsType::CUSTOM_FIELD_LIST_FIELD,
+            ListingCustomFieldsType::class,
+            [
+                'listingEntity' => $options['data'],
+                'mapped' => false,
+                'attr' => [
+                    'class' => 'js__customFieldList',
+                ],
+                'form_group_attr' => [
+                    'class' => 'mb-0',
+                ],
+            ]
+        );
         $builder->add('locationLatitude', HiddenType::class, [
             'label' => false,
             'required' => false,
             'attr' => [
-                'class' => 'js__location-latitude',
+                'class' => 'js__locationLatitude',
             ],
         ]);
         $builder->add('locationLongitude', HiddenType::class, [
             'label' => false,
             'required' => false,
             'attr' => [
-                'class' => 'js__location-longitude',
+                'class' => 'js__locationLongitude',
             ],
         ]);
     }

@@ -24,4 +24,42 @@ class TwigSettings implements RuntimeExtensionInterface
     {
         return $this->settingsService->getSettingsDto();
     }
+
+    public function thousandsSeparate(int $value): string
+    {
+        return \number_format(
+            $value,
+            0,
+            $this->settingsService->getSettingsDto()->getDecimalSeparator(),
+            $this->settingsService->getSettingsDto()->getThousandSeparator(),
+        );
+    }
+
+    public function money(float $money): string
+    {
+        if ($money < 40) {
+            return (string) \round($money, 2);
+        }
+
+        return \number_format(
+            $money,
+            0,
+            $this->settingsService->getSettingsDto()->getDecimalSeparator(),
+            $this->settingsService->getSettingsDto()->getThousandSeparator(),
+        );
+    }
+
+    public function moneyPrecise(?int $value): ?string
+    {
+        if (null === $value) {
+            return null;
+        }
+
+        return \number_format(
+            \round($value / 100, 2),
+            2,
+            $this->settingsService->getSettingsDto()->getDecimalSeparator(),
+            $this->settingsService->getSettingsDto()->getThousandSeparator(),
+        );
+    }
 }

@@ -1,25 +1,24 @@
 {{ form_start(form) }}
-{{ form_widget(form) }}
-
+    {{ form_widget(form) }}
     <div>
         <h1>{{ 'trans.Categories' | trans }}</h1>
 
         <div class="mb-2">
             <div class="row">
                 <div class="col-md-4 mb-3">
-                    {% for categorySelection in categorySelectionList %}
+                    {% for categorySelectedForCustomField in categoriesForCustomFieldList %}
                         {# @var category \App\Entity\Category  #}
-                        {% set category = categorySelection.category %}
+                        {% set category = categorySelectedForCustomField.category %}
                         {% if category.lvl == 1 and not loop.first %}
                             </div><div class="col-md-4 mb-3">
                         {% endif %}
-                        <div class="custom-control custom-checkbox" style="margin-left: {{ (category.lvl-1) * 2 }}rem">
+                        <div class="custom-control custom-checkbox m-for-category-level m-for-category-level-{{ category.lvl }}">
                             <input
                                     type="checkbox"
                                     id="category_{{ category.id }}"
                                     name="selectedCategories[]"
                                     value="{{ category.id }}"
-                                    {% if categorySelection.selected %}checked{% endif %}
+                                    {% if categorySelectedForCustomField.selected %}checked{% endif %}
                                     class="custom-control-input"
                             >
                             <label for="category_{{ category.id }}" class="custom-control-label text-break">
@@ -32,5 +31,5 @@
         </div>
     </div>
 
-    <button class="btn btn-primary">{{ button_label|default('trans.Save' | trans) }}</button>
+    <button class="btn btn-primary">{{ button_label | default('trans.Save' | trans) }}</button>
 {{ form_end(form) }}

@@ -8,15 +8,15 @@
 
         <table class="table">
             <thead>
-            <tr>
-                <th>{{ 'trans.Title' | trans }}</th>
-                <th>{{ 'trans.Enabled' | trans }}</th>
-                <th class="text-right">
-                    <a href="{{ path('app_admin_page_new') }}" class="btn btn-primary">
-                        {{ 'trans.Create new' | trans }}
-                    </a>
-                </th>
-            </tr>
+                <tr>
+                    <th>{{ 'trans.Title' | trans }}</th>
+                    <th>{{ 'trans.Enabled' | trans }}</th>
+                    <th class="text-right">
+                        <a href="{{ path('app_admin_page_new') }}" class="btn btn-primary">
+                            {{- 'trans.Create new' | trans -}}
+                        </a>
+                    </th>
+                </tr>
             </thead>
             <tbody>
             {% for page in pages %}
@@ -28,12 +28,12 @@
                     </td>
                     <td>
                         <span class="{{ page.enabled | boolGreenRedClass }}">
-                            {{ page.enabled | boolText | trans }}
+                            {{- page.enabled | boolText | trans -}}
                         </span>
                     </td>
                     <td class="text-right">
                         <a href="{{ path('app_admin_page_edit', {'id': page.id}) }}" class="btn btn-primary">
-                            {{ 'trans.edit' | trans }}
+                            {{- 'trans.edit' | trans -}}
                         </a>
                     </td>
                 </tr>

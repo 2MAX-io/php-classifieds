@@ -91,7 +91,6 @@ history
 php zz_engine/bin/console doctrine:schema:update --help
 php zz_engine/bin/console doctrine:schema:update --dump-sql
 php zz_engine/bin/console make:command
-php zz_engine/bin/console app:cron:search-text-regenerate
 composer install install
 composer install hautelook/phpass
 composer require -w zz_engine hautelook/phpass
@@ -165,8 +164,6 @@ php zz_engine/bin/console doctrine:migrations:migrate
 php zz_engine/bin/console doctrine:migrations:dump-schema
 php zz_engine/bin/console doctrine:migrations:dump-schema --help
 php zz_engine/bin/console debug:container | grep assets._default_package
-php /var/www/html/zz_engine/bin/console app:cron:secondary
-/var/www/html/zz_engine/bin/console app:cron:secondary
 cat /usr/local/etc/php/php.ini
 ls -la zz_engine/src/Controller/
 chmod -R 000 zz_engine/src/Controller/
@@ -286,7 +283,6 @@ cd zz_engine/
 composer install
 composer install --optimize-autoloader
 composer update -d zz_engine --optimize-autoloader
-gulp -f zz_engine/gulpfile.js --cwd=.
 php zz_engine/bin/console doctrine:schema:create --dump-sql > install/data/_schema.sql
 bash zz_engine/dev/bin/DEV_build_installer.sh
 composer require willdurand/js-translation-bundle
@@ -323,11 +319,6 @@ composer install --optimize-autoloader
 composer install -d zz_engine --optimize-autoloader
 composer update -d zz_engine --optimize-autoloader
 composer update -d zz_engine --lock
-gulp -f zz_engine/gulpfile.js --cwd=.
-gulp -f zz_engine/gulpfile.js --cwd=.
-gulp -f zz_engine/gulpfile.js --cwd=.
-gulp -f zz_engine/gulpfile.js --cwd=.
-gulp -f zz_engine/gulpfile.js --cwd=.
 php zz_engine/bin/console doctrine:schema:update -f
 bash zz_engine/dev/bin/DEV_build_installer.sh
 php zz_engine/bin/console app:delete-old-listing-files 10
@@ -337,10 +328,7 @@ php zz_engine/bin/console app:delete-old-listing-files 10 --limit 100 -vvv --dry
 composer install -d zz_engine --optimize-autoloader
 composer install -d zz_engine --optimize-autoloader
 php zz_engine/bin/console doctrine:schema:update -f
-gulp --gulpfile zz_engine/gulpfile.js --cwd .
-gulp --gulpfile zz_engine/gulpfile.js --cwd .
 gulp --help
-gulp --gulpfile zz_engine/gulpfile.js --cwd .
 ls
 npm install
 cd zz_engine/
@@ -351,74 +339,158 @@ ls -la /var/www/
 cd zz_engine/
 ls
 npm install
-gulp --gulpfile zz_engine/gulpfile.js --cwd .
-gulp --gulpfile zz_engine/gulpfile.js --cwd .
-gulp --gulpfile zz_engine/gulpfile.js --cwd .
 composer update -d zz_engine --optimize-autoloader
-gulp --gulpfile zz_engine/gulpfile.js --cwd .
 php zz_engine/bin/console doctrine:schema:update -f
 php zz_engine/bin/console doctrine:schema:update -f
 php zz_engine/bin/console doctrine:schema:update -f
 php zz_engine/bin/console make:entity --regenerate "App"
 php zz_engine/bin/console make:entity --regenerate "App"
 php zz_engine/bin/console doctrine:schema:update -f
-gulp --gulpfile zz_engine/gulpfile.js --cwd .
-php zz_engine/bin/console doctrine:schema:update -f
-gulp --gulpfile zz_engine/gulpfile.js --cwd .
-gulp --gulpfile zz_engine/gulpfile.js --cwd .
-gulp --gulpfile zz_engine/gulpfile.js --cwd .
-gulp --gulpfile zz_engine/gulpfile.js --cwd .
-gulp --gulpfile zz_engine/gulpfile.js --cwd .
-gulp --gulpfile zz_engine/gulpfile.js --cwd .
-gulp --gulpfile zz_engine/gulpfile.js --cwd .
 php zz_engine/bin/console doctrine:schema:update -f
 php zz_engine/bin/console doctrine:schema:update -f
 php zz_engine/bin/console doctrine:schema:update -f
-gulp --gulpfile zz_engine/gulpfile.js --cwd .
-gulp --gulpfile zz_engine/gulpfile.js --cwd .
 php zz_engine/bin/console doctrine:schema:update -f
 php zz_engine/bin/console doctrine:schema:update -f
-gulp --gulpfile zz_engine/gulpfile.js --cwd .
-php zz_engine/bin/console app:dev:generate-param-enum-for-js
+php zz_engine/bin/console doctrine:schema:update -f
 export XDEBUG_CONFIG="mode=debug client_host=192.168.205.1 start_with_request=yes"
-php zz_engine/bin/console app:dev:generate-param-enum-for-js
-php zz_engine/bin/console app:dev:generate-param-enum-for-js
-php zz_engine/bin/console app:dev:generate-param-enum-for-js
 env
-php zz_engine/bin/console app:dev:generate-param-enum-for-js
 php -r "xdebug_info();"
 export XDEBUG_CONFIG="mode=debug client_host=192.168.205.1 client_port=9003 start_with_request=yes"
 php -r "xdebug_info();"
-php zz_engine/bin/console app:dev:generate-param-enum-for-js
 php -r "xdebug_info();"
 php -r "xdebug_info();"
-php zz_engine/bin/console app:dev:generate-param-enum-for-js
-php zz_engine/bin/console app:dev:generate-param-enum-for-js
-php zz_engine/bin/console app:dev:generate-param-enum-for-js
-gulp --gulpfile zz_engine/gulpfile.js --cwd .
-gulp --gulpfile zz_engine/gulpfile.js --cwd .
-php zz_engine/bin/console app:dev:generate-param-enum-for-js
-gulp --gulpfile zz_engine/gulpfile.js --cwd .
-php zz_engine/bin/console app:dev:generate-param-enum-for-js
-php zz_engine/bin/console app:dev:generate-param-enum-for-js
-gulp --gulpfile zz_engine/gulpfile.js --cwd .
-php zz_engine/bin/console app:dev:generate-param-enum-for-js
-gulp --gulpfile zz_engine/gulpfile.js --cwd .
-gulp --gulpfile zz_engine/gulpfile.js --cwd .
-gulp --gulpfile zz_engine/gulpfile.js --cwd .
-php zz_engine/bin/console app:dev:generate-param-enum-for-js
-gulp --gulpfile zz_engine/gulpfile.js --cwd .
-gulp --gulpfile zz_engine/gulpfile.js --cwd .
-gulp --gulpfile zz_engine/gulpfile.js --cwd .
 composer require -d zz_engine symfony/messenger
 composer install -d zz_engine --optimize-autoloader
 composer dump-env dev -d zz_engine
 php zz_engine/bin/console messenger:consume async --time-limit=55
 php zz_engine/bin/console messenger:consume one_at_time --time-limit=55 --limit=1
-gulp --gulpfile zz_engine/gulpfile.js --cwd .
-gulp --gulpfile zz_engine/gulpfile.js --cwd .
 php zz_engine/bin/console messenger:consume async --time-limit=55
 composer dump-env dev -d zz_engine
 php zz_engine/bin/console messenger:consume async -vvv
 php zz_engine/bin/console doctrine:schema:update --dump-sql 
 php zz_engine/bin/console doctrine:schema:update --dump-sql 
+composer require -d zz_engine symfony/webpack-encore-bundle
+yarn install
+yarn install -- help
+(cd /var/www/zz_engine && yarn install)
+(cd /var/www/htmml/zz_engine && yarn install)
+(cd /var/www/html/zz_engine && yarn install)
+(cd /var/www/html/zz_engine && yarn encore dev)
+(cd /var/www/html/zz_engine && pm run dev)
+(cd /var/www/html/zz_engine && npm run dev)
+(cd /var/www/html/zz_engine && yarn encore dev)
+(cd /var/www/html/zz_engine && yarn install)
+(cd /var/www/html/zz_engine && yarn encore production)
+(cd /var/www/html/zz_engine && yarn add @symfony/webpack-encore --dev)
+(cd /var/www/html/zz_engine && yarn add webpack-notifier@^1.6.0 --dev)
+(cd /var/www/html/zz_engine && yarn add @fortawesome/fontawesome-free@^5.2.0 --dev)
+bash zz_engine/dev/bin/build_assets.sh
+(cd /var/www/html/zz_engine && yarn encore dev)
+(cd /var/www/html/zz_engine && yarn encore dev --watch)
+bash zz_engine/dev/bin/build_assets.sh 
+(cd /var/www/html/zz_engine && yarn encore dev --watch)
+bash zz_engine/dev/bin/build_assets.sh
+bash zz_engine/dev/bin/build_assets.sh 
+bash zz_engine/dev/bin/build_assets.sh 
+bash zz_engine/dev/bin/build_assets.sh 
+bash zz_engine/dev/bin/build_assets.sh 
+bash zz_engine/dev/bin/build_assets.sh 
+bash zz_engine/dev/bin/build_assets.sh 
+bash zz_engine/dev/bin/build_assets.sh 
+bash zz_engine/dev/bin/build_assets.sh 
+bash zz_engine/dev/bin/build_assets.sh 
+(cd /var/www/html/zz_engine && yarn encore dev)
+bash zz_engine/dev/bin/build_assets.sh
+bash zz_engine/dev/bin/build_assets.sh 
+php zz_engine/bin/console doctrine:schema:update -f
+php zz_engine/bin/console doctrine:schema:update -f
+php zz_engine/bin/console doctrine:schema:update --dump-sql 
+php zz_engine/bin/console doctrine:schema:update -f
+php zz_engine/bin/console doctrine:schema:update -f
+php zz_engine/bin/console doctrine:schema:update --dump-sql 
+php zz_engine/bin/console doctrine:schema:update --dump-sql 
+php zz_engine/bin/console app:cron:main 
+php zz_engine/bin/console app:cron:main 
+php zz_engine/bin/console app:cron:main 
+php zz_engine/bin/console app:cron:main 
+php zz_engine/bin/console app:cron:main 
+php zz_engine/bin/console app:cron:main --night --ignore-delay
+php zz_engine/bin/console messenger:consume one_at_time --limit=1 -vvv
+php zz_engine/bin/console app:cron:main --night --ignore-delay
+php zz_engine/bin/console app:cron:main --night --ignore-delay
+php zz_engine/bin/console app:cron:main --night --ignore-delay
+php zz_engine/bin/console messenger:consume one_at_time --limit=1 -vvv
+php zz_engine/bin/console messenger:consume one_at_time --limit=1 -vvv
+php zz_engine/bin/console messenger:consume one_at_time --limit=1 -vvv
+php zz_engine/bin/console messenger:consume one_at_time --limit=1 -vvv
+php zz_engine/bin/console messenger:consume one_at_time --limit=1 -vvv
+php zz_engine/bin/console app:cron:main --night --ignore-delay
+php zz_engine/bin/console messenger:consume one_at_time --limit=1 -vvv
+php zz_engine/bin/console messenger:consume one_at_time --limit=1 -vvv
+php zz_engine/bin/console messenger:consume one_at_time --limit=1 -vvv
+php zz_engine/bin/console messenger:consume one_at_time --limit=1 -vvv
+php zz_engine/bin/console app:cron:main --night --ignore-delay
+php zz_engine/bin/console messenger:consume one_at_time  -vvv
+php zz_engine/bin/console app:cron:main --night --ignore-delay
+php zz_engine/bin/console messenger:consume one_at_time  -vvv
+php zz_engine/bin/console app:cron:main --night --ignore-delay
+php zz_engine/bin/console messenger:consume one_at_time  -vvv
+php zz_engine/bin/console app:cron:main --night --ignore-delay
+php zz_engine/bin/console messenger:consume one_at_time  -vvv
+php zz_engine/bin/console messenger:consume one_at_time  -vvv
+php zz_engine/bin/console app:cron:main --night --ignore-delay
+php zz_engine/bin/console messenger:consume one_at_time  -vvv
+php zz_engine/bin/console messenger:consume one_at_time  -vvv
+php zz_engine/bin/console app:cron:main --night --ignore-delay
+php zz_engine/bin/console messenger:consume one_at_time  -vvv
+php zz_engine/bin/console app:cron:main --night --ignore-delay
+php zz_engine/bin/console messenger:consume one_at_time  -vvv
+php zz_engine/bin/console app:cron:main 
+php zz_engine/bin/console messenger:consume one_at_time  -vvv
+php zz_engine/bin/console app:cron:main 
+php zz_engine/bin/console app:cron:main  --ignore-delay
+php zz_engine/bin/console app:cron:main  --ignore-delay
+(cd /var/www/html/zz_engine && yarn encore dev)
+bash zz_engine/dev/bin/build_assets.sh 
+bash zz_engine/dev/bin/build_assets.sh 
+bash zz_engine/dev/bin/build_assets.sh
+php zz_engine/bin/console make:entity --regenerate "App"
+php zz_engine/bin/console app:search-text-regenerate
+php zz_engine/bin/console app:search-text-regenerate --limit-time-seconds=10
+bash zz_engine/dev/bin/build_assets.sh
+php zz_engine/bin/console debug:router --raw > /var/www/html/out.txt
+php zz_engine/bin/console debug:router --help
+bash zz_engine/dev/bin/build_assets.sh
+(cd /var/www/html/zz_engine && yarn encore dev-server --port 9000)
+php zz_engine/bin/console app:dev:translation:yaml-to-xliff zz_engine/translations/messages.en.yaml
+php zz_engine/bin/console app:dev:translation:generate-en-from-other zz_engine/translations/messages.pl.yaml
+php zz_engine/bin/console app:dev:generate-test-listings 100
+(cd /var/www/html/zz_engine && php vendor/bin/php-cs-fixer)
+(cd /var/www/html/zz_engine && php vendor/bin/php-cs-fixer fix)
+(cd /var/www/html/zz_engine && php vendor/bin/phpcs)
+(cd /var/www/html/zz_engine && php vendor/phpstan/phpstan/phpstan analyse --level=2 src --memory-limit=2G)
+(cd /var/www/html/zz_engine && php vendor/bin/psalm)
+composer update -d zz_engine --optimize-autoloader
+(cd /var/www/html/zz_engine && php vendor/phpstan/phpstan/phpstan analyse  src --memory-limit=2G)
+(cd /var/www/html/zz_engine && php vendor/phpstan/phpstan/phpstan analyse  src --memory-limit=2G)
+(cd /var/www/html/zz_engine && php vendor/bin/php-cs-fixer fix)
+(cd /var/www/html/zz_engine && php vendor/phpstan/phpstan/phpstan analyse  src --memory-limit=2G) > out.txt
+(cd /var/www/html/zz_engine && php vendor/bin/php-cs-fixer fix)
+composer install -d zz_engine --optimize-autoloader
+php zz_engine/bin/console make:entity --regenerate "App"
+(cd /var/www/html/zz_engine && php vendor/bin/psalm -m) > out.txt
+(cd /var/www/html/zz_engine && php vendor/bin/phpcs)
+(cd /var/www/html/zz_engine && php vendor/bin/psalm -m) > out.txt
+(cd /var/www/html/zz_engine && yarn encore dev --watch)
+bash zz_engine/dev/bin/build_assets.sh
+(cd /var/www/html/zz_engine && php vendor/bin/grumphp run)
+(cd /var/www/html/zz_engine && npx prettier --write 'assets/**/*.js')
+(cd /var/www/html/zz_engine && npx prettier --check 'assets/**/*.js')
+php zz_engine/bin/console app:dev:generate-paramEnum-for-js
+php zz_engine/bin/console debug:router --raw > /var/www/html/out.txt
+sort -o out.txt out.txt
+bash zz_engine/dev/bin/build_assets.sh
+(cd /var/www/html/zz_engine && php vendor/bin/php-cs-fixer fix --dry-run)
+composer update -d zz_engine --optimize-autoloader
+php zz_engine/bin/console make:migration
+php zz_engine/bin/console doctrine:migrations:migrate --no-interaction

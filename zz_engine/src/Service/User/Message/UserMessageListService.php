@@ -12,6 +12,7 @@ use App\Helper\DateHelper;
 use App\Security\CurrentUserService;
 use App\Service\User\Message\Dto\UserMessageThreadDto;
 use Doctrine\Common\Collections\Criteria;
+use Doctrine\DBAL\Connection;
 use Doctrine\ORM\EntityManagerInterface;
 
 class UserMessageListService
@@ -40,14 +41,14 @@ class UserMessageListService
         $qb = $this->em->createQueryBuilder();
         $qb->select('msg');
         $qb->from(UserMessage::class, 'msg');
-        $qb->andWhere($qb->expr()->eq('msg.userMessageThread', ':user_message_thread'));
-        $qb->setParameter(':user_message_thread', $userMessageThread->getId());
+        $qb->andWhere($qb->expr()->eq('msg.userMessageThread', ':userMessageThread'));
+        $qb->setParameter(':userMessageThread', $userMessageThread->getId());
 
         $qb->andWhere($qb->expr()->orX(
-            $qb->expr()->eq('msg.senderUser', ':user_id'),
-            $qb->expr()->eq('msg.recipientUser', ':user_id'),
+            $qb->expr()->eq('msg.senderUser', ':userId'),
+            $qb->expr()->eq('msg.recipientUser', ':userId'),
         ));
-        $qb->setParameter(':user_id', $this->currentUserService->getUser()->getId());
+        $qb->setParameter(':userId', $this->currentUserService->getUser()->getId());
 
         return $qb->getQuery()->getResult();
     }
@@ -55,12 +56,11 @@ class UserMessageListService
     /**
      * @return UserMessageThreadDto[]
      */
-    public function getUserMessageThreadList(User $user): array
+    public function getThreadList(User $user): array
     {
-        /** @var \PDO $pdo */
+        /** @var Connection|\PDO $pdo */
         $pdo = $this->em->getConnection();
-        $stmt = $pdo->prepare(
-            /** @lang MySQL */ '
+        $stmt = $pdo->prepare('
             SELECT
                 user_message_thread.id AS userMessageThreadId,
                 user_message.sender_user_id AS senderUserId,
@@ -70,7 +70,7 @@ class UserMessageListService
                 listing.id AS listingId,
                 listing.slug AS listingSlug,
                 listing.title AS listingTitle,
-                MAX(user_message.datetime) AS datetime,
+                MAX(user_message.datetime) AS datetimeString,
                 unread_count AS unreadCount,
                 null
             FROM user_message_thread
@@ -101,7 +101,7 @@ class UserMessageListService
         $stmt->setFetchMode(\PDO::FETCH_CLASS, UserMessageThreadDto::class);
         $stmt->execute();
 
-        return $stmt->fetchAll();
+        return $stmt->fetchAll() ?: [];
     }
 
     public function getExistingUserThreadForListing(Listing $listing, User $user): ?UserMessageThread
@@ -109,8 +109,10 @@ class UserMessageListService
         $qb = $this->em->createQueryBuilder();
         $qb->select('user_message_thread');
         $qb->from(UserMessageThread::class, 'user_message_thread');
+
         $qb->andWhere($qb->expr()->eq('user_message_thread.listing', ':listing'));
         $qb->setParameter(':listing', $listing->getId());
+
         $qb->andWhere($qb->expr()->eq('user_message_thread.createdByUser', ':user'));
         $qb->setParameter(':user', $user->getId());
 

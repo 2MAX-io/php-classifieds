@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Form\Type;
 
 use App\Entity\Category;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -29,11 +30,10 @@ class CategoryType extends AbstractType
             'placeholder' => 'trans.Select category',
             'label' => 'trans.Select category',
             'attr' => [
-                'class' => 'formCategory',
+                'class' => 'js__formCategory',
             ],
             'choice_label' => static function (Category $category) {
                 $path = $category->getPath();
-
                 $path = \array_map(
                     static function (Category $category) {
                         if ($category->getLvl() < 1) {
@@ -48,13 +48,15 @@ class CategoryType extends AbstractType
                 return \implode(' ⇾ ', $path);
             },
             'query_builder' => function () {
-                $qb = $this->em->getRepository(Category::class)->createQueryBuilder('category');
+                $qb = $this->em->createQueryBuilder();
+                $qb->select('category');
+                $qb->from(Category::class, 'category');
 
                 $qb->andWhere('category.lvl > 1');
-                $qb->addOrderBy('category.sort', 'ASC');
+                $qb->addOrderBy('category.sort', Criteria::ASC);
 
                 return $qb;
-            }
+            },
         ]);
     }
 

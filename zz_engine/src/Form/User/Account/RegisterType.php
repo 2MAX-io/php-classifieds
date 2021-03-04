@@ -22,7 +22,7 @@ class RegisterType extends AbstractType
             'constraints' => [
                 new NotBlank(),
                 new Email([
-                    'mode' => Email::VALIDATION_MODE_STRICT
+                    'mode' => Email::VALIDATION_MODE_STRICT,
                 ]),
                 new UserEmailNotTaken(),
             ],

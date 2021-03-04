@@ -15,9 +15,6 @@
         {{ form_row(form.footerSiteCopyright) }}
         {{ form_row(form.searchPlaceholder) }}
 
-        <h2>{{ 'trans.Language' | trans }}</h2>
-        {{ form_row(form.languageTwoLetters) }}
-
         <h2>{{ 'trans.SEO and Metadata Settings' | trans }}</h2>
         {{ form_row(form.metaDescription) }}
         {{ form_row(form.metaKeywords) }}
@@ -41,7 +38,7 @@
         {{ form_row(form.customJavascriptInHead) }}
         {{ form_row(form.customJavascriptBottom) }}
 
-        <button class="btn btn-primary">{{ button_label|default('trans.Save' | trans) }}</button>
+        <button class="btn btn-primary">{{ button_label | default('trans.Save' | trans) }}</button>
         {{ form_end(form) }}
     </div>
 {% endblock %}

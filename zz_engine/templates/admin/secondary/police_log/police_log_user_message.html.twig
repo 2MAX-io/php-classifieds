@@ -1,0 +1,155 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}{{ 'trans.Police log' | trans }}{% endblock %}
+
+{% block body %}
+    <div class="container mt-3">
+        <div class="mb-2">
+            <form method="get" class="mt-2 mt-md-0" role="search">
+                <div class="row">
+                    <div class="col-md-4 mb-2">
+                        <label for="query">{{ 'trans.Search' | trans }}</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text"><i class="fas fa-search"></i></div>
+                            </div>
+                            <input
+                                    type="text"
+                                    name="query"
+                                    id="query"
+                                    value="{{ app.request.get('query') }}"
+                                    class="form-control"
+                            />
+                        </div>
+                    </div>
+                    {% if app.request.get('user') %}
+                        <div class="col-md-4 mb-2">
+                            <label for="user">{{ 'trans.User' | trans }}</label>
+                            <div class="input-group">
+                                <input
+                                        type="text"
+                                        name="user"
+                                        id="user"
+                                        value="{{ app.request.get('user') }}"
+                                        class="form-control"
+                                />
+                            </div>
+                        </div>
+                    {% endif %}
+                    {% if app.request.get('listing') %}
+                        <div class="col-md-4 mb-2">
+                            <label for="listing">{{ 'trans.Listing' | trans }}</label>
+                            <div class="input-group">
+                                <input
+                                        type="text"
+                                        name="listing"
+                                        id="listing"
+                                        value="{{ app.request.get('listing') }}"
+                                        class="form-control"
+                                />
+                            </div>
+                        </div>
+                    {% endif %}
+                    {% if app.request.get('thread') %}
+                        <div class="col-md-4 mb-2">
+                            <label for="thread">{{ 'trans.Thread' | trans }}</label>
+                            <div class="input-group">
+                                <input
+                                        type="text"
+                                        name="thread"
+                                        id="thread"
+                                        value="{{ app.request.get('thread') }}"
+                                        class="form-control"
+                                />
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    <div class="col-md-4 mb-2 pt-2">
+                        <button type="submit" class="btn btn-primary p-3 px-5">{{ 'trans.Search' | trans }}</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <table class="table table-responsive-sm">
+            <thead>
+            <tr>
+                <th></th>
+                <th>{{ 'trans.Message' | trans }}</th>
+                <th>{{ 'trans.Log' | trans }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for policeLogUserMessage in policeLogUserMessages %}
+                <tr>
+                    <td>
+                        <div>
+                            {{- policeLogUserMessage.datetime | date -}}
+                        </div>
+                        <div>
+                            {{- 'trans.From' | trans -}}
+                            {{- ': ' -}}
+                            {{- policeLogUserMessage.sender -}}
+                            <a href="{{ path('app_admin_user_edit', {'id': policeLogUserMessage.senderUserId}) }}">
+                                <i class="fa fa-sm fa-user"></i>
+                                {{- ' » ' -}}
+                            </a>
+                        </div>
+                        <div>
+                            {{- 'trans.To' | trans -}}
+                            {{- ': ' -}}
+                            {{- policeLogUserMessage.recipient | default -}}
+                            <a href="{{ path('app_admin_user_edit', {'id': policeLogUserMessage.recipientUserId}) }}">
+                                <i class="fa fa-sm fa-user"></i>
+                                {{- ' » ' -}}
+                            </a>
+                        </div>
+                        <div>
+                            <a href="{{ path('app_listing_show', {'id': policeLogUserMessage.listingId, 'slug': policeLogUserMessage.listingSlug}) }}">
+                                {{- policeLogUserMessage.listingTitle -}}
+                            </a>
+                        </div>
+                        <div class="mt-2">
+                            <div>
+                                <a href="{{ path('app_admin_police_log_user_message', {'thread': policeLogUserMessage.threadId}) }}">
+                                    {{- 'trans.Thread messages' | trans -}}
+                                </a>
+                            </div>
+                            <div>
+                                <a href="{{ path('app_admin_police_log_user_message', {'user': policeLogUserMessage.senderUserId}) }}">
+                                    {{- 'trans.Sender messages' | trans -}}
+                                </a>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        {{ policeLogUserMessage.userMessage | nl2br }}
+                    </td>
+                    <td>
+                        <textarea class="h-10em w-100">
+                            {{- policeLogUserMessage.logText -}}
+                        </textarea>
+                        <button
+                                class="js__copyToClipboard btn btn-sm btn-secondary d-block mb-2"
+                                data-clipboard-value="{{- policeLogUserMessage.logText -}}"
+                        >
+                            {{- 'trans.Copy' | trans -}}
+                        </button>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="99">{{ 'trans.no records found' | trans }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        {% include 'base/_pagination.html.twig' %}
+    </div>
+{% endblock %}
+
+{% block js %}
+    {{ encore_entry_link_tags('admin_police_log_user_message') }}
+    {{ encore_entry_script_tags('admin_police_log_user_message') }}
+{% endblock js %}

@@ -5,11 +5,12 @@ declare(strict_types=1);
 namespace App\Controller\Admin\User;
 
 use App\Controller\Admin\Base\AbstractAdminController;
-use App\Entity\Admin;
+use App\Entity\System\Admin;
 use App\Form\Admin\AdministratorEditType;
 use App\Form\Admin\AdministratorNewType;
-use App\Helper\Str;
+use App\Helper\StringHelper;
 use App\Service\Admin\User\AdministratorListService;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -18,15 +19,28 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class AdministratorController extends AbstractAdminController
 {
     /**
-     * @Route("/admin/red5/administrator-user", name="app_admin_administrator_index", methods={"GET"})
+     * @var EntityManagerInterface
      */
-    public function index(
+    private $em;
+
+    public function __construct(EntityManagerInterface $em)
+    {
+        $this->em = $em;
+    }
+
+    /**
+     * @Route("/admin/red5/administrator/list", name="app_admin_administrator_list", methods={"GET"})
+     */
+    public function administratorListForAdmin(
         Request $request,
         AdministratorListService $administratorListService
     ): Response {
         $this->denyUnlessAdmin();
 
-        $paginationDto = $administratorListService->getAdminList((int) $request->get('page', 1));
+        $paginationDto = $administratorListService->getAdminList(
+            (int) $request->get('page', 1),
+            $request->get('query'),
+        );
 
         return $this->render('admin/administrator/index.html.twig', [
             'users' => $paginationDto->getResults(),
@@ -35,7 +49,7 @@ class AdministratorController extends AbstractAdminController
     }
 
     /**
-     * @Route("/admin/red5/administrator-user/new", name="app_admin_administrator_new", methods={"GET","POST"})
+     * @Route("/admin/red5/administrator/new", name="app_admin_administrator_new", methods={"GET","POST"})
      */
     public function new(Request $request, UserPasswordEncoderInterface $userPasswordEncoder): Response
     {
@@ -46,14 +60,14 @@ class AdministratorController extends AbstractAdminController
         $admin->setRoles([Admin::ROLE_ADMIN]);
         $form = $this->createForm(AdministratorNewType::class, $admin);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
-            if (!Str::emptyTrim($admin->getPlainPassword())) {
-                $admin->setPassword($userPasswordEncoder->encodePassword($admin, $admin->getPlainPassword()));
+            if (!StringHelper::emptyTrim($admin->getPlainPassword())) {
+                $encodedPassword = $userPasswordEncoder->encodePassword($admin, $admin->getPlainPassword());
+                $admin->setPassword($encodedPassword);
             }
 
-            $this->getDoctrine()->getManager()->persist($admin);
-            $this->getDoctrine()->getManager()->flush();
+            $this->em->persist($admin);
+            $this->em->flush();
 
             return $this->redirectToRoute('app_admin_administrator_edit', [
                 'id' => $admin->getId(),
@@ -66,7 +80,7 @@ class AdministratorController extends AbstractAdminController
     }
 
     /**
-     * @Route("/admin/red5/administrator-user/{id}/edit", name="app_admin_administrator_edit", methods={"GET","POST"})
+     * @Route("/admin/red5/administrator/{id}/edit", name="app_admin_administrator_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Admin $admin, UserPasswordEncoderInterface $userPasswordEncoder): Response
     {
@@ -75,13 +89,13 @@ class AdministratorController extends AbstractAdminController
 
         $form = $this->createForm(AdministratorEditType::class, $admin);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
-            if (!Str::emptyTrim($admin->getPlainPassword())) {
-                $admin->setPassword($userPasswordEncoder->encodePassword($admin, $admin->getPlainPassword()));
+            if (!StringHelper::emptyTrim($admin->getPlainPassword())) {
+                $encodedPassword = $userPasswordEncoder->encodePassword($admin, $admin->getPlainPassword());
+                $admin->setPassword($encodedPassword);
             }
 
-            $this->getDoctrine()->getManager()->flush();
+            $this->em->flush();
 
             return $this->redirectToRoute('app_admin_administrator_edit', [
                 'id' => $admin->getId(),

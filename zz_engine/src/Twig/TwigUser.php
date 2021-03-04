@@ -6,6 +6,7 @@ namespace App\Twig;
 
 use App\Entity\Listing;
 use App\Entity\User;
+use App\Enum\ParamEnum;
 use App\Security\CurrentUserService;
 use App\Service\Setting\SettingsService;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -46,9 +47,9 @@ class TwigUser implements RuntimeExtensionInterface
         $this->trans = $trans;
     }
 
-    public function lowSecurityCheckIsAdminInPublic(): bool
+    public function isAdminInPublic(): bool
     {
-        return $this->currentUserService->lowSecurityCheckIsAdminInPublic();
+        return $this->currentUserService->isAdminInPublic();
     }
 
     public function isCurrentUserListing(Listing $listing): bool
@@ -58,17 +59,20 @@ class TwigUser implements RuntimeExtensionInterface
 
     public function userOrAdmin(Listing $listing): bool
     {
-        return $this->currentUserService->getUserOrNull() === $listing->getUser() || $this->currentUserService->lowSecurityCheckIsAdminInPublic();
+        return $this->currentUserService->getUserOrNull() === $listing->getUser() || $this->currentUserService->isAdminInPublic();
     }
 
-    public function displayAsExpired(Listing $listing, bool $showPreviewForOwner = false): bool
+    public function displayAsExpired(Listing $listing, bool $showListingPreviewForOwner = false): bool
     {
-        $showPreviewForOwner = $this->requestStack->getMasterRequest()->query->get('showPreviewForOwner', $showPreviewForOwner);
+        $showListingPreviewForOwner = $this->requestStack->getMasterRequest()->query->get(
+            ParamEnum::SHOW_LISTING_PREVIEW_FOR_OWNER,
+            $showListingPreviewForOwner,
+        );
 
-        if ($showPreviewForOwner &&
-            (
+        if ($showListingPreviewForOwner
+            && (
                 $this->currentUserService->getUserOrNull() === $listing->getUser()
-                || $this->currentUserService->lowSecurityCheckIsAdminInPublic()
+                || $this->currentUserService->isAdminInPublic()
             )
         ) {
             return false;
@@ -89,7 +93,7 @@ class TwigUser implements RuntimeExtensionInterface
         }
 
         if (!$user->getDisplayUsername()) {
-            return $this->trans->trans('trans.User') . ' #' .$user->getId();
+            return $this->trans->trans('trans.User').' #'.$user->getId();
         }
 
         return $user->getDisplayUsername();

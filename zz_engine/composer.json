@@ -57,6 +57,7 @@
         "symfony/twig-pack": "*",
         "symfony/validator": "4.4.*",
         "symfony/web-link": "4.4.*",
+        "symfony/webpack-encore-bundle": "^1.11",
         "symfony/yaml": "4.4.*",
         "ticketswap/omnipay-przelewy24": "^2.0",
         "twig/twig": "^3.0",
@@ -64,13 +65,20 @@
         "willdurand/js-translation-bundle": "^3.0"
     },
     "require-dev": {
+        "vimeo/psalm": "^4.6",
+        "friendsofphp/php-cs-fixer": "^2.18",
         "fzaninotto/faker": "^1.9",
+        "phpro/grumphp": "^1.3",
+        "phpstan/phpstan-doctrine": "^0.12.32",
+        "phpstan/phpstan-symfony": "^0.12.20",
         "roave/security-advisories": "dev-master",
         "slevomat/coding-standard": "^5.0",
         "stesie/phpcs-doctrine-annotation-rules": "^1.2",
         "symfony/debug-pack": "*",
         "symfony/maker-bundle": "^1.19",
         "symfony/profiler-pack": "*",
+        "psalm/plugin-symfony": "^2.1",
+        "weirdan/doctrine-psalm-plugin": "^1.0",
         "symfony/test-pack": "*"
     },
     "config": {

@@ -14,10 +14,13 @@ use Symfony\Component\Validator\Exception\ConstraintDefinitionException;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 /**
- * based on @see UniqueValueValidator
+ * based on @see UniqueEntityValidator.
  */
 class UniqueValueValidator extends ConstraintValidator
 {
+    /**
+     * @var ManagerRegistry
+     */
     private $registry;
 
     public function __construct(ManagerRegistry $registry)
@@ -26,9 +29,9 @@ class UniqueValueValidator extends ConstraintValidator
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
-    public function validate($fieldValue, Constraint $constraint): void
+    public function validate($value, Constraint $constraint): void
     {
         if (!$constraint instanceof UniqueValue) {
             throw new UnexpectedTypeException($constraint, UniqueValue::class);
@@ -48,21 +51,20 @@ class UniqueValueValidator extends ConstraintValidator
             throw new ConstraintDefinitionException('At least one field has to be specified.');
         }
 
-        if (null === $fieldValue) {
+        if (null === $value) {
             return;
         }
 
         if ($constraint->em) {
             $em = $this->registry->getManager($constraint->em);
 
-            if (!$em) {
+            if (!$em instanceof ObjectManager) {
                 throw new ConstraintDefinitionException(\sprintf('Object manager "%s" does not exist.', $constraint->em));
             }
         } else {
             $em = $this->registry->getManagerForClass($constraint->entityClass);
-
-            if (!$em) {
-                throw new ConstraintDefinitionException(\sprintf('Unable to find the object manager associated with an entity of class "%s".', \get_class($constraint->entityClass)));
+            if (!$em instanceof ObjectManager) {
+                throw new ConstraintDefinitionException(\sprintf('Unable to find the object manager associated with an entity of class "%s".', $constraint->entityClass));
             }
         }
 
@@ -70,7 +72,6 @@ class UniqueValueValidator extends ConstraintValidator
         /* @var $class ClassMetadata */
 
         $criteria = [];
-
         foreach ($fields as $field) {
             if ($field instanceof UniqueValueDto) {
                 $fieldName = $field->getName();
@@ -80,13 +81,14 @@ class UniqueValueValidator extends ConstraintValidator
 
             if (!$class->hasField($fieldName) && !$class->hasAssociation($fieldName)) {
                 throw new ConstraintDefinitionException(
-                    \sprintf('The field "%s" is not mapped by Doctrine, so it cannot be validated for uniqueness.', $fieldName));
+                    \sprintf('The field "%s" is not mapped by Doctrine, so it cannot be validated for uniqueness.', $fieldName)
+                );
             }
 
             if ($field instanceof UniqueValueDto) {
                 $criteria[$field->getName()] = $field->getValue();
             } else {
-                $criteria[$fieldName] = $fieldValue;
+                $criteria[$fieldName] = $value;
             }
 
             if (null !== $criteria[$fieldName] && $class->hasAssociation($fieldName)) {
@@ -114,14 +116,14 @@ class UniqueValueValidator extends ConstraintValidator
 
             if ($constraint->entityClass !== $supportedClass) {
                 throw new ConstraintDefinitionException(
-                    \sprintf('The "%s" entity repository does not support the "%s" entity. The entity should be an instance of or extend "%s".', $constraint->entityClass, $class->getName(), $supportedClass));
+                    \sprintf('The "%s" entity repository does not support the "%s" entity. The entity should be an instance of or extend "%s".', $constraint->entityClass, $class->getName(), $supportedClass)
+                );
             }
         } else {
             throw new ConstraintDefinitionException(
                 \sprintf(
                     'entityClass must be set in Constraint: %s',
-                    \get_class
-                    (
+                    \get_class(
                         $constraint
                     )
                 )
@@ -160,15 +162,20 @@ class UniqueValueValidator extends ConstraintValidator
             return;
         }
 
-        /**
+        /*
          * do not make error for current value when updating
          */
-        if ($constraint->excludeCurrent !== null && \count($result) === 1 && \current($result) === $constraint->excludeCurrent) {
+        if (null !== $constraint->excludeCurrent && 1 === \count($result) && \current($result) === $constraint->excludeCurrent) {
             return;
         }
 
-        $errorPath = $constraint->errorPath ?? $fields[0];
-        $invalidValue = $criteria[$errorPath] ?? $criteria[$fields[0]];
+        if ($fields[0] instanceof UniqueValueDto) {
+            $firstFieldName = $fields[0]->getName();
+        } else {
+            $firstFieldName = $fields[0];
+        }
+        $errorPath = $constraint->errorPath ?? $firstFieldName;
+        $invalidValue = $criteria[$errorPath] ?? $criteria[$firstFieldName];
 
         $this->context->buildViolation($constraint->message)
             ->atPath($errorPath)
@@ -176,11 +183,12 @@ class UniqueValueValidator extends ConstraintValidator
             ->setInvalidValue($invalidValue)
             ->setCode(UniqueEntity::NOT_UNIQUE_ERROR)
             ->setCause($result)
-            ->addViolation();
+            ->addViolation()
+        ;
     }
 
     /**
-     * @inheritDoc
+     * @param object|string $value
      */
     private function formatWithIdentifiers(ObjectManager $em, ClassMetadata $class, $value): string
     {

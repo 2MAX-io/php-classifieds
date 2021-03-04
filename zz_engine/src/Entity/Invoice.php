@@ -21,7 +21,7 @@ class Invoice
     private $id;
 
     /**
-     * @var User|null
+     * @var null|User
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="invoices")
      * @ORM\JoinColumn(nullable=true)
@@ -29,7 +29,7 @@ class Invoice
     private $user;
 
     /**
-     * @var Payment|null
+     * @var null|Payment
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\Payment", inversedBy="invoices")
      * @ORM\JoinColumn(nullable=true)
@@ -37,14 +37,14 @@ class Invoice
     private $payment;
 
     /**
-     * @var string
+     * @var null|string
      *
-     * @ORM\Column(type="string", length=255, nullable=true, unique=true)
+     * @ORM\Column(type="string", length=100, nullable=true, unique=true)
      */
     private $invoiceNumber;
 
     /**
-     * @var \DateTimeInterface
+     * @var null|\DateTimeInterface
      *
      * @ORM\Column(type="datetime", nullable=true)
      */
@@ -72,14 +72,14 @@ class Invoice
     private $totalTaxMoney;
 
     /**
-     * @var string
+     * @var null|string
      *
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $externalSystemReference;
 
     /**
-     * @var string
+     * @var null|string
      *
      * @ORM\Column(type="string", length=255, nullable=true)
      */
@@ -121,56 +121,63 @@ class Invoice
     private $invoiceFilePath;
 
     /**
-     * @var string
+     * @var null|string
      *
-     * @ORM\Column(type="string", length=255, nullable=false)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $companyName;
 
     /**
-     * @var string
+     * @var null|string
+     *
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $individualClientName;
+
+    /**
+     * @var null|string
      *
      * @ORM\Column(type="string", length=50, nullable=true)
      */
     private $clientTaxNumber;
 
     /**
-     * @var string
+     * @var null|string
      *
-     * @ORM\Column(type="string", length=100, nullable=false)
+     * @ORM\Column(type="string", length=100, nullable=true)
      */
     private $city;
 
     /**
-     * @var string
+     * @var null|string
      *
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $street;
 
     /**
-     * @var string
+     * @var null|string
      *
-     * @ORM\Column(type="string", length=50, nullable=false)
+     * @ORM\Column(type="string", length=50, nullable=true)
      */
     private $buildingNumber;
 
     /**
-     * @var string
+     * @var null|string
      *
      * @ORM\Column(type="string", length=50, nullable=true)
      */
     private $unitNumber;
 
     /**
-     * @var string
+     * @var null|string
      *
-     * @ORM\Column(type="string", length=50, nullable=false)
+     * @ORM\Column(type="string", length=50, nullable=true)
      */
     private $zipCode;
 
     /**
-     * @var string
+     * @var null|string
      *
      * @ORM\Column(type="string", length=50, nullable=true)
      */
@@ -184,7 +191,7 @@ class Invoice
     private $sellerCompanyName;
 
     /**
-     * @var string
+     * @var null|string
      *
      * @ORM\Column(type="string", length=50, nullable=true)
      */
@@ -198,7 +205,7 @@ class Invoice
     private $sellerCity;
 
     /**
-     * @var string
+     * @var null|string
      *
      * @ORM\Column(type="string", length=255, nullable=true)
      */
@@ -212,7 +219,7 @@ class Invoice
     private $sellerBuildingNumber;
 
     /**
-     * @var string
+     * @var null|string
      *
      * @ORM\Column(type="string", length=50, nullable=true)
      */
@@ -226,14 +233,14 @@ class Invoice
     private $sellerZipCode;
 
     /**
-     * @var string
+     * @var null|string
      *
      * @ORM\Column(type="string", length=50, nullable=true)
      */
     private $sellerCountry;
 
     /**
-     * @var string
+     * @var null|string
      *
      * @ORM\Column(type="string", length=100, nullable=true)
      */
@@ -247,14 +254,14 @@ class Invoice
     private $emailForInvoice;
 
     /**
-     * @var \DateTimeInterface
+     * @var null|\DateTimeInterface
      *
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $exportDate;
 
     /**
-     * @var \DateTimeInterface
+     * @var null|\DateTimeInterface
      *
      * @ORM\Column(type="datetime", nullable=true)
      */
@@ -414,7 +421,7 @@ class Invoice
         return $this->companyName;
     }
 
-    public function setCompanyName(string $companyName): self
+    public function setCompanyName(?string $companyName): self
     {
         $this->companyName = $companyName;
 
@@ -474,7 +481,7 @@ class Invoice
         return $this->zipCode;
     }
 
-    public function setZipCode(string $zipCode): self
+    public function setZipCode(?string $zipCode): self
     {
         $this->zipCode = $zipCode;
 
@@ -600,12 +607,12 @@ class Invoice
         $this->sellerCompanyName = $sellerCompanyName;
     }
 
-    public function getSellerTaxNumber(): string
+    public function getSellerTaxNumber(): ?string
     {
         return $this->sellerTaxNumber;
     }
 
-    public function setSellerTaxNumber(string $sellerTaxNumber): void
+    public function setSellerTaxNumber(?string $sellerTaxNumber): void
     {
         $this->sellerTaxNumber = $sellerTaxNumber;
     }
@@ -620,12 +627,12 @@ class Invoice
         $this->sellerCity = $sellerCity;
     }
 
-    public function getSellerStreet(): string
+    public function getSellerStreet(): ?string
     {
         return $this->sellerStreet;
     }
 
-    public function setSellerStreet(string $sellerStreet): void
+    public function setSellerStreet(?string $sellerStreet): void
     {
         $this->sellerStreet = $sellerStreet;
     }
@@ -640,12 +647,12 @@ class Invoice
         $this->sellerBuildingNumber = $sellerBuildingNumber;
     }
 
-    public function getSellerUnitNumber(): string
+    public function getSellerUnitNumber(): ?string
     {
         return $this->sellerUnitNumber;
     }
 
-    public function setSellerUnitNumber(string $sellerUnitNumber): void
+    public function setSellerUnitNumber(?string $sellerUnitNumber): void
     {
         $this->sellerUnitNumber = $sellerUnitNumber;
     }
@@ -660,22 +667,22 @@ class Invoice
         $this->sellerZipCode = $sellerZipCode;
     }
 
-    public function getSellerCountry(): string
+    public function getSellerCountry(): ?string
     {
         return $this->sellerCountry;
     }
 
-    public function setSellerCountry(string $sellerCountry): void
+    public function setSellerCountry(?string $sellerCountry): void
     {
         $this->sellerCountry = $sellerCountry;
     }
 
-    public function getSellerEmail(): string
+    public function getSellerEmail(): ?string
     {
         return $this->sellerEmail;
     }
 
-    public function setSellerEmail(string $sellerEmail): void
+    public function setSellerEmail(?string $sellerEmail): void
     {
         $this->sellerEmail = $sellerEmail;
     }
@@ -688,5 +695,15 @@ class Invoice
     public function setCurrency(string $currency): void
     {
         $this->currency = $currency;
+    }
+
+    public function getIndividualClientName(): ?string
+    {
+        return $this->individualClientName;
+    }
+
+    public function setIndividualClientName(?string $individualClientName): void
+    {
+        $this->individualClientName = $individualClientName;
     }
 }

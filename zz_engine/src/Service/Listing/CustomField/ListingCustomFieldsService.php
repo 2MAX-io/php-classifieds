@@ -4,18 +4,27 @@ declare(strict_types=1);
 
 namespace App\Service\Listing\CustomField;
 
+use App\Entity\Category;
 use App\Entity\CustomField;
-use App\Entity\CustomFieldOption;
 use App\Entity\Listing;
 use App\Entity\ListingCustomFieldValue;
-use App\Helper\Arr;
-use App\Helper\Str;
+use App\Form\ListingCustomFieldsType;
+use App\Helper\StringHelper;
+use App\Repository\CustomFieldOptionRepository;
+use App\Service\Listing\CustomField\Dto\CustomFieldFromRequestDto;
+use App\Service\Listing\Save\Dto\ListingSaveDto;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr\Join;
 use Psr\Log\LoggerInterface;
 
 class ListingCustomFieldsService
 {
+    /**
+     * @var CustomFieldOptionRepository
+     */
+    private $customFieldOptionRepository;
+
     /**
      * @var EntityManagerInterface
      */
@@ -26,8 +35,12 @@ class ListingCustomFieldsService
      */
     private $logger;
 
-    public function __construct(EntityManagerInterface $em, LoggerInterface $logger)
-    {
+    public function __construct(
+        CustomFieldOptionRepository $customFieldOptionRepository,
+        EntityManagerInterface $em,
+        LoggerInterface $logger
+    ) {
+        $this->customFieldOptionRepository = $customFieldOptionRepository;
         $this->em = $em;
         $this->logger = $logger;
     }
@@ -35,129 +48,124 @@ class ListingCustomFieldsService
     /**
      * @return CustomField[]
      */
-    public function getFields(?int $categoryId, ?int $listingId): array
+    public function getCustomFields(Category $category, Listing $listing): array
     {
-        $qb = $this->em->getRepository(CustomField::class)->createQueryBuilder('customField');
-        $qb->addSelect('customFieldOptions');
-        $qb->addSelect('categoryJoin');
+        $qb = $this->em->createQueryBuilder();
+        $qb->select('customField');
+        $qb->from(CustomField::class, 'customField');
+        $qb->addSelect('customFieldOption');
+        $qb->addSelect('customFieldForCategory');
         $qb->addSelect('category');
-        $qb->join('customField.categoriesJoin', 'categoryJoin');
-        $qb->join('categoryJoin.category', 'category');
-        $qb->leftJoin('customField.customFieldOptions', 'customFieldOptions');
+        $qb->addSelect('listingCustomFieldValue');
+        $qb->join('customField.customFieldForCategories', 'customFieldForCategory');
+        $qb->join('customFieldForCategory.category', 'category');
+        $qb->leftJoin('customField.customFieldOptions', 'customFieldOption');
 
-        $qb->andWhere($qb->expr()->eq('category.id', ':category'));
-        $qb->setParameter(':category', $categoryId);
-
-        $qb->addSelect('listingCustomFieldValues');
         $qb->leftJoin(
             'customField.listingCustomFieldValues',
-            'listingCustomFieldValues',
+            'listingCustomFieldValue',
             Join::WITH,
-            $qb->expr()->eq('listingCustomFieldValues.listing', ':listingId')
+            (string) $qb->expr()->eq('listingCustomFieldValue.listing', ':listing'),
         );
-        $qb->setParameter(':listingId', $listingId);
+        $qb->setParameter(':listing', $listing->getId());
 
-        $qb->orderBy('categoryJoin.sort', 'ASC');
+        $qb->andWhere($qb->expr()->eq('category.id', ':category'));
+        $qb->setParameter(':category', $category->getId());
+
+        $qb->orderBy('customFieldForCategory.sort', Criteria::ASC);
 
         return $qb->getQuery()->getResult();
     }
 
-    public function saveCustomFieldsToListing(Listing $listing, array $customFieldValueList): void
+    public function saveCustomFieldsToListing(ListingSaveDto $listingSaveDto): void
     {
-        $listingCustomFieldValues = $this->getListingCustomFieldValues($listing);
-        $listingCustomFieldValuesToRemove = $listingCustomFieldValues;
+        $listing = $listingSaveDto->getListing();
+        $listingCustomFieldValues = $listing->getListingCustomFieldValues()->toArray();
+        $listingSaveDto->setCurrentValueEntities($listingCustomFieldValues);
+        $listingSaveDto->setCustomFieldValueEntitiesToRemove($listingCustomFieldValues);
 
-        /** @var string|array $customFieldValue */
-        foreach ($customFieldValueList as $customFieldId => $customFieldValue) {
-            if (\is_array($customFieldValue)) {
-                foreach ($customFieldValue as $customFieldValueItem) {
-                    $listingCustomFieldValue = $this->saveField(
-                        $customFieldId,
-                        $customFieldValueItem,
-                        $listingCustomFieldValues,
-                        $listingCustomFieldValuesToRemove,
-                        true
+        foreach ($listingSaveDto->getCustomFieldValuesFromRequest() as $customFieldId => $customFieldValueFromRequest) {
+            if (\is_array($customFieldValueFromRequest)) {
+                foreach ($customFieldValueFromRequest as $customFieldValue) {
+                    if (StringHelper::emptyTrim($customFieldValue)) {
+                        continue;
+                    }
+
+                    $customFieldFromRequestDto = new CustomFieldFromRequestDto();
+                    $customFieldFromRequestDto->setCustomFieldId($customFieldId);
+                    $customFieldFromRequestDto->setCustomFieldValueString($customFieldValue);
+                    $listingCustomFieldValue = $this->saveCustomField(
+                        $customFieldFromRequestDto,
+                        $listingSaveDto,
                     );
                     $listing->addListingCustomFieldValue($listingCustomFieldValue);
                 }
+
                 continue;
             }
 
-            if (Str::emptyTrim($customFieldValue)) {
+            $customFieldValue = $customFieldValueFromRequest;
+            if (StringHelper::emptyTrim($customFieldValue)) {
                 continue;
             }
 
-            $listingCustomFieldValue = $this->saveField(
-                $customFieldId,
-                $customFieldValue,
-                $listingCustomFieldValues,
-                $listingCustomFieldValuesToRemove
+            $customFieldFromRequestDto = new CustomFieldFromRequestDto();
+            $customFieldFromRequestDto->setCustomFieldId($customFieldId);
+            $customFieldFromRequestDto->setCustomFieldValueString($customFieldValue);
+            $listingCustomFieldValue = $this->saveCustomField(
+                $customFieldFromRequestDto,
+                $listingSaveDto,
             );
             $listing->addListingCustomFieldValue($listingCustomFieldValue);
         }
 
-        foreach ($listingCustomFieldValuesToRemove as $listingCustomFieldValue) {
-            $this->em->remove($listingCustomFieldValue);
+        foreach ($listingSaveDto->getCustomFieldValueEntitiesToRemove() as $valueEntityToRemove) {
+            $this->em->remove($valueEntityToRemove);
         }
     }
 
-    public function saveField(
-        int $customFieldId,
-        string $customFieldValue,
-        array $listingCustomFieldValues,
-        array &$listingCustomFieldValuesToRemove,
-        bool $multiple = false
+    public function saveCustomField(
+        CustomFieldFromRequestDto $customFieldFromRequestDto,
+        ListingSaveDto $listingSaveDto
     ): ListingCustomFieldValue {
+        $customFieldValueString = $customFieldFromRequestDto->getCustomFieldValueString();
         $option = null;
-        if (Str::beginsWith($customFieldValue, '__form_custom_field_option_id_')) {
-            $optionId = (int) \str_replace('__form_custom_field_option_id_', '', $customFieldValue);
-            $option = $this->em->getRepository(CustomFieldOption::class)->find($optionId);
-            if ($option === null || $option->getValue() === null) {
+        if (StringHelper::beginsWith(
+            $customFieldValueString,
+            ListingCustomFieldsType::CUSTOM_FIELD_OPTION_ID_PREFIX
+        )) {
+            $optionId = (int) \str_replace(
+                ListingCustomFieldsType::CUSTOM_FIELD_OPTION_ID_PREFIX,
+                '',
+                $customFieldValueString,
+            );
+            $option = $this->customFieldOptionRepository->find($optionId);
+            if (null === $option || null === $option->getValue()) {
                 $this->logger->error('option should not be null', ['optionId' => $optionId]);
             }
 
-            $customFieldValue = $option->getValue() ?? (string) $optionId; // should not be null
+            $customFieldValueString = $option->getValue() ?? (string) $optionId; // should not be null
         }
 
-        if ($multiple) {
-            $idValueConcat = $customFieldId . '_' . $customFieldValue;
-            if (isset($listingCustomFieldValues[$idValueConcat])) {
-                $listingCustomFieldValue = $listingCustomFieldValues[$idValueConcat];
-                unset($listingCustomFieldValuesToRemove[$idValueConcat]);
-            } else {
-                $listingCustomFieldValue = new ListingCustomFieldValue();
-            }
-        } else {
-            /** @noinspection NestedPositiveIfStatementsInspection */
-            if (isset($listingCustomFieldValues[$customFieldId])) {
-                $listingCustomFieldValue = $listingCustomFieldValues[$customFieldId];
-                unset($listingCustomFieldValuesToRemove[$customFieldId]);
-            } else {
-                $listingCustomFieldValue = new ListingCustomFieldValue();
-            }
+        $listingCustomFieldValue = $listingSaveDto->getCurrentCustomFieldValueEntity(
+            $customFieldFromRequestDto,
+            $option
+        );
+        if (!$listingCustomFieldValue) {
+            $listingCustomFieldValue = new ListingCustomFieldValue();
         }
 
-        $listingCustomFieldValue->setValue($customFieldValue);
+        /** @var CustomField $customField */
+        $customField = $this->em->getReference(
+            CustomField::class,
+            $customFieldFromRequestDto->getCustomFieldId()
+        );
+        $listingCustomFieldValue->setValue($customFieldValueString);
         $listingCustomFieldValue->setCustomFieldOption($option);
-        $listingCustomFieldValue->setCustomField($this->em->getReference(CustomField::class, $customFieldId));
+        $listingCustomFieldValue->setCustomField($customField);
         $this->em->persist($listingCustomFieldValue);
+        $listingSaveDto->stopCustomFieldValueRemove($listingCustomFieldValue);
 
         return $listingCustomFieldValue;
-    }
-
-    /**
-     * indexed by custom field unique identifier
-     *
-     * @return ListingCustomFieldValue[]
-     */
-    private function getListingCustomFieldValues(Listing $listing): array
-    {
-        return Arr::indexBy($listing->getListingCustomFieldValues()->toArray(), static function(ListingCustomFieldValue $customFieldValue) {
-            if ($customFieldValue->getCustomFieldNotNull()->getType() === CustomField::CHECKBOX_MULTIPLE) {
-                return [$customFieldValue->getCustomFieldNotNull()->getId() . '_' . $customFieldValue->getValue() => $customFieldValue];
-            }
-
-            return [$customFieldValue->getCustomFieldNotNull()->getId() => $customFieldValue];
-        });
     }
 }

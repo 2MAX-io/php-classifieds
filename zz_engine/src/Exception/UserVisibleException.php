@@ -15,15 +15,20 @@ class UserVisibleException extends \Exception implements HttpExceptionInterface
     private $messageKey;
 
     /**
-     * @var array
+     * @var array<string,string>
      */
     private $messageData;
 
     /**
      * @param string $message #TranslationKey
+     * @param array<string,string> $messageData
      */
-    public function __construct(string $message = '', array $messageData = [], int $code = 0, \Exception $previous = null)
-    {
+    public function __construct(
+        string $message = '',
+        array $messageData = [],
+        int $code = 0,
+        \Throwable $previous = null
+    ) {
         parent::__construct($message, $code, $previous);
 
         $this->setUserSafeMessage($message, $messageData);
@@ -31,17 +36,22 @@ class UserVisibleException extends \Exception implements HttpExceptionInterface
 
     /**
      * @param string $message #TranslationKey
+     * @param array<string,string> $messageData
      */
-    public static function fromPrevious(string $message, \Exception $previous = null, array $messageData = [], int $code = 0): self
-    {
-        return new static($message, $messageData, $code, $previous);
+    public static function fromPrevious(
+        string $message,
+        \Throwable $previous = null,
+        array $messageData = [],
+        int $code = 0
+    ): self {
+        return new self($message, $messageData, $code, $previous);
     }
 
     /**
      * Set a message that will be shown to the user.
      *
-     * @param string $messageKey  The message or message key
-     * @param array  $messageData Data to be passed into the translator
+     * @param string $messageKey #TranslationKey
+     * @param string[] $messageData Data to be passed into the translator
      */
     public function setUserSafeMessage(string $messageKey, array $messageData = []): void
     {
@@ -54,6 +64,9 @@ class UserVisibleException extends \Exception implements HttpExceptionInterface
         return $this->messageKey;
     }
 
+    /**
+     * @return array<string,string>
+     */
     public function getUserSafeMessageData(): array
     {
         return $this->messageData;
@@ -72,7 +85,7 @@ class UserVisibleException extends \Exception implements HttpExceptionInterface
     /**
      * Returns response headers.
      *
-     * @return array Response headers
+     * @return array<string,string> Response headers
      */
     public function getHeaders(): array
     {

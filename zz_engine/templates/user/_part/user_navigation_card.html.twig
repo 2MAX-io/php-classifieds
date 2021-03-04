@@ -6,28 +6,28 @@
 
     <div class="text-dark">
         <a href="{{ path('app_user_listing_list') }}" class="link-list-item text-dark">
-            <i class="fas fa-list-ul"></i>
+            <i class="svg svg-list-ul mr-1"></i>
             <span>{{ 'trans.Listings' | trans }}</span>
         </a>
         <a href="{{ path('app_listing_new') }}" class="link-list-item text-dark">
-            <i class="far fa-plus-square"></i>
+            <i class="svg svg-plus-square mr-1"></i>
             <span>{{ 'trans.Create Listing' | trans }}</span>
         </a>
         {% if settings.messageSystemEnabled %}
             <a href="{{ path('app_user_message_list') }}" class="link-list-item text-dark">
-                <i class="fas fa-inbox"></i>
+                <i class="svg svg-inbox mr-1"></i>
                 <span>{{ 'trans.Messages' | trans }}</span>
             </a>
         {% endif %}
         {% if settings.paymentAllowed %}
             <a href="{{ path('app_user_balance_top_up') }}" class="link-list-item text-dark">
-                <i class="fas fa-money-check-alt"></i>
+                <i class="svg svg-money-check-alt mr-1"></i>
                 <span>{{ 'trans.Top up account' | trans }}</span>
             </a>
         {% endif %}
         {% if settings.paymentAllowed %}
             <a href="{{ path('app_user_invoice_list') }}" class="link-list-item text-dark">
-                <i class="fas fa-envelope"></i>
+                <i class="svg svg-envelope mr-1"></i>
                 <span>{{ 'trans.Invoices' | trans }}</span>
             </a>
         {% endif %}
@@ -39,15 +39,14 @@
 
     <div class="text-dark">
         <a href="{{ path('app_user_settings') }}" class="link-list-item text-dark">
-            <i class="fas fa-cogs"></i>
+            <i class="svg svg-cogs mr-1"></i>
             <span>{{ 'trans.Settings' | trans }}</span>
         </a>
         <a
-                href="{{ path('app_logout') }}"
-                onclick="return confirm('{{ 'trans.Do you want to log out?' | trans }}')"
+                href="{{ path('app_logout_confirm') }}"
                 class="link-list-item text-dark"
         >
-            <i class="fas fa-sign-out-alt"></i>
+            <i class="svg svg-sign-out-alt mr-1"></i>
             <span>{{ 'trans.Logout' | trans }}</span>
         </a>
     </div>

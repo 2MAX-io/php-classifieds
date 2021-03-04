@@ -7,101 +7,109 @@ namespace App\Service\Admin\Listing;
 use App\Entity\Category;
 use App\Entity\Listing;
 use App\Exception\UserVisibleException;
-use App\Helper\Search;
-use App\Helper\Str;
+use App\Helper\SearchHelper;
+use App\Helper\StringHelper;
+use App\Repository\CategoryRepository;
+use App\Service\Admin\Listing\Dto\AdminListingListDto;
+use App\Service\Listing\ListingPublicDisplayService;
 use App\Service\System\Pagination\PaginationService;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RequestStack;
 
 class AdminListingSearchService
 {
     /**
-     * @var EntityManagerInterface|EntityManager
+     * @var CategoryRepository
      */
-    private $em;
+    private $categoryRepository;
 
     /**
-     * @var RequestStack
+     * @var ListingPublicDisplayService
      */
-    private $requestStack;
+    private $listingPublicDisplayService;
 
     /**
      * @var PaginationService
      */
     private $paginationService;
 
+    /**
+     * @var EntityManager|EntityManagerInterface
+     */
+    private $em;
+
     public function __construct(
-        EntityManagerInterface $em,
-        RequestStack $requestStack,
-        PaginationService $paginationService
+        CategoryRepository $categoryRepository,
+        ListingPublicDisplayService $listingPublicDisplayService,
+        PaginationService $paginationService,
+        EntityManagerInterface $em
     ) {
-        $this->em = $em;
-        $this->requestStack = $requestStack;
+        $this->categoryRepository = $categoryRepository;
+        $this->listingPublicDisplayService = $listingPublicDisplayService;
         $this->paginationService = $paginationService;
+        $this->em = $em;
     }
 
-    /**
-     * @return Listing[]
-     */
-    public function getList(int $page): AdminListingListDto
+    public function getList(AdminListingListDto $adminListingListDto): AdminListingListDto
     {
-        $qb = $this->getQuery();
+        $qb = $this->getQuery($adminListingListDto);
 
         $pager = $this->paginationService->createPaginationForQb($qb);
-        $pager->setMaxPerPage($this->paginationService->getMaxPerPage());
-        $pager->setCurrentPage($page);
+        $pager->setMaxPerPage($this->paginationService->getPerPage());
+        $pager->setCurrentPage($adminListingListDto->getCurrentPage());
 
-        $adminListingListDto = new AdminListingListDto($pager->getCurrentPageResults(), $pager);
+        $adminListingListDto->setResults($pager->getCurrentPageResults());
+        $adminListingListDto->setPager($pager);
 
         return $adminListingListDto;
     }
 
-    public function getQuery(): QueryBuilder
+    public function getQuery(AdminListingListDto $adminListingListDto): QueryBuilder
     {
-        $qb = $this->em->getRepository(Listing::class)->createQueryBuilder('listing');
-        /** @var Request $request */
-        $request = $this->requestStack->getMasterRequest();
+        $qb = $this->em->createQueryBuilder();
+        $qb->select('listing');
+        $qb->from(Listing::class, 'listing');
 
-        if (!Str::emptyTrim($request->get('query'))) {
+        if (!StringHelper::emptyTrim($adminListingListDto->getFilterBySearchQuery())) {
             $qb->andWhere('MATCH (listing.searchText, listing.email, listing.phone, listing.rejectionReason) AGAINST (:query BOOLEAN) > 0');
-            $qb->setParameter(':query', Search::optimizeMatch($request->get('query')));
+            $qb->setParameter(':query', SearchHelper::optimizeMatch($adminListingListDto->getFilterBySearchQuery()));
         }
 
-        if (!Str::emptyTrim($request->get('adminActivated'))) {
+        if (!StringHelper::emptyTrim($adminListingListDto->getFilterByAdminActivated())) {
             $qb->andWhere($qb->expr()->eq('listing.adminActivated', ':adminActivated'));
-            $qb->setParameter(':adminActivated', $request->get('adminActivated'));
+            $qb->setParameter(':adminActivated', $adminListingListDto->getFilterByAdminActivated());
         }
 
-        if (!Str::emptyTrim($request->get('adminRejected'))) {
+        if (!StringHelper::emptyTrim($adminListingListDto->getFilterByAdminRejected())) {
             $qb->andWhere($qb->expr()->eq('listing.adminRejected', ':adminRejected'));
-            $qb->setParameter(':adminRejected', $request->get('adminRejected'));
+            $qb->setParameter(':adminRejected', $adminListingListDto->getFilterByAdminRejected());
         }
 
-        if (!Str::emptyTrim($request->get('adminRemoved'))) {
+        if (!StringHelper::emptyTrim($adminListingListDto->getFilterByAdminRemoved())) {
             $qb->andWhere($qb->expr()->eq('listing.adminRemoved', ':adminRemoved'));
-            $qb->setParameter(':adminRemoved', $request->get('adminRemoved'));
+            $qb->setParameter(':adminRemoved', $adminListingListDto->getFilterByAdminRemoved());
         }
 
-        if (!Str::emptyTrim($request->get('userDeactivated'))) {
+        if (!StringHelper::emptyTrim($adminListingListDto->getFilterByUserDeactivated())) {
             $qb->andWhere($qb->expr()->eq('listing.userDeactivated', ':userDeactivated'));
-            $qb->setParameter(':userDeactivated', $request->get('userDeactivated'));
+            $qb->setParameter(':userDeactivated', $adminListingListDto->getFilterByUserDeactivated());
         }
 
-        if (!Str::emptyTrim($request->get('userRemoved'))) {
+        if (!StringHelper::emptyTrim($adminListingListDto->getFilterByUserRemoved())) {
             $qb->andWhere($qb->expr()->eq('listing.userRemoved', ':userRemoved'));
-            $qb->setParameter(':userRemoved', $request->get('userRemoved'));
+            $qb->setParameter(':userRemoved', $adminListingListDto->getFilterByUserRemoved());
         }
 
-        if (!Str::emptyTrim($request->get('featured'))) {
+        if (!StringHelper::emptyTrim($adminListingListDto->getFilterByFeatured())) {
             $qb->andWhere($qb->expr()->eq('listing.featured', ':featured'));
-            $qb->setParameter(':featured', $request->get('featured'));
+            $qb->setParameter(':featured', $adminListingListDto->getFilterByFeatured());
         }
 
-        if (!Str::emptyTrim($request->get('category'))) {
-            $category = $this->em->getRepository(Category::class)->find($request->get('category'));
+        if (!StringHelper::emptyTrim($adminListingListDto->getFilterByCategory())) {
+            $category = $this->categoryRepository->find($adminListingListDto->getFilterByCategory());
             if (!$category) {
                 throw new UserVisibleException('category not found');
             }
@@ -116,7 +124,7 @@ class AdminListingSearchService
             $qb->setParameter(':requestedCategoryRgt', $category->getRgt());
         }
 
-        if (!Str::emptyTrim($request->get('user'))) {
+        if (!StringHelper::emptyTrim($adminListingListDto->getFilterByUser())) {
             $qb->join('listing.user', 'user');
 
             $qb->andWhere(
@@ -126,17 +134,48 @@ class AdminListingSearchService
                     $qb->expr()->eq('user.id', ':user')
                 )
             );
-            $qb->setParameter(':user', Search::optimizeLike($request->get('user')));
+            $qb->setParameter(':user', SearchHelper::optimizeLike($adminListingListDto->getFilterByUser()));
         }
 
-        $qb->orderBy('listing.id', 'DESC');
+        if (!StringHelper::emptyTrim($adminListingListDto->getFilterByPublicDisplay())) {
+            if ($adminListingListDto->getFilterByPublicDisplay()) {
+                $this->listingPublicDisplayService->applyPublicDisplayConditions($qb);
+            } else {
+                $this->listingPublicDisplayService->applyHiddenConditions($qb);
+            }
+        }
+
+        $qb->orderBy('listing.id', Criteria::DESC);
 
         return $qb;
     }
 
-    public function getCategories(): array
+    public function getAdminListingListDtoFromRequest(Request $request): AdminListingListDto
     {
-        $qb = $this->em->getRepository(Category::class)->createQueryBuilder('category');
+        $adminListingListDto = new AdminListingListDto();
+        $adminListingListDto->setCurrentPage((int) $request->query->get('page', 1));
+        $adminListingListDto->setFilterBySearchQuery($request->get('query'));
+        $adminListingListDto->setFilterByUser($request->get('user'));
+        $adminListingListDto->setFilterByCategory($request->get('category'));
+        $adminListingListDto->setFilterByPublicDisplay($request->get('publicDisplay'));
+        $adminListingListDto->setFilterByFeatured($request->get('featured'));
+        $adminListingListDto->setFilterByAdminActivated($request->get('adminActivated'));
+        $adminListingListDto->setFilterByAdminRejected($request->get('adminRejected'));
+        $adminListingListDto->setFilterByAdminRemoved($request->get('adminRemoved'));
+        $adminListingListDto->setFilterByUserDeactivated($request->get('userDeactivated'));
+        $adminListingListDto->setFilterByUserRemoved($request->get('userRemoved'));
+
+        return $adminListingListDto;
+    }
+
+    /**
+     * @return array<int|string,string>
+     */
+    public function getFilterByCategorySelectList(): array
+    {
+        $qb = $this->em->createQueryBuilder();
+        $qb->select('category');
+        $qb->from(Category::class, 'category');
         $qb->addOrderBy('category.sort');
         /** @var Category[] $categories */
         $categories = $qb->getQuery()->getResult();

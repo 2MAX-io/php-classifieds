@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Validator\Constraints;
 
-use App\Service\Setting\SettingsService;
+use App\Service\Setting\SettingsDto;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
@@ -13,13 +13,13 @@ use Symfony\Component\Validator\Exception\UnexpectedValueException;
 class HasLetterNumberValidator extends ConstraintValidator
 {
     /**
-     * @var SettingsService
+     * @var SettingsDto
      */
-    private $settingsService;
+    private $settingsDto;
 
-    public function __construct(SettingsService $settingsService)
+    public function __construct(SettingsDto $settingsDto)
     {
-        $this->settingsService = $settingsService;
+        $this->settingsDto = $settingsDto;
     }
 
     /**
@@ -41,17 +41,19 @@ class HasLetterNumberValidator extends ConstraintValidator
 
         $value = (string) $value;
 
-
         $allowedCharacters = '';
+        /* @noinspection SpellCheckingInspection */
         $allowedCharacters .= 'qwertyuiopasdfghjklzxcvbnm';
+        /* @noinspection SpellCheckingInspection */
         $allowedCharacters .= 'QWERTYUIOPASDFGHJKLZXCVBNM';
         $allowedCharacters .= '1234567890';
-        $allowedCharacters .= $this->settingsService->getAllowedCharacters();
+        $allowedCharacters .= $this->settingsDto->getAllowedCharacters();
 
-        if (!\preg_match('~[' . \preg_quote($allowedCharacters, '~') . ']+~', $value)) {
+        if (!\preg_match('~['.\preg_quote($allowedCharacters, '~').']+~', $value)) {
             $this->context->buildViolation($constraint->message)
                 ->setParameter('{{ value }}', $this->formatValue($value))
-                ->addViolation();
+                ->addViolation()
+            ;
         }
     }
 }

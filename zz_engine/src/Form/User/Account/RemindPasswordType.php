@@ -23,12 +23,12 @@ class RemindPasswordType extends AbstractType
             'constraints' => [
                 new NotBlank(),
                 new Email([
-                    'mode' => Email::VALIDATION_MODE_STRICT
+                    'mode' => Email::VALIDATION_MODE_STRICT,
                 ]),
                 new ValueExist([
                     'fields' => 'email',
                     'entityClass' => User::class,
-                    'message' => 'trans.User with this email address was not found'
+                    'message' => 'trans.User with this email address was not found',
                 ]),
             ],
         ]);

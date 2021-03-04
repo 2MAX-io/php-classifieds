@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Form\Type;
 
 use App\Entity\Category;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -30,7 +31,6 @@ class AdminCategoryType extends AbstractType
             'label' => 'trans.Under category',
             'choice_label' => static function (Category $category) {
                 $path = $category->getPath();
-
                 $path = \array_map(
                     static function (Category $category) {
                         return $category->getName();
@@ -45,11 +45,13 @@ class AdminCategoryType extends AbstractType
                 return \implode(' ⇾ ', $path);
             },
             'query_builder' => function () {
-                $qb = $this->em->getRepository(Category::class)->createQueryBuilder('category');
-                $qb->addOrderBy('category.sort', 'ASC');
+                $qb = $this->em->createQueryBuilder();
+                $qb->select('category');
+                $qb->from(Category::class, 'category');
+                $qb->addOrderBy('category.sort', Criteria::ASC);
 
                 return $qb;
-            }
+            },
         ]);
     }
 

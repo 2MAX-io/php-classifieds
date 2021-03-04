@@ -30,23 +30,25 @@ class PageType extends AbstractType
                 new NotBlank(),
             ],
         ]);
-        $builder->add(
-            self::SLUG, TextType::class, [
+        $slug = $builder->add(self::SLUG, TextType::class, [
             'label' => 'trans.Slug',
             'constraints' => [
                 new NotBlank(),
                 new Slug(),
                 new HasLetterNumber(),
             ],
-        ])
-        ->addEventListener(FormEvents::PRE_SUBMIT, static function(FormEvent $formEvent): void {
+        ]);
+        $slug->addEventListener(FormEvents::PRE_SUBMIT, static function (FormEvent $formEvent): void {
             $data = $formEvent->getData();
-            $data[self::SLUG] = SlugHelper::softSlug($data[self::SLUG]);
+            $data[self::SLUG] = SlugHelper::lowercaseWithoutSpaces($data[self::SLUG]);
 
             $formEvent->setData($data);
         });
         $builder->add('content', TextareaType::class, [
             'label' => 'trans.Content',
+            'attr' => [
+                'class' => 'js__textareaAutosize',
+            ],
         ]);
         $builder->add('enabled', CheckboxType::class, [
             'label' => 'trans.Enabled',

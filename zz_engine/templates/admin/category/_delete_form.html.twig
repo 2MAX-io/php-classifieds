@@ -1,10 +1,10 @@
 <form
         method="post"
         action="{{ path('app_admin_category_delete', {'id': category.id}) }}"
-        onsubmit="return confirm('{{ 'trans.Delete category' | trans }}: {{ category.name }}?');"
-        class="d-inline"
+        data-confirm-message="{{ 'trans.Delete category' | trans }}: {{ category.name }}?"
+        class="d-inline js__confirm"
 >
-<input type="hidden" name="_method" value="DELETE">
-    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ category.id) }}">
+    <input type="hidden" name="_method" value="DELETE">
+    <input type="hidden" name="_token" value="{{ csrf_token('csrf_deleteCategory' ~ category.id) }}">
     <button class="btn btn-danger mb-1">{{ 'trans.Delete' | trans }}</button>
 </form>

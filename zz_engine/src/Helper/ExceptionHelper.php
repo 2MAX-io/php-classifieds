@@ -6,13 +6,18 @@ namespace App\Helper;
 
 class ExceptionHelper
 {
+    /**
+     * @param array<int|string,int|string> $context
+     *
+     * @return array<mixed,mixed>
+     */
     public static function flatten(\Throwable $e, array $context = []): array
     {
         return \array_merge(
             [
                 'exceptionMessage' => $e->getMessage(),
-                'file' => $e->getFile() . ':' . $e->getLine(),
-                'trace' => "\n" . \mb_substr($e->getTraceAsString(), 0, 1000) . "\n",
+                'file' => $e->getFile().':'.$e->getLine(),
+                'trace' => "\n".\mb_substr($e->getTraceAsString(), 0, 1000)."\n",
                 'previous' => \array_map(
                     static function (\Throwable $e) {
                         return static::flatten($e);

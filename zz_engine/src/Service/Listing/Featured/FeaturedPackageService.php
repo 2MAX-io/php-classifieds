@@ -6,6 +6,7 @@ namespace App\Service\Listing\Featured;
 
 use App\Entity\FeaturedPackage;
 use App\Entity\Listing;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\EntityManagerInterface;
 
 class FeaturedPackageService
@@ -15,9 +16,8 @@ class FeaturedPackageService
      */
     private $em;
 
-    public function __construct(
-        EntityManagerInterface $em
-    ) {
+    public function __construct(EntityManagerInterface $em)
+    {
         $this->em = $em;
     }
 
@@ -34,25 +34,35 @@ class FeaturedPackageService
         return $this->getDefaultPlans();
     }
 
+    /**
+     * @return FeaturedPackage[]
+     */
     public function getNotDefaultPlans(Listing $listing): array
     {
-        $qb = $this->em->getRepository(FeaturedPackage::class)->createQueryBuilder('featuredPackage');
+        $qb = $this->em->createQueryBuilder();
+        $qb->select('featuredPackage');
+        $qb->from(FeaturedPackage::class, 'featuredPackage');
         $qb->join('featuredPackage.featuredPackageForCategories', 'featuredPackageForCategory');
         $qb->andWhere($qb->expr()->eq('featuredPackageForCategory.category', ':category'));
         $qb->setParameter(':category', $listing->getCategory());
         $qb->andWhere($qb->expr()->eq('featuredPackage.defaultPackage', 0));
         $qb->andWhere($qb->expr()->eq('featuredPackage.removed', 0));
-        $qb->orderBy('featuredPackage.price', 'ASC');
+        $qb->orderBy('featuredPackage.price', Criteria::ASC);
 
         return $qb->getQuery()->getResult();
     }
 
+    /**
+     * @return FeaturedPackage[]
+     */
     public function getDefaultPlans(): array
     {
-        $qb = $this->em->getRepository(FeaturedPackage::class)->createQueryBuilder('featuredPackage');
+        $qb = $this->em->createQueryBuilder();
+        $qb->select('featuredPackage');
+        $qb->from(FeaturedPackage::class, 'featuredPackage');
         $qb->andWhere($qb->expr()->eq('featuredPackage.defaultPackage', 1));
         $qb->andWhere($qb->expr()->eq('featuredPackage.removed', 0));
-        $qb->orderBy('featuredPackage.price', 'ASC');
+        $qb->orderBy('featuredPackage.price', Criteria::ASC);
 
         return $qb->getQuery()->getResult();
     }

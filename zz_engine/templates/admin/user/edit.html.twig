@@ -1,56 +1,62 @@
 {% extends 'admin/base.html.twig' %}
 
 {% block title %}{{ 'trans.Edit User' | trans }}{% endblock %}
+{# @var settings \App\Service\Setting\SettingsDto #}
+{%- set settings = settings() -%}
 
 {% block body %}
-
 <div class="container mt-3">
-
     <div class="mb-4">
         <h1 class="text-break">{{ 'trans.Edit User' | trans }}: {{ user.email }}</h1>
 
-        <a href="{{ path('app_admin_user_index') }}">{{ 'trans.back to list' | trans }}</a>
+        <a href="{{ path('app_admin_user_list') }}">{{ 'trans.back to list' | trans }}</a>
 
         <div class="float-right">
+            {% if settings.messageSystemEnabled %}
+                <a href="{{ path('app_admin_police_log_user_message', {'user': user.id}) }}" class="btn btn-info mb-1">
+                    {{- 'trans.Police log for messages' | trans -}}
+                </a>
+            {% endif %}
+
             <a
                     href="{{ path('app_admin_user_change_balance', {'id': user.id}) }}"
                     class="btn btn-primary mb-1 mr-1"
             >
-                {{ 'trans.Change user balance' | trans }}
+                {{- 'trans.Change user balance' | trans -}}
             </a>
 
             <a href="{{ path('app_admin_listing_search', {'user': user.email}) }}" class="btn btn-secondary mb-1">
-                {{ 'trans.User listings' | trans }}
+                {{- 'trans.User listings' | trans -}}
             </a>
         </div>
     </div>
 
     <table class="table">
         <tbody>
-        <tr>
-            <th>{{ 'trans.Username' | trans }}</th>
-            <td class="text-break">{{ user.username }}</td>
-        </tr>
-        <tr>
-            <th>{{ 'trans.Email' | trans }}</th>
-            <td class="text-break">{{ user.email }}</td>
-        </tr>
-        <tr>
-            <th>{{ 'trans.Enabled' | trans }}</th>
-            <td>
-                <span class="{{ user.enabled | boolGreenRedClass }}">
-                    {{ user.enabled | boolText | trans }}
-                </span>
-            </td>
-        </tr>
-        <tr>
-            <th>{{ 'trans.Registration date' | trans }}</th>
-            <td>{{ user.registrationDate ? user.registrationDate|date(dateFormatYmdHis) : '' }}</td>
-        </tr>
-        <tr>
-            <th>{{ 'trans.Last login' | trans }}</th>
-            <td>{{ user.lastLogin ? user.lastLogin|date(dateFormatYmdHis) : '' }}</td>
-        </tr>
+            <tr>
+                <th>{{ 'trans.Username' | trans }}</th>
+                <td class="text-break">{{ user.username }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'trans.Email' | trans }}</th>
+                <td class="text-break">{{ user.email }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'trans.Enabled' | trans }}</th>
+                <td>
+                    <span class="{{ user.enabled | boolGreenRedClass }}">
+                        {{- user.enabled | boolText | trans -}}
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <th>{{ 'trans.Registration date' | trans }}</th>
+                <td>{{ user.registrationDate ? user.registrationDate | date(dateFormatYmdHis) : '' }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'trans.Last login' | trans }}</th>
+                <td>{{ user.lastLogin ? user.lastLogin | date(dateFormatYmdHis) : '' }}</td>
+            </tr>
         </tbody>
     </table>
 

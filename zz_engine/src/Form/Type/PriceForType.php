@@ -11,10 +11,12 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class PriceForType extends AbstractType
 {
-    public function configureOptions(OptionsResolver $resolver): void
+    /**
+     * @return array<string,string>
+     */
+    public static function getPricePerChoices(): array
     {
-        $resolver->setDefault('placeholder', '—');
-        $resolver->setDefault('choices', [
+        return [
             'trans.priceFor.PRICE_FOR_WHOLE' => Listing::PRICE_FOR_WHOLE,
             'trans.priceFor.PRICE_FOR_ITEM' => Listing::PRICE_FOR_ITEM,
             'trans.priceFor.PRICE_FOR_SEE_DESCRIPTION' => Listing::PRICE_FOR_SEE_DESCRIPTION,
@@ -40,7 +42,13 @@ class PriceForType extends AbstractType
             'trans.priceFor.PRICE_FOR_CM' => Listing::PRICE_FOR_CM,
             'trans.priceFor.PRICE_FOR_GRAM' => Listing::PRICE_FOR_GRAM,
             'trans.priceFor.PRICE_FOR_KILOGRAM' => Listing::PRICE_FOR_KILOGRAM,
-        ]);
+        ];
+    }
+
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        $resolver->setDefault('placeholder', '—');
+        $resolver->setDefault('choices', static::getPricePerChoices());
 
         $resolver->setDefault('label', 'trans.Amount per');
     }

@@ -7,10 +7,11 @@ namespace App\Service\Payment;
 use App\Entity\FeaturedPackage;
 use App\Entity\Listing;
 use App\Entity\Payment;
-use App\Entity\PaymentForFeaturedPackage;
 use App\Entity\PaymentForBalanceTopUp;
+use App\Entity\PaymentForFeaturedPackage;
 use App\Entity\User;
-use App\Helper\Random;
+use App\Helper\DateHelper;
+use App\Helper\RandomHelper;
 use App\Security\CurrentUserService;
 use App\Service\Invoice\CreateInvoiceService;
 use App\Service\Listing\Featured\FeaturedListingService;
@@ -19,7 +20,7 @@ use App\Service\Payment\Dto\CompletePurchaseDto;
 use App\Service\Payment\Dto\ConfirmPaymentConfigDto;
 use App\Service\Payment\Dto\ConfirmPaymentDto;
 use App\Service\Payment\Dto\PaymentDto;
-use App\Service\Setting\SettingsService;
+use App\Service\Setting\SettingsDto;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -29,24 +30,9 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class PaymentService
 {
     /**
-     * @var EntityManagerInterface
+     * @var PaymentGatewayService
      */
-    private $em;
-
-    /**
-     * @var SettingsService
-     */
-    private $settingsService;
-
-    /**
-     * @var CurrentUserService
-     */
-    private $currentUserService;
-
-    /**
-     * @var TranslatorInterface
-     */
-    private $trans;
+    private $paymentGatewayService;
 
     /**
      * @var UserBalanceService
@@ -54,9 +40,9 @@ class PaymentService
     private $userBalanceService;
 
     /**
-     * @var LoggerInterface
+     * @var CreateInvoiceService
      */
-    private $logger;
+    private $createInvoiceService;
 
     /**
      * @var FeaturedListingService
@@ -64,34 +50,49 @@ class PaymentService
     private $featuredListingService;
 
     /**
+     * @var SettingsDto
+     */
+    private $settingsDto;
+
+    /**
+     * @var CurrentUserService
+     */
+    private $currentUserService;
+
+    /**
      * @var UrlGeneratorInterface
      */
     private $urlGenerator;
 
     /**
-     * @var PaymentGatewayService
+     * @var TranslatorInterface
      */
-    private $paymentGatewayService;
+    private $trans;
 
     /**
-     * @var CreateInvoiceService
+     * @var EntityManagerInterface
      */
-    private $createInvoiceService;
+    private $em;
+
+    /**
+     * @var LoggerInterface
+     */
+    private $logger;
 
     public function __construct(
         PaymentGatewayService $paymentGatewayService,
-        CreateInvoiceService $createInvoiceService,
         UserBalanceService $userBalanceService,
+        CreateInvoiceService $createInvoiceService,
         FeaturedListingService $featuredListingService,
-        SettingsService $settingsService,
+        SettingsDto $settingsDto,
         CurrentUserService $currentUserService,
-        EntityManagerInterface $em,
         UrlGeneratorInterface $urlGenerator,
         TranslatorInterface $trans,
+        EntityManagerInterface $em,
         LoggerInterface $logger
     ) {
         $this->em = $em;
-        $this->settingsService = $settingsService;
+        $this->settingsDto = $settingsDto;
         $this->currentUserService = $currentUserService;
         $this->trans = $trans;
         $this->userBalanceService = $userBalanceService;
@@ -117,22 +118,22 @@ class PaymentService
                 ]
             )
         );
-        $paymentDto->setCurrency($this->settingsService->getCurrency());
+        $paymentDto->setCurrency($this->settingsDto->getCurrency());
         $paymentDto->setAmount($featuredPackage->getPrice());
         $paymentDto->setUser($this->currentUserService->getUserOrNull());
-        if ($this->settingsService->getSettingsDto()->getPaymentGatewayPaymentDescription()) {
-            $paymentDto->setGatewayPaymentDescription($this->settingsService->getSettingsDto()->getPaymentGatewayPaymentDescription());
+        if ($this->settingsDto->getPaymentGatewayPaymentDescription()) {
+            $paymentDto->setGatewayPaymentDescription($this->settingsDto->getPaymentGatewayPaymentDescription());
         } else {
             $paymentDto->setGatewayPaymentDescription($this->trans->trans('trans.Promotion of listings'));
         }
 
         $paymentDto = $this->createPayment($paymentDto);
 
-        $paymentFeaturedPackage = new PaymentForFeaturedPackage();
-        $paymentFeaturedPackage->setPayment($paymentDto->getPaymentEntity());
-        $paymentFeaturedPackage->setFeaturedPackage($featuredPackage);
-        $paymentFeaturedPackage->setListing($listing);
-        $this->em->persist($paymentFeaturedPackage);
+        $paymentForFeaturedPackage = new PaymentForFeaturedPackage();
+        $paymentForFeaturedPackage->setPayment($paymentDto->getPaymentEntity());
+        $paymentForFeaturedPackage->setFeaturedPackage($featuredPackage);
+        $paymentForFeaturedPackage->setListing($listing);
+        $this->em->persist($paymentForFeaturedPackage);
 
         return $paymentDto;
     }
@@ -149,11 +150,11 @@ class PaymentService
                 ]
             )
         );
-        $paymentDto->setCurrency($this->settingsService->getCurrency());
+        $paymentDto->setCurrency($this->settingsDto->getCurrency());
         $paymentDto->setAmount($amount);
         $paymentDto->setUser($this->currentUserService->getUserOrNull());
-        if ($this->settingsService->getSettingsDto()->getPaymentGatewayPaymentDescription()) {
-            $paymentDto->setGatewayPaymentDescription($this->settingsService->getSettingsDto()->getPaymentGatewayPaymentDescription());
+        if ($this->settingsDto->getPaymentGatewayPaymentDescription()) {
+            $paymentDto->setGatewayPaymentDescription($this->settingsDto->getPaymentGatewayPaymentDescription());
         } else {
             $paymentDto->setGatewayPaymentDescription($this->trans->trans('trans.Promotion of listings'));
         }
@@ -170,7 +171,7 @@ class PaymentService
 
     public function createPayment(PaymentDto $paymentDto): PaymentDto
     {
-        $paymentDto->setPaymentAppToken(Random::string(64));
+        $paymentDto->setPaymentAppToken(RandomHelper::string(64));
         $paymentGateway = $this->paymentGatewayService->getPaymentGateway();
         $paymentGateway->createPayment($paymentDto);
 
@@ -178,7 +179,7 @@ class PaymentService
         $paymentEntity->setCanceled(false);
         $paymentEntity->setPaid(false);
         $paymentEntity->setDelivered(false);
-        $paymentEntity->setDatetime(new \DateTime());
+        $paymentEntity->setDatetime(DateHelper::create());
         $paymentEntity->setAmount($paymentDto->getAmount());
         $paymentEntity->setCurrency($paymentDto->getCurrency());
         $paymentEntity->setGatewayPaymentId($paymentDto->getGatewayPaymentId());
@@ -198,28 +199,36 @@ class PaymentService
         return $paymentDto;
     }
 
-    public function process(ConfirmPaymentConfigDto $confirmPaymentConfigDto): CompletePurchaseDto
-    {
-        $confirmPaymentDto = $this->confirmPayment($confirmPaymentConfigDto);
-        $this->validate($confirmPaymentDto);
-
-        return $this->completePurchase($confirmPaymentDto);
-    }
-
-    public function confirmPayment(ConfirmPaymentConfigDto $confirmPaymentConfigDto): ConfirmPaymentDto
+    public function confirmPayment(ConfirmPaymentConfigDto $confirmPaymentConfigDto): CompletePurchaseDto
     {
         $paymentEntity = $this->getPaymentEntity($confirmPaymentConfigDto->getPaymentAppToken());
         $confirmPaymentConfigDto->setPaymentEntity($paymentEntity);
-        $confirmPaymentDto = $this->paymentGatewayService->getPaymentGateway()->confirmPayment($confirmPaymentConfigDto);
+        $paymentGateway = $this->paymentGatewayService->getPaymentGateway();
+        $confirmPaymentDto = $paymentGateway->confirmPayment($confirmPaymentConfigDto);
 
         $paymentEntity->setGatewayTransactionId($confirmPaymentDto->getGatewayTransactionId());
         $paymentEntity->setPaid(true);
         $paymentEntity->setGatewayAmountPaid($confirmPaymentDto->getGatewayAmount());
         $paymentEntity->setGatewayStatus($confirmPaymentDto->getGatewayStatus());
-
         $confirmPaymentDto->setPaymentEntity($paymentEntity);
 
-        return $confirmPaymentDto;
+        $this->validate($confirmPaymentDto);
+
+        return $this->completePurchase($confirmPaymentDto);
+    }
+
+    public function cancelPayment(string $paymentAppToken): ?Payment
+    {
+        $paymentEntity = $this->em->getRepository(Payment::class)->findOneBy([
+            'appToken' => $paymentAppToken,
+        ]);
+        if (!$paymentEntity) {
+            return null;
+        }
+
+        $paymentEntity->setCanceled(true);
+
+        return $paymentEntity;
     }
 
     public function validate(ConfirmPaymentDto $confirmPaymentDto): void
@@ -252,12 +261,16 @@ class PaymentService
 
     public function isPaid(ConfirmPaymentDto $confirmPaymentDto): bool
     {
-        return $this->getPaymentEntity($confirmPaymentDto->getPaymentEntityNotNull()->getAppToken())->getPaid();
+        $paymentAppToken = $confirmPaymentDto->getPaymentEntityNotNull()->getAppToken();
+
+        return $this->getPaymentEntity($paymentAppToken)->getPaid();
     }
 
     public function isDelivered(ConfirmPaymentDto $confirmPaymentDto): bool
     {
-        return $this->getPaymentEntity($confirmPaymentDto->getPaymentEntityNotNull()->getAppToken())->getDelivered();
+        $paymentAppToken = $confirmPaymentDto->getPaymentEntityNotNull()->getAppToken();
+
+        return $this->getPaymentEntity($paymentAppToken)->getDelivered();
     }
 
     public function completePurchase(ConfirmPaymentDto $confirmPaymentDto): CompletePurchaseDto
@@ -274,14 +287,14 @@ class PaymentService
         if ($paymentForFeaturedPackage instanceof PaymentForFeaturedPackage) {
             $userBalanceChange = $this->userBalanceService->addBalance(
                 $confirmPaymentDto->getGatewayAmount(),
-                $paymentForFeaturedPackage->getListing()->getUser(),
-                $paymentEntity
+                $paymentForFeaturedPackage->getListingNotNull()->getUser(),
+                $paymentEntity,
             );
             $userBalanceChange->setDescription(
                 $this->trans->trans(
                     'trans.Featuring of listing: %listingTitle%, using package: %featuredPackageName%, payment acceptance',
                     [
-                        '%listingTitle%' => $paymentForFeaturedPackage->getListing()->getTitle(),
+                        '%listingTitle%' => $paymentForFeaturedPackage->getListingNotNull()->getTitle(),
                         '%featuredPackageName%' => $paymentForFeaturedPackage->getFeaturedPackage()->getName(),
                     ]
                 )
@@ -290,7 +303,7 @@ class PaymentService
             $this->em->flush();
 
             $userBalanceChange = $this->featuredListingService->makeFeaturedByBalance(
-                $paymentForFeaturedPackage->getListing(),
+                $paymentForFeaturedPackage->getListingNotNull(),
                 $paymentForFeaturedPackage->getFeaturedPackage(),
                 $paymentEntity
             );
@@ -298,16 +311,23 @@ class PaymentService
                 $this->trans->trans(
                     'trans.Featuring of listing: %listingTitle%, using package: %featuredPackageName%',
                     [
-                        '%listingTitle%' => $paymentForFeaturedPackage->getListing()->getTitle(),
+                        '%listingTitle%' => $paymentForFeaturedPackage->getListingNotNull()->getTitle(),
                         '%featuredPackageName%' => $paymentForFeaturedPackage->getFeaturedPackage()->getName(),
                     ]
                 )
             );
 
             $completePaymentDto->setIsSuccess(true);
-            $completePaymentDto->setRedirectResponse(new RedirectResponse($this->urlGenerator->generate('app_user_feature_listing', [
-                'id' => $paymentForFeaturedPackage->getListing()->getId()
-            ])));
+            $completePaymentDto->setRedirectResponse(
+                new RedirectResponse(
+                    $this->urlGenerator->generate(
+                        'app_user_feature_listing',
+                        [
+                            'id' => $paymentForFeaturedPackage->getListingNotNull()->getId(),
+                        ]
+                    )
+                )
+            );
             $this->markDelivered($confirmPaymentDto);
 
             $this->createInvoiceService->createInvoice($paymentEntity);
@@ -319,7 +339,7 @@ class PaymentService
             $userBalanceChange = $this->userBalanceService->addBalance(
                 $confirmPaymentDto->getGatewayAmount(),
                 $paymentEntity->getPaymentForBalanceTopUp()->getUser(),
-                $paymentEntity
+                $paymentEntity,
             );
             $userBalanceChange->setPayment($paymentEntity);
             $userBalanceChange->setDescription($this->trans->trans('trans.Topping up the account balance'));
@@ -338,7 +358,8 @@ class PaymentService
 
     public function markDelivered(ConfirmPaymentDto $confirmPaymentDto): void
     {
-        $paymentEntity = $this->getPaymentEntity($confirmPaymentDto->getPaymentEntityNotNull()->getAppToken());
+        $paymentAppToken = $confirmPaymentDto->getPaymentEntityNotNull()->getAppToken();
+        $paymentEntity = $this->getPaymentEntity($paymentAppToken);
         $paymentEntity->setDelivered(true);
 
         $this->em->persist($paymentEntity);
@@ -346,8 +367,13 @@ class PaymentService
 
     public function getPaymentEntity(string $paymentAppToken): Payment
     {
-        return $this->em->getRepository(Payment::class)->findOneBy([
-            'appToken' => $paymentAppToken
+        $payment = $this->em->getRepository(Payment::class)->findOneBy([
+            'appToken' => $paymentAppToken,
         ]);
+        if (null === $payment) {
+            throw new \RuntimeException("payment not found by: `{$paymentAppToken}`");
+        }
+
+        return $payment;
     }
 }

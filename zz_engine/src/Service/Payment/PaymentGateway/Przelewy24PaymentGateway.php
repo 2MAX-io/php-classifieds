@@ -1,20 +1,22 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Service\Payment\PaymentGateway;
 
 use App\Exception\UserVisibleException;
 use App\Helper\ExceptionHelper;
-use App\Helper\Integer;
+use App\Helper\IntegerHelper;
 use App\Service\Payment\Base\PaymentGatewayInterface;
 use App\Service\Payment\Dto\ConfirmPaymentConfigDto;
 use App\Service\Payment\Dto\ConfirmPaymentDto;
-use App\Service\Payment\Enum\PaymentGatewayEnum;
-use App\Service\Payment\Enum\GatewayModeEnum;
 use App\Service\Payment\Dto\PaymentDto;
+use App\Service\Payment\Enum\GatewayModeEnum;
+use App\Service\Payment\Enum\PaymentGatewayEnum;
 use App\Service\Payment\PaymentHelperService;
-use App\Service\Setting\SettingsService;
+use App\Service\Setting\SettingsDto;
 use Omnipay\Common\GatewayInterface;
+use Omnipay\Common\Message\RedirectResponseInterface;
 use Omnipay\Omnipay;
 use Omnipay\Przelewy24\Gateway;
 use Psr\Log\LoggerInterface;
@@ -27,9 +29,9 @@ class Przelewy24PaymentGateway implements PaymentGatewayInterface
     private $paymentHelperService;
 
     /**
-     * @var SettingsService
+     * @var SettingsDto
      */
-    private $settingsService;
+    private $settingsDto;
 
     /**
      * @var LoggerInterface
@@ -38,12 +40,17 @@ class Przelewy24PaymentGateway implements PaymentGatewayInterface
 
     public function __construct(
         PaymentHelperService $paymentHelperService,
-        SettingsService $settingsService,
+        SettingsDto $settingsDto,
         LoggerInterface $logger
     ) {
         $this->paymentHelperService = $paymentHelperService;
-        $this->settingsService = $settingsService;
+        $this->settingsDto = $settingsDto;
         $this->logger = $logger;
+    }
+
+    public static function getName(): string
+    {
+        return PaymentGatewayEnum::PRZELEWY24;
     }
 
     public function createPayment(PaymentDto $paymentDto): void
@@ -73,8 +80,8 @@ class Przelewy24PaymentGateway implements PaymentGatewayInterface
                 $paymentDto->setGatewayPaymentId($data['token']);
                 $paymentDto->setGatewayToken($data['token']);
                 $paymentDto->setGatewayStatus($data['error']);
-                if ($response->isRedirect()) {
-                    $paymentDto->setPaymentExecuteUrl($response->getRedirectUrl());
+                if ($response instanceof RedirectResponseInterface && $response->isRedirect()) {
+                    $paymentDto->setMakePaymentUrl($response->getRedirectUrl());
                 }
 
                 return;
@@ -114,7 +121,7 @@ class Przelewy24PaymentGateway implements PaymentGatewayInterface
                 $confirmPaymentDto->setGatewayTransactionId($transactionId);
                 $confirmPaymentDto->setGatewayStatus($data['error']);
                 $confirmPaymentDto->setConfirmed($response->isSuccessful());
-                $confirmPaymentDto->setGatewayAmount(Integer::toInteger($confirmPaymentConfigDto->getRequest()->get('p24_amount')));
+                $confirmPaymentDto->setGatewayAmount(IntegerHelper::toInteger($confirmPaymentConfigDto->getRequest()->get('p24_amount')));
 
                 return $confirmPaymentDto;
             }
@@ -131,27 +138,26 @@ class Przelewy24PaymentGateway implements PaymentGatewayInterface
         }
     }
 
+    public function getGatewayMode(): string
+    {
+        $paymentPrzelewy24Mode = $this->settingsDto->getPaymentPrzelewy24Mode();
+        if (null === $paymentPrzelewy24Mode) {
+            throw new \RuntimeException('getPaymentPrzelewy24Mode is null');
+        }
+
+        return $paymentPrzelewy24Mode;
+    }
+
     private function getGateway(): GatewayInterface
     {
         $gateway = Omnipay::create('Przelewy24');
-
         $gateway->initialize([
-            'merchantId' => $this->settingsService->getPaymentPrzelewy24MerchantId(),
-            'posId'      => $this->settingsService->getPaymentPrzelewy24PosId(),
-            'crc'        => $this->settingsService->getPaymentPrzelewy24Crc(),
-            'testMode'   => $this->settingsService->getPaymentPrzelewy24Mode() === GatewayModeEnum::SANDBOX,
+            'merchantId' => $this->settingsDto->getPaymentPrzelewy24MerchantId(),
+            'posId' => $this->settingsDto->getPaymentPrzelewy24PosId(),
+            'crc' => $this->settingsDto->getPaymentPrzelewy24Crc(),
+            'testMode' => GatewayModeEnum::SANDBOX === $this->settingsDto->getPaymentPrzelewy24Mode(),
         ]);
 
         return $gateway;
-    }
-
-    public function getGatewayMode(): string
-    {
-        return $this->settingsService->getPaymentPrzelewy24Mode();
-    }
-
-    public static function getName(): string
-    {
-        return PaymentGatewayEnum::PRZELEWY24;
     }
 }

@@ -6,11 +6,10 @@ namespace App\Validator\Constraints;
 
 class UniqueValueDto
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     private $name;
 
+    /** @var string */
     private $value;
 
     /**

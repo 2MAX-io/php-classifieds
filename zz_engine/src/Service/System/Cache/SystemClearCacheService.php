@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace App\Service\System\Cache;
 
+use App\Helper\DateHelper;
 use App\Helper\ExceptionHelper;
-use App\System\EnvironmentService;
+use App\Service\Setting\EnvironmentService;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Filesystem\Filesystem;
@@ -65,9 +66,9 @@ class SystemClearCacheService
             KernelEvents::TERMINATE,
             static function () use ($environmentService, $filesystem, $logger): void {
                 try {
-                    $oldCache = $environmentService->getCacheDir() . \date('_Ymd_His');
-                    $filesystem->rename($environmentService->getCacheDir(), $oldCache);
-                    $filesystem->remove($oldCache);
+                    $toDeletePath = $environmentService->getCacheDir().DateHelper::date('_to_delete_Ymd_His');
+                    $filesystem->rename($environmentService->getCacheDir(), $toDeletePath);
+                    $filesystem->remove($toDeletePath);
                 } catch (\Throwable $e) {
                     $logger->critical('error while deleting all system cache', ExceptionHelper::flatten($e));
                 }

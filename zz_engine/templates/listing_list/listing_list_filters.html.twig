@@ -1,0 +1,249 @@
+<div class="card mb-3">
+    <div class="card-header">
+        <strong>{{ 'trans.Filters' | trans }}</strong>
+        <a href="{{ path(app.request.get('_route'), app.request.attributes.get('_route_params')) }}" class="float-right">
+            {{- 'trans.clear filters' | trans -}}
+        </a>
+    </div>
+    <div class="card-body">
+        <form method="get">
+            <div class="input-group mb-3 mr-2">
+                <div class="input-group-prepend">
+                    <div class="input-group-text"><i class="svg svg-search"></i></div>
+                </div>
+                <input {{- ' ' -}}
+                        name="query" {{- ' ' -}}
+                        value="{{ app.request.get('query') | default }}" {{- ' ' -}}
+                        type="text" {{- ' ' -}}
+                        class="form-control" {{- ' ' -}}
+                        placeholder="{{ 'trans.keyword'|trans }}" {{- ' ' -}}
+                >
+            </div>
+
+            {%- if app.request.get('user') is not empty ~%}
+                <div class="custom-control custom-checkbox mb-3">
+                    <input {{- ' ' -}}
+                            name="user" {{- ' ' -}}
+                            value="{{ app.request.get('user') }}" {{- ' ' -}}
+                            checked {{- ' ' -}}
+                            type="checkbox" {{- ' ' -}}
+                            id="option_user" {{- ' ' -}}
+                            class="custom-control-input" {{- ' ' -}}
+                    > {{- ' ' -}}
+                    <label class="custom-control-label" for="option_user">{{ 'trans.User listings' | trans }}</label>
+                </div>
+            {%- endif ~%}
+
+            <!-- price -->
+            <label>{{ 'trans.Amount or price' | trans }}</label>
+            <div class="form-row mb-3">
+                <div class="col-6">
+                    <input {{- ' ' -}}
+                            name="minPrice" {{- ' ' -}}
+                            value="{{ app.request.get('minPrice') | default }}" {{- ' ' -}}
+                            type="number" {{- ' ' -}}
+                            class="form-control" {{- ' ' -}}
+                            placeholder="{{ 'trans.min' | trans }}" {{- ' ' -}}
+                    >
+                </div>
+
+                <div class="col-6">
+                    <input {{- ' ' -}}
+                            name="maxPrice" {{- ' ' -}}
+                            value="{{ app.request.get('maxPrice') | default }}" {{- ' ' -}}
+                            type="number" {{- ' ' -}}
+                            class="form-control" {{- ' ' -}}
+                            placeholder="{{ 'trans.max' | trans }}" {{- ' ' -}}
+                    >
+                </div>
+            </div>
+
+            {#- @var customField \App\Entity\CustomField -#}
+            {%- for customField in customFieldList ~%}
+                {% set customFieldData = app.request.get('customField')[customField.id] | default([]) %}
+                <!-- custom field: {{ customField.name }} [{{ customField.id }}] -->
+
+                {%- if customField.type == constant('\App\\Entity\\CustomField::SELECT_AS_CHECKBOXES') and customField.customFieldOptions is not empty ~%}
+                    <div class="mb-3">
+                        <label class="text-break">{{ customField.name }}</label>
+                        {%- for customFieldOption in customField.customFieldOptions -%}
+                            {%- set checked = customFieldOption.value in customFieldData['values'] | default([]) -%}
+                            <div class="custom-control custom-checkbox {% if loop.index > 5 and not checked %}collapse{% endif %} show-more-custom-field-{{ customField.id }}">
+                                <input {{- ' ' -}}
+                                        name="customField[{{ customField.id }}][values][]" {{- ' ' -}}
+                                        value="{{ customFieldOption.value }}" {{- ' ' -}}
+                                        {% if checked %}{{- ' checked ' -}}{% endif %} {{- ' ' -}}
+                                        type="checkbox" {{- ' ' -}}
+                                        id="option_{{ customFieldOption.id }}" {{- ' ' -}}
+                                        class="custom-control-input" {{- ' ' -}}
+                                >
+                                <label {{- ' ' -}}
+                                        class="custom-control-label text-break" {{- ' ' -}}
+                                        for="option_{{ customFieldOption.id }}" {{- ' ' -}}
+                                >
+                                    {{- customFieldOption.name -}}
+                                </label>
+                            </div>
+                        {%- endfor ~%}
+
+                        {%- if customField.customFieldOptions.count > 5 ~%}
+                            <div {{- ' ' -}}
+                                    class="btn btn-link px-0 pt-2 pt-lg-1 cursor-pointer js__removeOnClick" {{- ' ' -}}
+                                    data-toggle="collapse" {{- ' ' -}}
+                                    data-target=".show-more-custom-field-{{ customField.id }}" {{- ' ' -}}
+                            >
+                                {{- 'trans.show more' | trans -}}
+                            </div>
+                        {%- endif ~%}
+                    </div>
+                {%- endif ~%}
+
+                {%- if customField.type == constant('\App\\Entity\\CustomField::SELECT_SINGLE') and customField.customFieldOptions is not empty ~%}
+                    <div class="mb-3">
+                        <label class="text-break">{{ customField.name }}</label>
+                        <div>
+                            <select name="customField[{{ customField.id }}][values][]" class="custom-select"> {{- ' ' -}}
+                                <option value="">{{ 'trans.Select' | trans }}</option> {{- ' ' -}}
+                                {%- for customFieldOption in customField.customFieldOptions -%}
+                                    <option {{- ' ' -}}
+                                            value="{{ customFieldOption.value }}" {{- ' ' -}}
+                                            {%- if customFieldOption.value in customFieldData['values'] | default([]) -%}
+                                                {{- 'selected' -}}
+                                            {%- endif -%}
+                                    >
+                                        {{- customFieldOption.name -}}
+                                    </option>
+                                {%- endfor -%}
+                            </select>
+                        </div>
+                    </div>
+                {%- endif ~%}
+
+                {%- if customField.type == constant('\App\\Entity\\CustomField::CHECKBOX_MULTIPLE') and customField.customFieldOptions is not empty ~%}
+                    <div class="mb-3">
+                        <label class="text-break">{{ customField.name }}</label>
+                        {%- for customFieldOption in customField.customFieldOptions -%}
+                            {% set checked = customFieldOption.value in customFieldData['values'] | default([]) ~%}
+                            <div class="custom-control custom-checkbox {% if loop.index > 5 and not checked %}collapse{% endif %} show-more-custom-field-{{ customField.id }}">
+                                <input {{- ' ' -}}
+                                        name="customField[{{ customField.id }}][values][]" {{- ' ' -}}
+                                        value="{{ customFieldOption.value }}" {{- ' ' -}}
+                                        {% if checked %}{{- ' checked ' -}}{% endif %} {{- ' ' -}}
+                                        type="checkbox" {{- ' ' -}}
+                                        id="option_{{ customFieldOption.id }}" {{- ' ' -}}
+                                        class="custom-control-input" {{- ' ' -}}
+                                >
+                                <label {{- ' ' -}}
+                                        class="custom-control-label" {{- ' ' -}}
+                                        for="option_{{ customFieldOption.id }}" {{- ' ' -}}
+                                >
+                                    {{- customFieldOption.name -}}
+                                </label>
+                            </div>
+                        {%- endfor -%}
+
+                        {%- if customField.customFieldOptions.count > 5 ~%}
+                            <div {{- ' ' -}}
+                                    class="btn btn-link px-0 pt-2 pt-lg-1 cursor-pointer" {{- ' ' -}}
+                                    data-toggle="collapse" {{- ' ' -}}
+                                    data-target=".show-more-custom-field-{{ customField.id }}" {{- ' ' -}}
+                            >
+                                {{- 'trans.show more' | trans -}}
+                            </div>
+                        {%- endif ~%}
+                    </div>
+                {%- endif ~%}
+
+                {%- if customField.type in [
+                    constant('\App\\Entity\\CustomField::INTEGER_RANGE'),
+                ]
+                ~%}
+                    <label class="text-break">
+                        {{- customField.name -}}
+                        {{- ' ' -}}
+                        {%- if customField.unit is not empty %}
+                            {{- ' [' -}}
+                            {{- customField.unit -}}
+                            {{- ']' -}}
+                        {% endif -%}
+                    </label>
+                    <div class="form-row mb-3">
+                        <div class="col-6">
+                            <input {{- ' ' -}}
+                                    name="customField[{{ customField.id }}][range][min]" {{- ' ' -}}
+                                    value="{{ customFieldData['range']['min'] | default }}" {{- ' ' -}}
+                                    type="number" {{- ' ' -}}
+                                    placeholder="{{ 'trans.min' | trans }}" {{- ' ' -}}
+                                    class="form-control" {{- ' ' -}}
+                            >
+                        </div>
+
+                        <div class="col-6">
+                            <input {{- ' ' -}}
+                                    name="customField[{{ customField.id }}][range][max]" {{- ' ' -}}
+                                    value="{{ customFieldData['range']['max'] | default }}" {{- ' ' -}}
+                                    type="number" {{- ' ' -}}
+                                    placeholder="{{ 'trans.max' | trans }}" {{- ' ' -}}
+                                    class="form-control" {{- ' ' -}}
+                            >
+                        </div>
+                    </div>
+                {%- endif ~%}
+
+                {%- if customField.type in [
+                    constant('\App\\Entity\\CustomField::YEAR_RANGE'),
+                ]
+                ~%}
+                    <label class="text-break">{{ customField.name }}</label>
+                    <div class="form-row mb-3">
+                        <div class="col-6">
+                            <select {{- ' ' -}}
+                                    name="customField[{{ customField.id }}][range][min]" {{- ' ' -}}
+                                    class="form-control" {{- ' ' -}}
+                            > {{- ' ' -}}
+                                <option value=''>{{ 'trans.min' | trans }}</option> {{- ' ' -}}
+
+                                {%- set startYear = date().format('Y') -%}
+                                {%- for year in startYear..1980 -%}
+                                    <option{{- ' ' -}}
+                                        value="{{- year -}}"{{- ' ' -}}
+                                        {%- if year == customFieldData['range']['min'] | default -%}
+                                            selected
+                                        {%- endif -%}
+                                    >
+                                        {{- year -}}
+                                    </option>
+                                {%- endfor -%}
+                            </select>
+                        </div>
+
+                        <div class="col-6">
+                            <select {{- ' ' -}}
+                                    name="customField[{{ customField.id }}][range][max]" {{- ' ' -}}
+                                    class="form-control" {{- ' ' -}}
+                            > {{- ' ' -}}
+                                <option value=''>{{ 'trans.max' | trans }}</option> {{- ' ' -}}
+
+                                {%- set startYear = date().format('Y') -%}
+                                {%- for year in startYear..1980 -%}
+                                    <option {{- ' ' -}}
+                                            value="{{- year -}}" {{- ' ' -}}
+                                            {%- if year == customFieldData['range']['max'] | default -%}
+                                                selected
+                                            {%- endif -%} {{- ' ' -}}
+                                    >
+                                        {{- year -}}
+                                    </option>
+                                {%- endfor -%}
+                            </select>
+                        </div>
+                    </div>
+                {%- endif ~%}
+            {%- endfor ~%}
+
+            <button class="btn btn-primary listing-list-filter-button">
+                {{- 'trans.Filter' | trans -}}
+            </button>
+        </form>
+    </div>
+</div>

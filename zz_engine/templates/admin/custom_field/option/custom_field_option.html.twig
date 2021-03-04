@@ -7,9 +7,11 @@
     <div class="row mb-2">
         <div class="col-md-8">
             <h1>{{ 'trans.Option for custom field' | trans }}</h1>
-            <h5>{{ 'trans.for custom field' | trans }}:
+            <h5>
+                {{- 'trans.for custom field' | trans -}}
+                {{- ': ' -}}
                 <strong class="text-break">
-                    {{ customFieldOption.customField.name }}
+                    {{- customFieldOption.customField.name -}}
                 </strong>
                 <span class="text-break text-muted">
                     {%- if customFieldOption.customField.nameForAdmin -%}
@@ -19,7 +21,9 @@
             </h5>
         </div>
         <div class="col-md-4 text-md-right">
-            <a href="{{ path('app_admin_custom_field_edit', {'id': customFieldOption.customField.id}) }}" class="mb-1">{{ 'trans.back to list' | trans }}</a>
+            <a href="{{ path('app_admin_custom_field_edit', {'id': customFieldOption.customField.id}) }}" class="mb-1">
+                {{- 'trans.back to list' | trans -}}
+            </a>
 
             {% if customFieldOption.id %}
                 {{ include('admin/custom_field/option/_delete_form.html.twig') }}
@@ -31,9 +35,13 @@
     {{ form_row(form.name) }}
     {{ form_row(form.value) }}
     {{ form_row(form.sort) }}
-    <button class="btn btn-primary mr-3">{{ button_label|default('trans.Save') | trans }}</button>
+    <button class="btn btn-primary mr-3">{{ button_label | default('trans.Save') | trans }}</button>
     {{ form_widget(form.saveAndAdd) }}
     {{ form_end(form) }}
-
 </div>
+{% endblock %}
+
+{% block js %}
+    {{ encore_entry_link_tags('admin_custom_field_option') }}
+    {{ encore_entry_script_tags('admin_custom_field_option') }}
 {% endblock %}

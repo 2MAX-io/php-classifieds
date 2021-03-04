@@ -21,14 +21,14 @@ class PaymentHelperService
 
     public function getSuccessUrl(PaymentDto $paymentDto): string
     {
-        return $this->urlGenerator->generate('app_payment', [
+        return $this->urlGenerator->generate('app_payment_success', [
             'paymentAppToken' => $paymentDto->getPaymentAppToken(),
         ], UrlGeneratorInterface::ABSOLUTE_URL);
     }
 
     public function getPaymentWaitUrl(PaymentDto $paymentDto): string
     {
-        return $this->urlGenerator->generate('app_payment_wait', [
+        return $this->urlGenerator->generate('app_payment_await_confirmation', [
             'paymentAppToken' => $paymentDto->getPaymentAppToken(),
         ], UrlGeneratorInterface::ABSOLUTE_URL);
     }

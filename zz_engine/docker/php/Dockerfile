@@ -1,7 +1,9 @@
 FROM php:7.4-apache
 
 RUN true \
-&& curl -sL https://deb.nodesource.com/setup_12.x | bash \
+&& curl -sL https://deb.nodesource.com/setup_14.x | bash \
+&& curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
+&& echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list \
 && apt-get update -y \
 && apt-get install --no-install-recommends -y \
 zip \
@@ -15,7 +17,7 @@ g++ \
 default-mysql-client \
 nodejs \
 git \
-&& npm install --global gulp-cli \
+yarn \
 && true
 
 RUN true \
@@ -33,13 +35,14 @@ RUN true \
 && a2ensite default-ssl \
 && true \
 && useradd -u 1000 -g www-data -d /var/www www-data-docker-host \
+&& chown -R 1000:1000 /var/www \
 && true
 
 COPY --from=composer:1 /usr/bin/composer /usr/bin/composer
 
 ARG WITH_XDEBUG=false
 RUN if [ $WITH_XDEBUG = "true" ] ; then \
-    pecl install xdebug-3.0.2; \
+    pecl install xdebug-3.0.3; \
     docker-php-ext-enable xdebug; \
 #    echo "xdebug.mode=debug" >> /usr/local/etc/php/php.ini; \
     mkdir /tmp/xdebug_out; \
@@ -49,10 +52,5 @@ fi;
 
 #COPY ./../../composer.json zz_engine
 #RUN bash -c "composer install -d /var/www/html/zz_engine --optimize-autoloader"
-
-RUN true \
-&& curl -sL https://deb.nodesource.com/setup_12.x | bash \
-&& npm install gulp \
-&& true
 
 EXPOSE 443

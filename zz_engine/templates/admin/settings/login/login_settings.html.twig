@@ -11,6 +11,7 @@
         {{ form_start(form) }}
 
         <h2>{{ 'trans.Social login' | trans }}</h2>
+
         <h4>{{ 'trans.Google' | trans }}</h4>
         {{ form_row(form.googleSignInEnabled) }}
         {{ form_row(form.googleSignInClientId) }}
@@ -21,7 +22,7 @@
         {{ form_row(form.facebookSignInAppId) }}
         {{ form_row(form.facebookSignInAppSecret) }}
 
-        <button class="btn btn-primary">{{ button_label|default('trans.Save' | trans) }}</button>
+        <button class="btn btn-primary">{{ button_label | default('trans.Save' | trans) }}</button>
         {{ form_end(form) }}
     </div>
 {% endblock %}

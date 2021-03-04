@@ -9,32 +9,32 @@ use App\Entity\Payment;
 class ConfirmPaymentDto
 {
     /**
-     * @var string|null
+     * @var null|string
      */
     public $gatewayTransactionId;
 
     /**
-     * @var string|null
+     * @var null|string
      */
     public $gatewayPaymentId;
 
     /**
-     * @var string|null
+     * @var null|string
      */
     private $gatewayStatus;
 
     /**
-     * @var int|null
+     * @var null|int
      */
     private $gatewayAmount;
 
     /**
-     * @var Payment|null
+     * @var null|Payment
      */
     private $paymentEntity;
 
     /**
-     * @var boolean
+     * @var bool
      */
     private $confirmed = false;
 
@@ -95,6 +95,10 @@ class ConfirmPaymentDto
 
     public function getPaymentEntityNotNull(): Payment
     {
+        if (null === $this->paymentEntity) {
+            throw new \RuntimeException('paymentEntity is null');
+        }
+
         return $this->paymentEntity;
     }
 

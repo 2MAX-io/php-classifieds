@@ -13,15 +13,18 @@
         </div>
 
         <div class="alert alert-danger">
-            {{ 'trans.Number of listings changed by this action would be:' | trans }}
-            {{ affectedCount | thousandsSeparate }}
+            {{~ 'trans.Number of listings changed by this action would be:' | trans -}}
+            {{- ' ' -}}
+            {{- affectedCount | thousandsSeparate -}}
 
-            {% if affectedPercentage > 1 %}
-                ({{ affectedPercentage | round }}% {{ 'trans.of all' | trans }})
-            {% endif %}
+            {%- if affectedPercentage > 1 -%}
+                {{- '(' -}}{{- affectedPercentage | round -}}{{- '% ' -}}{{- 'trans.of all' | trans -}}{{- ')' -}}
+            {%- endif -%}
 
             {% if affectedPercentage > 80 %}
-                <h1 class="text-danger">{{ 'trans.This action will be executed on %percentage%% of listings (almost every listing), are you REALLY sure you want to execute it?' | trans({'%percentage%': affectedPercentage}) }}</h1>
+                <h1 class="text-danger">
+                    {{- 'trans.This action will be executed on %percentage%% of listings (almost every listing), are you REALLY sure you want to execute it?' | trans({'%percentage%': affectedPercentage}) -}}
+                </h1>
             {% endif %}
         </div>
 
@@ -30,18 +33,19 @@
             {{ form_widget(form) }}
 
             <button
-                    onclick="return confirm('{{ 'trans.Execute action on %number% of listings?' | trans({'%number%': affectedCount | thousandsSeparate}) }}');"
-                    class="btn btn-danger"
+                    data-confirm-message="{{ 'trans.Execute action on %number% of listings?' | trans({'%number%': affectedCount | thousandsSeparate}) }}"
+                    class="btn btn-danger js__confirm"
             >
-                {{ 'trans.Execute action on filtered listings' | trans }}
+                {{- 'trans.Execute action on filtered listings' | trans -}}
             </button>
             <span class="badge badge-warning align-middle">
-                {{ 'trans.changes:' | trans }}
-                {{ affectedCount | thousandsSeparate }}
-
-                {% if affectedPercentage > 1 %}
-                    ({{ affectedPercentage | round }}% {{ 'trans.of all' | trans }})
-                {% endif %}
+                {{- 'trans.changes:' | trans -}}
+                {{- ' ' -}}
+                {{- affectedCount | thousandsSeparate -}}
+                {{- ' ' -}}
+                {%- if affectedPercentage > 1 -%}
+                    {{- '(' -}}{{- affectedPercentage | round -}}{{- '% ' -}}{{- 'trans.of all' | trans -}}{{- ')' -}}
+                {%- endif -%}
             </span>
             {{ form_end(form) }}
         </div>
@@ -49,5 +53,6 @@
 {% endblock %}
 
 {% block js %}
-    <script src="{{ asset('asset/page/admin/listing/execute-on-filtered.js') }}"></script>
+    {{ encore_entry_link_tags('admin_listing_execute_on_filtered') }}
+    {{ encore_entry_script_tags('admin_listing_execute_on_filtered') }}
 {% endblock js %}

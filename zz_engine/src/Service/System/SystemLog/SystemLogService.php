@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace App\Service\System\SystemLog;
 
-use App\Entity\SystemLog;
+use App\Entity\System\SystemLog;
+use App\Helper\DateHelper;
 use Doctrine\ORM\EntityManagerInterface;
 
 class SystemLogService
@@ -22,7 +23,7 @@ class SystemLogService
     public function addSystemLog(string $type, string $message): void
     {
         $systemLog = new SystemLog();
-        $systemLog->setDate(new \DateTime());
+        $systemLog->setDate(DateHelper::create());
         $systemLog->setType($type);
         $systemLog->setMessage($message);
         $this->em->persist($systemLog);

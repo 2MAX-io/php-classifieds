@@ -9,10 +9,7 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method FeaturedPackage|null find($id, $lockMode = null, $lockVersion = null)
- * @method FeaturedPackage|null findOneBy(array $criteria, array $orderBy = null)
- * @method FeaturedPackage[]    findAll()
- * @method FeaturedPackage[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @extends \Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository<FeaturedPackage>
  */
 class FeaturedPackageRepository extends ServiceEntityRepository
 {

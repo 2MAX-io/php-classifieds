@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Security;
 
-use App\Entity\Admin;
+use App\Entity\System\Admin;
 use App\Entity\User;
+use App\Enum\RuntimeCacheEnum;
+use App\Enum\UserRoleEnum;
 use App\Helper\SerializerHelper;
 use App\Service\System\Cache\RuntimeCacheService;
-use App\Service\User\RoleInterface;
-use App\System\Cache\RuntimeCacheEnum;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
@@ -28,14 +28,14 @@ class CurrentUserService
     private $session;
 
     /**
-     * @var EntityManagerInterface
-     */
-    private $em;
-
-    /**
      * @var RuntimeCacheService
      */
     private $runtimeCache;
+
+    /**
+     * @var EntityManagerInterface
+     */
+    private $em;
 
     public function __construct(
         Security $security,
@@ -45,8 +45,8 @@ class CurrentUserService
     ) {
         $this->security = $security;
         $this->session = $session;
-        $this->em = $em;
         $this->runtimeCache = $runtimeCache;
+        $this->em = $em;
     }
 
     public function getUserOrNull(): ?User
@@ -100,13 +100,11 @@ class CurrentUserService
      * WARNING! do not use to authorize anything important, like authorizing admin actions
      *
      * only use to display links to admin panel, or show not activated listings, nothing more than that
-     *
-     * @return bool
      */
-    public function lowSecurityCheckIsAdminInPublic(): bool
+    public function isAdminInPublic(): bool
     {
-        return $this->runtimeCache->get(RuntimeCacheEnum::ADMIN_IN_PUBLIC, function(): bool {
-            return $this->lowSecurityCheckIsAdminInPublicNoCache();
+        return $this->runtimeCache->get(RuntimeCacheEnum::ADMIN_IN_PUBLIC, function (): bool {
+            return $this->isAdminInPublicNoCache();
         });
     }
 
@@ -114,13 +112,10 @@ class CurrentUserService
      * WARNING! do not use to authorize anything important, like authorizing admin actions
      *
      * only use to display links to admin panel, or show not activated listings, nothing more than that
-     *
-     * @return bool
      */
-    public function lowSecurityCheckIsAdminInPublicNoCache(): bool
+    public function isAdminInPublicNoCache(): bool
     {
         $adminSerialized = $this->session->get('_security_admin', false);
-
         if (false === $adminSerialized) {
             return false;
         }
@@ -136,7 +131,7 @@ class CurrentUserService
             return false;
         }
 
-        if (!\in_array(RoleInterface::ROLE_ADMIN, $admin->getRoles(), true)) {
+        if (!\in_array(UserRoleEnum::ROLE_ADMIN, $admin->getRoles(), true)) {
             return false;
         }
 

@@ -14,16 +14,16 @@ use Symfony\Component\Routing\Annotation\Route;
 class PaymentController extends AbstractAdminController
 {
     /**
-     * @Route("/admin/red5/payment/", name="app_admin_payment_index", methods={"GET"})
+     * @Route("/admin/red5/payment/", name="app_admin_payment_list", methods={"GET"})
      */
-    public function index(Request $request, PaymentHistoryService $paymentHistoryService): Response
+    public function paymentListForAdmin(Request $request, PaymentHistoryService $paymentHistoryService): Response
     {
         $this->denyUnlessAdmin();
 
         $paginationDto = $paymentHistoryService->getPaymentList((int) $request->get('page', 1));
-
         /** @var Payment[] $payments */
         $payments = $paginationDto->getResults();
+
         return $this->render('admin/payment/index.html.twig', [
             'payments' => $payments,
             'pager' => $paginationDto->getPager(),
@@ -31,9 +31,9 @@ class PaymentController extends AbstractAdminController
     }
 
     /**
-     * @Route("/admin/red5/payment/{id}", name="app_admin_payment_show", methods={"GET"})
+     * @Route("/admin/red5/payment/{id}/show-payment", name="app_admin_payment_show", methods={"GET"})
      */
-    public function show(Payment $payment): Response
+    public function showPaymentForAdmin(Payment $payment): Response
     {
         $this->denyUnlessAdmin();
 

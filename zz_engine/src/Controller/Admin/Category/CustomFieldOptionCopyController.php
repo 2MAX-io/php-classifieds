@@ -9,6 +9,7 @@ use App\Entity\CustomField;
 use App\Form\Admin\CustomFieldOptionCopyDto;
 use App\Form\Admin\CustomFieldOptionCopyType;
 use App\Service\Admin\CustomField\CustomFieldOptionCopyService;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -16,8 +17,18 @@ use Symfony\Component\Routing\Annotation\Route;
 class CustomFieldOptionCopyController extends AbstractAdminController
 {
     /**
+     * @var EntityManagerInterface
+     */
+    private $em;
+
+    public function __construct(EntityManagerInterface $em)
+    {
+        $this->em = $em;
+    }
+
+    /**
      * @Route(
-     *     "/admin/red5/custom-field/{id}/copy-options-from-other",
+     *     "/admin/red5/custom-field-option/custom-field/{id}/copy-custom-field-options",
      *     name="app_admin_custom_field_option_copy",
      *     methods={"GET","POST"}
      * )
@@ -32,11 +43,12 @@ class CustomFieldOptionCopyController extends AbstractAdminController
         $customFieldOptionCopyDto = new CustomFieldOptionCopyDto();
         $form = $this->createForm(CustomFieldOptionCopyType::class, $customFieldOptionCopyDto);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $customFieldOptionCopyService->copy($customFieldOptionCopyDto, $customField);
-            $em->flush();
+            $customFieldOptionCopyService->copy(
+                $customFieldOptionCopyDto,
+                $customField
+            );
+            $this->em->flush();
 
             return $this->redirectToRoute('app_admin_custom_field_edit', [
                 'id' => $customField->getId(),

@@ -9,7 +9,9 @@
             <h1>{{ 'trans.Featured packages' | trans }}</h1>
         </div>
         <div class="col-md-6 text-md-right">
-            <a href="{{ path('app_admin_featured_package_new') }}" class="btn btn-primary">{{ 'trans.Create new' | trans }}</a>
+            <a href="{{ path('app_admin_featured_package_new') }}" class="btn btn-primary">
+                {{- 'trans.Create new' | trans -}}
+            </a>
         </div>
     </div>
 
@@ -25,22 +27,24 @@
             </tr>
         </thead>
         <tbody>
-        {% for featured_package in featured_packages %}
+        {% for featuredPackage in featuredPackages %}
             <tr>
                 <td>
-                    <div class="text-break">{{ featured_package.name }}</div>
-                    <div class="text-muted text-break">{{ featured_package.adminName }}</div>
+                    <div class="text-break">{{ featuredPackage.name }}</div>
+                    <div class="text-muted text-break">{{ featuredPackage.adminName }}</div>
                 </td>
-                <td>{{ featured_package.price | moneyPrecise }}</td>
-                <td>{{ featured_package.daysFeaturedExpire }}</td>
-                <td>{{ featured_package.daysListingExpire }}</td>
+                <td>{{ featuredPackage.price | moneyPrecise }}</td>
+                <td>{{ featuredPackage.daysFeaturedExpire }}</td>
+                <td>{{ featuredPackage.daysListingExpire }}</td>
                 <td>
-                    <span class="{{ featured_package.defaultPackage | boolGreenRedClass }}">
-                        {{ featured_package.defaultPackage | boolText | trans }}
+                    <span class="{{ featuredPackage.defaultPackage | boolGreenRedClass }}">
+                        {{- featuredPackage.defaultPackage | boolText | trans -}}
                     </span>
                 </td>
                 <td>
-                    <a href="{{ path('app_admin_featured_package_edit', {'id': featured_package.id}) }}" class="btn btn-dark">{{ 'trans.edit' | trans }}</a>
+                    <a href="{{ path('app_admin_featured_package_edit', {'id': featuredPackage.id}) }}" class="btn btn-dark">
+                        {{- 'trans.edit' | trans -}}
+                    </a>
                 </td>
             </tr>
         {% else %}

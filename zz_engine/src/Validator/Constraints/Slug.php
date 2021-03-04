@@ -9,8 +9,11 @@ use Symfony\Component\Validator\Constraints\RegexValidator;
 
 class Slug extends Regex
 {
+    /** @var string */
     public $message = 'Contains not allowed characters. Allowed characters: plain letters, numbers, minus character';
-    public $pattern = '#^[a-zA-Z0-9\-]*$#';
+
+    /** @var string */
+    public $pattern = '~^[a-zA-Z0-9\-]*$~';
 
     public function getRequiredOptions(): array
     {

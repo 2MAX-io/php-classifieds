@@ -5,13 +5,14 @@ declare(strict_types=1);
 namespace App\Controller\User\Account;
 
 use App\Controller\User\Base\AbstractUserController;
-use App\Entity\Token;
-use App\Entity\TokenField;
+use App\Entity\System\Token;
+use App\Entity\System\TokenField;
 use App\Form\User\Account\ChangeEmailType;
 use App\Security\CurrentUserService;
-use App\Service\FlashBag\FlashService;
+use App\Service\System\FlashBag\FlashService;
 use App\Service\System\Token\TokenService;
 use App\Service\User\Account\ChangeEmailService;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -19,12 +20,22 @@ use Symfony\Component\Routing\Annotation\Route;
 class ChangeEmailController extends AbstractUserController
 {
     /**
-     * @Route("/user/account/changeEmail", name="app_user_change_email")
+     * @var EntityManagerInterface
+     */
+    private $em;
+
+    public function __construct(EntityManagerInterface $em)
+    {
+        $this->em = $em;
+    }
+
+    /**
+     * @Route("/user/account/change-email", name="app_user_change_email")
      */
     public function changeEmail(
         Request $request,
-        CurrentUserService $currentUserService,
         ChangeEmailService $changeEmailService,
+        CurrentUserService $currentUserService,
         FlashService $flashService
     ): Response {
         $this->dennyUnlessUser();
@@ -34,10 +45,9 @@ class ChangeEmailController extends AbstractUserController
         if ($form->isSubmitted() && $form->isValid()) {
             $changeEmailService->sendConfirmation(
                 $currentUserService->getUser(),
-                $form->get(ChangeEmailType::FORM_NEW_EMAIL)->getData()
+                $form->get(ChangeEmailType::FORM_NEW_EMAIL)->getData(),
             );
-
-            $this->getDoctrine()->getManager()->flush();
+            $this->em->flush();
 
             $flashService->addFlash(
                 FlashService::SUCCESS_ABOVE_FORM,
@@ -65,7 +75,7 @@ class ChangeEmailController extends AbstractUserController
         FlashService $flashService
     ): Response {
         $tokenEntity = $tokenService->getToken($token, Token::USER_EMAIL_CHANGE_TYPE);
-        if ($tokenEntity === null) {
+        if (null === $tokenEntity) {
             $flashService->addFlash(
                 FlashService::ERROR_ABOVE_FORM,
                 'trans.Confirmation link is invalid or expired, check if confirmation link is correct'
@@ -95,11 +105,10 @@ class ChangeEmailController extends AbstractUserController
 
         $changeEmailService->changeEmail(
             $tokenService->getUserFromToken($tokenEntity),
-            $newEmail
+            $newEmail,
         );
         $tokenService->markTokenUsed($tokenEntity);
-
-        $this->getDoctrine()->getManager()->flush();
+        $this->em->flush();
 
         $flashService->addFlash(
             FlashService::SUCCESS_ABOVE_FORM,

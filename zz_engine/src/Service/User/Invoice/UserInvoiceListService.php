@@ -11,14 +11,14 @@ use App\Security\CurrentUserService;
 class UserInvoiceListService
 {
     /**
-     * @var CurrentUserService
-     */
-    private $currentUserService;
-
-    /**
      * @var InvoiceRepository
      */
     private $invoiceRepository;
+
+    /**
+     * @var CurrentUserService
+     */
+    private $currentUserService;
 
     public function __construct(
         InvoiceRepository $invoiceRepository,

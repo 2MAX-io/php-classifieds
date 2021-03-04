@@ -10,55 +10,61 @@ use App\Helper\DateHelper;
 class UserMessageThreadDto
 {
     /**
-     * @var int|null
+     * @var null|int
      */
     private $userMessageThreadId;
 
     /**
-     * @var int|null
+     * @var int
      */
     private $senderUserId;
 
     /**
-     * @var int|null
+     * @var int
      */
     private $recipientUserId;
 
     /**
-     * @var string|null
+     * @var null|string
      */
     private $recipientUserName;
 
     /**
-     * @var string|null
+     * @var null|string
      */
     private $senderUserName;
 
     /**
-     * @var int|null
+     * @var null|int
      */
     private $listingId;
 
     /**
-     * @var string|null
+     * @var null|string
      */
     private $listingSlug;
 
     /**
-     * @var string|null
+     * @var null|string
      */
     private $listingTitle;
 
     /**
-     * @var int|null
+     * @var null|int
      */
     private $unreadCount;
 
     /**
-     * @var string|\DateTimeInterface
+     * @var string
+     */
+    private $datetimeString;
+
+    /**
+     * @var \DateTimeInterface
      */
     private $datetime;
 
+    /** @noinspection UnnecessaryCastingInspection */
     public function __construct()
     {
         $this->userMessageThreadId = (int) $this->userMessageThreadId;
@@ -66,7 +72,7 @@ class UserMessageThreadDto
         $this->listingId = (int) $this->listingId;
         $this->senderUserId = (int) $this->senderUserId;
         $this->recipientUserId = (int) $this->recipientUserId;
-        $this->datetime = DateHelper::createFromSqlString($this->datetime);
+        $this->datetime = DateHelper::createFromSqlString($this->datetimeString);
     }
 
     public function getReplyToName(User $currentUser): ?string
@@ -103,12 +109,12 @@ class UserMessageThreadDto
         $this->userMessageThreadId = $userMessageThreadId;
     }
 
-    public function getSenderUserId(): ?int
+    public function getSenderUserId(): int
     {
         return $this->senderUserId;
     }
 
-    public function getRecipientUserId(): ?int
+    public function getRecipientUserId(): int
     {
         return $this->recipientUserId;
     }

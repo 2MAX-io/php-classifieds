@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'trans.Messages' | trans }}{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-4 col-lg-3 mb-4">
+                {% include 'user/_part/user_navigation_card.html.twig' %}
+            </div>
+
+            <div class="col-md-8 col-lg-9">
+                <div class="row rounded-lg overflow-hidden border-gray">
+                    <!-- Messages Box-->
+                    <div class="col-12 px-0 bg-white">
+                        <div class="px-2 py-2">
+                            {% if listing %}
+                                <span>{{ 'trans.Listing' | trans }}: </span>
+                                <a href="{{ path('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}">
+                                    {{ listing.title }}
+                                </a>
+                            {% endif %}
+                        </div>
+                        <!-- Typing area -->
+                        <div>
+                            {{ form_start(form) }}
+                            <div class="input-group">
+                                {{ form_widget(form.message) }}
+                                <div class="input-group-append">
+                                    <button
+                                            id="button-addon2"
+                                            type="submit"
+                                            class="btn btn-link"
+                                            title="{{ 'trans.Send message' | trans }}"
+                                    >
+                                        {{- ' ' -}}<i class="svg svg-send-message"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            {{ form_end(form) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block js %}
+    {{ encore_entry_link_tags('user_message') }}
+    {{ encore_entry_script_tags('user_message') }}
+{% endblock js %}
+

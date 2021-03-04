@@ -12,28 +12,27 @@ class SlugHelper
     public static function getSlug(string $sting, string $delimiter = '-'): string
     {
         $generator = new SlugGenerator(
-            (new SlugOptions)
+            (new SlugOptions())
                 ->setValidChars('a-z0-9')
                 ->setDelimiter($delimiter)
         );
 
         $slug = $generator->generate(\trim($sting));
-        if ($slug === '') {
-            return 'classified-ads-item';
+        if ('' === $slug) {
+            throw new \RuntimeException('could not generate not empty slug');
         }
 
         return $slug;
     }
 
-    public static function softSlug(?string $value): ?string
+    public static function lowercaseWithoutSpaces(?string $value): ?string
     {
         if (null === $value) {
             return $value;
         }
 
         $value = \mb_strtolower($value);
-        $value = Str::replace($value, [' '], '-');
 
-        return $value;
+        return StringHelper::replaceMultipleToSingle($value, [' '], '-');
     }
 }

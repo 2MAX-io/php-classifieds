@@ -29,7 +29,7 @@
             </tr>
             <tr>
                 <th>{{ 'trans.Date' | trans }}</th>
-                <td>{{ payment.datetime ? payment.datetime|date(dateFormatYmdHis) : '' }}</td>
+                <td>{{ payment.datetime ? payment.datetime | date(dateFormatYmdHis) : '' }}</td>
             </tr>
             <tr>
                 <th>{{ 'trans.Payment gateway - status' | trans }}</th>
@@ -48,12 +48,18 @@
             <tr>
                 <th>{{ 'trans.Delivered?' | trans }}</th>
                 <td>
-                    <span class="{{ payment.delivered | boolGreenRedClass }}">{{ payment.delivered | boolText | trans }}</span>
+                    <span class="{{ payment.delivered | boolGreenRedClass }}">
+                        {{- payment.delivered | boolText | trans -}}
+                    </span>
                 </td>
             </tr>
             <tr>
                 <th>{{ 'trans.Canceled?' | trans }}</th>
-                <td><span class="{{ payment.canceled | boolGreenRedClass }}">{{ payment.canceled | boolText | trans }}</span></td>
+                <td>
+                    <span class="{{ payment.canceled | boolGreenRedClass }}">
+                        {{- payment.canceled | boolText | trans -}}
+                    </span>
+                </td>
             </tr>
             <tr>
                 <th>{{ 'trans.Payment gateway - transaction ID' | trans }}</th>
@@ -61,14 +67,20 @@
                     {% set paymentTransactionIdShown = false %}
                     {% if payment.gatewayName in [constant('\App\\Service\\Payment\\Enum\\PaymentGatewayEnum::PAYPAL'), constant('\App\\Service\\Payment\\Enum\\PaymentGatewayEnum::PAYPAL_NATIVE')] %}
                         {% set paymentTransactionIdShown = true %}
-                        <a href="https://www.paypal.com/activity/payment/{{ payment.gatewayTransactionId }}">{{ payment.gatewayTransactionId }}</a>
+                        <a href="https://www.paypal.com/activity/payment/{{ payment.gatewayTransactionId }}">
+                            {{- payment.gatewayTransactionId -}}
+                        </a>
                     {% endif %}
                     {% if payment.gatewayName == constant('\App\\Service\\Payment\\Enum\\PaymentGatewayEnum::PRZELEWY24') %}
                         {% set paymentTransactionIdShown = true %}
                         {% if payment.gatewayMode == constant('\App\\Service\\Payment\\Enum\\GatewayModeEnum::SANDBOX') %}
-                            <a href="https://sandbox.przelewy24.pl/panel/transakcja.php?id={{ payment.gatewayTransactionId }}">{{ payment.gatewayTransactionId }}</a>
+                            <a href="https://sandbox.przelewy24.pl/panel/transakcja.php?id={{ payment.gatewayTransactionId }}">
+                                {{- payment.gatewayTransactionId -}}
+                            </a>
                         {% else %}
-                            <a href="https://panel.przelewy24.pl/transakcja.php?id={{ payment.gatewayTransactionId }}">{{ payment.gatewayTransactionId }}</a>
+                            <a href="https://panel.przelewy24.pl/transakcja.php?id={{ payment.gatewayTransactionId }}">
+                                {{- payment.gatewayTransactionId -}}
+                            </a>
                         {% endif %}
                     {% endif %}
 
@@ -89,29 +101,42 @@
                 <tr>
                     <th>{{ 'trans.Featured package' | trans }}</th>
                     <td>
-                        <div class="text-break"><a href="{{ path('app_admin_featured_package_edit', {'id': payment.paymentForFeaturedPackage.featuredPackage.id}) }}">{{ payment.paymentForFeaturedPackage.featuredPackage.name }}</a></div>
-                        <div class="text-muted text-break">{{ payment.paymentForFeaturedPackage.featuredPackage.adminName }}</div>
+                        <div class="text-break">
+                            <a href="{{ path('app_admin_featured_package_edit', {'id': payment.paymentForFeaturedPackage.featuredPackage.id}) }}">
+                                {{- payment.paymentForFeaturedPackage.featuredPackage.name -}}
+                            </a>
+                        </div>
+                        <div class="text-muted text-break">
+                            {{- payment.paymentForFeaturedPackage.featuredPackage.adminName -}}
+                        </div>
                     </td>
                 </tr>
             {% endif %}
             <tr>
                 <th>{{ 'trans.User' | trans }}</th>
                 <td>
-                    <a href="{{ path('app_admin_user_edit', {'id': payment.user.id}) }}" class="text-break">{{ payment.user.username }}</a>
+                    <a href="{{ path('app_admin_user_edit', {'id': payment.user.id}) }}" class="text-break">
+                        {{- payment.user.username -}}
+                    </a>
                 </td>
             </tr>
             <tr>
                 <th>{{ 'trans.Listing' | trans }}</th>
                 <td>
                     {% if payment.paymentForFeaturedPackage %}
-                        <a href="{{ path('app_admin_listing_edit', {'id': payment.paymentForFeaturedPackage.listing.id}) }}" class="text-break">{{ payment.paymentForFeaturedPackage.listing.title }}</a>
+                        <a
+                                href="{{ path('app_admin_listing_edit', {'id': payment.paymentForFeaturedPackage.listing.id}) }}"
+                                class="text-break"
+                        >
+                            {{- payment.paymentForFeaturedPackage.listing.title -}}
+                        </a>
                     {% else %}
-                        {{ 'trans.none' | trans }}
+                        {{- 'trans.none' | trans -}}
                     {% endif %}
                 </td>
             </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('app_admin_payment_index') }}" class="btn btn-secondary">{{ 'trans.back to list' | trans }}</a>
+    <a href="{{ path('app_admin_payment_list') }}" class="btn btn-secondary">{{ 'trans.back to list' | trans }}</a>
 {% endblock %}

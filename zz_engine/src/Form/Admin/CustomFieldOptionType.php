@@ -29,17 +29,16 @@ class CustomFieldOptionType extends AbstractType
                 new NotBlank(),
             ],
         ]);
-        $builder->add(
-            self::VALUE_FIELD, TextType::class, [
+        $valueField = $builder->add(self::VALUE_FIELD, TextType::class, [
             'label' => 'trans.Value',
             'constraints' => [
                 new NotBlank(),
                 new OptionValue(),
-            ]
-        ])
-        ->addEventListener(FormEvents::PRE_SUBMIT, static function(FormEvent $formEvent): void {
+            ],
+        ]);
+        $valueField->addEventListener(FormEvents::PRE_SUBMIT, static function (FormEvent $formEvent): void {
             $data = $formEvent->getData();
-            $data[self::VALUE_FIELD] = SlugHelper::softSlug($data[self::VALUE_FIELD]);
+            $data[self::VALUE_FIELD] = SlugHelper::lowercaseWithoutSpaces($data[self::VALUE_FIELD]);
 
             $formEvent->setData($data);
         });

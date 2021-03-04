@@ -22,66 +22,66 @@ class PaymentDto
     /**
      * @var string
      */
-    public $paymentExecuteUrl;
+    private $makePaymentUrl;
 
     /**
-     * @var string|null
+     * @var null|string
      */
-    public $returnUrl;
+    private $returnUrl;
 
     /**
-     * @var int|null
+     * @var null|int
      */
-    public $amount;
+    private $amount;
 
     /**
-     * @var string|null
+     * @var null|string
      */
-    public $currency;
+    private $currency;
 
     /**
-     * @var string|null
+     * @var null|string
      */
-    public $gatewayPaymentId;
+    private $gatewayPaymentId;
 
     /**
-     * @var string|null
+     * @var null|string
      */
-    public $gatewayToken;
+    private $gatewayToken;
 
     /**
-     * @var string|null
+     * @var null|string
      */
-    public $gatewayStatus;
+    private $gatewayStatus;
 
     /**
-     * @var string|null
+     * @var null|string
      */
-    public $gatewayPaymentDescription;
+    private $gatewayPaymentDescription;
 
     /**
-     * @var string|null
+     * @var null|string
      */
-    public $paymentAppToken;
+    private $paymentAppToken;
 
     /**
-     * @var Payment|null
+     * @var null|Payment
      */
-    public $paymentEntity;
+    private $paymentEntity;
 
     /**
-     * @var User|null
+     * @var null|User
      */
-    public $user;
+    private $user;
 
-    public function setPaymentExecuteUrl(string $paymentExecuteUrl): void
+    public function setMakePaymentUrl(string $makePaymentUrl): void
     {
-        $this->paymentExecuteUrl = $paymentExecuteUrl;
+        $this->makePaymentUrl = $makePaymentUrl;
     }
 
-    public function getPaymentExecuteUrl(): string
+    public function getMakePaymentUrl(): string
     {
-        return $this->paymentExecuteUrl;
+        return $this->makePaymentUrl;
     }
 
     public function getReturnUrl(): ?string
@@ -151,6 +151,10 @@ class PaymentDto
 
     public function getUserNotNull(): User
     {
+        if (null === $this->user) {
+            throw new \RuntimeException('user is null');
+        }
+
         return $this->user;
     }
 

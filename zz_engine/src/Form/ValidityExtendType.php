@@ -33,7 +33,7 @@ class ValidityExtendType extends AbstractType
             'constraints' => [
                 new Constraints\NotBlank(),
                 new Constraints\Choice([
-                    'choices' => $this->validUntilSetService->getValidityTimeDaysChoices()
+                    'choices' => $this->validUntilSetService->getValidityTimeDaysChoices(),
                 ]),
             ],
         ]);
@@ -41,10 +41,8 @@ class ValidityExtendType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults(
-            [
-                'data_class' => null,
-            ]
-        );
+        $resolver->setDefaults([
+            'data_class' => null,
+        ]);
     }
 }

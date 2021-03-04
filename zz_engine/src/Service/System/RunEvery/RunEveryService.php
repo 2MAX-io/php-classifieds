@@ -4,24 +4,23 @@ declare(strict_types=1);
 
 namespace App\Service\System\RunEvery;
 
-use Symfony\Component\Cache\Adapter\AdapterInterface;
-use Symfony\Contracts\Cache\CacheInterface;
+use Psr\Cache\CacheItemPoolInterface;
 
 class RunEveryService
 {
     /**
-     * @var CacheInterface|AdapterInterface
+     * @var CacheItemPoolInterface
      */
     private $cache;
 
-    public function __construct(CacheInterface $cache)
+    public function __construct(CacheItemPoolInterface $cache)
     {
         $this->cache = $cache;
     }
 
     public function canRunAgain(string $name, int $seconds = null): bool
     {
-        $cacheName = $name . '_CAN_RUN_AGAIN';
+        $cacheName = $name.'_CAN_RUN_AGAIN';
         $cacheItem = $this->cache->getItem($cacheName);
         if ($cacheItem->isHit()) {
             return false;

@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Service\Listing;
 
 use App\Entity\Listing;
+use App\Enum\ParamEnum;
+use App\Helper\DateHelper;
 use App\Security\CurrentUserService;
 use App\Service\Setting\SettingsService;
 use Doctrine\ORM\QueryBuilder;
@@ -39,38 +41,54 @@ class ListingPublicDisplayService
 
     public function applyPublicDisplayConditions(QueryBuilder $qb): void
     {
-        $qb->andWhere($qb->expr()->gte('listing.validUntilDate', ':todayDayStart'));
-        $qb->setParameter(':todayDayStart', \date('Y-m-d 00:00:00'));
+        $qb->andWhere($qb->expr()->gte('listing.validUntilDate', ':startOfToday'));
+        $qb->setParameter(':startOfToday', DateHelper::date('Y-m-d 00:00:00'));
 
-        $qb->andWhere('listing.userDeactivated = 0');
-        $qb->andWhere('listing.userRemoved = 0');
-        $qb->andWhere('listing.adminRejected = 0');
+        $qb->andWhere($qb->expr()->eq('listing.userDeactivated', 0));
+        $qb->andWhere($qb->expr()->eq('listing.userRemoved', 0));
+        $qb->andWhere($qb->expr()->eq('listing.userDeactivated', 0));
 
         if ($this->settingsService->getSettingsDto()->getRequireListingAdminActivation()) {
-            $qb->andWhere('listing.adminActivated = 1');
+            $qb->andWhere($qb->expr()->eq('listing.adminActivated', 1));
         }
 
-        $qb->andWhere('listing.adminRemoved = 0');
+        $qb->andWhere($qb->expr()->eq('listing.adminRemoved', 0));
     }
 
-    public function canDisplay(Listing $listing, bool $showPreviewForOwner = false): bool
+    public function applyHiddenConditions(QueryBuilder $qb): void
     {
-        $showPreviewForOwner = $this->requestStack->getMasterRequest()->query->get('showPreviewForOwner', $showPreviewForOwner);
-        if ($showPreviewForOwner && $this->currentUserService->isCurrentUser($listing->getUser())) {
-            return true;
+        $orx = $qb->expr()->orX();
+        $orx->add($qb->expr()->lt('listing.validUntilDate', ':startOfToday'));
+        $qb->setParameter(':startOfToday', DateHelper::date('Y-m-d 00:00:00'));
+
+        $orx->add($qb->expr()->eq('listing.userDeactivated', 1));
+        $orx->add($qb->expr()->eq('listing.userRemoved', 1));
+        $orx->add($qb->expr()->eq('listing.adminRejected', 1));
+
+        if ($this->settingsService->getSettingsDto()->getRequireListingAdminActivation()) {
+            $qb->andWhere($qb->expr()->eq('listing.adminActivated', 0));
         }
 
-        if ($showPreviewForOwner && $this->currentUserService->lowSecurityCheckIsAdminInPublic()) {
-            return true;
+        $orx->add($qb->expr()->eq('listing.adminRemoved', 1));
+        $qb->andWhere($orx);
+    }
+
+    public function canDisplay(Listing $listing, bool $showListingPreviewForOwner = false): bool
+    {
+        $request = $this->requestStack->getMasterRequest();
+        if ($request) {
+            $showListingPreviewForOwner = $request->get(ParamEnum::SHOW_LISTING_PREVIEW_FOR_OWNER, $showListingPreviewForOwner);
+            if ($showListingPreviewForOwner) {
+                if ($this->currentUserService->isCurrentUser($listing->getUser())) {
+                    return true;
+                }
+
+                if ($this->currentUserService->isAdminInPublic()) {
+                    return true;
+                }
+            }
         }
 
-        /**
-         * no need to check if:
-         * - userDeactivated
-         * - userRemoved
-         *
-         * when this happen listing is displayed as expired
-         */
         return ($listing->getAdminActivated() || !$this->settingsService->getSettingsDto()->getRequireListingAdminActivation())
             && !$listing->getAdminRemoved()
             && !$listing->getAdminRejected()

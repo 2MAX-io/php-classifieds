@@ -6,9 +6,9 @@ namespace App\Service\Admin\CustomField;
 
 use App\Entity\CustomField;
 use App\Entity\CustomFieldOption;
+use App\Enum\SortConfig;
 use App\Form\Admin\CustomFieldOptionCopyDto;
-use App\Helper\Arr;
-use App\Service\System\Sort\SortService;
+use App\Helper\ArrayHelper;
 use Doctrine\ORM\EntityManagerInterface;
 
 class CustomFieldOptionCopyService
@@ -28,16 +28,22 @@ class CustomFieldOptionCopyService
         CustomField $targetCustomField
     ): void {
         $currentOptions = $this->getOptionsIndexedByValue($targetCustomField);
-        $sort = $targetCustomField->getCustomFieldOptions()->count() ? $targetCustomField->getCustomFieldOptions()->last()->getSort(): SortService::START_REORDER_FROM;
+        $sort = SortConfig::START_REORDER_FROM;
+        if ($targetCustomField->getCustomFieldOptions()->count()) {
+            /** @var CustomFieldOption $customFieldOption */
+            $customFieldOption = $targetCustomField->getCustomFieldOptions()->last();
+            $sort = $customFieldOption->getSort();
+        }
 
-        foreach ($customFieldOptionCopyDto->getSourceCustomFieldNotNull()->getCustomFieldOptions() as $sourceCustomFieldOption) {
-            $sort++;
+        $customFieldOptions = $customFieldOptionCopyDto->getSourceCustomFieldNotNull()->getCustomFieldOptions();
+        foreach ($customFieldOptions as $sourceCustomFieldOption) {
+            ++$sort;
             $newValue = $sourceCustomFieldOption->getValue();
             if (isset($currentOptions[$newValue])) {
                 continue;
             }
 
-            $newCustomFieldOption= clone $sourceCustomFieldOption;
+            $newCustomFieldOption = clone $sourceCustomFieldOption;
             $newCustomFieldOption->setCustomField($targetCustomField);
             $newCustomFieldOption->setSort($sort);
             $targetCustomField->addCustomFieldOption($newCustomFieldOption);
@@ -45,10 +51,16 @@ class CustomFieldOptionCopyService
         }
     }
 
+    /**
+     * @return array<int|string,CustomFieldOption>
+     */
     private function getOptionsIndexedByValue(CustomField $targetCustomField): array
     {
-        return Arr::indexBy($targetCustomField->getCustomFieldOptions()->toArray(), static function(CustomFieldOption $customFieldOption) {
-            return [$customFieldOption->getValue() => $customFieldOption];
-        });
+        return ArrayHelper::indexBy(
+            $targetCustomField->getCustomFieldOptions()->toArray(),
+            static function (CustomFieldOption $customFieldOption) {
+                return [$customFieldOption->getValueNotNull() => $customFieldOption];
+            }
+        );
     }
 }

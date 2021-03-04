@@ -4,88 +4,39 @@ declare(strict_types=1);
 
 namespace App\Controller\Pub;
 
-use App\Entity\User;
-use App\Repository\CategoryRepository;
+use App\Enum\ParamEnum;
 use App\Service\Category\CategoryListService;
-use App\Service\Listing\ListingList\ListingListDto;
 use App\Service\Listing\ListingList\ListingListService;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ListingListController extends AbstractController
 {
     /**
-     * @var TranslatorInterface
-     */
-    private $trans;
-
-    /**
-     * @var EntityManagerInterface
-     */
-    private $em;
-
-    public function __construct(TranslatorInterface $trans, EntityManagerInterface $em)
-    {
-        $this->trans = $trans;
-        $this->em = $em;
-    }
-
-    /**
-     * @Route("/listing/search", name="app_listing_search")
-     * @Route("/last-added", name="app_last_added")
-     * @Route("/listings-of-user", name="app_public_listings_of_user")
      * @Route("/c/{categorySlug}", name="app_category")
+     * @Route("/last-added", name="app_last_added")
+     * @Route("/listing/search", name="app_listing_search")
+     * @Route("/listings-of-user", name="app_public_listings_of_user")
      */
-    public function index(
+    public function listingList(
         Request $request,
         ListingListService $listingListService,
         CategoryListService $categoryListService,
-        CategoryRepository $categoryRepository,
         string $categorySlug = null
     ): Response {
-        $listingListDto = new ListingListDto();
-        $listingListDto->setRoute($request->get('_route'));
-        $page = (int) $request->get('page', 1);
-        $listingListDto->setPageNumber($page);
-
-        $category = null;
-        if ($categorySlug) {
-            $category = $categoryRepository->findOneBy(['slug' => $categorySlug]);
-            if ($category === null) {
-                throw $this->createNotFoundException();
-            }
-            $listingListDto->setCategory($category);
+        $listingListDto = $listingListService->getListingListDtoFromRequest($request);
+        if ($listingListDto->getRedirectToRoute()) {
+            return $this->redirectToRoute($listingListDto->getRedirectToRoute());
         }
-
-        if (null === $listingListDto->getCategory() && $listingListDto->getRoute() === 'app_category') {
-            // category not found, redirect to last added to prevent error
-            return $this->redirectToRoute('app_last_added');
-        }
-
-        if ($request->query->has('user')) {
-            $userId = (int) $request->query->get('user');
-            $user = $this->em->getRepository(User::class)->findOneBy(['id' => $userId]);
-            if (!$user) {
-                throw $this->createNotFoundException();
-            }
-
-            $listingListDto->setFilterByUser($user);
-        }
-
-        if ($listingListDto->getRoute() === 'app_last_added') {
-            $listingListDto->setLastAddedListFlag(true);
-        }
-
         $routeParams = [
             'categorySlug' => $categorySlug,
         ];
 
-        $customFieldsForCategory = $listingListService->getCustomFields($category);
-        $listingListDto->setCustomFieldForCategoryList($customFieldsForCategory);
+        $category = $listingListDto->getCategory();
+        $categoryCustomFields = $listingListService->getCustomFields($listingListDto);
+        $listingListDto->setCategoryCustomFields($categoryCustomFields);
         $listingListDto = $listingListService->getListings($listingListDto);
 
         if ($listingListDto->getRedirectToPageNumber()) {
@@ -103,61 +54,24 @@ class ListingListController extends AbstractController
         }
 
         return $this->render(
-            'listing_list.html.twig',
+            'listing_list/listing_list.html.twig',
             [
                 'listingList' => $listingListDto->getResults(),
-                'pager' => $listingListDto->getPager(),
-                'pager_route_params' => $routeParams,
                 'listingListDto' => $listingListDto,
-                'customFieldList' => $customFieldsForCategory,
-                'categoryList' => $categoryListService->getLevelOfSubcategoriesToDisplayForCategory($category),
-                'categoryBreadcrumbs' => $categoryListService->getBreadcrumbs($category),
+                'pager' => $listingListDto->getPager(),
+                'route_params' => $routeParams,
                 'category' => $category,
+                'categoryBreadcrumbs' => $categoryListService->getCategoriesForBreadcrumbs($category),
+                'categoryList' => $categoryListService->getCategoryListForSideMenu($category),
+                'customFieldList' => $categoryCustomFields,
                 'queryParameters' => [
                     'query' => $request->query->get('query'),
                     'user' => $request->query->get('user'),
-                    'min_price' => $request->query->get('min_price'),
-                    'max_price' => $request->query->get('max_price'),
-                    'form_custom_field' => $request->query->get('form_custom_field'),
+                    'minPrice' => $request->query->get('minPrice'),
+                    'maxPrice' => $request->query->get('maxPrice'),
+                    ParamEnum::CUSTOM_FIELD => $request->query->get(ParamEnum::CUSTOM_FIELD),
                 ],
-                'pageTitle' => $this->getPageTitleForRoute($listingListDto),
-                'breadcrumbLast' => $this->getBreadcrumbsForRoute($listingListDto),
             ]
         );
-    }
-
-    private function getPageTitleForRoute(ListingListDto $listingListDto): string
-    {
-        $route = $listingListDto->getRoute();
-        $map = [
-            'app_listing_search' => $this->trans->trans('trans.Search Engine'),
-            'app_last_added' => $this->trans->trans('trans.Last added'),
-            'app_public_listings_of_user' => $this->trans->trans('trans.Listings of user'),
-            'app_category' => static function() use ($listingListDto) {
-                return $listingListDto->getCategoryNotNull()->getName();
-            },
-        ];
-
-        if (isset($map[$route])) {
-            if (\is_callable($map[$route])) {
-                return $map[$route]();
-            }
-
-            return $map[$route];
-        }
-
-        return $this->trans->trans('trans.Listings');
-    }
-
-    private function getBreadcrumbsForRoute(ListingListDto $listingListDto): ?string
-    {
-        $route = $listingListDto->getRoute();
-        $map = [
-            'app_listing_search' => $this->trans->trans('trans.Search Engine'),
-            'app_last_added' => $this->trans->trans('trans.Last added'),
-            'app_public_listings_of_user' => $this->trans->trans('trans.Listings of user'),
-        ];
-
-        return $map[$route] ?? null;
     }
 }

@@ -18,11 +18,11 @@
                 <div>
                     <div>
                         <a
-                                href="{{ path('app_listing_show', {'id': listing.id, 'slug': listing.slug, 'showPreviewForOwner': 1}) }}"
+                                href="{{ path('app_listing_show', {'id': listing.id, 'slug': listing.slug, 'showListingPreviewForOwner': 1}) }}"
                                 target="_blank"
                                 class="float-md-left btn btn-link pl-0"
                         >
-                            {{ 'trans.Preview listing' | trans }}
+                            {{- 'trans.Preview listing' | trans -}}
                         </a>
                     </div>
 
@@ -30,25 +30,24 @@
                         <span class="{{ getListingStatusClass(listing) }}">{{ getListingStatus(listing) }}</span>
                         {% if listing.status in [constant('\App\\Entity\\Listing::STATUS_REJECTED')] and listing.rejectionReason is empty and settings.linkRejectionReason is not empty %}
                             <a href="{{ path('app_page', {'slug': settings.linkRejectionReason}) }}">
-                                {{ 'trans.more information' | trans }}
+                                {{- 'trans.more information' | trans -}}
                             </a>
                         {% endif %}
 
                         {% if settings.paymentAllowed and listing.status in [constant('\App\\Entity\\Listing::STATUS_ACTIVE'), constant('\App\\Entity\\Listing::STATUS_ACTIVE_FEATURED')] %}
-                            <a
-                                    href="{{ path('app_user_feature_listing', {"id": listing.id}) }}"
-                                    class="btn btn-dark mb-1"
-                            >{{ 'trans.Feature this listing' | trans }}</a>
+                            <a href="{{ path('app_user_feature_listing', {"id": listing.id}) }}" class="btn btn-dark mb-1">
+                                {{- 'trans.Feature this listing' | trans -}}
+                            </a>
                         {% endif %}
 
                         {{ userMacro.listingButtons(listing) }}
 
-                        {% if lowSecurityCheckIsAdminInPublic() %}
+                        {% if isAdminInPublic() %}
                             <a
                                     href="{{ path('app_admin_listing_edit', {'id': listing.id}) }}"
                                     class="btn btn-outline-danger mb-1"
                             >
-                                {{ 'trans.Edit listing as Admin' | trans }}
+                                {{- 'trans.Edit listing as Admin' | trans -}}
                             </a>
                         {% endif %}
                     </div>
@@ -63,6 +62,6 @@
 {% endblock %}
 
 {% block js %}
-    {% include 'user/listing/_part/_file_upload.html.twig' %}
-    {% include 'user/listing/_part/_listing_js.html.twig' %}
+    {{ encore_entry_link_tags('listing_edit') }}
+    {{ encore_entry_script_tags('listing_edit') }}
 {% endblock %}

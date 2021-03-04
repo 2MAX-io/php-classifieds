@@ -11,10 +11,7 @@ use Doctrine\Common\Collections\Criteria;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method UserInvoiceDetails|null find($id, $lockMode = null, $lockVersion = null)
- * @method UserInvoiceDetails|null findOneBy(array $criteria, array $orderBy = null)
- * @method UserInvoiceDetails[]    findAll()
- * @method UserInvoiceDetails[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @extends \Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository<UserInvoiceDetails>
  */
 class UserInvoiceDetailsRepository extends ServiceEntityRepository
 {
@@ -33,33 +30,4 @@ class UserInvoiceDetailsRepository extends ServiceEntityRepository
 
         return $qb->getQuery()->getOneOrNullResult();
     }
-
-    // /**
-    //  * @return UserInvoiceDetails[] Returns an array of UserInvoiceDetails objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('u')
-            ->andWhere('u.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('u.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?UserInvoiceDetails
-    {
-        return $this->createQueryBuilder('u')
-            ->andWhere('u.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

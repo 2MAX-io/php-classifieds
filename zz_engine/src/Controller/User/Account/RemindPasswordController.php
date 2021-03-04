@@ -5,14 +5,15 @@ declare(strict_types=1);
 namespace App\Controller\User\Account;
 
 use App\Controller\User\Base\AbstractUserController;
-use App\Entity\Token;
-use App\Entity\TokenField;
+use App\Entity\System\Token;
+use App\Entity\System\TokenField;
 use App\Entity\User;
 use App\Enum\ParamEnum;
 use App\Form\User\Account\RemindPasswordType;
-use App\Service\FlashBag\FlashService;
+use App\Service\System\FlashBag\FlashService;
 use App\Service\System\Token\TokenService;
 use App\Service\User\Account\RemindPasswordService;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -20,6 +21,16 @@ use Symfony\Component\Security\Core\Security;
 
 class RemindPasswordController extends AbstractUserController
 {
+    /**
+     * @var EntityManagerInterface
+     */
+    private $em;
+
+    public function __construct(EntityManagerInterface $em)
+    {
+        $this->em = $em;
+    }
+
     /**
      * @Route("/remind-password", name="app_remind_password")
      */
@@ -32,10 +43,9 @@ class RemindPasswordController extends AbstractUserController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $remindPasswordService->sendRemindConfirmation(
-                $form->get(RemindPasswordType::EMAIL_FIELD)->getData()
+                $form->get(RemindPasswordType::EMAIL_FIELD)->getData(),
             );
-
-            $this->getDoctrine()->getManager()->flush();
+            $this->em->flush();
 
             $flashService->addFlash(
                 FlashService::SUCCESS_ABOVE_FORM,
@@ -51,7 +61,7 @@ class RemindPasswordController extends AbstractUserController
     }
 
     /**
-     * @Route("/remind-password/confirm/{token}", name="app_remind_password_confirm")
+     * @Route("/private/remind-password/confirm/{token}", name="app_remind_password_confirm")
      */
     public function remindPasswordConfirm(
         Request $request,
@@ -61,7 +71,7 @@ class RemindPasswordController extends AbstractUserController
         FlashService $flashService
     ): Response {
         $tokenEntity = $tokenService->getToken($token, Token::USER_PASSWORD_REMIND);
-        if ($tokenEntity === null) {
+        if (null === $tokenEntity) {
             $flashService->addFlash(
                 FlashService::ERROR_ABOVE_FORM,
                 'trans.Confirmation link is invalid or expired, check if confirmation link is correct'
@@ -101,11 +111,10 @@ class RemindPasswordController extends AbstractUserController
 
         $remindPasswordService->setHashedPassword(
             $user,
-            $newHashedPassword
+            $newHashedPassword,
         );
         $tokenService->markTokenUsed($tokenEntity);
-
-        $this->getDoctrine()->getManager()->flush();
+        $this->em->flush();
 
         $flashService->addFlash(
             FlashService::SUCCESS_ABOVE_FORM,

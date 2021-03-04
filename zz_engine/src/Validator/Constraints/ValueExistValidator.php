@@ -23,12 +23,11 @@ use Symfony\Component\Validator\Exception\ConstraintDefinitionException;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 /**
- * Unique Entity Validator checks if one or a set of fields contain unique values.
- *
- * @author Benjamin Eberlei <kontakt@beberlei.de>
+ * based on @see UniqueEntityValidator.
  */
 class ValueExistValidator extends ConstraintValidator
 {
+    /** @var ManagerRegistry */
     private $registry;
 
     public function __construct(ManagerRegistry $registry)
@@ -37,9 +36,9 @@ class ValueExistValidator extends ConstraintValidator
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
-    public function validate($fieldValue, Constraint $constraint): void
+    public function validate($value, Constraint $constraint): void
     {
         if (!$constraint instanceof ValueExist) {
             throw new UnexpectedTypeException($constraint, ValueExist::class);
@@ -59,14 +58,14 @@ class ValueExistValidator extends ConstraintValidator
             throw new ConstraintDefinitionException('At least one field has to be specified.');
         }
 
-        if (null === $fieldValue) {
+        if (null === $value) {
             return;
         }
 
         if ($constraint->em) {
             $em = $this->registry->getManager($constraint->em);
 
-            if (!$em) {
+            if (!$em instanceof ObjectManager) {
                 throw new ConstraintDefinitionException(\sprintf('Object manager "%s" does not exist.', $constraint->em));
             }
         } else {
@@ -87,7 +86,7 @@ class ValueExistValidator extends ConstraintValidator
                 throw new ConstraintDefinitionException(\sprintf('The field "%s" is not mapped by Doctrine, so it cannot be validated for uniqueness.', $fieldName));
             }
 
-            $criteria[$fieldName] = $fieldValue;
+            $criteria[$fieldName] = $value;
 
             if (null !== $criteria[$fieldName] && $class->hasAssociation($fieldName)) {
                 /* Ensure the Proxy is initialized before using reflection to
@@ -119,8 +118,7 @@ class ValueExistValidator extends ConstraintValidator
             throw new ConstraintDefinitionException(
                 \sprintf(
                     'entityClass must be set in Constraint: %s',
-                    \get_class
-                    (
+                    \get_class(
                         $constraint
                     )
                 )
@@ -168,11 +166,12 @@ class ValueExistValidator extends ConstraintValidator
             ->setInvalidValue($invalidValue)
             ->setCode(UniqueEntity::NOT_UNIQUE_ERROR)
             ->setCause($result)
-            ->addViolation();
+            ->addViolation()
+        ;
     }
 
     /**
-     * @inheritDoc
+     * @param object|string $value
      */
     private function formatWithIdentifiers(ObjectManager $em, ClassMetadata $class, $value): string
     {

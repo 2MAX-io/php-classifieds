@@ -11,10 +11,7 @@ use Doctrine\Common\Collections\Criteria;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method Invoice|null find($id, $lockMode = null, $lockVersion = null)
- * @method Invoice|null findOneBy(array $criteria, array $orderBy = null)
- * @method Invoice[]    findAll()
- * @method Invoice[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @extends \Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository<Invoice>
  */
 class InvoiceRepository extends ServiceEntityRepository
 {
@@ -24,7 +21,7 @@ class InvoiceRepository extends ServiceEntityRepository
     }
 
     /**
-     * @return User[]
+     * @return Invoice[]
      */
     public function getListForUser(User $user): array
     {
@@ -33,6 +30,7 @@ class InvoiceRepository extends ServiceEntityRepository
         $qb->setParameter(':user', $user->getId());
 
         $qb->addOrderBy('invoice.id', Criteria::DESC);
+        $qb->setMaxResults(100);
 
         return $qb->getQuery()->getResult();
     }

@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace App\Service\User\Account;
 
-use App\Entity\Token;
-use App\Entity\TokenField;
+use App\Entity\System\Token;
+use App\Entity\System\TokenField;
 use App\Entity\User;
+use App\Helper\DateHelper;
 use App\Service\System\Token\TokenService;
-use Carbon\Carbon;
+use App\Service\User\Account\Secondary\UserAccountEmailService;
 use Doctrine\ORM\EntityManagerInterface;
 
 class ChangeEmailService
@@ -29,9 +30,9 @@ class ChangeEmailService
     private $tokenService;
 
     public function __construct(
-        EntityManagerInterface $em,
         UserAccountEmailService $userAccountEmailService,
-        TokenService $tokenService
+        TokenService $tokenService,
+        EntityManagerInterface $em
     ) {
         $this->em = $em;
         $this->userAccountEmailService = $userAccountEmailService;
@@ -40,15 +41,23 @@ class ChangeEmailService
 
     public function sendConfirmation(User $user, string $newEmail): void
     {
-        $token = $this->tokenService->getTokenBuilder(
+        $token = $this->tokenService->createToken(
             Token::USER_EMAIL_CHANGE_TYPE,
-            Carbon::now()->add('day', 7),
+            DateHelper::carbonNow()->addDays(7),
         );
         $token->addField(TokenField::USER_NEW_EMAIL_FIELD, $newEmail);
         $token->addField(TokenField::USER_ID_FIELD, (string) $user->getId());
 
-        $this->userAccountEmailService->sendEmailChangeConfirmationToPreviousEmail($user, $newEmail, $token->getTokenEntity()->getTokenString());
-        $this->userAccountEmailService->sendEmailChangeNotificationToNewEmail($user, $newEmail, $token->getTokenEntity()->getTokenString());
+        $this->userAccountEmailService->sendEmailChangeConfirmationToPreviousEmail(
+            $user,
+            $newEmail,
+            $token->getTokenEntity()->getTokenString()
+        );
+        $this->userAccountEmailService->sendEmailChangeNotificationToNewEmail(
+            $user,
+            $newEmail,
+            $token->getTokenEntity()->getTokenString()
+        );
 
         $this->em->persist($token->getTokenEntity());
     }

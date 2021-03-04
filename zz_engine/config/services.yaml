@@ -8,10 +8,14 @@ parameters:
     locale: '%env(resolve:APP_LOCALE)%'
     env(APP_TIMEZONE): 'UTC'
     timezone: '%env(resolve:APP_TIMEZONE)%'
+    env(APP_DATE_FORMAT): 'Y-m-d, H:i'
+    date_format: '%env(resolve:APP_DATE_FORMAT)%'
+    env(APP_DATE_FORMAT_SHORT): 'Y-m-d'
+    date_format_short: '%env(resolve:APP_DATE_FORMAT_SHORT)%'
     env(APP_UPGRADE_DISABLED): false
-    upgrade_disabled: '%env(resolve:APP_UPGRADE_DISABLED)%'
+    upgrade_disabled: '%env(resolve:bool:APP_UPGRADE_DISABLED)%'
     env(APP_UPGRADE_AVAILABLE_CHECK_DISABLED): false
-    upgrade_available_check_disabled: '%env(resolve:APP_UPGRADE_AVAILABLE_CHECK_DISABLED)%'
+    upgrade_available_check_disabled: '%env(resolve:bool:APP_UPGRADE_AVAILABLE_CHECK_DISABLED)%'
     env(APP_ASSET_VERSION): 1
     asset_version: '%env(resolve:APP_ASSET_VERSION)%'
     env(APP_ENVIRONMENT_CSS_CLASS): ''
@@ -19,7 +23,6 @@ parameters:
     router.request_context.host: '%env(resolve:APP_HTTP_HOST)%'
     router.request_context.scheme: '%env(resolve:APP_HTTP_SCHEME)%'
     router.request_context.base_url: '%env(resolve:APP_HTTP_BASE_URL)%'
-
 
 services:
     # default configuration for services in *this* file
@@ -34,6 +37,10 @@ services:
             tags: ['app.health_checker']
         App\Service\Payment\Base\PaymentGatewayInterface:
             tags: ['app.payment_gateway_list']
+        App\Service\System\Cron\Action\Base\CronActionInterface:
+            tags: ['app.cron_action']
+        App\Form\Admin\Settings\Base\SettingTypeInterface:
+            tags: ['app.setting_type']
 
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
@@ -60,24 +67,28 @@ services:
         tags:
             - { name: kernel.event_listener, event: kernel.exception }
 
-    libphonenumber\PhoneNumberUtil:
-        factory: ['@App\System\Support\Phone\PhoneNumberService', 'factory']
-
     App\Service\Setting\SettingsService:
         public: true
 
+    App\Service\Setting\SettingsDto:
+        factory: [ '@App\Service\Setting\SettingsService', 'getSettingsDto' ]
+
     App\Service\System\HealthCheck\HealthCheckService:
-        arguments: [!tagged app.health_checker]
+        arguments: [ !tagged app.health_checker ]
 
     App\Service\Payment\PaymentGatewayService:
-        arguments: [!tagged app.payment_gateway_list]
+        arguments: [ !tagged app.payment_gateway_list ]
+
+    App\Service\System\Cron\CronService:
+        arguments: [ !tagged app.cron_action ]
+
+    App\Service\System\HealthCheck\HealthChecker\Settings\SettingsRequiredHealthChecker:
+        arguments: [ !tagged app.setting_type ]
 
     Symfony\Component\HttpKernel\CacheClearer\CacheClearerInterface: '@cache_clearer'
 
-    App\Service\System\Asset\AssetVersionStrategyService:
-        arguments:
-            $version: '%asset_version%'
-        public: false
-
-    App\Service\Email\Transport\SelfSignedEmailTransportFactory:
+    App\Service\System\Email\Transport\SelfSignedEmailTransportFactory:
         tags: ['mailer.transport_factory']
+
+    libphonenumber\PhoneNumberUtil:
+        factory: [ '@App\Service\System\Text\PhoneNumberService', 'factory' ]

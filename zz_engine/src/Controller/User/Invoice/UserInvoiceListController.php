@@ -12,11 +12,10 @@ use Symfony\Component\Routing\Annotation\Route;
 class UserInvoiceListController extends AbstractUserController
 {
     /**
-     * @Route("/user/invoices", name="app_user_invoice_list")
+     * @Route("/user/invoice/invoice-list", name="app_user_invoice_list")
      */
-    public function userInvoices(
-        UserInvoiceListService $invoiceListService
-    ): Response {
+    public function userInvoiceList(UserInvoiceListService $invoiceListService): Response
+    {
         $this->dennyUnlessUser();
 
         return $this->render('user/invoice/user_invoice_list.html.twig', [

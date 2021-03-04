@@ -7,7 +7,11 @@
 {% block body %}
     <div class="container mt-3">
         <h3>{{ 'trans.Edit listing' | trans }}:
-            <a target="_blank" href="{{ path('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}" class="text-break">
+            <a
+                    target="_blank"
+                    href="{{ path('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}"
+                    class="text-break"
+            >
                 {{- listing.title -}}
             </a>
         </h3>
@@ -19,18 +23,12 @@
         <div class="float-right">
             <span class="{{ getListingStatusClass(listing) }}">{{ getListingStatus(listing) }}</span>
 
-            {%- if adminShowActivate(listing) -%}
+            {%- if listingToActivateForAdmin(listing) -%}
                 {{ include('admin/listing/_action/_admin_activate_form.html.twig') }}
             {%- endif -%}
 
-            {% if adminShowReject(listing) %}
-                <a
-                href="{{ path('app_admin_listing_reject', {'id': listing.id}) }}"
-                target="_blank"
-                class="btn btn-warning mb-1"
-                >
-                    {{ 'trans.Reject' | trans }}
-                </a>
+            {% if listingToRejectForAdmin(listing) %}
+                {{ include('admin/listing/_action/_admin_reject_form.html.twig') }}
             {% endif %}
         </div>
 
@@ -48,19 +46,16 @@
                     {% else %}
                         {{ 'trans.Not set' | trans }}
                     {% endif %}
-                    <div class="btn btn-outline-secondary btn-sm cursor-pointer js__add-location-to-the-map-button">
-                        {{ 'trans.Edit location to the map' | trans }}
+                    <div class="btn btn-outline-secondary btn-sm cursor-pointer js__addLocationToTheMapButton">
+                        {{- 'trans.Edit location to the map' | trans -}}
                     </div>
                 </div>
 
-                <div class="listing-edit-location-map d-none-soft js__listing-edit-location-map"></div>
-
-                {{ form_row(form.locationLatitude) }}
-                {{ form_row(form.locationLongitude) }}
+                <div class="listing-edit-location-map d-none-soft js__listingEditLocationMap"></div>
             </div>
         {% endif %}
 
-        <button class="btn btn-primary mb-4">{{ button_label|default('trans.Save' | trans) }}</button>
+        <button class="btn btn-primary mb-4">{{ button_label | default('trans.Save' | trans) }}</button>
         {{ form_end(form) }}
 
         <div class="row mb-2">
@@ -74,11 +69,11 @@
                         <img
                                 class="img-cover-center admin-image-delete"
                                 src="{{ asset(listingFile.pathInListSize) }}"
-                                alt=""
+                                alt="{{ listingFile.userOriginalFilename }}"
                         >
                     </div>
                     <div class="text-center">
-                        {{ include('admin/listing/_action/_delete_file_form.html.twig') }}
+                        {{ include('admin/listing/_action/_remove_file_form.html.twig') }}
                     </div>
                 </div>
             {% endfor %}
@@ -87,11 +82,6 @@
 {% endblock %}
 
 {% block js %}
-    <script src="{{ asset('asset/page/listing/listing-custom-fields.js') }}"></script>
-    <link rel="stylesheet" href="{{ asset('asset/lib/leaflet/leaflet.css') }}">
-    <script src="{{ asset('asset/lib/leaflet/leaflet.js') }}"></script>
-    <link rel="stylesheet" href="{{ asset('asset/lib/leaflet/locate/L.Control.Locate.min.css') }}">
-    <script src="{{ asset('asset/lib/leaflet/locate/L.Control.Locate.min.js') }}"></script>
-
-    <script src="{{ asset('asset/page/listing/listing-edit-map.js') }}"></script>
+    {{ encore_entry_link_tags('admin_listing_edit') }}
+    {{ encore_entry_script_tags('admin_listing_edit') }}
 {% endblock %}

@@ -6,7 +6,7 @@ namespace App\Controller\Admin\Payment;
 
 use App\Controller\Admin\Base\AbstractAdminController;
 use App\Entity\Invoice;
-use App\Service\Invoice\InvoiceService;
+use App\Service\Invoice\AdminInvoiceService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -16,17 +16,16 @@ class InvoiceListController extends AbstractAdminController
     /**
      * @Route("/admin/red5/invoice/invoice-list", name="app_admin_invoice_list", methods={"GET"})
      */
-    public function adminInvoiceList(Request $request, InvoiceService $invoiceService): Response
+    public function invoiceListForAdmin(Request $request, AdminInvoiceService $invoiceService): Response
     {
         $this->denyUnlessAdmin();
 
         $paginationDto = $invoiceService->getInvoiceList((int) $request->get('page', 1));
-
-        /** @var Invoice[] $payments */
-        $payments = $paginationDto->getResults();
+        /** @var Invoice[] $invoices */
+        $invoices = $paginationDto->getResults();
 
         return $this->render('admin/invoice/index.html.twig', [
-            'invoices' => $payments,
+            'invoices' => $invoices,
             'pager' => $paginationDto->getPager(),
         ]);
     }

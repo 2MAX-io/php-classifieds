@@ -31,13 +31,15 @@
 
     <table class="table table-responsive-sm">
         <thead>
-        <tr>
-            <th>{{ 'trans.Email' | trans }}</th>
-            <th>{{ 'trans.Enabled' | trans }}</th>
-            <th class="text-right">
-                <a href="{{ path('app_admin_administrator_new') }}" class="btn btn-primary">{{ 'trans.Add Administrator' | trans }}</a>
-            </th>
-        </tr>
+            <tr>
+                <th>{{ 'trans.Email' | trans }}</th>
+                <th>{{ 'trans.Enabled' | trans }}</th>
+                <th class="text-right">
+                    <a href="{{ path('app_admin_administrator_new') }}" class="btn btn-primary">
+                        {{- 'trans.Add Administrator' | trans -}}
+                    </a>
+                </th>
+            </tr>
         </thead>
         <tbody>
         {% for user in users %}
@@ -47,13 +49,13 @@
                     <div class="text-break">{{ 'trans.Username' | trans }}: {{ user.username }}</div>
                 </td>
                 <td>
-                        <span class="{{ user.enabled | boolGreenRedClass }}">
-                            {{ user.enabled | boolText | trans }}
-                        </span>
+                    <span class="{{ user.enabled | boolGreenRedClass }}">
+                        {{- user.enabled | boolText | trans -}}
+                    </span>
                 </td>
                 <td class="text-right">
                     <a href="{{ path('app_admin_administrator_edit', {'id': user.id}) }}" class="btn btn-primary">
-                        {{ 'trans.Edit' | trans }}
+                        {{- 'trans.Edit' | trans -}}
                     </a>
                 </td>
             </tr>

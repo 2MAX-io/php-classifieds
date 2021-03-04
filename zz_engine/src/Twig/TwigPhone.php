@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace App\Twig;
 
-use App\Service\Setting\SettingsService;
-use libphonenumber\PhoneNumberUtil;
+use App\Service\Setting\SettingsDto;
+use libphonenumber\PhoneNumber;
 use libphonenumber\PhoneNumberFormat;
+use libphonenumber\PhoneNumberUtil;
+use Psr\Log\LoggerInterface;
 use Twig\Extension\RuntimeExtensionInterface;
 
 class TwigPhone implements RuntimeExtensionInterface
@@ -17,22 +19,39 @@ class TwigPhone implements RuntimeExtensionInterface
     private $phoneNumberUtil;
 
     /**
-     * @var SettingsService
+     * @var SettingsDto
      */
-    private $settingsService;
+    private $settingsDto;
 
-    public function __construct(PhoneNumberUtil $phoneNumberUtil, SettingsService $settingsService)
-    {
+    /**
+     * @var LoggerInterface
+     */
+    private $logger;
+
+    public function __construct(
+        PhoneNumberUtil $phoneNumberUtil,
+        SettingsDto $settingsDto,
+        LoggerInterface $logger
+    ) {
         $this->phoneNumberUtil = $phoneNumberUtil;
-        $this->settingsService = $settingsService;
+        $this->settingsDto = $settingsDto;
+        $this->logger = $logger;
     }
 
     public function phone(string $phoneString): string
     {
+        /** @var null|PhoneNumber $phoneNumber */
         $phoneNumber = $this->phoneNumberUtil->parse(
             $phoneString,
-            $this->settingsService->getLanguageTwoLetters()
+            $this->settingsDto->getCountryIso(),
         );
+        if (!$phoneNumber) {
+            $this->logger->error('could not parse phone number', [
+                '$phoneString' => $phoneString,
+            ]);
+
+            return $phoneString;
+        }
 
         return $this->phoneNumberUtil->format($phoneNumber, PhoneNumberFormat::NATIONAL);
     }

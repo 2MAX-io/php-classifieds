@@ -9,8 +9,11 @@ use Symfony\Component\Validator\Constraints\RegexValidator;
 
 class OptionValue extends Regex
 {
+    /** @var string */
     public $message = 'Contains not allowed characters. Allowed characters: plain letters, numbers, minus character, underscore character';
-    public $pattern = '#^[a-zA-Z0-9\-_]*$#';
+
+    /** @var string */
+    public $pattern = '~^[a-zA-Z0-9\-_]*$~';
 
     public function getRequiredOptions(): array
     {

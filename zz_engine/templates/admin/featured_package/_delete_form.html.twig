@@ -1,10 +1,10 @@
 <form
         method="post"
-        action="{{ path('app_admin_featured_package_delete', {'id': featured_package.id}) }}"
-        onsubmit="return confirm('{{ 'trans.Delete featured package' | trans }}: {{ featured_package.name }}, {{ featured_package.adminName }}');"
-        class="d-inline"
+        action="{{ path('app_admin_featured_package_delete', {'id': featuredPackage.id}) }}"
+        data-confirm-message="{{ 'trans.Delete featured package' | trans }}: {{ featuredPackage.name }}, {{ featuredPackage.adminName }}"
+        class="d-inline js__confirm"
 >
 <input type="hidden" name="_method" value="DELETE">
-    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ featured_package.id) }}">
+    <input type="hidden" name="_token" value="{{ csrf_token('csrf_deleteFeaturedPackage' ~ featuredPackage.id) }}">
     <button class="btn btn-danger">{{ 'trans.Delete' | trans }}</button>
 </form>

@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace App\Command\Dev;
 
-use App\Helper\Megabyte;
-use App\Service\Dev\GenerateTestData\DevGenerateTestListings;
+use App\Enum\ConsoleReturnEnum;
+use App\Helper\MegabyteHelper;
+use App\Service\System\Dev\GenerateTestData\DevGenerateTestListings;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -36,14 +37,17 @@ class DevGenerateTestListingsCommand extends Command
         ;
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output): void
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        \ini_set('memory_limit', (string) Megabyte::toByes(1024));
+        \ini_set('memory_limit', (string) MegabyteHelper::toByes(1024));
         $io = new SymfonyStyle($input, $output);
         $requestedCount = (int) $input->getArgument('count');
 
+        $this->devGenerateTestListings->setOutputInterface($output);
         $this->devGenerateTestListings->generate($requestedCount);
 
         $io->success('done');
+
+        return ConsoleReturnEnum::SUCCESS;
     }
 }

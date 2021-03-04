@@ -19,7 +19,7 @@ class InvoiceNumberGeneratorService
         $this->settingsService = $settingsService;
     }
 
-    public function getNextInvoiceNumber(Invoice $invoice): ?string
+    public function getNextInvoiceNumber(Invoice $invoice): string
     {
         $settingsDto = $this->settingsService->getSettingsDtoWithoutCache();
 
@@ -27,6 +27,6 @@ class InvoiceNumberGeneratorService
             return $settingsDto->getInvoiceNumberPrefix().$invoice->getId();
         }
 
-        return $invoice->getId();
+        return (string) $invoice->getId();
     }
 }

@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Security;
 
-use App\Entity\Admin;
+use App\Entity\System\Admin;
 use App\Entity\User;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
@@ -26,11 +26,6 @@ class LoginUserProgrammaticallyService
     private $session;
 
     /**
-     * @var RequestStack
-     */
-    private $requestStack;
-
-    /**
      * @var EventDispatcherInterface
      */
     private $eventDispatcher;
@@ -38,34 +33,32 @@ class LoginUserProgrammaticallyService
     public function __construct(
         TokenStorageInterface $tokenStorage,
         SessionInterface $session,
-        RequestStack $requestStack,
         EventDispatcherInterface $eventDispatcher
     ) {
         $this->tokenStorage = $tokenStorage;
         $this->session = $session;
-        $this->requestStack = $requestStack;
         $this->eventDispatcher = $eventDispatcher;
     }
 
-    public function loginUser(User $user): void
+    public function loginUser(User $user, Request $request): void
     {
         $token = new UsernamePasswordToken($user, null, 'main', $user->getRoles());
 
         $this->tokenStorage->setToken($token);
         $this->session->set('_security_main', \serialize($token));
 
-        $event = new InteractiveLoginEvent($this->requestStack->getMasterRequest(), $token);
+        $event = new InteractiveLoginEvent($request, $token);
         $this->eventDispatcher->dispatch($event);
     }
 
-    public function loginAdmin(Admin $admin): void
+    public function loginAdmin(Admin $admin, Request $request): void
     {
         $token = new UsernamePasswordToken($admin, null, 'admin', $admin->getRoles());
 
         $this->tokenStorage->setToken($token);
         $this->session->set('_security_admin', \serialize($token));
 
-        $event = new InteractiveLoginEvent($this->requestStack->getMasterRequest(), $token);
+        $event = new InteractiveLoginEvent($request, $token);
         $this->eventDispatcher->dispatch($event);
     }
 }

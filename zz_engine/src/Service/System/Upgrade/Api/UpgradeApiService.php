@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace App\Service\System\Upgrade\Api;
 
-use App\Helper\Json;
+use App\Enum\RuntimeCacheEnum;
 use App\Helper\ExceptionHelper;
+use App\Helper\JsonHelper;
 use App\Service\System\Cache\RuntimeCacheService;
 use App\Service\System\License\LicenseService;
-use App\Service\System\Signature\SignatureVerifyNormalSecurity;
+use App\Service\System\Signature\VerifySignature;
 use App\Service\System\Upgrade\Base\UpgradeApi;
 use App\Service\System\Upgrade\Dto\LatestVersionDto;
-use App\System\Cache\RuntimeCacheEnum;
 use App\Version;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Request;
@@ -22,11 +22,6 @@ use Symfony\Component\HttpFoundation\Response;
 class UpgradeApiService
 {
     /**
-     * @var LoggerInterface
-     */
-    private $logger;
-
-    /**
      * @var LicenseService
      */
     private $licenseService;
@@ -36,16 +31,24 @@ class UpgradeApiService
      */
     private $runtimeCache;
 
-    public function __construct(LicenseService $licenseService, RuntimeCacheService $runtimeCache, LoggerInterface $logger)
-    {
-        $this->logger = $logger;
+    /**
+     * @var LoggerInterface
+     */
+    private $logger;
+
+    public function __construct(
+        LicenseService $licenseService,
+        RuntimeCacheService $runtimeCache,
+        LoggerInterface $logger
+    ) {
         $this->licenseService = $licenseService;
         $this->runtimeCache = $runtimeCache;
+        $this->logger = $logger;
     }
 
     public function getLatestVersion(): ?LatestVersionDto
     {
-        return $this->runtimeCache->get(RuntimeCacheEnum::LATEST_VERSION, function() {
+        return $this->runtimeCache->get(RuntimeCacheEnum::LATEST_VERSION, function () {
             return $this->getLatestVersionNoCache();
         });
     }
@@ -59,34 +62,32 @@ class UpgradeApiService
                 RequestOptions::READ_TIMEOUT => 10,
             ]);
             $request = new Request(
-                'GET', UpgradeApi::LATEST_VERSION_URL,
+                'GET',
+                UpgradeApi::LATEST_VERSION_URL,
                 [
                     'x-license' => \base64_encode($this->licenseService->getLicenseText()),
                     'x-license-url' => $this->licenseService->getCurrentUrlOfLicense(),
                 ]
             );
             $response = $client->send($request);
-
-            if ($response->getStatusCode() === Response::HTTP_OK) {
+            if (Response::HTTP_OK === $response->getStatusCode()) {
                 $responseBody = $response->getBody()->getContents();
-                $signatureNormal = $response->getHeader(UpgradeApi::HEADER_SIGNATURE_NORMAL_SECURITY)[0] ?? null;
-
-                if (null === $signatureNormal) {
+                $signature = $response->getHeader(UpgradeApi::HEADER_SIGNATURE)[0] ?? null;
+                if (null === $signature) {
                     $this->logger->error('missing signature', ['$responseBody' => $responseBody]);
 
                     return null;
                 }
 
-                if (!SignatureVerifyNormalSecurity::authenticate($responseBody, $signatureNormal)) {
+                if (!VerifySignature::authenticate($responseBody, $signature)) {
                     $this->logger->error('invalid signature', ['$responseBody' => $responseBody]);
 
                     return null;
                 }
 
-                $responseArr = Json::toArray($responseBody);
-                $versionDto = new LatestVersionDto((int) $responseArr['version'], (string) $responseArr['date']);
+                $responseArr = JsonHelper::toArray($responseBody);
 
-                return $versionDto;
+                return new LatestVersionDto((int) $responseArr['version'], (string) $responseArr['date']);
             }
         } catch (\Throwable $e) {
             $this->logger->error('failed to get current version from server', ExceptionHelper::flatten($e));
@@ -95,6 +96,9 @@ class UpgradeApiService
         return null;
     }
 
+    /**
+     * @return null|array<string,mixed>
+     */
     public function getUpgradeList(): ?array
     {
         try {
@@ -109,28 +113,29 @@ class UpgradeApiService
             ]);
 
             $request = new Request(
-                'POST', UpgradeApi::UPGRADE_LIST_URL,
+                'POST',
+                UpgradeApi::UPGRADE_LIST_URL,
                 [
                     'x-license' => \base64_encode($this->licenseService->getLicenseText()),
                     'x-license-url' => $this->licenseService->getCurrentUrlOfLicense(),
-                ], Json::toString($jsonArray)
+                ],
+                JsonHelper::toString($jsonArray)
             );
             $response = $client->send($request);
-
             $responseBody = $response->getBody()->getContents();
-            $signatureNormal = $response->getHeader(UpgradeApi::HEADER_SIGNATURE_NORMAL_SECURITY)[0] ?? null;
-            if (null === $signatureNormal) {
+            $signature = $response->getHeader(UpgradeApi::HEADER_SIGNATURE)[0] ?? null;
+            if (null === $signature) {
                 $this->logger->error('missing signature', ['$responseBody' => $responseBody]);
 
                 return null;
             }
-            if (!SignatureVerifyNormalSecurity::authenticate($responseBody, $signatureNormal)) {
+            if (!VerifySignature::authenticate($responseBody, $signature)) {
                 $this->logger->error('invalid signature', ['$responseBody' => $responseBody]);
 
                 return null;
             }
 
-            return Json::toArray($responseBody);
+            return JsonHelper::toArray($responseBody);
         } catch (\Throwable $e) {
             $this->logger->error('failed when getting upgrade', ExceptionHelper::flatten($e));
         }

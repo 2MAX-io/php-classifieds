@@ -12,29 +12,26 @@
 
         <h2>{{ 'trans.Listings' | trans }}</h2>
         {{ form_row(form.requireListingAdminActivation) }}
-        {{ form_row(form.wordsToRemoveFromTitle) }}
-        {{ form_row(form.allowedCharactersEnabled) }}
-        {{ form_row(form.allowedCharacters) }}
 
         <h2>{{ 'trans.Pagination' | trans }}</h2>
-        {{ form_row(form.itemsPerPageMax) }}
+        {{ form_row(form.itemsPerPage) }}
 
-        <h2>{{ 'trans.Email' | trans }}</h2>
-        {{ form_row(form.emailFromAddress) }}
-        {{ form_row(form.emailFromName) }}
-        {{ form_row(form.emailReplyTo) }}
+        <h2>{{ 'trans.Allowed characters' | trans }}</h2>
+        {{ form_row(form.allowedCharactersEnabled) }}
+        {{ form_row(form.allowedCharacters) }}
+        {{ form_row(form.wordsToRemoveFromTitle) }}
 
-        <h2>{{ 'trans.Other' | trans }}</h2>
-
-        {{ form_row(form.messageSystemEnabled) }}
-
+        <h2>{{ 'trans.Map' | trans }}</h2>
         {{ form_row(form.mapEnabled) }}
         {{ form_row(form.mapDefaultLatitude) }}
         {{ form_row(form.mapDefaultLongitude) }}
         {{ form_row(form.mapDefaultZoom) }}
         {{ form_row(form.mapDefaultZoomSingleListing) }}
 
-        <button class="btn btn-primary">{{ button_label|default('trans.Save' | trans) }}</button>
+        <h2>{{ 'trans.Other' | trans }}</h2>
+        {{ form_row(form.messageSystemEnabled) }}
+
+        <button class="btn btn-primary">{{ button_label | default('trans.Save' | trans) }}</button>
         {{ form_end(form) }}
     </div>
 {% endblock %}

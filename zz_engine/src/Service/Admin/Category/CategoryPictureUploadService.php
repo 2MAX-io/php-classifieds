@@ -21,10 +21,14 @@ class CategoryPictureUploadService
 
         $movedFile = $uploadedFile->move(
             \dirname($destinationPath),
-            \basename($destinationPath)
+            \basename($destinationPath),
         );
+        $movedFilePath = $movedFile->getRealPath();
+        if (!$movedFilePath) {
+            throw new \RuntimeException("file not found, path: `{$movedFile->getPath()}`, name: `{$movedFile->getFilename()}`");
+        }
 
-        $category->setPicture(Path::makeRelative($movedFile->getRealPath(), FilePath::getProjectDir()));
+        $category->setPicture(Path::makeRelative($movedFilePath, FilePath::getPublicDir()));
     }
 
     private function getDestinationPath(UploadedFile $uploadedFile): string
@@ -32,10 +36,9 @@ class CategoryPictureUploadService
         $extension = $uploadedFile->getClientOriginalExtension();
 
         $return = FilePath::getCategoryPicturePath()
-            . '/' . FileHelper::getFilenameValidCharacters($uploadedFile->getClientOriginalName()) . '.' . $extension;
-        $return = FileHelper::reduceFilenameLength($return, 50);
-        $return = FileHelper::reducePathLength($return, 100);
+            .'/'.FileHelper::getFilenameValidCharacters($uploadedFile->getClientOriginalName()).'.'.$extension;
+        $return = FileHelper::reduceLengthOfFilenameOnly($return, 50);
 
-        return $return;
+        return FileHelper::reduceLengthOfEntirePath($return, 100);
     }
 }

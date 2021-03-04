@@ -11,18 +11,18 @@
             </div>
             <div class="d-md-none">
                 <a href="{{ path('app_category_view_all') }}" class="btn btn-light">
-                    {{ 'trans.All categories' | trans }}
+                    {{- 'trans.All categories' | trans -}}
                 </a>
                 <a href="{{ path('app_last_added') }}" class="btn btn-light">
-                    {{ 'trans.Last added' | trans }}
+                    {{- 'trans.Last added' | trans -}}
                 </a>
             </div>
             <div class="d-none d-md-block">
                 <a href="{{ path('app_category_view_all') }}" class="btn btn-light">
-                    {{ 'trans.View all categories' | trans }}
+                    {{- 'trans.View all categories' | trans -}}
                 </a>
                 <a href="{{ path('app_last_added') }}" class="btn btn-light">
-                    {{ 'trans.Last added' | trans }}
+                    {{- 'trans.Last added' | trans -}}
                 </a>
             </div>
         </div>
@@ -31,35 +31,35 @@
     <!-- cat list -->
     <div class="container mb-0 mb-md-2">
         <div class="row">
-            {% for category in categoryList %}
+            {%- for category in categoryList ~%}
             <div class="col-sm-6 col-lg-3 text-center mb-4">
                 <div class="card bg-light text-white">
-                    <a
-                            href="{{ path('app_category', {'categorySlug': category.slug}) }}"
-                            title="{{ category.name }}"
-                            class="text-white"
+                    <a {{- ' ' -}}
+                            href="{{ path('app_category', {'categorySlug': category.slug}) }}" {{- ' ' -}}
+                            title="{{ category.name }}" {{- ' ' -}}
+                            class="text-white" {{- ' ' -}}
                     >
-                        <img
-                                class="index-category-img"
-                                src="{{ asset(category.picture | default('static/system/blank.png')) }}"
-                                alt=""
+                        <img {{- ' ' -}}
+                                class="index-category-img" {{- ' ' -}}
+                                src="{{ asset(category.picture | default('static/system/blank.png')) }}" {{- ' ' -}}
+                                alt="{{ category.name }}" {{- ' ' -}}
                         >
-                        <div class="card-img-overlay">
-                            <h5 class="card-title index-category-title">{{ category.name }}</h5>
+                        <div class="card-img-overlay"> {{- ' ' -}}
+                            <h5 class="card-title index-category-title">{{ category.name }}</h5> {{- ' ' -}}
                         </div>
                     </a>
                 </div>
             </div>
-            {% else %}
+            {%- else ~%}
                 <div class="alert alert-info w-100">
                     {{ 'trans.No categories found, try again latter' | trans }}
                 </div>
-            {% endfor %}
+            {%- endfor ~%}
         </div>
     </div>
 
     <!-- latest listings -->
-    {% if recommendedListings and latestListings %}
+    {%- if recommendedListings and latestListings ~%}
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
@@ -69,50 +69,42 @@
                         </div>
 
                         <div class="card-body p-0">
-                            {% for listing in recommendedListings %}
-                                <a
-                                        href="{{ path('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}"
-                                        class="link-list-item force-single-line"
-                                >
-                                    {{ listing.title }}
+                            {%- for listing in recommendedListings ~%}
+                                <a href="{{ path('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}" class="link-list-item force-single-line">
+                                    {{- listing.title -}}
                                 </a>
-                            {% endfor %}
+                            {%- endfor ~%}
                         </div>
 
                         <div class="card-footer">
                             <a href="{{ path('app_last_added') }}" class="btn btn-sm btn-dark btn-block mt-auto">
-                                {{ 'trans.View more' | trans }}
+                                {{- 'trans.View more' | trans -}}
                             </a>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6">
-
                     <div class="card last-added-listings mb-4">
                         <div class="card-header">
                             <strong>{{ 'trans.Latest Listings' | trans }}</strong>
                         </div>
 
                         <div class="card-body p-0">
-                            {% for listing in latestListings %}
-                                <a
-                                        href="{{ path('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}"
-                                        class="link-list-item force-single-line"
-                                >
-                                    {{ listing.title }}
+                            {%- for listing in latestListings ~%}
+                                <a href="{{ path('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}" class="link-list-item force-single-line">
+                                    {{- listing.title -}}
                                 </a>
-                            {% endfor %}
+                            {%- endfor ~%}
                         </div>
 
                         <div class="card-footer">
                             <a href="{{ path('app_last_added') }}" class="btn btn-sm btn-dark btn-block mt-auto">
-                                {{ 'trans.View more' | trans }}
+                                {{- 'trans.View more' | trans -}}
                             </a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    {% endif %}
-
+    {%- endif ~%}
 {% endblock body %}

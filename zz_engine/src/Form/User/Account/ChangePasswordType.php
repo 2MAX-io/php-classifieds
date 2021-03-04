@@ -27,22 +27,25 @@ class ChangePasswordType extends AbstractType
             ],
         ]);
 
-        $builder->add(
-            static::FORM_NEW_PASSWORD,
-            RepeatedType::class,
-            [
-                'first_options' => [
-                    'label' => 'trans.New password',
+        $builder->add(static::FORM_NEW_PASSWORD, RepeatedType::class, [
+            'first_options' => [
+                'label' => 'trans.New password',
+                'attr' => [
+                    'autocomplete' => 'new-password',
                 ],
-                'second_options' => [
-                    'label' => 'trans.Repeat new password',
+            ],
+            'second_options' => [
+                'label' => 'trans.Repeat new password',
+                'attr' => [
+                    'autocomplete' => 'new-password',
                 ],
-                'type' => PasswordType::class,
-                'constraints' => [
-                    new NotBlank(),
-                    new Length(['min' => 8, 'max' => 100,]),
-                ],
-            ]
-        );
+            ],
+            'type' => PasswordType::class,
+            'invalid_message' => 'Repeated value does note match',
+            'constraints' => [
+                new NotBlank(),
+                new Length(['min' => 8, 'max' => 100]),
+            ],
+        ]);
     }
 }

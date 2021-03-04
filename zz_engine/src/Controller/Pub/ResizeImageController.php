@@ -7,10 +7,10 @@ namespace App\Controller\Pub;
 use App\Helper\FileHelper;
 use App\Helper\FilePath;
 use App\Helper\IniHelper;
-use App\Helper\Megabyte;
+use App\Secondary\ImageManipulation\ImageManipulationFactory;
+use App\Service\Setting\EnvironmentService;
 use App\Service\System\Image\Dto\ImageDto;
-use App\System\EnvironmentService;
-use App\System\ImageManipulation\ImageManipulationFactory;
+use League\Glide\Responses\ResponseFactoryInterface;
 use League\Glide\Responses\SymfonyResponseFactory;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -50,13 +50,11 @@ class ResizeImageController
         if ($session->isStarted()) {
             $session->save();
         }
-        if (IniHelper::returnBytes(\ini_get('memory_limit')) < Megabyte::toByes(256)) {
-            \ini_set('memory_limit','256M'); // required to handle big images
-        }
+        IniHelper::setMemoryLimitIfLessThanMb(256);
 
         $requestUriWithoutGet = \strtok($request->getRequestUri(), '?');
-        $sourcePath = $path . '/' . $file;
-        $targetPath = Path::canonicalize(FilePath::getProjectDir() . $requestUriWithoutGet);
+        $sourcePath = $path.'/'.$file;
+        $targetPath = Path::canonicalize(FilePath::getPublicDir().$requestUriWithoutGet);
 
         return $this->getImageResponse($request, $type, $sourcePath, $targetPath);
     }
@@ -67,6 +65,7 @@ class ResizeImageController
             $this->logger->debug('source path not image', [
                 'sourcePath' => $sourcePath,
             ]);
+
             throw new NotFoundHttpException();
         }
 
@@ -74,6 +73,7 @@ class ResizeImageController
             $this->logger->debug('target path not image', [
                 'sourcePath' => $sourcePath,
             ]);
+
             throw new NotFoundHttpException();
         }
 
@@ -81,6 +81,7 @@ class ResizeImageController
             $this->logger->debug('target path not inside expected directory', [
                 'sourcePath' => $sourcePath,
             ]);
+
             throw new NotFoundHttpException();
         }
 
@@ -88,14 +89,15 @@ class ResizeImageController
             $this->logger->debug('source path not inside expected directory', [
                 'sourcePath' => $sourcePath,
             ]);
+
             throw new NotFoundHttpException();
         }
 
-        if (!\file_exists(FilePath::getStaticPath() . '/' . $sourcePath)) {
+        if (!\file_exists(FilePath::getStaticPath().'/'.$sourcePath)) {
             if ($this->environmentService->getExternalImageUrlForDevelopment()) {
                 return new RedirectResponse(
                     \rtrim($this->environmentService->getExternalImageUrlForDevelopment(), '/')
-                    . '/' . $request->getRequestUri()
+                    .'/'.$request->getRequestUri()
                 );
             }
             $this->logger->debug('resized image not found for `{sourcePath}`, type: `{$type}`', [
@@ -113,6 +115,7 @@ class ResizeImageController
          */
         $imageDto = new ImageDto();
         $imageDto->setSourcePath(FilePath::getStaticPath().'/'.$sourcePath);
+        $imageDto->updateSize();
         $imageDto->setType($type);
         $imageDto->setImageParams($this->getImageParams($imageDto));
         $imageWorker = ImageManipulationFactory::create(
@@ -130,7 +133,7 @@ class ResizeImageController
         );
 
         $responseFactory = $imageWorker->getResponseFactory();
-        if (!$responseFactory) {
+        if (!$responseFactory instanceof ResponseFactoryInterface) {
             throw new \RuntimeException('could not create response factory');
         }
 
@@ -140,6 +143,9 @@ class ResizeImageController
         );
     }
 
+    /**
+     * @return array<string,int|string>
+     */
     private function getImageParams(ImageDto $imageDto): array
     {
         if (static::TYPE_LIST === $imageDto->getType()) {

@@ -17,12 +17,13 @@ class SerializerHelper
         $prevUnserializeHandler = \ini_set('unserialize_callback_func', __CLASS__.'::handleUnserializeCallback');
         $prevErrorHandler = \set_error_handler(
             static function ($type, $msg, $file, $line, $context = []) use (&$prevErrorHandler) {
-            if (__FILE__ === $file) {
-                throw new \ErrorException($msg, 0x37313bc, $type, $file, $line);
-            }
+                if (__FILE__ === $file) {
+                    throw new \ErrorException($msg, 0x37313bc, $type, $file, $line);
+                }
 
-            return $prevErrorHandler ? $prevErrorHandler($type, $msg, $file, $line, $context) : false;
-        });
+                return $prevErrorHandler ? $prevErrorHandler($type, $msg, $file, $line, $context) : false;
+            }
+        );
 
         try {
             /** @noinspection UnserializeExploitsInspection */
@@ -30,7 +31,9 @@ class SerializerHelper
         } catch (\Throwable $e) {
         }
         \restore_error_handler();
-        \ini_set('unserialize_callback_func', $prevUnserializeHandler);
+        if ($prevUnserializeHandler) {
+            \ini_set('unserialize_callback_func', $prevUnserializeHandler);
+        }
         if ($e) {
             if (!$e instanceof \ErrorException || 0x37313bc !== $e->getCode()) {
                 throw $e;
@@ -41,12 +44,12 @@ class SerializerHelper
     }
 
     /**
-     * @param string|mixed $class
+     * @param mixed|string $class
      *
      * @internal
      */
     public static function handleUnserializeCallback($class): void
     {
-        throw new \UnexpectedValueException('Class not found: ' . $class, 0x37313bc);
+        throw new \UnexpectedValueException('Class not found: '.$class, 0x37313bc);
     }
 }

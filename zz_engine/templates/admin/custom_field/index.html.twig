@@ -9,49 +9,51 @@
             <h1>{{ 'trans.Custom fields' | trans }}</h1>
         </div>
         <div class="col-md-6 text-md-right">
-            <button class="btn btn-success saveOrder mb-1">{{ 'trans.Save order' | trans }}</button>
+            <button class="btn btn-success mb-1 js__saveOrder">{{ 'trans.Save order' | trans }}</button>
 
-            <a href="{{ path('app_admin_custom_field_new') }}" class="btn btn-primary mb-1">{{ 'trans.Add custom field' | trans }}</a>
+            <a href="{{ path('app_admin_custom_field_new') }}" class="btn btn-primary mb-1">
+                {{- 'trans.Add custom field' | trans -}}
+            </a>
         </div>
     </div>
 
     <table class="table table-responsive-sm">
         <thead>
-        <tr>
-            <th style="width: 2rem;"></th>
-            <th style="min-width: 8rem;">{{ 'trans.Name' | trans }}</th>
-            <th style="min-width: 8rem;">{{ 'trans.Type' | trans }}</th>
-            <th>{{ 'trans.Required?' | trans }}</th>
-            <th>{{ 'trans.Searchable?' | trans }}</th>
-            <th>{{ 'trans.Unit' | trans }}</th>
-            <th></th>
-        </tr>
+            <tr>
+                <th class="column-sort-handle"></th>
+                <th class="mw-8-rem">{{ 'trans.Name' | trans }}</th>
+                <th class="mw-8-rem">{{ 'trans.Type' | trans }}</th>
+                <th>{{ 'trans.Required?' | trans }}</th>
+                <th>{{ 'trans.Searchable?' | trans }}</th>
+                <th>{{ 'trans.Unit' | trans }}</th>
+                <th></th>
+            </tr>
         </thead>
-        <tbody class="sortable">
-        {% for custom_field in custom_fields %}
-            <tr data-id="{{ custom_field.id }}">
-                <td><i class="fas fa-arrows-alt sortableHandle"></i></td>
+        <tbody class="sortable js__sortable">
+        {% for customField in customFieldList %}
+            <tr data-id="{{ customField.id }}">
+                <td><i class="fas fa-arrows-alt sortable-handle js__sortableHandle"></i></td>
                 <td>
-                    <div class="text-break">{{ custom_field.name }}</div>
-                    {% if custom_field.nameForAdmin %}
-                        <div class="text-muted text-break">{{ custom_field.nameForAdmin }}</div>
+                    <div class="text-break">{{ customField.name }}</div>
+                    {% if customField.nameForAdmin %}
+                        <div class="text-muted text-break">{{ customField.nameForAdmin }}</div>
                     {% endif %}
                 </td>
-                <td>{{ ('trans.customFieldType.'~custom_field.type) | trans }}</td>
+                <td>{{ ('trans.customFieldType.'~customField.type) | trans }}</td>
                 <td>
-                    <span class="{{ custom_field.required | boolGreenRedClass }}">
-                        {{ custom_field.required | boolText | trans }}
+                    <span class="{{ customField.required | boolGreenRedClass }}">
+                        {{- customField.required | boolText | trans -}}
                     </span>
                 </td>
                 <td>
-                    <span class="{{ custom_field.searchable | boolGreenRedClass }}">
-                        {{ custom_field.searchable | boolText | trans }}
+                    <span class="{{ customField.searchable | boolGreenRedClass }}">
+                        {{- customField.searchable | boolText | trans -}}
                     </span>
                 </td>
-                <td class="text-break">{{ custom_field.unit }}</td>
+                <td class="text-break">{{ customField.unit }}</td>
                 <td>
-                    <a href="{{ path('app_admin_custom_field_edit', {'id': custom_field.id}) }}" class="btn btn-dark">
-                        {{ 'trans.Edit' | trans }}
+                    <a href="{{ path('app_admin_custom_field_edit', {'id': customField.id}) }}" class="btn btn-dark">
+                        {{- 'trans.Edit' | trans -}}
                     </a>
                 </td>
             </tr>
@@ -66,5 +68,6 @@
 {% endblock %}
 
 {% block js %}
-    <script src="{{ asset('asset/page/admin/custom-field.js') }}"></script>
+    {{ encore_entry_link_tags('admin_custom_field_list') }}
+    {{ encore_entry_script_tags('admin_custom_field_list') }}
 {% endblock %}

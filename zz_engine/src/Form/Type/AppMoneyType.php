@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Form\Type;
 
-use App\Service\Setting\SettingsService;
+use App\Service\Setting\SettingsDto;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -12,21 +12,21 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class AppMoneyType extends AbstractType
 {
     /**
-     * @var SettingsService
+     * @var SettingsDto
      */
-    private $settingsService;
+    private $settingsDto;
 
-    public function __construct(SettingsService $settingsService)
+    public function __construct(SettingsDto $settingsDto)
     {
-        $this->settingsService = $settingsService;
+        $this->settingsDto = $settingsDto;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefault('currency', $this->settingsService->getCurrency());
+        $resolver->setDefault('currency', $this->settingsDto->getCurrency());
         $resolver->setDefault('grouping', true);
-        $resolver->setDefault('attr',  [
-            'class' => 'input-money',
+        $resolver->setDefault('attr', [
+            'class' => 'js__inputMoney',
         ]);
     }
 

@@ -8,7 +8,7 @@
     <table class="table table-responsive-sm">
         <thead>
             <tr>
-                <th style="min-width: 8rem;">{{ 'trans.Date' | trans }}</th>
+                <th class="mw-8-rem">{{ 'trans.Date' | trans }}</th>
                 <th>{{ 'trans.Amount' | trans }}</th>
                 <th>{{ 'trans.Payment gateway - status' | trans }}</th>
                 <th>{{ 'trans.Paid?' | trans }}</th>
@@ -20,7 +20,7 @@
         <tbody>
         {% for payment in payments %}
             <tr>
-                <td>{{ payment.datetime ? payment.datetime|date(dateFormatYmdHis) : '' }}</td>
+                <td>{{ payment.datetime ? payment.datetime | date(dateFormatYmdHis) : '' }}</td>
                 <td>{{ payment.amount | moneyPrecise }}</td>
                 <td>{{ payment.gatewayStatus }}</td>
                 <td>
@@ -31,7 +31,9 @@
                 </td>
                 <td>{{ payment.gatewayTransactionId }}</td>
                 <td>
-                    <a href="{{ path('app_admin_payment_show', {'id': payment.id}) }}" class="btn btn-secondary">{{ 'trans.details' | trans }}</a>
+                    <a href="{{ path('app_admin_payment_show', {'id': payment.id}) }}" class="btn btn-secondary">
+                        {{- 'trans.details' | trans -}}
+                    </a>
                 </td>
             </tr>
         {% else %}
@@ -43,5 +45,4 @@
     </table>
 
     {% include 'base/_pagination.html.twig' %}
-
 {% endblock %}

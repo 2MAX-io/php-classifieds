@@ -7,9 +7,10 @@ namespace App\Controller\Admin\User;
 use App\Controller\Admin\Base\AbstractAdminController;
 use App\Entity\User;
 use App\Form\Admin\UserChangeBalanceType;
-use App\Helper\Integer;
+use App\Helper\IntegerHelper;
 use App\Service\Money\UserBalanceHistoryService;
 use App\Service\Money\UserBalanceService;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -18,9 +19,19 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class UserChangeBalanceController extends AbstractAdminController
 {
     /**
+     * @var EntityManagerInterface
+     */
+    private $em;
+
+    public function __construct(EntityManagerInterface $em)
+    {
+        $this->em = $em;
+    }
+
+    /**
      * @Route("/admin/red5/user/change-balance/{id}", name="app_admin_user_change_balance")
      */
-    public function userChangeBalance(
+    public function changeBalanceOfUser(
         Request $request,
         User $user,
         UserBalanceService $userBalanceService,
@@ -30,13 +41,12 @@ class UserChangeBalanceController extends AbstractAdminController
         $this->denyUnlessAdmin();
 
         $form = $this->createForm(UserChangeBalanceType::class, []);
-
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $previousBalance = $userBalanceService->getCurrentBalance($user);
             $userBalanceChange = $userBalanceService->forceSetBalance(
-                Integer::toInteger($form->get(UserChangeBalanceType::NEW_BALANCE)->getData() * 100),
-                $user
+                IntegerHelper::toInteger($form->get(UserChangeBalanceType::NEW_BALANCE)->getData() * 100),
+                $user,
             );
 
             if ($form->get(UserChangeBalanceType::CHANGE_REASON)->getData()) {
@@ -50,21 +60,19 @@ class UserChangeBalanceController extends AbstractAdminController
                         ]
                     )
                 );
-            } else{
+            } else {
                 $userBalanceChange->setDescription(
                     $trans->trans(
                         'trans.Balance change by administrator to: %newBalance% from previous: %previousBalance%',
                         [
                             '%newBalance%' => $userBalanceChange->getBalanceFinal() / 100,
                             '%previousBalance%' => $previousBalance / 100,
-                            '%reason%' => $form->get(UserChangeBalanceType::CHANGE_REASON)->getData(),
                         ]
                     )
                 );
             }
 
-            $em = $this->getDoctrine()->getManager();
-            $em->flush();
+            $this->em->flush();
 
             return $this->redirectToRoute('app_admin_user_change_balance', ['id' => $user->getId()]);
         }

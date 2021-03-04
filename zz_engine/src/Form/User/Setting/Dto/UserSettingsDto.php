@@ -9,13 +9,13 @@ use App\Entity\User;
 class UserSettingsDto
 {
     /**
-     * @var string|null
+     * @var null|string
      */
     public $displayUsername;
 
     public static function fromUser(User $user): self
     {
-        $userSettingsDto = new static();
+        $userSettingsDto = new self();
         $userSettingsDto->setDisplayUsername($user->getDisplayUsername());
 
         return $userSettingsDto;

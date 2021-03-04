@@ -1,10 +1,10 @@
 <form
         method="post"
         action="{{ path('app_user_feature_listing_as_demo', {'id': listing.id}) }}"
-        onsubmit="return confirm('{{ 'trans.Feature as a demonstration for 30 minutes: %listing%?' | trans({'%listing%': listing.title}) }}');"
-        class="d-inline"
+        data-confirm-message="{{ 'trans.Feature as a demonstration for 30 minutes: %listing%?' | trans({'%listing%': listing.title}) }}"
+        class="d-inline js__confirm"
 >
-<input type="hidden" name="_method" value="PATCH">
-    <input type="hidden" name="_token" value="{{ csrf_token('featureAsDemo' ~ listing.id) }}">
+    <input type="hidden" name="_method" value="PATCH">
+    <input type="hidden" name="_token" value="{{ csrf_token('csrf_featureAsDemo' ~ listing.id) }}">
     <button class="btn btn-success mb-2">{{ 'trans.Feature as a demonstration for 30 minutes' | trans }}</button>
 </form>

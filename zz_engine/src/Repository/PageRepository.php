@@ -6,13 +6,11 @@ namespace App\Repository;
 
 use App\Entity\Page;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method Page|null find($id, $lockMode = null, $lockVersion = null)
- * @method Page|null findOneBy(array $criteria, array $orderBy = null)
- * @method Page[]    findAll()
- * @method Page[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @extends \Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository<Page>
  */
 class PageRepository extends ServiceEntityRepository
 {
@@ -28,7 +26,7 @@ class PageRepository extends ServiceEntityRepository
     {
         $qb = $this->createQueryBuilder('page');
         $qb->andWhere($qb->expr()->eq('page.enabled', 1));
-        $qb->orderBy('page.title', 'ASC');
+        $qb->orderBy('page.title', Criteria::ASC);
 
         return $qb->getQuery()->getResult();
     }

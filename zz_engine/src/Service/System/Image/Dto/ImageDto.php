@@ -17,17 +17,17 @@ class ImageDto
     private $type;
 
     /**
-     * @var int|null
+     * @var null|int
      */
     private $width;
 
     /**
-     * @var int|null
+     * @var null|int
      */
     private $height;
 
     /**
-     * @var array
+     * @var array<string,int|string>
      */
     private $imageParams = [];
 
@@ -80,11 +80,17 @@ class ImageDto
         $this->height = $height;
     }
 
+    /**
+     * @return array<string,int|string>
+     */
     public function getImageParams(): array
     {
         return $this->imageParams;
     }
 
+    /**
+     * @param array<string,int|string> $imageParams
+     */
     public function setImageParams(array $imageParams): void
     {
         $this->imageParams = $imageParams;

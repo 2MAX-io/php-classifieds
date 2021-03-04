@@ -27,7 +27,7 @@ class TwigForm implements RuntimeExtensionInterface
         $this->twig = $twig;
     }
 
-    public function optionAttr(string $name, string $value): string
+    public function setOptionSelectedAttr(string $name, string $value): string
     {
         /** @var Request $request */
         $request = $this->requestStack->getMasterRequest();
@@ -40,7 +40,7 @@ class TwigForm implements RuntimeExtensionInterface
         $escapedValue = \twig_escape_filter($this->twig, $value);
 
         return <<<END
-value="$escapedValue" $selected 
+value="{$escapedValue}" {$selected} 
 END;
     }
 }

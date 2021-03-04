@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Service\Listing\MapWithListings\Dto;
 
 use App\Entity\Listing;
+use App\Enum\ParamEnum;
 
 class ListingOnMapDto implements \JsonSerializable
 {
@@ -35,7 +36,7 @@ class ListingOnMapDto implements \JsonSerializable
 
     public static function fromListing(Listing $listing): self
     {
-        $listingOnMapDto = new static();
+        $listingOnMapDto = new self();
         $listingOnMapDto->setListingId($listing->getId());
         $listingOnMapDto->setListingSlug($listing->getSlug());
         $listingOnMapDto->setListingTitle($listing->getTitle());
@@ -45,14 +46,17 @@ class ListingOnMapDto implements \JsonSerializable
         return $listingOnMapDto;
     }
 
+    /**
+     * @return array<string,float|int|string>
+     */
     public function jsonSerialize(): array
     {
         return [
-            'listingId' => $this->getListingId(),
+            ParamEnum::LISTING_ID => $this->getListingId(),
             'listingSlug' => $this->getListingSlug(),
             'listingTitle' => $this->getListingTitle(),
-            'latitude' => $this->getLatitude(),
-            'longitude' => $this->getLongitude(),
+            ParamEnum::LATITUDE => $this->getLatitude(),
+            ParamEnum::LONGITUDE => $this->getLongitude(),
         ];
     }
 

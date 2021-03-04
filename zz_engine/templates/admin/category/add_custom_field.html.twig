@@ -7,10 +7,18 @@
     <div class="row mb-2">
         <div class="col-md-6">
             <h1>{{ 'trans.Add custom field' | trans }}</h1>
-            <h5 class="text-break">{{ 'trans.for category' | trans }}: {{ customFieldJoinCategory.category.parent.name }} ⇾ {{ customFieldJoinCategory.category.name }}</h5>
+            <h5 class="text-break">
+                {{- 'trans.for category' | trans -}}
+                {{- ': ' -}}
+                {{- customFieldForCategory.category.parent.name -}}
+                {{- ' ⇾ ' -}}
+                {{- customFieldForCategory.category.name -}}
+            </h5>
         </div>
         <div class="col-md-6 text-md-right">
-            <a href="{{ path('app_admin_category_edit', {'id':customFieldJoinCategory.category.id}) }}">{{ 'trans.back to list' | trans }}</a>
+            <a href="{{ path('app_admin_category_edit', {'id': customFieldForCategory.category.id}) }}">
+                {{- 'trans.back to list' | trans -}}
+            </a>
         </div>
     </div>
 
@@ -22,17 +30,16 @@
         </div>
         <div class="col-md-7">
             <a
-                    href="{{ path('app_admin_custom_field_new', {'categoryId': customFieldJoinCategory.category.id}) }}"
+                    href="{{ path('app_admin_custom_field_new', {'categoryId': customFieldForCategory.category.id}) }}"
                     class="btn btn-primary col-checkbox-pull-down"
             >
-                {{ 'trans.Add missing custom field' | trans }}
+                {{- 'trans.Add missing custom field' | trans -}}
             </a>
         </div>
     </div>
 
     {{ form_widget(form) }}
-    <button class="btn btn-primary">{{ button_label|default('trans.Save') | trans }}</button>
+    <button class="btn btn-primary">{{ button_label | default('trans.Save') | trans }}</button>
     {{ form_end(form) }}
-
 </div>
 {% endblock %}

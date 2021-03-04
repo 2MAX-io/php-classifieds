@@ -4,9 +4,8 @@
 
 {% block body %}
     <div class="container mt-3">
-
         <div class="float-right">
-            <a href="{{ path('app_admin_page_index') }}">{{ 'trans.back to list' | trans }}</a>
+            <a href="{{ path('app_admin_page_list') }}">{{ 'trans.back to list' | trans }}</a>
 
             <a href="{{ path('app_page', {'slug': page.slug}) }}" class="btn btn-info">{{ 'trans.Preview' | trans }}</a>
 
@@ -17,4 +16,9 @@
 
         {{ include('admin/page/_form.html.twig', {'button_label': 'trans.Update'}) }}
     </div>
+{% endblock %}
+
+{% block js %}
+    {{ encore_entry_link_tags('admin_page_edit') }}
+    {{ encore_entry_script_tags('admin_page_edit') }}
 {% endblock %}

@@ -9,16 +9,23 @@ use App\Entity\ListingFile;
 use App\Helper\DateHelper;
 use App\Helper\FileHelper;
 use App\Helper\FilePath;
+use App\Helper\JsonHelper;
 use App\Helper\ListingFileHelper;
-use App\Helper\Random;
-use App\Service\Event\FileModificationEventService;
+use App\Helper\RandomHelper;
+use App\Service\Listing\Save\Dto\ListingFileUploadDto;
+use App\Service\Listing\Save\Dto\ListingSaveDto;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Asset\Packages;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\Request;
 use Webmozart\PathUtil\Path;
 
 class ListingFileUploadService
 {
     public const MAX_FILE_NAME_LENGTH = 70;
+    public const FILEUPLOADER_FIELD_NAME_PREFIX = 'fileuploader-list-';
+    public const UPLOADED_FILES_FIELD_NAME = 'files';
+    public const FILEUPLOADER_FIELD_NAME = self::FILEUPLOADER_FIELD_NAME_PREFIX.self::UPLOADED_FILES_FIELD_NAME;
 
     /**
      * @var EntityManagerInterface
@@ -26,30 +33,74 @@ class ListingFileUploadService
     private $em;
 
     /**
-     * @var FileModificationEventService
+     * @var OnListingFileModificationService
      */
-    private $fileModificationEventService;
+    private $onListingFileModificationService;
 
-    public function __construct(EntityManagerInterface $em, FileModificationEventService $fileModificationEventService)
-    {
+    /**
+     * @var Packages
+     */
+    private $packages;
+
+    public function __construct(
+        OnListingFileModificationService $onListingFileModificationService,
+        Packages $packages,
+        EntityManagerInterface $em
+    ) {
         $this->em = $em;
-        $this->fileModificationEventService = $fileModificationEventService;
+        $this->onListingFileModificationService = $onListingFileModificationService;
+        $this->packages = $packages;
     }
 
-    public function processListingFiles(Listing $listing, array $fileUploaderList): void
+    /**
+     * @return array<array-key, mixed>
+     */
+    public function getListingFilesForFrontend(ListingSaveDto $listingSaveDto): array
     {
-        $fileIdToSortIndexMap = [];
-        foreach ($fileUploaderList as $fileUploaderListElement) {
-            if (isset($fileUploaderListElement['data']['listingFileId'])) {
-                $listingId = (int) $fileUploaderListElement['data']['listingFileId'];
-                $fileIdToSortIndexMap[$listingId] = (int) $fileUploaderListElement['index'];
+        $files = $listingSaveDto->getUploadedFilesFromRequest();
+        if (!empty($files)) {
+            return \array_map(function ($file): array {
+                if (isset($file['data']['tmpFilePath'])) {
+                    $file['file'] = $this->packages->getUrl($file['data']['tmpFilePath']);
+                }
+
+                return $file;
+            }, $files);
+        }
+
+        $returnFiles = [];
+        foreach ($listingSaveDto->getListing()->getListingFiles() as $listingFile) {
+            $returnFiles[] = [
+                'name' => $listingFile->getUserOriginalFilename() ?? $listingFile->getFilename(),
+                'type' => $listingFile->getMimeType(),
+                'size' => $listingFile->getSizeBytes(),
+                'file' => $this->packages->getUrl($listingFile->getPathInListSize()),
+                'data' => [
+                    'listingFileId' => $listingFile->getId(),
+                    'filePath' => $this->packages->getUrl($listingFile->getPath()),
+                ],
+            ];
+        }
+
+        return $returnFiles;
+    }
+
+    public function saveUploadedFiles(ListingSaveDto $listingSaveDto): void
+    {
+        $listing = $listingSaveDto->getListing();
+        $fileIdToSortPositionMap = [];
+        foreach ($listingSaveDto->getUploadedFilesFromRequest() as $uploadedFileFromRequest) {
+            if (isset($uploadedFileFromRequest['data']['listingFileId'])) {
+                $listingId = (int) $uploadedFileFromRequest['data']['listingFileId'];
+                $fileIdToSortPositionMap[$listingId] = (int) $uploadedFileFromRequest['index'];
+
                 continue;
             }
-            if (!isset($fileUploaderListElement['data']['tmpFilePath'])) {
+            if (!isset($uploadedFileFromRequest['data']['tmpFilePath'])) {
                 continue;
             }
 
-            $fileUploadDto = ListingFileUploadDto::fromFileUploaderListElement($fileUploaderListElement);
+            $fileUploadDto = ListingFileUploadDto::fromUploadedFileFromRequest($uploadedFileFromRequest);
             if (!\file_exists($fileUploadDto->getSourceFilePath())) {
                 continue;
             }
@@ -59,15 +110,30 @@ class ListingFileUploadService
             FileHelper::throwExceptionIfPathOutsideDir($destinationPath, FilePath::getListingFilePath());
             FileHelper::throwExceptionIfUnsafeFilename($destinationPath);
             $newFile = $tmpFile->move(\dirname($destinationPath), \basename($destinationPath));
+            $newFilePath = $newFile->getRealPath();
+            if (!$newFilePath) {
+                throw new \RuntimeException("file not found, path: `{$newFile->getPath()}`, name: `{$newFile->getFilename()}`");
+            }
+
+            $imageWidth = null;
+            $imageHeight = null;
+            if (FileHelper::isImage($destinationPath)) {
+                $imageSizeInfo = \getimagesize($destinationPath);
+                if ($imageSizeInfo) {
+                    [$imageWidth, $imageHeight] = $imageSizeInfo;
+                }
+            }
 
             $listingFile = new ListingFile();
-            $listingFile->setPath(Path::makeRelative($newFile->getRealPath(), FilePath::getPublicDir()));
+            $listingFile->setPath(Path::makeRelative($newFilePath, FilePath::getPublicDir()));
             $listingFile->setFilename(\basename($listingFile->getPath()));
-            $listingFile->setMimeType(\mime_content_type($listingFile->getPath()));
-            $listingFile->setSizeBytes(\filesize($listingFile->getPath()));
-            $listingFile->setFileHash(\hash_file('sha256', $listingFile->getPath()));
-            $listingFile->setUploadDate(DateHelper::create());
             $listingFile->setUserOriginalFilename(\mb_substr($fileUploadDto->getOriginalFilename(), 0, 255));
+            $listingFile->setMimeType(\mime_content_type($listingFile->getPath()) ?: '');
+            $listingFile->setSizeBytes(\filesize($listingFile->getPath()) ?: 0);
+            $listingFile->setFileHash(\hash_file('sha256', $listingFile->getPath()) ?: '');
+            $listingFile->setImageWidth($imageWidth);
+            $listingFile->setImageHeight($imageHeight);
+            $listingFile->setUploadDate(DateHelper::create());
             $listingFile->setSort($fileUploadDto->getSort());
             $this->em->persist($listingFile);
 
@@ -75,45 +141,56 @@ class ListingFileUploadService
         }
 
         foreach ($listing->getListingFiles() as $listingFile) {
-            if (!isset($fileIdToSortIndexMap[$listingFile->getId()])) {
+            $sortPositionFound = isset($fileIdToSortPositionMap[$listingFile->getId()]);
+            if (!$sortPositionFound) {
                 continue;
             }
-            $listingFile->setSort($fileIdToSortIndexMap[$listingFile->getId()]);
+            $listingFile->setSort($fileIdToSortPositionMap[$listingFile->getId()]);
             $this->em->persist($listingFile);
         }
 
-        $this->fileModificationEventService->updateListingMainImage($listing);
+        $this->onListingFileModificationService->updateListingMainImage($listing);
+    }
+
+    /**
+     * @return array<string,array|int|string>
+     */
+    public function getUploadedFilesFromRequest(Request $request): array
+    {
+        return JsonHelper::toArrayFromRequestKey($request, static::FILEUPLOADER_FIELD_NAME);
     }
 
     private function getDestinationPath(Listing $listing, ListingFileUploadDto $fileUploadDto): string
     {
         $destinationPath = ListingFileHelper::getDestinationDirectory($listing)
-            . '/'
-            . \basename($this->getDestinationFileName($fileUploadDto));
-
+            .'/'
+            .\basename($this->getDestinationFileName($fileUploadDto));
 
         FileHelper::throwExceptionIfPathOutsideDir($destinationPath, FilePath::getListingFilePath());
+        FileHelper::throwExceptionIfUnsafeFilename($destinationPath);
         $destinationPath = Path::canonicalize($destinationPath);
-        $destinationPath = FileHelper::reduceFilenameLength($destinationPath, self::MAX_FILE_NAME_LENGTH);
-        $destinationPath = FileHelper::reducePathLength($destinationPath);
+        $destinationPath = FileHelper::reduceLengthOfFilenameOnly($destinationPath, self::MAX_FILE_NAME_LENGTH);
 
-        return $destinationPath;
+        return FileHelper::reduceLengthOfEntirePath($destinationPath);
     }
 
     private function getDestinationFileName(ListingFileUploadDto $fileUploadDto): string
     {
         $filenameValidCharacters = FileHelper::getFilenameValidCharacters($fileUploadDto->getOriginalFilename());
-        $extensionSuffix = '.' . \pathinfo($fileUploadDto->getOriginalFilename(), \PATHINFO_EXTENSION);
-        $extensionSuffixLength = \strlen($extensionSuffix);
-        $fileNameSuffix = '_' . Random::string(10);
+        $fileExtension = '.'.\pathinfo($fileUploadDto->getOriginalFilename(), \PATHINFO_EXTENSION);
+        $fileExtensionLength = \strlen($fileExtension);
+        $fileNameSuffix = '_'.RandomHelper::string(10);
         $fileNameSuffixLength = \strlen($fileNameSuffix);
         $fileNameWithReducedLength = \substr(
             $filenameValidCharacters,
             0,
-            static::MAX_FILE_NAME_LENGTH - $fileNameSuffixLength - $extensionSuffixLength
+            static::MAX_FILE_NAME_LENGTH - $fileNameSuffixLength - $fileExtensionLength
         );
         $fileNameWithReducedLength = \trim($fileNameWithReducedLength, '_');
 
-        return \basename($fileNameWithReducedLength . $fileNameSuffix . $extensionSuffix);
+        $destinationFilename = \basename($fileNameWithReducedLength.$fileNameSuffix.$fileExtension);
+        FileHelper::throwExceptionIfUnsafeFilename($destinationFilename);
+
+        return $destinationFilename;
     }
 }

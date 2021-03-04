@@ -4,15 +4,11 @@
 
 {% block body %}
     <div class="container-fluid px-0 mt-3 mt-sm-4">
-        <div class="map-with-listings js__map-with-listings"></div>
+        <div class="map-with-listings js__mapWithListings"></div>
     </div>
 {% endblock body %}
 
 {% block js %}
-    <link rel="stylesheet" href="{{ asset('asset/lib/leaflet/leaflet.css') }}">
-    <script src="{{ asset('asset/lib/leaflet/leaflet.js') }}"></script>
-    <link rel="stylesheet" href="{{ asset('asset/lib/leaflet/locate/L.Control.Locate.min.css') }}">
-    <script src="{{ asset('asset/lib/leaflet/locate/L.Control.Locate.min.js') }}"></script>
-
-    <script src="{{ asset('asset/page/map_with_listings/map-with-listings.js') }}"></script>
+    {{ encore_entry_link_tags('map_with_listings') }}
+    {{ encore_entry_script_tags('map_with_listings') }}
 {% endblock %}

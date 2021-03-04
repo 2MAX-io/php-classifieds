@@ -60,6 +60,11 @@ class Page
         return $this->title;
     }
 
+    public function getTitleNotNull(): string
+    {
+        return $this->title;
+    }
+
     public function setTitle(?string $title): self
     {
         $this->title = $title;
@@ -92,6 +97,11 @@ class Page
     }
 
     public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function getSlugNotNull(): string
     {
         return $this->slug;
     }

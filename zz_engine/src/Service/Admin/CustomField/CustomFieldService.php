@@ -6,31 +6,41 @@ namespace App\Service\Admin\CustomField;
 
 use App\Entity\CustomField;
 use App\Entity\ListingCustomFieldValue;
-use App\Service\System\Sort\SortService;
+use App\Enum\SortConfig;
+use App\Repository\CustomFieldRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
 class CustomFieldService
 {
     /**
+     * @var CustomFieldRepository
+     */
+    private $customFieldRepository;
+
+    /**
      * @var EntityManagerInterface
      */
     private $em;
 
-    public function __construct(EntityManagerInterface $em)
+    public function __construct(CustomFieldRepository $customFieldRepository, EntityManagerInterface $em)
     {
+        $this->customFieldRepository = $customFieldRepository;
         $this->em = $em;
     }
 
+    /**
+     * @param int[] $orderedCustomFieldIds
+     */
     public function saveOrder(array $orderedCustomFieldIds): void
     {
-        $customFields = $this->em->getRepository(CustomField::class)->getFromIds($orderedCustomFieldIds);
+        $customFields = $this->customFieldRepository->getFromIds($orderedCustomFieldIds);
 
-        $sort = SortService::START_REORDER_FROM;
+        $sort = SortConfig::START_REORDER_FROM;
         foreach ($orderedCustomFieldIds as $id) {
             $customField = $customFields[$id];
             $customField->setSort($sort);
             $this->em->persist($customField);
-            $sort++;
+            ++$sort;
         }
     }
 
@@ -38,13 +48,15 @@ class CustomFieldService
     {
         $pdo = $this->em->getConnection();
         $stmt = $pdo->prepare('SET @count = :count');
-        $stmt->execute([':count' => SortService::START_REORDER_FROM]);
+        $stmt->execute([':count' => SortConfig::START_REORDER_FROM]);
         $pdo->executeQuery('UPDATE custom_field SET sort = @count:= @count + 1 WHERE 1 ORDER BY sort ASC;');
     }
 
     public function deleteValueFromListings(CustomField $customField): void
     {
-        $qb = $this->em->getRepository(ListingCustomFieldValue::class)->createQueryBuilder('listingCustomFieldValue');
+        $qb = $this->em->createQueryBuilder();
+        $qb->select('listingCustomFieldValue');
+        $qb->from(ListingCustomFieldValue::class, 'listingCustomFieldValue');
         $qb->delete(ListingCustomFieldValue::class, 'listingCustomFieldValue');
 
         $qb->andWhere($qb->expr()->eq('listingCustomFieldValue.customField', ':customField'));

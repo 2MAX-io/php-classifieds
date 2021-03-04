@@ -34,18 +34,21 @@ class AdminCategorySaveType extends AbstractType
                 new NotBlank(),
             ],
         ]);
-        $builder->add(
-            self::SLUG, TextType::class, [
-            'label' => 'trans.Slug',
-            'constraints' => [
-                new NotBlank(),
-                new Slug(),
-                new HasLetterNumber(),
-            ],
-        ])
-        ->addEventListener(FormEvents::PRE_SUBMIT, static function(FormEvent $formEvent): void {
+        $slug = $builder->add(
+            self::SLUG,
+            TextType::class,
+            [
+                'label' => 'trans.Slug',
+                'constraints' => [
+                    new NotBlank(),
+                    new Slug(),
+                    new HasLetterNumber(),
+                ],
+            ]
+        );
+        $slug->addEventListener(FormEvents::PRE_SUBMIT, static function (FormEvent $formEvent): void {
             $data = $formEvent->getData();
-            $data[self::SLUG] = SlugHelper::softSlug($data[self::SLUG]);
+            $data[self::SLUG] = SlugHelper::lowercaseWithoutSpaces($data[self::SLUG]);
 
             $formEvent->setData($data);
         });

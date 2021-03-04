@@ -8,20 +8,23 @@
     {# @var parentCategory \App\Entity\Category #}
     <li class="nested-sortable-group" data-id="{{ parentCategory.id }}">
         <div class="nested-sortable-item">
-            <i class="fas fa-arrows-alt sortableHandle"></i>
+            <i class="fas fa-arrows-alt sortable-handle js__sortableHandle"></i>
             {{ parentCategory.name }}
             <div class="float-md-right ml-md-5 d-md-inline-block">
                 <a href="{{ path('app_admin_category_edit', {'id': parentCategory.id}) }}" class="btn btn-dark mb-1">
                     {{- 'trans.Edit' | trans -}}
                 </a>
-                <a href="{{ path('app_admin_category_new', {'parentCategory': parentCategory.id}) }}" class="btn btn-success mb-1">
+                <a
+                        href="{{ path('app_admin_category_new', {'parentCategory': parentCategory.id}) }}"
+                        class="btn btn-success mb-1"
+                >
                     {{- 'trans.Add subcategory' | trans -}}
                 </a>
             </div>
         </div>
 
         {% for category in parentCategory.children  %}
-            <ul class="nested-sortable"  data-sortable-group="parent_{{ parentCategory.id }}">
+            <ul class="js__nestedSortable" data-sortable-group="parent_{{ parentCategory.id }}">
                 {{- macros.categoryLevel(category) -}}
             </ul>
         {% endfor %}
@@ -35,28 +38,34 @@
                 <h1>{{ 'trans.Categories' | trans }}</h1>
             </div>
             <div class="col-md-6 text-md-right">
-                <a href="{{ path('app_admin_category_new') }}" class="btn btn-primary">{{ 'trans.Add category' | trans }}</a>
+                <a href="{{ path('app_admin_category_new') }}" class="btn btn-primary">
+                    {{- 'trans.Add category' | trans -}}
+                </a>
             </div>
         </div>
 
         {% if categoryList %}
-            <button class="btn btn-primary w-100 mb-2 saveOrder">{{ 'trans.Save order of categories' | trans }}</button>
+            <button class="btn btn-primary w-100 mb-2 js__saveOrder">
+                {{- 'trans.Save order of categories' | trans -}}
+            </button>
 
-            <ul class="nested-sortable mb-2 pl-0" data-sortable-group="root">
+            <ul class="js__nestedSortable mb-2 pl-0" data-sortable-group="root">
                 {# @var category1 \App\Entity\Category #}
                 {%- for category in categoryList -%}
                     {{ macros.categoryLevel(category) }}
                 {%- endfor -%}
             </ul>
 
-            <button class="btn btn-primary w-100 mb-2 saveOrder">{{ 'trans.Save order of categories' | trans }}</button>
+            <button class="btn btn-primary w-100 mb-2 js__saveOrder">
+                {{- 'trans.Save order of categories' | trans -}}
+            </button>
         {% else %}
             <div class="alert alert-info w-100">{{ 'trans.no records found' | trans }}</div>
         {% endif %}
     </div>
-
 {% endblock %}
 
 {% block js %}
-    <script src="{{ asset('asset/page/admin/category/category-list.js') }}"></script>
+    {{ encore_entry_link_tags('admin_category_list') }}
+    {{ encore_entry_script_tags('admin_category_list') }}
 {% endblock %}

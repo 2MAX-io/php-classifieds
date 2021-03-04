@@ -7,8 +7,14 @@
 {% block body %}
     <div class="container mt-3">
         <div>
-            <h3>{{ 'trans.Edit listing' | trans }}:
-                <a target="_blank" href="{{ path('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}" class="text-break">
+            <h3>
+                {{- 'trans.Edit listing' | trans -}}
+                {{- ': ' -}}
+                <a
+                        target="_blank"
+                        href="{{ path('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}"
+                        class="text-break"
+                >
                     {{- listing.title -}}
                 </a>
             </h3>
@@ -23,10 +29,10 @@
                 <span class="{{ getListingStatusClass(listing) }}">{{ getListingStatus(listing) }}</span>
 
                 <a
-                        href="{{ path('app_admin_police_log', {'id': listing.id}) }}"
+                        href="{{ path('app_admin_police_log_listing', {'id': listing.id}) }}"
                         class="btn btn-info mb-1"
                 >
-                    {{ 'trans.Police log' | trans }}
+                    {{- 'trans.Police log' | trans -}}
                 </a>
 
                 <a
@@ -34,19 +40,19 @@
                         target="_blank"
                         class="btn btn-dark mb-1"
                 >
-                    {{ 'trans.User' | trans }}
+                    {{- 'trans.User' | trans -}}
                 </a>
 
-                {{ include('admin/listing/_action/_raise_form.html.twig') }}
+                {{ include('admin/listing/_action/_pull_up_form.html.twig') }}
                 {{ include('admin/listing/_action/_feature_for_week.html.twig') }}
-                {{ include('admin/listing/_action/_delete_form.html.twig') }}
+                {{ include('admin/listing/_action/_remove_form.html.twig') }}
             </div>
         </div>
 
         {{ form_start(form) }}
         {{ form_widget(form) }}
 
-        <button class="btn btn-primary">{{ button_label|default('trans.Save' | trans) }}</button>
+        <button class="btn btn-primary">{{ button_label | default('trans.Save' | trans) }}</button>
         {{ form_end(form) }}
 
         <div class="row mt-4">
@@ -56,5 +62,6 @@
 {% endblock %}
 
 {% block js %}
-    <script src="{{ asset('asset/page/admin/listing/edit-advanced.js') }}"></script>
+    {{ encore_entry_link_tags('admin_listing_edit_advanced') }}
+    {{ encore_entry_script_tags('admin_listing_edit_advanced') }}
 {% endblock %}

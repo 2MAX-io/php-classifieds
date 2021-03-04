@@ -37,7 +37,7 @@
         {{ form_row(form.invoiceGenerationStrategy) }}
         {{ form_row(form.invoiceNumberPrefix) }}
 
-        <button class="btn btn-primary">{{ button_label|default('trans.Save' | trans) }}</button>
+        <button class="btn btn-primary">{{ button_label | default('trans.Save' | trans) }}</button>
         {{ form_end(form) }}
     </div>
 {% endblock %}

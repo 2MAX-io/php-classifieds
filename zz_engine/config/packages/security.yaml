@@ -2,7 +2,7 @@ security:
     encoders:
       App\Entity\User:
         algorithm: auto
-      App\Entity\Admin:
+      App\Entity\System\Admin:
         algorithm: auto # change install script when changing this
       legacy_phpass:
         id: 'App\Security\Encoder\PhpassPasswordEncoder'
@@ -15,7 +15,7 @@ security:
           property: username
       app_admin_provider:
         entity:
-          class: App\Entity\Admin
+          class: App\Entity\System\Admin
           property: email
     firewalls:
         dev:

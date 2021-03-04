@@ -31,7 +31,7 @@ class UserMessageThread
     private $createdByUser;
 
     /**
-     * @var Listing|null
+     * @var null|Listing
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\Listing")
      * @ORM\JoinColumn(nullable=true)
@@ -57,13 +57,13 @@ class UserMessageThread
      */
     public function getAllUsersArray(): array
     {
-        return [$this->listing->getUser(), $this->createdByUser];
+        return [$this->listing->getUserNotNull(), $this->getCreatedByUser()];
     }
 
     public function getOtherUser(User $user): User
     {
         /** @var User[] $userList */
-        $userList = [$this->listing->getUser(), $this->createdByUser];
+        $userList = [$this->listing->getUser(), $this->getCreatedByUser()];
         foreach ($userList as $otherUser) {
             if ($otherUser->getId() !== $user->getId()) {
                 return $otherUser;
@@ -100,6 +100,10 @@ class UserMessageThread
 
     public function getListingNotNull(): Listing
     {
+        if (null === $this->listing) {
+            throw new \RuntimeException('listing is null');
+        }
+
         return $this->listing;
     }
 

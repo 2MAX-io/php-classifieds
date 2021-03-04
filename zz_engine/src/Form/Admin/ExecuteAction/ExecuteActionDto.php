@@ -6,23 +6,29 @@ namespace App\Form\Admin\ExecuteAction;
 
 use App\Entity\Category;
 use App\Entity\CustomFieldOption;
+use App\Service\Admin\Listing\Dto\AdminListingListDto;
 
 class ExecuteActionDto
 {
     /**
-     * @var string|null
+     * @var null|string
      */
     private $action;
 
     /**
-     * @var CustomFieldOption|null
+     * @var null|CustomFieldOption
      */
     private $customFieldOption;
 
     /**
-     * @var Category|null
+     * @var null|Category
      */
     private $category;
+
+    /**
+     * @var AdminListingListDto
+     */
+    private $adminListingListDto;
 
     public function getAction(): ?string
     {
@@ -52,5 +58,15 @@ class ExecuteActionDto
     public function setCategory(?Category $category): void
     {
         $this->category = $category;
+    }
+
+    public function getAdminListingListDto(): AdminListingListDto
+    {
+        return $this->adminListingListDto;
+    }
+
+    public function setAdminListingListDto(AdminListingListDto $adminListingListDto): void
+    {
+        $this->adminListingListDto = $adminListingListDto;
     }
 }

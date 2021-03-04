@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace App\Service\User\Account;
 
-use App\Entity\Token;
-use App\Entity\TokenField;
+use App\Entity\System\Token;
+use App\Entity\System\TokenField;
 use App\Entity\User;
+use App\Helper\DateHelper;
 use App\Service\System\Token\TokenService;
-use Carbon\Carbon;
+use App\Service\User\Account\Secondary\EncodePasswordService;
+use App\Service\User\Account\Secondary\UserAccountEmailService;
 use Doctrine\ORM\EntityManagerInterface;
 
 class ChangePasswordService
@@ -27,16 +29,17 @@ class ChangePasswordService
      * @var TokenService
      */
     private $tokenService;
+
     /**
      * @var UserAccountEmailService
      */
     private $userAccountEmailService;
 
     public function __construct(
-        EntityManagerInterface $em,
+        UserAccountEmailService $userAccountEmailService,
         EncodePasswordService $encodePasswordService,
         TokenService $tokenService,
-        UserAccountEmailService $userAccountEmailService
+        EntityManagerInterface $em
     ) {
         $this->em = $em;
         $this->encodePasswordService = $encodePasswordService;
@@ -47,16 +50,18 @@ class ChangePasswordService
     public function sendConfirmation(User $user, string $newPassword): void
     {
         $hashedPassword = $this->encodePasswordService->getEncodedPassword($user, $newPassword);
-
         $user->setPlainPassword($newPassword);
 
-        $token = $this->tokenService->getTokenBuilder(
+        $token = $this->tokenService->createToken(
             Token::USER_PASSWORD_CHANGE_TYPE,
-            Carbon::now()->add('day', 7)
+            DateHelper::carbonNow()->addDays(7)
         );
         $token->addField(TokenField::USER_ID_FIELD, (string) $user->getId());
         $token->addField(TokenField::CHANGED_NEW_HASHED_PASSWORD, $hashedPassword);
-        $this->userAccountEmailService->changePasswordConfirmation($user, $token->getTokenEntity()->getTokenString());
+        $this->userAccountEmailService->changePasswordConfirmation(
+            $user,
+            $token->getTokenEntity()->getTokenString()
+        );
 
         $this->em->persist($token->getTokenEntity());
     }

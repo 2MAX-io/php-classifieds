@@ -8,22 +8,34 @@ use App\Controller\Admin\Base\AbstractAdminController;
 use App\Entity\FeaturedPackage;
 use App\Form\Admin\FeaturedPackageType;
 use App\Repository\FeaturedPackageRepository;
-use App\Service\Admin\FeaturedPackage\CategorySelection\FeaturedPackageCategorySelectionService;
+use App\Service\Admin\FeaturedPackage\CategorySelection\FeaturedPackageCategoriesService;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Exception\InvalidCsrfTokenException;
 
 class FeaturedPackageController extends AbstractAdminController
 {
     /**
-     * @Route("/admin/red5/featured-package", name="app_admin_featured_package_index", methods={"GET"})
+     * @var EntityManagerInterface
      */
-    public function index(FeaturedPackageRepository $featuredPackageRepository): Response
+    private $em;
+
+    public function __construct(EntityManagerInterface $em)
+    {
+        $this->em = $em;
+    }
+
+    /**
+     * @Route("/admin/red5/featured-package", name="app_admin_featured_package_list", methods={"GET"})
+     */
+    public function featuredPackageList(FeaturedPackageRepository $featuredPackageRepository): Response
     {
         $this->denyUnlessAdmin();
 
         return $this->render('admin/featured_package/index.html.twig', [
-            'featured_packages' => $featuredPackageRepository->findBy(['removed' => false,]),
+            'featuredPackages' => $featuredPackageRepository->findBy(['removed' => false]),
         ]);
     }
 
@@ -32,23 +44,21 @@ class FeaturedPackageController extends AbstractAdminController
      */
     public function new(
         Request $request,
-        FeaturedPackageCategorySelectionService $featuredPackageCategorySelectionService
+        FeaturedPackageCategoriesService $categoriesService
     ): Response {
         $this->denyUnlessAdmin();
 
         $featuredPackage = new FeaturedPackage();
         $form = $this->createForm(FeaturedPackageType::class, $featuredPackage);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($featuredPackage);
+            $this->em->persist($featuredPackage);
 
-            $featuredPackageCategorySelectionService->saveSelection(
+            $categoriesService->saveSelectedCategories(
                 $featuredPackage,
                 $request->get('selectedCategories', [])
             );
-            $em->flush();
+            $this->em->flush();
 
             return $this->redirectToRoute('app_admin_featured_package_edit', [
                 'id' => $featuredPackage->getId(),
@@ -56,9 +66,10 @@ class FeaturedPackageController extends AbstractAdminController
         }
 
         return $this->render('admin/featured_package/new.html.twig', [
-            'featured_package' => $featuredPackage,
-            'categorySelectionList' => $featuredPackageCategorySelectionService->getCategorySelectionList(
+            'featuredPackage' => $featuredPackage,
+            'categorySelectionList' => $categoriesService->getCategorySelectionList(
                 $featuredPackage,
+                $categoriesService->getSelectedCategoriesIdFromRequest($request),
             ),
             'form' => $form->createView(),
         ]);
@@ -70,19 +81,18 @@ class FeaturedPackageController extends AbstractAdminController
     public function edit(
         Request $request,
         FeaturedPackage $featuredPackage,
-        FeaturedPackageCategorySelectionService $featuredPackageCategorySelectionService
+        FeaturedPackageCategoriesService $categoriesService
     ): Response {
         $this->denyUnlessAdmin();
 
         $form = $this->createForm(FeaturedPackageType::class, $featuredPackage);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
-            $featuredPackageCategorySelectionService->saveSelection(
+            $categoriesService->saveSelectedCategories(
                 $featuredPackage,
                 $request->get('selectedCategories', [])
             );
-            $this->getDoctrine()->getManager()->flush();
+            $this->em->flush();
 
             return $this->redirectToRoute('app_admin_featured_package_edit', [
                 'id' => $featuredPackage->getId(),
@@ -90,28 +100,29 @@ class FeaturedPackageController extends AbstractAdminController
         }
 
         return $this->render('admin/featured_package/edit.html.twig', [
-            'featured_package' => $featuredPackage,
-            'categorySelectionList' => $featuredPackageCategorySelectionService->getCategorySelectionList(
+            'featuredPackage' => $featuredPackage,
+            'categorySelectionList' => $categoriesService->getCategorySelectionList(
                 $featuredPackage,
+                $categoriesService->getSelectedCategoriesIdFromRequest($request),
             ),
             'form' => $form->createView(),
         ]);
     }
 
     /**
-     * @Route("/admin/red5/featured-package/{id}", name="app_admin_featured_package_delete", methods={"DELETE"})
+     * @Route("/admin/red5/featured-package/{id}/delete", name="app_admin_featured_package_delete", methods={"DELETE"})
      */
     public function delete(Request $request, FeaturedPackage $featuredPackage): Response
     {
         $this->denyUnlessAdmin();
 
-        if ($this->isCsrfTokenValid('delete'.$featuredPackage->getId(), $request->request->get('_token'))) {
-            $em = $this->getDoctrine()->getManager();
-            $featuredPackage->setRemoved(true);
-            $em->persist($featuredPackage);
-            $em->flush();
+        if (!$this->isCsrfTokenValid('csrf_deleteFeaturedPackage'.$featuredPackage->getId(), $request->request->get('_token'))) {
+            throw new InvalidCsrfTokenException('token not valid');
         }
+        $featuredPackage->setRemoved(true);
+        $this->em->persist($featuredPackage);
+        $this->em->flush();
 
-        return $this->redirectToRoute('app_admin_featured_package_index');
+        return $this->redirectToRoute('app_admin_featured_package_list');
     }
 }

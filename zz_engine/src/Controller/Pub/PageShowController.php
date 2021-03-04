@@ -15,8 +15,9 @@ class PageShowController extends AbstractController
     /**
      * @Route("/p/{slug}", name="app_page")
      */
-    public function index(Page $page, PageRepository $pageRepository): Response {
-        if ($page->getEnabled() === false) {
+    public function pageShow(Page $page, PageRepository $pageRepository): Response
+    {
+        if (false === $page->getEnabled()) {
             throw $this->createNotFoundException();
         }
 

@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace App\EventListener\Exception;
 
 use App\Exception\UserVisibleException;
+use App\Helper\DateHelper;
 use App\Helper\ExceptionHelper;
-use App\Helper\Str;
+use App\Helper\StringHelper;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,6 +19,11 @@ use Twig\Environment;
 class UserVisibleExceptionListener
 {
     /**
+     * @var Environment
+     */
+    private $twig;
+
+    /**
      * @var TranslatorInterface
      */
     private $trans;
@@ -27,21 +33,16 @@ class UserVisibleExceptionListener
      */
     private $logger;
 
-    /**
-     * @var Environment
-     */
-    private $twig;
-
     public function __construct(Environment $twig, TranslatorInterface $trans, LoggerInterface $logger)
     {
+        $this->twig = $twig;
         $this->trans = $trans;
         $this->logger = $logger;
-        $this->twig = $twig;
     }
 
     public function onKernelException(ExceptionEvent $event): void
     {
-        /** @var UserVisibleException $exception */
+        /** @var \Throwable|UserVisibleException $exception */
         $exception = $event->getThrowable();
         $request = $event->getRequest();
         if (!$this->isUserVisibleException($exception)) {
@@ -70,18 +71,18 @@ class UserVisibleExceptionListener
     private function getExceptionTrace(Request $request, \Throwable $exception): string
     {
         $exceptionTrace = '';
-        $exceptionTrace .= ' | '.\date('Y-m-d H:i:s.U P');
-        $exceptionTrace .= "\r\n".' | '.$this->getUserVisibleExceptionMessage($exception);
-        $exceptionTrace .= "\r\n".' | REQUEST_TIME_FLOAT '.$request->server->get('REQUEST_TIME_FLOAT', '');
-        $exceptionTrace .= "\r\n".' | REMOTE_ADDR '.$request->server->get('REMOTE_ADDR', '');
-        $exceptionTrace .= "\r\n".' | REMOTE_PORT '.$request->server->get('REMOTE_PORT', '');
-        $exceptionTrace .= "\r\n".' | HTTP_CF_CONNECTING_IP '.$request->server->get('HTTP_CF_CONNECTING_IP', '');
-        $exceptionTrace .= "\r\n".' | HTTP_REFERER '.$request->server->get('HTTP_REFERER', '');
-        $exceptionTrace .= "\r\n".' | REQUEST_URI '.$request->server->get('REQUEST_URI', '');
-        $exceptionTrace .= "\r\n".' | SERVER_ADDR '.$request->server->get('SERVER_ADDR', '');
-        $exceptionTrace .= "\r\n".' | SERVER_PORT '.$request->server->get('SERVER_PORT', '');
+        $exceptionTrace .= 'Error: '.$this->getUserVisibleExceptionMessage($exception)."\r\n";
+        $exceptionTrace .= 'Date: '.DateHelper::date('Y-m-d H:i:s.U P');
+        $exceptionTrace .= 'REQUEST_TIME_FLOAT '.$request->server->get('REQUEST_TIME_FLOAT', '')."\r\n";
+        $exceptionTrace .= 'REMOTE_ADDR '.$request->server->get('REMOTE_ADDR', '')."\r\n";
+        $exceptionTrace .= 'REMOTE_PORT '.$request->server->get('REMOTE_PORT', '')."\r\n";
+        $exceptionTrace .= 'HTTP_CF_CONNECTING_IP '.$request->server->get('HTTP_CF_CONNECTING_IP', '')."\r\n";
+        $exceptionTrace .= 'HTTP_REFERER '.$request->server->get('HTTP_REFERER', '')."\r\n";
+        $exceptionTrace .= 'REQUEST_URI '.$request->server->get('REQUEST_URI', '')."\r\n";
+        $exceptionTrace .= 'SERVER_ADDR '.$request->server->get('SERVER_ADDR', '')."\r\n";
+        $exceptionTrace .= 'SERVER_PORT '.$request->server->get('SERVER_PORT', '')."\r\n";
 
-        return \base64_encode($exceptionTrace);
+        return $exceptionTrace;
     }
 
     private function getUserVisibleExceptionMessage(\Throwable $exception): ?string
@@ -93,7 +94,7 @@ class UserVisibleExceptionListener
         $message = $exception->getMessage();
 
         try {
-            if (Str::beginsWith($message, 'trans.')) {
+            if (StringHelper::beginsWith($message, 'trans.')) {
                 return $this->trans->trans($message);
             }
         } catch (\Throwable $e) {

@@ -1,10 +1,11 @@
-<title>Install</title>
+<?php
 
-<!--suppress HtmlUnknownTarget -->
-<link rel="stylesheet" type="text/css" href="bootstrap.css" />
+declare(strict_types=1);
+
+include 'base/header.php';
+?>
 
 <div class="container">
-
     <h1>Already installed</h1>
 
     <div class="alert alert-danger">
@@ -13,7 +14,6 @@
     </div>
 
     <div class="alert alert-info">
-        To rerun install, you need to remove configuration file <?php echo e($configFilePath) ?> and clear app database.
+        To rerun install, you need to remove configuration file <?php echo e($configFilePath); ?> and clear app database.
     </div>
-
 </div>

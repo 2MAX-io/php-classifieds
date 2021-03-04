@@ -1,10 +1,10 @@
 <form
         method="post"
         action="{{ path('app_admin_listing_feature_for_week', {'id': listing.id}) }}"
-        onsubmit="return confirm('{{ 'trans.Feature for week' | trans }}: {{ listing.title }}?');"
-        class="d-inline"
+        data-confirm-message="{{ 'trans.Feature for week' | trans }}: {{ listing.title }}?"
+        class="d-inline js__confirm"
 >
     <input type="hidden" name="_method" value="PATCH">
-    <input type="hidden" name="_token" value="{{ csrf_token('adminFeatureForWeek' ~ listing.id) }}">
+    <input type="hidden" name="_token" value="{{ csrf_token('csrf_adminFeatureForWeekListing' ~ listing.id) }}">
     <button class="btn btn-success mb-1">{{ 'trans.Feature for week' | trans }}</button>
 </form>

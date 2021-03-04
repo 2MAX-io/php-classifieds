@@ -4,22 +4,23 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
-use App\Helper\Str;
+use App\Enum\UserRoleEnum;
+use App\Helper\StringHelper;
 use App\Security\Base\EnablableInterface;
-use App\Service\User\RoleInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\Encoder\EncoderAwareInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @UniqueEntity(fields={"email"})
  * @UniqueEntity(fields={"username"})
  */
-class User implements UserInterface, RoleInterface, EnablableInterface, EncoderAwareInterface
+class User implements UserInterface, UserRoleEnum, EnablableInterface, EncoderAwareInterface
 {
     /**
      * @var int
@@ -45,7 +46,7 @@ class User implements UserInterface, RoleInterface, EnablableInterface, EncoderA
     protected $email;
 
     /**
-     * @var string|null
+     * @var null|string
      *
      * @ORM\Column(type="string", length=100, nullable=true)
      */
@@ -73,7 +74,7 @@ class User implements UserInterface, RoleInterface, EnablableInterface, EncoderA
     protected $password;
 
     /**
-     * @var string|null
+     * @var null|string
      */
     private $plainPassword;
 
@@ -85,51 +86,52 @@ class User implements UserInterface, RoleInterface, EnablableInterface, EncoderA
     private $registrationDate;
 
     /**
-     * @var \DateTimeInterface
+     * @var null|\DateTimeInterface
      *
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $lastLogin;
 
     /**
-     * @var Listing[]
+     * @var Collection|Listing[]
      *
+     * @Assert\Type(groups={"skipAutomaticValidation"}, type="")
      * @ORM\OneToMany(targetEntity="App\Entity\Listing", mappedBy="user", fetch="EXTRA_LAZY")
      */
     private $listings;
 
     /**
-     * @var UserBalanceChange[]
+     * @var Collection|UserBalanceChange[]
      *
-     * @ORM\OneToMany(targetEntity="App\Entity\UserBalanceChange", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="App\Entity\UserBalanceChange", mappedBy="user", fetch="EXTRA_LAZY")
      */
     private $userBalanceChanges;
 
     /**
-     * @var PaymentForBalanceTopUp[]
+     * @var Collection|PaymentForBalanceTopUp[]
      *
-     * @ORM\OneToMany(targetEntity="App\Entity\PaymentForBalanceTopUp", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="App\Entity\PaymentForBalanceTopUp", mappedBy="user", fetch="EXTRA_LAZY")
      */
     private $paymentForBalanceTopUpList;
 
     /**
-     * @var Payment[]
+     * @var Collection|Payment[]
      *
-     * @ORM\OneToMany(targetEntity="App\Entity\Payment", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="App\Entity\Payment", mappedBy="user", fetch="EXTRA_LAZY")
      */
     private $payments;
 
     /**
-     * @var UserInvoiceDetails[]|Collection
+     * @var Collection|UserInvoiceDetails[]
      *
-     * @ORM\OneToMany(targetEntity="App\Entity\UserInvoiceDetails", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="App\Entity\UserInvoiceDetails", mappedBy="user", fetch="EXTRA_LAZY")
      */
     private $userInvoiceDetails;
 
     /**
-     * @var Invoice[]|Collection
+     * @var Collection|Invoice[]
      *
-     * @ORM\OneToMany(targetEntity="App\Entity\Invoice", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="App\Entity\Invoice", mappedBy="user", fetch="EXTRA_LAZY")
      */
     private $invoices;
 
@@ -144,44 +146,7 @@ class User implements UserInterface, RoleInterface, EnablableInterface, EncoderA
     }
 
     /**
-     * @see UserInterface
-     */
-    public function eraseCredentials(): void
-    {
-        // If you store any temporary, sensitive data on the user, clear it here
-        $this->plainPassword = null;
-    }
-
-    public function setEmail(?string $email): self
-    {
-        $this->email = $email;
-
-        if ($this->username && Str::contains($this->getUsername(), '@')) {
-            $this->setUsername($email);
-        }
-
-        return $this;
-    }
-
-    /**
-     * Gets the name of the encoder used to encode the password.
-     *
-     * If the method returns null, the standard way to retrieve the encoder
-     * will be used instead.
-     *
-     * @return string
-     */
-    public function getEncoderName(): ?string
-    {
-        if (Str::beginsWith($this->getPassword() ?? '', '$2a$')) {
-            return 'legacy_phpass'; // security.yaml
-        }
-
-        return null; // use the default encoder
-    }
-
-    /**
-     * prevents big session, when serializing user security token
+     * prevents big session, when serializing user security token.
      *
      * @return array|mixed
      */
@@ -197,9 +162,55 @@ class User implements UserInterface, RoleInterface, EnablableInterface, EncoderA
         ];
     }
 
+    /**
+     * @see UserInterface
+     */
+    public function eraseCredentials(): void
+    {
+        // If you store any temporary, sensitive data on the user, clear it here
+        $this->plainPassword = null;
+    }
+
+    /**
+     * Gets the name of the encoder used to encode the password.
+     *
+     * If the method returns null, the standard way to retrieve the encoder
+     * will be used instead.
+     *
+     * @return string
+     */
+    public function getEncoderName(): ?string
+    {
+        if (StringHelper::beginsWith($this->getPassword() ?? '', '$2a$')) {
+            return 'legacy_phpass'; // security.yaml
+        }
+
+        return null; // use the default encoder
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function getSalt(): ?string
+    {
+        // not needed when using the "bcrypt" algorithm in security.yaml
+        return null;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function setEmail(?string $email): self
+    {
+        $this->email = $email;
+
+        if ($this->username && \str_contains($this->getUsername(), '@')) {
+            $this->setUsername($email);
+        }
+
+        return $this;
     }
 
     public function getEmail(): ?string
@@ -226,16 +237,21 @@ class User implements UserInterface, RoleInterface, EnablableInterface, EncoderA
 
     /**
      * @see UserInterface
+     *
+     * @return string[]
      */
     public function getRoles(): array
     {
         $roles = $this->roles;
         // guarantee every user at least has ROLE_USER
-        $roles[] = RoleInterface::ROLE_USER;
+        $roles[] = UserRoleEnum::ROLE_USER;
 
         return \array_unique($roles);
     }
 
+    /**
+     * @param string[] $roles
+     */
     public function setRoles(array $roles): self
     {
         $this->roles = $roles;
@@ -256,14 +272,6 @@ class User implements UserInterface, RoleInterface, EnablableInterface, EncoderA
         $this->password = $password;
 
         return $this;
-    }
-
-    /**
-     * @see UserInterface
-     */
-    public function getSalt(): void
-    {
-        // not needed when using the "bcrypt" algorithm in security.yaml
     }
 
     /**
@@ -436,14 +444,14 @@ class User implements UserInterface, RoleInterface, EnablableInterface, EncoderA
         return $this;
     }
 
-    public function getUserInvoiceDetails(): UserInvoiceDetails
+    public function getUserInvoiceDetails(): ?UserInvoiceDetails
     {
-        return $this->userInvoiceDetails->last();
+        return $this->userInvoiceDetails->last() ?: null;
     }
 
     public function setUserInvoiceDetails(UserInvoiceDetails $userInvoiceDetails): void
     {
-        $this->userInvoiceDetails = $userInvoiceDetails;
+        $this->userInvoiceDetails[] = $userInvoiceDetails;
     }
 
     public function addUserInvoiceDetail(UserInvoiceDetails $userInvoiceDetail): self

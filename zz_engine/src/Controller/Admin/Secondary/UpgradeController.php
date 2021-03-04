@@ -5,17 +5,19 @@ declare(strict_types=1);
 namespace App\Controller\Admin\Secondary;
 
 use App\Controller\Admin\Base\AbstractAdminController;
+use App\Enum\AppCacheEnum;
 use App\Exception\UserVisibleException;
+use App\Service\Setting\EnvironmentService;
 use App\Service\System\Upgrade\Api\UpgradeApiService;
-use App\Service\System\Upgrade\UpgradeService;
+use App\Service\System\Upgrade\Dto\LatestVersionDto;
+use App\Service\System\Upgrade\RunUpgradeService;
 use App\Service\System\Upgrade\VersionCheckService;
-use App\System\Cache\AppCacheEnum;
-use App\System\EnvironmentService;
 use App\Version;
-use Symfony\Contracts\Cache\CacheInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Exception\InvalidCsrfTokenException;
+use Symfony\Contracts\Cache\CacheInterface;
 
 class UpgradeController extends AbstractAdminController
 {
@@ -39,39 +41,42 @@ class UpgradeController extends AbstractAdminController
 
         $cache->delete(AppCacheEnum::ADMIN_UPGRADE_CHECK);
 
+        /** @var LatestVersionDto $latestVersionDto */
+        $latestVersionDto = $versionCheckService->getLatestVersion();
+
         return $this->render('admin/secondary/upgrade/upgrade.html.twig', [
-            'latestVersion' => $versionCheckService->getLatestVersion(),
+            'latestVersion' => $latestVersionDto,
             'installedVersion' => new Version(),
             'canUpgrade' => $versionCheckService->canUpgrade(),
         ]);
     }
 
     /**
-     * @Route("/admin/red5/upgrade/execute", name="app_admin_upgrade_execute")
+     * @Route("/admin/red5/upgrade/execute-upgrade", name="app_admin_upgrade_run")
      */
-    public function upgradeExecute(
+    public function runUpgrade(
         Request $request,
-        UpgradeService $upgradeService,
+        RunUpgradeService $runUpgradeService,
         UpgradeApiService $upgradeApiService,
         VersionCheckService $versionCheckService
     ): Response {
         $this->denyUnlessAdmin();
         $this->blockIfUpgradeDisabled();
 
-        if (!$this->isCsrfTokenValid('adminExecuteUpgrade', $request->request->get('_token'))) {
-            throw new UserVisibleException('CSRF token invalid');
+        if (!$this->isCsrfTokenValid('csrf_adminExecuteUpgrade', $request->request->get('_token'))) {
+            throw new InvalidCsrfTokenException('token not valid');
         }
 
         if (!$versionCheckService->canUpgrade()) {
             return $this->redirectToRoute('app_admin_upgrade');
         }
 
-        $upgradeArr = $upgradeApiService->getUpgradeList();
-        if ($upgradeArr === null) {
-            throw new UserVisibleException('trans.Upgrade not started');
+        $upgradeArray = $upgradeApiService->getUpgradeList();
+        if (null === $upgradeArray) {
+            throw new UserVisibleException('trans.Error, could not download upgrade files, upgrade not started');
         }
 
-        $upgradeService->upgrade($upgradeArr);
+        $runUpgradeService->runUpgrade($upgradeArray);
 
         return $this->render('admin/secondary/upgrade/upgrade_executed.html.twig');
     }

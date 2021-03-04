@@ -5,24 +5,28 @@ declare(strict_types=1);
 namespace App\Security;
 
 use App\Entity\User;
-use App\Helper\Random;
+use App\Helper\DateHelper;
+use App\Helper\RandomHelper;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 
 class LoginListener
 {
-    private $em;
-
     /**
      * @var UserPasswordEncoderInterface
      */
     private $userPasswordEncoder;
 
-    public function __construct(EntityManagerInterface $em, UserPasswordEncoderInterface $userPasswordEncoder)
+    /**
+     * @var EntityManagerInterface
+     */
+    private $em;
+
+    public function __construct(UserPasswordEncoderInterface $userPasswordEncoder, EntityManagerInterface $em)
     {
-        $this->em = $em;
         $this->userPasswordEncoder = $userPasswordEncoder;
+        $this->em = $em;
     }
 
     public function onSecurityInteractiveLogin(InteractiveLoginEvent $event): void
@@ -39,13 +43,13 @@ class LoginListener
 
     private function updateLastLoginOfUser(User $user): void
     {
-        $user->setLastLogin(new \DateTime());
+        $user->setLastLogin(DateHelper::create());
         $this->em->persist($user);
     }
 
     private function migrateLegacyPassword(User $user, InteractiveLoginEvent $event): void
     {
-        if ($user->getEncoderName() === null) {
+        if (null === $user->getEncoderName()) {
             return;
         }
 
@@ -53,7 +57,7 @@ class LoginListener
             return;
         }
 
-        $user->setPassword('removed ' . Random::string(20)); // safe guard for empty passwords
+        $user->setPassword('removed '.RandomHelper::string(20)); // safe guard for empty passwords
         $user->setPassword(
             $this->userPasswordEncoder->encodePassword(
                 $user,

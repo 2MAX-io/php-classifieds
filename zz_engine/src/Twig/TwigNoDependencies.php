@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace App\Twig;
 
-use App\Helper\Str;
-use App\System\Localization\AppNumberFormatter;
-use Carbon\Carbon;
-use DateTimeInterface;
+use App\Helper\DateHelper;
+use App\Helper\StringHelper;
 use Misd\Linkify\Linkify;
 use Twig\Extension\RuntimeExtensionInterface;
 
@@ -25,7 +23,7 @@ class TwigNoDependencies implements RuntimeExtensionInterface
 
     public function isExpired(\DateTime $date): bool
     {
-        return $date <= new \DateTime();
+        return $date <= DateHelper::create();
     }
 
     /**
@@ -33,23 +31,23 @@ class TwigNoDependencies implements RuntimeExtensionInterface
      */
     public function boolText($value): string
     {
-        if ($value === true) {
+        if (true === $value) {
             return 'trans.Yes';
         }
 
-        if ($value === false) {
+        if (false === $value) {
             return 'trans.No';
         }
 
-        if ($value === '0' || $value === '' || $value === 'false' || $value === 'null') {
+        if ('0' === $value || '' === $value || 'false' === $value || 'null' === $value) {
             return 'trans.No';
         }
 
-        if (Str::emptyTrim($value)) {
+        if (StringHelper::emptyTrim($value)) {
             return 'trans.No';
         }
 
-        if ($value === '1' || $value === 1 || $value === 'true') {
+        if ('1' === $value || 1 === $value || 'true' === $value) {
             return 'trans.Yes';
         }
 
@@ -60,78 +58,13 @@ class TwigNoDependencies implements RuntimeExtensionInterface
         return 'trans.No';
     }
 
-    public function moneyPrecise(?int $value): ?string
-    {
-        if (null === $value) {
-            return null;
-        }
-
-        return \number_format(
-            \round($value / 100, 2),
-            2,
-            AppNumberFormatter::getDecimalSeparator(),
-            AppNumberFormatter::getThousandSeparator()
-        );
-    }
-
-    public function thousandsSeparate(int $value): string
-    {
-        return \number_format(
-            $value,
-            0,
-            AppNumberFormatter::getDecimalSeparator(),
-            AppNumberFormatter::getThousandSeparator()
-        );
-    }
-
-    public function money(float $money): string
-    {
-        if ($money < 40) {
-            return (string) \round($money, 2);
-        }
-
-        return \number_format(
-            $money,
-            0,
-            AppNumberFormatter::getDecimalSeparator(),
-            AppNumberFormatter::getThousandSeparator()
-        );
-    }
-
-    public function returnPlusIfPositive(float $number): string
+    public function plusPrefixForPositiveNumber(float $number): string
     {
         if ($number > 0) {
             return '+';
         }
 
         return '';
-    }
-
-    public function getCleaveConfig(): array
-    {
-        return [
-            'delimiter' => AppNumberFormatter::getThousandSeparator(),
-            'numeralDecimalMark' => AppNumberFormatter::getDecimalSeparator(),
-        ];
-    }
-
-    public function normalizeWhitespace(string $string): string
-    {
-        return \trim(\preg_replace('/\s+/u', ' ', $string));
-    }
-
-    /**
-     * diffToNowWithinSeconds(listing.featuredUntilDate, -1800, 0)
-     * true if less than 1800 seconds to now
-     */
-    public function diffToNowWithinSeconds(?DateTimeInterface $dateTime, int $maxSecondsLeft, int $maxSecondsRight=0): bool
-    {
-        if (null === $dateTime) {
-            return false;
-        }
-        $diffInSeconds = Carbon::instance($dateTime)->diffInSeconds(Carbon::now(), false);
-
-        return $maxSecondsLeft < $diffInSeconds && $diffInSeconds < $maxSecondsRight;
     }
 
     public function linkify(?string $text): ?string
@@ -146,10 +79,5 @@ class TwigNoDependencies implements RuntimeExtensionInterface
         $linkify = new Linkify();
 
         return $linkify->process($text, ['attr' => []]);
-    }
-
-    public function base64_encode(string $value): string
-    {
-        return \base64_encode($value);
     }
 }

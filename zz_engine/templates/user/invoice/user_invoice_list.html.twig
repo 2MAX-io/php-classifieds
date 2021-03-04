@@ -15,29 +15,41 @@
                         <h2 class="mb-3">{{ 'trans.Invoices' | trans }}</h2>
                     </div>
                     <div class="col-md-6 text-md-right">
-                        <a href="{{ path('app_user_invoice_details') }}" class="btn btn-secondary mb-1">{{ 'trans.Invoice details' | trans }}</a>
+                        <a href="{{ path('app_user_invoice_details') }}" class="btn btn-secondary mb-1">
+                            {{- 'trans.Invoice details' | trans -}}
+                        </a>
                     </div>
                 </div>
 
                 <table class="table table-responsive-sm">
                     <thead>
                     <tr>
-                        <th style="min-width: 8rem;">{{ 'trans.Invoice number' | trans }}</th>
+                        <th class="column-invoice-number">{{ 'trans.Invoice number' | trans }}</th>
                         <th>{{ 'trans.Amount' | trans }}</th>
                         <th></th>
                     </tr>
                     </thead>
-                    <tbody class="sortable">
+                    <tbody>
                     {% for invoice in invoiceList %}
                         <tr>
                             <td>
                                 <div class="text-break">{{ invoice.invoiceNumber }}</div>
-                                <div class="text-muted text-break">{% if invoice.invoiceDate %}{{ invoice.invoiceDate | date }}{% else %}-{% endif %}</div>
+                                <div class="text-muted text-break">
+                                    {%- if invoice.invoiceDate -%}
+                                        {{- invoice.invoiceDate | date -}}
+                                    {%- else -%}
+                                        {{- '-' -}}
+                                    {%- endif -%}
+                                </div>
                             </td>
                             <td>{{ invoice.totalMoneyFloat | moneyPrecise }}</td>
                             <td>
-                                <a class="btn btn-dark float-right" href="{{ path('app_user_invoice', {'invoice': invoice.id}) }}" target="_blank">
-                                    {{ 'trans.Download' | trans }}
+                                <a
+                                        class="btn btn-dark float-right"
+                                        href="{{ path('app_user_invoice_download', {'invoice': invoice.id}) }}"
+                                        target="_blank"
+                                >
+                                    {{- 'trans.Download' | trans -}}
                                 </a>
                             </td>
                         </tr>

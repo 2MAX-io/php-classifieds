@@ -6,6 +6,7 @@ namespace App\Service\Money;
 
 use App\Entity\User;
 use App\Entity\UserBalanceChange;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\EntityManagerInterface;
 
 class UserBalanceHistoryService
@@ -25,9 +26,11 @@ class UserBalanceHistoryService
      */
     public function getHistoryList(User $user): array
     {
-        $qb = $this->em->getRepository(UserBalanceChange::class)->createQueryBuilder('userBalanceChange');
+        $qb = $this->em->createQueryBuilder();
+        $qb->select('userBalanceChange');
+        $qb->from(UserBalanceChange::class, 'userBalanceChange');
         $qb->andWhere($qb->expr()->eq('userBalanceChange.user', ':user'));
-        $qb->setParameter('user', $user);
+        $qb->setParameter('user', $user->getId(), Types::INTEGER);
 
         return $qb->getQuery()->getResult();
     }

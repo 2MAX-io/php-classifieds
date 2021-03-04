@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace App\Service\User\Message\SendNotification;
 
 use App\Entity\UserMessage;
-use App\Service\Email\EmailService;
+use App\Helper\DateHelper;
+use App\Service\System\Email\EmailService;
+use App\Service\System\Messenger\MessengerHelperService;
 use App\Service\User\Message\Messenger\SendNotification\SendNotificationMessage;
 use App\Service\User\Message\SendNotification\Dto\MessageToUserAggregateDto;
-use App\System\Messenger\MessengerHelperService;
-use Carbon\Carbon;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Mailer\MailerInterface;
@@ -23,24 +23,14 @@ class SendNotificationService
     public const NOTIFICATION_DELAY_SECONDS = 5 * 60;
 
     /**
-     * @var EntityManagerInterface
+     * @var EmailService
      */
-    private $em;
-
-    /**
-     * @var TranslatorInterface
-     */
-    private $trans;
+    private $emailService;
 
     /**
      * @var MailerInterface
      */
     private $mailer;
-
-    /**
-     * @var EmailService
-     */
-    private $emailService;
 
     /**
      * @var MessageBusInterface
@@ -52,13 +42,23 @@ class SendNotificationService
      */
     private $messengerHelperService;
 
+    /**
+     * @var TranslatorInterface
+     */
+    private $trans;
+
+    /**
+     * @var EntityManagerInterface
+     */
+    private $em;
+
     public function __construct(
         EmailService $emailService,
         MessengerHelperService $messengerHelperService,
-        EntityManagerInterface $em,
         MailerInterface $mailer,
         MessageBusInterface $messageBus,
-        TranslatorInterface $trans
+        TranslatorInterface $trans,
+        EntityManagerInterface $em
     ) {
         $this->em = $em;
         $this->trans = $trans;
@@ -132,8 +132,8 @@ class SendNotificationService
      */
     private function getUserMessagesToNotify(): array
     {
-        $userMessageIdList = $this->getLastMessageForUserOlderThanIdList(
-            Carbon::now()->subSeconds(self::NOTIFICATION_DELAY_SECONDS),
+        $userMessageIdList = $this->getMessageForUserOlderThanAsIdsList(
+            DateHelper::carbonNow()->subSeconds(self::NOTIFICATION_DELAY_SECONDS),
         );
 
         $qb = $this->em->createQueryBuilder();
@@ -141,8 +141,10 @@ class SendNotificationService
         $qb->addSelect('thread');
         $qb->from(UserMessage::class, 'msg');
         $qb->join('msg.userMessageThread', 'thread');
+
         $qb->andWhere($qb->expr()->in('msg.id', ':userMessageIdList'));
         $qb->setParameter(':userMessageIdList', $userMessageIdList);
+
         $qb->andWhere($qb->expr()->eq('msg.recipientNotified', 0));
         $qb->andWhere($qb->expr()->eq('msg.recipientRead', 0));
 
@@ -155,7 +157,7 @@ class SendNotificationService
     /**
      * @return int[]
      */
-    private function getLastMessageForUserOlderThanIdList(\DateTimeInterface $olderThanDatetime): array
+    private function getMessageForUserOlderThanAsIdsList(\DateTimeInterface $olderThanDatetime): array
     {
         /** @var \PDO $pdo */
         $pdo = $this->em->getConnection();
@@ -183,13 +185,11 @@ ON true
 WHERE true
     && user_message_to_notify.recipient_notified = 0
     && user_message_to_notify.recipient_read = 0
-        '
-        );
+        ');
         $stmt->bindValue(':olderThan', $olderThanDatetime);
-        $stmt->setFetchMode(\PDO::FETCH_COLUMN, 0);
         $stmt->execute();
 
-        return $stmt->fetchAll();
+        return $stmt->fetchAll() ?: [];
     }
 
     private function noNotificationSendTryAgainLater(): void
@@ -218,6 +218,6 @@ WHERE true
         $qb->from(UserMessage::class, 'userMessage');
         $qb->andWhere($qb->expr()->eq('userMessage.recipientNotified', 0));
 
-        return (int) $qb->getQuery()->getScalarResult();
+        return (int) $qb->getQuery()->getSingleScalarResult();
     }
 }

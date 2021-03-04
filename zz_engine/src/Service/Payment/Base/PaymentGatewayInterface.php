@@ -10,11 +10,11 @@ use App\Service\Payment\Dto\PaymentDto;
 
 interface PaymentGatewayInterface
 {
+    public static function getName(): string;
+
     public function createPayment(PaymentDto $paymentDto): void;
 
     public function confirmPayment(ConfirmPaymentConfigDto $confirmPaymentConfigDto): ConfirmPaymentDto;
-
-    public static function getName(): string;
 
     public function getGatewayMode(): string;
 }

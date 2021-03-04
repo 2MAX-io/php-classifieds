@@ -5,47 +5,56 @@
 {% block title %}{{ 'trans.Activation' | trans }}{% endblock %}
 
 {% block body %}
-    <div class="mt-2 container-fluid">
+    <div class="container-fluid mt-2">
         <table class="table table-responsive-sm" id="listings">
             <thead>
-            <tr>
-                <th style="min-width: 2rem;" class="d-none-soft listingSelectionHidden">
-                    <button class="btn btn-secondary" onclick="selectAll('.listingSelectionCheckbox')">*</button>
-                </th>
-                <th>
-                    <button class="btn btn-secondary btn-sm" onclick="enableSelection(this)">
-                        {{ 'trans.Action on selected' | trans }}
-                    </button>
-                </th>
-                <th style="min-width: 20rem;">{{ 'trans.Title' | trans }}</th>
-                <th style="min-width: 10rem;">{{ 'trans.Last edit' | trans }}</th>
-                <th>{{ 'trans.Actions' | trans }}</th>
-            </tr>
+                <tr>
+                    <th class="column-select-checkbox d-none-soft js__listingSelectionHidden">
+                        <button class="js__selectAll btn btn-secondary">*</button>
+                    </th>
+                    <th>
+                        <button class="js__enableSelection btn btn-secondary btn-sm">
+                            {{- 'trans.Action on selected' | trans -}}
+                        </button>
+                    </th>
+                    <th class="column-listing-title">{{ 'trans.Title' | trans }}</th>
+                    <th class="column-listing-activate-last-edit">{{ 'trans.Last edit' | trans }}</th>
+                    <th>{{ 'trans.Actions' | trans }}</th>
+                </tr>
             </thead>
             <tbody>
             {% for listing in listings %}
-                <tr onclick="toggleCheckbox('#checkbox_{{ listing.id }}')">
-                    <td class="d-none-soft listingSelectionHidden">
+                <tr>
+                    <td class="d-none-soft js__listingSelectionHidden">
                         <label class="d-block">
                             <input
                                     type="checkbox"
                                     id="checkbox_{{ listing.id }}"
                                     value="{{ listing.id }}"
-                                    class="form-control listingSelectionCheckbox"
-                                    onclick="toggleCheckbox('#checkbox_{{ listing.id }}')"
+                                    class="form-control js__selectListingCheckbox"
                             />
                         </label>
                     </td>
                     <td>
                         <div>
-                            <a title="{{ listing.title }}" href="{{ path('app_listing_show', {id: listing.id, 'slug': listing.slug, 'showPreviewForOwner': 1}) }}">
-                                <img class="rounded list-small-img" alt="{{ listing.title }}" src="{{ asset(listing.mainImageInListSize | default('static/system/blank.png')) }}">
+                            <a
+                                    title="{{ listing.title }}"
+                                    href="{{ path('app_listing_show', {id: listing.id, 'slug': listing.slug, 'showListingPreviewForOwner': 1}) }}"
+                            >
+                                <img
+                                        class="rounded list-small-img"
+                                        src="{{ asset(listing.mainImageInListSize | default('static/system/blank.png')) }}"
+                                        alt="{{ listing.title }}"
+                                >
                             </a>
                         </div>
                     </td>
                     <td>
                         <div>
-                            <a href="{{ path('app_listing_show', {"id": listing.id, 'slug': listing.slug, 'showPreviewForOwner': 1}) }}" class="text-break">
+                            <a
+                                    href="{{ path('app_listing_show', {"id": listing.id, 'slug': listing.slug, 'showListingPreviewForOwner': 1}) }}"
+                                    class="text-break"
+                            >
                                 {{- listing.title -}}
                             </a>
                         </div>
@@ -55,8 +64,8 @@
                                 <span class="badge badge-pill badge-warning">{{ 'trans.Featured' | trans }}</span>
                             {% endif %}
                             <span class="mr-2 text-break">
-                                {{ listing.category.parent.name }}
-                                ⇾
+                                {{- listing.category.parent.name -}}
+                                {{- ' ⇾ ' -}}
                                 <a href="{{ path('app_category', {'categorySlug': listing.category.slug}) }}">
                                     {{- listing.category.name -}}
                                 </a>
@@ -84,7 +93,9 @@
                         {% if listing.rejectionReason is not empty %}
                             <div>
                                 <span class="text-warning-color">
-                                    {{ 'trans.Previous rejection' | trans }}: {{ listing.rejectionReason }}
+                                    {{- 'trans.Previous rejection' | trans -}}
+                                    {{- ': ' -}}
+                                    {{- listing.rejectionReason -}}
                                 </span>
                             </div>
                         {% endif %}
@@ -96,14 +107,8 @@
                         </a>
 
                         {{ include('admin/listing/_action/_admin_activate_form.html.twig') }}
-
-                        <a
-                                href="{{ path('app_admin_listing_reject', {'id': listing.id}) }}"
-                                target="_blank"
-                                class="btn btn-warning mb-1"
-                        >
-                            {{ 'trans.Reject' | trans }}
-                        </a>                    </td>
+                        {{ include('admin/listing/_action/_admin_reject_form.html.twig') }}
+                    </td>
                 </tr>
                 <tr class="collapse" id="collapse{{ listing.id }}" data-parent="#listings">
                     <td colspan="99">
@@ -120,39 +125,39 @@
             </tbody>
         </table>
 
-        <div class="mb-2 d-none-soft listingSelectionHidden">
-            <form action="{{ path('app_admin_listing_activate_action_on_selected') }}" method="post" class="listingSelectionForm">
+        <div class="mb-2 d-none-soft js__listingSelectionHidden">
+            <form action="{{ path('app_admin_listing_activate_action_on_selected') }}" method="post" class="js__listingSelectionForm">
                 <button
                         type="submit"
-                        class="btn btn-secondary"
-                        onclick="return confirm('{{ 'trans.Activate selected?' | trans }}') && $('.listingSelectionActionHiddenInput').val(this.value)"
-                        value="{{ constant('\App\\Controller\\Admin\\ListingActivateController::ACTIVATE_ACTION') }}"
+                        class="btn btn-secondary js__activateSelectedActionButton"
+                        data-confirm-message="{{ 'trans.Activate selected?' | trans }}"
+                        value="{{ constant('\App\\Controller\\Admin\\AdminListingActivateController::ACTIVATE_ACTION') }}"
                 >
-                    {{ 'trans.Activate' | trans }}
+                    {{- 'trans.Activate' | trans -}}
                 </button>
 
                 <button
                         type="submit"
-                        class="btn btn-secondary"
-                        onclick="return confirm('{{ 'trans.Reject selected?' | trans }}') && $('.listingSelectionActionHiddenInput').val(this.value)"
-                        value="{{ constant('\App\\Controller\\Admin\\ListingActivateController::REJECT_ACTION') }}"
+                        class="btn btn-secondary js__activateSelectedActionButton"
+                        data-confirm-message="{{ 'trans.Reject selected?' | trans }}"
+                        value="{{ constant('\App\\Controller\\Admin\\AdminListingActivateController::REJECT_ACTION') }}"
                 >
-                    {{ 'trans.Reject' | trans }}
+                    {{- 'trans.Reject' | trans -}}
                 </button>
 
                 <span>{{ 'trans.selected' | trans }}</span>
 
-                <input type="hidden" name="action" value="" class="listingSelectionActionHiddenInput">
-                <input type="hidden" name="selected" value="" class="listingSelectionSelectedHiddenInput">
-                <input type="hidden" name="_token" value="{{ csrf_token('activationActionForSelected') }}">
+                <input type="hidden" name="action" value="" class="js__actionToExecuteOnSelectedListings">
+                <input type="hidden" name="selected" value="" class="js__selectedListingsInput">
+                <input type="hidden" name="_token" value="{{ csrf_token('csrf_activateSelectedListings') }}">
             </form>
         </div>
 
         {% include 'base/_pagination.html.twig' %}
-
     </div>
 {% endblock %}
 
 {% block js %}
-    <script src="{{ asset('asset/page/admin/listing/listing-activate.js') }}"></script>
+    {{ encore_entry_link_tags('admin_listing_activate') }}
+    {{ encore_entry_script_tags('admin_listing_activate') }}
 {% endblock %}

@@ -1,21 +1,22 @@
-<title>Install</title>
+<?php
 
-<!--suppress HtmlUnknownTarget -->
-<link rel="stylesheet" type="text/css" href="bootstrap.css" />
+declare(strict_types=1);
+
+include 'base/header.php';
+?>
 
 <div class="container">
-
     <h1>Installation - Server and PHP requirements</h1>
 
     <div class="alert alert-info">
         You can find more information about requirements in <a href="https://documentation.2max.io/display/CLAS/Requirements">documentation</a>
     </div>
 
-    <?php foreach ($errors as $error): ?>
+    <?php foreach ($errors as $error) { ?>
         <div class="alert alert-danger">
-            <?php echo e($error) ?>
+            <?php echo e($error); ?>
         </div>
-    <?php endforeach; ?>
+    <?php } ?>
 
     <a href="" class="btn btn-primary">Refresh</a>
 </div>

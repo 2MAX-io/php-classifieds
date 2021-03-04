@@ -28,25 +28,22 @@ class ChangeEmailType extends AbstractType
             ],
         ]);
 
-        $builder->add(
-            static::FORM_NEW_EMAIL,
-            RepeatedType::class,
-            [
-                'first_options' => [
-                    'label' => 'trans.New email',
-                ],
-                'second_options' => [
-                    'label' => 'trans.Repeat new email',
-                ],
-                'type' => EmailType::class,
-                'constraints' => [
-                    new NotBlank(),
-                    new Email([
-                        'mode' => Email::VALIDATION_MODE_STRICT
-                    ]),
-                    new UserEmailNotTaken(),
-                ],
-            ]
-        );
+        $builder->add(static::FORM_NEW_EMAIL, RepeatedType::class, [
+            'first_options' => [
+                'label' => 'trans.New email',
+            ],
+            'second_options' => [
+                'label' => 'trans.Repeat new email',
+            ],
+            'type' => EmailType::class,
+            'invalid_message' => 'Repeated value does note match',
+            'constraints' => [
+                new NotBlank(),
+                new Email([
+                    'mode' => Email::VALIDATION_MODE_STRICT,
+                ]),
+                new UserEmailNotTaken(),
+            ],
+        ]);
     }
 }

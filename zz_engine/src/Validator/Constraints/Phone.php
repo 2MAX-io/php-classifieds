@@ -8,6 +8,7 @@ use Symfony\Component\Validator\Constraint;
 
 class Phone extends Constraint
 {
+    /** @var string */
     public $message = 'Phone number is incorrect.';
 
     public function validatedBy(): string

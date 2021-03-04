@@ -5,20 +5,19 @@ declare(strict_types=1);
 namespace App\Service\Listing\Save;
 
 use App\Entity\Listing;
-use App\Form\ListingCustomFieldListType;
+use App\Form\ListingCustomFieldsType;
 use App\Form\ListingType;
-use App\Helper\Json;
+use App\Helper\DateHelper;
 use App\Helper\SlugHelper;
-use App\Helper\Str;
+use App\Helper\StringHelper;
 use App\Security\CurrentUserService;
+use App\Service\Listing\Save\Dto\ListingSaveDto;
 use App\Service\Listing\ValidityExtend\ValidUntilSetService;
 use App\Service\Setting\SettingsService;
 use App\Service\System\Text\TextService;
 use Minwork\Helper\Arr;
-use Symfony\Component\Asset\Packages;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RequestStack;
 
 class SaveListingService
 {
@@ -26,11 +25,6 @@ class SaveListingService
      * @var ValidUntilSetService
      */
     private $validUntilSetService;
-
-    /**
-     * @var Packages
-     */
-    private $packages;
 
     /**
      * @var TextService
@@ -43,34 +37,48 @@ class SaveListingService
     private $currentUserService;
 
     /**
-     * @var RequestStack
-     */
-    private $requestStack;
-
-    /**
      * @var SettingsService
      */
     private $settingsService;
 
+    /**
+     * @var ListingFileUploadService
+     */
+    private $listingFileUploadService;
+
     public function __construct(
+        ListingFileUploadService $listingFileUploadService,
         ValidUntilSetService $validUntilSetService,
-        Packages $packages,
-        TextService $textService,
         CurrentUserService $currentUserService,
         SettingsService $settingsService,
-        RequestStack $requestStack
+        TextService $textService
     ) {
         $this->validUntilSetService = $validUntilSetService;
-        $this->packages = $packages;
         $this->textService = $textService;
         $this->currentUserService = $currentUserService;
-        $this->requestStack = $requestStack;
         $this->settingsService = $settingsService;
+        $this->listingFileUploadService = $listingFileUploadService;
+    }
+
+    public function getListingSaveDtoFromRequest(Request $request, Listing $listing = null): ListingSaveDto
+    {
+        $listing = $listing ?? $this->createListingForForm();
+
+        $listingSaveDto = new ListingSaveDto();
+        $listingSaveDto->setListing($listing);
+        $listingSaveDto->setUploadedFilesFromRequest(
+            $this->listingFileUploadService->getUploadedFilesFromRequest($request),
+        );
+        $listingSaveDto->setCustomFieldValuesFromRequest(
+            $this->getCustomFieldValuesFromRequest($request),
+        );
+
+        return $listingSaveDto;
     }
 
     public function createListingForForm(): Listing
     {
-        $currentDate = new \DateTime();
+        $currentDate = DateHelper::create();
 
         $listing = new Listing();
         $listing->setFirstCreatedDate($currentDate);
@@ -85,16 +93,22 @@ class SaveListingService
         return $listing;
     }
 
-    public function modifyListingPreFormSubmit(array $listingArray): array
+    /**
+     * @param array<string,null|string> $listingFormDataArray
+     *
+     * @return array<string,null|string>
+     */
+    public function modifyListingPreFormSubmit(array $listingFormDataArray): array
     {
-        $listingArray['description'] = $this->textService->normalizeUserInput($listingArray['description']);
-        $listingArray['title'] = $this->textService->normalizeUserInput($listingArray['title']);
-        $listingArray['title'] = $this->textService->removeWordsFromTitle($listingArray['title']);
-        $listingArray['city'] = \ucwords(
-            $this->textService->normalizeUserInput($listingArray['city']),
+        $listingFormDataArray['description'] = $this->textService->normalizeUserInput($listingFormDataArray['description']);
+        $listingFormDataArray['title'] = $this->textService->normalizeUserInput($listingFormDataArray['title']);
+        $listingFormDataArray['title'] = $this->textService->removeWordsFromTitle($listingFormDataArray['title']);
+        $listingFormDataArray['city'] = \ucwords(
+            $this->textService->normalizeUserInput($listingFormDataArray['city']),
         );
+        $listingFormDataArray['phone'] = StringHelper::replaceMultipleToSingle($listingFormDataArray['phone'], [' '], '');
 
-        return $listingArray;
+        return $listingFormDataArray;
     }
 
     public function modifyListingPostFormSubmit(Listing $listing, FormInterface $form): void
@@ -115,39 +129,6 @@ class SaveListingService
         if (!$listing->getUser()) { // set user when creating, if not set
             $listing->setUser($this->currentUserService->getUserOrNull());
         }
-    }
-
-    public function getListingFilesForJavascript(Listing $listing): array
-    {
-        $fileUploaderListFilesFromRequest = $this->requestStack->getMasterRequest()->request->get('fileuploader-list-files', false);
-        if ($fileUploaderListFilesFromRequest) {
-            $files = Json::toArray($fileUploaderListFilesFromRequest);
-            $files = \array_map(function($file): array {
-                if (isset($file['data']['tmpFilePath'])) {
-                    $file['file'] = $this->packages->getUrl($file['data']['tmpFilePath']);
-                }
-
-                return $file;
-            }, $files);
-
-            return $files;
-        }
-
-        $returnFiles = [];
-        foreach ($listing->getListingFiles() as $listingFile) {
-            $returnFiles[] = [
-                'name' => $listingFile->getUserOriginalFilename() ?? $listingFile->getFilename(),
-                'type' => $listingFile->getMimeType(),
-                'size' => $listingFile->getSizeBytes(),
-                'file' => $this->packages->getUrl($listingFile->getPathInListSize()),
-                'data' => [
-                    'listingFileId' => $listingFile->getId(),
-                    'filePath' => $this->packages->getUrl($listingFile->getPath()),
-                ],
-            ];
-        }
-
-        return $returnFiles;
     }
 
     public function saveSearchText(Listing $listing): void
@@ -190,40 +171,55 @@ class SaveListingService
         $searchText .= $listing->getid();
         $searchText .= ' ';
 
+        if ($listing->getUser()) {
+            $searchText .= $listing->getUser()->getId();
+            $searchText .= ' ';
+        }
+
         $listing->setSearchText($searchText);
     }
 
     public function updateSlug(Listing $listing): void
     {
-        $slugSourceText = '';
-        $slugSourceText .= $listing->getTitle();
-        $slugSourceText .= ' ';
-        $slugSourceText .= $listing->getCategoryNotNull()->getName();
-        $slugSourceText .= ' ';
-        $slugSourceText .= $listing->getCategoryNotNull()->getParentNotNull()->getName();
-        $slugSourceText .= ' ';
+        $maxSlugLength = 60;
 
-        foreach ($listing->getListingCustomFieldValues() as $listingCustomFieldValue) {
-            if (!$listingCustomFieldValue->getCustomFieldOption()) {
-                continue;
+        $slug = '';
+        $slug .= $listing->getTitle();
+        $slug .= ' ';
+        $slug .= $listing->getCategoryNotNull()->getName();
+        $slug .= ' ';
+        $slug .= $listing->getCategoryNotNull()->getParentNotNull()->getName();
+        $slug .= ' ';
+
+        if (\mb_strlen($slug) < $maxSlugLength) {
+            foreach ($listing->getListingCustomFieldValues() as $listingCustomFieldValue) {
+                if (!$listingCustomFieldValue->getCustomFieldOption()) {
+                    continue;
+                }
+                $slug .= $listingCustomFieldValue->getCustomFieldOption()->getName();
+                $slug .= ' ';
             }
-            $slugSourceText .= $listingCustomFieldValue->getCustomFieldOption()->getName();
-            $slugSourceText .= ' ';
         }
 
-        $slugSourceText = Str::substrWords($slugSourceText, 60);
-        $listing->setSlug(SlugHelper::getSlug($slugSourceText));
+        $slug = StringHelper::substrWords($slug, $maxSlugLength);
+        $listing->setSlug(SlugHelper::getSlug($slug));
     }
 
     /**
      * from listing[customFieldList]
+     *
+     * @return array<int,string>
      */
-    public function getCustomFieldValueListArrayFromRequest(Request $request): array
+    private function getCustomFieldValuesFromRequest(Request $request): array
     {
         $customFieldListArray = Arr::getNestedElement(
             $request->request->all(),
-            [ListingType::LISTING_FIELD, ListingCustomFieldListType::CUSTOM_FIELD_LIST_FIELD] // listing[customFieldList]
+            [
+                ListingType::LISTING_FIELD,
+                ListingCustomFieldsType::CUSTOM_FIELD_LIST_FIELD,
+            ] // listing[customFieldList]
         );
+
         return $customFieldListArray ?? [];
     }
 }

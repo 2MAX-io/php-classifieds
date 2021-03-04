@@ -64,7 +64,7 @@
     <inspection_tool class="CascadeStringReplacementInspection" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="CascadingDirnameCallsInspection" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="CaseInsensitiveStringFunctionsMissUseInspection" enabled="true" level="WARNING" enabled_by_default="true" />
-    <inspection_tool class="CaseSensitivityServiceInspection" enabled="true" level="WARNING" enabled_by_default="true" />
+    <inspection_tool class="CaseSensitivityServiceInspection" enabled="false" level="WARNING" enabled_by_default="false" />
     <inspection_tool class="ChainedEqualityJS" enabled="false" level="WARNING" enabled_by_default="false" />
     <inspection_tool class="ChainedFunctionCallJS" enabled="false" level="WARNING" enabled_by_default="false" />
     <inspection_tool class="CheckDtdRefs" enabled="true" level="ERROR" enabled_by_default="true" />
@@ -197,33 +197,33 @@
     <inspection_tool class="ES6ShorthandObjectProperty" enabled="true" level="INFORMATION" enabled_by_default="true" />
     <inspection_tool class="ES6TopLevelAwaitExpression" enabled="false" level="ERROR" enabled_by_default="false" />
     <inspection_tool class="ES6UnusedImports" enabled="true" level="WARNING" enabled_by_default="true" />
-    <inspection_tool class="EditorConfigCharClassLetterRedundancy" enabled="false" level="WARNING" enabled_by_default="false" />
-    <inspection_tool class="EditorConfigCharClassRedundancy" enabled="false" level="WARNING" enabled_by_default="false" />
-    <inspection_tool class="EditorConfigDeprecatedDescriptor" enabled="false" level="WARNING" enabled_by_default="false" />
-    <inspection_tool class="EditorConfigEmptyHeader" enabled="false" level="ERROR" enabled_by_default="false" />
-    <inspection_tool class="EditorConfigEmptySection" enabled="false" level="WARNING" enabled_by_default="false" />
-    <inspection_tool class="EditorConfigHeaderUniqueness" enabled="false" level="WARNING" enabled_by_default="false" />
-    <inspection_tool class="EditorConfigKeyCorrectness" enabled="false" level="WARNING" enabled_by_default="false" />
-    <inspection_tool class="EditorConfigListAcceptability" enabled="false" level="ERROR" enabled_by_default="false" />
-    <inspection_tool class="EditorConfigMissingRequiredDeclaration" enabled="false" level="ERROR" enabled_by_default="false" />
-    <inspection_tool class="EditorConfigNoMatchingFiles" enabled="false" level="WARNING" enabled_by_default="false" />
-    <inspection_tool class="EditorConfigNumerousWildcards" enabled="false" level="WEAK WARNING" enabled_by_default="false" />
-    <inspection_tool class="EditorConfigOptionRedundancy" enabled="false" level="WARNING" enabled_by_default="false" />
-    <inspection_tool class="EditorConfigPairAcceptability" enabled="false" level="ERROR" enabled_by_default="false" />
-    <inspection_tool class="EditorConfigPartialOverride" enabled="false" level="WEAK WARNING" enabled_by_default="false" />
-    <inspection_tool class="EditorConfigPatternEnumerationRedundancy" enabled="false" level="ERROR" enabled_by_default="false" />
-    <inspection_tool class="EditorConfigPatternRedundancy" enabled="false" level="WARNING" enabled_by_default="false" />
-    <inspection_tool class="EditorConfigReferenceCorrectness" enabled="false" level="ERROR" enabled_by_default="false" />
-    <inspection_tool class="EditorConfigRootDeclarationCorrectness" enabled="false" level="ERROR" enabled_by_default="false" />
-    <inspection_tool class="EditorConfigRootDeclarationUniqueness" enabled="false" level="ERROR" enabled_by_default="false" />
-    <inspection_tool class="EditorConfigShadowedOption" enabled="false" level="WARNING" enabled_by_default="false" />
-    <inspection_tool class="EditorConfigShadowingOption" enabled="false" level="WARNING" enabled_by_default="false" />
-    <inspection_tool class="EditorConfigSpaceInHeader" enabled="false" level="WEAK WARNING" enabled_by_default="false" />
-    <inspection_tool class="EditorConfigUnexpectedComma" enabled="false" level="ERROR" enabled_by_default="false" />
-    <inspection_tool class="EditorConfigUnusedDeclaration" enabled="false" level="WARNING" enabled_by_default="false" />
-    <inspection_tool class="EditorConfigValueCorrectness" enabled="false" level="ERROR" enabled_by_default="false" />
-    <inspection_tool class="EditorConfigValueUniqueness" enabled="false" level="ERROR" enabled_by_default="false" />
-    <inspection_tool class="EditorConfigWildcardRedundancy" enabled="false" level="WARNING" enabled_by_default="false" />
+    <inspection_tool class="EditorConfigCharClassLetterRedundancy" enabled="true" level="WARNING" enabled_by_default="true" />
+    <inspection_tool class="EditorConfigCharClassRedundancy" enabled="true" level="WARNING" enabled_by_default="true" />
+    <inspection_tool class="EditorConfigDeprecatedDescriptor" enabled="true" level="WARNING" enabled_by_default="true" />
+    <inspection_tool class="EditorConfigEmptyHeader" enabled="true" level="ERROR" enabled_by_default="true" />
+    <inspection_tool class="EditorConfigEmptySection" enabled="true" level="WARNING" enabled_by_default="true" />
+    <inspection_tool class="EditorConfigHeaderUniqueness" enabled="true" level="WARNING" enabled_by_default="true" />
+    <inspection_tool class="EditorConfigKeyCorrectness" enabled="true" level="WARNING" enabled_by_default="true" />
+    <inspection_tool class="EditorConfigListAcceptability" enabled="true" level="ERROR" enabled_by_default="true" />
+    <inspection_tool class="EditorConfigMissingRequiredDeclaration" enabled="true" level="ERROR" enabled_by_default="true" />
+    <inspection_tool class="EditorConfigNoMatchingFiles" enabled="true" level="WARNING" enabled_by_default="true" />
+    <inspection_tool class="EditorConfigNumerousWildcards" enabled="true" level="WEAK WARNING" enabled_by_default="true" />
+    <inspection_tool class="EditorConfigOptionRedundancy" enabled="true" level="WARNING" enabled_by_default="true" />
+    <inspection_tool class="EditorConfigPairAcceptability" enabled="true" level="ERROR" enabled_by_default="true" />
+    <inspection_tool class="EditorConfigPartialOverride" enabled="true" level="WEAK WARNING" enabled_by_default="true" />
+    <inspection_tool class="EditorConfigPatternEnumerationRedundancy" enabled="true" level="ERROR" enabled_by_default="true" />
+    <inspection_tool class="EditorConfigPatternRedundancy" enabled="true" level="WARNING" enabled_by_default="true" />
+    <inspection_tool class="EditorConfigReferenceCorrectness" enabled="true" level="ERROR" enabled_by_default="true" />
+    <inspection_tool class="EditorConfigRootDeclarationCorrectness" enabled="true" level="ERROR" enabled_by_default="true" />
+    <inspection_tool class="EditorConfigRootDeclarationUniqueness" enabled="true" level="ERROR" enabled_by_default="true" />
+    <inspection_tool class="EditorConfigShadowedOption" enabled="true" level="WARNING" enabled_by_default="true" />
+    <inspection_tool class="EditorConfigShadowingOption" enabled="true" level="WARNING" enabled_by_default="true" />
+    <inspection_tool class="EditorConfigSpaceInHeader" enabled="true" level="WEAK WARNING" enabled_by_default="true" />
+    <inspection_tool class="EditorConfigUnexpectedComma" enabled="true" level="ERROR" enabled_by_default="true" />
+    <inspection_tool class="EditorConfigUnusedDeclaration" enabled="true" level="WARNING" enabled_by_default="true" />
+    <inspection_tool class="EditorConfigValueCorrectness" enabled="true" level="ERROR" enabled_by_default="true" />
+    <inspection_tool class="EditorConfigValueUniqueness" enabled="true" level="ERROR" enabled_by_default="true" />
+    <inspection_tool class="EditorConfigWildcardRedundancy" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="EfferentObjectCouplingInspection" enabled="false" level="WEAK WARNING" enabled_by_default="false" />
     <inspection_tool class="ElvisOperatorCanBeUsedInspection" enabled="true" level="WEAK WARNING" enabled_by_default="true" />
     <inspection_tool class="EmptyCatchBlockJS" enabled="false" level="WARNING" enabled_by_default="false" />
@@ -626,7 +626,10 @@
     <inspection_tool class="PhpAssignmentReplaceableWithPrefixExpressionInspection" enabled="true" level="INFORMATION" enabled_by_default="true" />
     <inspection_tool class="PhpAttributeCanBeAddedToOverriddenMemberInspection" enabled="false" level="WEAK WARNING" enabled_by_default="false" />
     <inspection_tool class="PhpAttributeIsNotRepeatableInspection" enabled="false" level="WEAK WARNING" enabled_by_default="false" />
-    <inspection_tool class="PhpCSFixerValidationInspection" enabled="false" level="WEAK WARNING" enabled_by_default="false" />
+    <inspection_tool class="PhpCSFixerValidationInspection" enabled="true" level="WEAK WARNING" enabled_by_default="true">
+      <option name="CODING_STANDARD" value="Custom" />
+      <option name="CUSTOM_RULESET_PATH" value="$PROJECT_DIR$/zz_engine/.php_cs.dist" />
+    </inspection_tool>
     <inspection_tool class="PhpCSValidationInspection" enabled="true" level="phpcs" enabled_by_default="true">
       <option name="CODING_STANDARD" value="Custom" />
       <option name="CUSTOM_RULESET_PATH" value="$PROJECT_DIR$/zz_engine/dev/phpcs/ruleset.xml" />
@@ -762,7 +765,10 @@
     <inspection_tool class="PhpSignatureMismatchDuringInheritanceInspection" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="PhpSillyAssignmentInspection" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="PhpSingleStatementWithBracesInspection" enabled="false" level="INFORMATION" enabled_by_default="false" />
-    <inspection_tool class="PhpStanGlobal" enabled="false" level="WEAK WARNING" enabled_by_default="false" />
+    <inspection_tool class="PhpStanGlobal" enabled="true" level="WEAK WARNING" enabled_by_default="true">
+      <option name="level" value="7" />
+      <option name="config" value="$PROJECT_DIR$/zz_engine/phpstan.neon.dist" />
+    </inspection_tool>
     <inspection_tool class="PhpStatementHasEmptyBodyInspection" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="PhpStatementWithoutBracesInspection" enabled="false" level="INFORMATION" enabled_by_default="false" />
     <inspection_tool class="PhpStaticAsDynamicMethodCallInspection" enabled="false" level="WEAK WARNING" enabled_by_default="false" />
@@ -849,7 +855,9 @@
     <inspection_tool class="ProperNullCoalescingOperatorUsageInspection" enabled="true" level="WEAK WARNING" enabled_by_default="true" />
     <inspection_tool class="PropertyCanBeStaticInspection" enabled="true" level="WEAK WARNING" enabled_by_default="true" />
     <inspection_tool class="PropertyInitializationFlawsInspection" enabled="true" level="WEAK WARNING" enabled_by_default="true" />
-    <inspection_tool class="PsalmGlobal" enabled="false" level="WEAK WARNING" enabled_by_default="false" />
+    <inspection_tool class="PsalmGlobal" enabled="true" level="WEAK WARNING" enabled_by_default="true">
+      <option name="config" value="$PROJECT_DIR$/zz_engine/psalm.xml" />
+    </inspection_tool>
     <inspection_tool class="RandomApiMigrationInspection" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="RealpathInStreamContextInspection" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="RedundantElseClauseInspection" enabled="true" level="WARNING" enabled_by_default="true" />
@@ -962,7 +970,7 @@
       <option name="processComments" value="true" />
     </inspection_tool>
     <inspection_tool class="SqlAddNotNullColumnInspection" enabled="true" level="WARNING" enabled_by_default="true" />
-    <inspection_tool class="SqlAggregatesInspection" enabled="true" level="WARNING" enabled_by_default="true" />
+    <inspection_tool class="SqlAggregatesInspection" enabled="false" level="WARNING" enabled_by_default="false" />
     <inspection_tool class="SqlAmbiguousColumnInspection" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="SqlAutoIncrementDuplicateInspection" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="SqlCallNotationInspection" enabled="false" level="ERROR" enabled_by_default="false" />

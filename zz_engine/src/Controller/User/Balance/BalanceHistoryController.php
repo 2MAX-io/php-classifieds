@@ -17,9 +17,9 @@ class BalanceHistoryController extends AbstractUserController
      * @Route("/user/balance/history", name="app_user_balance_history")
      */
     public function balanceHistory(
-        CurrentUserService $currentUserService,
         UserBalanceService $userBalanceService,
-        UserBalanceHistoryService $userBalanceHistoryService
+        UserBalanceHistoryService $userBalanceHistoryService,
+        CurrentUserService $currentUserService
     ): Response {
         $this->dennyUnlessUser();
         $currentUser = $currentUserService->getUser();

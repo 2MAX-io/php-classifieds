@@ -9,7 +9,7 @@ use Twig\Extension\RuntimeExtensionInterface;
 
 class TwigListing implements RuntimeExtensionInterface
 {
-    public function adminShowActivate(Listing $listing): bool
+    public function listingToActivateForAdmin(Listing $listing): bool
     {
         if ($listing->getAdminRemoved()) {
             return false;
@@ -34,13 +34,17 @@ class TwigListing implements RuntimeExtensionInterface
         return true;
     }
 
-    public function adminShowReject(Listing $listing): bool
+    public function listingToRejectForAdmin(Listing $listing): bool
     {
         if ($listing->getAdminRemoved()) {
             return false;
         }
 
         if ($listing->getUserRemoved()) {
+            return false;
+        }
+
+        if ($listing->getAdminRejected()) {
             return false;
         }
 

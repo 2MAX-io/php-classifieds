@@ -1,20 +1,22 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Service\Payment\PaymentGateway;
 
 use App\Exception\UserVisibleException;
 use App\Helper\ExceptionHelper;
-use App\Helper\Integer;
+use App\Helper\IntegerHelper;
 use App\Service\Payment\Base\PaymentGatewayInterface;
 use App\Service\Payment\Dto\ConfirmPaymentConfigDto;
 use App\Service\Payment\Dto\ConfirmPaymentDto;
-use App\Service\Payment\Enum\PaymentGatewayEnum;
 use App\Service\Payment\Dto\PaymentDto;
 use App\Service\Payment\Enum\GatewayModeEnum;
+use App\Service\Payment\Enum\PaymentGatewayEnum;
 use App\Service\Payment\PaymentHelperService;
 use App\Service\Setting\SettingsService;
 use Omnipay\Common\GatewayInterface;
+use Omnipay\Common\Message\RedirectResponseInterface;
 use Omnipay\Omnipay;
 use Psr\Log\LoggerInterface;
 
@@ -45,6 +47,11 @@ class PayPalPaymentGateway implements PaymentGatewayInterface
         $this->logger = $logger;
     }
 
+    public static function getName(): string
+    {
+        return PaymentGatewayEnum::PAYPAL;
+    }
+
     public function createPayment(PaymentDto $paymentDto): void
     {
         try {
@@ -66,8 +73,8 @@ class PayPalPaymentGateway implements PaymentGatewayInterface
                 $paymentDto->setGatewayPaymentId($data['id']);
                 $paymentDto->setGatewayToken($data['id']);
                 $paymentDto->setGatewayStatus($data['state']);
-                if ($response->isRedirect()) {
-                    $paymentDto->setPaymentExecuteUrl($response->getRedirectUrl());
+                if ($response instanceof RedirectResponseInterface && $response->isRedirect()) {
+                    $paymentDto->setMakePaymentUrl($response->getRedirectUrl());
                 }
 
                 return;
@@ -108,7 +115,7 @@ class PayPalPaymentGateway implements PaymentGatewayInterface
                 $confirmPaymentDto->setGatewayPaymentId($data['id']);
                 $confirmPaymentDto->setGatewayStatus($data['state']);
                 $confirmPaymentDto->setConfirmed($response->isSuccessful());
-                $confirmPaymentDto->setGatewayAmount(Integer::toInteger($data['transactions'][0]['amount']['total'] * 100));
+                $confirmPaymentDto->setGatewayAmount(IntegerHelper::toInteger($data['transactions'][0]['amount']['total'] * 100));
 
                 return $confirmPaymentDto;
             }
@@ -125,29 +132,25 @@ class PayPalPaymentGateway implements PaymentGatewayInterface
         }
     }
 
+    public function getGatewayMode(): string
+    {
+        $paymentPayPalMode = $this->settingsService->getSettingsDto()->getPaymentPayPalMode();
+        if (null === $paymentPayPalMode) {
+            throw new \RuntimeException('PaymentPayPalMode is null');
+        }
+
+        return $paymentPayPalMode;
+    }
+
     private function getGateway(): GatewayInterface
     {
         $gateway = Omnipay::create('PayPal_Rest');
-
-        // sandbox / demo, client id and secret
-        // client id: AYSq3RDGsmBLJE-otTkBtM-jBRd1TCQwFf9RGfwddNXWz0uFU9ztymylOhRS
-        // client secret: EGnHDxD_qRPdaLdZz8iCr8N7_MzF-YHPTkjs6NKYQvQSBngp4PTTVWkPZRbL
         $gateway->initialize([
             'clientId' => $this->settingsService->getSettingsDto()->getPaymentPayPalClientId(),
             'secret' => $this->settingsService->getSettingsDto()->getPaymentPayPalClientSecret(),
-            'testMode' => $this->getGatewayMode() === GatewayModeEnum::SANDBOX,
+            'testMode' => GatewayModeEnum::SANDBOX === $this->getGatewayMode(),
         ]);
 
         return $gateway;
-    }
-
-    public function getGatewayMode(): string
-    {
-        return $this->settingsService->getSettingsDto()->getPaymentPayPalMode();
-    }
-
-    public static function getName(): string
-    {
-        return PaymentGatewayEnum::PAYPAL;
     }
 }

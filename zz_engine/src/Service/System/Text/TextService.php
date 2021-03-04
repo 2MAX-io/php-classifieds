@@ -4,55 +4,27 @@ declare(strict_types=1);
 
 namespace App\Service\System\Text;
 
-use App\Helper\Str;
-use App\Service\Setting\SettingsService;
+use App\Helper\StringHelper;
+use App\Service\Setting\SettingsDto;
 
 class TextService
 {
     /**
-     * @var SettingsService
+     * @var SettingsDto
      */
-    private $settingsService;
+    private $settingsDto;
 
-    public function __construct(SettingsService $settingsService)
+    public function __construct(SettingsDto $settingsDto)
     {
-        $this->settingsService = $settingsService;
-    }
-
-    public function normalizeUserInput(?string $text): ?string
-    {
-        if ($text === null) {
-            return null;
-        }
-
-        $return = $text;
-        $return = $this->removeNotAllowedCharacters($return);
-        $return = $this->removeTooManyNewLines($return);
-        $return = $this->forceLowerCaseIfAllCaps($return);
-        $return = \trim($return);
-
-        return $return;
-    }
-
-    public function removeNotAllowedCharacters(string $text): string
-    {
-        if (!$this->settingsService->getAllowedCharactersEnabled()) {
-            return $text;
-        }
-
-        $allowedCharacters = static::getAllowedCharacters();
-        $allowedCharacters .= $this->settingsService->getAllowedCharacters();
-        $allowedCharacters .= \mb_strtoupper($this->settingsService->getAllowedCharacters());
-
-        return \preg_replace('~[^'.\preg_quote($allowedCharacters, '~').']+~', '', $text);
+        $this->settingsDto = $settingsDto;
     }
 
     public static function getAllowedCharacters(): string
     {
         $allowedCharacters = ' ';
-        /** @noinspection SpellCheckingInspection */
+        /* @noinspection SpellCheckingInspection */
         $allowedCharacters .= 'qwertyuiopasdfghjklzxcvbnm';
-        /** @noinspection SpellCheckingInspection */
+        /* @noinspection SpellCheckingInspection */
         $allowedCharacters .= 'QWERTYUIOPASDFGHJKLZXCVBNM';
         $allowedCharacters .= '1234567890';
         $allowedCharacters .= '~!@#$%^&*_+-=?';
@@ -67,9 +39,40 @@ class TextService
         return $allowedCharacters;
     }
 
+    public function normalizeUserInput(?string $text): ?string
+    {
+        if (null === $text) {
+            return null;
+        }
+
+        $return = $text;
+        $return = $this->removeNotAllowedCharacters($return);
+        $return = $this->removeTooManyNewLines($return);
+        $return = $this->forceLowerCaseIfAllCaps($return);
+
+        return \trim($return);
+    }
+
+    public function removeNotAllowedCharacters(string $text): string
+    {
+        if (!$this->settingsDto->getAllowedCharactersEnabled()) {
+            return $text;
+        }
+
+        $allowedCharacters = static::getAllowedCharacters();
+        $allowedCharacters .= $this->settingsDto->getAllowedCharacters();
+        $allowedCharacters .= \mb_strtoupper($this->settingsDto->getAllowedCharacters());
+
+        return \preg_replace(
+            '~[^'.\preg_quote($allowedCharacters, '~').']+~',
+            '',
+            $text,
+        );
+    }
+
     public function removeTooManyNewLines(string $text, int $threshold = 2): string
     {
-        return \preg_replace('#(\r?\n){'.($threshold+2).',}#', "\r\n\r\n", $text);
+        return \preg_replace('~(\r?\n){'.($threshold + 2).',}~', "\r\n\r\n", $text);
     }
 
     public function forceLowerCaseIfAllCaps(string $text): string
@@ -85,29 +88,35 @@ class TextService
 
     public function removeWordsFromTitle(string $string): string
     {
-        $wordsToRemove = \explode("\n", $this->settingsService->getSettingsDto()->getWordsToRemoveFromTitle());
-        $wordsToRemove = \array_map(static function(string $element) {
-            if (\mb_strlen($element) < 2) {
-                return false;
+        $wordsToRemoveFromTitle = $this->settingsDto->getWordsToRemoveFromTitle();
+        $wordsToRemoveExploded = \explode("\n", $wordsToRemoveFromTitle);
+        $wordsToRemove = [];
+        foreach ($wordsToRemoveExploded as $word) {
+            if (\mb_strlen($word) < 2) {
+                continue;
             }
 
-            return \trim($element);
-        }, $wordsToRemove);
+            $wordsToRemove[] = \trim($word);
+        }
 
-        return \trim(Str::replaceIgnoreCase($string, $wordsToRemove, ''));
+        return \trim(StringHelper::replaceIgnoreCase($string, $wordsToRemove, ''));
     }
 
     private function calculateUpperCaseScore(string $text): float
     {
-        $upperAllowedChars = \mb_strtoupper($this->settingsService->getAllowedCharacters());
-        $uppercaseLetters = \preg_replace('#[^A-Z'. $upperAllowedChars .']#', '', $text);
+        $upperAllowedChars = \mb_strtoupper($this->settingsDto->getAllowedCharacters());
+        $uppercaseLetters = \preg_replace('~[^A-Z'.$upperAllowedChars.']~', '', $text);
         $uppercaseCount = \mb_strlen($uppercaseLetters);
 
         if ($uppercaseCount < 10) {
             return 0;
         }
 
-        $textWithoutWhiteChars = \preg_replace('~['.\preg_quote(" \r\n~'!@#$%^&*_+-=?[]{}()<>.,:;|/\\\"", '~').']~', '', $text);
+        $textWithoutWhiteChars = \preg_replace(
+            '~['.\preg_quote(" \r\n~'!@#$%^&*_+-=?[]{}()<>.,:;|/\\\"", '~').']~',
+            '',
+            $text
+        );
         $lettersCount = \mb_strlen($textWithoutWhiteChars);
 
         return $uppercaseCount / $lettersCount;

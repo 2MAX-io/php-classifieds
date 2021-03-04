@@ -5,22 +5,27 @@
 
     <div class="col-md-4">
         {% if listing.adminLastActivationDate %}
-            {{ 'trans.Admin last activation' | trans }}:{{ ' ' }}{{- listing.adminLastActivationDate | date -}}
+            {{- 'trans.Admin last activation' | trans -}}
+            {{ ': ' }}
+            {{- listing.adminLastActivationDate | date -}}
         {% else %}
             <span class="{% if settings.requireListingAdminActivation %}text-warning-color{% endif %}">
-                {{ 'trans.Admin last activation' | trans }}:{{ ' ' }}{{- 'trans.none' | trans -}}
+                {{- 'trans.Admin last activation' | trans -}}
+                {{- ': ' -}}
+                {{- 'trans.none' | trans -}}
             </span>
         {% endif %}
     </div>
     <div class="col-md-4">
-        {{ 'trans.Featured until' | trans }}:
-        {% if listing.featured and listing.featuredUntilDate %}
+        {{- 'trans.Featured until' | trans -}}
+        {{- ': ' -}}
+        {%- if listing.featured and listing.featuredUntilDate -%}
             <span class="{{ listing.featuredUntilDate | isExpired | displayTextWarning }}">
-                {{ listing.featuredUntilDate | date }}
+                {{- listing.featuredUntilDate | date -}}
             </span>
-        {% else %}
-            {{ 'trans.none' | trans }}
-        {% endif %}
+        {%- else -%}
+            {{- 'trans.none' | trans -}}
+        {%- endif -%}
     </div>
     <div class="col-md-4">
         {{ 'trans.Last edit' | trans }}: {{ listing.lastEditDate | date }}

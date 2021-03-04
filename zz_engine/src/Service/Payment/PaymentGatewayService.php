@@ -1,10 +1,11 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Service\Payment;
 
 use App\Service\Payment\Base\PaymentGatewayInterface;
-use App\Service\Setting\SettingsService;
+use App\Service\Setting\SettingsDto;
 use Psr\Log\LoggerInterface;
 
 class PaymentGatewayService
@@ -15,25 +16,28 @@ class PaymentGatewayService
     private $paymentMethodList;
 
     /**
-     * @var SettingsService
+     * @var SettingsDto
      */
-    private $settingsService;
+    private $settingsDto;
 
     /**
      * @var LoggerInterface
      */
     private $logger;
 
-    public function __construct(iterable $paymentMethodList, SettingsService $settingsService, LoggerInterface $logger)
+    /**
+     * @param iterable|PaymentGatewayInterface[] $paymentMethodList
+     */
+    public function __construct(iterable $paymentMethodList, SettingsDto $settingsDto, LoggerInterface $logger)
     {
         $this->paymentMethodList = $paymentMethodList;
-        $this->settingsService = $settingsService;
+        $this->settingsDto = $settingsDto;
         $this->logger = $logger;
     }
 
     public function getPaymentGateway(): PaymentGatewayInterface
     {
-        $paymentGatewayName = $this->settingsService->getPaymentGateway();
+        $paymentGatewayName = $this->settingsDto->getPaymentGateway();
         foreach ($this->paymentMethodList as $paymentMethod) {
             if ($paymentMethod::getName() === $paymentGatewayName) {
                 $this->logger->debug('using payment gateway: {paymentGateway}', [
@@ -44,6 +48,6 @@ class PaymentGatewayService
             }
         }
 
-        throw new \RuntimeException("payment gateway not found for: $paymentGatewayName");
+        throw new \RuntimeException("payment gateway not found: `{$paymentGatewayName}`");
     }
 }

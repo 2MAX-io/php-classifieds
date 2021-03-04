@@ -13,11 +13,13 @@
                 <div class="row mb-2">
                     <div class="col-md-6">
                         <h2 class="mb-3">
-                            {{ 'trans.Top up account' | trans }}
+                            {{- 'trans.Top up account' | trans -}}
                         </h2>
                     </div>
                     <div class="col-md-6 text-md-right">
-                        <a href="{{ path('app_user_balance_history') }}" class="btn btn-secondary mb-1">{{ 'trans.History of balance changes' | trans }}</a>
+                        <a href="{{ path('app_user_balance_history') }}" class="btn btn-secondary mb-1">
+                            {{- 'trans.History of balance changes' | trans -}}
+                        </a>
                     </div>
                 </div>
 
@@ -47,12 +49,12 @@
 
                 <button class="btn btn-primary">{{ 'trans.Top up account' | trans }}</button>
                 {{ form_end(form) }}
-
             </div>
         </div>
     </div>
 {% endblock %}
 
 {% block js %}
-    <script src="{{ asset('asset/page/payment/balance-top-up.js') }}"></script>
+    {{ encore_entry_link_tags('balance_top_up') }}
+    {{ encore_entry_script_tags('balance_top_up') }}
 {% endblock %}

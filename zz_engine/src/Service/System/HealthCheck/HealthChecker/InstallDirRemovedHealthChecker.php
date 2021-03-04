@@ -23,7 +23,7 @@ class InstallDirRemovedHealthChecker implements HealthCheckerInterface
 
     public function checkHealth(): HealthCheckResultDto
     {
-        if (\file_exists(FilePath::getPublicDir() . '/install')) {
+        if (\file_exists(FilePath::getPublicDir().'/install')) {
             return new HealthCheckResultDto(true, $this->trans->trans('trans.Install directory has not been removed'));
         }
 

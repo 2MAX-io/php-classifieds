@@ -3,29 +3,27 @@
 {% block title %}{{ 'trans.Edit Administrator' | trans }}{% endblock %}
 
 {% block body %}
-
 <div class="container mt-3">
-
     <div class="mb-4">
         <h1 class="text-break">{{ 'trans.Edit Administrator' | trans }}: {{ user.email }}</h1>
 
-        <a href="{{ path('app_admin_administrator_index') }}">{{ 'trans.back to list' | trans }}</a>
+        <a href="{{ path('app_admin_administrator_list') }}">{{ 'trans.back to list' | trans }}</a>
     </div>
 
     <table class="table">
         <tbody>
-        <tr>
-            <th>{{ 'trans.Email' | trans }}</th>
-            <td class="text-break">{{ user.email }}</td>
-        </tr>
-        <tr>
-            <th>{{ 'trans.Enabled' | trans }}</th>
-            <td>
-                <span class="{{ user.enabled | boolGreenRedClass }}">
-                    {{ user.enabled | boolText | trans }}
-                </span>
-            </td>
-        </tr>
+            <tr>
+                <th>{{ 'trans.Email' | trans }}</th>
+                <td class="text-break">{{ user.email }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'trans.Enabled' | trans }}</th>
+                <td>
+                    <span class="{{ user.enabled | boolGreenRedClass }}">
+                        {{- user.enabled | boolText | trans -}}
+                    </span>
+                </td>
+            </tr>
         </tbody>
     </table>
 

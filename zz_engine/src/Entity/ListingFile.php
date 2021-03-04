@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
-use App\Helper\ImageResizePath;
-use App\Service\System\Sort\SortService;
+use App\Enum\SortConfig;
+use App\Helper\ResizedImagePath;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\ListingFileRepository")
+ * @ORM\Entity()
  */
 class ListingFile
 {
@@ -73,6 +73,20 @@ class ListingFile
     private $fileHash;
 
     /**
+     * @var null|int
+     *
+     * @ORM\Column(type="smallint", nullable=true, options={"unsigned"=true})
+     */
+    private $imageWidth;
+
+    /**
+     * @var null|int
+     *
+     * @ORM\Column(type="smallint", nullable=true, options={"unsigned"=true})
+     */
+    private $imageHeight;
+
+    /**
      * @var bool
      *
      * @ORM\Column(type="boolean", nullable=false)
@@ -87,7 +101,7 @@ class ListingFile
     private $fileDeleted = false;
 
     /**
-     * @var \DateTimeInterface
+     * @var null|\DateTimeInterface
      *
      * @ORM\Column(type="datetime", nullable=true)
      */
@@ -98,16 +112,16 @@ class ListingFile
      *
      * @ORM\Column(type="smallint", nullable=false, options={"unsigned"=true})
      */
-    private $sort = SortService::LAST_VALUE;
+    private $sort = SortConfig::LAST_VALUE;
 
     public function getPathInListSize(): ?string
     {
-        return ImageResizePath::forType(ImageResizePath::LIST, $this->getPath());
+        return ResizedImagePath::forType(ResizedImagePath::LIST, $this->getPath());
     }
 
     public function getPathInNormalSize(): ?string
     {
-        return ImageResizePath::forType(ImageResizePath::NORMAL, $this->getPath());
+        return ResizedImagePath::forType(ResizedImagePath::NORMAL, $this->getPath());
     }
 
     public function getId(): ?int
@@ -234,7 +248,7 @@ class ListingFile
         $this->fileDeleted = $fileDeleted;
     }
 
-    public function getUploadDate(): \DateTimeInterface
+    public function getUploadDate(): ?\DateTimeInterface
     {
         return $this->uploadDate;
     }
@@ -242,5 +256,25 @@ class ListingFile
     public function setUploadDate(\DateTimeInterface $uploadDate): void
     {
         $this->uploadDate = $uploadDate;
+    }
+
+    public function getImageWidth(): ?int
+    {
+        return $this->imageWidth;
+    }
+
+    public function setImageWidth(?int $imageWidth): void
+    {
+        $this->imageWidth = $imageWidth;
+    }
+
+    public function getImageHeight(): ?int
+    {
+        return $this->imageHeight;
+    }
+
+    public function setImageHeight(?int $imageHeight): void
+    {
+        $this->imageHeight = $imageHeight;
     }
 }

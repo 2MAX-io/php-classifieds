@@ -6,12 +6,11 @@
     <meta charset="utf-8">
     <title>{% block title %}{{ 'trans.Admin' | trans }} - {{ 'trans.Classifieds' | trans }}{% endblock %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
     <meta name="msapplication-TileColor" content="#edeef0">
     <meta name="theme-color" content="#edeef0">
-
+    <meta name="robots" content="noindex">
     {% block stylesheets %}
-        <link rel="stylesheet" href="{{ asset('asset/build/admin.css') }}">
+        {{ encore_entry_link_tags('app_admin') }}
     {% endblock %}
 </head>
 <body class="{{ environmentCssClass() }}">
@@ -20,14 +19,18 @@
     <div class="container container-remove-padding">
         <nav class="navbar navbar-expand-lg navbar-light">
             <a class="navbar-brand" href="{{ path('app_admin_index') }}" title="{{ settings.indexPageTitle }}">
-                <img src="{{ asset(settings.logoPath | default('static/system/logo_default.png')) }}" alt="{{ settings.indexPageTitle }}" width="200">
+                <img
+                        class="admin-logo-side-menu"
+                        src="{{ asset(settings.logoPath | default('static/system/logo_default.png')) }}"
+                        alt="{{ 'trans.Admin panel' | trans }}"
+                >
             </a>
 
             <button
                     class="navbar-toggler"
                     type="button"
                     data-toggle="collapse"
-                    data-target="#adminSidebar"
+                    data-target="#js__adminSidebar"
                     aria-expanded="false"
             >
                 <span class="navbar-toggler-icon"></span>
@@ -38,103 +41,97 @@
 
 <div class="container-fluid">
     <div class="row">
-
         {% if app.user %}
-            <nav class="col-lg-3 col-xl-2 d-none-soft d-lg-block bg-light sidebar" id="adminSidebar">
+            <nav class="col-lg-3 col-xl-2 d-none-soft d-lg-block bg-light sidebar" id="js__adminSidebar">
                 <div class="sidebar-sticky">
-
-                    <div id="logo" class="sm-text-center mb-3 d-none d-lg-block logo-admin">
-                        <a
-                                href="{{ path('app_admin_index') }}"
-                                title="{{ 'trans.Classifieds'|trans }}"
-                                class="d-block"
-                        >
-                            <img src="{{ asset(settings.logoPath | default('static/system/logo_default.png')) }}" alt="{{ 'trans.Classifieds' | trans }}" class="admin-logo">
+                    <div id="logo" class="logo-admin d-none d-lg-block mb-3 text-center">
+                        <a href="{{ path('app_admin_index') }}" title="{{ 'trans.Classifieds'|trans }}" class="d-block">
+                            <img src="{{ asset(settings.logoPath | default('static/system/logo_default.png')) }}" alt="{{ 'trans.Admin panel' | trans }}" class="admin-logo">
                         </a>
                     </div>
 
                     <ul class="nav flex-column">
                         <li class="nav-item my-3">
                             <a class="btn btn-secondary w-100" href="{{ path('app_index') }}">
-                                {{ 'trans.Public classifieds' | trans }}
+                                {{- 'trans.Public classifieds' | trans -}}
                             </a>
                         </li>
 
                         <li class="nav-item">
                             <a class="nav-link" href="{{ path('app_admin_index') }}">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                                <i class="svg svg-home"></i>
                                 {{ 'trans.Admin Dashboard' | trans }}
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ path('app_admin_listing_activate_list') }}">
-                                <svg class="feather" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" focusable="false" width="0.88em" height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 448 512"><path d="M400 32H48C21.49 32 0 53.49 0 80v352c0 26.51 21.49 48 48 48h352c26.51 0 48-21.49 48-48V80c0-26.51-21.49-48-48-48zm0 400H48V80h352v352zm-35.864-241.724L191.547 361.48c-4.705 4.667-12.303 4.637-16.97-.068l-90.781-91.516c-4.667-4.705-4.637-12.303.069-16.971l22.719-22.536c4.705-4.667 12.303-4.637 16.97.069l59.792 60.277 141.352-140.216c4.705-4.667 12.303-4.637 16.97.068l22.536 22.718c4.667 4.706 4.637 12.304-.068 16.971z" fill="currentColor"></path></svg>
+                                <i class="svg svg-check"></i>
                                 {{ 'trans.Activate' | trans }}
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ path('app_admin_listing_search') }}">
-                                <svg class="feather" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024"><path d="M909.6 854.5L649.9 594.8C690.2 542.7 712 479 712 412c0-80.2-31.3-155.4-87.9-212.1-56.6-56.7-132-87.9-212.1-87.9s-155.5 31.3-212.1 87.9C143.2 256.5 112 331.8 112 412c0 80.1 31.3 155.5 87.9 212.1C256.5 680.8 331.8 712 412 712c67 0 130.6-21.8 182.7-62l259.7 259.6a8.2 8.2 0 0 0 11.6 0l43.6-43.5a8.2 8.2 0 0 0 0-11.6zM570.4 570.4C528 612.7 471.8 636 412 636s-116-23.3-158.4-65.6C211.3 528 188 471.8 188 412s23.3-116.1 65.6-158.4C296 211.3 352.2 188 412 188s116.1 23.2 158.4 65.6S636 352.2 636 412s-23.3 116.1-65.6 158.4z" fill="currentColor"></path></svg>
+                                <i class="svg svg-search"></i>
                                 {{ 'trans.Search listings' | trans }}
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ path('app_admin_user_index') }}">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-users"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                            <a class="nav-link" href="{{ path('app_admin_user_list') }}">
+                                <i class="svg svg-users"></i>
                                 {{ 'trans.Users' | trans }}
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ path('app_admin_administrator_index') }}">
-                                <svg class="feather" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1.25em" height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 640 512"><path d="M528 448H112c-8.8 0-16 7.2-16 16v32c0 8.8 7.2 16 16 16h416c8.8 0 16-7.2 16-16v-32c0-8.8-7.2-16-16-16zm64-320c-26.5 0-48 21.5-48 48 0 7.1 1.6 13.7 4.4 19.8L476 239.2c-15.4 9.2-35.3 4-44.2-11.6L350.3 85C361 76.2 368 63 368 48c0-26.5-21.5-48-48-48s-48 21.5-48 48c0 15 7 28.2 17.7 37l-81.5 142.6c-8.9 15.6-28.9 20.8-44.2 11.6l-72.3-43.4c2.7-6 4.4-12.7 4.4-19.8 0-26.5-21.5-48-48-48S0 149.5 0 176s21.5 48 48 48c2.6 0 5.2-.4 7.7-.8L128 416h384l72.3-192.8c2.5.4 5.1.8 7.7.8 26.5 0 48-21.5 48-48s-21.5-48-48-48z" fill="currentColor"></path></svg>
+                            <a class="nav-link" href="{{ path('app_admin_administrator_list') }}">
+                                <i class="svg svg-crown"></i>
                                 {{ 'trans.Administrators' | trans }}
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ path('app_admin_page_index') }}">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg>
+                            <a class="nav-link" href="{{ path('app_admin_page_list') }}">
+                                <i class="svg svg-file-empty"></i>
                                 {{ 'trans.Subpages' | trans }}
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ path('app_admin_category') }}">
-                                <svg class="feather" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="0.77em" height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 551 717"><path d="M83 0L28 56h496L469 0H83zm468 276H0V83h551v193zm-165-55v-55H166v55h27v-28h165v28h28zm165 276H0V304h551v193zm-165-55v-56H166v56h27v-28h165v28h28zm165 275H0V525h551v192zm-165-55v-55H166v55h27v-28h165v28h28z" fill="currentColor"></path></svg>
+                                <i class="svg svg-archive"></i>
                                 {{ 'trans.Categories' | trans }}
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ path('app_admin_custom_field_index') }}">
-                                <svg class="feather" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path d="M19 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zM6 6h5v5H6V6zm4.5 13a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5zm3-6l3-5 3 5h-6z" fill="currentColor"></path></svg>
+                            <a class="nav-link" href="{{ path('app_admin_custom_field_list') }}">
+                                <i class="svg svg-blocks"></i>
                                 {{ 'trans.Custom fields' | trans }}
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ path('app_admin_featured_package_index') }}">
-                                <svg class="feather"  stroke="currentColor" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 32 32"><g fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M16 2l4 10h10l-8 7 3 11-9-7-9 7 3-11-8-7h10z"></path></g></svg>
+                            <a class="nav-link" href="{{ path('app_admin_featured_package_list') }}">
+                                <i class="svg svg-star"></i>
                                 {{ 'trans.Featured packages' | trans }}
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ path('app_admin_payment_index') }}">
-                                <svg class="feather" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="0.59em" height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 224 384"><path d="M117 169q46 11 73 32t27 61q0 32-20.5 51T143 338v46H79v-46q-34-7-55.5-28T0 256h47q4 45 64 45 31 0 44-12t13-26q0-17-13.5-30T104 211Q4 187 4 123q0-29 21-49.5T79 46V0h64v47q32 8 49.5 30t18.5 51h-47q-2-45-53-45-27 0-42.5 11T53 123q0 15 14 25.5t50 20.5z" fill="currentColor"></path></svg>
+                            <a class="nav-link" href="{{ path('app_admin_payment_list') }}">
+                                <i class="svg svg-dollar"></i>
                                 {{ 'trans.Payments' | trans }}
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ path('app_admin_invoice_list') }}">
-                                <svg class="feather" fill="currentColor" height="24" viewBox="0 0 480 480" width="24" xmlns="http://www.w3.org/2000/svg"><path d="m215 164c0 57.897 47.103 105 105 105s105-47.103 105-105-47.103-105-105-105-105 47.103-105 105zm194 0c0 49.075-39.925 89-89 89s-89-39.925-89-89 39.925-89 89-89 89 39.925 89 89zm-89-54c4.418 0 8 3.582 8 8v3.376c9.311 3.303 16 12.195 16 22.624 0 4.418-3.582 8-8 8s-8-3.582-8-8c0-4.411-3.589-8-8-8s-8 3.589-8 8v3.237c0 3.518 2.256 6.586 5.614 7.636l9.544 2.982c10.074 3.149 16.842 12.355 16.842 22.908v3.237c0 11.519-8.159 21.166-19 23.473v2.527c0 4.418-3.582 8-8 8s-8-3.582-8-8v-4.68c-7.714-3.996-13-12.05-13-21.32 0-4.418 3.582-8 8-8s8 3.582 8 8c0 4.411 3.589 8 8 8s8-3.589 8-8v-3.237c0-3.518-2.256-6.586-5.614-7.636l-9.544-2.982c-10.074-3.149-16.842-12.355-16.842-22.908v-3.237c0-10.429 6.689-19.321 16-22.624v-3.376c0-4.418 3.582-8 8-8zm130 212v102c0 30.879-25.122 56-56 56h-308c-30.878 0-56-25.121-56-56v-392c0-17.645 14.355-32 32-32h260c17.645 0 32 14.355 32 32 0 4.418-3.582 8-8 8s-8-3.582-8-8c0-8.822-7.178-16-16-16h-260c-8.822 0-16 7.178-16 16v392c0 22.056 17.944 40 40 40h268.862c-10.395-10.172-16.862-24.342-16.862-40v-125c0-4.418 3.582-8 8-8s8 3.582 8 8v125c0 22.056 17.944 40 40 40s40-17.944 40-40v-102c0-8.822-7.178-16-16-16h-34c-4.418 0-8-3.582-8-8s3.582-8 8-8h34c17.645 0 32 14.355 32 32zm-350-107c0-4.418 3.582-8 8-8h68c4.418 0 8 3.582 8 8s-3.582 8-8 8h-68c-4.418 0-8-3.582-8-8zm0-90c0-4.418 3.582-8 8-8h68c4.418 0 8 3.582 8 8s-3.582 8-8 8h-68c-4.418 0-8-3.582-8-8zm184 180c0 4.418-3.582 8-8 8h-168c-4.418 0-8-3.582-8-8s3.582-8 8-8h168c4.418 0 8 3.582 8 8zm0 84c0 4.418-3.582 8-8 8h-168c-4.418 0-8-3.582-8-8s3.582-8 8-8h168c4.418 0 8 3.582 8 8z"/></svg>
+                                <i class="svg svg-invoice"></i>
                                 {{ 'trans.Invoices' | trans }}
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ path('app_admin_upgrade') }}">
-                                <svg class="feather" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1024 1024"><path d="M880 112H144c-17.7 0-32 14.3-32 32v736c0 17.7 14.3 32 32 32h736c17.7 0 32-14.3 32-32V144c0-17.7-14.3-32-32-32zM690 624h-46.9c-10.2 0-19.9-4.9-25.9-13.2L512 465.4 406.8 610.8c-6 8.3-15.6 13.2-25.9 13.2H334c-6.5 0-10.3-7.4-6.5-12.7l178-246c3.2-4.4 9.7-4.4 12.9 0l178 246c3.9 5.3.1 12.7-6.4 12.7z" fill="currentColor"></path></svg>
+                                <i class="svg svg-button-up"></i>
                                 {{ 'trans.Upgrade' | trans }}
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ path('app_admin_settings') }}">
-                                <svg class="feather" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 32 32"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M13 2v4l-2 1-3-3-4 4 3 3-1 2H2v6h4l1 2-3 3 4 4 3-3 2 1v4h6v-4l2-1 3 3 4-4-3-3 1-2h4v-6h-4l-1-2 3-3-4-4-3 3-2-1V2z"></path><circle cx="16" cy="16" r="4"></circle></g></svg>
+                                <i class="svg svg-gear"></i>
                                 {{ 'trans.Settings' | trans }}
                             </a>
                         </li>
@@ -148,14 +145,14 @@
                         {% if settings.masterSiteLinkShow %}
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ settings.masterSiteUrl }}">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                                    <i class="svg svg-file"></i>
                                     {{ settings.masterSiteAnchorText }}
                                 </a>
                             </li>
                         {% endif %}
                         <li class="nav-item">
                             <a class="nav-link" href="https://documentation.2max.io/display/CLAS">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                                <i class="svg svg-file"></i>
                                 {{ 'trans.Documentation' | trans }}
                             </a>
                         </li>
@@ -163,7 +160,7 @@
 
                     <div class="mt-5">
                         <a href="{{ path('app_logout') }}" class="btn btn-dark w-100">
-                            {{ 'trans.Logout' | trans }}
+                            {{- 'trans.Logout' | trans -}}
                         </a>
                     </div>
                 </div>
@@ -171,29 +168,24 @@
         {% endif %}
 
         <main class="col-lg-9 col-xl-10 px-2">
-
             {% block body %}{% endblock body %}
 
             <!-- footer -->
             <footer class="pt-2 mt-1 mt-md-2 mb-2 pt-md-4 border-top">
-                <small class="d-block mb-3 text-muted">{{ settings.footerSiteCopyright | replace({"%year%": "now" | date('Y')}) }}</small>
+                <small class="d-block mb-3 text-muted">
+                    {{- settings.footerSiteCopyright | replace({"%year%": "now" | date('Y')}) -}}
+                </small>
             </footer>
-
         </main>
     </div>
 </div>
-
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css">
+{{ encore_entry_link_tags('app_admin_bottom') }}
 
 {% block javascripts %}
-    {{ nelmio_js_error_logger() }}
-    <script type="application/json" id="js__dataForJs">{{ dataForJs | default([]) | inlineJson | base64_encode }}</script>
-    <script src="{{ asset('asset/build/admin.js') }}"></script>
-
-    <script src="{{ path('bazinga_jstranslation_js') }}"></script>
-    <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
+    <param id="js__dataForJs" value="{{ dataForJs | default([]) | processDataForJs }}" name="dataForJs" class="d-none">
+    {{ encore_entry_script_tags('app_admin') }}
+    {{ encore_entry_script_tags('app_admin_bottom') }}
 {% endblock %}
 {% block js %}{% endblock %}
-
 </body>
 </html>

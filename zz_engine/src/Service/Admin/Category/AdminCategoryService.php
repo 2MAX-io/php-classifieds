@@ -5,27 +5,38 @@ declare(strict_types=1);
 namespace App\Service\Admin\Category;
 
 use App\Entity\Category;
-use App\Service\System\Sort\SortService;
+use App\Enum\SortConfig;
+use App\Repository\CategoryRepository;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\EntityManagerInterface;
+use StefanoTree\NestedSet;
 
 class AdminCategoryService
 {
+    /**
+     * @var CategoryRepository
+     */
+    private $categoryRepository;
+
     /**
      * @var EntityManagerInterface
      */
     private $em;
 
-    public function __construct(EntityManagerInterface $em)
+    public function __construct(CategoryRepository $categoryRepository, EntityManagerInterface $em)
     {
+        $this->categoryRepository = $categoryRepository;
         $this->em = $em;
     }
 
     /**
      * @return Category[]
      */
-    public function getCategoryList(): array
+    public function getCategoriesWithChildren(): array
     {
-        $qb = $this->em->getRepository(Category::class)->createQueryBuilder('category1');
+        $qb = $this->em->createQueryBuilder();
+        $qb->select('category1');
+        $qb->from(Category::class, 'category1');
         $qb->addSelect('category2');
         $qb->addSelect('category3');
         $qb->addSelect('category4');
@@ -42,38 +53,50 @@ class AdminCategoryService
         $qb->leftJoin('category6.children', 'category7');
         $qb->leftJoin('category7.children', 'category8');
         $qb->leftJoin('category8.children', 'category9');
-        $qb->andWhere($qb->expr()->eq('category1.lvl', 1));
 
-        $qb->addOrderBy('category1.sort', 'ASC');
-        $qb->addOrderBy('category2.sort', 'ASC');
-        $qb->addOrderBy('category3.sort', 'ASC');
-        $qb->addOrderBy('category4.sort', 'ASC');
-        $qb->addOrderBy('category5.sort', 'ASC');
-        $qb->addOrderBy('category6.sort', 'ASC');
-        $qb->addOrderBy('category7.sort', 'ASC');
-        $qb->addOrderBy('category8.sort', 'ASC');
-        $qb->addOrderBy('category9.sort', 'ASC');
+        $qb->addOrderBy('category1.sort', Criteria::ASC);
+        $qb->addOrderBy('category2.sort', Criteria::ASC);
+        $qb->addOrderBy('category3.sort', Criteria::ASC);
+        $qb->addOrderBy('category4.sort', Criteria::ASC);
+        $qb->addOrderBy('category5.sort', Criteria::ASC);
+        $qb->addOrderBy('category6.sort', Criteria::ASC);
+        $qb->addOrderBy('category7.sort', Criteria::ASC);
+        $qb->addOrderBy('category8.sort', Criteria::ASC);
+        $qb->addOrderBy('category9.sort', Criteria::ASC);
+
+        $qb->andWhere($qb->expr()->eq('category1.lvl', 1));
 
         return $qb->getQuery()->getResult();
     }
 
+    /**
+     * @param int[] $orderedCategoryIdList
+     */
     public function saveOrder(array $orderedCategoryIdList): void
     {
-        $categories = $this->em->getRepository(Category::class)->getFromIds($orderedCategoryIdList);
+        $categories = $this->categoryRepository->getFromIds($orderedCategoryIdList);
 
         $sort = 1;
         foreach ($orderedCategoryIdList as $categoryId) {
             $category = $categories[$categoryId];
             $category->setSort($sort);
             $this->em->persist($category);
-            $sort++;
+            ++$sort;
         }
     }
 
-    public function reorderSort(): void
+    public function resetOrderOfAllCategories(): void
     {
-        $categoryRepository = $this->em->getRepository(Category::class);
-        $qb = $categoryRepository->createQueryBuilder('category1');
+        $rootNodeCategory = $this->categoryRepository->getRootNode();
+        $tree = new NestedSet([
+            'tableName' => 'category',
+            'idColumnName' => 'id',
+            'levelColumnName' => 'lvl',
+        ], $this->em->getConnection());
+
+        $tree->rebuild($rootNodeCategory->getId());
+
+        $qb = $this->categoryRepository->createQueryBuilder('category1');
         $qb->addSelect('category2');
         $qb->addSelect('category3');
         $qb->addSelect('category4');
@@ -90,38 +113,39 @@ class AdminCategoryService
         $qb->leftJoin('category6.children', 'category7');
         $qb->leftJoin('category7.children', 'category8');
         $qb->leftJoin('category8.children', 'category9');
-        $qb->andWhere($qb->expr()->eq('category1.id', $categoryRepository->getRootNode()->getId()));
 
-        $qb->addOrderBy('category1.sort', 'ASC');
-        $qb->addOrderBy('category2.sort', 'ASC');
-        $qb->addOrderBy('category3.sort', 'ASC');
-        $qb->addOrderBy('category4.sort', 'ASC');
-        $qb->addOrderBy('category5.sort', 'ASC');
-        $qb->addOrderBy('category6.sort', 'ASC');
-        $qb->addOrderBy('category7.sort', 'ASC');
-        $qb->addOrderBy('category8.sort', 'ASC');
-        $qb->addOrderBy('category9.sort', 'ASC');
+        $qb->addOrderBy('category1.sort', Criteria::ASC);
+        $qb->addOrderBy('category2.sort', Criteria::ASC);
+        $qb->addOrderBy('category3.sort', Criteria::ASC);
+        $qb->addOrderBy('category4.sort', Criteria::ASC);
+        $qb->addOrderBy('category5.sort', Criteria::ASC);
+        $qb->addOrderBy('category6.sort', Criteria::ASC);
+        $qb->addOrderBy('category7.sort', Criteria::ASC);
+        $qb->addOrderBy('category8.sort', Criteria::ASC);
+        $qb->addOrderBy('category9.sort', Criteria::ASC);
 
-        /** @var Category $rootCategory */
-        $rootCategory = $qb->getQuery()->getSingleResult();
+        $qb->andWhere($qb->expr()->eq('category1.id', $rootNodeCategory->getId()));
 
-        $rootCategory->setSort(0);
-        $this->reorderCategoryAndChildren($rootCategory, SortService::START_REORDER_FROM);
+        /** @var Category $rootCategoryWithChildren */
+        $rootCategoryWithChildren = $qb->getQuery()->getSingleResult();
+        $rootCategoryWithChildren->setSort(0);
+
+        $sortOrderValue = SortConfig::START_REORDER_FROM;
+        $this->resetOrderOfCategoryAndChildren($rootCategoryWithChildren, $sortOrderValue);
     }
 
-    private function reorderCategoryAndChildren(Category $parentCategory, int $baseSort = null): void
-    {
-        static $sort;
-        if ($baseSort !== null) {
-            $sort = $baseSort;
-        }
+    private function resetOrderOfCategoryAndChildren(
+        Category $parentCategory,
+        int &$sortOrderValue = SortConfig::START_REORDER_FROM
+    ): void {
         foreach ($parentCategory->getChildren() as $category) {
-            $sort++;
-            $category->setSort($sort);
+            /** @var int $sortOrderValue */
+            ++$sortOrderValue;
+            $category->setSort($sortOrderValue);
             $this->em->persist($category);
 
-            if ($category->getChildren()) {
-                $this->reorderCategoryAndChildren($category);
+            if ($category->getChildren()->count()) {
+                $this->resetOrderOfCategoryAndChildren($category, $sortOrderValue);
             }
         }
     }

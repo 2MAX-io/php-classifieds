@@ -13,42 +13,43 @@ class AppExtension extends AbstractExtension
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('lowSecurityCheckIsAdminInPublic', [TwigUser::class, 'lowSecurityCheckIsAdminInPublic']),
+            // returning raw unsafe html:
+            new TwigFunction('setOptionSelectedAttr', [TwigForm::class, 'setOptionSelectedAttr'], ['is_safe' => ['html']]),
+
+            // returning safe HTML:
+            new TwigFunction('settings', [TwigSettings::class, 'settings']),
+            new TwigFunction('environmentCssClass', [TwigEnvironment::class, 'environmentCssClass']),
             new TwigFunction('isCurrentUserListing', [TwigUser::class, 'isCurrentUserListing']),
-            new TwigFunction('getListingStatus', [TwigListingStatus::class, 'getListingStatus']),
-            new TwigFunction('getListingStatusClass', [TwigListingStatus::class, 'getListingStatusClass']),
-            new TwigFunction('adminShowActivate', [TwigListing::class, 'adminShowActivate']),
-            new TwigFunction('adminShowReject', [TwigListing::class, 'adminShowReject']),
             new TwigFunction('displayAsExpired', [TwigUser::class, 'displayAsExpired']),
             new TwigFunction('userOrAdmin', [TwigUser::class, 'userOrAdmin']),
-            new TwigFunction('settings', [TwigSettings::class, 'settings']),
-            new TwigFunction('getCleaveConfig', [TwigNoDependencies::class, 'getCleaveConfig']),
-            new TwigFunction('optionAttr', [TwigForm::class, 'optionAttr'], ['is_safe' => ['html']]),
-            new TwigFunction('returnPlusIfPositive', [TwigNoDependencies::class, 'returnPlusIfPositive']),
-            new TwigFunction('diffToNowWithinSeconds', [TwigNoDependencies::class, 'diffToNowWithinSeconds']),
-            new TwigFunction('environmentCssClass', [TwigEnvironment::class, 'environmentCssClass']),
+            new TwigFunction('isAdminInPublic', [TwigUser::class, 'isAdminInPublic']),
+            new TwigFunction('getListingStatus', [TwigListingStatus::class, 'getListingStatus']),
+            new TwigFunction('getListingStatusClass', [TwigListingStatus::class, 'getListingStatusClass']),
+            new TwigFunction('listingToActivateForAdmin', [TwigListing::class, 'listingToActivateForAdmin']),
+            new TwigFunction('listingToRejectForAdmin', [TwigListing::class, 'listingToRejectForAdmin']),
+            new TwigFunction('plusPrefixForPositiveNumber', [TwigNoDependencies::class, 'plusPrefixForPositiveNumber']),
         ];
     }
 
     public function getFilters(): array
     {
         return [
-            new TwigFilter('inlineJson', [InlineJson::class, 'inlineJson'], ['is_safe' => ['html']]),
-            new TwigFilter('normalizeWhitespace', [TwigNoDependencies::class, 'normalizeWhitespace'], ['is_safe' => ['html']]),
+            // returning raw unsafe html:
+            new TwigFilter('processDataForJs', [DataForJs::class, 'processDataForJs'], ['is_safe' => ['html']]),
             new TwigFilter('linkify', [TwigNoDependencies::class, 'linkify'], ['is_safe' => ['html']]),
             new TwigFilter('linkifyDoFollow', [TwigNoDependencies::class, 'linkifyDoFollow'], ['is_safe' => ['html']]),
 
+            // returning safe HTML:
             new TwigFilter('boolText', [TwigNoDependencies::class, 'boolText']),
             new TwigFilter('displayTextWarning', [TwigNoDependencies::class, 'displayTextWarning']),
             new TwigFilter('isExpired', [TwigNoDependencies::class, 'isExpired']),
-            new TwigFilter('moneyPrecise', [TwigNoDependencies::class, 'moneyPrecise']),
-            new TwigFilter('money', [TwigNoDependencies::class, 'money']),
+            new TwigFilter('boolGreenRedClass', [TwigNoDependencies::class, 'boolGreenRedClass']),
             new TwigFilter('defaultTrans', [TwigTranslator::class, 'defaultTrans']),
             new TwigFilter('phone', [TwigPhone::class, 'phone']),
-            new TwigFilter('thousandsSeparate', [TwigNoDependencies::class, 'thousandsSeparate']),
-            new TwigFilter('boolGreenRedClass', [TwigNoDependencies::class, 'boolGreenRedClass']),
-            new TwigFilter('base64_encode', [TwigNoDependencies::class, 'base64_encode']),
             new TwigFilter('displayUserName', [TwigUser::class, 'displayUserName']),
+            new TwigFilter('money', [TwigSettings::class, 'money']),
+            new TwigFilter('moneyPrecise', [TwigSettings::class, 'moneyPrecise']),
+            new TwigFilter('thousandsSeparate', [TwigSettings::class, 'thousandsSeparate']),
         ];
     }
 }

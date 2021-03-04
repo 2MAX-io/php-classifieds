@@ -8,12 +8,23 @@ use App\Controller\User\Base\AbstractUserController;
 use App\Entity\Listing;
 use App\Form\ValidityExtendType;
 use App\Service\Listing\ValidityExtend\ValidUntilSetService;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class ValidityExtendController extends AbstractUserController
 {
+    /**
+     * @var EntityManagerInterface
+     */
+    private $em;
+
+    public function __construct(EntityManagerInterface $em)
+    {
+        $this->em = $em;
+    }
+
     /**
      * @Route("/user/validity-extend/{id}", name="app_user_validity_extend")
      */
@@ -25,18 +36,16 @@ class ValidityExtendController extends AbstractUserController
         $this->dennyUnlessCurrentUserAllowed($listing);
 
         $form = $this->createForm(ValidityExtendType::class, []);
-
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $validUntilSetService->setValidityDaysFromNow(
                 $listing,
-                (int) $form->get('validityTimeDays')->getData()
+                (int) $form->get('validityTimeDays')->getData(),
             );
-            $validUntilSetService->validityExtendedByUser($listing);
+            $validUntilSetService->onValidityExtendedByUser($listing);
 
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($listing);
-            $em->flush();
+            $this->em->persist($listing);
+            $this->em->flush();
 
             return $this->redirectToRoute('app_user_validity_extend', ['id' => $listing->getId()]);
         }

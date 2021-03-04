@@ -6,7 +6,7 @@ namespace App\Controller\User\Invoice;
 
 use App\Controller\User\Base\AbstractUserController;
 use App\Form\UserInvoiceDetailsType;
-use App\Service\FlashBag\FlashService;
+use App\Service\System\FlashBag\FlashService;
 use App\Service\User\Invoice\UserInvoiceDetailsService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,12 +16,21 @@ use Symfony\Component\Routing\Annotation\Route;
 class UserInvoiceDetailsController extends AbstractUserController
 {
     /**
+     * @var EntityManagerInterface
+     */
+    private $em;
+
+    public function __construct(EntityManagerInterface $em)
+    {
+        $this->em = $em;
+    }
+
+    /**
      * @Route("/user/invoice/user-invoice-details", name="app_user_invoice_details")
      */
     public function userInvoiceDetails(
         Request $request,
         UserInvoiceDetailsService $userInvoiceDetailsService,
-        EntityManagerInterface $em,
         FlashService $flashService
     ): Response {
         $this->dennyUnlessUser();
@@ -30,12 +39,12 @@ class UserInvoiceDetailsController extends AbstractUserController
         $form = $this->createForm(UserInvoiceDetailsType::class, $userInvoiceDetails);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $em->persist($userInvoiceDetails);
-            $em->flush();
+            $this->em->persist($userInvoiceDetails);
+            $this->em->flush();
 
             $flashService->addFlash(
                 FlashService::SUCCESS_ABOVE_FORM,
-                'trans.Saved successfully'
+                'trans.Saved successfully',
             );
 
             return $this->redirectToRoute('app_user_invoice_details');

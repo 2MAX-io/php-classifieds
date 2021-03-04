@@ -17,30 +17,37 @@ class HealthCheckService
     private $healthCheckerList;
 
     /**
+     * @var TranslatorInterface
+     */
+    private $trans;
+
+    /**
      * @var LoggerInterface
      */
     private $logger;
 
     /**
-     * @var TranslatorInterface
+     * @param HealthCheckerInterface[]|iterable $healthCheckerList
      */
-    private $trans;
-
     public function __construct(iterable $healthCheckerList, TranslatorInterface $trans, LoggerInterface $logger)
     {
         $this->healthCheckerList = $healthCheckerList;
-        $this->logger = $logger;
         $this->trans = $trans;
+        $this->logger = $logger;
     }
 
+    /**
+     * @return string[]
+     */
     public function getProblems(): array
     {
         $return = [];
+
         try {
             foreach ($this->healthCheckerList as $healthChecker) {
                 $healthCheckResultDto = $healthChecker->checkHealth();
-                if ($healthCheckResultDto->isProblem()) {
-                    $return[] = $healthCheckResultDto->getMessage();
+                if ($healthCheckResultDto->hasProblem()) {
+                    $return[] = $healthCheckResultDto->getMessageNotNull();
                 }
             }
         } catch (\Throwable $e) {

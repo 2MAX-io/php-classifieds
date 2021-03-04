@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Form\Admin;
 
-use App\Entity\Admin;
+use App\Entity\System\Admin;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
@@ -34,7 +34,7 @@ class AdministratorEditType extends AbstractType
                 'constraints' => [
                     new NotBlank(),
                     new Email([
-                        'mode' => Email::VALIDATION_MODE_STRICT
+                        'mode' => Email::VALIDATION_MODE_STRICT,
                     ]),
                 ],
             ]
@@ -46,14 +46,20 @@ class AdministratorEditType extends AbstractType
             [
                 'first_options' => [
                     'label' => 'trans.New password',
+                    'attr' => [
+                        'autocomplete' => 'new-password',
+                    ],
                 ],
                 'second_options' => [
                     'label' => 'trans.Repeat new password',
+                    'attr' => [
+                        'autocomplete' => 'new-password',
+                    ],
                 ],
                 'type' => PasswordType::class,
                 'invalid_message' => 'Repeated value does note match',
                 'constraints' => [
-                    new Length(['min' => 8, 'max' => 100,]),
+                    new Length(['min' => 8, 'max' => 100]),
                 ],
             ]
         );

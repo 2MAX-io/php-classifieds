@@ -5,16 +5,17 @@ declare(strict_types=1);
 namespace App\Controller\User\Account;
 
 use App\Controller\User\Base\AbstractUserController;
-use App\Entity\Token;
-use App\Entity\TokenField;
+use App\Entity\System\Token;
+use App\Entity\System\TokenField;
 use App\Entity\User;
 use App\Enum\ParamEnum;
 use App\Form\User\Account\RegisterType;
 use App\Repository\UserRepository;
-use App\Service\FlashBag\FlashService;
+use App\Service\System\FlashBag\FlashService;
 use App\Service\System\Token\TokenService;
-use App\Service\User\Account\RegisterConfirmService;
 use App\Service\User\Account\CreateUserService;
+use App\Service\User\Account\RegisterConfirmService;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -22,6 +23,16 @@ use Symfony\Component\Security\Core\Security;
 
 class RegisterController extends AbstractUserController
 {
+    /**
+     * @var EntityManagerInterface
+     */
+    private $em;
+
+    public function __construct(EntityManagerInterface $em)
+    {
+        $this->em = $em;
+    }
+
     /**
      * @Route("/register", name="app_register")
      */
@@ -34,8 +45,7 @@ class RegisterController extends AbstractUserController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $createUserService->registerUser($form->get(RegisterType::EMAIL_FIELD)->getData());
-
-            $this->getDoctrine()->getManager()->flush();
+            $this->em->flush();
 
             $flashService->addFlash(
                 FlashService::SUCCESS_ABOVE_FORM,
@@ -51,18 +61,18 @@ class RegisterController extends AbstractUserController
     }
 
     /**
-     * @Route("/register/confirm/{token}", name="app_register_confirm")
+     * @Route("/private/register/confirm/{token}", name="app_register_confirm")
      */
-    public function registerConfirm(
+    public function confirmRegistration(
         Request $request,
         string $token,
         RegisterConfirmService $registerConfirmService,
+        UserRepository $userRepository,
         FlashService $flashService,
-        TokenService $tokenService,
-        UserRepository $userRepository
+        TokenService $tokenService
     ): Response {
         $tokenEntity = $tokenService->getToken($token, Token::USER_REGISTER_TYPE);
-        if ($tokenEntity === null) {
+        if (null === $tokenEntity) {
             $flashService->addFlash(
                 FlashService::ERROR_ABOVE_FORM,
                 'trans.Confirmation link is invalid or expired, check if confirmation link is correct'
@@ -80,7 +90,7 @@ class RegisterController extends AbstractUserController
         }
 
         $userEmail = $tokenEntity->getFieldByName(TokenField::USER_EMAIL_FIELD);
-        if ($userEmail === null) {
+        if (null === $userEmail) {
             $flashService->addFlash(
                 FlashService::ERROR_ABOVE_FORM,
                 'trans.Confirmation link is invalid or expired, check if confirmation link is correct'
@@ -101,8 +111,7 @@ class RegisterController extends AbstractUserController
 
         $registerConfirmService->confirmRegistration($user);
         $tokenService->markTokenUsed($tokenEntity);
-
-        $this->getDoctrine()->getManager()->flush();
+        $this->em->flush();
 
         if ($user->getEnabled()) {
             $flashService->addFlash(

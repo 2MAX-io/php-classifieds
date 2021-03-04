@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Service\Category;
 
 use App\Entity\Category;
+use Doctrine\Common\Collections\Criteria;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr\Join;
 
@@ -23,20 +25,22 @@ class CategoryListService
     /**
      * @return Category[]
      */
-    public function getMenuCategoryList(?Category $category = null): array
+    public function getCategoryListForSideMenu(?Category $category = null): array
     {
-        $qb = $this->em->getRepository(Category::class)->createQueryBuilder('category');
+        $qb = $this->em->createQueryBuilder();
+        $qb->select('category');
+        $qb->from(Category::class, 'category');
 
-        if ($category === null) {
+        if (null === $category) {
             $qb->andWhere($qb->expr()->eq('category.lvl', 1));
         }
 
-        if ($category !== null) {
+        if (null !== $category) {
             $qb->join(
                 Category::class,
                 'requestedCategory',
                 Join::WITH,
-                $qb->expr()->eq('requestedCategory.id', ':requestedCategory')
+                (string) $qb->expr()->eq('requestedCategory.id', ':requestedCategory')
             );
             $qb->setParameter(':requestedCategory', $category->getId());
 
@@ -51,7 +55,7 @@ class CategoryListService
             );
         }
 
-        $qb->orderBy('category.sort', 'ASC');
+        $qb->orderBy('category.sort', Criteria::ASC);
 
         return $qb->getQuery()->getResult();
     }
@@ -59,13 +63,15 @@ class CategoryListService
     /**
      * @return Category[]
      */
-    public function getCategoryBreadcrumbs(?Category $category = null): array
+    public function getCategoriesForBreadcrumbs(?Category $category = null): array
     {
-        if ($category === null) {
+        if (null === $category) {
             return [];
         }
 
-        $qb = $this->em->getRepository(Category::class)->createQueryBuilder('category0');
+        $qb = $this->em->createQueryBuilder();
+        $qb->select('category0');
+        $qb->from(Category::class, 'category0');
         $qb->addSelect('category1');
         $qb->addSelect('category2');
         $qb->addSelect('category3');
@@ -87,13 +93,13 @@ class CategoryListService
         $qb->leftJoin('category8.parent', 'category9');
 
         $qb->andWhere($qb->expr()->eq('category0.id', ':category'));
-        $qb->setParameter(':category', $category);
+        $qb->setParameter(':category', $category->getId(), Types::INTEGER);
 
         /** @var Category $category */
         $currentCategoryLevel = $qb->getQuery()->getOneOrNullResult();
 
         $result = [$currentCategoryLevel];
-        while($currentCategoryLevel) {
+        while ($currentCategoryLevel) {
             $currentCategoryLevel = $currentCategoryLevel->getParent();
             if ($currentCategoryLevel && $currentCategoryLevel->getLvl() > 0) {
                 $result[] = $currentCategoryLevel;
@@ -104,11 +110,13 @@ class CategoryListService
     }
 
     /**
-     * @return Category[]
+     * @return array<int|string, array<int, Category>>
      */
-    public function getSelectFormCategoryList(): array
+    public function getCategoryListForSelect(): array
     {
-        $qb = $this->em->getRepository(Category::class)->createQueryBuilder('category');
+        $qb = $this->em->createQueryBuilder();
+        $qb->select('category');
+        $qb->from(Category::class, 'category');
         $qb->addSelect('categoryChildren');
         $qb->leftJoin('category.children', 'categoryChildren');
         $qb->andWhere($qb->expr()->neq('category.rgt - category.lft', '1'));
@@ -121,5 +129,19 @@ class CategoryListService
         }
 
         return $result;
+    }
+
+    /**
+     * @return Category[]
+     */
+    public function getMainCategoryList(): array
+    {
+        $qb = $this->em->createQueryBuilder();
+        $qb->select('category');
+        $qb->from(Category::class, 'category');
+        $qb->andWhere($qb->expr()->eq('category.lvl', 1));
+        $qb->orderBy('category.sort', Criteria::ASC);
+
+        return $qb->getQuery()->getResult();
     }
 }

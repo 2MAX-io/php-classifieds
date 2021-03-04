@@ -9,7 +9,7 @@ use App\Entity\CustomField;
 class CustomFieldOptionCopyDto
 {
     /**
-     * @var CustomField|null
+     * @var null|CustomField
      */
     private $sourceCustomField;
 
@@ -20,6 +20,10 @@ class CustomFieldOptionCopyDto
 
     public function getSourceCustomFieldNotNull(): CustomField
     {
+        if (null === $this->sourceCustomField) {
+            throw new \RuntimeException('sourceCustomField is null');
+        }
+
         return $this->sourceCustomField;
     }
 

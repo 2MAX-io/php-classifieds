@@ -11,14 +11,10 @@ use Symfony\Component\HttpKernel\KernelInterface;
 
 class ContainerHelper
 {
-    public static function getContainer(): ?ContainerInterface
+    public static function getContainer(): ContainerInterface
     {
-        if (!isset($GLOBALS['kernel'])) {
-            return null;
-        }
-
-        if (!$GLOBALS['kernel'] instanceof KernelInterface) {
-            return null;
+        if (!isset($GLOBALS['kernel']) && !$GLOBALS['kernel'] instanceof KernelInterface) {
+            throw new \RuntimeException('could not find container');
         }
 
         return $GLOBALS['kernel']->getContainer();
@@ -26,11 +22,6 @@ class ContainerHelper
 
     public static function getSettings(): SettingsDto
     {
-        $container = static::getContainer();
-        if (!$container instanceof ContainerInterface) {
-            throw new \RuntimeException('could not find container');
-        }
-
-        return $container->get(SettingsService::class)->getSettingsDto();
+        return static::getContainer()->get(SettingsService::class)->getSettingsDto();
     }
 }

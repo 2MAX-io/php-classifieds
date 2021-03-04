@@ -7,7 +7,6 @@ namespace App\Service\Listing\ValidityExtend;
 use App\Entity\Listing;
 use App\Helper\DateHelper;
 use Carbon\Carbon;
-use Carbon\CarbonInterval;
 use Doctrine\ORM\EntityManagerInterface;
 
 class ValidUntilSetService
@@ -25,7 +24,7 @@ class ValidUntilSetService
     public function setValidityDaysFromNow(Listing $listing, int $validityTimeDays): void
     {
         $validityTimeDays = \min($validityTimeDays, $this->getMaxValidityTimeDays());
-        $newValidUntilDate = Carbon::now()->add(CarbonInterval::days($validityTimeDays));
+        $newValidUntilDate = DateHelper::carbonNow()->addDays($validityTimeDays);
         if ($newValidUntilDate < $listing->getValidUntilDate()) {
             return;
         }
@@ -35,22 +34,23 @@ class ValidUntilSetService
         $this->em->persist($listing);
     }
 
-    public function validityExtendedByUser(Listing $listing): void
+    public function onValidityExtendedByUser(Listing $listing): void
     {
         $listing->setUserDeactivated(false);
-
-        if (DateHelper::olderThanDays(40, $listing->getOrderByDate())) {
-            $listing->setOrderByDate(new \DateTime());
-        }
+        $this->pullUpOrderListing($listing);
     }
 
     public function addValidityDaysWithoutRestrictions(Listing $listing, int $validityTimeDays): void
     {
-        $newValidUntilDate = Carbon::instance($listing->getValidUntilDate())->add(CarbonInterval::days($validityTimeDays));
+        $currentValidUntilDate = Carbon::instance($listing->getValidUntilDate());
+        $newValidUntilDate = $currentValidUntilDate->addDays($validityTimeDays);
         $listing->setValidUntilDate($newValidUntilDate);
         $this->em->persist($listing);
     }
 
+    /**
+     * @return int[]
+     */
     public function getValidityTimeDaysChoices(): array
     {
         return [
@@ -61,8 +61,20 @@ class ValidUntilSetService
         ];
     }
 
-    public function getMaxValidityTimeDays(): int
+    private function getMaxValidityTimeDays(): int
     {
-        return \max($this->getValidityTimeDaysChoices());
+        $max = \max($this->getValidityTimeDaysChoices());
+        if (false === $max) {
+            throw new \RuntimeException('max validity time not found');
+        }
+
+        return $max;
+    }
+
+    private function pullUpOrderListing(Listing $listing): void
+    {
+        if (DateHelper::olderThanDays(40, $listing->getOrderByDate())) {
+            $listing->setOrderByDate(DateHelper::create());
+        }
     }
 }

@@ -9,7 +9,7 @@
             <h1>{{ 'trans.Edit custom field' | trans }}</h1>
         </div>
         <div class="col-md-4 text-md-right">
-            <a href="{{ path('app_admin_custom_field_index') }}">{{ 'trans.back to list' | trans }}</a>
+            <a href="{{ path('app_admin_custom_field_list') }}">{{ 'trans.back to list' | trans }}</a>
             {{ include('admin/custom_field/_delete_form.html.twig') }}
         </div>
     </div>
@@ -17,28 +17,36 @@
     {{ include('admin/custom_field/_form.html.twig', {'button_label': 'trans.Update' | trans}) }}
 </div>
 
-    {% if custom_field.type in [
+    {% if customField.type in [
         constant('\App\\Entity\\CustomField::SELECT_AS_CHECKBOXES'),
         constant('\App\\Entity\\CustomField::SELECT_SINGLE'),
         constant('\App\\Entity\\CustomField::CHECKBOX_MULTIPLE'),
-    ]
-    %}
+    ] %}
         <div class="container mt-3">
             <div class="row mb-2">
                 <div class="col-md-6">
                     <h1>{{ 'trans.Options' | trans }}</h1>
                 </div>
                 <div class="col-md-6 text-md-right">
-                    <button class="btn btn-success saveOrder mb-1">{{ 'trans.Save order' | trans }}</button>
+                    <button class="btn btn-success mb-1 js__saveOrder">{{ 'trans.Save order' | trans }}</button>
 
-                    <a href="{{ path('app_admin_custom_field_option_add', {id: custom_field.id}) }}" class="btn btn-primary mb-1">{{ 'trans.Add option' | trans }}</a>
+                    <a
+                            href="{{ path('app_admin_custom_field_option_add', {id: customField.id}) }}"
+                            class="btn btn-primary mb-1"
+                    >
+                        {{- 'trans.Add option' | trans -}}
+                    </a>
                 </div>
             </div>
 
-            <div class="list-group sortable mb-2">
-                {% for customFieldOption in custom_field.customFieldOptions %}
-                    <div class="list-group-item sortAlphabeticallyElement"  data-id="{{ customFieldOption.id }}" data-name="{{ customFieldOption.name }}">
-                        <i class="fas fa-arrows-alt sortableHandle"></i>
+            <div class="list-group mb-2 sortable js__sortable">
+                {% for customFieldOption in customField.customFieldOptions %}
+                    <div
+                            class="list-group-item js__sortAlphabeticallyElement"
+                            data-id="{{ customFieldOption.id }}"
+                            data-name="{{ customFieldOption.name }}"
+                    >
+                        <i class="fas fa-arrows-alt sortable-handle js__sortableHandle"></i>
                         <span class="text-break">{{ customFieldOption.name }}</span>
 
                         <div class="float-right">
@@ -52,13 +60,21 @@
             </div>
 
             <div class="mb-2">
-                <button class="btn btn-secondary sortAlphabetically mb-2">{{ 'trans.Sort Alphabetically' | trans }}</button>
-                <a href="{{ path('app_admin_custom_field_option_copy', {'id': custom_field.id}) }}" class="btn btn-secondary mb-2">{{ 'trans.Copy options from other custom field' | trans }}</a>
+                <button class="btn btn-secondary mb-2 js__sortAlphabetically">
+                    {{- 'trans.Sort Alphabetically' | trans -}}
+                </button>
+                <a
+                        href="{{ path('app_admin_custom_field_option_copy', {'id': customField.id}) }}"
+                        class="btn btn-secondary mb-2"
+                >
+                    {{- 'trans.Copy options from other custom field' | trans -}}
+                </a>
             </div>
         </div>
     {% endif %}
 {% endblock %}
 
 {% block js %}
-    <script src="{{ asset('asset/page/admin/custom-field-edit.js') }}"></script>
+    {{ encore_entry_link_tags('admin_custom_field_edit') }}
+    {{ encore_entry_script_tags('admin_custom_field_edit') }}
 {% endblock %}

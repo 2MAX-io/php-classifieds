@@ -4,17 +4,19 @@ declare(strict_types=1);
 
 namespace App\Service\Listing\ListingList;
 
-use App\Entity\Category;
 use App\Entity\CustomField;
 use App\Entity\Listing;
-use App\Entity\User;
 use App\Enum\ParamEnum;
-use App\Helper\Arr;
-use App\Helper\Search;
-use App\Helper\Str;
+use App\Helper\ArrayHelper;
+use App\Helper\SearchHelper;
+use App\Helper\StringHelper;
+use App\Repository\CategoryRepository;
+use App\Repository\UserRepository;
+use App\Service\Listing\ListingList\Dto\ListingListDto;
 use App\Service\Listing\ListingPublicDisplayService;
-use App\Service\Listing\Search\SaveSearchHistoryService;
+use App\Service\Listing\Secondary\SaveSearchHistoryService;
 use App\Service\System\Pagination\PaginationService;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
@@ -25,14 +27,24 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class ListingListService
 {
     /**
-     * @var EntityManagerInterface|EntityManager
-     */
-    private $em;
-
-    /**
      * @var ListingPublicDisplayService
      */
     private $listingPublicDisplayService;
+
+    /**
+     * @var SaveSearchHistoryService
+     */
+    private $saveSearchHistory;
+
+    /**
+     * @var CategoryRepository
+     */
+    private $categoryRepository;
+
+    /**
+     * @var UserRepository
+     */
+    private $userRepository;
 
     /**
      * @var PaginationService
@@ -40,32 +52,38 @@ class ListingListService
     private $paginationService;
 
     /**
-     * @var SaveSearchHistoryService
+     * @var EntityManager|EntityManagerInterface
      */
-    private $saveSearchHistory;
+    private $em;
 
     public function __construct(
         ListingPublicDisplayService $listingPublicDisplayService,
         SaveSearchHistoryService $saveSearchHistory,
+        CategoryRepository $categoryRepository,
+        UserRepository $userRepository,
         PaginationService $paginationService,
         EntityManagerInterface $em
     ) {
         $this->listingPublicDisplayService = $listingPublicDisplayService;
-        $this->paginationService = $paginationService;
         $this->saveSearchHistory = $saveSearchHistory;
+        $this->categoryRepository = $categoryRepository;
+        $this->userRepository = $userRepository;
+        $this->paginationService = $paginationService;
         $this->em = $em;
     }
 
-    public function getListings(Request $request, ListingListDto $listingListDto): ListingListDto
+    public function getListings(ListingListDto $listingListDto): ListingListDto
     {
-        $qb = $this->em->getRepository(Listing::class)->createQueryBuilder('listing');
+        $qb = $this->em->createQueryBuilder();
+        $qb->select('listing');
+        $qb->from(Listing::class, 'listing');
 
         if ($listingListDto->getCategory()) {
             $qb->join(
                 'listing.category',
                 'category',
                 Join::WITH,
-                $qb->expr()->andX(
+                (string) $qb->expr()->andX(
                     $qb->expr()->gte('category.lft', ':requestedCategoryLft'),
                     $qb->expr()->lte('category.rgt', ':requestedCategoryRgt')
                 )
@@ -74,19 +92,19 @@ class ListingListService
             $qb->setParameter(':requestedCategoryRgt', $listingListDto->getCategory()->getRgt());
         }
 
-        if ($request->get('min_price', false)) {
+        if ($listingListDto->getMinPrice()) {
             $qb->andWhere($qb->expr()->gte('listing.price', ':minPrice'));
-            $qb->setParameter(':minPrice', $request->get('min_price', false));
+            $qb->setParameter(':minPrice', $listingListDto->getMinPrice());
         }
 
-        if ($request->get('max_price', false)) {
+        if ($listingListDto->getMaxPrice()) {
             $qb->andWhere($qb->expr()->lte('listing.price', ':maxPrice'));
-            $qb->setParameter(':maxPrice', $request->get('max_price', false));
+            $qb->setParameter(':maxPrice', $listingListDto->getMaxPrice());
         }
 
-        if ($request->get('query', false)) {
+        if ($listingListDto->getSearchQuery()) {
             $qb->andWhere('MATCH (listing.searchText) AGAINST (:query BOOLEAN) > 0');
-            $qb->setParameter(':query', Search::optimizeMatch($request->get('query', false)));
+            $qb->setParameter(':query', SearchHelper::optimizeMatch($listingListDto->getSearchQuery()));
         }
 
         if ($listingListDto->getFilterByUser()) {
@@ -96,98 +114,100 @@ class ListingListService
 
         $this->listingPublicDisplayService->applyPublicDisplayConditions($qb);
 
-        if ($request->get(ParamEnum::CUSTOM_FIELD, false)) {
-            $customFieldForCategoryList = Arr::indexBy(
-                $listingListDto->getCustomFieldForCategoryList(),
+        if ($listingListDto->getFilterByCustomFields()) {
+            /** @var CustomField[] $customFieldListIndexedById */
+            $customFieldListIndexedById = ArrayHelper::indexBy(
+                $listingListDto->getCategoryCustomFields(),
                 static function (CustomField $customField) {
-                    return [$customField->getId() => $customField];
+                    return [$customField->getIdNotNull() => $customField];
                 }
             );
 
-            $sqlParamId = 0;
-            $usedCustomFieldIdList = [];
-            $customFieldConditionList = $qb->expr()->orX();
-            foreach ($request->get(ParamEnum::CUSTOM_FIELD) as $customFieldId => $customFieldFilter) {
-                $sqlParamId++;
-                /** @var CustomField $customField */
-                if (!isset($customFieldForCategoryList[$customFieldId])) {
+            $sqlParamNumber = 0;
+            $usedCustomFieldFilters = [];
+            $customFieldFiltersQueryOrX = $qb->expr()->orX();
+            foreach ($listingListDto->getFilterByCustomFields() as $customFieldId => $customFieldFilter) {
+                ++$sqlParamNumber;
+                $customField = $customFieldListIndexedById[$customFieldId] ?? null;
+                if (!$customField) {
                     continue;
                 }
-                $customField = $customFieldForCategoryList[$customFieldId];
 
                 $isRangeFilter = isset($customFieldFilter['range']);
                 if ($isRangeFilter) {
                     $rangeCondition = $qb->expr()->andX();
-
                     if (!empty($customFieldFilter['range']['min'])) {
-                        $rangeCondition->add($qb->expr()->gte('listingCustomFieldValue.value', ':customFieldValueMin_' . $sqlParamId));
+                        $rangeCondition->add($qb->expr()->gte('listingCustomFieldValue.value', ':customFieldValueMin_'.$sqlParamNumber));
                         $qb->setParameter(
-                            ':customFieldValueMin_' . $sqlParamId,
+                            ':customFieldValueMin_'.$sqlParamNumber,
                             $customFieldFilter['range']['min'],
-                            Types::INTEGER
+                            Types::INTEGER,
                         );
                     }
 
                     if (!empty($customFieldFilter['range']['max'])) {
-                        $rangeCondition->add($qb->expr()->lte('listingCustomFieldValue.value', ':customFieldValueMax_' . $sqlParamId));
+                        $rangeCondition->add($qb->expr()->lte('listingCustomFieldValue.value', ':customFieldValueMax_'.$sqlParamNumber));
                         $qb->setParameter(
-                            ':customFieldValueMax_' . $sqlParamId,
+                            ':customFieldValueMax_'.$sqlParamNumber,
                             $customFieldFilter['range']['max'],
-                            Types::INTEGER
+                            Types::INTEGER,
                         );
                     }
 
                     if ($rangeCondition->count() > 0) {
-                        $customFieldConditionList->add($rangeCondition);
+                        $customFieldFiltersQueryOrX->add($rangeCondition);
 
-                        $rangeCondition->add($qb->expr()->eq('listingCustomFieldValue.customField', ':customFieldId_' . $sqlParamId));
-                        $qb->setParameter(':customFieldId_' . $sqlParamId, $customFieldId);
+                        $rangeCondition->add($qb->expr()->eq('listingCustomFieldValue.customField', ':customFieldId_'.$sqlParamNumber));
+                        $qb->setParameter(':customFieldId_'.$sqlParamNumber, $customFieldId);
 
-                        $usedCustomFieldIdList[] = $customFieldId;
+                        $usedCustomFieldFilters[] = $customFieldId;
                     }
                 }
 
                 $isMultipleValuesFilter = isset($customFieldFilter['values']);
                 if ($isMultipleValuesFilter) {
-                    foreach ($customFieldFilter['values'] as $valueItem) {
-                        if (Str::emptyTrim($valueItem)) {
+                    foreach ($customFieldFilter['values'] as $customFieldValue) {
+                        if (StringHelper::emptyTrim($customFieldValue)) {
                             continue;
                         }
 
-                        $sqlParamId++;
-                        $customFieldConditionList->add($qb->expr()->andX(
-                            $qb->expr()->eq('listingCustomFieldValue.value', ':customFieldValue_' . $sqlParamId),
-                            $qb->expr()->eq('listingCustomFieldValue.customField', ':customFieldId_' . $sqlParamId),
+                        ++$sqlParamNumber;
+                        $customFieldFiltersQueryOrX->add($qb->expr()->andX(
+                            $qb->expr()->eq('listingCustomFieldValue.value', ':customFieldValue_'.$sqlParamNumber),
+                            $qb->expr()->eq('listingCustomFieldValue.customField', ':customFieldId_'.$sqlParamNumber),
                         ));
-                        $qb->setParameter(':customFieldId_' . $sqlParamId, $customFieldId);
-                        $qb->setParameter(':customFieldValue_' . $sqlParamId, $valueItem);
+                        $qb->setParameter(':customFieldValue_'.$sqlParamNumber, $customFieldValue);
+                        $qb->setParameter(':customFieldId_'.$sqlParamNumber, $customFieldId);
 
-                        if ($customField->getType() === CustomField::CHECKBOX_MULTIPLE) {
-                            $usedCustomFieldIdList[] = $customFieldId . "_$valueItem";
+                        if (CustomField::CHECKBOX_MULTIPLE === $customField->getType()) {
+                            $usedCustomFieldFilters[] = $customFieldId."_{$customFieldValue}";
                         } else {
-                            $usedCustomFieldIdList[] = $customFieldId;
+                            $usedCustomFieldFilters[] = $customFieldId;
                         }
                     }
                 }
             }
 
-            $customFieldsCount = \count(\array_unique($usedCustomFieldIdList));
-            if ($customFieldsCount > 0) {
+            $usedCustomFieldFiltersCount = \count(\array_unique($usedCustomFieldFilters));
+            if ($usedCustomFieldFiltersCount > 0) {
                 $qb->join('listing.listingCustomFieldValues', 'listingCustomFieldValue');
-                $qb->andWhere($customFieldConditionList);
+                $qb->andWhere($customFieldFiltersQueryOrX);
 
-                $qb->andHaving($qb->expr()->eq($qb->expr()->countDistinct('listingCustomFieldValue.id'), ':uniqueCustomFieldsCount'));
-                $qb->setParameter(':uniqueCustomFieldsCount', $customFieldsCount);
+                $qb->andHaving($qb->expr()->eq(
+                    $qb->expr()->countDistinct('listingCustomFieldValue.id'),
+                    ':usedCustomFieldFiltersCount'
+                ));
+                $qb->setParameter(':usedCustomFieldFiltersCount', $usedCustomFieldFiltersCount);
             }
         }
 
-        $qb->addOrderBy('listing.featured', 'DESC');
-        $qb->addOrderBy('listing.featuredWeight', 'DESC');
-        $qb->addOrderBy('listing.orderByDate', 'DESC');
-        $qb->addOrderBy('listing.id', 'DESC');
+        $qb->addOrderBy('listing.featured', Criteria::DESC);
+        $qb->addOrderBy('listing.featuredWeight', Criteria::DESC);
+        $qb->addOrderBy('listing.orderByDate', Criteria::DESC);
+        $qb->addOrderBy('listing.id', Criteria::DESC);
 
-        if ($listingListDto->isLastAddedListFlag()) {
-            $qb->orderBy('listing.firstCreatedDate', 'DESC');
+        if ($listingListDto->isLastAddedList()) {
+            $qb->orderBy('listing.firstCreatedDate', Criteria::DESC);
         }
 
         $qb->groupBy('listing.id');
@@ -202,10 +222,10 @@ class ListingListService
         $listingListDto->setPager($pager);
         $listingListDto->setResults($pager->getCurrentPageResults());
 
-        if ($request->get('query', false)) {
+        if ($listingListDto->getSearchQuery()) {
             $this->saveSearchHistory->saveSearch(
-                $request->get('query', false),
-                $listingListDto->getPager()->getNbResults()
+                $listingListDto->getSearchQuery(),
+                $listingListDto->getPager()->getNbResults(),
             );
         }
 
@@ -215,19 +235,25 @@ class ListingListService
     /**
      * @return CustomField[]
      */
-    public function getCustomFields(?Category $category): array
+    public function getCustomFields(ListingListDto $listingListDto): array
     {
-        $qb = $this->em->getRepository(CustomField::class)->createQueryBuilder('customField');
+        if (!$listingListDto->getCategory()) {
+            return [];
+        }
+
+        $qb = $this->em->createQueryBuilder();
+        $qb->select('customField');
+        $qb->from(CustomField::class, 'customField');
         $qb->addSelect('customFieldOption');
-        $qb->join('customField.categoriesJoin', 'categoryJoin');
-        $qb->join('categoryJoin.category', 'category');
+        $qb->join('customField.customFieldForCategories', 'customFieldForCategory');
+        $qb->join('customFieldForCategory.category', 'category');
         $qb->leftJoin('customField.customFieldOptions', 'customFieldOption');
 
         $qb->andWhere($qb->expr()->eq('customField.searchable', 1));
         $qb->andWhere($qb->expr()->eq('category.id', ':category'));
-        $qb->setParameter(':category', $category);
+        $qb->setParameter(':category', $listingListDto->getCategory()->getId(), Types::INTEGER);
 
-        $qb->addOrderBy('categoryJoin.sort', 'ASC');
+        $qb->addOrderBy('customFieldForCategory.sort', Criteria::ASC);
 
         return $qb->getQuery()->getResult();
     }
@@ -238,11 +264,16 @@ class ListingListService
         $listingListDto->setRoute($request->get('_route'));
         $listingListDto->setCategorySlug($request->get('categorySlug'));
         $listingListDto->setPageNumber((int) $request->get('page', 1));
+        $listingListDto->setSearchQuery($request->get('query'));
+        $listingListDto->setMinPrice($request->get('minPrice'));
+        $listingListDto->setMaxPrice($request->get('maxPrice'));
+        $listingListDto->setFilterByCustomFields($request->get(ParamEnum::CUSTOM_FIELD, []));
 
-        $category = null;
         if ($listingListDto->getCategorySlug()) {
-            $category = $this->em->getRepository(Category::class)->findOneBy(['slug' => $listingListDto->getCategorySlug()]);
-            if ($category === null) {
+            $category = $this->categoryRepository->findOneBy([
+                'slug' => $listingListDto->getCategorySlug(),
+            ]);
+            if (null === $category) {
                 throw new NotFoundHttpException();
             }
             $listingListDto->setCategory($category);
@@ -250,7 +281,7 @@ class ListingListService
 
         if ($request->query->has('user')) {
             $userId = (int) $request->query->get('user');
-            $user = $this->em->getRepository(User::class)->findOneBy(['id' => $userId]);
+            $user = $this->userRepository->findOneBy(['id' => $userId]);
             if (!$user) {
                 throw new NotFoundHttpException();
             }
@@ -258,8 +289,8 @@ class ListingListService
             $listingListDto->setFilterByUser($user);
         }
 
-        if ($listingListDto->getRoute() === 'app_last_added') {
-            $listingListDto->setLastAddedListFlag(true);
+        if ('app_last_added' === $listingListDto->getRoute()) {
+            $listingListDto->setLastAddedList(true);
         }
 
         return $listingListDto;

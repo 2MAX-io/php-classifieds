@@ -24,8 +24,9 @@
                 <td>
                     {% if invoice.payment %}
                         <a href="{{ path('app_admin_payment_show', {'id': invoice.payment.id}) }}">
-                            {{ 'trans.Payment' | trans }}{{ ' ' }}
-                            #{{ invoice.payment.id }}
+                            {{- 'trans.Payment' | trans -}}
+                            {{- ' ' -}}
+                            #{{- invoice.payment.id -}}
                         </a>
                     {% endif %}
                     <div>{{ 'trans.Gateway Payment ID' | trans }}:</div>
@@ -51,38 +52,38 @@
             <tr>
                 <th>{{ 'trans.Export date' | trans }}</th>
                 <td>
-                    {% if invoice.exportDate %}
-                        {{ invoice.exportDate | date(dateFormatYmdHis) }}
-                    {% else %}
-                        {{ '-' }}
-                    {% endif %}
+                    {%- if invoice.exportDate -%}
+                        {{- invoice.exportDate | date(dateFormatYmdHis) -}}
+                    {%- else -%}
+                        {{- '-' -}}
+                    {%- endif -%}
                 </td>
             </tr>
             <tr>
                 <th>{{ 'trans.Sent to user date' | trans }}</th>
                 <td>
-                    {% if invoice.sentToUser %}
-                        {{ invoice.sentToUserDate | date(dateFormatYmdHis) }}
-                    {% else %}
-                        {{ '-' }}
-                    {% endif %}
+                    {%- if invoice.sentToUser -%}
+                        {{- invoice.sentToUserDate | date(dateFormatYmdHis) -}}
+                    {%- else -%}
+                        {{- '-' -}}
+                    {%- endif -%}
                 </td>
             </tr>
             <tr>
                 <th>{{ 'trans.Display to user' | trans }}</th>
                 <td>
-                    {% if invoice.displayToUser %}
-                        {{ invoice.sentToUserDate | date(dateFormatYmdHis) }}
-                    {% else %}
-                        {{ '-' }}
-                    {% endif %}
+                    {%- if invoice.displayToUser -%}
+                        {{- invoice.sentToUserDate | date(dateFormatYmdHis) -}}
+                    {%- else -%}
+                        {{- '-' -}}
+                    {%- endif -%}
                 </td>
             </tr>
             {% if invoice.externalSystemReference %}
                 <tr>
                     <th>{{ 'trans.External system reference' | trans }}</th>
                     <td>
-                        {{ invoice.externalSystemReference }}
+                        {{- invoice.externalSystemReference -}}
                     </td>
                 </tr>
             {% endif %}
@@ -90,14 +91,14 @@
                 <tr>
                     <th>{{ 'trans.External system reference secondary' | trans }}</th>
                     <td>
-                        {{ invoice.externalSystemReferenceSecondary }}
+                        {{- invoice.externalSystemReferenceSecondary -}}
                     </td>
                 </tr>
             {% endif %}
             <tr>
                 <th>{{ 'trans.Internal Payment ID' | trans }}</th>
                 <td>
-                    {{ invoice.id }}
+                    {{- invoice.id -}}
                 </td>
             </tr>
         </tbody>

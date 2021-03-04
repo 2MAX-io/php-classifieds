@@ -7,10 +7,10 @@ namespace App\Controller\Admin\Category;
 use App\Controller\Admin\Base\AbstractAdminController;
 use App\Entity\CustomField;
 use App\Entity\CustomFieldOption;
+use App\Enum\SortConfig;
 use App\Form\Admin\CustomFieldOptionType;
-use App\Helper\Json;
+use App\Helper\JsonHelper;
 use App\Service\Admin\CustomField\CustomFieldOptionService;
-use App\Service\System\Sort\SortService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Form;
@@ -18,12 +18,25 @@ use Symfony\Component\Form\SubmitButton;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Exception\InvalidCsrfTokenException;
 
 class CustomFieldOptionController extends AbstractAdminController
 {
+    public const CSRF_SAVE_ORDER = 'csrf_adminCustomFieldOptionsOrderSave';
+
+    /**
+     * @var EntityManagerInterface
+     */
+    private $em;
+
+    public function __construct(EntityManagerInterface $em)
+    {
+        $this->em = $em;
+    }
+
     /**
      * @Route(
-     *     "/admin/red5/custom-field/{id}/add-option",
+     *     "/admin/red5/custom-field-option/custom-field/{id}/add-option",
      *     name="app_admin_custom_field_option_add",
      *     methods={"GET","POST"}
      * )
@@ -37,22 +50,21 @@ class CustomFieldOptionController extends AbstractAdminController
 
         $customFieldOption = new CustomFieldOption();
         $customFieldOption->setCustomField($customField);
-        $customFieldOption->setSort(SortService::LAST_VALUE);
+        $customFieldOption->setSort(SortConfig::LAST_VALUE);
         /** @var Form $form */
         $form = $this->createForm(CustomFieldOptionType::class, $customFieldOption);
         $saveAndAddButton = $form->add(CustomFieldOptionType::SAVE_AND_ADD, SubmitType::class, [
             'label' => 'trans.Save and Add',
         ]);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($customFieldOption);
-            $em->flush();
+            $this->em->persist($customFieldOption);
+            $this->em->flush();
 
             $customFieldOptionService->reorder();
 
-            if ($saveAndAddButton->getClickedButton() instanceof SubmitButton && $saveAndAddButton->getClickedButton()->isClicked()) {
+            $clickedButton = $saveAndAddButton->getClickedButton();
+            if ($clickedButton instanceof SubmitButton && $clickedButton->isClicked()) {
                 return $this->redirectToRoute('app_admin_custom_field_option_add', [
                     'id' => $customField->getId(),
                 ]);
@@ -71,7 +83,7 @@ class CustomFieldOptionController extends AbstractAdminController
 
     /**
      * @Route(
-     *     "/admin/red5/custom-field/option/{id}/edit-option",
+     *     "/admin/red5/custom-field-option/{id}/edit-option",
      *     name="app_admin_custom_field_option_edit",
      *     methods={"GET","POST"}
      * )
@@ -90,20 +102,19 @@ class CustomFieldOptionController extends AbstractAdminController
             'label' => 'trans.Save and Add',
         ]);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($customFieldOption);
-            $em->flush();
+            $this->em->persist($customFieldOption);
+            $this->em->flush();
 
             $customFieldOptionService->reorder();
-            $customFieldOptionService->changeStringValue(
+            $customFieldOptionService->updateCustomFieldOptionValueForListings(
                 $customFieldOption,
                 $oldCustomField->getValue(),
-                $customFieldOption->getValue()
+                $customFieldOption->getValue(),
             );
 
-            if ($saveAndAddButton->getClickedButton() instanceof SubmitButton && $saveAndAddButton->getClickedButton()->isClicked()) {
+            $clickedButton = $saveAndAddButton->getClickedButton();
+            if ($clickedButton instanceof SubmitButton && $clickedButton->isClicked()) {
                 return $this->redirectToRoute('app_admin_custom_field_option_add', [
                     'id' => $customFieldOption->getCustomFieldNotNull()->getId(),
                 ]);
@@ -122,7 +133,7 @@ class CustomFieldOptionController extends AbstractAdminController
 
     /**
      * @Route(
-     *     "/admin/red5/custom-field/option/{id}/delete-option",
+     *     "/admin/red5/custom-field-option/{id}/delete",
      *     name="app_admin_custom_field_option_delete",
      *     methods={"DELETE"}
      * )
@@ -130,33 +141,37 @@ class CustomFieldOptionController extends AbstractAdminController
     public function delete(
         Request $request,
         CustomFieldOption $customFieldOption,
-        CustomFieldOptionService $customFieldOptionService,
-        EntityManagerInterface $em
+        CustomFieldOptionService $customFieldOptionService
     ): Response {
         $this->denyUnlessAdmin();
 
-        if ($this->isCsrfTokenValid('delete'.$customFieldOption->getId(), $request->request->get('_token'))) {
-            try {
-                $em->beginTransaction();
-                $customFieldOptionService->deleteOptionFromListingValues($customFieldOption);
-                $em->remove($customFieldOption);
-                $em->flush();
-                $em->commit();
-            } catch (\Throwable $e) {
-                $em->rollback();
-
-                throw $e;
-            }
-
-            $customFieldOptionService->reorder();
+        if (!$this->isCsrfTokenValid('csrf_deleteFieldOption'.$customFieldOption->getId(), $request->request->get('_token'))) {
+            throw new InvalidCsrfTokenException('token not valid');
         }
 
-        return $this->redirectToRoute('app_admin_custom_field_edit', ['id' => $customFieldOption->getCustomFieldNotNull()->getId()]);
+        try {
+            $this->em->beginTransaction();
+            $customFieldOptionService->deleteCustomFieldOptionValuesFromListings($customFieldOption);
+            $this->em->remove($customFieldOption);
+            $this->em->flush();
+            $this->em->commit();
+        } catch (\Throwable $e) {
+            $this->em->rollback();
+
+            throw $e;
+        }
+
+        $customFieldOptionService->reorder();
+
+        return $this->redirectToRoute(
+            'app_admin_custom_field_edit',
+            ['id' => $customFieldOption->getCustomFieldNotNull()->getId()]
+        );
     }
 
     /**
      * @Route(
-     *     "/admin/red5/custom-field/options/save-order-of-options",
+     *     "/admin/red5/custom-field-option/save-options-order",
      *     name="app_admin_custom_field_options_save_order",
      *     methods={"POST"},
      *     options={"expose": true},
@@ -168,15 +183,15 @@ class CustomFieldOptionController extends AbstractAdminController
     ): Response {
         $this->denyUnlessAdmin();
 
-        if ($this->isCsrfTokenValid('adminCustomFieldOptionsOrderCsrfToken', $request->headers->get('x-csrf-token'))) {
-            $em = $this->getDoctrine()->getManager();
-
-            $requestContentArray  = Json::toArray($request->getContent());
-            $customFieldOptionService->saveOrderOfOptions($requestContentArray['orderedIdList']);
-            $em->flush();
-
-            $customFieldOptionService->reorder();
+        if (!$this->isCsrfTokenValid(self::CSRF_SAVE_ORDER, $request->headers->get('x-csrf-token'))) {
+            throw new InvalidCsrfTokenException('token not valid');
         }
+
+        $requestContentArray = JsonHelper::toArray($request->getContent());
+        $customFieldOptionService->saveOrderOfOptions($requestContentArray['orderedIdList']);
+        $this->em->flush();
+
+        $customFieldOptionService->reorder();
 
         return $this->json([]);
     }

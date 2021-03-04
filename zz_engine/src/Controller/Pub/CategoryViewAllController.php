@@ -16,7 +16,7 @@ class CategoryViewAllController extends AbstractController
      */
     public function categoriesViewAll(CategoryViewAllService $categoryViewAllService): Response
     {
-        return $this->render('category_view_all.html.twig', [
+        return $this->render('secondary/category_view_all.html.twig', [
             'categories' => $categoryViewAllService->getAllCategories(),
         ]);
     }

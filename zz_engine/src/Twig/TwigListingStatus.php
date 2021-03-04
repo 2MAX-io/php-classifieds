@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace App\Twig;
 
 use App\Entity\Listing;
-use App\System\EnvironmentService;
+use App\Service\Setting\EnvironmentService;
+use Psr\Log\LoggerInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Extension\RuntimeExtensionInterface;
 
@@ -21,25 +22,31 @@ class TwigListingStatus implements RuntimeExtensionInterface
      */
     private $environmentService;
 
-    public function __construct(TranslatorInterface $translator, EnvironmentService $environmentService)
+    /**
+     * @var LoggerInterface
+     */
+    private $logger;
+
+    public function __construct(TranslatorInterface $translator, EnvironmentService $environmentService, LoggerInterface $logger)
     {
         $this->translator = $translator;
         $this->environmentService = $environmentService;
+        $this->logger = $logger;
     }
 
     public function getListingStatus(Listing $listing): string
     {
         $status = $listing->getStatus();
+        $twigDateFormatShort = $this->environmentService->getDateFormatShort();
 
         if ($status === $listing::STATUS_ACTIVE_FEATURED) {
             $featuredUntilDate = $this->translator->trans('trans.none');
             if ($listing->getFeaturedUntilDate() instanceof \DateTimeInterface) {
-                $featuredUntilDate = $listing->getFeaturedUntilDate()->format(
-                    $this->environmentService->getTwigDateFormatShort()
-                );
+                $featuredUntilDate = $listing->getFeaturedUntilDate()->format($twigDateFormatShort);
             }
+
             return $this->translator->trans(
-                "trans.listing.status.$status",
+                "trans.listing.status.{$status}",
                 [
                     '%featuredUntilDate%' => $featuredUntilDate,
                 ]
@@ -49,12 +56,11 @@ class TwigListingStatus implements RuntimeExtensionInterface
         if ($status === $listing::STATUS_ACTIVE) {
             $activeUntilDate = $this->translator->trans('trans.none');
             if ($listing->getValidUntilDate() instanceof \DateTimeInterface) {
-                $activeUntilDate = $listing->getValidUntilDate()->format(
-                    $this->environmentService->getTwigDateFormatShort()
-                );
+                $activeUntilDate = $listing->getValidUntilDate()->format($twigDateFormatShort);
             }
+
             return $this->translator->trans(
-                "trans.listing.status.$status",
+                "trans.listing.status.{$status}",
                 [
                     '%activeUntilDate%' => $activeUntilDate,
                 ]
@@ -63,16 +69,19 @@ class TwigListingStatus implements RuntimeExtensionInterface
 
         if ($status === $listing::STATUS_REJECTED && $listing->getRejectionReason()) {
             return $this->translator->trans(
-                "trans.listing.status.$status.withReason",
+                "trans.listing.status.{$status}.withReason",
                 [
                     '%rejectionReason%' => $listing->getRejectionReason(),
                 ]
             );
         }
 
-        return $this->translator->trans("trans.listing.status.$status");
+        return $this->translator->trans("trans.listing.status.{$status}");
     }
 
+    /**
+     * CSS class for listing status
+     */
     public function getListingStatusClass(Listing $listing): string
     {
         $map = [
@@ -87,7 +96,14 @@ class TwigListingStatus implements RuntimeExtensionInterface
         ];
 
         $status = $listing->getStatus();
+        if (!isset($map[$status])) {
+            $this->logger->error('listing status CSS class not found for: {status}', [
+                'status' => $listing->getStatus(),
+            ]);
 
-        return $map[$status] ?? 'listing-status-not-found';
+            return 'listing-status-not-found';
+        }
+
+        return $map[$status];
     }
 }

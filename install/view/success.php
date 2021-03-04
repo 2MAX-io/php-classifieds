@@ -1,10 +1,13 @@
-<title>Install success</title>
+<?php
 
-<!--suppress HtmlUnknownTarget -->
-<link rel="stylesheet" type="text/css" href="bootstrap.css" />
+declare(strict_types=1);
+
+$pageTitle = 'Install success';
+
+include 'base/header.php';
+?>
 
 <div class="container">
-
     <h1>Installation</h1>
 
     <div class="alert alert-success">
@@ -19,7 +22,7 @@
     <div class="alert alert-info">
         Set up cron
 
-        <textarea class="w-100 form-text"><?php echo e($crontabText ?? '') ?></textarea>
+        <textarea class="w-100 form-text"><?php echo e($crontabText ?? ''); ?></textarea>
     </div>
 
     <div class="alert alert-info">
@@ -28,5 +31,4 @@
 
     <!--suppress HtmlUnknownTarget -->
     <a href="../admin/red5" class="btn btn-primary">Go to admin page</a>
-
 </div>

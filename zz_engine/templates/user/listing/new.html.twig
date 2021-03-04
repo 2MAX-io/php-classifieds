@@ -19,6 +19,6 @@
 {% endblock %}
 
  {% block js %}
-     {% include 'user/listing/_part/_file_upload.html.twig' %}
-     {% include 'user/listing/_part/_listing_js.html.twig' %}
+     {{ encore_entry_link_tags('listing_edit') }}
+     {{ encore_entry_script_tags('listing_edit') }}
  {% endblock %}

@@ -10,9 +10,13 @@
             </div>
 
             <div class="col-md-8 col-lg-9">
-                <div class="alert alert-danger">{{ 'trans.Error, you are trying to send message to yourself' | trans }}</div>
+                <div class="alert alert-danger">
+                    {{- 'trans.Error, you are trying to send message to yourself' | trans -}}
+                </div>
 
-                <a class="btn btn-primary" href="javascript:history.back()">Go Back</a>
+                <span class="btn btn-primary js__goBackOnClick">
+                    {{- 'trans.Go back' | trans -}}
+                </span>
             </div>
         </div>
     </div>

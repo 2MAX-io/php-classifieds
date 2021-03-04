@@ -5,21 +5,17 @@ declare(strict_types=1);
 namespace App\Service\User\Listing;
 
 use App\Entity\Listing;
-use App\Helper\Search;
+use App\Helper\SearchHelper;
 use App\Security\CurrentUserService;
 use App\Service\System\Pagination\PaginationService;
+use App\Service\User\Listing\Dto\UserListingListDto;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\EntityManagerInterface;
 use Pagerfanta\Doctrine\ORM\QueryAdapter;
 use Pagerfanta\Pagerfanta;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RequestStack;
 
 class UserListingListService
 {
-    /**
-     * @var EntityManagerInterface
-     */
-    private $em;
     /**
      * @var CurrentUserService
      */
@@ -31,31 +27,25 @@ class UserListingListService
     private $paginationService;
 
     /**
-     * @var RequestStack
+     * @var EntityManagerInterface
      */
-    private $requestStack;
+    private $em;
 
     public function __construct(
-        EntityManagerInterface $em,
         CurrentUserService $currentUserService,
-        RequestStack $requestStack,
-        PaginationService $paginationService
+        PaginationService $paginationService,
+        EntityManagerInterface $em
     ) {
-        $this->em = $em;
         $this->currentUserService = $currentUserService;
         $this->paginationService = $paginationService;
-        $this->requestStack = $requestStack;
+        $this->em = $em;
     }
 
-    /**
-     * @return Listing[]
-     */
-    public function getList(int $page = 1): UserListingListDto
+    public function getList(int $page = 1, string $searchQuery = null): UserListingListDto
     {
-        /** @var Request $request */
-        $request = $this->requestStack->getMasterRequest();
-
-        $qb = $this->em->getRepository(Listing::class)->createQueryBuilder('listing');
+        $qb = $this->em->createQueryBuilder();
+        $qb->select('listing');
+        $qb->from(Listing::class, 'listing');
         $qb->addSelect('category');
         $qb->addSelect('categoryParent');
         $qb->join('listing.category', 'category');
@@ -65,21 +55,19 @@ class UserListingListService
 
         $qb->andWhere($qb->expr()->eq('listing.userRemoved', 0));
 
-        if ($request->get('query', false)) {
+        if ($searchQuery) {
             $qb->andWhere('MATCH (listing.searchText) AGAINST (:query BOOLEAN) > 0');
-            $qb->setParameter(':query', Search::optimizeMatch($request->get('query')));
+            $qb->setParameter(':query', SearchHelper::optimizeMatch($searchQuery));
         }
 
-        $qb->orderBy('listing.lastEditDate', 'DESC');
+        $qb->orderBy('listing.lastEditDate', Criteria::DESC);
 
-        $adapter = new QueryAdapter($qb, false, $qb->getDQLPart('having') !== null);
+        $adapter = new QueryAdapter($qb, false, null !== $qb->getDQLPart('having'));
         $pager = new Pagerfanta($adapter);
         $pager->setNormalizeOutOfRangePages(true);
-        $pager->setMaxPerPage($this->paginationService->getMaxPerPage());
+        $pager->setMaxPerPage($this->paginationService->getPerPage());
         $pager->setCurrentPage($page);
 
-        $userListingListDto = new UserListingListDto($pager->getCurrentPageResults(), $pager);
-
-        return $userListingListDto;
+        return new UserListingListDto($pager->getCurrentPageResults(), $pager);
     }
 }

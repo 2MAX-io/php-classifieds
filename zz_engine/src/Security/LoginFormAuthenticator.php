@@ -5,8 +5,7 @@ declare(strict_types=1);
 namespace App\Security;
 
 use App\Entity\User;
-use App\Helper\Str;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\UserRepository;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,8 +13,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationException;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationException;
 use Symfony\Component\Security\Core\Exception\InvalidCsrfTokenException;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -29,24 +28,29 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
 {
     use TargetPathTrait;
 
-    private $em;
+    /** @var UrlGeneratorInterface */
     private $urlGenerator;
+
+    /** @var CsrfTokenManagerInterface */
     private $csrfTokenManager;
+
+    /** @var UserPasswordEncoderInterface */
     private $passwordEncoder;
 
-    /**
-     * @var LoggerInterface
-     */
+    /** @var LoggerInterface */
     private $logger;
 
+    /** @var UserRepository */
+    private $userRepository;
+
     public function __construct(
-        EntityManagerInterface $em,
+        UserRepository $userRepository,
         UrlGeneratorInterface $urlGenerator,
         CsrfTokenManagerInterface $csrfTokenManager,
         UserPasswordEncoderInterface $passwordEncoder,
         LoggerInterface $logger
     ) {
-        $this->em = $em;
+        $this->userRepository = $userRepository;
         $this->urlGenerator = $urlGenerator;
         $this->csrfTokenManager = $csrfTokenManager;
         $this->passwordEncoder = $passwordEncoder;
@@ -59,6 +63,9 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
             && $request->isMethod('POST');
     }
 
+    /**
+     * @return array<string,string>
+     */
     public function getCredentials(Request $request): array
     {
         $credentials = [
@@ -66,6 +73,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
             'password' => $request->request->get('password'),
             'csrf_token' => $request->request->get('_csrf_token'),
         ];
+        /** @var null|SessionInterface $session */
         $session = $request->getSession();
         if ($session instanceof SessionInterface) {
             $session->set(
@@ -80,20 +88,20 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function getUser($credentials, UserProviderInterface $userProvider): User
     {
         $token = new CsrfToken('authenticate', $credentials['csrf_token']);
         if (!$this->csrfTokenManager->isTokenValid($token)) {
-            /** @noinspection ThrowRawExceptionInspection */
+            /* @noinspection ThrowRawExceptionInspection */
             throw new InvalidCsrfTokenException();
         }
 
-        if (Str::contains($credentials['email'], '@')) {
-            $user = $this->em->getRepository(User::class)->findOneBy(['email' => $credentials['email']]);
+        if (\str_contains($credentials['email'], '@')) {
+            $user = $this->userRepository->findOneBy(['email' => $credentials['email']]);
         } else {
-            $user = $this->em->getRepository(User::class)->findOneBy(['username' => $credentials['email']]);
+            $user = $this->userRepository->findOneBy(['username' => $credentials['email']]);
         }
 
         if (!$user) {
@@ -105,7 +113,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function checkCredentials($credentials, UserInterface $user): bool
     {
@@ -113,7 +121,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey): Response
     {

@@ -19,17 +19,15 @@ class UserChangeBalanceType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder->add(
-            self::NEW_BALANCE, AppMoneyType::class, [
+        $builder->add(self::NEW_BALANCE, AppMoneyType::class, [
             'label' => 'trans.Set balance to',
             'mapped' => false,
             'constraints' => [
                 new NotBlank(),
-                new GreaterThanOrEqual(['value' => 0])
+                new GreaterThanOrEqual(['value' => 0]),
             ],
         ]);
-        $builder->add(
-            self::CHANGE_REASON, TextareaType::class, [
+        $builder->add(self::CHANGE_REASON, TextareaType::class, [
             'mapped' => false,
             'required' => false,
             'label' => 'trans.Change reason in description, visible to user',

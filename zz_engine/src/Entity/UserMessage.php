@@ -60,40 +60,43 @@ class UserMessage
     private $message;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(type="boolean", nullable=false)
      */
     private $spamChecked = false;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(type="boolean", nullable=false)
      */
     private $spam = false;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(type="boolean", nullable=false)
      */
     private $recipientNotified = false;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(type="boolean", nullable=false)
      */
     private $recipientRead = false;
 
     /**
-     * @var \DateTimeInterface|null
+     * @var null|\DateTimeInterface
      *
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $recipientReadDatetime;
 
+    /**
+     * @return User[]
+     */
     public function getAllUsersArray(): array
     {
         return [$this->getSenderUser(), $this->getRecipientUser()];
@@ -232,5 +235,20 @@ class UserMessage
     public function setUserMessageThread(UserMessageThread $userMessageThread): void
     {
         $this->userMessageThread = $userMessageThread;
+    }
+
+    public function getSpamChecked(): ?bool
+    {
+        return $this->spamChecked;
+    }
+
+    public function getSpam(): ?bool
+    {
+        return $this->spam;
+    }
+
+    public function getRecipientNotified(): ?bool
+    {
+        return $this->recipientNotified;
     }
 }

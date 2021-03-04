@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Form\Admin\Settings;
 
+use App\Form\Admin\Settings\Base\SettingTypeInterface;
 use App\Form\Type\BoolRequiredType;
 use App\Service\Invoice\Enum\InvoiceGenerationStrategyEnum;
 use App\Service\Payment\Enum\GatewayModeEnum;
@@ -17,7 +18,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
-class PaymentInvoiceSettingsType extends AbstractType
+class PaymentInvoiceSettingsType extends AbstractType implements SettingTypeInterface
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -155,11 +156,12 @@ class PaymentInvoiceSettingsType extends AbstractType
             'label' => 'trans.Invoice generation strategy',
             'required' => true,
             'choices' => [
-                'trans.invoice_generation_strategy.diabled' => InvoiceGenerationStrategyEnum::DISABLED,
+                'trans.invoice_generation_strategy.disabled' => InvoiceGenerationStrategyEnum::DISABLED,
                 'trans.invoice_generation_strategy.auto' => InvoiceGenerationStrategyEnum::AUTO,
-//                'trans.invoice_generation_strategy.manual' => InvoiceGenerationStrategyEnum::MANUAL,
-//                'trans.invoice_generation_strategy.external_system' => InvoiceGenerationStrategyEnum::EXTERNAL_SYSTEM,
-//                'trans.invoice_generation_strategy.infakt_pl' => InvoiceGenerationStrategyEnum::INFAKT_PL,
+                // todo: remove / disable
+                // 'trans.invoice_generation_strategy.manual' => InvoiceGenerationStrategyEnum::MANUAL,
+                // 'trans.invoice_generation_strategy.external_system' => InvoiceGenerationStrategyEnum::EXTERNAL_SYSTEM,
+                // 'trans.invoice_generation_strategy.infakt_pl' => InvoiceGenerationStrategyEnum::INFAKT_PL,
             ],
         ]);
         $builder->add('invoiceNumberPrefix', TextType::class, [

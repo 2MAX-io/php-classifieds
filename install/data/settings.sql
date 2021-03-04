@@ -23,7 +23,7 @@ INSERT INTO setting (name, value, last_update_date) VALUES ( 'paymentGatewayPaym
 INSERT INTO setting (name, value, last_update_date) VALUES ( 'wordsToRemoveFromTitle', 'to sell
 selling', '2010-01-01 00:00:00');
 INSERT INTO setting (name, value, last_update_date) VALUES ( 'footerSiteCopyright', '2018-%year% - 2MAX.io Classified Ads', '2010-01-01 00:00:00');
-INSERT INTO setting (name, value, last_update_date) VALUES ( 'itemsPerPageMax', '10', '2010-01-01 00:00:00');
+INSERT INTO setting (name, value, last_update_date) VALUES ( 'itemsPerPage', '10', '2010-01-01 00:00:00');
 INSERT INTO setting (name, value, last_update_date) VALUES ( 'emailFromName', '2MAX.io Classified Ads', '2010-01-01 00:00:00');
 INSERT INTO setting (name, value, last_update_date) VALUES ( 'emailReplyTo', 'classifieds@example.com', '2010-01-01 00:00:00');
 INSERT INTO setting (name, value, last_update_date) VALUES ( 'emailFromAddress', 'classifieds@example.com', '2010-01-01 00:00:00');

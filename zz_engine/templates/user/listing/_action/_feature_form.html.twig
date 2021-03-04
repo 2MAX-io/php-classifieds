@@ -1,0 +1,14 @@
+<form
+        method="post"
+        action="{{ path('app_user_feature_listing_action', {'id': listing.id, 'featuredPackage': package.id}) }}"
+        data-confirm-message="{{ '{1}trans.Feature for one day for %price%: %listing%?|]1,Inf[ Feature for %featuredDays% days for %price%: %listing%?' | trans({'%listing%': listing.title, '%featuredDays%': package.daysFeaturedExpire, '%price%': package.price | moneyPrecise}, null, null, package.daysFeaturedExpire) }}"
+        class="d-inline js__confirm"
+>
+    <input type="hidden" name="_method" value="PATCH">
+    <input type="hidden" name="_token" value="{{ csrf_token('csrf_feature' ~ listing.id) }}">
+    <button class="btn btn-success mb-2">
+        {%- trans count package.daysFeaturedExpire with {'%featuredDays%': package.daysFeaturedExpire, '%price%': package.price | moneyPrecise} -%}
+            {1}trans.Feature for one day for %price%|]1,Inf[ Feature for %featuredDays% days for %price%
+        {%- endtrans -%}
+    </button>
+</form>

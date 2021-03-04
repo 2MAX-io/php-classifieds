@@ -4,61 +4,31 @@ declare(strict_types=1);
 
 namespace App\Form\Admin\Settings;
 
+use App\Form\Admin\Settings\Base\SettingTypeInterface;
 use App\Form\Type\BoolRequiredType;
 use App\Service\Setting\SettingsDto;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\GreaterThan;
-use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
-class SettingsType extends AbstractType
+class SettingsType extends AbstractType implements SettingTypeInterface
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder->add('emailFromAddress', EmailType::class, [
-            'label' => 'trans.Email address used in from field of email message',
-            'help' => 'trans.Must match email from which you send messages',
+        $builder->add('requireListingAdminActivation', BoolRequiredType::class, [
+            'label' => 'trans.Require listing activation by admin before publishing',
             'required' => true,
-            'empty_data' => '',
             'constraints' => [
                 new NotBlank(),
-                new Length(['min' => 4]),
-                new Email([
-                    'mode' => Email::VALIDATION_MODE_STRICT
-                ]),
             ],
         ]);
-        $builder->add('emailFromName', TextType::class, [
-            'label' => 'trans.Name used before email address, in from field of email message',
-            'required' => true,
-            'empty_data' => '',
-            'constraints' => [
-                new NotBlank(),
-                new Length(['min' => 4, 'max' => 40]),
-            ],
-        ]);
-        $builder->add('emailReplyTo', EmailType::class, [
-            'label' => 'trans.Email used when user replies to emails from this application',
-            'required' => true,
-            'empty_data' => '',
-            'constraints' => [
-                new NotBlank(),
-                new Length(['min' => 4]),
-                new Email([
-                    'mode' => Email::VALIDATION_MODE_STRICT
-                ]),
-            ],
-        ]);
-        $builder->add('itemsPerPageMax', IntegerType::class, [
+        $builder->add('itemsPerPage', IntegerType::class, [
             'label' => 'trans.Items per page',
             'required' => true,
             'empty_data' => '',
@@ -67,14 +37,7 @@ class SettingsType extends AbstractType
                 new GreaterThan(['value' => 0]),
             ],
         ]);
-        $builder->add('requireListingAdminActivation', BoolRequiredType::class, [
-            'label' => 'trans.Require listing activation by admin before making public',
-            'required' => true,
-            'constraints' => [
-                new NotBlank(),
-            ],
-        ]);
-        $builder->add('allowedCharactersEnabled', CheckboxType::class, [
+        $builder->add('allowedCharactersEnabled', BoolRequiredType::class, [
             'label' => 'trans.Remove non standard characters in listing - Enabled',
             'help' => 'trans.allows to remove all non standard characters from listing, except those which are white listed bellow',
             'required' => true,
@@ -91,14 +54,17 @@ class SettingsType extends AbstractType
             'required' => true,
             'constraints' => [
             ],
+            'attr' => [
+                'class' => 'js__textareaAutosize',
+            ],
         ]);
-        $builder->add('messageSystemEnabled', CheckboxType::class, [
+        $builder->add('messageSystemEnabled', BoolRequiredType::class, [
             'label' => 'trans.Message system between users enabled',
             'required' => true,
             'constraints' => [
             ],
         ]);
-        $builder->add('mapEnabled', CheckboxType::class, [
+        $builder->add('mapEnabled', BoolRequiredType::class, [
             'label' => 'trans.Map enabled?',
             'required' => true,
         ]);

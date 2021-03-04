@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Service\System\HealthCheck\HealthChecker;
 
 use App\Entity\Page;
-use App\Helper\Str;
 use App\Service\Setting\SettingsService;
 use App\Service\System\HealthCheck\Base\HealthCheckerInterface;
 use App\Service\System\HealthCheck\HealthCheckResultDto;
@@ -16,9 +15,9 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class InvalidLinkToPagesHealthChecker implements HealthCheckerInterface
 {
     /**
-     * @var EntityManagerInterface
+     * @var SettingsService
      */
-    private $em;
+    private $settingsService;
 
     /**
      * @var TranslatorInterface
@@ -26,12 +25,15 @@ class InvalidLinkToPagesHealthChecker implements HealthCheckerInterface
     private $trans;
 
     /**
-     * @var SettingsService
+     * @var EntityManagerInterface
      */
-    private $settingsService;
+    private $em;
 
-    public function __construct(EntityManagerInterface $em, SettingsService $settingsService, TranslatorInterface $trans)
-    {
+    public function __construct(
+        SettingsService $settingsService,
+        TranslatorInterface $trans,
+        EntityManagerInterface $em
+    ) {
         $this->em = $em;
         $this->trans = $trans;
         $this->settingsService = $settingsService;
@@ -39,18 +41,23 @@ class InvalidLinkToPagesHealthChecker implements HealthCheckerInterface
 
     public function checkHealth(): HealthCheckResultDto
     {
-        if (!$this->hasAllRequired()) {
-            return new HealthCheckResultDto(true, $this->trans->trans('trans.Some links to pages in settings are not set or disabled'));
+        if (!$this->hasAllRequiredLinksToPages()) {
+            return new HealthCheckResultDto(
+                true,
+                $this->trans->trans('trans.Some links to pages in settings are not set or disabled')
+            );
         }
 
         return new HealthCheckResultDto(false);
     }
 
-    private function hasAllRequired(): bool
+    private function hasAllRequiredLinksToPages(): bool
     {
-        $requiredPages = $this->getRequiredPages();
+        $requiredPages = $this->getSlugOfRequiredPages();
 
-        $qb = $this->em->getRepository(Page::class)->createQueryBuilder('page');
+        $qb = $this->em->createQueryBuilder();
+        $qb->select('page');
+        $qb->from(Page::class, 'page');
         $qb->select('COUNT(1)');
         $qb->andWhere($qb->expr()->in('page.slug', ':slugList'));
         $qb->setParameter('slugList', $requiredPages, Connection::PARAM_STR_ARRAY);
@@ -60,27 +67,19 @@ class InvalidLinkToPagesHealthChecker implements HealthCheckerInterface
         return \count($requiredPages) === $foundPagesCount;
     }
 
-    private function getRequiredPages(): array
+    /**
+     * @return array<array-key, string|null>
+     */
+    private function getSlugOfRequiredPages(): array
     {
         $settingsDto = $this->settingsService->getSettingsDto();
 
-        $checkIfNotEmpty = [
-            $settingsDto->getLinkTermsConditions(),
-            $settingsDto->getLinkPrivacyPolicy(),
-            $settingsDto->getLinkRejectionReason(),
-            $settingsDto->getLinkAdvertisement(),
-            $settingsDto->getLinkContact(),
+        return [
+            $settingsDto->getLinkTermsConditions() ?? 'LinkTermsConditions',
+            $settingsDto->getLinkPrivacyPolicy() ?? 'LinkPrivacyPolicy',
+            $settingsDto->getLinkRejectionReason() ?? 'LinkRejectionReason',
+            $settingsDto->getLinkAdvertisement() ?? 'LinkAdvertisement',
+            $settingsDto->getLinkContact() ?? 'LinkContact',
         ];
-
-        $return = [];
-        foreach ($checkIfNotEmpty as $page) {
-            if (Str::emptyTrim($page)) {
-                continue;
-            }
-
-            $return[] = $page;
-        }
-
-        return $return;
     }
 }

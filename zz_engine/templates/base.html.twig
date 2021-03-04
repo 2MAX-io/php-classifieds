@@ -17,65 +17,80 @@
     <meta name="theme-color" content="#edeef0">
     <meta name="description" content="{{- settings.metaDescription }}" />
     <meta name='keywords' content='{{- settings.metaKeywords }}'/>
-
-    {%  block stylesheets %}
-        <link rel="stylesheet" href="{{ asset('asset/build/app.css') }}">
-    {%- endblock -%}
+    {% block stylesheets %}
+        {{- encore_entry_link_tags('app') -}}
+    {% endblock %}
     {% block css %}{% endblock %}
 
     <link rel='alternate' type='application/rss+xml' title='{{- settings.rssTitle }}' href='{{ url('app_rss') }}'/>
 
-    {{ settings.customJavascriptInHead | raw }}
+    {{- settings.customJavascriptInHead | raw ~}}
 </head>
 <body class="{{ environmentCssClass() }}">
-<!-- top -->
 <div class="container-fluid page-top d-print-none">
     <div class="container container-remove-padding">
         <nav class="navbar navbar-top navbar-expand-lg navbar-light">
-            <a class="navbar-brand" href="{{ path('app_index') }}" title="{{ settings.indexPageTitle }}">
-                <img src="{{ asset(settings.logoPath | default('static/system/logo_default.png')) }}" alt="{{ 'trans.Classifieds' | trans }}" width="200" class="logo"/>
+            <a class="navbar-brand" href="{{ path('app_index') }}" title="{{ settings.indexPageTitle }}"> {{- '' -}}
+                <img class="logo" src="{{ asset(settings.logoPath | default('static/system/logo_default.png')) }}" alt="{{ settings.indexPageTitle }}"/> {{- '' -}}
             </a>
 
-            <button
-                    class="navbar-toggler mb-1"
-                    type="button"
-                    data-toggle="collapse"
-                    data-target="#navbarPageTop"
-                    aria-controls="navbarPageTop"
-                    aria-expanded="false"
-                    aria-label="Toggle navigation"
-            >
-                <span class="navbar-toggler-icon"></span>
+            <button {{- ' ' -}}
+                    class="navbar-toggler mb-1" {{- ' ' -}}
+                    type="button" {{- ' ' -}}
+                    data-toggle="collapse" {{- ' ' -}}
+                    data-target="#navbarPageTop" {{- ' ' -}}
+                    aria-controls="navbarPageTop" {{- ' ' -}}
+                    aria-expanded="false" {{- ' ' -}}
+                    aria-label="Toggle navigation" {{- ' ' -}}
+            > {{- '' -}}
+                <span class="navbar-toggler-icon"></span> {{- '' -}}
             </button>
 
+            <!-- navbar mobile -->
             <div class="collapse navbar-collapse" id="navbarPageTop">
                 <ul class="navbar-nav justify-content-around d-sm-none mb-2">
-                    {% if settings.masterSiteLinkShow %}
-                        <li class="nav-item menu-top-item">
-                            <a class="nav-link" href="{{ settings.masterSiteUrl }}">{{ settings.masterSiteAnchorText }}</a>
+                    {%- if settings.masterSiteLinkShow ~%}
+                        <li class="nav-item menu-top-item"> {{- '' -}}
+                            <a class="nav-link" href="{{ settings.masterSiteUrl }}">
+                                {{- settings.masterSiteAnchorText -}}
+                            </a> {{- '' -}}
                         </li>
-                    {%- endif -%}
-                    <li class="nav-item">
-                        <a class="nav-link menu-top-item" href="{{ path('app_index') }}">{{ 'trans.Home page' | trans }}</a>
-                    </li>
-                    {% if settings.mapEnabled %}
-                        <li class="nav-item">
-                            <a class="nav-link menu-top-item" href="{{ path('app_map_with_listings') }}">{{ 'trans.Map' | trans }}</a>
+                        <li class="nav-item"> {{- '' -}}
+                            <a class="nav-link menu-top-item" href="{{ path('app_index') }}">
+                                {{- 'trans.Classifieds' | trans -}}
+                            </a> {{- '' -}}
                         </li>
-                    {% endif %}
-                    <li class="nav-item">
-                        <a class="nav-link menu-top-item" href="{{ path('app_category_view_all') }}">{{ 'trans.Categories' | trans }}</a>
+                    {%- else ~%}
+                        <li class="nav-item"> {{- '' -}}
+                            <a class="nav-link menu-top-item" href="{{ path('app_index') }}">
+                                {{- 'trans.Home page' | trans -}}
+                            </a> {{- '' -}}
+                        </li>
+                    {%- endif ~%}
+                    {%- if settings.mapEnabled ~%}
+                        <li class="nav-item"> {{- '' -}}
+                            <a class="nav-link menu-top-item" href="{{ path('app_map_with_listings') }}">
+                                {{- 'trans.Map' | trans -}}
+                            </a> {{- '' -}}
+                        </li>
+                    {%- endif ~%}
+                    <li class="nav-item"> {{- '' -}}
+                        <a class="nav-link menu-top-item" href="{{ path('app_category_view_all') }}">
+                            {{- 'trans.Categories' | trans -}}
+                        </a> {{- '' -}}
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link menu-top-item" href="{{ path('app_last_added') }}">{{ 'trans.Last added' | trans }}</a>
+                    <li class="nav-item"> {{- '' -}}
+                        <a class="nav-link menu-top-item" href="{{ path('app_last_added') }}">
+                            {{- 'trans.Last added' | trans -}}
+                        </a> {{- '' -}}
                     </li>
                 </ul>
 
-                {% if lowSecurityCheckIsAdminInPublic() %}
+                {%- if isAdminInPublic() ~%}
                     <a class="nav-link btn btn-outline-admin d-sm-none" href="{{ path('app_admin_index') }}">
                         {{- 'trans.Admin panel' | trans -}}
                     </a>
-                {%- endif -%}
+                {%- endif ~%}
 
                 <div class="col-md-8 container-remove-padding">
                     <form class="form-inline my-2 my-lg-0" method="get" action="{{ path('app_listing_search') }}">
@@ -83,16 +98,16 @@
                             <label class="sr-only" for="query">{{ 'trans.keyword'|trans }}</label>
                             <div class="input-group mb-2 mr-md-2">
                                 <div class="input-group-prepend">
-                                    <div class="input-group-text"><svg class="fas" width="16" height="16" viewBox="0 0 1792 1792" stroke="currentColor" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M1216 832q0-185-131.5-316.5t-316.5-131.5-316.5 131.5-131.5 316.5 131.5 316.5 316.5 131.5 316.5-131.5 131.5-316.5zm512 832q0 52-38 90t-90 38q-54 0-90-38l-343-342q-179 124-399 124-143 0-273.5-55.5t-225-150-150-225-55.5-273.5 55.5-273.5 150-225 225-150 273.5-55.5 273.5 55.5 225 150 150 225 55.5 273.5q0 220-124 399l343 343q37 37 37 90z"/></svg></div>
+                                    <div class="input-group-text"><i class="svg svg-search"></i></div>
                                 </div>
 
-                                <input
-                                        type="text"
-                                        class="form-control"
-                                        name="query"
-                                        id="query"
-                                        placeholder="{{ settings.searchPlaceholder }}"
-                                        value="{{ app.request.get('query') | default }}"
+                                <input {{- ' ' -}}
+                                        type="text" {{- ' ' -}}
+                                        class="form-control" {{- ' ' -}}
+                                        name="query" {{- ' ' -}}
+                                        id="query" {{- ' ' -}}
+                                        placeholder="{{ settings.searchPlaceholder }}" {{- ' ' -}}
+                                        value="{{ app.request.get('query') | default }}" {{- ' ' -}}
                                 >
                             </div>
                         </div>
@@ -108,164 +123,219 @@
                     <div class="text-right mt-md-2">
                         <ul class="list-inline">
                             <li class="list-inline-item">
-                                <a href="{{ path('app_my_account') }}">{{ 'trans.My account' | trans }}</a>
+                                <a href="{{ path('app_user_my_account') }}">{{ 'trans.My account' | trans }}</a>
                             </li>
                             <li class="list-inline-item">
                                 <a href="{{ path('app_listing_new') }}" class="btn btn-primary">
-                                    {{ 'trans.Add listing' | trans }}
-                                    <svg class="fas" width="14" height="14" viewBox="0 0 1792 1792" stroke="currentColor" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M1600 736v192q0 40-28 68t-68 28h-416v416q0 40-28 68t-68 28h-192q-40 0-68-28t-28-68v-416h-416q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h416v-416q0-40 28-68t68-28h192q40 0 68 28t28 68v416h416q40 0 68 28t28 68z"/></svg>
+                                    {{- 'trans.Add listing' | trans -}}
+                                    {{- ' ' -}}
+                                    <i class="svg svg-add"></i> {{- ' ' -}}
                                 </a>
                             </li>
                         </ul>
                     </div>
                 </div>
 
-                {%- if app.user -%}
+                {%- if app.user ~%}
                     <a class="nav-link d-sm-none" href="{{ path('app_user_listing_list') }}">
                         {{- 'trans.My listings' | trans -}}
                     </a>
-                {% endif %}
+                {%- endif ~%}
             </div>
         </nav>
     </div>
 </div>
 
-<!-- Navbar -->
+<!-- navbar desktop -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark d-none d-md-block menu-secondary d-print-none">
     <div class="container">
-        <button
-                class="navbar-toggler"
-                type="button"
-                data-toggle="collapse"
-                data-target="#main-navbar"
-                aria-controls="main-navbar"
-                aria-expanded="false"
-                aria-label="Toggle navigation"
-        >
-            <span class="navbar-toggler-icon"></span>
+        <button {{- ' ' -}}
+                class="navbar-toggler" {{- ' ' -}}
+                type="button" {{- ' ' -}}
+                data-toggle="collapse" {{- ' ' -}}
+                data-target="#main-navbar" {{- ' ' -}}
+                aria-controls="main-navbar" {{- ' ' -}}
+                aria-expanded="false" {{- ' ' -}}
+                aria-label="Toggle navigation" {{- ' ' -}}
+        > {{- ' ' -}}
+            <span class="navbar-toggler-icon"></span> {{- ' ' -}}
         </button>
 
         <div class="collapse navbar-collapse" id="main-navbar">
             <ul class="navbar-nav justify-content-around w-100">
-                {% if settings.masterSiteLinkShow %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ settings.masterSiteUrl }}">{{ settings.masterSiteAnchorText }}</a>
+                {%- if settings.masterSiteLinkShow ~%}
+                    <li class="nav-item"> {{- '' -}}
+                        <a class="nav-link" href="{{ settings.masterSiteUrl }}">{{ settings.masterSiteAnchorText }}</a> {{- '' -}}
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('app_index') }}">{{ 'trans.Classifieds' | trans }}</a>
+                    <li class="nav-item"> {{- '' -}}
+                        <a class="nav-link" href="{{ path('app_index') }}">{{ 'trans.Classifieds' | trans }}</a> {{- '' -}}
                     </li>
-                {% else %}
-                    <li class="nav-item active">
-                        <a class="nav-link" href="{{ path('app_index') }}">{{ 'trans.Home page' | trans }}</a>
+                {%- else ~%}
+                    <li class="nav-item active"> {{- '' -}}
+                        <a class="nav-link" href="{{ path('app_index') }}">{{ 'trans.Home page' | trans }}</a> {{- '' -}}
                     </li>
-                {% endif %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ path('app_category_view_all') }}">{{ 'trans.Categories' | trans }}</a>
+                {%- endif ~%}
+                <li class="nav-item"> {{- '' -}}
+                    <a class="nav-link" href="{{ path('app_category_view_all') }}">{{ 'trans.Categories' | trans }}</a> {{- '' -}}
                 </li>
-                {% if settings.mapEnabled %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('app_map_with_listings') }}">{{ 'trans.Map' | trans }}</a>
+                {%- if settings.mapEnabled ~%}
+                    <li class="nav-item"> {{- '' -}}
+                        <a class="nav-link" href="{{ path('app_map_with_listings') }}">{{ 'trans.Map' | trans }}</a> {{- '' -}}
                     </li>
-                {% endif %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ path('app_last_added') }}">{{ 'trans.Last added' | trans }}</a>
+                {%- endif ~%}
+                <li class="nav-item"> {{- '' -}}
+                    <a class="nav-link" href="{{ path('app_last_added') }}">{{ 'trans.Last added' | trans }}</a> {{- '' -}}
                 </li>
 
-                {%- if app.user -%}
-                    <li class="nav-item">
+                {%- if app.user ~%}
+                    <li class="nav-item"> {{- '' -}}
                         <a class="nav-link" href="{{ path('app_user_listing_list') }}">
                             {{- 'trans.My listings' | trans -}}
-                        </a>
+                        </a> {{- '' -}}
                     </li>
-                {% endif %}
+                {%- endif %}
 
-                {% if lowSecurityCheckIsAdminInPublic() %}
-                    <li class="nav-item">
+                {%- if isAdminInPublic() ~%}
+                    <li class="nav-item"> {{- '' -}}
                         <a class="nav-link btn btn-outline-admin" href="{{ path('app_admin_index') }}">
                             {{- 'trans.Admin panel' | trans -}}
-                        </a>
+                        </a> {{- '' -}}
                     </li>
-                {% endif %}
+                {%- endif ~%}
             </ul>
         </div>
     </div>
 </nav>
 
 {% if not app.request.cookies.get('gdpr', false) %}
-    <div id="gdpr" class="alert alert-info d-print-none">
+    <div id="js__gdpr" class="alert alert-info d-print-none">
         <div class="container">
             {{ 'trans.We use cookies to improve your experience on our site. To find out more, read our' | trans }}
 
-            {% if settings.linkPrivacyPolicy %}
+            {%- if settings.linkPrivacyPolicy ~%}
                 <a href="{{ path('app_page', {'slug': settings.linkPrivacyPolicy}) }}">
-                    {{ 'trans.privacy policy' | trans }}
+                    {{- 'trans.privacy policy' | trans -}}
                 </a>
-            {% else %}
-                {{ 'trans.privacy policy' | trans }}
-            {% endif %}
+            {%- else ~%}
+                {{- 'trans.privacy policy' | trans -}}
+            {%- endif ~%}
 
-            <button
-                    class="btn btn-dark btn-sm"
-                    onclick="$('#gdpr').remove(); document.cookie = 'gdpr=1; expires='+ new Date(new Date().getTime()+315360000000).toUTCString()+'; path=/'"
-            >
+            <button id="js__gdprAcceptButton" class="btn btn-dark btn-sm">
                 {{- 'trans.I accept' | trans -}}
             </button>
         </div>
     </div>
 {% endif %}
 
+<!-- CONTENT -->
 {% block body %}{% endblock body %}
 
-<!-- footer -->
+<!-- FOOTER -->
 <div class="container mt-1 mt-md-2 d-print-none">
     <footer class="pt-1 pt-md-3 border-top">
         <div class="row">
             <div class="col-12 col-md">
-                <small class="d-block mb-3 text-muted">{{ settings.footerSiteCopyright | replace({"%year%": "now" | date('Y')}) }}</small>
+                <small class="d-block mb-1 text-muted">
+                    {{- settings.footerSiteCopyright | replace({"%year%": "now" | date('Y')}) -}}
+                </small>
+                {%- if app.user ~%}
+                    <div> {{- '' -}}
+                        <a class="text-muted mobile-link mb-1" href="{{ path('app_logout_confirm') }}">
+                            {{- 'trans.Logout' | trans -}}
+                        </a> {{- '' -}}
+                    </div>
+                {%- endif ~%}
             </div>
             <div class="col-6 col-md">
                 <h5>{{ 'trans.Quick links' | trans }}</h5>
                 <ul class="list-unstyled text-small">
-                    <li><a class="text-muted mobile-link" href="{{ path('app_index') }}">{{ 'trans.Home page' | trans }}</a></li>
-                    <li><a class="text-muted mobile-link" href="{{ path('app_listing_new') }}">{{ 'trans.Add listing' | trans }}</a></li>
-                    <li><a class="text-muted mobile-link" href="{{ path('app_my_account') }}">{{ 'trans.My account' | trans }}</a></li>
-                    <li><a class="text-muted mobile-link" href="{{ path('app_last_added') }}">{{ 'trans.Last added' | trans }}</a></li>
+                    {%- if- settings.masterSiteLinkShow ~%}
+                        <li> {{- '' -}}
+                            <a class="text-muted mobile-link" href="{{ settings.masterSiteUrl }}">
+                                {{- settings.masterSiteAnchorText -}}
+                            </a> {{- '' -}}
+                        </li>
+                        <li> {{- '' -}}
+                            <a class="text-muted mobile-link" href="{{ path('app_index') }}">
+                                {{- 'trans.Classifieds' | trans -}}
+                            </a> {{- '' -}}
+                        </li>
+                    {%- else ~%}
+                        <li> {{- '' -}}
+                            <a class="text-muted mobile-link" href="{{ path('app_index') }}">
+                                {{- 'trans.Home page' | trans -}}
+                            </a> {{- '' -}}
+                        </li>
+                    {%- endif ~%}
+                    <li> {{- '' -}}
+                        <a class="text-muted mobile-link" href="{{ path('app_listing_new') }}">
+                            {{- 'trans.Add listing' | trans -}}
+                        </a> {{- '' -}}
+                    </li>
+                    <li> {{- '' -}}
+                        <a class="text-muted mobile-link" href="{{ path('app_user_my_account') }}">
+                            {{- 'trans.My account' | trans -}}
+                        </a> {{- '' -}}
+                    </li>
+                    <li> {{- '' -}}
+                        <a class="text-muted mobile-link" href="{{ path('app_last_added') }}">
+                            {{- 'trans.Last added' | trans -}}
+                        </a> {{- '' -}}
+                    </li>
                 </ul>
             </div>
             <div class="col-6 col-md">
                 <h5>{{ 'trans.About' | trans }}</h5>
                 <ul class="list-unstyled text-small">
-                    {%- if settings.linkAdvertisement -%}
-                        <li><a class="text-danger mobile-link" href="{{ path('app_page', {'slug': settings.linkAdvertisement}) }}">{{ 'trans.Advertisement' | trans }}</a></li>
-                    {%- endif -%}
-                    {%- if settings.linkTermsConditions -%}
-                        <li><a class="text-muted mobile-link" href="{{ path('app_page', {'slug': settings.linkTermsConditions}) }}">{{ 'trans.Terms and conditions' | trans }}</a></li>
-                    {%- endif -%}
-                    {%- if settings.linkPrivacyPolicy -%}
-                        <li><a class="text-muted mobile-link" href="{{ path('app_page', {'slug': settings.linkPrivacyPolicy}) }}">{{ 'trans.Privacy policy' | trans }}</a></li>
-                    {%- endif -%}
-                    <li><a class="text-muted mobile-link" href="{{ path('app_credits') }}">{{ 'trans.Credits' | trans }}</a></li>
-                    {%- if settings.linkContact -%}
-                        <li><a class="text-muted mobile-link" href="{{ path('app_page', {'slug': settings.linkContact}) }}">{{ 'trans.Contact' | trans }}</a></li>
-                    {%- endif -%}
+                    {%- if settings.linkAdvertisement ~%}
+                        <li> {{- '' -}}
+                            <a class="text-danger mobile-link" href="{{ path('app_page', {'slug': settings.linkAdvertisement}) }}">
+                                {{- 'trans.Advertisement' | trans -}}
+                            </a> {{- '' -}}
+                        </li>
+                    {%- endif ~%}
+
+                    {%- if settings.linkTermsConditions ~%}
+                        <li> {{- '' -}}
+                            <a class="text-muted mobile-link" href="{{ path('app_page', {'slug': settings.linkTermsConditions}) }}">
+                                {{- 'trans.Terms and conditions' | trans -}}
+                            </a> {{- '' -}}
+                        </li>
+                    {%- endif ~%}
+
+                    {%- if settings.linkPrivacyPolicy ~%}
+                        <li> {{- '' -}}
+                            <a class="text-muted mobile-link" href="{{ path('app_page', {'slug': settings.linkPrivacyPolicy}) }}">
+                                {{- 'trans.Privacy policy' | trans -}}
+                            </a> {{- '' -}}
+                        </li>
+                    {%- endif ~%}
+
+                    <li> {{- '' -}}
+                        <a class="text-muted mobile-link" href="{{ path('app_credits') }}">
+                            {{- 'trans.Credits' | trans -}}
+                        </a> {{- '' -}}
+                    </li>
+
+                    {%- if settings.linkContact ~%}
+                        <li> {{- '' -}}
+                            <a class="text-muted mobile-link" href="{{ path('app_page', {'slug': settings.linkContact}) }}">
+                                {{- 'trans.Contact' | trans -}}
+                            </a> {{- '' -}}
+                        </li>
+                    {%- endif ~%}
                 </ul>
             </div>
         </div>
     </footer>
 </div>
 
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css">
-<link rel="stylesheet" href="{{ asset('asset/build/app.bottom.css') }}">
+{{ encore_entry_link_tags('app_bottom') }}
 {{ settings.customCss | raw }}
 
 {% block javascripts %}
-    {{ nelmio_js_error_logger() }}
-    <script type="application/json" id="js__dataForJs">{{ dataForJs | default([]) | inlineJson | base64_encode }}</script>
-    <script src="{{ asset('asset/build/app.js') }}"></script>
-    <script src="{{ asset('asset/lib/cleave/addons/cleave-phone.'~ settings.languageTwoLetters | lower ~'.js') }}"></script>
-    <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData', version: asset_version(path('fos_js_routing_js')) }) }}"></script>
-    <script src="{{ asset(path('bazinga_jstranslation_js')) }}"></script>
-
+    <param id="js__dataForJs" value="{{ dataForJs | default([]) | processDataForJs }}" name="dataForJs" class="d-none">
+    {{ encore_entry_script_tags('app') }}
     {{ settings.customJavascriptBottom | raw }}
 {% endblock %}
 {% block js %}{% endblock %}

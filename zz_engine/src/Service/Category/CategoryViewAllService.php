@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Service\Category;
 
 use App\Entity\Category;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\EntityManagerInterface;
 
 class CategoryViewAllService
@@ -24,11 +25,14 @@ class CategoryViewAllService
      */
     public function getAllCategories(): array
     {
-        $qb = $this->em->getRepository(Category::class)->createQueryBuilder('category');
+        $qb = $this->em->createQueryBuilder();
+        $qb->select('category');
+        $qb->from(Category::class, 'category');
         $qb->addSelect('categoryChild');
         $qb->join('category.children', 'categoryChild');
+
         $qb->andWhere($qb->expr()->eq('category.lvl', 1));
-        $qb->orderBy('category.sort', 'ASC');
+        $qb->orderBy('category.sort', Criteria::ASC);
 
         return $qb->getQuery()->getResult();
     }

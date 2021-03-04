@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "allowSyntheticDefaultImports": false,
+    "baseUrl": "./",
+    "paths": {
+      "~/*": [
+        "zz_engine/assets/*"
+      ]
+    }
+  },
+  "exclude": [
+    "zz_engine/node_modules",
+    "asset/build"
+  ]
+}

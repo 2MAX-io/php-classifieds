@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Service\Payment\Dto;
@@ -29,6 +30,15 @@ class CompletePurchaseDto
 
     public function getRedirectResponse(): ?Response
     {
+        return $this->redirectResponse;
+    }
+
+    public function getRedirectResponseNotNull(): Response
+    {
+        if (null === $this->redirectResponse) {
+            throw new \RuntimeException('redirectResponse is null');
+        }
+
         return $this->redirectResponse;
     }
 

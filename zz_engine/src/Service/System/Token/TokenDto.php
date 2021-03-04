@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Service\System\Token;
 
-use App\Entity\Token;
-use App\Entity\TokenField;
+use App\Entity\System\Token;
+use App\Entity\System\TokenField;
 
 class TokenDto
 {
@@ -24,11 +24,22 @@ class TokenDto
         $this->tokenEntity = $tokenEntity;
     }
 
+    public function getTokenEntity(): Token
+    {
+        return $this->tokenEntity;
+    }
+
+    /**
+     * @return TokenField[]
+     */
     public function getFields(): array
     {
         return $this->fields;
     }
 
+    /**
+     * @param TokenField[] $fields
+     */
     public function setFields(array $fields): void
     {
         $this->fields = $fields;
@@ -41,10 +52,5 @@ class TokenDto
         $tokenField->setValue($value);
 
         $this->tokenEntity->addField($tokenField);
-    }
-
-    public function getTokenEntity(): Token
-    {
-        return $this->tokenEntity;
     }
 }

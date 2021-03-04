@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace App\Form\Admin;
 
 use App\Entity\CustomField;
-use App\Entity\CustomFieldJoinCategory;
+use App\Entity\CustomFieldForCategory;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -34,15 +35,17 @@ class CategoryAddCustomFieldType extends AbstractType
             'choice_label' => static function (CustomField $customField) {
                 $hint = '';
                 if ($customField->getNameForAdmin()) {
-                    $hint = ' (' . $customField->getNameForAdmin() . ')';
+                    $hint = ' ('.$customField->getNameForAdmin().')';
                 }
 
-                return $customField->getName() . $hint;
+                return $customField->getName().$hint;
             },
             'label' => 'trans.Custom field',
             'query_builder' => function () {
-                $qb = $this->em->getRepository(CustomField::class)->createQueryBuilder('customField');
-                $qb->addOrderBy('customField.sort', 'ASC');
+                $qb = $this->em->createQueryBuilder();
+                $qb->select('customField');
+                $qb->from(CustomField::class, 'customField');
+                $qb->addOrderBy('customField.sort', Criteria::ASC);
 
                 return $qb;
             },
@@ -62,7 +65,7 @@ class CategoryAddCustomFieldType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => CustomFieldJoinCategory::class,
+            'data_class' => CustomFieldForCategory::class,
         ]);
     }
 }

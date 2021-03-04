@@ -35,7 +35,7 @@ class ServerHelper
                 continue;
             }
 
-            $return .= "$serverKey => {$_SERVER[$serverKey]} \r\n";
+            $return .= "{$serverKey} => {$_SERVER[$serverKey]} \r\n";
         }
 
         return $return;

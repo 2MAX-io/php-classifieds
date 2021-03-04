@@ -6,6 +6,7 @@ namespace App\Form\Admin\ExecuteAction;
 
 use App\Entity\CustomFieldOption;
 use App\Form\Type\CategoryType;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -22,7 +23,7 @@ class ExecuteActionType extends AbstractType
     public const CATEGORY_FIELD = 'category';
     public const ACTION = 'action';
 
-    public const ACTION_SET_CUSTOM_FIELD_OPTION = 'ACTION_SET_CUSTOM_FIELD_OPTION';
+    public const ACTION_SET_CUSTOM_FIELD_OPTION_WHEN_NOT_SET = 'ACTION_SET_CUSTOM_FIELD_OPTION_WHEN_NOT_SET';
     public const ACTION_SET_CATEGORY = 'ACTION_SET_CATEGORY';
 
     /**
@@ -41,15 +42,15 @@ class ExecuteActionType extends AbstractType
             'label' => 'trans.Execute action',
             'placeholder' => 'trans.Select',
             'choices' => [
-                'trans.Set custom field option' => static::ACTION_SET_CUSTOM_FIELD_OPTION,
+                'trans.Set custom field option, if custom field not set' => static::ACTION_SET_CUSTOM_FIELD_OPTION_WHEN_NOT_SET,
                 'trans.Set category' => static::ACTION_SET_CATEGORY,
             ],
             'constraints' => [
                 new NotBlank(),
             ],
             'attr' => [
-                'class' => 'selectActonInput',
-            ]
+                'class' => 'js__selectAction',
+            ],
         ]);
         $builder->add(static::CUSTOM_FIELD_OPTION_FIELD, EntityType::class, [
             'label' => 'trans.Custom field option',
@@ -59,29 +60,31 @@ class ExecuteActionType extends AbstractType
                 $customField = $customFieldOption->getCustomFieldNotNull();
                 $hint = $customField->getNameForAdmin() ? " ({$customField->getNameForAdmin()})" : '';
 
-                return $customField->getName() . $hint . ' ⇾ ' . $customFieldOption->getName();
+                return $customField->getName().$hint.' ⇾ '.$customFieldOption->getName();
             },
             'query_builder' => function () {
-                $qb = $this->em->getRepository(CustomFieldOption::class)->createQueryBuilder('customFieldOption');
+                $qb = $this->em->createQueryBuilder();
+                $qb->select('customFieldOption');
+                $qb->from(CustomFieldOption::class, 'customFieldOption');
                 $qb->join('customFieldOption.customField', 'customField');
 
-                $qb->addOrderBy('customField.sort', 'ASC');
-                $qb->addOrderBy('customFieldOption.sort', 'ASC');
+                $qb->addOrderBy('customField.sort', Criteria::ASC);
+                $qb->addOrderBy('customFieldOption.sort', Criteria::ASC);
 
                 return $qb;
             },
             'form_group_attr' => [
-                'class' => 'actionField d-none-soft',
-                'data-for-action' => static::ACTION_SET_CUSTOM_FIELD_OPTION,
+                'class' => 'js__executeActionValueSelect d-none-soft',
+                'data-value-for-action' => static::ACTION_SET_CUSTOM_FIELD_OPTION_WHEN_NOT_SET,
             ],
         ]);
         $builder->add(static::CATEGORY_FIELD, CategoryType::class, [
             'label' => 'trans.Category',
             'placeholder' => 'trans.Select',
             'form_group_attr' => [
-                'class' => 'actionField d-none-soft',
-                'data-for-action' => static::ACTION_SET_CATEGORY,
-            ]
+                'class' => 'js__executeActionValueSelect d-none-soft',
+                'data-value-for-action' => static::ACTION_SET_CATEGORY,
+            ],
         ]);
     }
 
@@ -94,18 +97,20 @@ class ExecuteActionType extends AbstractType
                 new Callback(['callback' => static function (ExecuteActionDto $executeActionDto, ExecutionContextInterface $context): void {
                     $action = $executeActionDto->getAction();
 
-                    if ($action === static::ACTION_SET_CUSTOM_FIELD_OPTION && null === $executeActionDto->getCustomFieldOption()) {
+                    if ($action === static::ACTION_SET_CUSTOM_FIELD_OPTION_WHEN_NOT_SET && null === $executeActionDto->getCustomFieldOption()) {
                         $context->buildViolation('This value should not be blank.')
                             ->atPath(static::CUSTOM_FIELD_OPTION_FIELD)
-                            ->addViolation();
+                            ->addViolation()
+                        ;
                     }
 
                     if ($action === static::ACTION_SET_CATEGORY && null === $executeActionDto->getCategory()) {
                         $context->buildViolation('This value should not be blank.')
                             ->atPath(static::CATEGORY_FIELD)
-                            ->addViolation();
+                            ->addViolation()
+                        ;
                     }
-                }])
+                }]),
             ],
         ]);
     }

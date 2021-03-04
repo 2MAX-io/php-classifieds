@@ -1,4 +1,4 @@
-<div class="js__listing-contact-data">
+<div class="js__listingContactData">
     {% if listing.phone is empty and listing.email is empty %}
         <button class="alert alert-danger mb-3">
             {{- 'trans.No contact information found, please check listing description' | trans -}}
@@ -11,10 +11,10 @@
                 <div class="col-sm-4 col-md-5">
                     <span>{{ 'trans.Phone' | trans }}</span>
                     <button
-                            onclick="copyTextToClipboard('{{ listing.phone }}')"
-                            class="btn btn-sm btn-secondary float-right"
+                            class="js__copyToClipboard btn btn-sm btn-secondary float-right"
+                            data-clipboard-value="{{ listing.phone }}"
                     >
-                        {{ 'trans.Copy' | trans }}
+                        {{- 'trans.Copy' | trans -}}
                     </button>
                 </div>
 
@@ -31,10 +31,10 @@
                 <div class="col-sm-4 col-md-5">
                     <span>{{ 'trans.Email' | trans }}</span>
                     <button
-                            onclick="copyTextToClipboard('{{ listing.email }}')"
-                            class="btn btn-sm btn-secondary float-right"
+                            class="js__copyToClipboard btn btn-sm btn-secondary float-right"
+                            data-clipboard-value="{{ listing.email }}"
                     >
-                        {{ 'trans.Copy' | trans }}
+                        {{- 'trans.Copy' | trans -}}
                     </button>
                 </div>
 

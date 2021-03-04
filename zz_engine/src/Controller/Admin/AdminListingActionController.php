@@ -6,110 +6,127 @@ namespace App\Controller\Admin;
 
 use App\Controller\Admin\Base\AbstractAdminController;
 use App\Entity\Listing;
-use App\Service\Admin\Listing\ListingNextWaitingService;
+use App\Helper\DateHelper;
+use App\Service\Admin\Listing\NextListingWaitingActivationService;
 use App\Service\Admin\ListingAction\ListingActionService;
 use App\Service\System\Routing\RefererService;
 use Carbon\Carbon;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Exception\InvalidCsrfTokenException;
 
 class AdminListingActionController extends AbstractAdminController
 {
     /**
-     * @Route("/admin/red5/listing/action/activate/{id}", name="app_admin_listing_activate", methods={"PATCH"})
+     * @var EntityManagerInterface
+     */
+    private $em;
+
+    public function __construct(EntityManagerInterface $em)
+    {
+        $this->em = $em;
+    }
+
+    /**
+     * @Route("/admin/red5/listing/{id}/action/activate", name="app_admin_listing_activate", methods={"PATCH"})
      */
     public function activate(
         Request $request,
         Listing $listing,
         ListingActionService $listingActionService,
         RefererService $refererService,
-        ListingNextWaitingService $listingRedirectNextWaitingService
+        NextListingWaitingActivationService $nextListingWaitingActivationService
     ): Response {
         $this->denyUnlessAdmin();
 
-        if ($this->isCsrfTokenValid('adminActivate'.$listing->getId(), $request->request->get('_token'))) {
-            $listingActionService->activate([$listing]);
-            $this->getDoctrine()->getManager()->flush();
+        if (!$this->isCsrfTokenValid('csrf_adminActivateListing'.$listing->getId(), $request->request->get('_token'))) {
+            throw new InvalidCsrfTokenException('token not valid');
         }
+        $listingActionService->activate([$listing->getIdNotNull()]);
+        $this->em->flush();
 
         if ($request->get('redirectToNextWaiting')) {
-            return $listingRedirectNextWaitingService->nextOneWaitingOrRefererRedirectResponse();
+            return $nextListingWaitingActivationService->nextWaitingRedirectResponse();
         }
 
         return $refererService->redirectToRefererResponse();
     }
 
     /**
-     * @Route("/admin/red5/listing/action/remove/{id}", name="app_admin_listing_remove", methods={"DELETE"})
+     * @Route("/admin/red5/listing/{id}/action/remove-listing", name="app_admin_listing_remove", methods={"DELETE"})
      */
     public function remove(Request $request, Listing $listing, RefererService $refererService): Response
     {
         $this->denyUnlessAdmin();
 
-        if ($this->isCsrfTokenValid('adminRemove'.$listing->getId(), $request->request->get('_token'))) {
-            $em = $this->getDoctrine()->getManager();
-            $listing->setAdminRemoved(true);
-            $em->flush();
+        if (!$this->isCsrfTokenValid('csrf_adminRemoveListing'.$listing->getId(), $request->request->get('_token'))) {
+            throw new InvalidCsrfTokenException('token not valid');
         }
+        $listing->setAdminRemoved(true);
+        $this->em->flush();
 
         return $refererService->redirectToRefererResponse();
     }
 
     /**
-     * @Route("/admin/red5/listing/action/raise/{id}", name="app_admin_listing_raise", methods={"PATCH"})
+     * move to the top on lists
+     *
+     * @Route("/admin/red5/listing/{id}/action/pull-up", name="app_admin_listing_pull_up", methods={"PATCH"})
      */
-    public function raise(Request $request, Listing $listing, RefererService $refererService): Response
+    public function pullUp(Request $request, Listing $listing, RefererService $refererService): Response
     {
         $this->denyUnlessAdmin();
 
-        if ($this->isCsrfTokenValid('adminRaise'.$listing->getId(), $request->request->get('_token'))) {
-            $em = $this->getDoctrine()->getManager();
-            $listing->setOrderByDate(new \DateTime());
-            $em->flush();
+        if (!$this->isCsrfTokenValid('csrf_adminPullUpListing'.$listing->getId(), $request->request->get('_token'))) {
+            throw new InvalidCsrfTokenException('token not valid');
         }
+        $listing->setOrderByDate(DateHelper::create());
+        $this->em->flush();
 
         return $refererService->redirectToRefererResponse();
     }
 
     /**
-     * @Route("/admin/red5/listing/action/feature-for-week/{id}", name="app_admin_listing_feature_for_week", methods={"PATCH"})
+     * @Route("/admin/red5/listing/{id}/action/feature-for-week", name="app_admin_listing_feature_for_week", methods={"PATCH"})
      */
     public function featureForWeek(Request $request, Listing $listing, RefererService $refererService): Response
     {
         $this->denyUnlessAdmin();
 
-        if ($this->isCsrfTokenValid('adminFeatureForWeek'.$listing->getId(), $request->request->get('_token'))) {
-            $em = $this->getDoctrine()->getManager();
-            $listing->setOrderByDate(new \DateTime());
-            $listing->setFeatured(true);
-            if ($listing->getFeaturedUntilDate() > new \DateTime()) {
-                $listing->setFeaturedUntilDate(Carbon::instance($listing->getFeaturedUntilDate())->addDays(7));
-            } else {
-                $listing->setFeaturedUntilDate(Carbon::now()->addDays(7));
-            }
-            $em->flush();
+        if (!$this->isCsrfTokenValid('csrf_adminFeatureForWeekListing'.$listing->getId(), $request->request->get('_token'))) {
+            throw new InvalidCsrfTokenException('token not valid');
         }
+        $listing->setOrderByDate(DateHelper::create());
+        $listing->setFeatured(true);
+        if ($listing->getFeaturedUntilDate() > DateHelper::create()) {
+            $listing->setFeaturedUntilDate(Carbon::instance($listing->getFeaturedUntilDate())->addDays(7));
+        } else {
+            $listing->setFeaturedUntilDate(DateHelper::carbonNow()->addDays(7));
+        }
+        $this->em->flush();
 
         return $refererService->redirectToRefererResponse();
     }
+
     /**
      * @Route(
-     *     "/admin/red5/listing/action/redirect-to-next-waiting-activation",
-     *     name="app_admin_listing_action_redirect_next_waiting_activation",
+     *     "/admin/red5/listing/action/redirect-to-next-listing-waiting-activation",
+     *     name="app_admin_listing_redirect_next_waiting_activation",
      *     methods={"PATCH"},
      * )
      */
     public function redirectToNextListingWaitingActivation(
         Request $request,
-        ListingNextWaitingService $listingRedirectNextWaitingService
+        NextListingWaitingActivationService $nextListingWaitingActivationService
     ): Response {
         $this->denyUnlessAdmin();
 
-        if (!$this->isCsrfTokenValid('adminRedirectNextWaitingActivation', $request->request->get('_token'))) {
-            throw $this->createAccessDeniedException();
+        if (!$this->isCsrfTokenValid('csrf_adminRedirectNextWaitingActivation', $request->request->get('_token'))) {
+            throw new InvalidCsrfTokenException('token not valid');
         }
 
-        return $listingRedirectNextWaitingService->nextOneWaitingOrRefererRedirectResponse();
+        return $nextListingWaitingActivationService->nextWaitingRedirectResponse();
     }
 }

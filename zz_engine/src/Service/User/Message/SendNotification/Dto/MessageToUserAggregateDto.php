@@ -21,14 +21,25 @@ class MessageToUserAggregateDto
 
     public function getNewestUserMessage(): UserMessage
     {
-        return \end($this->userMessageList);
+        $userMessage = \end($this->userMessageList);
+        if (false === $userMessage) {
+            throw new \RuntimeException('user message not found');
+        }
+
+        return $userMessage;
     }
 
+    /**
+     * @return UserMessage[]
+     */
     public function getUserMessageList(): array
     {
         return $this->userMessageList;
     }
 
+    /**
+     * @param UserMessage[] $userMessageList
+     */
     public function setUserMessageList(array $userMessageList): void
     {
         $this->userMessageList = $userMessageList;

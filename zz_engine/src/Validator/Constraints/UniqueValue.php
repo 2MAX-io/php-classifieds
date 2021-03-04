@@ -10,18 +10,34 @@ class UniqueValue extends Constraint
 {
     public const NOT_UNIQUE_ERROR = '23bd9dbf-6b9b-41cd-a99e-4844bcf3077f';
 
-    public $message = 'This value is already used.';
-    public $em;
-    public $entityClass;
-    public $repositoryMethod = 'findBy';
-    public $fields = [];
-    public $errorPath;
-    public $ignoreNull = true;
-    public $excludeCurrent;
-
+    /** @var string[] */
     protected static $errorNames = [
         self::NOT_UNIQUE_ERROR => 'NOT_UNIQUE_ERROR',
     ];
+
+    /** @var string */
+    public $message = 'This value is already used.';
+
+    /** @var null|string */
+    public $em;
+
+    /** @var class-string */
+    public $entityClass;
+
+    /** @var string */
+    public $repositoryMethod = 'findBy';
+
+    /** @var null|string[]|UniqueValueDto[] */
+    public $fields = [];
+
+    /** @var null|string */
+    public $errorPath;
+
+    /** @var bool */
+    public $ignoreNull = true;
+
+    /** @var string */
+    public $excludeCurrent;
 
     public function getRequiredOptions(): array
     {
@@ -30,8 +46,6 @@ class UniqueValue extends Constraint
 
     /**
      * The validator must be defined as a service with this name.
-     *
-     * @return string
      */
     public function validatedBy(): string
     {

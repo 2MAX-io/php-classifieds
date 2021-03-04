@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Controller\User\Payment;
 
-use App\Entity\Payment;
-use App\Service\FlashBag\FlashService;
+use App\Service\Payment\PaymentService;
+use App\Service\System\FlashBag\FlashService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,20 +14,33 @@ use Symfony\Component\Routing\Annotation\Route;
 class PaymentCancelController extends AbstractController
 {
     /**
+     * @var PaymentService
+     */
+    private $paymentService;
+    /**
+     * @var EntityManagerInterface
+     */
+    private $em;
+
+    public function __construct(PaymentService $paymentService, EntityManagerInterface $em)
+    {
+        $this->em = $em;
+        $this->paymentService = $paymentService;
+    }
+
+    /**
      * @Route("/user/payment/cancel/{paymentAppToken}", name="app_payment_cancel")
      */
     public function paymentCancel(
         string $paymentAppToken,
-        FlashService $flashService,
-        EntityManagerInterface $em
+        FlashService $flashService
     ): Response {
-        $paymentEntity = $em->getRepository(Payment::class)->findOneBy(['appToken' => $paymentAppToken]);
+        $paymentEntity = $this->paymentService->cancelPayment($paymentAppToken);
         if (!$paymentEntity) {
             throw $this->createNotFoundException();
         }
 
-        $paymentEntity->setCanceled(true);
-        $em->flush();
+        $this->em->flush();
 
         if ($paymentEntity->getPaymentForFeaturedPackage()) {
             $flashService->addFlash(
@@ -35,10 +48,9 @@ class PaymentCancelController extends AbstractController
                 'trans.You have canceled payment. If you want to feature listing, try again and complete payment'
             );
 
-            return $this->redirectToRoute(
-                'app_user_feature_listing',
-                ['id' => $paymentEntity->getPaymentForFeaturedPackage()->getListing()->getId()]
-            );
+            return $this->redirectToRoute('app_user_feature_listing', [
+                'id' => $paymentEntity->getPaymentForFeaturedPackage()->getListingNotNull()->getId(),
+            ]);
         }
 
         if ($paymentEntity->getPaymentForBalanceTopUp()) {

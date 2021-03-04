@@ -8,16 +8,28 @@ use App\Controller\Admin\Base\AbstractAdminController;
 use App\Entity\Page;
 use App\Form\Admin\PageType;
 use App\Repository\PageRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Exception\InvalidCsrfTokenException;
 
 class PageController extends AbstractAdminController
 {
     /**
-     * @Route("/admin/red5/page", name="app_admin_page_index", methods={"GET"})
+     * @var EntityManagerInterface
      */
-    public function index(PageRepository $pageRepository): Response
+    private $em;
+
+    public function __construct(EntityManagerInterface $em)
+    {
+        $this->em = $em;
+    }
+
+    /**
+     * @Route("/admin/red5/page", name="app_admin_page_list", methods={"GET"})
+     */
+    public function pageListForAdmin(PageRepository $pageRepository): Response
     {
         $this->denyUnlessAdmin();
 
@@ -37,11 +49,9 @@ class PageController extends AbstractAdminController
         $page->setEnabled(true);
         $form = $this->createForm(PageType::class, $page);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($page);
-            $em->flush();
+            $this->em->persist($page);
+            $this->em->flush();
 
             return $this->redirectToRoute('app_admin_page_edit', [
                 'id' => $page->getId(),
@@ -64,9 +74,8 @@ class PageController extends AbstractAdminController
 
         $form = $this->createForm(PageType::class, $page);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $this->em->flush();
 
             return $this->redirectToRoute('app_admin_page_edit', [
                 'id' => $page->getId(),
@@ -80,18 +89,18 @@ class PageController extends AbstractAdminController
     }
 
     /**
-     * @Route("/admin/red5/page/{id}", name="app_admin_page_delete", methods={"DELETE"})
+     * @Route("/admin/red5/page/{id}/delete", name="app_admin_page_delete", methods={"DELETE"})
      */
     public function delete(Request $request, Page $page): Response
     {
         $this->denyUnlessAdmin();
 
-        if ($this->isCsrfTokenValid('delete'.$page->getId(), $request->request->get('_token'))) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($page);
-            $em->flush();
+        if (!$this->isCsrfTokenValid('csrf_deletePage'.$page->getId(), $request->request->get('_token'))) {
+            throw new InvalidCsrfTokenException('token not valid');
         }
+        $this->em->remove($page);
+        $this->em->flush();
 
-        return $this->redirectToRoute('app_admin_page_index');
+        return $this->redirectToRoute('app_admin_page_list');
     }
 }

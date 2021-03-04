@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Twig;
 
-use App\System\EnvironmentService;
+use App\Service\Setting\EnvironmentService;
 use Twig\Extension\RuntimeExtensionInterface;
 
 class TwigEnvironment implements RuntimeExtensionInterface

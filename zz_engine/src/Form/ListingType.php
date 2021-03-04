@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace App\Form;
 
 use App\Entity\Listing;
+use App\Form\Type\AppMoneyType;
 use App\Form\Type\BoolType;
 use App\Form\Type\CategoryType;
-use App\Form\Type\AppMoneyType;
 use App\Form\Type\PriceForType;
 use App\Service\Listing\Save\SaveListingService;
 use App\Service\Listing\ValidityExtend\ValidUntilSetService;
@@ -40,45 +40,49 @@ class ListingType extends AbstractType
     public const DESCRIPTION_MAX_LENGTH = 10000;
 
     /**
-     * @var ValidUntilSetService
-     */
-    private $validUntilSetService;
-
-    /**
      * @var SaveListingService
      */
     private $saveListingService;
 
-    public function __construct(ValidUntilSetService $validUntilSetService, SaveListingService $saveListingService)
+    /**
+     * @var ValidUntilSetService
+     */
+    private $validUntilSetService;
+
+    public function __construct(SaveListingService $saveListingService, ValidUntilSetService $validUntilSetService)
     {
-        $this->validUntilSetService = $validUntilSetService;
         $this->saveListingService = $saveListingService;
+        $this->validUntilSetService = $validUntilSetService;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add('title', TextType::class, [
-                'label' => 'trans.Title',
-                'empty_data' => '',
-                'constraints' => [
-                    new NotBlank(),
-                    new Length(['min' => 5]),
-                    new HasLetterNumber(),
-                ],
-                'attr' => [
-                    'maxlength' => 70,
-                ]
-            ]);
+            'label' => 'trans.Title',
+            'empty_data' => '',
+            'constraints' => [
+                new NotBlank(),
+                new Length(['min' => 5]),
+                new HasLetterNumber(),
+            ],
+            'attr' => [
+                'maxlength' => 70,
+            ],
+        ]);
         $builder->add('description', TextareaType::class, [
             'label' => 'trans.Description',
             'attr' => [
-                'class' => 'form-listing-description-textarea textarea-autosize',
+                'class' => 'edit-listing-description-textarea js__textareaAutosize',
                 'minlength' => 10,
                 'maxlength' => static::DESCRIPTION_MAX_LENGTH,
             ],
             'constraints' => [
                 new NotBlank(),
-                new Length(['min' => 10, 'max' => static::DESCRIPTION_MAX_LENGTH + 1000, 'maxMessage' => 'This value is too long. It should have 10 000 character or less.|This value is too long. It should have 10 000 characters or less.']),
+                new Length([
+                    'min' => 10,
+                    'max' => static::DESCRIPTION_MAX_LENGTH + 1000,
+                    'maxMessage' => 'This value is too long. It should have 10 000 character or less.|This value is too long. It should have 10 000 characters or less.',
+                ]),
                 new HasLetterNumber(),
             ],
             'empty_data' => '',
@@ -94,7 +98,7 @@ class ListingType extends AbstractType
             'constraints' => [
                 new NotBlank(),
                 new Choice([
-                    'choices' => $this->validUntilSetService->getValidityTimeDaysChoices()
+                    'choices' => $this->validUntilSetService->getValidityTimeDaysChoices(),
                 ]),
             ],
             'label' => 'trans.For how long listing should be published?',
@@ -107,8 +111,8 @@ class ListingType extends AbstractType
                 new Phone(),
             ],
             'attr' => [
-                'class' => 'input-phone',
                 'maxlength' => 20,
+                'class' => 'js__inputPhone',
             ],
         ]);
         $builder->add('email', EmailType::class, [
@@ -119,7 +123,7 @@ class ListingType extends AbstractType
             ],
             'constraints' => [
                 new Email([
-                    'mode' => Email::VALIDATION_MODE_STRICT
+                    'mode' => Email::VALIDATION_MODE_STRICT,
                 ]),
             ],
         ]);
@@ -140,7 +144,7 @@ class ListingType extends AbstractType
             ],
             'attr' => [
                 'max' => (int) \str_repeat('9', 12),
-                'class' => 'input-money',
+                'class' => 'js__inputMoney',
             ],
         ]);
         $builder->add('priceNegotiable', BoolType::class, [
@@ -162,13 +166,13 @@ class ListingType extends AbstractType
             ],
         ]);
         $builder->add(
-            ListingCustomFieldListType::CUSTOM_FIELD_LIST_FIELD,
-            ListingCustomFieldListType::class,
+            ListingCustomFieldsType::CUSTOM_FIELD_LIST_FIELD,
+            ListingCustomFieldsType::class,
             [
                 'listingEntity' => $options['data'],
                 'mapped' => false,
                 'attr' => [
-                    'class' => 'formCustomFieldList',
+                    'class' => 'js__customFieldList',
                 ],
                 'form_group_attr' => [
                     'class' => 'mb-0',
@@ -179,21 +183,20 @@ class ListingType extends AbstractType
             'label' => false,
             'required' => false,
             'attr' => [
-                'class' => 'js__location-latitude',
+                'class' => 'js__locationLatitude',
             ],
         ]);
         $builder->add('locationLongitude', HiddenType::class, [
             'label' => false,
             'required' => false,
             'attr' => [
-                'class' => 'js__location-longitude',
+                'class' => 'js__locationLongitude',
             ],
         ]);
 
-        $builder->addEventListener(FormEvents::PRE_SUBMIT, function(FormEvent $formEvent): void {
-            $listingArray = $formEvent->getData();
-
-            $formEvent->setData($this->saveListingService->modifyListingPreFormSubmit($listingArray));
+        $builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $formEvent): void {
+            $listingFormDataArray = $formEvent->getData();
+            $formEvent->setData($this->saveListingService->modifyListingPreFormSubmit($listingFormDataArray));
         });
     }
 
@@ -207,17 +210,20 @@ class ListingType extends AbstractType
                         if (empty($listing->getPhone()) && (empty($listing->getEmail()) || !$listing->getEmailShow())) {
                             $context->buildViolation('Enter email or phone, both can not be empty')
                                 ->atPath('phone')
-                                ->addViolation();
+                                ->addViolation()
+                            ;
 
                             $context->buildViolation('Enter email or phone, both can not be empty')
                                 ->atPath('email')
-                                ->addViolation();
+                                ->addViolation()
+                            ;
 
                             $context->buildViolation('Enter email or phone, both can not be empty')
                                 ->atPath('emailShow')
-                                ->addViolation();
+                                ->addViolation()
+                            ;
                         }
-                    }])
+                    }]),
                 ],
             ]
         );

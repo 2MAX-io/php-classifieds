@@ -12,10 +12,8 @@ rm -r ${INSTALLER_DIR}/.idea
 rm -r ${INSTALLER_DIR}/zz_engine/dev
 rm -r ${INSTALLER_DIR}/zz_engine/docker
 
-rm ${INSTALLER_DIR}/perf.php
-rm ${INSTALLER_DIR}/echo.php
-rm ${INSTALLER_DIR}/echo.html
-rm ${INSTALLER_DIR}/.gitignore
+#rm ${INSTALLER_DIR}/.gitignore
+#rm ${INSTALLER_DIR}/jsconfig.json
 
 cp ${PROJECT_DIR}/install/data/example/listing.large.sql ${INSTALLER_DIR}/install/data/example/listing.large.sql
 

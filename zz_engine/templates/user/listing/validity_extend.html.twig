@@ -14,8 +14,13 @@
 
             <div class="col-md-8 col-lg-9">
                 <div class="mb-4">
-                    <h3 class="mb-1">{{ 'trans.Extend listing' | trans }}:
-                        <a href="{{ path('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}" target="_blank" class="text-break">
+                    <h3 class="mb-1">
+                        {{ 'trans.Extend listing' | trans }}:
+                        <a
+                                href="{{ path('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}"
+                                target="_blank"
+                                class="text-break"
+                        >
                             {{- listing.title -}}
                         </a>
                     </h3>

@@ -11,29 +11,29 @@ use App\Entity\UserMessageThread;
 class SendUserMessageDto
 {
     /**
-     * @var string|null
+     * @var null|string
      */
     private $message;
 
     /**
-     * @var Listing|null
+     * @var null|Listing
      */
     private $listing;
 
     /**
-     * @var User|null
+     * @var User
      */
     private $currentUser;
 
     /**
-     * @var bool|null
-     */
-    private $createThread;
-
-    /**
-     * @var UserMessageThread|null
+     * @var null|UserMessageThread
      */
     private $userMessageThread;
+
+    /**
+     * @var null|bool
+     */
+    private $createThread;
 
     public function getMessage(): ?string
     {
@@ -55,12 +55,12 @@ class SendUserMessageDto
         $this->listing = $listing;
     }
 
-    public function getCurrentUser(): ?User
+    public function getCurrentUser(): User
     {
         return $this->currentUser;
     }
 
-    public function setCurrentUser(?User $currentUser): void
+    public function setCurrentUser(User $currentUser): void
     {
         $this->currentUser = $currentUser;
     }
@@ -82,6 +82,10 @@ class SendUserMessageDto
 
     public function getUserMessageThreadNotNull(): UserMessageThread
     {
+        if (null === $this->userMessageThread) {
+            throw new \RuntimeException('userMessageThread is null');
+        }
+
         return $this->userMessageThread;
     }
 

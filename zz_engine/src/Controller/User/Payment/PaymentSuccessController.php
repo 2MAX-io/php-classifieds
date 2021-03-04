@@ -19,36 +19,44 @@ use Symfony\Component\Routing\Annotation\Route;
 class PaymentSuccessController extends AbstractController
 {
     /**
-     * @Route("/user/payment/success/{paymentAppToken}", name="app_payment")
+     * @var EntityManagerInterface
      */
-    public function payment(
+    private $em;
+
+    public function __construct(EntityManagerInterface $em)
+    {
+        $this->em = $em;
+    }
+
+    /**
+     * @Route("/user/payment/success/{paymentAppToken}", name="app_payment_success")
+     */
+    public function paymentSuccess(
         Request $request,
         string $paymentAppToken,
         PaymentService $paymentService,
         SettingsService $settingsService,
-        EntityManagerInterface $em,
         LoggerInterface $logger
     ): Response {
         if (!$settingsService->getSettingsDto()->isPaymentAllowed()) {
             throw new UserVisibleException('trans.Payments have been disabled');
         }
 
-        $em->beginTransaction();
-
         try {
+            $this->em->beginTransaction();
             $confirmPaymentConfigDto = new ConfirmPaymentConfigDto();
             $confirmPaymentConfigDto->setRequest($request);
             $confirmPaymentConfigDto->setPaymentAppToken($paymentAppToken);
-            $completePurchaseDto = $paymentService->process($confirmPaymentConfigDto);
-            if ($em->getConnection()->isTransactionActive()) {
-                $em->flush();
-                $em->commit();
+            $completePurchaseDto = $paymentService->confirmPayment($confirmPaymentConfigDto);
+            if ($this->em->getConnection()->isTransactionActive()) {
+                $this->em->flush();
+                $this->em->commit();
             }
             if ($completePurchaseDto->isSuccess()) {
-                return $completePurchaseDto->getRedirectResponse();
+                return $completePurchaseDto->getRedirectResponseNotNull();
             }
         } catch (\Throwable $e) {
-            $em->rollback();
+            $this->em->rollback();
 
             $logger->error('error on payment success', ExceptionHelper::flatten($e));
 
@@ -60,7 +68,7 @@ class PaymentSuccessController extends AbstractController
         throw $this->getGeneralException();
     }
 
-    private function getGeneralException(\Exception $e = null): \Throwable
+    private function getGeneralException(\Throwable $e = null): \Throwable
     {
         return new UserVisibleException('trans.Could not process payment, if you have been charged and did not receive service, please contact us', [], 0, $e);
     }

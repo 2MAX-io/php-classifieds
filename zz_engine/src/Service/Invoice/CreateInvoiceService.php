@@ -6,6 +6,7 @@ namespace App\Service\Invoice;
 
 use App\Entity\Invoice;
 use App\Entity\Payment;
+use App\Helper\DateHelper;
 use App\Repository\UserInvoiceDetailsRepository;
 use App\Service\Invoice\Enum\InvoiceGenerationStrategyEnum;
 use App\Service\Invoice\Helper\InvoiceNumberGeneratorService;
@@ -14,16 +15,6 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class CreateInvoiceService
 {
-    /**
-     * @var SettingsService
-     */
-    private $settingsService;
-
-    /**
-     * @var EntityManagerInterface
-     */
-    private $em;
-
     /**
      * @var UserInvoiceDetailsRepository
      */
@@ -34,16 +25,26 @@ class CreateInvoiceService
      */
     private $invoiceNumberGeneratorService;
 
+    /**
+     * @var SettingsService
+     */
+    private $settingsService;
+
+    /**
+     * @var EntityManagerInterface
+     */
+    private $em;
+
     public function __construct(
         UserInvoiceDetailsRepository $userInvoiceDetailsRepository,
         InvoiceNumberGeneratorService $invoiceNumberGeneratorService,
         SettingsService $settingsService,
         EntityManagerInterface $em
     ) {
-        $this->settingsService = $settingsService;
-        $this->em = $em;
         $this->userInvoiceDetailsRepository = $userInvoiceDetailsRepository;
         $this->invoiceNumberGeneratorService = $invoiceNumberGeneratorService;
+        $this->settingsService = $settingsService;
+        $this->em = $em;
     }
 
     public function createInvoice(Payment $payment): void
@@ -60,7 +61,7 @@ class CreateInvoiceService
         }
         $userInvoiceDetails = $this->userInvoiceDetailsRepository->findByUser($user);
 
-
+        $currentDatetime = DateHelper::create();
         $invoice = new Invoice();
         $invoice->setUser($user);
         $invoice->setPayment($payment);
@@ -69,8 +70,8 @@ class CreateInvoiceService
         $invoice->setExported(false);
         $invoice->setSentToUser(false);
         $invoice->setInvoiceFilePath(''); // todo
-        $invoice->setCreatedDate(new \DateTime());
-        $invoice->setUpdatedDate(new \DateTime());
+        $invoice->setCreatedDate($currentDatetime);
+        $invoice->setUpdatedDate($currentDatetime);
 
         $invoice->setTotalMoney((string) ($payment->getAmount() / 100));
         $invoice->setCurrency($payment->getCurrency());
@@ -78,7 +79,8 @@ class CreateInvoiceService
         // client
 
         if (null === $userInvoiceDetails) {
-            $invoice->setCompanyName($user->getEmail()); // todo
+            $invoice->setIndividualClientName($user->getEmail());
+            $invoice->setEmailForInvoice($user->getEmail());
         } else {
             $invoice->setCompanyName($userInvoiceDetails->getCompanyName());
             $invoice->setClientTaxNumber($userInvoiceDetails->getTaxNumber());
@@ -108,7 +110,7 @@ class CreateInvoiceService
         if (InvoiceGenerationStrategyEnum::AUTO === $invoiceGenerationStrategy) {
             $invoiceNumber = $this->invoiceNumberGeneratorService->getNextInvoiceNumber($invoice);
             $invoice->setInvoiceNumber($invoiceNumber);
-            $invoice->setInvoiceDate(new \DateTime());
+            $invoice->setInvoiceDate($currentDatetime);
 
             $this->em->persist($invoice);
             $this->em->flush();

@@ -34,7 +34,7 @@ class MapWithListingsController extends AbstractController
                 ParamEnum::MAP_DEFAULT_LATITUDE => $mapDefaultConfig->getLatitude(),
                 ParamEnum::MAP_DEFAULT_LONGITUDE => $mapDefaultConfig->getLongitude(),
                 ParamEnum::MAP_DEFAULT_ZOOM => $mapDefaultConfig->getZoom(),
-            ]
+            ],
         ]);
     }
 }

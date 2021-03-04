@@ -2,25 +2,38 @@
   "name": "symfony",
   "version": "1.0.0",
   "description": "",
-  "main": "gulpfile.js",
-  "dependencies": {
-    "gulp-cssnano": "^2.1.3",
-    "gulp-concat": "^2.6.1",
-    "gulp-csso": "^4.0.1",
-    "gulp-uglify": "^3.0.2"
-  },
+  "main": "webpack.config.js",
+  "dependencies": {},
   "devDependencies": {
-    "gulp": "^4.0.2",
-    "gulp-clean": "^0.4.0",
-    "gulp-clean-css": "^4.3.0",
-    "gulp-rename": "^1.4.0",
-    "gulp-rev": "^9.0.0",
-    "gulp-sourcemaps": "^2.6.5",
-    "gulp-util": "^3.0.8"
+    "@babel/plugin-proposal-class-properties": "^7.13.0",
+    "@fancyapps/fancybox": "^3.5.7",
+    "@fortawesome/fontawesome-free": "^5.2.0",
+    "@symfony/webpack-encore": "^1.1.0",
+    "bootstrap": "^4.6.0",
+    "cleave.js": "^1.6.0",
+    "core-js": "3",
+    "exports-loader": "^2.0.0",
+    "jquery": "^3.5.1",
+    "leaflet": "^1.7.0",
+    "leaflet-defaulticon-compatibility": "^0.1.1",
+    "leaflet-fullscreen": "Leaflet/Leaflet.fullscreen",
+    "leaflet.locatecontrol": "^0.72.2",
+    "popper.js": "^1.16.1",
+    "prettier": "2.2.1",
+    "prunecluster": "^2.1.0",
+    "sortablejs": "^1.13.0",
+    "stacktrace-js": "^2.0.2",
+    "webpack-notifier": "^1.6.0"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prettier": "npx prettier --write \"assets/**/*.js\"",
+    "prettier-check": "npx prettier --check \"assets/**/*.js\""
   },
-  "author": "",
+  "browserslist": [
+    "> .05%",
+    "ie 11"
+  ],
+  "author": "2max.io",
   "license": "SEE LICENSE IN LICENSE_LICENCJA_UnRsurDMXRqbXu3XeNPys.txt"
 }

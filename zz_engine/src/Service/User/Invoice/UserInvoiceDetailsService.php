@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Service\User\Invoice;
 
 use App\Entity\UserInvoiceDetails;
+use App\Helper\DateHelper;
 use App\Repository\UserInvoiceDetailsRepository;
 use App\Security\CurrentUserService;
 
@@ -33,10 +34,11 @@ class UserInvoiceDetailsService
         $user = $this->currentUserService->getUser();
         $userInvoiceDetails = $this->userInvoiceDetailsRepository->findByUser($user);
         if (null === $userInvoiceDetails) {
+            $currentDatetime = DateHelper::create();
             $userInvoiceDetails = new UserInvoiceDetails();
             $userInvoiceDetails->setUser($user);
-            $userInvoiceDetails->setCreatedDate(new \DateTime());
-            $userInvoiceDetails->setUpdatedDate(new \DateTime());
+            $userInvoiceDetails->setCreatedDate($currentDatetime);
+            $userInvoiceDetails->setUpdatedDate($currentDatetime);
         }
 
         return $userInvoiceDetails;

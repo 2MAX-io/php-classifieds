@@ -13,11 +13,11 @@ class ListingFileHelper
         $userDivider = \floor($listing->getUserNotNull()->getId() / 10000) + 1;
 
         return FilePath::getListingFilePath()
-            . '/'
-            . $userDivider
-            . '/'
-            . 'user_' . $listing->getUserNotNull()->getId()
-            . '/'
-            . 'listing_' . $listing->getId();
+            .'/'
+            .$userDivider
+            .'/'
+            .'user_'.$listing->getUserNotNull()->getId()
+            .'/'
+            .'listing_'.$listing->getId();
     }
 }

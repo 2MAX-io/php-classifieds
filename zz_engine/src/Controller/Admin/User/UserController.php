@@ -6,10 +6,11 @@ namespace App\Controller\Admin\User;
 
 use App\Controller\Admin\Base\AbstractAdminController;
 use App\Entity\User;
-use App\Form\Admin\UserType;
-use App\Helper\Str;
+use App\Form\Admin\AdminUserEditType;
+use App\Helper\StringHelper;
 use App\Service\Admin\User\UserListService;
-use App\Service\User\Account\EncodePasswordService;
+use App\Service\User\Account\Secondary\EncodePasswordService;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -17,15 +18,28 @@ use Symfony\Component\Routing\Annotation\Route;
 class UserController extends AbstractAdminController
 {
     /**
-     * @Route("/admin/red5/user", name="app_admin_user_index", methods={"GET"})
+     * @var EntityManagerInterface
      */
-    public function index(
+    private $em;
+
+    public function __construct(EntityManagerInterface $em)
+    {
+        $this->em = $em;
+    }
+
+    /**
+     * @Route("/admin/red5/user", name="app_admin_user_list", methods={"GET"})
+     */
+    public function userListForAdmin(
         Request $request,
         UserListService $userListService
     ): Response {
         $this->denyUnlessAdmin();
 
-        $paginationDto = $userListService->getUserList((int) $request->get('page', 1));
+        $paginationDto = $userListService->getUserList(
+            (int) $request->get('page', 1),
+            $request->get('query'),
+        );
 
         return $this->render('admin/user/index.html.twig', [
             'users' => $paginationDto->getResults(),
@@ -41,15 +55,14 @@ class UserController extends AbstractAdminController
         $this->denyUnlessAdmin();
         $originalUser = clone $user;
 
-        $form = $this->createForm(UserType::class, $user);
+        $form = $this->createForm(AdminUserEditType::class, $user);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
-            if (!Str::emptyTrim($user->getPlainPassword())) {
-                $user->setPassword($encodePasswordService->getEncodedPassword($user, $user->getPlainPassword()));
+            if (!StringHelper::emptyTrim($user->getPlainPassword())) {
+                $encodedPassword = $encodePasswordService->getEncodedPassword($user, $user->getPlainPassword());
+                $user->setPassword($encodedPassword);
             }
-
-            $this->getDoctrine()->getManager()->flush();
+            $this->em->flush();
 
             return $this->redirectToRoute('app_admin_user_edit', [
                 'id' => $user->getId(),

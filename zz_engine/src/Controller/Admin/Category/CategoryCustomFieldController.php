@@ -6,18 +6,31 @@ namespace App\Controller\Admin\Category;
 
 use App\Controller\Admin\Base\AbstractAdminController;
 use App\Entity\Category;
-use App\Entity\CustomFieldJoinCategory;
-use App\Exception\UserVisibleException;
+use App\Entity\CustomFieldForCategory;
+use App\Enum\SortConfig;
 use App\Form\Admin\CategoryAddCustomFieldType;
-use App\Helper\Json;
-use App\Service\Admin\CustomField\CustomFieldForCategoryService;
-use App\Service\System\Sort\SortService;
+use App\Helper\JsonHelper;
+use App\Service\Admin\CustomField\CustomFieldCategoriesOrderService;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Exception\InvalidCsrfTokenException;
 
 class CategoryCustomFieldController extends AbstractAdminController
 {
+    public const CSRF_CUSTOM_FIELDS_FOR_CATEGORY_ORDER_SAVE = 'csrf_adminCustomFieldsForCategoryOrderSave';
+
+    /**
+     * @var EntityManagerInterface
+     */
+    private $em;
+
+    public function __construct(EntityManagerInterface $em)
+    {
+        $this->em = $em;
+    }
+
     /**
      * @Route(
      *     "/admin/red5/category/{id}/add-custom-field",
@@ -25,33 +38,31 @@ class CategoryCustomFieldController extends AbstractAdminController
      *     methods={"GET","POST"}
      * )
      */
-    public function addCustomField(
+    public function addCustomFieldForCategory(
         Request $request,
         Category $category,
-        CustomFieldForCategoryService $customFieldForCategoryService
+        CustomFieldCategoriesOrderService $customFieldForCategoryService
     ): Response {
         $this->denyUnlessAdmin();
 
-        $customFieldJoinCategory = new CustomFieldJoinCategory();
-        $customFieldJoinCategory->setCategory($category);
-        $customFieldJoinCategory->setSort(SortService::LAST_VALUE);
-        $form = $this->createForm(CategoryAddCustomFieldType::class, $customFieldJoinCategory);
+        $customFieldForCategory = new CustomFieldForCategory();
+        $customFieldForCategory->setCategory($category);
+        $customFieldForCategory->setSort(SortConfig::LAST_VALUE);
+        $form = $this->createForm(CategoryAddCustomFieldType::class, $customFieldForCategory);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($customFieldJoinCategory);
-            $em->flush();
+            $this->em->persist($customFieldForCategory);
+            $this->em->flush();
 
             $customFieldForCategoryService->reorder();
 
             return $this->redirectToRoute('app_admin_category_edit', [
-                'id' => $customFieldJoinCategory->getCategoryNotNull()->getId(),
+                'id' => $customFieldForCategory->getCategoryNotNull()->getId(),
             ]);
         }
 
         return $this->render('admin/category/add_custom_field.html.twig', [
-            'customFieldJoinCategory' => $customFieldJoinCategory,
+            'customFieldForCategory' => $customFieldForCategory,
             'form' => $form->createView(),
         ]);
     }
@@ -64,20 +75,22 @@ class CategoryCustomFieldController extends AbstractAdminController
      *     options={"expose": true},
      * )
      */
-    public function saveCustomFieldsOrderInCategory(
+    public function saveCustomFieldsForCategoryOrder(
         Request $request,
-        CustomFieldForCategoryService $customFieldForCategoryService
+        CustomFieldCategoriesOrderService $customFieldForCategoryService
     ): Response {
         $this->denyUnlessAdmin();
 
-        if (!$this->isCsrfTokenValid('adminCustomFieldsInCategorySaveSort', $request->headers->get('x-csrf-token'))) {
-            throw new UserVisibleException('CSRF token invalid');
+        if (!$this->isCsrfTokenValid(
+            self::CSRF_CUSTOM_FIELDS_FOR_CATEGORY_ORDER_SAVE,
+            $request->headers->get('x-csrf-token')
+        )) {
+            throw new InvalidCsrfTokenException('token not valid');
         }
-        $em = $this->getDoctrine()->getManager();
 
-        $requestContentArray = Json::toArray($request->getContent());
+        $requestContentArray = JsonHelper::toArray($request->getContent());
         $customFieldForCategoryService->saveOrder($requestContentArray['orderedIdList']);
-        $em->flush();
+        $this->em->flush();
 
         $customFieldForCategoryService->reorder();
 
@@ -86,28 +99,30 @@ class CategoryCustomFieldController extends AbstractAdminController
 
     /**
      * @Route(
-     *     "/admin/red5/category/custom-field-join-category/{id}",
-     *     name="app_admin_category_custom_field_join_category_delete",
+     *     "/admin/red5/category/custom-field-for-category/{id}/delete",
+     *     name="app_admin_category_custom_field_for_category_delete",
      *     methods={"DELETE"}
      * )
      */
-    public function deleteCustomFieldJoinCategory(
+    public function deleteCustomFieldForCategory(
         Request $request,
-        CustomFieldJoinCategory $customFieldJoinCategory,
-        CustomFieldForCategoryService $customFieldForCategoryService
+        CustomFieldForCategory $customFieldForCategory,
+        CustomFieldCategoriesOrderService $customFieldForCategoryService
     ): Response {
         $this->denyUnlessAdmin();
 
-        if ($this->isCsrfTokenValid('deleteCustomFieldFromCategory'.$customFieldJoinCategory->getId(), $request->request->get('_token'))) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($customFieldJoinCategory);
-            $em->flush();
-
-            $customFieldForCategoryService->reorder();
+        if (!$this->isCsrfTokenValid(
+            'csrf_deleteCustomFieldForCategory'.$customFieldForCategory->getId(),
+            $request->request->get('_token')
+        )) {
+            throw new InvalidCsrfTokenException('token not valid');
         }
+        $this->em->remove($customFieldForCategory);
+        $this->em->flush();
+        $customFieldForCategoryService->reorder();
 
         return $this->redirectToRoute('app_admin_category_edit', [
-            'id' => $customFieldJoinCategory->getCategoryNotNull()->getId(),
+            'id' => $customFieldForCategory->getCategoryNotNull()->getId(),
         ]);
     }
 }

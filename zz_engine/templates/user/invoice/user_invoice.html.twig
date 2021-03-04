@@ -1,11 +1,14 @@
 <!doctype html>
-<html>
+<html lang="">
 <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>{{ 'trans.Invoice' | trans }}: {{ invoice.invoiceNumber }}</title>
     {# @var settings \App\Service\Setting\SettingsDto #}
     {%- set settings = settings() -%}
-    <meta charset="utf-8">
 
     <style>
+        *{ font-family: "DejaVu Sans Mono", monospace; font-size: 12px;}
+
         .invoice-box {
             max-width: 800px;
             margin: auto;
@@ -14,7 +17,6 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, .15);
             font-size: 16px;
             line-height: 24px;
-            font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
             color: #555;
         }
 
@@ -84,20 +86,6 @@
             }
         }
 
-        /** RTL **/
-        .rtl {
-            direction: rtl;
-            font-family: Tahoma, 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
-        }
-
-        .rtl table {
-            text-align: right;
-        }
-
-        .rtl table tr td:nth-child(2) {
-            text-align: left;
-        }
-
         .footer {
             font-size: 50%;
             color: gray;
@@ -105,24 +93,30 @@
 
         .logo {
             font-size: 10px;
+            width: 150px;
+        }
+
+        table {
+            padding: 0;
+            border-spacing: 0;
+            border-collapse: collapse;
         }
     </style>
 </head>
 
 <body>
 <div class="invoice-box">
-    <table cellpadding="0" cellspacing="0">
+    <table>
         <tr class="top">
             <td colspan="2">
                 <table>
                     <tr>
-                        <td class="title">
-                            <img class="logo" src="data:image/png;base64,{{ logoImageBase64 }}" alt="{{ app.request.host }}" style="width: 150px">
-                        </td>
-
                         <td>
-                            {{ 'trans.Invoice number' | trans }}: {{ invoice.invoiceNumber }}<br>
+                            {{ 'trans.Invoice number' | trans }}: <strong>{{ invoice.invoiceNumber }}</strong><br>
                             {{ 'trans.Invoice date' | trans }}: {{ invoice.invoiceDate | date(dateFormatYmd) }}<br>
+                        </td>
+                        <td class="title">
+                            <img class="logo" src="data:image/png;base64,{{ logoImageBase64 }}" alt="{{ app.request.host }}">
                         </td>
                     </tr>
                 </table>
@@ -143,11 +137,30 @@
                         </td>
 
                         <td>
-                            <div>{{ 'trans.Client' | trans }}:</div>
-                            <div>{{ invoice.companyName }}</div>
-                            <div>{{ 'trans.Tax ID' | trans }}: {{ invoice.clientTaxNumber }}</div>
-                            <div>{{ invoice.street }}, {{ invoice.buildingNumber }} / {{ invoice.unitNumber }}</div>
-                            <div>{{ invoice.zipCode }}, {{ invoice.city }}</div>
+                            <div>{{ 'trans.Invoiced to' | trans }}:</div>
+                            {%- if invoice.individualClientName ~%}
+                                <div>{{ invoice.individualClientName }}</div>
+                            {%- endif ~%}
+                            {%- if invoice.companyName ~%}
+                                <div>{{ invoice.companyName }}</div>
+                            {%- endif ~%}
+                            {%- if invoice.clientTaxNumber ~%}
+                                <div>{{ 'trans.Tax ID' | trans }}: {{ invoice.clientTaxNumber }}</div>
+                            {%- endif ~%}
+                            {%- if invoice.street and invoice.buildingNumber and invoice.unitNumber ~%}
+                                <div>{{ invoice.street }}, {{ invoice.buildingNumber }} / {{ invoice.unitNumber }}</div>
+                            {%- elseif invoice.street and invoice.buildingNumber ~%}
+                                <div>{{ invoice.street }}, {{ invoice.buildingNumber }}</div>
+                            {%- elseif invoice.buildingNumber ~%}
+                                <div>{{ invoice.buildingNumber }}</div>
+                            {%- endif ~%}
+                            {%- if invoice.zipCode and invoice.city ~%}
+                                <div>{{ invoice.zipCode }}, {{ invoice.city }}</div>
+                            {%- elseif invoice.zipCode ~%}
+                                <div>{{ invoice.zipCode }}</div>
+                            {%- elseif invoice.city ~%}
+                                {{ invoice.city }}
+                            {%- endif ~%}
                             <div>{{ 'trans.Email' | trans }}: {{ invoice.emailForInvoice }}</div>
                         </td>
                     </tr>
@@ -186,8 +199,10 @@
             Invoice Number: {{ invoice.invoiceNumber }},
             Internal ID: {{ invoice.id }},
             {% if invoice.payment %}
-                Internal Payment ID: {{ invoice.payment.id }},
-                Payment Gateway ID: {{ invoice.payment.gatewayPaymentId }},
+                <div>
+                    Internal Payment ID: {{ invoice.payment.id }},
+                    Payment Gateway ID: {{ invoice.payment.gatewayPaymentId }},
+                </div>
             {% endif %}
         </div>
         <div>

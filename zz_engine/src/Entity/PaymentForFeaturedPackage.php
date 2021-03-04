@@ -7,7 +7,7 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\PaymentForFeaturedPackageRepository")
+ * @ORM\Entity()
  */
 class PaymentForFeaturedPackage
 {
@@ -66,19 +66,24 @@ class PaymentForFeaturedPackage
         return $this->featuredPackage;
     }
 
-    public function setFeaturedPackage(FeaturedPackage $featuredPackage): self
+    public function setFeaturedPackage(?FeaturedPackage $featuredPackage): self
     {
         $this->featuredPackage = $featuredPackage;
 
         return $this;
     }
 
-    public function getListing(): Listing
+    public function getListing(): ?Listing
     {
         return $this->listing;
     }
 
-    public function setListing(Listing $listing): self
+    public function getListingNotNull(): Listing
+    {
+        return $this->listing;
+    }
+
+    public function setListing(?Listing $listing): self
     {
         $this->listing = $listing;
 

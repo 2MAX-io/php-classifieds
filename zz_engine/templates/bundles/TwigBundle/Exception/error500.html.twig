@@ -8,17 +8,16 @@
         .container { margin: 30px; max-width: 600px; }
         h1 { color: #dc3545; font-size: 24px; }
         h2 { font-size: 18px; }
+        .exception-trace {
+            width: 100%;
+            min-height: 10em;
+            overflow-wrap: break-word;
+        }
     </style>
 </head>
 <body>
 <div class="container">
-    {% if userVisibleExceptionMessage %}
-        <h1>
-            An Error Occurred: {{ userVisibleExceptionMessage }}
-        </h1>
-    {% else %}
-        <h1>Oops! An Error Occurred</h1>
-    {% endif %}
+    <h1>Oops! An Error Occurred</h1>
 
     <h2>The server returned a "{{ status_code }} {{ status_text }}".</h2>
 
@@ -32,14 +31,22 @@
     </p>
 
     <p>
-        <button onclick="copyTextToClipboard('{{ exceptionTrace }}')">Copy to clipboard</button>
+        <button id="js__copyToClipboard">Copy to clipboard</button>
     </p>
 
-    <textarea id="exceptionTrace" style="width: 100%; min-height: 10em; overflow-wrap: break-word;">
-        {{- exceptionTrace -}}
-    </textarea>
+    {% if exceptionReferenceMessage is defined %}
+        <textarea id="js_copyToClipboardText" class="exception-trace">
+            {{- exceptionReferenceMessage -}}
+        </textarea>
+    {% else %}
+        <textarea id="js_copyToClipboardText" class="exception-trace">
+            {{- 'Error: ' -}}{{- status_text -}}{{- "\n" -}}
+            {{- "now" | date('Y-m-d H:i:s.U P') -}}{{- "\n" -}}
+            {{- 'Route: ' -}}{{- app.request.requestUri | default -}}
+        </textarea>
+    {% endif %}
 
-    <script src="{{ asset('asset/page/error/exception-page.js') }}"></script>
+    <script src="{{ asset('asset/page/exception-page.js') }}"></script>
 </div>
 </body>
 </html>

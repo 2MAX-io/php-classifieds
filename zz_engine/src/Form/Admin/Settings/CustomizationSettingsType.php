@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Form\Admin\Settings;
 
+use App\Form\Admin\Settings\Base\SettingTypeInterface;
 use App\Form\Type\BoolRequiredType;
-use App\Form\Type\LanguageTwoLettersType;
-use App\Form\Type\PageType;
+use App\Form\Type\PageSelectType;
 use App\Service\Setting\SettingsDto;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -17,7 +17,7 @@ use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Url;
 
-class CustomizationSettingsType extends AbstractType
+class CustomizationSettingsType extends AbstractType implements SettingTypeInterface
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -82,41 +82,35 @@ class CustomizationSettingsType extends AbstractType
                 new NotBlank(),
                 new Length(['min' => 2]),
             ],
-        ]);$builder->add('linkContact', PageType::class, [
-        'label' => 'trans.Link to contact page',
-        'required' => true,
-        'constraints' => [
-        ],
-    ]);
-        $builder->add('linkAdvertisement', PageType::class, [
+        ]);
+        $builder->add('linkContact', PageSelectType::class, [
+            'label' => 'trans.Link to contact page',
+            'required' => true,
+            'constraints' => [
+            ],
+        ]);
+        $builder->add('linkAdvertisement', PageSelectType::class, [
             'label' => 'trans.Link to information about advertisement',
             'required' => true,
             'constraints' => [
             ],
         ]);
-        $builder->add('linkTermsConditions', PageType::class, [
+        $builder->add('linkTermsConditions', PageSelectType::class, [
             'label' => 'trans.Link to terms and conditions',
             'required' => true,
             'constraints' => [
             ],
         ]);
-        $builder->add('linkPrivacyPolicy', PageType::class, [
+        $builder->add('linkPrivacyPolicy', PageSelectType::class, [
             'label' => 'trans.Link to privacy policy',
             'required' => true,
             'constraints' => [
             ],
         ]);
-        $builder->add('linkRejectionReason', PageType::class, [
+        $builder->add('linkRejectionReason', PageSelectType::class, [
             'label' => 'trans.Link to rejection reasons',
             'required' => true,
-            'placeholder' => 'trans.not required'
-        ]);
-        $builder->add('languageTwoLetters', LanguageTwoLettersType::class, [
-            'label' => 'trans.Language',
-            'required' => true,
-            'constraints' => [
-                new NotBlank(),
-            ],
+            'placeholder' => 'trans.not required',
         ]);
         $builder->add('searchPlaceholder', TextType::class, [
             'label' => 'trans.Search examples',
@@ -144,7 +138,7 @@ class CustomizationSettingsType extends AbstractType
             'label' => 'trans.Text of link to master site',
             'required' => true,
             'constraints' => [
-                new Length(['min'=> 2]),
+                new Length(['min' => 2]),
             ],
         ]);
         $builder->add('customJavascriptBottom', TextareaType::class, [

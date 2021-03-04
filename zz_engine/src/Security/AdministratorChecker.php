@@ -18,7 +18,7 @@ class AdministratorChecker implements UserCheckerInterface
         }
 
         if (false === $admin->getEnabled()) {
-            $e = new DisabledException("User [{$admin->getUsername()}] is disabled and can't be logged in");
+            $e = new DisabledException();
             $e->setUser($admin);
 
             throw $e;

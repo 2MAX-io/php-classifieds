@@ -18,7 +18,7 @@ class UserChecker implements UserCheckerInterface
         }
 
         if (false === $user->getEnabled()) {
-            $e = new DisabledException("User [{$user->getUsername()}] is disabled and can't be logged in");
+            $e = new DisabledException();
             $e->setUser($user);
 
             throw $e;

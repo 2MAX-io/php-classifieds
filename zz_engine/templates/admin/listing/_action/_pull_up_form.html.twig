@@ -1,0 +1,10 @@
+<form
+        method="post"
+        action="{{ path('app_admin_listing_pull_up', {'id': listing.id}) }}"
+        data-confirm-message="{{ 'trans.Pull up' | trans }}: {{ listing.title }}?"
+        class="d-inline js__confirm"
+>
+    <input type="hidden" name="_method" value="PATCH">
+    <input type="hidden" name="_token" value="{{ csrf_token('csrf_adminPullUpListing' ~ listing.id) }}">
+    <button class="btn btn-success mb-1">{{ 'trans.Pull up' | trans }}</button>
+</form>

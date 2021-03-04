@@ -15,10 +15,10 @@ use Symfony\Component\Routing\Annotation\Route;
 class ListingListController extends AbstractController
 {
     /**
-     * @Route("/listing/search", name="app_listing_search")
-     * @Route("/last-added", name="app_last_added")
-     * @Route("/listings-of-user", name="app_public_listings_of_user")
      * @Route("/c/{categorySlug}", name="app_category")
+     * @Route("/last-added", name="app_last_added")
+     * @Route("/listing/search", name="app_listing_search")
+     * @Route("/listings-of-user", name="app_public_listings_of_user")
      */
     public function listingList(
         Request $request,
@@ -35,9 +35,9 @@ class ListingListController extends AbstractController
         ];
 
         $category = $listingListDto->getCategory();
-        $customFieldsForCategory = $listingListService->getCustomFields($category);
-        $listingListDto->setCustomFieldForCategoryList($customFieldsForCategory);
-        $listingListDto = $listingListService->getListings($request, $listingListDto);
+        $categoryCustomFields = $listingListService->getCustomFields($listingListDto);
+        $listingListDto->setCategoryCustomFields($categoryCustomFields);
+        $listingListDto = $listingListService->getListings($listingListDto);
 
         if ($listingListDto->getRedirectToPageNumber()) {
             return $this->redirectToRoute(
@@ -54,22 +54,22 @@ class ListingListController extends AbstractController
         }
 
         return $this->render(
-            'listing_list.html.twig',
+            'listing_list/listing_list.html.twig',
             [
                 'listingList' => $listingListDto->getResults(),
-                'pager' => $listingListDto->getPager(),
-                'pager_route_params' => $routeParams,
                 'listingListDto' => $listingListDto,
-                'customFieldList' => $customFieldsForCategory,
-                'categoryList' => $categoryListService->getMenuCategoryList($category),
-                'categoryBreadcrumbs' => $categoryListService->getCategoryBreadcrumbs($category),
+                'pager' => $listingListDto->getPager(),
+                'route_params' => $routeParams,
                 'category' => $category,
+                'categoryBreadcrumbs' => $categoryListService->getCategoriesForBreadcrumbs($category),
+                'categoryList' => $categoryListService->getCategoryListForSideMenu($category),
+                'customFieldList' => $categoryCustomFields,
                 'queryParameters' => [
                     'query' => $request->query->get('query'),
                     'user' => $request->query->get('user'),
-                    'min_price' => $request->query->get('min_price'),
-                    'max_price' => $request->query->get('max_price'),
-                    ParamEnum::CUSTOM_FIELD => $request->query->get('custom_field'),
+                    'minPrice' => $request->query->get('minPrice'),
+                    'maxPrice' => $request->query->get('maxPrice'),
+                    ParamEnum::CUSTOM_FIELD => $request->query->get(ParamEnum::CUSTOM_FIELD),
                 ],
             ]
         );

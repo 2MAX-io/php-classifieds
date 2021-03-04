@@ -33,6 +33,6 @@ class PhpassPasswordEncoder extends BasePasswordEncoder implements SelfSaltingEn
 
     private function getEncoder(): PasswordHash
     {
-        return new PasswordHash(8,false);
+        return new PasswordHash(8, false);
     }
 }

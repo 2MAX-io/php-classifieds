@@ -11,45 +11,45 @@ class BoolHelper
      */
     public static function isTrue($value, bool $castToBool = false): bool
     {
-        if ($value === true) {
+        if (true === $value) {
             return true;
         }
 
-        if ($value === 1) {
+        if (1 === $value) {
             return true;
         }
 
         $valueTrimmed = \trim((string) $value);
 
-        if ($valueTrimmed === '1') {
+        if ('1' === $valueTrimmed) {
             return true;
         }
 
-        if ($valueTrimmed === 'true') {
+        if ('true' === $valueTrimmed) {
             return true;
         }
 
-        if ($value === false) {
+        if (false === $value) {
             return false;
         }
 
-        if ($value === 0) {
+        if (0 === $value) {
             return false;
         }
 
-        if ($value === null) {
+        if (null === $value) {
             return false;
         }
 
-        if ($value === '') {
+        if ('' === $value) {
             return false;
         }
 
-        if ($valueTrimmed === '0') {
+        if ('0' === $valueTrimmed) {
             return false;
         }
 
-        if ($valueTrimmed === 'false') {
+        if ('false' === $valueTrimmed) {
             return false;
         }
 

@@ -6,20 +6,20 @@ namespace App\Service\Admin\Other\Logo;
 
 use App\Helper\FileHelper;
 use App\Helper\FilePath;
-use App\Service\Setting\SettingsService;
+use App\Service\Setting\SettingsSaveService;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Webmozart\PathUtil\Path;
 
 class LogoUploadService
 {
     /**
-     * @var SettingsService
+     * @var SettingsSaveService
      */
-    private $settingsService;
+    private $settingsSaveService;
 
-    public function __construct(SettingsService $settingsService)
+    public function __construct(SettingsSaveService $settingsSaveService)
     {
-        $this->settingsService = $settingsService;
+        $this->settingsSaveService = $settingsSaveService;
     }
 
     public function saveLogo(UploadedFile $uploadedFile): void
@@ -34,30 +34,34 @@ class LogoUploadService
             \dirname($destinationPath),
             \basename($destinationPath)
         );
+        $movedFilePath = $movedFile->getRealPath();
+        if (!$movedFilePath) {
+            throw new \RuntimeException("file not found, path: `{$movedFile->getPath()}`, name: `{$movedFile->getFilename()}`");
+        }
 
-        $this->saveLogoSetting(Path::makeRelative($movedFile->getRealPath(), FilePath::getProjectDir()));
+        $this->saveLogoSetting(Path::makeRelative($movedFilePath, FilePath::getPublicDir()));
     }
 
     public function getLogoPath(): ?string
     {
-        return $this->settingsService->getSettingsDtoWithoutCache()->getLogoPath();
+        return $this->settingsSaveService->getSettingsDtoWithoutCache()->getLogoPath();
     }
 
     private function getDestinationPath(UploadedFile $uploadedFile): string
     {
         $extension = $uploadedFile->getClientOriginalExtension();
         $destinationPath = FilePath::getLogoPath()
-            . '/' . FileHelper::getFilenameValidCharacters($uploadedFile->getClientOriginalName()) . '.' . $extension;
-        $destinationPath = FileHelper::reduceFilenameLength($destinationPath, 50);
-        $destinationPath = FileHelper::reducePathLength($destinationPath, 100);
+            .'/'.FileHelper::getFilenameValidCharacters($uploadedFile->getClientOriginalName())
+            .'.'.$extension;
+        $destinationPath = FileHelper::reduceLengthOfFilenameOnly($destinationPath, 50);
 
-        return $destinationPath;
+        return FileHelper::reduceLengthOfEntirePath($destinationPath, 100);
     }
 
     private function saveLogoSetting(string $logoPath): void
     {
-        $settingsDto = $this->settingsService->getSettingsDtoWithoutCache();
+        $settingsDto = $this->settingsSaveService->getSettingsDtoWithoutCache();
         $settingsDto->setLogoPath($logoPath);
-        $this->settingsService->save($settingsDto);
+        $this->settingsSaveService->save($settingsDto);
     }
 }

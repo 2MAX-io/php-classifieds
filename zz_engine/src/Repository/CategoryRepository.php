@@ -6,14 +6,12 @@ namespace App\Repository;
 
 use App\Entity\Category;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\DBAL\Connection;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method Category|null find($id, $lockMode = null, $lockVersion = null)
- * @method Category|null findOneBy(array $criteria, array $orderBy = null)
- * @method Category[]    findAll()
- * @method Category[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @extends \Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository<Category>
  */
 class CategoryRepository extends ServiceEntityRepository
 {
@@ -24,14 +22,17 @@ class CategoryRepository extends ServiceEntityRepository
 
     public function getRootNode(): Category
     {
-        $qb =  $this->createQueryBuilder('category');
+        $qb = $this->createQueryBuilder('category');
         $qb->andWhere($qb->expr()->isNull('category.parent'));
-        $qb->orderBy('category.id', 'ASC');
+        $qb->orderBy('category.id', Criteria::ASC);
+        $qb->setMaxResults(1);
 
         return $qb->getQuery()->getOneOrNullResult();
     }
 
     /**
+     * @param array<int,Category|int|string> $categoryIds
+     *
      * @return Category[]
      */
     public function getFromIds(array $categoryIds): array
@@ -49,19 +50,6 @@ class CategoryRepository extends ServiceEntityRepository
         $qb->andWhere($qb->expr()->in('category.id', ':ids'));
         $qb->setParameter('ids', $ids, Connection::PARAM_INT_ARRAY);
         $qb->indexBy('category', 'category.id');
-
-        return $qb->getQuery()->getResult();
-    }
-
-    /**
-     * @return Category[]
-     */
-    public function getFlatCategoryList(): array
-    {
-        $qb = $this->createQueryBuilder('category');
-        $qb->andWhere($qb->expr()->gt('category.lvl', 0));
-
-        $qb->addOrderBy('category.sort', 'ASC');
 
         return $qb->getQuery()->getResult();
     }

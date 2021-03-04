@@ -51,12 +51,31 @@ class CustomFieldOption
      */
     private $sort;
 
+    public function setValue(?string $value): self
+    {
+        if (\is_string($value)) {
+            $this->value = \mb_strtolower($value);
+        }
+
+        return $this;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    public function getIdNotNull(): int
+    {
+        return $this->id;
+    }
+
     public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function getNameNotNull(): string
     {
         return $this->name;
     }
@@ -73,13 +92,9 @@ class CustomFieldOption
         return $this->value;
     }
 
-    public function setValue(?string $value): self
+    public function getValueNotNull(): string
     {
-        if (\is_string($value)) {
-            $this->value = \mb_strtolower($value);
-        }
-
-        return $this;
+        return $this->value;
     }
 
     public function getCustomField(): ?CustomField

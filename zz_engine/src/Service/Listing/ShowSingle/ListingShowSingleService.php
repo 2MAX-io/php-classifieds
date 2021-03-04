@@ -6,6 +6,8 @@ namespace App\Service\Listing\ShowSingle;
 
 use App\Entity\Listing;
 use App\Entity\ListingView;
+use App\Helper\DateHelper;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr\Join;
 
@@ -23,27 +25,23 @@ class ListingShowSingleService
 
     public function getSingle(int $listingId): ?ListingShowDto
     {
-        $listingViewQuery = $this->em->getRepository(ListingView::class)->createQueryBuilder('listingView');
-        $listingViewQuery->select('SUM(listingView.viewCount)');
-        $listingViewQuery->andWhere($listingViewQuery->expr()->eq('listingView.listing', 'listing.id'));
-        $viewsCountQuery = $listingViewQuery->getQuery()->getDQL();
-        $viewsCountQuery = "($viewsCountQuery) AS viewsCount";
-
-        $qb = $this->em->getRepository(Listing::class)->createQueryBuilder('listing');
+        $qb = $this->em->createQueryBuilder();
+        $qb->select('listing');
+        $qb->from(Listing::class, 'listing');
         $qb->addSelect('customField');
         $qb->addSelect('listingCustomFieldValue');
         $qb->addSelect('customFieldOption');
         $qb->addSelect('listingFile');
         $qb->addSelect('category');
-        $qb->addSelect($viewsCountQuery);
+        $qb->addSelect($this->getListingViewsQueryForSelect());
         $qb->join('listing.category', 'category');
-        $qb->leftJoin('category.customFieldsJoin', 'listingCategoryCustomFieldsJoin');
+        $qb->leftJoin('category.customFieldForCategoryList', 'customFieldForCategoryList');
         $qb->leftJoin(
             'listing.listingCustomFieldValues',
             'listingCustomFieldValue',
             Join::WITH,
-            $qb->expr()->eq(
-                'listingCategoryCustomFieldsJoin.customField',
+            (string) $qb->expr()->eq(
+                'customFieldForCategoryList.customField',
                 'listingCustomFieldValue.customField',
             )
         );
@@ -51,19 +49,20 @@ class ListingShowSingleService
         $qb->leftJoin('listingCustomFieldValue.customField', 'customField');
         $qb->leftJoin('listing.listingFiles', 'listingFile');
         $qb->leftJoin(
-            'customField.categoriesJoin',
-            'categoryJoin',
+            'customField.customFieldForCategories',
+            'customFieldForCategory',
             Join::WITH,
-            $qb->expr()->andX(
-                $qb->expr()->eq('categoryJoin.category', 'listing.category'),
+            (string) $qb->expr()->andX(
+                $qb->expr()->eq('customFieldForCategory.category', 'listing.category'),
             )
         );
+
         $qb->andWhere($qb->expr()->eq('listing.id', ':listingId'));
         $qb->setParameter(':listingId', $listingId);
 
-        $qb->addOrderBy('categoryJoin.sort', 'ASC');
-        $qb->addOrderBy('customFieldOption.sort', 'ASC');
-        $qb->addOrderBy('customField.sort', 'ASC');
+        $qb->addOrderBy('customFieldForCategoryList.sort', Criteria::ASC);
+        $qb->addOrderBy('customFieldOption.sort', Criteria::ASC);
+        $qb->addOrderBy('customField.sort', Criteria::ASC);
 
         return ListingShowDto::fromDoctrineResult($qb->getQuery()->getOneOrNullResult());
     }
@@ -72,12 +71,25 @@ class ListingShowSingleService
     {
         $query = $this->em->getConnection()->prepare('
             INSERT INTO listing_view 
-            SET listing_id=:listingId,
-                view_count=1,
-                datetime=:datetime
+            SET 
+                listing_id = :listingId,
+                view_count = 1,
+                datetime = :datetime
         ');
         $query->bindValue(':listingId', $listing->getId());
-        $query->bindValue(':datetime', \date('Y-m-d H:i:s'));
+        $query->bindValue(':datetime', DateHelper::date('Y-m-d H:i:s'));
         $query->execute();
+    }
+
+    private function getListingViewsQueryForSelect(): string
+    {
+        $qb = $this->em->createQueryBuilder();
+        $qb->select('listingView');
+        $qb->from(ListingView::class, 'listingView');
+        $qb->select('SUM(listingView.viewCount)');
+        $qb->andWhere($qb->expr()->eq('listingView.listing', 'listing.id'));
+        $dql = $qb->getQuery()->getDQL();
+
+        return "({$dql}) AS viewsCount";
     }
 }

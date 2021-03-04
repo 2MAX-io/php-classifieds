@@ -51,6 +51,7 @@ IndexIgnore *
     RedirectMatch 404 /\.git
     RedirectMatch 404 /zz_engine
     RewriteRule Readme.md - [R=404,L]
+    RewriteRule jsconfig.json - [R=404,L]
     RewriteRule static/.*\.php$ - [R=404,L]
 
     #________________________________________________________________________________________________________________

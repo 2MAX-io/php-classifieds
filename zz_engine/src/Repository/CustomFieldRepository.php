@@ -11,10 +11,7 @@ use Doctrine\DBAL\Connection;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method CustomField|null find($id, $lockMode = null, $lockVersion = null)
- * @method CustomField|null findOneBy(array $criteria, array $orderBy = null)
- * @method CustomField[]    findAll()
- * @method CustomField[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @extends \Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository<CustomField>
  */
 class CustomFieldRepository extends ServiceEntityRepository
 {
@@ -24,6 +21,8 @@ class CustomFieldRepository extends ServiceEntityRepository
     }
 
     /**
+     * @param array<int,CustomField|int|string> $customFieldIds
+     *
      * @return Category[]
      */
     public function getFromIds(array $customFieldIds): array

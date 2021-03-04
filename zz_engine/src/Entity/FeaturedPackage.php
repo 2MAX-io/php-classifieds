@@ -51,11 +51,15 @@ class FeaturedPackage
     private $price;
 
     /**
+     * @var int
+     *
      * @ORM\Column(type="smallint", nullable=false, options={"unsigned"=true})
      */
     private $daysFeaturedExpire;
 
     /**
+     * @var int
+     *
      * @ORM\Column(type="smallint", nullable=false, options={"unsigned"=true})
      */
     private $daysListingExpire;
@@ -68,37 +72,50 @@ class FeaturedPackage
     private $removed = false;
 
     /**
-     * @var string
+     * @var null|string
      *
      * @ORM\Column(type="string", length=10000, nullable=true)
      */
     private $description;
 
     /**
-     * @var FeaturedPackageForCategory[]|Collection
+     * @var Collection|FeaturedPackageForCategory[]
      *
      * @ORM\OneToMany(targetEntity="App\Entity\FeaturedPackageForCategory", mappedBy="featuredPackage")
      */
     private $featuredPackageForCategories;
 
     /**
-     * @var PaymentForFeaturedPackage[]|Collection
+     * @var Collection|PaymentForFeaturedPackage[]
      *
      * @ORM\OneToMany(targetEntity="App\Entity\PaymentForFeaturedPackage", mappedBy="featuredPackage")
      */
     private $paymentFeaturedPackage;
 
     /**
-     * @var float
+     * @var null|float
      *
      * used only for form auto validation, if saving empty featured package form successful can be removed
      */
-    private /** @noinspection PhpUnusedPrivateFieldInspection */ $priceFloat;
+    private $priceFloat;
 
     public function __construct()
     {
         $this->featuredPackageForCategories = new ArrayCollection();
         $this->paymentFeaturedPackage = new ArrayCollection();
+    }
+
+    public function getPriceFloat(): ?float
+    {
+        return $this->price / 100;
+    }
+
+    public function setPriceFloat(?float $price): self
+    {
+        $this->priceFloat = $price;
+        $this->price = (int) ($price * 100);
+
+        return $this;
     }
 
     public function getId(): ?int
@@ -138,18 +155,6 @@ class FeaturedPackage
     public function setPrice(?int $price): self
     {
         $this->price = $price;
-
-        return $this;
-    }
-
-    public function getPriceFloat(): ?float
-    {
-        return $this->price / 100;
-    }
-
-    public function setPriceFloat(?float $price): self
-    {
-        $this->price = (int) ($price * 100);
 
         return $this;
     }

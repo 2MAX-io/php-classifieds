@@ -18,13 +18,16 @@ class ListingShowDto
      */
     private $viewsCount;
 
+    /**
+     * @param null|array<int|string,mixed> $result
+     */
     public static function fromDoctrineResult(?array $result): ?ListingShowDto
     {
         if (empty($result)) {
             return null;
         }
 
-        $listingShowDto = new static();
+        $listingShowDto = new self();
         $listingShowDto->setListing($result[0]);
         $listingShowDto->setViewsCount((int) $result['viewsCount']);
 

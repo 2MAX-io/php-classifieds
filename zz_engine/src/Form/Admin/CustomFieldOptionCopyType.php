@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Form\Admin;
 
 use App\Entity\CustomField;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -36,18 +37,20 @@ class CustomFieldOptionCopyType extends AbstractType
             'choice_label' => static function (CustomField $customField) {
                 $hint = '';
                 if ($customField->getNameForAdmin()) {
-                    $hint = ' (' . $customField->getNameForAdmin() . ')';
+                    $hint = ' ('.$customField->getNameForAdmin().')';
                 }
 
-                return $customField->getName() . $hint;
+                return $customField->getName().$hint;
             },
             'query_builder' => function () {
-                $qb = $this->em->getRepository(CustomField::class)->createQueryBuilder('customField');
+                $qb = $this->em->createQueryBuilder();
+                $qb->select('customField');
+                $qb->from(CustomField::class, 'customField');
                 $qb->join('customField.customFieldOptions', 'customFieldOption');
-                $qb->addOrderBy('customField.sort', 'ASC');
+                $qb->addOrderBy('customField.sort', Criteria::ASC);
 
                 return $qb;
-            }
+            },
         ]);
     }
 

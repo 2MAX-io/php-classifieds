@@ -7,136 +7,143 @@ namespace App\Service\Setting;
 class SettingsDto
 {
     /**
-     * @var string|null
+     * @var null|string
      */
     private $indexPageTitle;
 
     /**
-     * @var string|null
+     * @var null|string
      */
     private $pageTitleSuffix;
 
     /**
-     * @var string|null
+     * @var null|string
      */
     private $metaDescription;
 
     /**
-     * @var string|null
+     * @var null|string
      */
     private $metaKeywords;
 
     /**
-     * @var string|null
+     * @var null|string
      */
     private $rssTitle;
 
     /**
-     * @var string|null
+     * @var null|string
      */
     private $rssDescription;
 
     /**
-     * @var string|null
+     * @var null|string
      */
     private $footerSiteCopyright;
 
     /**
-     * @var string|null
+     * @var null|string
      */
     private $emailFromAddress;
 
     /**
-     * @var string|null
+     * @var null|string
      */
     private $emailFromName;
 
     /**
-     * @var string|null
+     * @var null|string
      */
     private $emailReplyTo;
 
     /**
-     * @var string|null
+     * @var null|string
      */
     private $linkTermsConditions;
 
     /**
-     * @var string|null
+     * @var null|string
      */
     private $linkPrivacyPolicy;
 
     /**
-     * @var string|null
+     * @var null|string
      */
     private $linkRejectionReason;
 
     /**
-     * @var string|null
+     * @var null|string
      */
     private $linkContact;
 
     /**
-     * @var string|null
+     * @var null|string
      */
     private $linkAdvertisement;
 
     /**
-     * ISO 639-1
+     * ISO 639
      *
-     * @var string|null
+     * @var null|string
      */
-    private $languageTwoLetters;
+    private $languageIso;
 
     /**
-     * @var string|null
+     * ISO 3166
+     *
+     * @var null|string
+     */
+    private $countryIso;
+
+    /**
+     * @var null|string
      */
     private $currency;
 
     /**
-     * @var bool|null
+     * @var null|bool
      */
-    private $allowedCharactersEnabled;
+    private $allowedCharactersEnabled = false;
 
     /**
-     * @var string|null
+     * @var null|string
      */
     private $allowedCharacters;
 
     /**
-     * @var string|null
+     * @var null|string
      */
     private $wordsToRemoveFromTitle;
 
     /**
-     * @var string|null
+     * @var null|string
      */
     private $searchPlaceholder;
 
     /**
-     * @var boolean
+     * @var bool
      */
-    private $masterSiteLinkShow;
+    private $masterSiteLinkShow = false;
 
     /**
-     * @var string|null
+     * @var null|string
      */
     private $masterSiteUrl;
 
     /**
-     * @var string|null
+     * @var null|string
      */
     private $masterSiteAnchorText;
 
     /**
-     * @var bool|null
+     * @var null|bool
      */
-    private $requireListingAdminActivation;
+    private $requireListingAdminActivation = false;
 
     /**
-     * @var boolean
+     * @var bool
      */
-    private $paymentAllowed;
+    private $paymentAllowed = false;
 
     /**
      * @var null|string
@@ -144,22 +151,22 @@ class SettingsDto
     private $paymentGateway;
 
     /**
-     * @var string|null
+     * @var null|string
      */
     private $paymentGatewayPaymentDescription;
 
     /**
-     * @var string|null
+     * @var null|string
      */
     private $paymentPayPalMode;
 
     /**
-     * @var string|null
+     * @var null|string
      */
     private $paymentPayPalClientId;
 
     /**
-     * @var string|null
+     * @var null|string
      */
     private $paymentPayPalClientSecret;
 
@@ -184,154 +191,189 @@ class SettingsDto
     private $paymentPrzelewy24Crc;
 
     /**
-     * @var string|null
+     * @var null|string
      */
-    private $itemsPerPageMax;
+    private $itemsPerPage;
 
     /**
-     * @var string|null
+     * @var null|string
      */
     private $logoPath;
 
     /**
-     * @var string|null
+     * @var null|string
      */
     private $customJavascriptBottom;
 
     /**
-     * @var string|null
+     * @var null|string
      */
     private $customJavascriptInHead;
 
     /**
-     * @var string|null
+     * @var null|string
      */
     private $customCss;
 
     /**
-     * @var string|null
+     * @var null|string
      */
     private $license;
 
     /**
-     * @var string|null
+     * @var null|string
      */
     private $facebookSignInEnabled;
 
     /**
-     * @var string|null
+     * @var null|string
      */
     private $facebookSignInAppId;
 
     /**
-     * @var string|null
+     * @var null|string
      */
     private $facebookSignInAppSecret;
 
     /**
-     * @var string|null
+     * @var null|string
      */
     private $googleSignInEnabled;
 
     /**
-     * @var string|null
+     * @var null|string
      */
     private $googleSignInClientId;
 
     /**
-     * @var string|null
+     * @var null|string
      */
     private $googleSignInClientSecret;
 
     /**
-     * @var string|null
+     * @var null|string
      */
     private $invoiceCompanyName;
 
     /**
-     * @var string|null
+     * @var null|string
      */
     private $invoiceTaxNumber;
 
     /**
-     * @var string|null
+     * @var null|string
      */
     private $invoiceCity;
 
     /**
-     * @var string|null
+     * @var null|string
      */
     private $invoiceStreet;
 
     /**
-     * @var string|null
+     * @var null|string
      */
     private $invoiceBuildingNumber;
 
     /**
-     * @var string|null
+     * @var null|string
      */
     private $invoiceUnitNumber;
 
     /**
-     * @var string|null
+     * @var null|string
      */
     private $invoiceZipCode;
 
     /**
-     * @var string|null
+     * @var null|string
      */
     private $invoiceCountry;
 
     /**
-     * @var string|null
+     * @var null|string
      */
     private $invoiceEmail;
 
     /**
-     * @var string|null
+     * @var null|string
      */
     private $invoiceSoldItemDescription;
 
     /**
-     * @var string|null
+     * @var null|string
      */
     private $invoiceGenerationStrategy;
 
     /**
-     * @var string|null
+     * @var null|string
      */
     private $invoiceNumberPrefix;
 
     /**
-     * @var bool|null
+     * @var null|bool
      */
-    private $messageSystemEnabled;
+    private $messageSystemEnabled = false;
 
     /**
-     * @var boolean|null
+     * @var null|bool
      */
-    private $mapEnabled;
+    private $mapEnabled = false;
 
     /**
-     * @var float|null
+     * @var null|float
      */
     private $mapDefaultLatitude;
 
     /**
-     * @var float|null
+     * @var null|float
      */
     private $mapDefaultLongitude;
 
     /**
-     * @var int|null
+     * @var null|int
      */
     private $mapDefaultZoom;
 
     /**
-     * @var int|null
+     * @var null|int
      */
     private $mapDefaultZoomSingleListing;
+
+    /**
+     * @var null|bool
+     */
+    private $deleteExpiredListingFilesEnabled = false;
+
+    /**
+     * @var null|int
+     */
+    private $deleteExpiredListingFilesOlderThanDays;
+
+    /**
+     * @var null|string
+     */
+    private $timezone;
+
+    /**
+     * @var null|string
+     */
+    private $dateFormat;
+
+    /**
+     * @var null|string
+     */
+    private $dateFormatShort;
+
+    /**
+     * @var null|string
+     */
+    private $decimalSeparator;
+
+    /**
+     * @var null|string
+     */
+    private $thousandSeparator;
 
     public function getIndexPageTitle(): ?string
     {
@@ -403,14 +445,24 @@ class SettingsDto
         $this->linkTermsConditions = $linkTermsConditions;
     }
 
-    public function getLanguageTwoLetters(): ?string
+    public function getLanguageIso(): ?string
     {
-        return $this->languageTwoLetters;
+        return $this->languageIso;
     }
 
-    public function setLanguageTwoLetters(?string $languageTwoLetters): void
+    public function getCountryIso(): ?string
     {
-        $this->languageTwoLetters = $languageTwoLetters;
+        return $this->countryIso;
+    }
+
+    public function setCountryIso(?string $countryIso): void
+    {
+        $this->countryIso = $countryIso;
+    }
+
+    public function setLanguageIso(?string $languageIso): void
+    {
+        $this->languageIso = $languageIso;
     }
 
     public function getCurrency(): ?string
@@ -573,14 +625,14 @@ class SettingsDto
         $this->footerSiteCopyright = $footerSiteCopyright;
     }
 
-    public function getItemsPerPageMax(): ?string
+    public function getItemsPerPage(): ?string
     {
-        return $this->itemsPerPageMax;
+        return $this->itemsPerPage;
     }
 
-    public function setItemsPerPageMax(?string $itemsPerPageMax): void
+    public function setItemsPerPage(?string $itemsPerPage): void
     {
-        $this->itemsPerPageMax = $itemsPerPageMax;
+        $this->itemsPerPage = $itemsPerPage;
     }
 
     public function getEmailFromName(): ?string
@@ -981,5 +1033,75 @@ class SettingsDto
     public function setMapDefaultZoomSingleListing(?int $mapDefaultZoomSingleListing): void
     {
         $this->mapDefaultZoomSingleListing = $mapDefaultZoomSingleListing;
+    }
+
+    public function getDeleteExpiredListingFilesEnabled(): ?bool
+    {
+        return $this->deleteExpiredListingFilesEnabled;
+    }
+
+    public function setDeleteExpiredListingFilesEnabled(?bool $deleteExpiredListingFilesEnabled): void
+    {
+        $this->deleteExpiredListingFilesEnabled = $deleteExpiredListingFilesEnabled;
+    }
+
+    public function getDeleteExpiredListingFilesOlderThanDays(): ?int
+    {
+        return $this->deleteExpiredListingFilesOlderThanDays;
+    }
+
+    public function setDeleteExpiredListingFilesOlderThanDays(?int $deleteExpiredListingFilesOlderThanDays): void
+    {
+        $this->deleteExpiredListingFilesOlderThanDays = $deleteExpiredListingFilesOlderThanDays;
+    }
+
+    public function getTimezone(): ?string
+    {
+        return $this->timezone;
+    }
+
+    public function setTimezone(?string $timezone): void
+    {
+        $this->timezone = $timezone;
+    }
+
+    public function getDecimalSeparator(): ?string
+    {
+        return $this->decimalSeparator;
+    }
+
+    public function setDecimalSeparator(?string $decimalSeparator): void
+    {
+        $this->decimalSeparator = $decimalSeparator;
+    }
+
+    public function getThousandSeparator(): ?string
+    {
+        return $this->thousandSeparator;
+    }
+
+    public function setThousandSeparator(?string $thousandSeparator): void
+    {
+        $this->thousandSeparator = $thousandSeparator;
+    }
+
+    public function getDateFormat(): ?string
+    {
+        return $this->dateFormat;
+    }
+
+    public function setDateFormat(?string $dateFormat): void
+    {
+        $this->dateFormat = $dateFormat;
+    }
+
+    public function getDateFormatShort(): ?string
+    {
+        return $this->dateFormatShort;
+    }
+
+    public function setDateFormatShort(?string $dateFormatShort): void
+    {
+        $this->dateFormatShort = $dateFormatShort;
     }
 }

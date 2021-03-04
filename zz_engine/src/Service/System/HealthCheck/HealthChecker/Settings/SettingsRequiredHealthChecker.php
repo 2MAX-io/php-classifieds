@@ -4,25 +4,25 @@ declare(strict_types=1);
 
 namespace App\Service\System\HealthCheck\HealthChecker\Settings;
 
-use App\Entity\Setting;
-use App\Form\Admin\Settings\SettingsType;
-use App\Helper\Arr;
+use App\Form\Admin\Settings\Base\SettingTypeInterface;
+use App\Helper\ArrayHelper;
+use App\Helper\ClassHelper;
 use App\Helper\ExceptionHelper;
-use App\Helper\Helper;
-use App\Helper\Str;
+use App\Helper\StringHelper;
+use App\Repository\SettingRepository;
 use App\Service\Setting\SettingsService;
 use App\Service\System\HealthCheck\Base\HealthCheckerInterface;
+use App\Service\System\HealthCheck\HealthChecker\Settings\Mock\MockFormBuilder;
 use App\Service\System\HealthCheck\HealthCheckResultDto;
-use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class SettingsRequiredHealthChecker implements HealthCheckerInterface
 {
     /**
-     * @var EntityManagerInterface
+     * @var SettingsService
      */
-    private $em;
+    private $settingsService;
 
     /**
      * @var TranslatorInterface
@@ -30,25 +30,35 @@ class SettingsRequiredHealthChecker implements HealthCheckerInterface
     private $trans;
 
     /**
-     * @var SettingsService
-     */
-    private $settingsService;
-
-    /**
      * @var LoggerInterface
      */
     private $logger;
 
+    /**
+     * @var SettingRepository
+     */
+    private $settingRepository;
+
+    /**
+     * @var iterable|SettingTypeInterface[]
+     */
+    private $settingTypes;
+
+    /**
+     * @param iterable|SettingTypeInterface[] $settingTypes
+     */
     public function __construct(
-        EntityManagerInterface $em,
+        iterable $settingTypes,
         SettingsService $settingsService,
+        SettingRepository $settingRepository,
         TranslatorInterface $trans,
         LoggerInterface $logger
     ) {
-        $this->em = $em;
         $this->trans = $trans;
         $this->settingsService = $settingsService;
         $this->logger = $logger;
+        $this->settingRepository = $settingRepository;
+        $this->settingTypes = $settingTypes;
     }
 
     public function checkHealth(): HealthCheckResultDto
@@ -57,42 +67,33 @@ class SettingsRequiredHealthChecker implements HealthCheckerInterface
         $failed = false;
         $missingSettings = [];
         foreach (\get_class_methods($settingsDto) as $method) {
-            if (Arr::inArray($method, ['__construct'])) {
+            if (ArrayHelper::inArray($method, ['__construct'])) {
                 continue;
             }
 
-            if (Str::beginsWith($method,'set')) {
+            if (StringHelper::beginsWith($method, 'set')) {
                 continue;
             }
 
-            $settingName = Helper::getPropertyNameFromMethodName($method);
-            if (\in_array(
-                $settingName,
-                $this->getExcludedSettings(),
-                true
-            )) {
+            $settingName = ClassHelper::getPropertyNameFromMethodName($method);
+            $settingValue = $settingsDto->{$method}();
+            if ($this->shouldSkip($settingName, $settingValue)) {
                 continue;
             }
-
-            $value = $settingsDto->$method();
-            if (Str::emptyTrim($value)) {
+            if (StringHelper::emptyTrim($settingValue)) {
                 $failed = true;
                 $missingSettings[] = $settingName;
                 $this->logger->debug('method returns empty', [$method]);
             }
         }
 
-        $qb = $this->em->getRepository(Setting::class)->createQueryBuilder('setting');
-        /** @var Setting[] $settingList */
-        $settingList = $qb->getQuery()->getResult();
-
-        foreach ($settingList as $setting) {
+        foreach ($this->settingRepository->getAllSettings() as $setting) {
             $settingName = $setting->getName();
-            if (\in_array($settingName, $this->getExcludedSettings(), true)) {
+            if ($this->shouldSkip($settingName, $setting->getValue())) {
                 continue;
             }
 
-            if (Str::emptyTrim($setting->getValue())) {
+            if (StringHelper::emptyTrim($setting->getValue())) {
                 $failed = true;
                 $missingSettings[] = $settingName;
             }
@@ -106,14 +107,38 @@ class SettingsRequiredHealthChecker implements HealthCheckerInterface
             $missingSettings
         );
         if ($failed) {
-            return new HealthCheckResultDto(true, $this->trans->trans('trans.Set all application settings. Missing settings: %missing%', [
-                '%missing%' => \implode(', ', $missingSettings)
-            ]));
+            return new HealthCheckResultDto(
+                true,
+                $this->trans->trans(
+                    'trans.Set all application settings. Missing settings: %missing%',
+                    [
+                        '%missing%' => \implode(', ', $missingSettings),
+                    ]
+                )
+            );
         }
 
         return new HealthCheckResultDto(false);
     }
 
+    /**
+     * @param mixed $settingValue
+     */
+    private function shouldSkip(string $settingName, $settingValue): bool
+    {
+        if (\in_array($settingName, $this->getExcludedSettings(), true)) {
+            return true;
+        }
+        if ('thousandSeparator' === $settingName && ' ' === $settingValue) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * @return string[]
+     */
     private function getExcludedSettings(): array
     {
         return [
@@ -154,9 +179,10 @@ class SettingsRequiredHealthChecker implements HealthCheckerInterface
     private function getSettingLabel(string $settingName): string
     {
         try {
-            $settingType = new SettingsType();
             $formBuilderMock = new MockFormBuilder();
-            $settingType->buildForm($formBuilderMock, []);
+            foreach ($this->settingTypes as $settingType) {
+                $settingType->buildForm($formBuilderMock, []);
+            }
         } catch (\Throwable $e) {
             $this->logger->critical('getting label from settings form type failed', ExceptionHelper::flatten($e));
 

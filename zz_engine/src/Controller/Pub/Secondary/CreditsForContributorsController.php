@@ -17,8 +17,8 @@ class CreditsForContributorsController extends AbstractController
     /**
      * @Route("/credits-for-contributors", name="app_credits")
      */
-    public function credits(PageRepository $pageRepository): Response {
-
+    public function credits(PageRepository $pageRepository): Response
+    {
         return $this->render('secondary/credits_for_contributors.html.twig', [
             'relatedPages' => $pageRepository->getRelatedPages(),
         ]);

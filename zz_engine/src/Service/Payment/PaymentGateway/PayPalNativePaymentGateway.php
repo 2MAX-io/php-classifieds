@@ -5,15 +5,15 @@ declare(strict_types=1);
 namespace App\Service\Payment\PaymentGateway;
 
 use App\Exception\UserVisibleException;
+use App\Helper\DateHelper;
 use App\Helper\ExceptionHelper;
 use App\Helper\FilePath;
-use App\Helper\Integer;
+use App\Helper\IntegerHelper;
 use App\Service\Payment\Base\PaymentGatewayInterface;
 use App\Service\Payment\Dto\ConfirmPaymentConfigDto;
 use App\Service\Payment\Dto\ConfirmPaymentDto;
-use App\Service\Payment\Enum\PaymentGatewayEnum;
 use App\Service\Payment\Dto\PaymentDto;
-use App\Service\Payment\Enum\GatewayModeEnum;
+use App\Service\Payment\Enum\PaymentGatewayEnum;
 use App\Service\Payment\PaymentHelperService;
 use App\Service\Setting\SettingsService;
 use PayPal\Api\Amount;
@@ -55,6 +55,11 @@ class PayPalNativePaymentGateway implements PaymentGatewayInterface
         $this->logger = $logger;
     }
 
+    public static function getName(): string
+    {
+        return PaymentGatewayEnum::PAYPAL_NATIVE;
+    }
+
     public function createPayment(PaymentDto $paymentDto): void
     {
         $payer = new Payer();
@@ -72,7 +77,7 @@ class PayPalNativePaymentGateway implements PaymentGatewayInterface
         $item->setName($paymentDto->getGatewayPaymentDescription());
         $item->setPrice($amount->getTotal());
         $item->setCurrency($paymentDto->getCurrency());
-        $item->setQuantity(1);
+        $item->setQuantity('1');
 
         $itemList = new ItemList();
         $itemList->setItems([$item]);
@@ -85,13 +90,13 @@ class PayPalNativePaymentGateway implements PaymentGatewayInterface
         $payment->setIntent('sale');
         $payment->setPayer($payer);
         $payment->setRedirectUrls($redirectUrls);
-        $payment->setTransactions(array($transaction));
+        $payment->setTransactions([$transaction]);
 
         try {
             $payment->create($this->getApiContext());
             $approvalUrl = $payment->getApprovalLink();
 
-            $paymentDto->setPaymentExecuteUrl($approvalUrl);
+            $paymentDto->setMakePaymentUrl($approvalUrl);
             $paymentDto->setGatewayPaymentId($payment->getId());
             $paymentDto->setGatewayToken($payment->getToken());
             $paymentDto->setGatewayStatus($payment->getState());
@@ -120,8 +125,9 @@ class PayPalNativePaymentGateway implements PaymentGatewayInterface
             $confirmPaymentDto->setGatewayTransactionId($payment->getTransactions()[0]->getRelatedResources()[0]->getSale()->getId());
             $confirmPaymentDto->setGatewayPaymentId($payment->getId());
             $confirmPaymentDto->setGatewayStatus($payment->getState());
-            $confirmPaymentDto->setConfirmed($payment->getState() === 'approved');
-            $confirmPaymentDto->setGatewayAmount(Integer::toInteger($payment->getTransactions()[0]->getAmount()->getTotal() * 100));
+            $confirmPaymentDto->setConfirmed('approved' === $payment->getState());
+            $total = (float) $payment->getTransactions()[0]->getAmount()->getTotal();
+            $confirmPaymentDto->setGatewayAmount(IntegerHelper::toInteger($total * 100));
 
             return $confirmPaymentDto;
         } catch (\Throwable $e) {
@@ -131,12 +137,18 @@ class PayPalNativePaymentGateway implements PaymentGatewayInterface
         }
     }
 
+    public function getGatewayMode(): string
+    {
+        $paymentPayPalMode = $this->settingsService->getSettingsDto()->getPaymentPayPalMode();
+        if (null === $paymentPayPalMode) {
+            throw new \RuntimeException('PaymentPayPalMode is null');
+        }
+
+        return $paymentPayPalMode;
+    }
+
     private function getApiContext(): ApiContext
     {
-        // sandbox / demo, client id and secret
-        // client id: AYSq3RDGsmBLJE-otTkBtM-jBRd1TCQwFf9RGfwddNXWz0uFU9ztymylOhRS
-        // client secret: EGnHDxD_qRPdaLdZz8iCr8N7_MzF-YHPTkjs6NKYQvQSBngp4PTTVWkPZRbL
-
         $apiContext = new ApiContext(
             new OAuthTokenCredential(
                 $this->settingsService->getSettingsDto()->getPaymentPayPalClientId(),
@@ -146,23 +158,13 @@ class PayPalNativePaymentGateway implements PaymentGatewayInterface
         $apiContext->setConfig([
             'mode' => $this->getGatewayMode(),
             'log.LogEnabled' => true,
-            'log.FileName' => FilePath::getLogDir() . '/payPal_'. \date('Y-m') .'.log',
+            'log.FileName' => FilePath::getLogDir().'/payPal_'.DateHelper::date('Y-m').'.log',
             'log.LogLevel' => 'INFO', // PLEASE USE `INFO` LEVEL FOR LOGGING IN LIVE ENVIRONMENTS, DEBUG in dev only
             'cache.enabled' => true,
-            'cache.FileName' => FilePath::getCacheDir() . '/payPalCache.php', // for determining paypal cache directory
+            'cache.FileName' => FilePath::getCacheDir().'/payPalCache.php', // for determining paypal cache directory
             'http.CURLOPT_CONNECTTIMEOUT' => 20,
         ]);
 
         return $apiContext;
-    }
-
-    public function getGatewayMode(): string
-    {
-        return $this->settingsService->getSettingsDto()->getPaymentPayPalMode() ?? GatewayModeEnum::SANDBOX;
-    }
-
-    public static function getName(): string
-    {
-        return PaymentGatewayEnum::PAYPAL_NATIVE;
     }
 }

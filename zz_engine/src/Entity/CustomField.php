@@ -7,6 +7,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CustomFieldRepository")
@@ -36,7 +37,7 @@ class CustomField
     private $name;
 
     /**
-     * @var string|null
+     * @var null|string
      *
      * @ORM\Column(type="string", length=50, nullable=true)
      */
@@ -71,14 +72,14 @@ class CustomField
     private $sort;
 
     /**
-     * @var string|null
+     * @var null|string
      *
      * @ORM\Column(type="string", length=25, nullable=true)
      */
     private $unit;
 
     /**
-     * @var CustomFieldOption[]|Collection
+     * @var Collection|CustomFieldOption[]
      *
      * @ORM\OneToMany(targetEntity="App\Entity\CustomFieldOption", mappedBy="customField")
      * @ORM\OrderBy({"sort" = "ASC"})
@@ -86,39 +87,42 @@ class CustomField
     private $customFieldOptions;
 
     /**
-     * @var ListingCustomFieldValue[]|Collection
+     * @var Collection|ListingCustomFieldValue[]
      *
+     * @Assert\Type(groups={"skipAutomaticValidation"}, type="")
      * @ORM\OneToMany(targetEntity="App\Entity\ListingCustomFieldValue", mappedBy="customField")
      */
     private $listingCustomFieldValues;
 
     /**
-     * @var CustomFieldJoinCategory[]|Collection
+     * @var Collection|CustomFieldForCategory[]
      *
-     * @ORM\OneToMany(targetEntity="App\Entity\CustomFieldJoinCategory", mappedBy="customField")
+     * @ORM\OneToMany(targetEntity="App\Entity\CustomFieldForCategory", mappedBy="customField")
      */
-    private $categoriesJoin;
+    private $customFieldForCategories;
 
     public function __construct()
     {
         $this->customFieldOptions = new ArrayCollection();
         $this->listingCustomFieldValues = new ArrayCollection();
-        $this->categoriesJoin = new ArrayCollection();
+        $this->customFieldForCategories = new ArrayCollection();
     }
 
-    /**
-     * @return ListingCustomFieldValue|null
-     */
     public function getListingCustomFieldValueFirst(): ?ListingCustomFieldValue
     {
         if ($this->getListingCustomFieldValues()->first()) {
-            return $this->getListingCustomFieldValues()->first();
+            return $this->getListingCustomFieldValues()->first() ?: null;
         }
 
         return null;
     }
 
     public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getIdNotNull(): int
     {
         return $this->id;
     }
@@ -222,16 +226,6 @@ class CustomField
         return $this->listingCustomFieldValues;
     }
 
-    /**
-     * @return Collection|ListingCustomFieldValue[]
-     */
-    public function getListingCustomFieldValuesArray(): array
-    {
-        return $this->getListingCustomFieldValues()->map(static function (ListingCustomFieldValue $value) {
-            return $value->getValue();
-        })->toArray();
-    }
-
     public function addListingCustomFieldValue(ListingCustomFieldValue $listingCustomFieldValue): self
     {
         if (!$this->listingCustomFieldValues->contains($listingCustomFieldValue)) {
@@ -256,27 +250,27 @@ class CustomField
     }
 
     /**
-     * @return Collection|CustomFieldJoinCategory[]
+     * @return Collection|CustomFieldForCategory[]
      */
-    public function getCategoriesJoin(): Collection
+    public function getCustomFieldForCategories(): Collection
     {
-        return $this->categoriesJoin;
+        return $this->customFieldForCategories;
     }
 
-    public function addCategoriesJoin(CustomFieldJoinCategory $categoriesJoin): self
+    public function addCustomFieldForCategory(CustomFieldForCategory $categoriesJoin): self
     {
-        if (!$this->categoriesJoin->contains($categoriesJoin)) {
-            $this->categoriesJoin[] = $categoriesJoin;
+        if (!$this->customFieldForCategories->contains($categoriesJoin)) {
+            $this->customFieldForCategories[] = $categoriesJoin;
             $categoriesJoin->setCustomField($this);
         }
 
         return $this;
     }
 
-    public function removeCategoriesJoin(CustomFieldJoinCategory $categoriesJoin): self
+    public function removeCustomFieldForCategory(CustomFieldForCategory $categoriesJoin): self
     {
-        if ($this->categoriesJoin->contains($categoriesJoin)) {
-            $this->categoriesJoin->removeElement($categoriesJoin);
+        if ($this->customFieldForCategories->contains($categoriesJoin)) {
+            $this->customFieldForCategories->removeElement($categoriesJoin);
             // set the owning side to null (unless already changed)
             if ($categoriesJoin->getCustomField() === $this) {
                 $categoriesJoin->setCustomField(null);

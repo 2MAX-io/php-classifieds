@@ -25,7 +25,6 @@
                         <h1 class="h3 mb-3 font-weight-normal">{{ 'trans.Please sign in' | trans }}</h1>
 
                         <div class="form-group">
-
                             {% include 'form/_flash_above_form.html.twig' %}
 
                             <label for="inputEmail" class="sr-only">{{ 'trans.Email' | trans }}</label>
@@ -59,7 +58,7 @@
 
                         <div class="form-group">
                             <button class="btn btn-primary btn-block" type="submit">
-                                {{ 'trans.Sign in' | trans }}
+                                {{- 'trans.Sign in' | trans -}}
                             </button>
                             <a href="{{ path('app_remind_password') }}">{{ 'trans.Forgot password?' | trans }}</a>
                         </div>
@@ -70,16 +69,24 @@
                     <div class="row">
                         {% if settings.facebookSignInEnabled %}
                             <div class="col-md-6 mb-2">
-                                <a href="{{ path('app_login_oauth', {'provider': constant('\App\\Controller\\User\\Account\\LoginOauthController::FACEBOOK_PROVIDER')}) }}" class="btn btn-secondary btn-block preventDoubleClick" rel="nofollow">
-                                    <i class="fab fa-facebook-f"></i> {{ 'trans.Facebook' | trans }}
+                                <a
+                                        href="{{ path('app_login_oauth', {'provider': constant('\App\\Controller\\User\\Account\\LoginOauthController::FACEBOOK_PROVIDER')}) }}"
+                                        class="btn btn-secondary btn-block js__preventDoubleClick"
+                                        rel="nofollow"
+                                >
+                                    {{- 'trans.Facebook' | trans -}}
                                 </a>
                             </div>
                         {% endif %}
 
                         {% if settings.googleSignInEnabled %}
                             <div class="col-md-6 mb-2">
-                                <a href="{{ path('app_login_oauth', {'provider': constant('\App\\Controller\\User\\Account\\LoginOauthController::GOOGLE_PROVIDER')}) }}" class="btn btn-secondary btn-block preventDoubleClick" rel="nofollow">
-                                    <i class="fab fa-google"></i> {{ 'trans.Google' | trans }}
+                                <a
+                                        href="{{ path('app_login_oauth', {'provider': constant('\App\\Controller\\User\\Account\\LoginOauthController::GOOGLE_PROVIDER')}) }}"
+                                        class="btn btn-secondary btn-block js__preventDoubleClick"
+                                        rel="nofollow"
+                                >
+                                    {{- 'trans.Google' | trans -}}
                                 </a>
                             </div>
                         {% endif %}
@@ -94,6 +101,4 @@
         </div>
     </div>
 </div>
-
-
 {% endblock %}

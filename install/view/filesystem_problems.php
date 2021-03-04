@@ -1,7 +1,11 @@
-<title>Install - problems</title>
+<?php
 
-<!--suppress HtmlUnknownTarget -->
-<link rel="stylesheet" type="text/css" href="bootstrap.css" />
+declare(strict_types=1);
+
+$pageTitle = 'Install - problems';
+
+include 'base/header.php';
+?>
 
 <div class="container">
     <div class="float-right mt-2"><a href="https://documentation.2max.io/display/CLAS/Required+permissions" class="btn btn-info" target="_blank">documentation</a></div>
@@ -15,20 +19,20 @@
         <p>One way to do that, is to use commands from textarea bellow in <a href="https://documentation.2max.io/display/CLAS/Where+is+app+root+directory" target="_blank">root path of this app</a>.</p>
         <p>Root path of this app is directory with file: zzzz_2max_io_classified_ads_project_root.txt</p>
 
-        <textarea class="w-100 form-control" style="height: 7em;">
-find <?php echo e($projectRootPath) ?> -type d -exec chmod 750 {} \;
-find <?php echo e($projectRootPath) ?> -type f -exec chmod 640 {} \;
-chmod +x <?php echo e($projectRootPath) ?>/zz_engine/bin/console;
+        <textarea class="w-100 form-control chmod-commands">
+find <?php echo e($projectRootPath); ?> -type d -exec chmod 750 {} \;
+find <?php echo e($projectRootPath); ?> -type f -exec chmod 640 {} \;
+chmod +x <?php echo e($projectRootPath); ?>/zz_engine/bin/console;
         </textarea>
 
         <p>If above commands would not work on it's own. Other potential issue may be incorrect <b>chown</b> settings.</p>
         <p>All project files should be readable and writable both by your current server's user and by webserver process (most common webserver users are www-data, www, apache, nobody or your current server user in shared environments)</p>
         <p>In most cases running one of commands bellow would fix problems, but do not run them if you do not know what exactly are you doing</p>
 
-        <textarea class="w-100 form-control" style="height: 5em;">
-chown -R YOUR_CURRENT_USER_HERE:YOUR_CURRENT_USER_HERE <?php echo e($projectRootPath) ?>;
-chown -R YOUR_CURRENT_USER_HERE:www-data <?php echo e($projectRootPath) ?>;
-chown -R www-data:www-data <?php echo e($projectRootPath) ?>;
+        <textarea class="w-100 form-control chown-commands">
+chown -R YOUR_CURRENT_USER_HERE:YOUR_CURRENT_USER_HERE <?php echo e($projectRootPath); ?>;
+chown -R YOUR_CURRENT_USER_HERE:www-data <?php echo e($projectRootPath); ?>;
+chown -R www-data:www-data <?php echo e($projectRootPath); ?>;
         </textarea>
 
         <p>in commands above change <u>www-data</u> to group of your webserver process, if it is different</p>
@@ -47,7 +51,7 @@ chown -R www-data:www-data <?php echo e($projectRootPath) ?>;
             Commands above should fix permissions issues, if not, bellow is detailed list of problems that should help troubleshoot issues.
         </div>
 
-        <?php if(!$canWriteToPhpFile): ?>
+        <?php if (!$canWriteToPhpFile) { ?>
             <div class="mb-3">
                 <h3>Could not write to test php file install/data/test.php</h3>
 
@@ -56,9 +60,9 @@ chown -R www-data:www-data <?php echo e($projectRootPath) ?>;
                     <div>List of all files with incorrect permissions can be found in other sections.</div>
                 </div>
             </div>
-        <?php endif; ?>
+        <?php } ?>
 
-        <?php if(!$canExecuteConsole): ?>
+        <?php if (!$canExecuteConsole) { ?>
             <div class="mb-3">
                 <h3>Could not execute zz_engine/bin/console, add execution permissions for this file using chmod +x</h3>
 
@@ -66,9 +70,9 @@ chown -R www-data:www-data <?php echo e($projectRootPath) ?>;
                     <div>required so that cron could be executed</div>
                 </div>
             </div>
-        <?php endif; ?>
+        <?php } ?>
 
-        <?php if($creatingDirFailedList): ?>
+        <?php if ($creatingDirFailedList) { ?>
             <div class="mb-3">
                 <h3>Could not create test directories</h3>
 
@@ -81,13 +85,13 @@ chown -R www-data:www-data <?php echo e($projectRootPath) ?>;
                     <div>Permissions should be set in a way, that allows dirs to be created in those locations by the app.</div>
                 </div>
 
-                <textarea class="w-100 form-control" style="height: 10em;">
-<?php echo e(implode("\n", $creatingDirFailedList)); ?>
+                <textarea class="w-100 h-10em form-control">
+<?php echo e(\implode("\n", $creatingDirFailedList)); ?>
 		        </textarea>
             </div>
-        <?php endif; ?>
+        <?php } ?>
 
-        <?php if($readingFileFailedList): ?>
+        <?php if ($readingFileFailedList) { ?>
             <div class="mb-3">
                 <h3>Could not read from files</h3>
 
@@ -97,13 +101,13 @@ chown -R www-data:www-data <?php echo e($projectRootPath) ?>;
                     <div>List of all files with incorrect permissions can be found in other sections.</div>
                 </div>
 
-                <textarea class="w-100 form-control" style="height: 10em;">
-<?php echo e(implode("\n", $readingFileFailedList)); ?>
+                <textarea class="w-100 h-10em form-control">
+<?php echo e(\implode("\n", $readingFileFailedList)); ?>
                 </textarea>
             </div>
-        <?php endif; ?>
+        <?php } ?>
 
-        <?php if($writingFileFailedList): ?>
+        <?php if ($writingFileFailedList) { ?>
             <div class="mb-3">
                 <h3>Could not write to files in directories</h3>
 
@@ -113,13 +117,13 @@ chown -R www-data:www-data <?php echo e($projectRootPath) ?>;
                     <div>List of all files with incorrect permissions can be found in other sections.</div>
                 </div>
 
-                <textarea class="w-100 form-control" style="height: 10em;">
-<?php echo e(implode("\n", $writingFileFailedList)); ?>
+                <textarea class="w-100 h-10em form-control">
+<?php echo e(\implode("\n", $writingFileFailedList)); ?>
                 </textarea>
             </div>
-        <?php endif; ?>
+        <?php } ?>
 
-        <?php if($incorrectFilePermissionList): ?>
+        <?php if ($incorrectFilePermissionList) { ?>
             <div class="mb-3">
                 <h3>Files with incorrect permissions, first 5000</h3>
 
@@ -127,13 +131,13 @@ chown -R www-data:www-data <?php echo e($projectRootPath) ?>;
                     Examples of files without read and write permissions (chmod 640).
                 </div>
 
-                <textarea class="w-100 form-control" style="height: 10em;">
-<?php echo e(implode("\n", $incorrectFilePermissionList)); ?>
+                <textarea class="w-100 h-10em form-control">
+<?php echo e(\implode("\n", $incorrectFilePermissionList)); ?>
                 </textarea>
             </div>
-        <?php endif; ?>
+        <?php } ?>
 
-        <?php if($incorrectDirPermissionList): ?>
+        <?php if ($incorrectDirPermissionList) { ?>
             <div class="mb-3">
                 <h3>Dirs with incorrect permissions, first 5000</h3>
 
@@ -141,10 +145,10 @@ chown -R www-data:www-data <?php echo e($projectRootPath) ?>;
                     Examples of directories without read and write permissions (chmod 750).
                 </div>
 
-                <textarea class="w-100 form-control" style="height: 10em;">
-<?php echo e(implode("\n", $incorrectDirPermissionList)); ?>
+                <textarea class="w-100 h-10em form-control">
+<?php echo e(\implode("\n", $incorrectDirPermissionList)); ?>
                 </textarea>
             </div>
-        <?php endif; ?>
+        <?php } ?>
     </div>
 </div>

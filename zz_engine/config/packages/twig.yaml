@@ -1,10 +1,7 @@
-parameters:
-    twig_date_format: 'Y-m-d, H:i'
-    twig_date_format_short: 'Y-m-d'
-
 twig:
     globals:
-        dateFormatShort: '%twig_date_format_short%'
+        dateFormat: '%date_format%'
+        dateFormatShort: '%date_format_short%'
         dateFormatYmd: 'Y-m-d'
         dateFormatYmdHis: 'Y-m-d H:i:s'
     default_path: '%kernel.project_dir%/templates'
@@ -12,6 +9,6 @@ twig:
     strict_variables: '%kernel.debug%'
     form_themes: ['form/form_layout.html.twig']
     date:
-        format: '%twig_date_format%'
+        format: '%date_format%'
         timezone: '%timezone%'
     exception_controller: null

@@ -9,6 +9,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\Index;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CategoryRepository")
@@ -29,7 +30,7 @@ class Category
     private $id;
 
     /**
-     * @var Category|null
+     * @var null|Category
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="children")
      * @ORM\JoinColumn(nullable=true)
@@ -79,14 +80,14 @@ class Category
     private $slug;
 
     /**
-     * @var string|null
+     * @var null|string
      *
      * @ORM\Column(type="string", length=100, nullable=true)
      */
     private $picture;
 
     /**
-     * @var Category[]|Collection
+     * @var Category[]|Collection<int, Category>
      *
      * @ORM\OneToMany(targetEntity="App\Entity\Category", mappedBy="parent")
      * @ORM\OrderBy({"sort" = "ASC"})
@@ -94,22 +95,23 @@ class Category
     private $children;
 
     /**
-     * @var Listing[]|Collection
+     * @var Collection<int, Listing>|Listing[]
      *
+     * @Assert\Type(groups={"skipAutomaticValidation"}, type="")
      * @ORM\OneToMany(targetEntity="App\Entity\Listing", mappedBy="category", fetch="EXTRA_LAZY")
      */
     private $listings;
 
     /**
-     * @var CustomFieldJoinCategory[]|Collection
+     * @var Collection<int, CustomFieldForCategory>|CustomFieldForCategory[]
      *
-     * @ORM\OneToMany(targetEntity="App\Entity\CustomFieldJoinCategory", mappedBy="category")
+     * @ORM\OneToMany(targetEntity="App\Entity\CustomFieldForCategory", mappedBy="category")
      * @ORM\OrderBy({"sort" = "ASC"})
      */
-    private $customFieldsJoin;
+    private $customFieldForCategoryList;
 
     /**
-     * @var FeaturedPackageForCategory[]|Collection
+     * @var Collection|FeaturedPackageForCategory[]
      *
      * @ORM\OneToMany(targetEntity="App\Entity\FeaturedPackageForCategory", mappedBy="category")
      */
@@ -118,7 +120,7 @@ class Category
     public function __construct()
     {
         $this->listings = new ArrayCollection();
-        $this->customFieldsJoin = new ArrayCollection();
+        $this->customFieldForCategoryList = new ArrayCollection();
         $this->children = new ArrayCollection();
         $this->featuredPackages = new ArrayCollection();
     }
@@ -128,8 +130,8 @@ class Category
      */
     public function getCustomFields(): Collection
     {
-        return $this->getCustomFieldsJoin()->map(static function(CustomFieldJoinCategory $el) {
-            return $el->getCustomField();
+        return $this->getCustomFieldForCategoryList()->map(static function (CustomFieldForCategory $el) {
+            return $el->getCustomFieldNotNull();
         });
     }
 
@@ -254,6 +256,10 @@ class Category
 
     public function getParentNotNull(): self
     {
+        if (null === $this->parent) {
+            throw new \RuntimeException('category parent is null');
+        }
+
         return $this->parent;
     }
 
@@ -277,7 +283,7 @@ class Category
     }
 
     /**
-     * @return Collection|Category[]
+     * @return Category[]|Collection
      */
     public function getChildren(): Collection
     {
@@ -374,30 +380,30 @@ class Category
     }
 
     /**
-     * @return Collection|CustomFieldJoinCategory[]
+     * @return Collection|CustomFieldForCategory[]
      */
-    public function getCustomFieldsJoin(): Collection
+    public function getCustomFieldForCategoryList(): Collection
     {
-        return $this->customFieldsJoin;
+        return $this->customFieldForCategoryList;
     }
 
-    public function addCustomFieldsJoin(CustomFieldJoinCategory $customFieldsJoin): self
+    public function addCustomFieldForCategory(CustomFieldForCategory $customFieldForCategory): self
     {
-        if (!$this->customFieldsJoin->contains($customFieldsJoin)) {
-            $this->customFieldsJoin[] = $customFieldsJoin;
-            $customFieldsJoin->setCategory($this);
+        if (!$this->customFieldForCategoryList->contains($customFieldForCategory)) {
+            $this->customFieldForCategoryList[] = $customFieldForCategory;
+            $customFieldForCategory->setCategory($this);
         }
 
         return $this;
     }
 
-    public function removeCustomFieldsJoin(CustomFieldJoinCategory $customFieldsJoin): self
+    public function removeCustomFieldForCategory(CustomFieldForCategory $customFieldForCategory): self
     {
-        if ($this->customFieldsJoin->contains($customFieldsJoin)) {
-            $this->customFieldsJoin->removeElement($customFieldsJoin);
+        if ($this->customFieldForCategoryList->contains($customFieldForCategory)) {
+            $this->customFieldForCategoryList->removeElement($customFieldForCategory);
             // set the owning side to null (unless already changed)
-            if ($customFieldsJoin->getCategory() === $this) {
-                $customFieldsJoin->setCategory(null);
+            if ($customFieldForCategory->getCategory() === $this) {
+                $customFieldForCategory->setCategory(null);
             }
         }
 
@@ -406,6 +412,28 @@ class Category
 
     public function hasChildren(): bool
     {
-        return $this->getRgt() - $this->getLft() !== 1;
+        return 1 !== $this->getRgt() - $this->getLft();
+    }
+
+    public function addCustomFieldForCategoryList(CustomFieldForCategory $customFieldForCategoryList): self
+    {
+        if (!$this->customFieldForCategoryList->contains($customFieldForCategoryList)) {
+            $this->customFieldForCategoryList[] = $customFieldForCategoryList;
+            $customFieldForCategoryList->setCategory($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCustomFieldForCategoryList(CustomFieldForCategory $customFieldForCategoryList): self
+    {
+        // set the owning side to null (unless already changed)
+        if ($this->customFieldForCategoryList->removeElement($customFieldForCategoryList)
+            && $customFieldForCategoryList->getCategory() === $this
+        ) {
+            $customFieldForCategoryList->setCategory(null);
+        }
+
+        return $this;
     }
 }

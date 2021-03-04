@@ -7,7 +7,7 @@ namespace App\Service\System\HealthCheck;
 class HealthCheckResultDto
 {
     /**
-     * @var string|null
+     * @var null|string
      */
     private $message;
 
@@ -22,12 +22,21 @@ class HealthCheckResultDto
         $this->problem = $problem;
     }
 
-    public function getMessage(): string
+    public function getMessage(): ?string
     {
         return $this->message;
     }
 
-    public function isProblem(): bool
+    public function getMessageNotNull(): string
+    {
+        if (null === $this->message) {
+            throw new \RuntimeException('message is null');
+        }
+
+        return $this->message;
+    }
+
+    public function hasProblem(): bool
     {
         return $this->problem;
     }

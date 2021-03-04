@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Validator\Constraints;
 
-use App\Service\Setting\SettingsService;
+use App\Service\Setting\SettingsDto;
 use libphonenumber\NumberParseException;
 use libphonenumber\PhoneNumberUtil;
 use Symfony\Component\Validator\Constraint;
@@ -19,18 +19,18 @@ class PhoneValidator extends ConstraintValidator
     private $phoneNumberUtil;
 
     /**
-     * @var SettingsService
+     * @var SettingsDto
      */
-    private $settingsService;
+    private $settingsDto;
 
-    public function __construct(PhoneNumberUtil $phoneNumberUtil, SettingsService $settingsService)
+    public function __construct(PhoneNumberUtil $phoneNumberUtil, SettingsDto $settingsDto)
     {
         $this->phoneNumberUtil = $phoneNumberUtil;
-        $this->settingsService = $settingsService;
+        $this->settingsDto = $settingsDto;
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function validate($value, Constraint $constraint): void
     {
@@ -43,8 +43,10 @@ class PhoneValidator extends ConstraintValidator
         }
 
         $phoneUtil = $this->phoneNumberUtil;
+        $phoneNumber = null;
+
         try {
-            $phoneNumber = $phoneUtil->parse($value, $this->settingsService->getLanguageTwoLetters());
+            $phoneNumber = $phoneUtil->parse($value, $this->settingsDto->getCountryIso());
         } catch (NumberParseException $e) {
             $this->addViolation($value, $constraint);
 
@@ -62,6 +64,7 @@ class PhoneValidator extends ConstraintValidator
     {
         $this->context->buildViolation($constraint->message)
             ->setParameter('{{ string }}', $value)
-            ->addViolation();
+            ->addViolation()
+        ;
     }
 }

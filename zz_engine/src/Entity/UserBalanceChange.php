@@ -7,7 +7,7 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\UserBalanceChangeRepository")
+ * @ORM\Entity()
  */
 class UserBalanceChange
 {
@@ -21,6 +21,8 @@ class UserBalanceChange
     private $id;
 
     /**
+     * @var User
+     *
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="userBalanceChanges")
      * @ORM\JoinColumn(nullable=false)
      */
@@ -41,7 +43,7 @@ class UserBalanceChange
     private $balanceFinal;
 
     /**
-     * @var Payment|null
+     * @var null|Payment
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\Payment", inversedBy="userBalanceChanges")
      * @ORM\JoinColumn(nullable=true)
@@ -79,7 +81,7 @@ class UserBalanceChange
         return $this;
     }
 
-    public function getBalanceFinal(): ?int
+    public function getBalanceFinal(): int
     {
         return $this->balanceFinal;
     }

@@ -13,7 +13,6 @@ use Symfony\Component\Routing\RouterInterface;
 
 class RefererService
 {
-
     /**
      * @var RequestStack
      */
@@ -29,8 +28,11 @@ class RefererService
      */
     private $logger;
 
-    public function __construct(RequestStack $requestStack, RouterInterface $router, LoggerInterface $logger)
-    {
+    public function __construct(
+        RequestStack $requestStack,
+        RouterInterface $router,
+        LoggerInterface $logger
+    ) {
         $this->requestStack = $requestStack;
         $this->router = $router;
         $this->logger = $logger;
@@ -42,19 +44,29 @@ class RefererService
     }
 
     /**
-     * @param string $route #Route
-     * @return bool
+     * checks if previous page route name got by referer url equals
      */
-    public function refererIsRoute(string $route): bool
+    public function isRefererUrlFromRouteName(string $routeName): bool
     {
-        return $this->getRouteNameFromReferer() === $route;
+        return $this->getRouteNameFromReferer() === $routeName;
     }
 
-    public function getSafeRefererUrl(): string
+    public function routeNameForRefererUrlFound(): bool
+    {
+        return null !== $this->getRouteNameFromReferer();
+    }
+
+    /**
+     * @param string $routeWhenNoReferer #Route
+     */
+    public function getSafeRefererUrl(string $routeWhenNoReferer = 'app_index'): string
     {
         $referer = $this->requestStack->getMasterRequest()->headers->get('referer');
+        if (null === $referer) {
+            return $this->router->generate($routeWhenNoReferer);
+        }
 
-        if (!$this->routeForRefererFound()) {
+        if (!$this->routeNameForRefererUrlFound()) {
             $this->logger->error('route for referer URL not found', [
                 'referer' => $referer,
             ]);
@@ -65,28 +77,23 @@ class RefererService
         return $referer;
     }
 
-    public function routeForRefererFound(): bool
-    {
-        return $this->getRouteNameFromReferer() !== null;
-    }
-
     public function getRouteNameFromReferer(): ?string
     {
         $this->router->getContext()->setMethod(Request::METHOD_GET);
-        $routeArray = $this->router->match($this->getRelativeReferer());
+        $routeArray = $this->router->match($this->getRelativeRefererUrl());
 
         return $routeArray['_route'] ?? null;
     }
 
-    public function getRelativeReferer(): string
+    public function getRelativeRefererUrl(): string
     {
         $referer = $this->requestStack->getMasterRequest()->headers->get('referer');
 
-        return $this->getRelativeUrl($referer);
-    }
+        $url = \parse_url($referer, \PHP_URL_PATH);
+        if (!\is_string($url)) {
+            throw new \RuntimeException("can not generate path from referer: `{$referer}`");
+        }
 
-    public function getRelativeUrl(string $url): string
-    {
-        return \parse_url($url, \PHP_URL_PATH);
+        return $url;
     }
 }

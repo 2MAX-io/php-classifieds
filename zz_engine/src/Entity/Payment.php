@@ -9,7 +9,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\PaymentRepository")
+ * @ORM\Entity()
  */
 class Payment
 {
@@ -26,7 +26,7 @@ class Payment
     private $id;
 
     /**
-     * @var User|null
+     * @var null|User
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="payments")
      * @ORM\JoinColumn(nullable=false)
@@ -55,7 +55,7 @@ class Payment
     private $amount;
 
     /**
-     * @var int
+     * @var null|int
      *
      * @ORM\Column(type="integer", nullable=true)
      */
@@ -111,7 +111,7 @@ class Payment
     private $gatewayPaymentId;
 
     /**
-     * @var string
+     * @var null|string
      *
      * @ORM\Column(type="string", length=255, nullable=true)
      */
@@ -146,28 +146,28 @@ class Payment
     private $gatewayMode;
 
     /**
-     * @var PaymentForFeaturedPackage|null
+     * @var null|PaymentForFeaturedPackage
      *
-     * @ORM\OneToOne(targetEntity="PaymentForFeaturedPackage", mappedBy="payment", fetch="EXTRA_LAZY")
+     * @ORM\OneToOne(targetEntity="App\Entity\PaymentForFeaturedPackage", mappedBy="payment", fetch="EXTRA_LAZY")
      */
     private $paymentForFeaturedPackage;
 
     /**
-     * @var PaymentForBalanceTopUp|null
+     * @var null|PaymentForBalanceTopUp
      *
      * @ORM\OneToOne(targetEntity="App\Entity\PaymentForBalanceTopUp", mappedBy="payment", fetch="EXTRA_LAZY")
      */
     private $paymentForBalanceTopUp;
 
     /**
-     * @var UserBalanceChange[]
+     * @var Collection|UserBalanceChange[]
      *
      * @ORM\OneToMany(targetEntity="App\Entity\UserBalanceChange", mappedBy="payment", fetch="EXTRA_LAZY")
      */
     private $userBalanceChanges;
 
     /**
-     * @var Invoice[]|Collection
+     * @var Collection|Invoice[]
      *
      * @ORM\OneToMany(targetEntity="App\Entity\Invoice", mappedBy="payment")
      */
@@ -220,7 +220,7 @@ class Payment
         return $this;
     }
 
-    public function getPaid(): ?bool
+    public function getPaid(): bool
     {
         return $this->paid;
     }
@@ -254,7 +254,7 @@ class Payment
         $this->paymentForFeaturedPackage = $paymentForFeaturedPackage;
 
         // set (or unset) the owning side of the relation if necessary
-        $newPayment = $paymentForFeaturedPackage === null ? null : $this;
+        $newPayment = null === $paymentForFeaturedPackage ? null : $this;
         if ($newPayment !== $paymentForFeaturedPackage->getPayment()) {
             $paymentForFeaturedPackage->setPayment($newPayment);
         }
@@ -296,7 +296,7 @@ class Payment
         $this->paymentForBalanceTopUp = $paymentForBalanceTopUp;
 
         // set (or unset) the owning side of the relation if necessary
-        $newPayment = $paymentForBalanceTopUp === null ? null : $this;
+        $newPayment = null === $paymentForBalanceTopUp ? null : $this;
         if ($newPayment !== $paymentForBalanceTopUp->getPayment()) {
             $paymentForBalanceTopUp->setPayment($newPayment);
         }
@@ -419,7 +419,7 @@ class Payment
         return $this;
     }
 
-    public function getDelivered(): ?bool
+    public function getDelivered(): bool
     {
         return $this->delivered;
     }

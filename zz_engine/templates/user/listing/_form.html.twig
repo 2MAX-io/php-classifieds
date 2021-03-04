@@ -7,10 +7,9 @@
 <!-- category -->
 <div class="form-group">
     {{ form_label(form.category) }}
-    <div id="js__cascader-category-select" class="cascader-main collapse">
+    <div id="js__cascaderCategorySelect" class="cascader-main collapse">
         <div class="row no-gutters">
-            {%- apply normalizeWhitespace -%}
-            {% for levelId, categoryLevelList in selectFormCategoryList %}
+            {% for levelId, categoryLevelList in selectCategoryList %}
                 <div class="col-lg-4 cascader-level cascader-level-{{ levelId }}" data-cascader-level="{{ levelId }}">
                     {% for categoryLevel in categoryLevelList %}
                         <div
@@ -21,8 +20,8 @@
                             <div class="cascader-branch-list-elements">
                                 {% for category in categoryLevel.children %}
                                     <div
-                                            onclick="cascader.select({{ category.id }}, this)"
-                                            class="cascader-branch cascader-click cascader-leaf-{{ category.id }} text-break"
+                                            class="js__cascaderSelectCategory cascader-branch cascader-click cascader-leaf-{{ category.id }} text-break"
+                                            data-category-id="{{ category.id }}"
                                     >
                                         {{- category.name -}}
                                     </div>
@@ -32,7 +31,6 @@
                     {% endfor %}
                 </div>
             {% endfor %}
-          {%- endapply -%}
         </div>
     </div>
     {{ form_widget(form.category) }}
@@ -68,21 +66,20 @@
 </div>
 
 {{ form_row(form.city) }}
-
-{{ form_widget(form) }}
+{{ form_row(form.customFieldList) }}
 
 {% if settings.mapEnabled %}
     <div class="form-group">
         <label>{{ 'trans.Approximate location on the map' | trans }}</label>
 
-        <div class="listing-edit-location-map {% if not listing.hasLocationOnMap %}d-none-soft{% else %}js__listing-edit-map-enabled{% endif %} js__listing-edit-location-map"></div>
+        <div class="listing-edit-location-map {% if not listing.hasLocationOnMap %}d-none-soft{% else %}js__listingEditMapEnabled{% endif %} js__listingEditLocationMap"></div>
         {% if not listing.hasLocationOnMap %}
-            <div class="btn btn-outline-secondary cursor-pointer js__add-location-to-the-map-button">
-                {{ 'trans.Add location to the map' | trans }}
+            <div class="btn btn-outline-secondary cursor-pointer js__addLocationToTheMapButton">
+                {{- 'trans.Add location to the map' | trans -}}
             </div>
         {% endif %}
         <div class="alert alert-info mt-1">
-            {{ 'trans.map_approximate_location_info' | trans }}
+            {{- 'trans.map_approximate_location_info' | trans -}}
         </div>
 
         {{ form_row(form.locationLatitude) }}
@@ -90,8 +87,15 @@
     </div>
 {% endif %}
 
-<label>{{ 'trans.Pictures' | trans }}</label>
-<input id="listing_file" type="file" multiple="multiple" name="files">
+{{ form_widget(form) }}
 
-<button class="btn btn-primary js__listingFormSaveButton" onclick="onListingSaveFormSubmit(this, event);">{{ button_label|default('trans.Save' | trans) }}</button>
+<label>{{ 'trans.Pictures' | trans }}</label>
+<input
+    name="{{ constant('\App\\Service\\Listing\\Save\\ListingFileUploadService::UPLOADED_FILES_FIELD_NAME') }}"
+    id="js__listingFileUpload"
+    type="file"
+    multiple="multiple"
+>
+
+<button class="btn btn-primary js__listingFormSaveButton">{{ button_label | default('trans.Save' | trans) }}</button>
 {{ form_end(form) }}

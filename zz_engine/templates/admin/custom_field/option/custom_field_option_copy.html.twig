@@ -7,7 +7,9 @@
     <div class="row mb-2">
         <div class="col-md-8">
             <h1>{{ 'trans.Copy options from other custom field' | trans }}</h1>
-            <h5>{{ 'trans.to custom field' | trans }}:
+            <h5>
+                {{- 'trans.to custom field' | trans -}}
+                {{- ': ' -}}
                 <strong class="text-break">
                     {{- customField.name -}}
                 </strong>
@@ -18,13 +20,14 @@
                 </span>
             </h5>
         </div>
-        <div class="col-md-4 text-md-right">
-        </div>
+        <div class="col-md-4 text-md-right"></div>
     </div>
 
     {{ form_start(form) }}
     {{ form_widget(form) }}
-    <button class="btn btn-primary mr-3">{{ button_label|default('trans.Copy custom field options') | trans }}</button>
+    <button class="btn btn-primary mr-3">
+        {{- button_label | default('trans.Copy custom field options') | trans -}}
+    </button>
     {{ form_end(form) }}
 
 </div>

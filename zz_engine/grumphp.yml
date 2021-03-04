@@ -1,0 +1,18 @@
+grumphp:
+    ascii:
+        failed: null
+        succeeded: null
+    tasks:
+        phpcsfixer:
+            config: '.php_cs.dist'
+        phpstan:
+            configuration: 'phpstan.neon.dist'
+            level: 4
+            memory_limit: "2G"
+        psalm:
+            config: psalm.xml
+        npm_script:
+            script: 'prettier-check'
+            triggered_by: [ js ]
+            working_directory: "./"
+            is_run_task: true

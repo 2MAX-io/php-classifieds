@@ -4,25 +4,24 @@ declare(strict_types=1);
 
 namespace App\Service\System\HealthCheck\HealthChecker;
 
+use App\Enum\AppCacheEnum;
 use App\Helper\ExceptionHelper;
 use App\Helper\FilePath;
-use App\Helper\Str;
+use App\Helper\StringHelper;
 use App\Service\System\HealthCheck\Base\HealthCheckerInterface;
 use App\Service\System\HealthCheck\HealthCheckResultDto;
-use App\System\Cache\AppCacheEnum;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\RequestOptions;
+use Psr\Cache\CacheItemPoolInterface;
 use Psr\Log\LoggerInterface;
-use Symfony\Component\Cache\Adapter\AdapterInterface;
-use Symfony\Contracts\Cache\CacheInterface;
 use Symfony\Component\HttpFoundation\UrlHelper;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Webmozart\PathUtil\Path;
 
 class SecurityHealthChecker implements HealthCheckerInterface
 {
-    public const /** @noinspection SpellCheckingInspection */ NON_PUBLIC_STR_IDENTIFIER = 'zbD2vXzqDyiFqE2iqFPPM';
+    public const /* @noinspection SpellCheckingInspection */ SECURITY_CHECK_STRING = 'zbD2vXzqDyiFqE2iqFPPM';
 
     /**
      * @var TranslatorInterface
@@ -30,24 +29,24 @@ class SecurityHealthChecker implements HealthCheckerInterface
     private $trans;
 
     /**
-     * @var CacheInterface|AdapterInterface
+     * @var CacheItemPoolInterface
      */
     private $cache;
-
-    /**
-     * @var LoggerInterface
-     */
-    private $logger;
 
     /**
      * @var UrlHelper
      */
     private $urlHelper;
 
+    /**
+     * @var LoggerInterface
+     */
+    private $logger;
+
     public function __construct(
         TranslatorInterface $trans,
         UrlHelper $urlHelper,
-        CacheInterface $cache,
+        CacheItemPoolInterface $cache,
         LoggerInterface $logger
     ) {
         $this->trans = $trans;
@@ -59,11 +58,11 @@ class SecurityHealthChecker implements HealthCheckerInterface
     public function checkHealth(): HealthCheckResultDto
     {
         $cacheItem = $this->cache->getItem(AppCacheEnum::ADMIN_SECURITY_CHECK);
-        if ($cacheItem->isHit() && $cacheItem->get() === true) {
+        if ($cacheItem->isHit() && true === $cacheItem->get()) {
             return new HealthCheckResultDto(false); // return no problems
         }
 
-        $healthCheckResultDto = $this->engineNotPublic();
+        $healthCheckResultDto = $this->engineDirNotAccessible();
         if ($healthCheckResultDto) {
             return $healthCheckResultDto;
         }
@@ -73,23 +72,29 @@ class SecurityHealthChecker implements HealthCheckerInterface
             return $healthCheckResultDto;
         }
 
-        /**
+        /*
          * cache only when security check successful
          */
-        $cacheItem->expiresAfter(3600*16);
+        $cacheItem->expiresAfter(3600 * 16);
         $cacheItem->set(true);
         $this->cache->save($cacheItem);
 
         return new HealthCheckResultDto(false);
     }
 
-    private function engineNotPublic(): ?HealthCheckResultDto
+    private function engineDirNotAccessible(): ?HealthCheckResultDto
     {
-        $testFilePath = Path::canonicalize(FilePath::getEngineDir() . '/zzzz_secuirty_check_file.html');
+        $testFilePath = Path::canonicalize(FilePath::getEngineDir().'/zzzz_security_check_file.html');
         if (!\file_exists($testFilePath)) {
-            return new HealthCheckResultDto(true, $this->trans->trans('trans.ALERT! security can not be checked, required file not found: %file%', [
-                '%file%' => $testFilePath,
-            ]));
+            return new HealthCheckResultDto(
+                true,
+                $this->trans->trans(
+                    'trans.ALERT! security can not be checked, required file not found: %file%',
+                    [
+                        '%file%' => $testFilePath,
+                    ]
+                ),
+            );
         }
 
         try {
@@ -101,10 +106,15 @@ class SecurityHealthChecker implements HealthCheckerInterface
                 RequestOptions::HTTP_ERRORS => false,
             ]);
 
-            $testedUrl = $this->urlHelper->getAbsoluteUrl('/' . Path::makeRelative($testFilePath, FilePath::getPublicDir()));
+            $testedUrl = $this->urlHelper->getAbsoluteUrl(
+                '/'.Path::makeRelative($testFilePath, FilePath::getPublicDir())
+            );
             $response = $client->get($testedUrl);
 
-            if (Str::containsOneOf($response->getBody()->getContents(), [static::NON_PUBLIC_STR_IDENTIFIER, 'SecurityHealthChecker'])) {
+            if (StringHelper::containsOneOf(
+                $response->getBody()->getContents(),
+                [static::SECURITY_CHECK_STRING, 'SecurityHealthChecker']
+            )) {
                 return new HealthCheckResultDto(
                     true,
                     $this->trans->trans(
@@ -112,11 +122,11 @@ class SecurityHealthChecker implements HealthCheckerInterface
                         [
                             '%url%' => $testedUrl,
                         ]
-                    )
+                    ),
                 );
             }
         } catch (ConnectException $e) {
-            $this->logger->critical('error during security check ' . __METHOD__, ExceptionHelper::flatten($e));
+            $this->logger->critical('error during security check '.__METHOD__, ExceptionHelper::flatten($e));
 
             return new HealthCheckResultDto(
                 true,
@@ -125,12 +135,15 @@ class SecurityHealthChecker implements HealthCheckerInterface
                     [
                         '%url%' => $testedUrl ?? '',
                     ]
-                )
+                ),
             );
         } catch (\Throwable $e) {
-            $this->logger->critical('error during security check ' . __METHOD__, ExceptionHelper::flatten($e));
+            $this->logger->critical('error during security check '.__METHOD__, ExceptionHelper::flatten($e));
 
-            return new HealthCheckResultDto(true, $this->trans->trans('trans.Unknown error during security audit'));
+            return new HealthCheckResultDto(
+                true,
+                $this->trans->trans('trans.Unknown error during security audit'),
+            );
         }
 
         return null;
@@ -150,7 +163,7 @@ class SecurityHealthChecker implements HealthCheckerInterface
             $testedUrl = $this->urlHelper->getAbsoluteUrl('/.git/HEAD');
             $response = $client->get($testedUrl);
 
-            if (Str::containsOneOf($response->getBody()->getContents(), ['ref:'])) {
+            if (StringHelper::containsOneOf($response->getBody()->getContents(), ['ref:'])) {
                 return new HealthCheckResultDto(
                     true,
                     $this->trans->trans(
@@ -162,7 +175,7 @@ class SecurityHealthChecker implements HealthCheckerInterface
                 );
             }
         } catch (ConnectException $e) {
-            $this->logger->critical('error during security check ' . __METHOD__, ExceptionHelper::flatten($e));
+            $this->logger->critical('error during security check '.__METHOD__, ExceptionHelper::flatten($e));
 
             return new HealthCheckResultDto(
                 true,
@@ -171,13 +184,12 @@ class SecurityHealthChecker implements HealthCheckerInterface
                     [
                         '%url%' => $testedUrl ?? '',
                     ]
-                )
+                ),
             );
         } catch (\Throwable $e) {
-            $this->logger->critical('error during security check ' . __METHOD__, ExceptionHelper::flatten($e));
+            $this->logger->critical('error during security check '.__METHOD__, ExceptionHelper::flatten($e));
 
             return new HealthCheckResultDto(true, $this->trans->trans('trans.Unknown error during security audit'));
-
         }
 
         return null;

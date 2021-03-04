@@ -1,10 +1,10 @@
 <form
         method="post"
-        action="{{ path('app_listing_deactivate', {'id': listing.id}) }}"
-        onsubmit="return confirm('{{ 'trans.Deactivate' | trans }}: {{ listing.title }}?');"
-        class="d-inline"
+        action="{{ path('app_user_listing_deactivate', {'id': listing.id}) }}"
+        data-confirm-message="{{ 'trans.Deactivate' | trans }}: {{ listing.title }}?"
+        class="d-inline js__confirm"
 >
     <input type="hidden" name="_method" value="PATCH">
-    <input type="hidden" name="_token" value="{{ csrf_token('deactivate' ~ listing.id) }}">
+    <input type="hidden" name="_token" value="{{ csrf_token('csrf_deactivate' ~ listing.id) }}">
     <button class="btn btn-warning mb-1">{{ 'trans.Deactivate' | trans }}</button>
 </form>

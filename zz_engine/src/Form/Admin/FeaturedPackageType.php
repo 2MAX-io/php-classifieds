@@ -35,6 +35,9 @@ class FeaturedPackageType extends AbstractType
         $builder->add('description', TextareaType::class, [
             'label' => 'trans.Description',
             'required' => false,
+            'attr' => [
+                'class' => 'js__textareaAutosize',
+            ],
         ]);
         $builder->add('priceFloat', AppMoneyType::class, [
             'label' => 'trans.Price',

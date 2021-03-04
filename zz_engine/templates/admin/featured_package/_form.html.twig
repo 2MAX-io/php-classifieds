@@ -1,6 +1,5 @@
 {{ form_start(form) }}
-{{ form_widget(form) }}
-
+    {{ form_widget(form) }}
     <div>
         <h1>{{ 'trans.Categories' | trans }}</h1>
 
@@ -13,7 +12,7 @@
                         {% if category.lvl == 1 and not loop.first %}
                             </div><div class="col-md-4 mb-3">
                         {% endif %}
-                        <div class="custom-control custom-checkbox" style="margin-left: {{ (category.lvl-1) * 2 }}rem">
+                        <div class="custom-control custom-checkbox m-for-category-level m-for-category-level-{{ category.lvl }}">
                             {% if category.lvl > 1 %}
                                 <input
                                         type="checkbox"
@@ -36,5 +35,5 @@
         </div>
     </div>
 
-    <button class="btn btn-primary">{{ button_label|default('trans.Save' | trans) }}</button>
+    <button class="btn btn-primary">{{ button_label | default('trans.Save' | trans) }}</button>
 {{ form_end(form) }}

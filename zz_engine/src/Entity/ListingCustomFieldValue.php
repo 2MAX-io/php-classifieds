@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping\Index;
 use Doctrine\ORM\Mapping\UniqueConstraint;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\ListingCustomFieldValueRepository")
+ * @ORM\Entity()
  * @ORM\Table(
  *      uniqueConstraints={
  *         @UniqueConstraint(columns={"listing_id", "custom_field_id", "value", "custom_field_option_id"}, name="unique_custom_field_value_in_listing"),
@@ -54,7 +54,7 @@ class ListingCustomFieldValue
     private $customField;
 
     /**
-     * @var CustomFieldOption
+     * @var null|CustomFieldOption
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\CustomFieldOption")
      * @ORM\JoinColumn(nullable=true)
@@ -100,9 +100,6 @@ class ListingCustomFieldValue
         return $this->customField;
     }
 
-    /**
-     * @param CustomField|object|null $customField
-     */
     public function setCustomField(?CustomField $customField): self
     {
         $this->customField = $customField;

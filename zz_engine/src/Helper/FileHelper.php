@@ -31,7 +31,7 @@ class FileHelper
     public static function getFilenameValidCharacters(string $filename): string
     {
         $generator = new SlugGenerator(
-            (new SlugOptions)
+            (new SlugOptions())
                 ->setValidChars('a-zA-Z0-9')
                 ->setDelimiter('_')
         );
@@ -61,27 +61,29 @@ class FileHelper
         static::throwExceptionIfUnsafeExtension(\pathinfo($path, \PATHINFO_EXTENSION));
     }
 
-    public static function reducePathLength(string $path, int $maxLength = 255): string
+    public static function reduceLengthOfEntirePath(string $path, int $maxLength = 255): string
     {
+        $fileName = \pathinfo($path, \PATHINFO_FILENAME);
         $dirname = \dirname($path);
-        $extension = '.' . \pathinfo($path, \PATHINFO_EXTENSION);
-        $usedLength = \strlen(Path::makeRelative($dirname . '/' .$extension, FilePath::getProjectDir()));
+        $extension = '.'.\pathinfo($path, \PATHINFO_EXTENSION);
+        $usedLength = \strlen(Path::makeRelative($dirname.'/'.$extension, FilePath::getPublicDir()));
         $filenameMaxLength = $maxLength - $usedLength - 1;
 
         $return = $dirname;
-        $return .= '/' . \substr(\pathinfo($path, \PATHINFO_FILENAME), 0, $filenameMaxLength);
+        $return .= '/'.\substr($fileName, 0, $filenameMaxLength);
         $return .= $extension;
 
         return $return;
     }
 
-    public static function reduceFilenameLength(string $path, int $maxLength = 100): string
+    public static function reduceLengthOfFilenameOnly(string $path, int $maxLength = 100): string
     {
-        $extension = '.' . \pathinfo($path, \PATHINFO_EXTENSION);
+        $fileName = \pathinfo($path, \PATHINFO_FILENAME);
+        $extension = '.'.\pathinfo($path, \PATHINFO_EXTENSION);
         $filenameMaxLength = $maxLength - \strlen($extension) - 1;
 
         $return = \dirname($path);
-        $return .= '/' . \substr(\pathinfo($path, \PATHINFO_FILENAME), 0, $filenameMaxLength);
+        $return .= '/'.\substr($fileName, 0, $filenameMaxLength);
         $return .= $extension;
 
         return $return;
@@ -90,7 +92,7 @@ class FileHelper
     public static function throwExceptionIfUnsafeExtension(string $extension): void
     {
         $fileExtension = \mb_strtolower($extension);
-        if (!Arr::inArray(
+        if (!ArrayHelper::inArray(
             $fileExtension,
             [
                 'jpg',
@@ -101,11 +103,11 @@ class FileHelper
             ]
         )) {
             throw new UserVisibleException(
-                "file extension $fileExtension is not allowed"
+                "file extension {$fileExtension} is not allowed"
             );
         }
 
-        if (Arr::inArray(
+        if (ArrayHelper::inArray(
             $fileExtension,
             [
                 'php',
@@ -118,6 +120,12 @@ class FileHelper
                 'php73',
                 'php74',
                 'php75',
+                'php8',
+                'php81',
+                'php82',
+                'php83',
+                'php9',
+                'php10',
                 'phtml',
                 'js',
                 'css',
@@ -127,16 +135,17 @@ class FileHelper
                 'sh',
                 'cgi',
                 'htaccess',
+                'phar',
             ]
         )) {
             throw new UserVisibleException(
-                "file extension $fileExtension is not allowed"
+                "file extension {$fileExtension} is not allowed"
             );
         }
 
         if (\preg_match('~^php\d+~', $fileExtension)) {
             throw new UserVisibleException(
-                "file extension $fileExtension is not allowed"
+                "file extension {$fileExtension} is not allowed"
             );
         }
     }

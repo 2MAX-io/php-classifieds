@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Form\Type;
 
-use App\System\EnvironmentService;
+use App\Service\Setting\EnvironmentService;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -28,7 +28,7 @@ class AppDateTimeType extends AbstractType
         $resolver->setDefault('html5', false);
         $resolver->setDefault('format', 'Y-MM-dd HH:mm:ss');
         $resolver->setDefault('attr', [
-            'class' => 'input-datetime',
+            'class' => 'js__dateTimePicker',
         ]);
     }
 

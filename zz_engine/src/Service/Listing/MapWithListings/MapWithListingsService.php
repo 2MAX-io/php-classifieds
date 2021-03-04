@@ -17,11 +17,6 @@ use Symfony\Component\HttpFoundation\Request;
 class MapWithListingsService
 {
     /**
-     * @var EntityManagerInterface
-     */
-    private $em;
-
-    /**
      * @var ListingPublicDisplayService
      */
     private $listingPublicDisplayService;
@@ -31,12 +26,16 @@ class MapWithListingsService
      */
     private $settingsService;
 
+    /**
+     * @var EntityManagerInterface
+     */
+    private $em;
+
     public function __construct(
         ListingPublicDisplayService $listingPublicDisplayService,
         SettingsService $settingsService,
         EntityManagerInterface $em
-    )
-    {
+    ) {
         $this->em = $em;
         $this->listingPublicDisplayService = $listingPublicDisplayService;
         $this->settingsService = $settingsService;
@@ -53,8 +52,8 @@ class MapWithListingsService
         $qb->andWhere($qb->expr()->isNotNull('listing.locationLatitude'));
         $qb->andWhere($qb->expr()->isNotNull('listing.locationLongitude'));
 
-        $qb->orderBy('listing.id', Criteria::DESC);
-        $qb->setMaxResults(1000);
+        $qb->orderBy('listing.orderByDate', Criteria::DESC);
+        $qb->setMaxResults(5000);
 
         $this->listingPublicDisplayService->applyPublicDisplayConditions($qb);
 

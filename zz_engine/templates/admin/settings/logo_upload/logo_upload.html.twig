@@ -12,13 +12,13 @@
             {{ form_start(form) }}
             {{ form_widget(form) }}
 
-            <button class="btn btn-primary">{{ button_label|default('trans.Upload' | trans) }}</button>
+            <button class="btn btn-primary">{{ button_label | default('trans.Upload' | trans) }}</button>
             {{ form_end(form) }}
         </div>
 
         <div>
             <h2>{{ 'trans.Preview' | trans }}</h2>
-            <img src="{{ asset(logoPath | default('static/system/logo_default.png')) }}" alt="{{ 'trans.Logo' | trans }}">
+            <img src="{{ asset(logoPath | default('static/system/logo_default.png')) }}" alt="{{ logoPath | default }}">
         </div>
     </div>
 {% endblock %}

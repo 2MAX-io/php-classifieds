@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace App\Service\System\Token;
 
-use App\Entity\Token;
-use App\Entity\TokenField;
+use App\Entity\System\Token;
+use App\Entity\System\TokenField;
 use App\Entity\User;
-use App\Helper\Random;
+use App\Helper\DateHelper;
+use App\Helper\RandomHelper;
+use App\Repository\TokenRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
-use Symfony\Component\Validator\Constraints\DateTime;
 
 class TokenService
 {
@@ -18,23 +19,30 @@ class TokenService
      * @var EntityManagerInterface
      */
     private $em;
+
     /**
      * @var LoggerInterface
      */
     private $logger;
 
-    public function __construct(EntityManagerInterface $em, LoggerInterface $logger)
+    /**
+     * @var TokenRepository
+     */
+    private $tokenRepository;
+
+    public function __construct(TokenRepository $tokenRepository, EntityManagerInterface $em, LoggerInterface $logger)
     {
+        $this->tokenRepository = $tokenRepository;
         $this->em = $em;
         $this->logger = $logger;
     }
 
-    public function getTokenBuilder(string $tokenType, ?\DateTimeInterface $validUntil = null): TokenDto
+    public function createToken(string $tokenType, ?\DateTimeInterface $validUntil = null): TokenDto
     {
         $token = new Token();
         $token->setType($tokenType);
-        $token->setTokenString(Random::string(40));
-        $token->setCreatedDate(new \DateTime());
+        $token->setTokenString(RandomHelper::string(40));
+        $token->setCreatedDate(DateHelper::create());
         $token->setValidUntilDate($validUntil);
 
         return new TokenDto($token);
@@ -42,13 +50,12 @@ class TokenService
 
     public function getToken(string $tokenString, string $tokenType): ?Token
     {
-        /** @var Token $tokenEntity */
-        $tokenEntity = $this->em->getRepository(Token::class)->findByToken($tokenString);
-        if ($tokenEntity === null) {
+        $tokenEntity = $this->tokenRepository->findByToken($tokenString);
+        if (null === $tokenEntity) {
             return null;
         }
 
-        if ($tokenEntity->getValidUntilDate() && $tokenEntity->getValidUntilDate() < new DateTime()) {
+        if ($tokenEntity->getValidUntilDate() && $tokenEntity->getValidUntilDate() < DateHelper::create()) {
             $this->logger->debug('token expired');
 
             return null;
@@ -56,7 +63,7 @@ class TokenService
 
         if ($tokenEntity->getType() !== $tokenType) {
             $this->logger->critical('token found, but incorrect type', [
-                $tokenString, $tokenType
+                $tokenString, $tokenType,
             ]);
 
             return null;
@@ -65,7 +72,7 @@ class TokenService
         return $tokenEntity;
     }
 
-    public function getUserFromToken(Token $tokenEntity): User
+    public function getUserFromToken(Token $tokenEntity): ?User
     {
         $userId = $tokenEntity->getFieldByName(TokenField::USER_ID_FIELD);
 

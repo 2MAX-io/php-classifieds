@@ -37,7 +37,9 @@
                 {% if app.request.query.get('demoStarted') %}
                     <div class="alert alert-success" role="alert">
                         {{ 'trans.Listing has been featured for 30 minutes, to see how it looks click' | trans }}
-                        <a href="{{ path('app_category', {'categorySlug': listing.category.slug}) }}#listing-{{ listing.id }}">{{ 'trans.HERE' | trans }}</a>
+                        <a href="{{ path('app_category', {'categorySlug': listing.category.slug}) }}#listing-{{ listing.id }}">
+                            {{- 'trans.HERE' | trans -}}
+                        </a>
                     </div>
                 {% endif %}
 
@@ -53,7 +55,7 @@
                                     </div>
 
                                     <div>
-                                        {{ include('user/listing/_action/_feature_paid_form.html.twig') }}
+                                        {{ include('user/listing/_action/_feature_form.html.twig') }}
                                     </div>
                                 </div>
 
@@ -61,7 +63,7 @@
                             </div>
                         {% endfor %}
 
-                        {% if listing.featuredUntilDate is null or (listing.featured and diffToNowWithinSeconds(listing.featuredUntilDate, -1800, 0)) %}
+                        {% if listing.featuredUntilDate is null %}
                         <div class="col-md-4 mb-3">
                             <h4>{{ 'trans.Try featured' | trans }}</h4>
 
@@ -69,7 +71,9 @@
                                 {% if listing.featuredUntilDate is null %}
                                     {{ include('user/listing/_action/_feature_as_demo_form.html.twig') }}
                                 {% else %}
-                                    <span class="btn btn-secondary btn-sm disabled">{{ 'trans.Demonstration of featured has been used up' | trans }}</span>
+                                    <span class="btn btn-secondary btn-sm disabled">
+                                        {{- 'trans.Demonstration of featured has been used up' | trans -}}
+                                    </span>
                                 {% endif %}
                             </div>
 
@@ -80,12 +84,21 @@
 
                     <div class="alert alert-info mt-3">
                         <div>
+                            {{ 'trans.Do you need invoice for your company?' | trans }}
+                            <a href="{{ path('app_user_invoice_details') }}" class="btn btn-secondary">
+                                {{- 'trans.Enter invoice details' | trans -}}
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="alert alert-info mt-3">
+                        <div>
                             {{ 'trans.Do you feature many listings?' | trans }}
                             {{ 'trans.Do you feature frequently?' | trans }}
                         </div>
 
                         <a href="{{ path('app_user_balance_top_up') }}" class="btn btn-primary">
-                            {{ 'trans.Top up account' | trans }}
+                            {{- 'trans.Top up account' | trans -}}
                         </a>
                         <span>{{ 'trans.to feature listings by single click' | trans }}</span>
                     </div>
@@ -100,4 +113,9 @@
             </div>
         </div>
     </div>
+{% endblock %}
+
+{% block js %}
+    {{ encore_entry_link_tags('feature_listing') }}
+    {{ encore_entry_script_tags('feature_listing') }}
 {% endblock %}

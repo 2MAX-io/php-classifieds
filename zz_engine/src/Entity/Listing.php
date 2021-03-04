@@ -4,11 +4,14 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use App\Entity\System\ListingInternalData;
 use App\Helper\ContainerHelper;
-use App\Helper\ImageResizePath;
+use App\Helper\DateHelper;
+use App\Helper\ResizedImagePath;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\Criteria;
+use Doctrine\Common\Collections\ExpressionBuilder;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\Index;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -85,7 +88,7 @@ class Listing
     /**
      * @var User
      *
-     * @Assert\NotNull(groups={"zzzz"})
+     * @Assert\NotNull(groups={"skipAutomaticValidation"})
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="listings")
      * @ORM\JoinColumn(nullable=false)
      */
@@ -94,7 +97,7 @@ class Listing
     /**
      * @var \DateTimeInterface
      *
-     * @Assert\NotNull(groups={"zzzz"})
+     * @Assert\NotNull(groups={"skipAutomaticValidation"})
      * @ORM\Column(type="datetime", nullable=false)
      */
     private $validUntilDate;
@@ -142,7 +145,7 @@ class Listing
     private $featured = false;
 
     /**
-     * @var \DateTimeInterface
+     * @var null|\DateTimeInterface
      *
      * @ORM\Column(type="datetime", nullable=true)
      */
@@ -179,7 +182,7 @@ class Listing
     private $lastEditDate;
 
     /**
-     * @var \DateTimeInterface|null
+     * @var null|\DateTimeInterface
      *
      * @ORM\Column(type="datetime", nullable=true)
      */
@@ -200,35 +203,35 @@ class Listing
     private $description;
 
     /**
-     * @var float|null
+     * @var null|float
      *
      * @ORM\Column(type="float", nullable=true)
      */
     private $price;
 
     /**
-     * @var string|null
+     * @var null|string
      *
      * @ORM\Column(type="string", length=40, nullable=true)
      */
     private $priceFor;
 
     /**
-     * @var bool|null
+     * @var null|bool
      *
      * @ORM\Column(type="boolean", nullable=true)
      */
     private $priceNegotiable;
 
     /**
-     * @var string|null
+     * @var null|string
      *
      * @ORM\Column(type="string", length=20, nullable=true)
      */
     private $phone;
 
     /**
-     * @var string|null
+     * @var null|string
      *
      * @ORM\Column(type="string", length=70, nullable=true)
      */
@@ -242,14 +245,14 @@ class Listing
     private $emailShow;
 
     /**
-     * @var string|null
+     * @var null|string
      *
      * @ORM\Column(type="string", length=30, nullable=true)
      */
     private $city;
 
     /**
-     * @var float|null
+     * @var null|float
      *
      * @ORM\Column(type="float", nullable=true)
      * @Assert\Type(type="numeric")
@@ -257,7 +260,7 @@ class Listing
     private $locationLatitude;
 
     /**
-     * @var float|null
+     * @var null|float
      *
      * @ORM\Column(type="float", nullable=true)
      * @Assert\Type(type="numeric")
@@ -265,7 +268,7 @@ class Listing
     private $locationLongitude;
 
     /**
-     * @var string|null
+     * @var null|string
      *
      * @ORM\Column(type="string", length=255, nullable=true)
      */
@@ -274,77 +277,60 @@ class Listing
     /**
      * @var string
      *
-     * @Assert\NotNull(groups={"zzzz"})
-     * @ORM\Column(type="string", length=100, nullable=false, unique=false)
+     * @Assert\NotNull(groups={"skipAutomaticValidation"})
+     * @ORM\Column(type="string", length=100, nullable=false)
      */
     private $slug;
 
     /**
      * @var string
      *
-     * @Assert\NotNull(groups={"zzzz"})
+     * @Assert\NotNull(groups={"skipAutomaticValidation"})
      * @ORM\Column(type="text", nullable=false)
      */
     private $searchText;
 
     /**
-     * @var string|null
+     * @var null|string
      *
      * @ORM\Column(type="string", length=150, nullable=true)
      */
     private $rejectionReason;
 
     /**
-     * @var PaymentForFeaturedPackage
+     * @var Collection|PaymentForFeaturedPackage[]
      *
      * @ORM\OneToMany(targetEntity="PaymentForFeaturedPackage", mappedBy="listing")
      */
     private $paymentFeaturedPackage;
 
     /**
-     * @var ListingCustomFieldValue[]
+     * @var Collection|ListingCustomFieldValue[]
      *
      * @ORM\OneToMany(targetEntity="App\Entity\ListingCustomFieldValue", mappedBy="listing")
      */
     private $listingCustomFieldValues;
 
     /**
-     * @var ListingFile[]
+     * @var ArrayCollection|ListingFile[]
      *
      * @ORM\OneToMany(targetEntity="App\Entity\ListingFile", mappedBy="listing")
      */
     private $listingFiles;
+
+    /**
+     * @var Collection|ListingInternalData[]
+     *
+     * @ORM\OneToMany(targetEntity="App\Entity\System\ListingInternalData", mappedBy="listing", fetch="EXTRA_LAZY")
+     */
+    private $listingInternalData;
 
     public function __construct()
     {
         $this->listingCustomFieldValues = new ArrayCollection();
         $this->listingFiles = new ArrayCollection();
         $this->paymentFeaturedPackage = new ArrayCollection();
-    }
-
-    /**
-     * @return ArrayCollection|ListingFile[]
-     */
-    public function getListingFiles(): Collection
-    {
-        return $this->listingFiles->matching(
-            Criteria::create()
-                ->orderBy(['sort' => 'asc'])
-                ->where(Criteria::expr()->eq('userRemoved', false))
-        );
-    }
-
-    /**
-     * @return ArrayCollection|ListingFile[]
-     */
-    public function getListingFilesAll(): Collection
-    {
-        return $this->listingFiles;
-    }
-
-    public function getMainImageNoCache(): ?ListingFile
-    {
-        return $this->getListingFiles()->first();
+        $this->listingInternalData = new ArrayCollection();
     }
 
     public function getStatus(): string
@@ -373,7 +359,7 @@ class Listing
             return static::STATUS_PENDING;
         }
 
-        if ($this->getFeatured() && $this->getFeaturedUntilDate() >= new \DateTime()) {
+        if ($this->getFeatured() && $this->getFeaturedUntilDate() >= DateHelper::create()) {
             return self::STATUS_ACTIVE_FEATURED;
         }
 
@@ -382,17 +368,47 @@ class Listing
 
     public function isFeaturedActive(): bool
     {
-        return $this->getFeatured() && $this->getFeaturedUntilDate() > new \DateTime();
+        return $this->getFeatured() && $this->getFeaturedUntilDate() > DateHelper::create();
+    }
+
+    /**
+     * @return ArrayCollection|ListingFile[]
+     */
+    public function getListingFiles(): ArrayCollection
+    {
+        $expr = Criteria::expr();
+        if (!$expr instanceof ExpressionBuilder) {
+            throw new \RuntimeException('Criteria::expr() returns null');
+        }
+
+        return $this->listingFiles->matching(
+            Criteria::create()
+                ->orderBy(['sort' => Criteria::ASC])
+                ->where($expr->eq('userRemoved', false))
+        );
+    }
+
+    /**
+     * @return Collection|ListingFile[]
+     */
+    public function getListingFilesAll(): Collection
+    {
+        return $this->listingFiles;
+    }
+
+    public function getMainImageNoCache(): ?ListingFile
+    {
+        return $this->getListingFiles()->first() ?: null;
     }
 
     public function getMainImage(string $type = null): ?string
     {
-        if ($this->mainImage === null) {
+        if (null === $this->mainImage) {
             return null;
         }
 
-        if ($type !== null) {
-            return ImageResizePath::forType($type, $this->mainImage);
+        if (null !== $type) {
+            return ResizedImagePath::forType($type, $this->mainImage);
         }
 
         return $this->mainImage;
@@ -400,15 +416,34 @@ class Listing
 
     public function getMainImageInListSize(): ?string
     {
-        return $this->getMainImage(ImageResizePath::LIST);
+        return $this->getMainImage(ResizedImagePath::LIST);
+    }
+
+    public function getValidUntilDateStringOrNull(): ?string
+    {
+        if (!$this->getValidUntilDate()) {
+            return null;
+        }
+
+        return $this->getValidUntilDate()->format('Y-m-d H:i:s');
     }
 
     public function isExpired(): bool
     {
-        return $this->getValidUntilDate() < (new \DateTime())->setTime(0,0);
+        return $this->getValidUntilDate() < DateHelper::create()->setTime(0, 0);
+    }
+
+    public function getHasLocationOnMap(): bool
+    {
+        return $this->getLocationLatitude() && $this->getLocationLongitude();
     }
 
     public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getIdNotNull(): int
     {
         return $this->id;
     }
@@ -439,11 +474,7 @@ class Listing
 
     public function getPrice(): ?float
     {
-        if ($this->price === null) {
-            return null;
-        }
-
-        return $this->price;
+        return $this->price ?? null;
     }
 
     public function setPrice(?float $price): self
@@ -567,6 +598,10 @@ class Listing
 
     public function getUserNotNull(): User
     {
+        if (null === $this->user) {
+            throw new \RuntimeException('user is null');
+        }
+
         return $this->user;
     }
 
@@ -652,15 +687,6 @@ class Listing
     public function getValidUntilDate(): ?\DateTimeInterface
     {
         return $this->validUntilDate;
-    }
-
-    public function getValidUntilDateStringOrNull(): ?string
-    {
-        if (!$this->getValidUntilDate()) {
-            return null;
-        }
-
-        return $this->getValidUntilDate()->format('Y-m-d H:i:s');
     }
 
     public function setValidUntilDate(\DateTimeInterface $validUntilDate): self
@@ -821,37 +847,6 @@ class Listing
         return $this;
     }
 
-    /**
-     * @return Collection|PaymentForFeaturedPackage[]
-     */
-    public function getPaymentFeaturedPackage(): Collection
-    {
-        return $this->paymentFeaturedPackage;
-    }
-
-    public function addPaymentFeaturedPackage(PaymentForFeaturedPackage $paymentFeaturedPackage): self
-    {
-        if (!$this->paymentFeaturedPackage->contains($paymentFeaturedPackage)) {
-            $this->paymentFeaturedPackage[] = $paymentFeaturedPackage;
-            $paymentFeaturedPackage->setListing($this);
-        }
-
-        return $this;
-    }
-
-    public function removePaymentFeaturedPackage(PaymentForFeaturedPackage $paymentFeaturedPackage): self
-    {
-        if ($this->paymentFeaturedPackage->contains($paymentFeaturedPackage)) {
-            $this->paymentFeaturedPackage->removeElement($paymentFeaturedPackage);
-            // set the owning side to null (unless already changed)
-            if ($paymentFeaturedPackage->getListing() === $this) {
-                $paymentFeaturedPackage->setListing(null);
-            }
-        }
-
-        return $this;
-    }
-
     public function getLocationLongitude(): ?float
     {
         return $this->locationLongitude;
@@ -872,8 +867,60 @@ class Listing
         $this->locationLatitude = $locationLatitude;
     }
 
-    public function getHasLocationOnMap(): bool
+    public function getListingInternalData(): ?ListingInternalData
     {
-        return $this->getLocationLatitude() && $this->getLocationLongitude();
+        return $this->listingInternalData->first() ?: null;
+    }
+
+    public function addListingInternalData(ListingInternalData $listingInternalData): self
+    {
+        if (!$this->listingInternalData->contains($listingInternalData)) {
+            $this->listingInternalData[] = $listingInternalData;
+            $listingInternalData->setListing($this);
+        }
+
+        return $this;
+    }
+
+    public function removeListingInternalData(ListingInternalData $listingInternalData): self
+    {
+        // set the owning side to null (unless already changed)
+        if ($this->listingInternalData->removeElement($listingInternalData)
+            && $listingInternalData->getListing() === $this
+        ) {
+            $listingInternalData->setListing(null);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|PaymentForFeaturedPackage[]
+     */
+    public function getPaymentFeaturedPackage(): Collection
+    {
+        return $this->paymentFeaturedPackage;
+    }
+
+    public function addPaymentFeaturedPackage(PaymentForFeaturedPackage $paymentFeaturedPackage): self
+    {
+        if (!$this->paymentFeaturedPackage->contains($paymentFeaturedPackage)) {
+            $this->paymentFeaturedPackage[] = $paymentFeaturedPackage;
+            $paymentFeaturedPackage->setListing($this);
+        }
+
+        return $this;
+    }
+
+    public function removePaymentFeaturedPackage(PaymentForFeaturedPackage $paymentFeaturedPackage): self
+    {
+        // set the owning side to null (unless already changed)
+        if ($this->paymentFeaturedPackage->removeElement($paymentFeaturedPackage)
+            && $paymentFeaturedPackage->getListing() === $this
+        ) {
+            $paymentFeaturedPackage->setListing(null);
+        }
+
+        return $this;
     }
 }

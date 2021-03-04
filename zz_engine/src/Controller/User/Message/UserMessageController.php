@@ -36,14 +36,14 @@ class UserMessageController extends AbstractUserController
      */
     public function userMessageList(
         Request $request,
-        UserMessageListService $userMessageListService,
         UserMessageSendService $userMessageSendService,
+        UserMessageListService $userMessageListService,
         CurrentUserService $currentUserService,
         UserMessageThread $userMessageThread = null
     ): Response {
         $this->dennyUnlessUser();
 
-        /** @var Listing|null $listing */
+        /** @var null|Listing $listing */
         $listing = $userMessageThread ? $userMessageThread->getListing() : null;
         $currentUser = $currentUserService->getUser();
 
@@ -62,7 +62,7 @@ class UserMessageController extends AbstractUserController
             $this->em->flush();
 
             return $this->redirectToRoute($request->get('_route'), [
-                'userMessageThread' => $userMessageThread->getId()
+                'userMessageThread' => $userMessageThread->getId(),
             ]);
         }
 
@@ -74,10 +74,10 @@ class UserMessageController extends AbstractUserController
         }
 
         return $this->render('user/message/user_message.html.twig', [
-            'threadList' => $userMessageListService->getUserMessageThreadList($currentUser),
+            'threadList' => $userMessageListService->getThreadList($currentUser),
             'messageList' => $messageList,
             'currentUser' => $currentUser,
-            'currentListing' => $listing,
+            'listing' => $listing,
             'userMessageThread' => $userMessageThread,
             'form' => $form->createView(),
         ]);
@@ -89,21 +89,22 @@ class UserMessageController extends AbstractUserController
     public function respondToListing(
         Request $request,
         Listing $listing,
-        UserMessageListService $userMessageListService,
         UserMessageSendService $userMessageSendService,
+        UserMessageListService $userMessageListService,
         CurrentUserService $currentUserService
     ): Response {
         $this->dennyUnlessUser();
         $currentUser = $currentUserService->getUser();
 
-        if ($listing->getUserNotNull()->getId() === $currentUser->getId()) {
+        $isCurrentUserListingOwner = $listing->getUserNotNull()->getId() === $currentUser->getId();
+        if ($isCurrentUserListingOwner) {
             return $this->render('user/message/error/message_to_yourself_error.html.twig');
         }
 
-        $previousThread = $userMessageListService->getExistingUserThreadForListing($listing, $currentUser);
-        if ($previousThread) {
+        $threadExist = $userMessageListService->getExistingUserThreadForListing($listing, $currentUser);
+        if ($threadExist) {
             return $this->redirectToRoute('app_user_message_list_thread', [
-                'userMessageThread' => $previousThread->getId()
+                'userMessageThread' => $threadExist->getId(),
             ]);
         }
 
@@ -123,8 +124,8 @@ class UserMessageController extends AbstractUserController
             ]);
         }
 
-        return $this->render('user/message/user_message_respond_to_listing.html.twig', [
-            'currentListing' => $listing,
+        return $this->render('user/message/reply_to_listing.html.twig', [
+            'listing' => $listing,
             'form' => $form->createView(),
         ]);
     }

@@ -10,19 +10,19 @@
             </div>
 
             <div class="col-md-8 col-lg-9">
-                <div>
+                <div class="mb-2">
                     <a href="{{ path('app_user_change_password') }}" class="btn btn-secondary">
-                        <i class="fas fa-lock"></i>
+                        <i class="svg svg-lock mr-1"></i>
                         <span>{{ 'trans.Change Password' | trans }}</span>
                     </a>
 
                     <a href="{{ path('app_user_change_email') }}" class="btn btn-secondary">
-                        <i class="fas fa-envelope"></i>
+                        <i class="svg svg-envelope mr-1"></i>
                         <span>{{ 'trans.Change Email' | trans }}</span>
                     </a>
                 </div>
 
-                <h2>{{ 'trans.Settings' | trans }}</h2>
+                <h2>{{ 'trans.Settings for user' | trans }}: {{ user.username | default (user.email) }}</h2>
 
                 {{ form_start(form) }}
                 {{ form_widget(form) }}

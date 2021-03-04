@@ -287,6 +287,7 @@ trans:
     Invoiced to: 'Invoiced to'
     Do you need invoice for your company?: 'Do you need invoice for your company?'
     Enter invoice details: 'Enter invoice details'
+    Advertisement zone id: 'Advertisement zone id'
 
 trans.customFieldType.SELECT_AS_CHECKBOXES: 'Checkboxes in filters, single select when editing'
 trans.customFieldType.SELECT_SINGLE: 'Single selection field'

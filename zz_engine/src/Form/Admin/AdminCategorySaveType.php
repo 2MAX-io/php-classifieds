@@ -19,6 +19,7 @@ use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Validator\Constraints\Image;
+use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 class AdminCategorySaveType extends AbstractType
@@ -61,6 +62,12 @@ class AdminCategorySaveType extends AbstractType
             'label' => 'trans.Order, smaller first',
             'constraints' => [
                 new NotBlank(),
+            ],
+        ]);
+        $builder->add('advertisementZoneId', IntegerType::class, [
+            'label' => 'trans.Advertisement zone id',
+            'constraints' => [
+                new Length(['min' => 1]),
             ],
         ]);
         $builder->add('picture', FileType::class, [

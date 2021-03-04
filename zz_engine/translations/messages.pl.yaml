@@ -720,6 +720,7 @@ trans:
     Invoiced to: 'Nabywca'
     Do you need invoice for your company?: 'Potrzebujesz faktury dla swojej firmy?'
     Enter invoice details: 'Wprowadź dane do faktury'
+    Advertisement zone id: 'ID strefy reklamowej'
 
 '—': '—'
 Year: Rok

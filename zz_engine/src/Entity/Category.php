@@ -82,6 +82,13 @@ class Category
     /**
      * @var null|string
      *
+     * @ORM\Column(type="string", length=10, nullable=true)
+     */
+    private $advertisementZoneId;
+
+    /**
+     * @var null|string
+     *
      * @ORM\Column(type="string", length=100, nullable=true)
      */
     private $picture;
@@ -435,5 +442,15 @@ class Category
         }
 
         return $this;
+    }
+
+    public function getAdvertisementZoneId(): ?string
+    {
+        return $this->advertisementZoneId;
+    }
+
+    public function setAdvertisementZoneId(?string $advertisementZoneId): void
+    {
+        $this->advertisementZoneId = $advertisementZoneId;
     }
 }

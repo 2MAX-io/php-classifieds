@@ -232,6 +232,8 @@
 <!-- CONTENT -->
 {% block body %}{% endblock body %}
 
+{{- advertisementZone('bottom', advertisementDto | default(null)) ~}}
+
 <!-- FOOTER -->
 <div class="container mt-1 mt-md-2 d-print-none">
     <footer class="pt-1 pt-md-3 border-top">

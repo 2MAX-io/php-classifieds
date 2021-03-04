@@ -82,7 +82,7 @@ class Category
     /**
      * @var null|string
      *
-     * @ORM\Column(type="string", length=10, nullable=true)
+     * @ORM\Column(type="string", length=50, nullable=true)
      */
     private $advertisementZoneId;
 

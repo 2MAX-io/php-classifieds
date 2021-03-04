@@ -64,8 +64,9 @@ class AdminCategorySaveType extends AbstractType
                 new NotBlank(),
             ],
         ]);
-        $builder->add('advertisementZoneId', IntegerType::class, [
+        $builder->add('advertisementZoneId', TextType::class, [
             'label' => 'trans.Advertisement zone id',
+            'required' => false,
             'constraints' => [
                 new Length(['min' => 1]),
             ],

@@ -178,4 +178,9 @@ class StringHelper
 
         return \mb_substr($forcedSubstring, 0, \strrpos($forcedSubstring, ' ') ?: null);
     }
+
+    public static function escape(string $string): string
+    {
+        return \htmlspecialchars($string, \ENT_QUOTES | \ENT_SUBSTITUTE);
+    }
 }

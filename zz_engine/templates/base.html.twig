@@ -207,7 +207,9 @@
     </div>
 </nav>
 
-{{- advertisementZone('under_header', advertisementDto | default(null)) ~}}
+{%- if displayTopAdvert ?? true ~%}
+    {{- advertisementZone('under_header', advertisementDto | default(null)) ~}}
+{%- endif ~%}
 
 {% if not app.request.cookies.get('gdpr', false) %}
     <div id="js__gdpr" class="alert alert-info d-print-none">
@@ -334,7 +336,7 @@
 {{ settings.customCss | raw }}
 
 {% block javascripts %}
-    <param id="js__dataForJs" value="{{ dataForJs | default([]) | processDataForJs }}" name="dataForJs" class="d-none">
+    <input type="hidden" id="js__dataForJs" value="{{ dataForJs | default([]) | processDataForJs }}">
     {{ encore_entry_script_tags('app') }}
     {{ settings.customJavascriptBottom | raw }}
 {% endblock %}

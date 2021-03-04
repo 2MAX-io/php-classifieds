@@ -182,7 +182,7 @@
 {{ encore_entry_link_tags('app_admin_bottom') }}
 
 {% block javascripts %}
-    <param id="js__dataForJs" value="{{ dataForJs | default([]) | processDataForJs }}" name="dataForJs" class="d-none">
+    <input type="hidden" id="js__dataForJs" value="{{ dataForJs | default([]) | processDataForJs }}">
     {{ encore_entry_script_tags('app_admin') }}
     {{ encore_entry_script_tags('app_admin_bottom') }}
 {% endblock %}

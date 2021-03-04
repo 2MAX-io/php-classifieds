@@ -17,7 +17,7 @@ if (null !== $advertisementDto
 ?>
 
 <div class="text-center my-2 d-print-none">
-    <script type='text/javascript'>
+    <script>
         document.MAX_ct0 ='INSERT_CLICKURL_HERE';
 
         var m3_u = (location.protocol=='https:'?'https://www.jaslo4u.pl/revive-adserver-4.1.4/www/delivery/ajs.php':'http://www.jaslo4u.pl/revive-adserver-4.1.4/www/delivery/ajs.php');
@@ -37,5 +37,5 @@ if (null !== $advertisementDto
         if (document.mmm_fo) document.write ("&amp;mmm_fo=1");
         document.write ("'><\/scr"+"ipt>");
     </script>
-    <noscript><a href='http://www.jaslo4u.pl/revive-adserver-4.1.4/www/delivery/ck.php?n=ab5ccf51&amp;cb=INSERT_RANDOM_NUMBER_HERE' target='_blank'><img src='http://www.jaslo4u.pl/revive-adserver-4.1.4/www/delivery/avw.php?zoneid=<?php echo StringHelper::escape((string) $zoneId); ?>&amp;cb=INSERT_RANDOM_NUMBER_HERE&amp;n=ab5ccf51&amp;ct0=INSERT_CLICKURL_HERE' border='0' alt='' /></a></noscript>
+    <noscript><a href='http://www.jaslo4u.pl/revive-adserver-4.1.4/www/delivery/ck.php?n=ab5ccf51&amp;cb=INSERT_RANDOM_NUMBER_HERE' target='_blank'><img src='http://www.jaslo4u.pl/revive-adserver-4.1.4/www/delivery/avw.php?zoneid=<?php echo StringHelper::escape((string) $zoneId); ?>&amp;cb=INSERT_RANDOM_NUMBER_HERE&amp;n=ab5ccf51&amp;ct0=INSERT_CLICKURL_HERE' class="border-0" alt='' /></a></noscript>
 </div>

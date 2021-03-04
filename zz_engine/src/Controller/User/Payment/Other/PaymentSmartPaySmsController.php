@@ -31,6 +31,7 @@ class PaymentSmartPaySmsController extends AbstractController
     ): Response {
         if (!isset($_ENV['APP_SMARTPAY_PL_URL_SECRET'])) {
             $logger->critical('ENV variable APP_SMARTPAY_PL_URL_SECRET not found');
+
             return new Response('ENV variable APP_SMARTPAY_PL_URL_SECRET not found');
         }
 
@@ -42,15 +43,16 @@ class PaymentSmartPaySmsController extends AbstractController
 
         try {
             $smsText = \trim($request->get('text'));
-            $smsPaymentNumber = (string) \trim($request->get('number'));
+            $smsPaymentNumber = \trim((string) $request->get('number'));
             $listingId = \preg_replace('~\D+~', '', $smsText);
+            /** @var array<string,int> $numberToDaysMap */
             $numberToDaysMap = [];
             $numberToDaysMap['71068'] = 3;
             $numberToDaysMap['72068'] = 7;
             $numberToDaysMap['74068'] = 21;
 
             $featuredTimeDays = $numberToDaysMap[$smsPaymentNumber];
-            /** @var Listing $listing */
+            /** @var null|Listing $listing */
             $listing = $em->getRepository(Listing::class)->find($listingId);
             if (null === $listing) {
                 $logger->alert('[Featured Listing] IMPORTANT! listing not found, SMS text: {smsText}', [
@@ -60,7 +62,7 @@ class PaymentSmartPaySmsController extends AbstractController
                 return new Response('OK');
             }
 
-            $featuredListingService->makeFeatured($listing, $featuredTimeDays * 3600*24);
+            $featuredListingService->makeFeatured($listing, $featuredTimeDays * 3600 * 24);
             $em->flush();
         } catch (\Throwable $e) {
             $logger->alert('error while featuring listing by SMS', ExceptionHelper::flatten($e));

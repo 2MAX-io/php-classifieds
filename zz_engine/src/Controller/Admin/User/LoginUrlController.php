@@ -5,9 +5,10 @@ declare(strict_types=1);
 namespace App\Controller\Admin\User;
 
 use App\Controller\Admin\Base\AbstractAdminController;
-use App\Entity\Admin;
+use App\Entity\System\Admin;
 use App\Exception\UserVisibleException;
 use App\Security\LoginUserProgrammaticallyService;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,7 +21,7 @@ class LoginUrlController extends AbstractAdminController
     /**
      * @Route("/admin/login-url/{adminLoginUrlSecret}/login-url", name="app_admin_login_url", methods={"GET"})
      */
-    public function adminLoginUtl(
+    public function adminLoginUrl(
         string $adminLoginUrlSecret,
         Request $request,
         LoginUserProgrammaticallyService $loginUserProgrammaticallyService,
@@ -29,14 +30,17 @@ class LoginUrlController extends AbstractAdminController
     ): Response {
         if (!isset($_ENV['APP_ADMIN_LOGIN_URL_SECRET'])) {
             $logger->critical('ENV variable APP_ADMIN_LOGIN_URL_SECRET not found');
+
             throw new UserVisibleException('ENV variable APP_ADMIN_LOGIN_URL_SECRET not found');
         }
         if (!isset($_ENV['APP_ADMIN_LOGIN_HASH_SECRET'])) {
             $logger->critical('ENV variable APP_ADMIN_LOGIN_HASH_SECRET not found');
+
             throw new UserVisibleException('ENV variable APP_ADMIN_LOGIN_HASH_SECRET not found');
         }
         if ($adminLoginUrlSecret !== $_ENV['APP_ADMIN_LOGIN_URL_SECRET']) {
             $logger->critical('{adminLoginUrlSecret} does not match ENV APP_ADMIN_LOGIN_URL_SECRET');
+
             throw new UserVisibleException('{adminLoginUrlSecret} does not match ENV APP_ADMIN_LOGIN_URL_SECRET');
         }
 
@@ -45,7 +49,7 @@ class LoginUrlController extends AbstractAdminController
         $hash = $request->get('hash');
         $unique = $request->get('unique');
         $userEmail = $request->get('userEmail');
-        if (\abs(\time() - $time) > 3600*24) {
+        if (\abs(\time() - $time) > 3600 * 24) {
             throw new UserVisibleException('login link has expired, go to previous page, refresh it, and try again by clicking link');
         }
 
@@ -53,15 +57,15 @@ class LoginUrlController extends AbstractAdminController
             throw new UserVisibleException('unique is too short');
         }
 
-        $generatedHash = \sha1(\sha1((string) $time) . $secret . $unique . $userEmail);
+        $generatedHash = \sha1(\sha1((string) $time).$secret.$unique.$userEmail);
         if ($hash === $generatedHash) {
-            /** @var Admin $admin */
+            /** @var null|Admin $admin */
             $admin = $em->getRepository(Admin::class)->findOneBy(['email' => $userEmail]);
             if (null === $admin) {
                 throw new UserVisibleException('user not found');
             }
 
-            $loginUserProgrammaticallyService->loginAdmin($admin);
+            $loginUserProgrammaticallyService->loginAdmin($admin, $request);
 
             return $this->redirectToRoute('app_admin_listing_activate_list');
         }
@@ -76,22 +80,29 @@ class LoginUrlController extends AbstractAdminController
         UrlGeneratorInterface $urlGenerator,
         EntityManagerInterface $em,
         LoggerInterface $logger
-    ): Response
-    {
+    ): Response {
         $this->denyUnlessAdmin();
 
         if (!isset($_ENV['APP_ADMIN_LOGIN_URL_SECRET'])) {
             $logger->critical('ENV variable APP_ADMIN_LOGIN_URL_SECRET not found');
+
             throw new UserVisibleException('ENV variable APP_ADMIN_LOGIN_URL_SECRET not found');
         }
         if (!isset($_ENV['APP_ADMIN_LOGIN_HASH_SECRET'])) {
             $logger->critical('ENV variable APP_ADMIN_LOGIN_HASH_SECRET not found');
+
             throw new UserVisibleException('ENV variable APP_ADMIN_LOGIN_HASH_SECRET not found');
         }
 
-        $admin = $em->getRepository(Admin::class)->findOneBy([], ['id' => 'DESC']);
-        if (!$admin instanceof Admin) {
+        $qb = $em->createQueryBuilder();
+        $qb->select('admin');
+        $qb->from(Admin::class, 'admin');
+        $qb->addOrderBy('admin.id', Criteria::DESC);
+        $qb->setMaxResults(1);
+        $admin = $qb->getQuery()->getOneOrNullResult();
+        if (null === $admin) {
             $logger->critical('admin user not found');
+
             throw new UserVisibleException('admin user not found');
         }
 
@@ -107,7 +118,7 @@ class LoginUrlController extends AbstractAdminController
                 'time' => $time,
                 'unique' => $unique,
                 'userEmail' => $userEmail,
-                'hash' => \sha1(\sha1((string) $time) . $secret . $unique . $userEmail),
+                'hash' => \sha1(\sha1((string) $time).$secret.$unique.$userEmail),
             ],
             UrlGeneratorInterface::ABSOLUTE_URL
         );

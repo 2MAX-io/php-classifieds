@@ -19,7 +19,7 @@ class TwigAdvert implements RuntimeExtensionInterface
     public const MOTO_SERVICES = 104;
     public const HOME_GARDEN = 400;
     public const FINANCES = 1300;
-    public const REALESTATE = 800;
+    public const REAL_ESTATE = 800;
     public const CLOTHING = 600;
     public const JOBS = 200;
     public const OTHER = 500;
@@ -47,7 +47,7 @@ class TwigAdvert implements RuntimeExtensionInterface
         $categoryToZoneMap[self::CONSTRUCTION] = 25;
         $categoryToZoneMap[self::HOME_GARDEN] = 24;
         $categoryToZoneMap[self::FINANCES] = 26;
-        $categoryToZoneMap[self::REALESTATE] = 18;
+        $categoryToZoneMap[self::REAL_ESTATE] = 18;
         $categoryToZoneMap[self::CLOTHING] = 16;
         $categoryToZoneMap[self::JOBS] = 22;
         $categoryToZoneMap[self::OTHER] = 15;

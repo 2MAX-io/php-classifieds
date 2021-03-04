@@ -13,6 +13,9 @@ customFields.$customFieldListWrapper = $(".js__customFieldList");
 customFields.loadFromBackend = function () {
     let listingId = dataForJs[ParamEnum.LISTING_ID];
     let categoryId = customFields.getCategoryFromSelect();
+    if (!categoryId) {
+        return;
+    }
     customFields.category = categoryId;
     let request = {
         listingId: listingId,
@@ -60,7 +63,7 @@ $(".js__formCategory").on("change", function () {
 });
 
 customFields.getCategoryFromSelect = function () {
-    return parseInt($(".js__formCategory").val());
+    return parseInt($(".js__formCategory").val()) || null;
 };
 
 let customFieldsCount = customFields.$customFieldListWrapper.find($(".form-group")).length;

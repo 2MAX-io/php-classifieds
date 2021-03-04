@@ -16,5 +16,3 @@ framework:
     #fragments: true
     php_errors:
         log: true
-
-    ide: '%env(resolve:APP_DEV_IDE_CONFIG)%'

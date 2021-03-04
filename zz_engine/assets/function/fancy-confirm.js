@@ -2,6 +2,8 @@
 
 import $ from "jquery";
 import Translator from "./../module/Translator";
+import "@fancyapps/fancybox";
+import "@fancyapps/fancybox/dist/jquery.fancybox.css";
 
 $.fancyConfirm = function (opts) {
     opts = $.extend(
@@ -27,7 +29,7 @@ $.fancyConfirm = function (opts) {
             opts.message +
             "</p>" +
             '<p class="text-right">' +
-            '<a data-value="0" data-fancybox-close href="javascript:;" class="mr-2">' +
+            '<a data-value="0" data-fancybox-close href="javascript:;" class="mr-2 btn btn-secondary">' +
             opts.noButton +
             "</a>" +
             '<button data-value="1" data-fancybox-close class="btn btn-primary">' +

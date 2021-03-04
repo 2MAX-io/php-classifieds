@@ -285,6 +285,7 @@ t.add("trans.Email for invoice", "Email for invoice", "messages", "en");
 t.add("trans.Invoiced to", "Invoiced to", "messages", "en");
 t.add("trans.Do you need invoice for your company?", "Do you need invoice for your company?", "messages", "en");
 t.add("trans.Enter invoice details", "Enter invoice details", "messages", "en");
+t.add("trans.Advertisement zone id", "Advertisement zone id", "messages", "en");
 t.add("trans.customFieldType.SELECT_AS_CHECKBOXES", "Checkboxes in filters, single select when editing", "messages", "en");
 t.add("trans.customFieldType.SELECT_SINGLE", "Single selection field", "messages", "en");
 t.add("trans.customFieldType.YEAR_RANGE", "Field with year", "messages", "en");

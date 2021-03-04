@@ -718,6 +718,7 @@ t.add("trans.Email for invoice", "Email do faktury", "messages", "pl");
 t.add("trans.Invoiced to", "Nabywca", "messages", "pl");
 t.add("trans.Do you need invoice for your company?", "Potrzebujesz faktury dla swojej firmy?", "messages", "pl");
 t.add("trans.Enter invoice details", "Wprowad\u017a dane do faktury", "messages", "pl");
+t.add("trans.Advertisement zone id", "ID strefy reklamowej", "messages", "pl");
 t.add("\u2014", "\u2014", "messages", "pl");
 t.add("Year", "Rok", "messages", "pl");
 t.add("Month", "Miesi\u0105c", "messages", "pl");

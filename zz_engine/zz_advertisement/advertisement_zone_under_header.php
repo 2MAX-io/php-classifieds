@@ -7,35 +7,11 @@ use App\Service\Advertisement\Dto\AdvertisementDto;
 
 /** @var null|AdvertisementDto $advertisementDto */
 $advertisementDto = $advertisementDto ?? null;
-$categoryIdToZoneIdMap = [
-    0 => 54, // default zone
-    100 => 14, // moto
-    101 => 33, // moto cars
-    103 => 35, // moto wheel tires
-    104 => 32, // moto services
-    105 => 36, // motor bikes
-    107 => 34, // moto parts
-    200 => 22, // jobs
-    300 => 19, // sport
-    400 => 24, // home garden
-    500 => 15, // other
-    600 => 16, // clothing
-    700 => 17, // home electronics
-    800 => 18, // real estate
-    900 => 20, // phones
-    1000 => 21, // other services
-    1200 => 25, // construction
-    1300 => 26, // finances
-    1400 => 27, // health beauty
-    1500 => 28, // events
-];
-
 $zoneId = 54; // default zone
 if (null !== $advertisementDto
     && null !== $advertisementDto->category
-    && isset($categoryIdToZoneIdMap[$advertisementDto->category->getId()])
 ) {
-    $zoneId = $categoryIdToZoneIdMap[$advertisementDto->category->getId()];
+    $zoneId = $advertisementDto->category->getAdvertisementZoneId();
 }
 
 ?>

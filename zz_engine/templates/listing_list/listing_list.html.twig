@@ -108,13 +108,13 @@
                             </a>
                         {%- endfor -%}
                         {% if categoryList | length > 4 ~%}
-                            <div {{- ' ' -}}
-                                    class="w-100-small text-left btn btn-link d-inline-block d-lg-none px-0 pt-1 align-top cursor-pointer js__removeOnClick" {{- ' ' -}}
+                            <a {{- ' ' -}}
+                                    class="w-100-small py-lg-0 show-more-subcategories cursor-pointer js__removeOnClick" {{- ' ' -}}
                                     data-toggle="collapse" {{- ' ' -}}
                                     data-target=".show-more-subcategories" {{- ' ' -}}
                             >
                                 {{- 'trans.show more' | trans -}}
-                            </div>
+                            </a>
                         {%- endif ~%}
                     </div>
                 {%- endif %}

@@ -5,11 +5,12 @@ declare(strict_types=1);
 namespace App\Controller\User\Account;
 
 use App\Controller\User\Base\AbstractUserController;
-use App\Entity\User;
 use App\Exception\UserVisibleException;
 use App\Helper\ExceptionHelper;
 use App\Helper\StringHelper;
+use App\Repository\UserRepository;
 use App\Security\LoginUserProgrammaticallyService;
+use App\Security\UserChecker;
 use App\Service\Setting\SettingsService;
 use App\Service\System\FlashBag\FlashService;
 use App\Service\User\Account\CreateUserService;
@@ -20,19 +21,25 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Symfony\Component\Security\Core\User\UserCheckerInterface;
 
 class LoginOauthController extends AbstractUserController
 {
     public const GOOGLE_PROVIDER = 'Google';
     public const FACEBOOK_PROVIDER = 'Facebook';
+
+    /**
+     * @var UserRepository
+     */
+    private $userRepository;
+
     /**
      * @var EntityManagerInterface
      */
     private $em;
 
-    public function __construct(EntityManagerInterface $em)
+    public function __construct(UserRepository $userRepository, EntityManagerInterface $em)
     {
+        $this->userRepository = $userRepository;
         $this->em = $em;
     }
 
@@ -43,7 +50,7 @@ class LoginOauthController extends AbstractUserController
         Request $request,
         LoginUserProgrammaticallyService $loginUserProgrammaticallyService,
         CreateUserService $createUserService,
-        UserCheckerInterface $userChecker,
+        UserChecker $userChecker,
         UrlGeneratorInterface $urlGenerator,
         SettingsService $settingsService,
         FlashService $flashService,
@@ -89,7 +96,7 @@ class LoginOauthController extends AbstractUserController
                 throw new UserVisibleException('trans.Share your email address to log in');
             }
 
-            $user = $this->em->getRepository(User::class)->findOneBy(['email' => $email]);
+            $user = $this->userRepository->findOneBy(['email' => $email]);
             $userExists = null !== $user;
             if (!$userExists) {
                 $user = $createUserService->registerUser($email);

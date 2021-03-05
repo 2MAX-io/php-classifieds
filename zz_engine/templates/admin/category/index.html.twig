@@ -10,6 +10,15 @@
         <div class="nested-sortable-item">
             <i class="fas fa-arrows-alt sortable-handle js__sortableHandle"></i>
             {{ parentCategory.name }}
+            {%- if parentCategory.advertisementZoneId  ~%}
+                <span class="ml-2 text-muted small d-none d-xl-inline">
+                    {{- '(' -}}
+                    {{- 'trans.Advertisement zone id' | trans -}}
+                    {{- ': ' -}}
+                    {{- parentCategory.advertisementZoneId -}}
+                    {{- ')' -}}
+                </span>
+            {%- endif ~%}
             <div class="float-md-right ml-md-5 d-md-inline-block">
                 <a href="{{ path('app_admin_category_edit', {'id': parentCategory.id}) }}" class="btn btn-dark mb-1">
                     {{- 'trans.Edit' | trans -}}

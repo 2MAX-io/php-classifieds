@@ -15,6 +15,7 @@ class AppExtension extends AbstractExtension
         return [
             // returning raw unsafe html:
             new TwigFunction('setOptionSelectedAttr', [TwigForm::class, 'setOptionSelectedAttr'], ['is_safe' => ['html']]),
+            new TwigFunction('advertisementZone', [TwigAdvertisementZone::class, 'advertisementZone'], ['is_safe' => ['html']]),
 
             // returning safe HTML:
             new TwigFunction('settings', [TwigSettings::class, 'settings']),

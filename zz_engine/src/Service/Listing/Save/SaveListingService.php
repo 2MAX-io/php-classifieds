@@ -129,6 +129,8 @@ class SaveListingService
         if (!$listing->getUser()) { // set user when creating, if not set
             $listing->setUser($this->currentUserService->getUserOrNull());
         }
+
+        $listing->setLastEditDate(DateHelper::create());
     }
 
     public function saveSearchText(Listing $listing): void

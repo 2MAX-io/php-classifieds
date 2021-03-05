@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller\Pub;
 
 use App\Enum\ParamEnum;
+use App\Service\Advertisement\Dto\AdvertisementDto;
 use App\Service\Category\CategoryListService;
 use App\Service\Listing\ListingPublicDisplayService;
 use App\Service\Listing\ShowSingle\ListingShowSingleService;
@@ -35,6 +36,8 @@ class ListingShowController extends AbstractController
             throw $this->createNotFoundException();
         }
         $listing = $listingShowDto->getListing();
+        $advertisementDto = new AdvertisementDto();
+        $advertisementDto->category = $listing->getCategory();
 
         $slugDifferentThanExpected = $slug !== $listing->getSlug();
         if ($slugDifferentThanExpected) {
@@ -54,6 +57,7 @@ class ListingShowController extends AbstractController
                     'listingShowDto' => $listingShowDto,
                     'listing' => $listing,
                     'category' => $listing->getCategory(),
+                    'advertisementDto' => $advertisementDto,
                     'categoryBreadcrumbs' => $categoryListService->getCategoriesForBreadcrumbs(
                         $listing->getCategory(),
                     ),
@@ -77,6 +81,7 @@ class ListingShowController extends AbstractController
                 'listingShowDto' => $listingShowDto,
                 'listing' => $listing,
                 'category' => $listing->getCategory(),
+                'advertisementDto' => $advertisementDto,
                 'categoryBreadcrumbs' => $categoryListService->getCategoriesForBreadcrumbs(
                     $listing->getCategory(),
                 ),

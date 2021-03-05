@@ -375,6 +375,11 @@ class SettingsDto
      */
     private $thousandSeparator;
 
+    /**
+     * @var null|string
+     */
+    private $defaultAdvertisementZoneId;
+
     public function getIndexPageTitle(): ?string
     {
         return $this->indexPageTitle;
@@ -1103,5 +1108,15 @@ class SettingsDto
     public function setDateFormatShort(?string $dateFormatShort): void
     {
         $this->dateFormatShort = $dateFormatShort;
+    }
+
+    public function getDefaultAdvertisementZoneId(): ?string
+    {
+        return $this->defaultAdvertisementZoneId;
+    }
+
+    public function setDefaultAdvertisementZoneId(?string $defaultAdvertisementZoneId): void
+    {
+        $this->defaultAdvertisementZoneId = $defaultAdvertisementZoneId;
     }
 }

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller\Pub;
 
 use App\Enum\ParamEnum;
+use App\Service\Advertisement\Dto\AdvertisementDto;
 use App\Service\Category\CategoryListService;
 use App\Service\Listing\ListingList\ListingListService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -35,10 +36,11 @@ class ListingListController extends AbstractController
         ];
 
         $category = $listingListDto->getCategory();
+        $advertisementDto = new AdvertisementDto();
+        $advertisementDto->category = $category;
         $categoryCustomFields = $listingListService->getCustomFields($listingListDto);
         $listingListDto->setCategoryCustomFields($categoryCustomFields);
         $listingListDto = $listingListService->getListings($listingListDto);
-
         if ($listingListDto->getRedirectToPageNumber()) {
             return $this->redirectToRoute(
                 $listingListDto->getRoute(),
@@ -61,6 +63,7 @@ class ListingListController extends AbstractController
                 'pager' => $listingListDto->getPager(),
                 'route_params' => $routeParams,
                 'category' => $category,
+                'advertisementDto' => $advertisementDto,
                 'categoryBreadcrumbs' => $categoryListService->getCategoriesForBreadcrumbs($category),
                 'categoryList' => $categoryListService->getCategoryListForSideMenu($category),
                 'customFieldList' => $categoryCustomFields,

@@ -488,6 +488,10 @@ input.form-control, textarea.form-control, select.form-control {
     border: 1px solid #dddddd;
 }
 
+.listing-contact-data-wrapper {
+    min-height: 38px;
+}
+
 @media (min-width: 768px) {
     .listing-show-description {
         background: #ecedef;

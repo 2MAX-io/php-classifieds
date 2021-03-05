@@ -276,17 +276,18 @@
                                     {{- 'trans.Listing has expired, please refrain from contacting listing issuer' | trans -}}
                                 </div>
                             {%- else ~%}
-                                <button class="btn btn-success w-100 mb-3 js__listingShowContactDetails" data-listing-id="{{ listing.id }}">
+                                <button class="btn btn-success w-100 js__listingShowContactDetails" data-listing-id="{{ listing.id }}">
                                     {{- 'trans.Show contact information' | trans -}}
                                 </button>
-
-                                {%- if settings.messageSystemEnabled and not isCurrentUserListing ~%}
-                                    <a class="btn btn-dark d-block" href="{{ path('app_user_message_respond_to_listing', {'listing': listing.id}) }}">
-                                        {{- 'trans.Write Message' | trans -}}
-                                    </a>
-                                {%- endif ~%}
                             {%- endif ~%}
                         </div>
+                        {%- if settings.messageSystemEnabled and not isCurrentUserListing and not displayAsExpired ~%}
+                            <div class="mb-3">
+                                <a class="btn btn-dark d-block" href="{{ path('app_user_message_respond_to_listing', {'listing': listing.id}) }}">
+                                    {{- 'trans.Write Message' | trans -}}
+                                </a>
+                            </div>
+                        {%- endif ~%}
 
                         {%- if listing.city is not empty and not displayAsExpired ~%}
                             <div class="mb-3">

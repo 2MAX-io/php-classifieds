@@ -86,6 +86,11 @@ class SettingsType extends AbstractType implements SettingTypeInterface
             'label' => 'trans.Default zoom for map on single listing',
             'required' => true,
         ]);
+        $builder->add('defaultAdvertisementZoneId', TextType::class, [
+            'label' => 'trans.Default advertisement zone id',
+            'required' => false,
+            'help' => 'trans.used as fallback when category do not have advertisement zone id assigned',
+        ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

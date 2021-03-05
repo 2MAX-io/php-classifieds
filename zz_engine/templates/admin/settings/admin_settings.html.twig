@@ -30,6 +30,9 @@
 
         <h2>{{ 'trans.Other' | trans }}</h2>
         {{ form_row(form.messageSystemEnabled) }}
+        {{ form_row(form.defaultAdvertisementZoneId) }}
+
+        {{ form_rest(form) }}
 
         <button class="btn btn-primary">{{ button_label | default('trans.Save' | trans) }}</button>
         {{ form_end(form) }}

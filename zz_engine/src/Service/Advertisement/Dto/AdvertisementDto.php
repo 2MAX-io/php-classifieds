@@ -13,4 +13,7 @@ class AdvertisementDto
 
     /** @var null|Category */
     public $category;
+
+    /** @var null|int|string */
+    public $defaultAdvertisementZoneId;
 }

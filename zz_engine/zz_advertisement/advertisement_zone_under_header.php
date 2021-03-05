@@ -5,13 +5,14 @@ declare(strict_types=1);
 use App\Helper\StringHelper;
 use App\Service\Advertisement\Dto\AdvertisementDto;
 
-/** @var null|AdvertisementDto $advertisementDto */
-$advertisementDto = $advertisementDto ?? null;
-$zoneId = 54; // default zone
-if (null !== $advertisementDto
-    && null !== $advertisementDto->category
-) {
+/** @var AdvertisementDto $advertisementDto */
+$zoneId = $advertisementDto->defaultAdvertisementZoneId; // default zone
+if (null !== $advertisementDto->category) {
     $zoneId = $advertisementDto->category->getAdvertisementZoneId();
+}
+
+if (empty($zoneId)) {
+    return; // skip displaying ad
 }
 
 ?>

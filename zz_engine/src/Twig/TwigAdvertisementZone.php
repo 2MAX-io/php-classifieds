@@ -6,15 +6,30 @@ namespace App\Twig;
 
 use App\Helper\FilePath;
 use App\Service\Advertisement\Dto\AdvertisementDto;
+use App\Service\Setting\SettingsDto;
 use Twig\Extension\RuntimeExtensionInterface;
 
 class TwigAdvertisementZone implements RuntimeExtensionInterface
 {
-    /** @noinspection PhpUnusedParameterInspection */
+    /**
+     * @var SettingsDto
+     */
+    private $settingsDto;
+
+    public function __construct(SettingsDto $settingsDto)
+    {
+        $this->settingsDto = $settingsDto;
+    }
+
     public function advertisementZone(
         string $advertisementZoneName,
         AdvertisementDto $advertisementDto = null
     ): string {
+        if (null === $advertisementDto) {
+            $advertisementDto = new AdvertisementDto();
+        }
+
+        $advertisementDto->defaultAdvertisementZoneId = $this->settingsDto->getDefaultAdvertisementZoneId();
         $path = FilePath::getEngineDir().'/zz_advertisement/advertisement_zone_'.\basename($advertisementZoneName).'.php';
         if (!\file_exists($path)) {
             return '';

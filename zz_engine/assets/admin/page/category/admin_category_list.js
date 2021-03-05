@@ -14,6 +14,11 @@ $(".js__nestedSortable").each(function (i, el) {
     sortableInstances.push(sortableInstance);
 });
 
+$(".js__levelToggle").on("click", function () {
+    let categoryLvl = $(this).parents(".nested-sortable-group").data("category-lvl");
+    $(".category-lvl-" + categoryLvl + " .js__nestedSortable").toggle();
+});
+
 $(".js__saveOrder").on("click", function () {
     let orderedIdList = [];
     for (let sortableInstance of sortableInstances) {

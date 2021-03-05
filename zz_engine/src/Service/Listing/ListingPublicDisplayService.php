@@ -46,7 +46,7 @@ class ListingPublicDisplayService
 
         $qb->andWhere($qb->expr()->eq('listing.userDeactivated', 0));
         $qb->andWhere($qb->expr()->eq('listing.userRemoved', 0));
-        $qb->andWhere($qb->expr()->eq('listing.userDeactivated', 0));
+        $qb->andWhere($qb->expr()->eq('listing.adminRejected', 0));
 
         if ($this->settingsService->getSettingsDto()->getRequireListingAdminActivation()) {
             $qb->andWhere($qb->expr()->eq('listing.adminActivated', 1));

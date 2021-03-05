@@ -290,6 +290,7 @@ trans:
     Advertisement zone id: 'Advertisement zone id'
     Default advertisement zone id: 'Default advertisement zone id'
     used as fallback when category do not have advertisement zone id assigned: 'used as fallback when category do not have advertisement zone id assigned'
+    List: 'List'
 
 trans.customFieldType.SELECT_AS_CHECKBOXES: 'Checkboxes in filters, single select when editing'
 trans.customFieldType.SELECT_SINGLE: 'Single selection field'

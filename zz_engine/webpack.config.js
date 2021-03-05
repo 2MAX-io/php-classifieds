@@ -32,9 +32,9 @@ Encore
     .addEntry('feature_listing', './assets/public/feature_listing.js')
     .addEntry('listing_edit', './assets/public/listing_edit.js')
     .addEntry('listing_list', './assets/public/listing_list.js')
+    .addEntry('listing_list_map', './assets/public/listing_list_map.js')
     .addEntry('listing_reject', './assets/public/listing_reject')
     .addEntry('listing_show', './assets/public/listing_show.js')
-    .addEntry('map_with_listings', './assets/public/map_with_listings.js')
     .addEntry('user_listing_list', './assets/public/user_listing_list.js')
     .addEntry('user_message', './assets/public/user_message.js')
 

@@ -1,7 +1,10 @@
 <div class="card mb-3">
     <div class="card-header">
         <strong>{{ 'trans.Filters' | trans }}</strong>
-        <a href="{{ path(app.request.get('_route'), app.request.attributes.get('_route_params')) }}" class="float-right">
+        <a {{- ' ' -}}
+                href="{{ path(app.request.get('_route'), routeParams | merge(mapLocationParams)) }}" {{- ' ' -}}
+                class="float-right js__linkToMap" {{- ' ' -}}
+        >
             {{- 'trans.clear filters' | trans -}}
         </a>
     </div>
@@ -88,7 +91,7 @@
 
                         {%- if customField.customFieldOptions.count > 5 ~%}
                             <div {{- ' ' -}}
-                                    class="btn btn-link px-0 pt-2 pt-lg-1 cursor-pointer js__removeOnClick" {{- ' ' -}}
+                                    class="btn btn-link px-0 pt-2 pt-lg-1 js__removeOnClick" {{- ' ' -}}
                                     data-toggle="collapse" {{- ' ' -}}
                                     data-target=".show-more-custom-field-{{ customField.id }}" {{- ' ' -}}
                             >
@@ -144,7 +147,7 @@
 
                         {%- if customField.customFieldOptions.count > 5 ~%}
                             <div {{- ' ' -}}
-                                    class="btn btn-link px-0 pt-2 pt-lg-1 cursor-pointer" {{- ' ' -}}
+                                    class="btn btn-link px-0 pt-2 pt-lg-1" {{- ' ' -}}
                                     data-toggle="collapse" {{- ' ' -}}
                                     data-target=".show-more-custom-field-{{ customField.id }}" {{- ' ' -}}
                             >
@@ -240,6 +243,17 @@
                     </div>
                 {%- endif ~%}
             {%- endfor ~%}
+
+            {%- if app.request.get('showOnMap') is not empty ~%}
+                <input type="hidden" name="showOnMap" value="{{ app.request.get('showOnMap') }}">
+            {%- endif ~%}
+
+            {%- if app.request.get('mapFullWidth') is not empty ~%}
+                <input type="hidden" name="mapFullWidth" value="{{ app.request.get('mapFullWidth') }}">
+            {%- endif ~%}
+            <input type="hidden" name="latitude" value="{{ app.request.get('latitude') }}" class="js__filterLatitude">
+            <input type="hidden" name="longitude" value="{{ app.request.get('longitude') }}" class="js__filterLongitude">
+            <input type="hidden" name="zoom" value="{{ app.request.get('zoom') }}" class="js__filterZoom">
 
             <button class="btn btn-primary listing-list-filter-button">
                 {{- 'trans.Filter' | trans -}}

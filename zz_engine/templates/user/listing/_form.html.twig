@@ -74,7 +74,7 @@
 
         <div class="listing-edit-location-map {% if not listing.hasLocationOnMap %}d-none-soft{% else %}js__listingEditMapEnabled{% endif %} js__listingEditLocationMap"></div>
         {% if not listing.hasLocationOnMap %}
-            <div class="btn btn-outline-secondary cursor-pointer js__addLocationToTheMapButton">
+            <div class="btn btn-outline-secondary js__addLocationToTheMapButton">
                 {{- 'trans.Add location to the map' | trans -}}
             </div>
         {% endif %}

@@ -1,5 +1,5 @@
 {% if pager.haveToPaginate %}
-    {%- set currentRouteParams = (route_params | default([])) | merge(app.request.query) -%}
+    {%- set currentRouteParams = (routeParams | default([])) | merge(app.request.query) -%}
 
     {%- macro pagePath(page, context) -%}
         {{- path(app.request.get('_route'), context.currentRouteParams | merge({'page': page})) -}}

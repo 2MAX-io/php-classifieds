@@ -27,7 +27,13 @@
         <a href="{{ path('app_index') }}">{{ 'trans.Classifieds' | trans }}</a>
 
         {%- for category in categoryBreadcrumbs ~%}
-            {{- ' > ' -}} <a href="{{ path('app_category', {'categorySlug': category.slug}) }}">{{ category.name }}</a>
+            {{- ' > ' -}}
+            <a {{- ' ' -}}
+                    href="{{ path('app_category', mapLocationParams | merge({'categorySlug': category.slug})) }}" {{- ' ' -}}
+                    class="js__linkToMap" {{- ' ' -}}
+            >
+                {{- category.name -}}
+            </a>
         {%- endfor ~%}
         {%- if app.request.get('_route') == 'app_last_added' ~%}
             {{- ' > ' }} {{ 'trans.Last added' | trans }}
@@ -51,7 +57,7 @@
         <div class="row">
             <div class="col-12 d-md-none">
                 <div {{- ' ' -}}
-                        class="btn btn-secondary btn-sm mb-2 w-100 cursor-pointer" {{- ' ' -}}
+                        class="btn btn-secondary btn-sm mb-2 w-100" {{- ' ' -}}
                         data-toggle="collapse" {{- ' ' -}}
                         data-target="#filters" {{- ' ' -}}
                 >
@@ -61,15 +67,40 @@
 
             <!-- filters -->
             <div class="col-md-3 d-none-soft d-md-block collapse d-print-none" id="filters">
-                {#- select category -#}
+                <div class="clearfix">
+                    {#- select category -#}
+                    {%- if categoryList is not empty ~%}
+                        <div {{- ' ' -}}
+                                class="btn btn-dark mb-2" {{- ' ' -}}
+                                data-toggle="collapse" {{- ' ' -}}
+                                data-target=".show-category-select" {{- ' ' -}}
+                        >
+                            {{- 'trans.Select category' | trans -}}
+                        </div>
+                    {% endif %}
+
+                    {%- if settings.mapEnabled ~%}
+                        {%- if listingListDto.showOnMap ~%}
+                            <a {{- ' ' -}}
+                                href="{{ path(app.request.get('_route'), queryParameters | merge({'showOnMap': null})) }}" {{- ' ' -}}
+                                class="btn btn-light-gray mb-2 float-right" {{- ' ' -}}
+                            > {{- '' -}}
+                                {{- 'trans.List' | trans -}}
+                            </a>
+                        {%- else ~%}
+                            <a {{- ' ' -}}
+                                href="{{ path(app.request.get('_route'), queryParameters | merge({'showOnMap': 1})) }}" {{- ' ' -}}
+                                class="btn btn-light-gray mb-2 float-right" {{- ' ' -}}
+                            > {{- '' -}}
+                                <i class="svg svg-location" title="{{ 'trans.Show on map' | trans }}"></i>
+                                {{- ' ' -}}
+                                {{- 'trans.Map' | trans -}}
+                            </a>
+                        {%- endif ~%}
+                    {%- endif ~%}
+                </div>
+
                 {%- if categoryList is not empty ~%}
-                    <div {{- ' ' -}}
-                            class="btn btn-dark mb-2 cursor-pointer js__removeOnClick" {{- ' ' -}}
-                            data-toggle="collapse" {{- ' ' -}}
-                            data-target=".show-category-select" {{- ' ' -}}
-                    >
-                        {{- 'trans.Select category' | trans -}}
-                    </div>
                     <div class="card mb-3 show-category-select collapse">
                         <div class="card-header">
                             <strong>{{ 'trans.Category' | trans }}</strong>
@@ -77,8 +108,8 @@
                         <div>
                             {%- for category in categoryList ~%}
                                 <a {{- ' ' -}}
-                                        href="{{ path('app_category', {'categorySlug': category.slug} | merge(queryParameters)) }}" {{- ' ' -}}
-                                        class="link-list-item category-link {% if listingListDto.category and category.slug == listingListDto.category.slug  %}active{% endif %}" {{- ' ' -}}
+                                        href="{{ path('app_category', queryParameters | merge({'categorySlug': category.slug})) }}" {{- ' ' -}}
+                                        class="link-list-item category-link js__linkToMap {% if listingListDto.category and category.slug == listingListDto.category.slug  %}active{% endif %}" {{- ' ' -}}
                                 >
                                     {{- category.name -}}
                                 </a>
@@ -91,9 +122,10 @@
             </div>
             <!-- filters end -->
 
-            <!-- subcategories -->
+            <!-- right side -->
             <div class="col-md-9">
-                {%- if category and category.hasChildren() and pager.currentPage == 1 ~%}
+                {%- if category and category.hasChildren() and (not pager or pager.currentPage == 1) ~%}
+                    <!-- subcategories -->
                     <div class="mb-2 d-print-none">
                         <span class="align-top d-inline-block pb-2 pb-lg-1">
                             {{- 'trans.Subcategories' | trans -}}
@@ -101,8 +133,8 @@
                         </span>
                         {%- for category in categoryList ~%}
                             <a {{- ' ' -}}
-                                    href="{{ path('app_category', {'categorySlug': category.slug} | merge(queryParameters)) }}" {{- ' ' -}}
-                                    class="{% if loop.index > 3 and loop.length > 4 %}collapse{% endif %} w-100-small py-lg-0 show-more-subcategories" {{- ' ' -}}
+                                    href="{{ path('app_category', queryParameters | merge({'categorySlug': category.slug})) }}" {{- ' ' -}}
+                                    class="{% if loop.index > 3 and loop.length > 4 %}collapse{% endif %} w-100-small py-lg-0 show-more-subcategories js__linkToMap" {{- ' ' -}}
                             >
                                 {{- category.name -}}
                             </a>
@@ -125,84 +157,98 @@
                     </div>
                 {%- endif ~%}
 
-                <!-- listing list -->
-                <div class="listing-list">
-                    {%- for listing in listingList ~%}
-                        <div id="listing-{{ listing.id }}" class="card listing-list-item clickable-div {% if listing.featured %}listing-recommended{% endif %}">
-                            <a class="clickable-div-link" href="{{ path('app_listing_show', {id: listing.id, 'slug': listing.slug}) }}" title="{{ listing.title }}"></a>
-                            <div class="container-fluid">
-                                <div class="row py-md-1">
-                                    <div class="col-12 col-md-4 p-0 {% if listing.mainImage is empty %}d-none-soft{% endif %} d-md-block">
-                                        <a {{- ' ' -}}
-                                                class="d-block text-center" {{- ' ' -}}
-                                                href="{{ path('app_listing_show', {id: listing.id, 'slug': listing.slug}) }}" {{- ' ' -}}
-                                                title="{{ listing.title }}" {{- ' ' -}}
-                                        >
-                                            <img {{- ' ' -}}
-                                                    class="listing-list-img {% if listing.mainImageInListSize is empty %}listing-list-img-blank{% endif %}" {{- ' ' -}}
-                                                    src="{{ asset(listing.mainImageInListSize | default('static/system/blank.png')) }}" {{- ' ' -}}
-                                                    alt="{{ listing.title }}" {{- ' ' -}}
-                                            >
-                                        </a>
-                                    </div>
-                                    <div class="card-text col-12 col-md-8 pb-3 pl-md-4">
-                                        <h5> {{- '' -}}
-                                            <strong> {{- '' -}}
-                                                <a {{- ' ' -}}
-                                                        href="{{ path('app_listing_show', {id: listing.id, 'slug': listing.slug}) }}"  {{- ' ' -}}
-                                                        class="use-visited-color d-block pt-2 w-100" {{- ' ' -}}
-                                                >
-                                                    {{- listing.title -}}
-                                                </a> {{- '' -}}
-                                            </strong> {{- '' -}}
-                                        </h5>
-
-                                        <div>
-                                            {%- if listing.city is not empty ~%}
-                                                <span class="mr-1"> {{- '' -}}
-                                                    <i class="svg svg-location"></i>
-                                                    {{- '&nbsp;' | raw -}}
-                                                    {{- listing.city -}}
-                                                </span>
-                                            {%- endif ~%}
-                                            <span class="mr-1 text-nowrap">{{- '' -}}
-                                                <i class="svg svg-calendar text-black-50"></i>
-                                                {{- ' ' -}}
-                                                {{- listing.orderByDate | date -}}
-                                            </span>
-                                            {%- if listing.featured ~%}
-                                                <span class="badge badge-pill badge-warning mr-2">{{- '' -}}
-                                                    {{- 'trans.Featured' | trans -}}
-                                                </span>
-                                            {%- endif ~%}
-                                        </div>
-
-                                        {%- if listing.price is not empty ~%}
-                                            <div class="mt-1"> {{- '' -}}
-                                                <span class="btn btn-dark btn-sm price mr-2">
-                                                    {{- 'trans.Price' | trans }}: {{ listing.price | money -}}
-                                                </span>
-
-                                                {%- if listing.priceFor -%}
-                                                    <span class="mr-2"> {{- '' -}}
-                                                        {{- ('trans.priceFor.'~listing.priceFor) | trans -}}
-                                                    </span>
-                                                {%- endif -%}
-                                            </div>
-                                        {%- endif ~%}
-                                    </div>
-                                </div>
-                            </div>
+                {%- if listingListDto.showOnMap ~%}
+                    {%- if listingListDto.results ~%}
+                        <!-- map -->
+                        <div class="container-fluid px-0">
+                            <div class="map-with-listings js__mapWithListings"></div>
                         </div>
                     {%- else ~%}
                         <div class="alert alert-info w-100">
                             {{- 'trans.No classified ads matching criteria were found' | trans -}}
                         </div>
-                    {%- endfor ~%}
-                </div>
-                <!-- listing list end -->
+                    {%- endif ~%}
+                {%- endif ~%}
 
-                {% include 'base/_pagination.html.twig' %}
+                {%- if not listingListDto.showOnMap ~%}
+                    <!-- listing list -->
+                    <div class="listing-list">
+                        {%- for listing in listingList ~%}
+                            <div id="listing-{{ listing.id }}" class="card listing-list-item clickable-div {% if listing.featured %}listing-recommended{% endif %}">
+                                <a class="clickable-div-link" href="{{ path('app_listing_show', {id: listing.id, 'slug': listing.slug}) }}" title="{{ listing.title }}"></a>
+                                <div class="container-fluid">
+                                    <div class="row py-md-1">
+                                        <div class="col-12 col-md-4 p-0 {% if listing.mainImage is empty %}d-none-soft{% endif %} d-md-block">
+                                            <a {{- ' ' -}}
+                                                    class="d-block text-center" {{- ' ' -}}
+                                                    href="{{ path('app_listing_show', {id: listing.id, 'slug': listing.slug}) }}" {{- ' ' -}}
+                                                    title="{{ listing.title }}" {{- ' ' -}}
+                                            >
+                                                <img {{- ' ' -}}
+                                                        class="listing-list-img {% if listing.mainImageInListSize is empty %}listing-list-img-blank{% endif %}" {{- ' ' -}}
+                                                        src="{{ asset(listing.mainImageInListSize | default('static/system/blank.png')) }}" {{- ' ' -}}
+                                                        alt="{{ listing.title }}" {{- ' ' -}}
+                                                >
+                                            </a>
+                                        </div>
+                                        <div class="card-text col-12 col-md-8 pb-3 pl-md-4">
+                                            <h5> {{- '' -}}
+                                                <strong> {{- '' -}}
+                                                    <a {{- ' ' -}}
+                                                            href="{{ path('app_listing_show', {id: listing.id, 'slug': listing.slug}) }}"  {{- ' ' -}}
+                                                            class="use-visited-color d-block pt-2 w-100" {{- ' ' -}}
+                                                    >
+                                                        {{- listing.title -}}
+                                                    </a> {{- '' -}}
+                                                </strong> {{- '' -}}
+                                            </h5>
+
+                                            <div>
+                                                {%- if listing.city is not empty ~%}
+                                                    <span class="mr-1"> {{- '' -}}
+                                                        <i class="svg svg-location"></i>
+                                                        {{- '&nbsp;' | raw -}}
+                                                        {{- listing.city -}}
+                                                    </span>
+                                                {%- endif ~%}
+                                                <span class="mr-1 text-nowrap">{{- '' -}}
+                                                    <i class="svg svg-calendar text-black-50"></i>
+                                                    {{- ' ' -}}
+                                                    {{- listing.orderByDate | date -}}
+                                                </span>
+                                                {%- if listing.featured ~%}
+                                                    <span class="badge badge-pill badge-warning mr-2">{{- '' -}}
+                                                        {{- 'trans.Featured' | trans -}}
+                                                    </span>
+                                                {%- endif ~%}
+                                            </div>
+
+                                            {%- if listing.price is not empty ~%}
+                                                <div class="mt-1"> {{- '' -}}
+                                                    <span class="btn btn-dark btn-sm price mr-2">
+                                                        {{- 'trans.Price' | trans }}: {{ listing.price | money -}}
+                                                    </span>
+
+                                                    {%- if listing.priceFor -%}
+                                                        <span class="mr-2"> {{- '' -}}
+                                                            {{- ('trans.priceFor.'~listing.priceFor) | trans -}}
+                                                        </span>
+                                                    {%- endif -%}
+                                                </div>
+                                            {%- endif ~%}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {%- else ~%}
+                            <div class="alert alert-info w-100">
+                                {{- 'trans.No classified ads matching criteria were found' | trans -}}
+                            </div>
+                        {%- endfor ~%}
+                    </div>
+                    <!-- listing list end -->
+                    {% include 'base/_pagination.html.twig' %}
+                {%- endif ~%}
             </div>
         </div>
     </div>
@@ -211,5 +257,10 @@
 {% block js %}
     {{ encore_entry_link_tags('listing_list') }}
     {{ encore_entry_script_tags('listing_list') }}
+
+    {%- if listingListDto.showOnMap ~%}
+        {{ encore_entry_link_tags('listing_list_map') }}
+        {{ encore_entry_script_tags('listing_list_map') }}
+    {%- endif ~%}
 {% endblock %}
 

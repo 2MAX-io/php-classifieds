@@ -724,6 +724,7 @@ trans:
     Default advertisement zone id: 'Domyślny id strefy reklamowej'
     used as fallback when category do not have advertisement zone id assigned: 'wartość zastępcza, używana gdy kategoria nie ma przypisanego id strefy reklamowej'
     List: 'Lista'
+    Return to the list: 'Wróć do listy'
 
 '—': '—'
 Year: Rok

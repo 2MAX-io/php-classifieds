@@ -6,9 +6,10 @@
 {% macro categoryLevel(parentCategory) %}
     {% import _self as macros %}
     {# @var parentCategory \App\Entity\Category #}
-    <li class="nested-sortable-group" data-id="{{ parentCategory.id }}">
+    <li class="nested-sortable-group category-lvl-{{ parentCategory.lvl }}" data-id="{{ parentCategory.id }}" data-category-lvl="{{ parentCategory.lvl }}">
         <div class="nested-sortable-item">
             <i class="fas fa-arrows-alt sortable-handle js__sortableHandle"></i>
+            <span class="js__levelToggle mr-1 text-black-50 small cursor-pointer">[LVL {{ parentCategory.lvl }}]</span>
             {{ parentCategory.name }}
             {%- if parentCategory.advertisementZoneId  ~%}
                 <span class="ml-2 text-muted small d-none d-xl-inline">
@@ -33,7 +34,7 @@
         </div>
 
         {% for category in parentCategory.children  %}
-            <ul class="js__nestedSortable" data-sortable-group="parent_{{ parentCategory.id }}">
+            <ul class="js__nestedSortable category-lvl-{{ category.lvl }}" data-sortable-group="parent_{{ parentCategory.id }}">
                 {{- macros.categoryLevel(category) -}}
             </ul>
         {% endfor %}

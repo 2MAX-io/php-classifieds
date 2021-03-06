@@ -494,3 +494,4 @@ bash zz_engine/dev/bin/build_assets.sh
 composer update -d zz_engine --optimize-autoloader
 php zz_engine/bin/console make:migration
 php zz_engine/bin/console doctrine:migrations:migrate --no-interaction
+php zz_engine/bin/console make:migration

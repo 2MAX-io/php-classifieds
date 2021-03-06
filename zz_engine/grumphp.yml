@@ -16,3 +16,10 @@ grumphp:
             triggered_by: [ js ]
             working_directory: "./"
             is_run_task: true
+        yamllint:
+            whitelist_patterns: []
+            ignore_patterns: []
+            object_support: false
+            exception_on_invalid_type: false
+            parse_constant: false
+            parse_custom_tags: true

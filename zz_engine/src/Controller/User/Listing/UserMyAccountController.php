@@ -5,25 +5,21 @@ declare(strict_types=1);
 namespace App\Controller\User\Listing;
 
 use App\Controller\User\Base\AbstractUserController;
-use App\Entity\User;
 use App\Service\User\Listing\UserListingListService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class UserListingsController extends AbstractUserController
+class UserMyAccountController extends AbstractUserController
 {
     /**
-     * @Route("/user/listing/", name="app_user_listing_list")
      * @Route("/user/my-account/", name="app_user_my_account")
+     * @Route("/user/listing/", name="app_user_listing_list")
      */
     public function userListingsList(
         Request $request,
         UserListingListService $userListingListService
     ): Response {
-        if (!$this->getUser() instanceof User) {
-            return $this->redirectToRoute('app_login');
-        }
         $this->dennyUnlessUser();
 
         $userListingListDto = $userListingListService->getList(

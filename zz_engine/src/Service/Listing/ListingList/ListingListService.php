@@ -8,11 +8,13 @@ use App\Entity\CustomField;
 use App\Entity\Listing;
 use App\Enum\ParamEnum;
 use App\Helper\ArrayHelper;
+use App\Helper\BoolHelper;
 use App\Helper\SearchHelper;
 use App\Helper\StringHelper;
 use App\Repository\CategoryRepository;
 use App\Repository\UserRepository;
 use App\Service\Listing\ListingList\Dto\ListingListDto;
+use App\Service\Listing\ListingList\MapWithListings\Dto\ListingOnMapDto;
 use App\Service\Listing\ListingPublicDisplayService;
 use App\Service\Listing\Secondary\SaveSearchHistoryService;
 use App\Service\System\Pagination\PaginationService;
@@ -201,6 +203,13 @@ class ListingListService
             }
         }
 
+        if ($listingListDto->getShowOnMap()) {
+            $qb->andWhere($qb->expr()->isNotNull('listing.locationLatitude'));
+            $qb->andWhere($qb->expr()->isNotNull('listing.locationLongitude'));
+            $listingListDto->setMaxResults(3600);
+            $listingListDto->setPaginationEnabled(false);
+        }
+
         $qb->addOrderBy('listing.featured', Criteria::DESC);
         $qb->addOrderBy('listing.featuredWeight', Criteria::DESC);
         $qb->addOrderBy('listing.orderByDate', Criteria::DESC);
@@ -212,24 +221,53 @@ class ListingListService
 
         $qb->groupBy('listing.id');
 
-        $pager = $this->paginationService->createPaginationForQb($qb);
-        $pager->setAllowOutOfRangePages(true);
-        $pager->setCurrentPage($listingListDto->getPageNumber());
-        if ($pager->getCurrentPage() > $pager->getNbPages()) {
-            $listingListDto->setRedirectToPageNumber($pager->getNbPages());
+        if ($listingListDto->getMaxResults()) {
+            $qb->setMaxResults($listingListDto->getMaxResults());
         }
 
-        $listingListDto->setPager($pager);
-        $listingListDto->setResults($pager->getCurrentPageResults());
+        if ($listingListDto->getPaginationEnabled()) {
+            $pager = $this->paginationService->createPaginationForQb($qb);
+            $pager->setAllowOutOfRangePages(true);
+            $pager->setCurrentPage($listingListDto->getPageNumber());
+            if ($pager->getCurrentPage() > $pager->getNbPages()) {
+                $listingListDto->setRedirectToPageNumber($pager->getNbPages());
+            }
+
+            $listingListDto->setPager($pager);
+            $listingListDto->setResults($pager->getCurrentPageResults());
+            $listingListDto->setResultsCount($listingListDto->getPagerNotNull()->getNbResults());
+        } else {
+            $listingListDto->setResults($qb->getQuery()->getResult());
+            $listingListDto->setResultsCount(\count((array) $listingListDto->getResults()));
+        }
 
         if ($listingListDto->getSearchQuery()) {
             $this->saveSearchHistory->saveSearch(
                 $listingListDto->getSearchQuery(),
-                $listingListDto->getPager()->getNbResults(),
+                $listingListDto->getResultsCount(),
             );
         }
 
         return $listingListDto;
+    }
+
+    /**
+     * @return ListingOnMapDto[]
+     */
+    public function getListingsOnMap(ListingListDto $listingListDto): array
+    {
+        if (!$listingListDto->getShowOnMap()) {
+            return [];
+        }
+
+        $listings = [];
+        $this->getListings($listingListDto);
+
+        foreach ($listingListDto->getResults() as $listing) {
+            $listings[] = ListingOnMapDto::fromListing($listing);
+        }
+
+        return $listings;
     }
 
     /**
@@ -268,6 +306,12 @@ class ListingListService
         $listingListDto->setMinPrice($request->get('minPrice'));
         $listingListDto->setMaxPrice($request->get('maxPrice'));
         $listingListDto->setFilterByCustomFields($request->get(ParamEnum::CUSTOM_FIELD, []));
+        $listingListDto->setShowOnMap(BoolHelper::isTrue($request->get('showOnMap')));
+        $listingListDto->setMapFullWidth(BoolHelper::isTrue($request->get('mapFullWidth')));
+        if ('app_map' === $listingListDto->getRoute()) {
+            $listingListDto->setMapFullWidth(true);
+            $listingListDto->setShowOnMap(true);
+        }
 
         if ($listingListDto->getCategorySlug()) {
             $category = $this->categoryRepository->findOneBy([

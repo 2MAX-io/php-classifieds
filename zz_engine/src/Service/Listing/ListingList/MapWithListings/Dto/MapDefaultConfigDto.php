@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Service\Listing\MapWithListings\Dto;
+namespace App\Service\Listing\ListingList\MapWithListings\Dto;
 
 class MapDefaultConfigDto
 {

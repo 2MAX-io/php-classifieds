@@ -15,7 +15,12 @@ class ListingListDto
     /**
      * @var iterable|Listing[]
      */
-    private $results;
+    private $results = [];
+
+    /**
+     * @var int
+     */
+    private $resultsCount;
 
     /**
      * @var string
@@ -28,7 +33,7 @@ class ListingListDto
     private $pageNumber;
 
     /**
-     * @var Pagerfanta
+     * @var null|Pagerfanta
      */
     private $pager;
 
@@ -88,6 +93,26 @@ class ListingListDto
     private $filterByCustomFields = [];
 
     /**
+     * @var bool
+     */
+    private $showOnMap = false;
+
+    /**
+     * @var bool
+     */
+    private $mapFullWidth = false;
+
+    /**
+     * @var bool
+     */
+    private $paginationEnabled = true;
+
+    /**
+     * @var null|int
+     */
+    private $maxResults;
+
+    /**
      * @return iterable|Listing[]
      */
     public function getResults(): iterable
@@ -95,12 +120,21 @@ class ListingListDto
         return $this->results;
     }
 
-    public function getPager(): Pagerfanta
+    public function getPager(): ?Pagerfanta
     {
         return $this->pager;
     }
 
-    public function setPager(Pagerfanta $pager): void
+    public function getPagerNotNull(): Pagerfanta
+    {
+        if (null === $this->pager) {
+            throw new \RuntimeException('page not found');
+        }
+
+        return $this->pager;
+    }
+
+    public function setPager(?Pagerfanta $pager): void
     {
         $this->pager = $pager;
     }
@@ -258,5 +292,55 @@ class ListingListDto
     public function setFilterByCustomFields(array $filterByCustomFields): void
     {
         $this->filterByCustomFields = $filterByCustomFields;
+    }
+
+    public function getShowOnMap(): bool
+    {
+        return $this->showOnMap;
+    }
+
+    public function setShowOnMap(bool $showOnMap): void
+    {
+        $this->showOnMap = $showOnMap;
+    }
+
+    public function getPaginationEnabled(): bool
+    {
+        return $this->paginationEnabled;
+    }
+
+    public function setPaginationEnabled(bool $paginationEnabled): void
+    {
+        $this->paginationEnabled = $paginationEnabled;
+    }
+
+    public function getMaxResults(): ?int
+    {
+        return $this->maxResults;
+    }
+
+    public function setMaxResults(?int $maxResults): void
+    {
+        $this->maxResults = $maxResults;
+    }
+
+    public function getMapFullWidth(): bool
+    {
+        return $this->mapFullWidth;
+    }
+
+    public function setMapFullWidth(bool $mapFullWidth): void
+    {
+        $this->mapFullWidth = $mapFullWidth;
+    }
+
+    public function getResultsCount(): int
+    {
+        return $this->resultsCount;
+    }
+
+    public function setResultsCount(int $resultsCount): void
+    {
+        $this->resultsCount = $resultsCount;
     }
 }

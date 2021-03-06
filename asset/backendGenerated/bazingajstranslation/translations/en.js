@@ -288,6 +288,7 @@ t.add("trans.Enter invoice details", "Enter invoice details", "messages", "en");
 t.add("trans.Advertisement zone id", "Advertisement zone id", "messages", "en");
 t.add("trans.Default advertisement zone id", "Default advertisement zone id", "messages", "en");
 t.add("trans.used as fallback when category do not have advertisement zone id assigned", "used as fallback when category do not have advertisement zone id assigned", "messages", "en");
+t.add("trans.List", "List", "messages", "en");
 t.add("trans.customFieldType.SELECT_AS_CHECKBOXES", "Checkboxes in filters, single select when editing", "messages", "en");
 t.add("trans.customFieldType.SELECT_SINGLE", "Single selection field", "messages", "en");
 t.add("trans.customFieldType.YEAR_RANGE", "Field with year", "messages", "en");

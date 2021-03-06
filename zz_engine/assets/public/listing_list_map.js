@@ -18,10 +18,26 @@ let leafletMap = map.createLeafletMap(document.querySelector(".js__mapWithListin
 
 leafletMap.on("moveend", function () {
     let url = new URL(window.location);
-    url.searchParams.set(ParamEnum.LATITUDE, leafletMap.getCenter().lat);
-    url.searchParams.set(ParamEnum.LONGITUDE, leafletMap.getCenter().lng);
-    url.searchParams.set(ParamEnum.ZOOM, leafletMap.getZoom());
+    let lat = leafletMap.getCenter().lat;
+    let lng = leafletMap.getCenter().lng;
+    let zoom = leafletMap.getZoom();
+
+    url.searchParams.set(ParamEnum.LATITUDE, lat);
+    url.searchParams.set(ParamEnum.LONGITUDE, lng);
+    url.searchParams.set(ParamEnum.ZOOM, zoom);
     window.history.pushState(null, null, url.toString());
+
+    document.querySelectorAll(".js__linkToMap").forEach((linkElement) => {
+        let linkUrl = new URL(linkElement.getAttribute("href"), window.location);
+        linkUrl.searchParams.set(ParamEnum.LATITUDE, lat);
+        linkUrl.searchParams.set(ParamEnum.LONGITUDE, lng);
+        linkUrl.searchParams.set(ParamEnum.ZOOM, zoom);
+        linkElement.setAttribute("href", linkUrl.toString());
+    });
+
+    document.querySelector(".js__filterLatitude").value = lat;
+    document.querySelector(".js__filterLongitude").value = lng;
+    document.querySelector(".js__filterZoom").value = zoom;
 });
 
 var pruneCluster = new PruneClusterForLeaflet();

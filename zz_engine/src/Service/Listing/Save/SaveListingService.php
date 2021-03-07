@@ -8,13 +8,17 @@ use App\Entity\Listing;
 use App\Form\ListingCustomFieldsType;
 use App\Form\ListingType;
 use App\Helper\DateHelper;
+use App\Helper\JsonHelper;
 use App\Helper\SlugHelper;
 use App\Helper\StringHelper;
 use App\Security\CurrentUserService;
+use App\Service\Listing\CustomField\Dto\CustomFieldInlineDto;
 use App\Service\Listing\Save\Dto\ListingSaveDto;
 use App\Service\Listing\ValidityExtend\ValidUntilSetService;
 use App\Service\Setting\SettingsService;
 use App\Service\System\Text\TextService;
+use Doctrine\DBAL\Connection;
+use Doctrine\ORM\EntityManagerInterface;
 use Minwork\Helper\Arr;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -46,18 +50,25 @@ class SaveListingService
      */
     private $listingFileUploadService;
 
+    /**
+     * @var EntityManagerInterface
+     */
+    private $em;
+
     public function __construct(
         ListingFileUploadService $listingFileUploadService,
         ValidUntilSetService $validUntilSetService,
         CurrentUserService $currentUserService,
         SettingsService $settingsService,
-        TextService $textService
+        TextService $textService,
+        EntityManagerInterface $em
     ) {
         $this->validUntilSetService = $validUntilSetService;
         $this->textService = $textService;
         $this->currentUserService = $currentUserService;
         $this->settingsService = $settingsService;
         $this->listingFileUploadService = $listingFileUploadService;
+        $this->em = $em;
     }
 
     public function getListingSaveDtoFromRequest(Request $request, Listing $listing = null): ListingSaveDto
@@ -179,6 +190,34 @@ class SaveListingService
         }
 
         $listing->setSearchText($searchText);
+    }
+
+    public function saveCustomFieldsInline(Listing $listing): void
+    {
+        /** @var Connection|\PDO $pdo */
+        $pdo = $this->em->getConnection();
+        $stmt = $pdo->prepare('
+            SELECT
+                custom_field.name AS name,
+                COALESCE(custom_field_option.name, listing_custom_field_value.value) AS value,
+                custom_field.type AS type,
+                null
+            FROM listing_custom_field_value
+            JOIN listing ON listing.id = listing_custom_field_value.listing_id
+            JOIN custom_field ON custom_field.id = listing_custom_field_value.custom_field_id
+            JOIN custom_field_for_category ON true
+                && custom_field_for_category.custom_field_id = custom_field.id
+                && custom_field_for_category.category_id = listing.category_id
+            LEFT JOIN custom_field_option ON custom_field_option.id = listing_custom_field_value.custom_field_option_id
+            WHERE listing.id = :listing_id
+            ORDER BY custom_field_for_category.sort ASC
+            LIMIT 6
+        ');
+        $stmt->bindValue(':listing_id', $listing->getId());
+        $stmt->setFetchMode(\PDO::FETCH_CLASS, CustomFieldInlineDto::class);
+        $stmt->execute();
+
+        $listing->setCustomFieldsInlineJson(JsonHelper::toString($stmt->fetchAll() ?: []));
     }
 
     public function updateSlug(Listing $listing): void

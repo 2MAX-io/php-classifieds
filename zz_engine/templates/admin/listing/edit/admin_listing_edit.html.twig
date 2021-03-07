@@ -55,12 +55,12 @@
             </div>
         {% endif %}
 
-        <button class="btn btn-primary mb-4">{{ button_label | default('trans.Save' | trans) }}</button>
-        {{ form_end(form) }}
-
         <div class="row mb-2">
             {{ adminMacro.listingInfo(listing) }}
         </div>
+
+        <button class="btn btn-primary mb-4">{{ button_label | default('trans.Save' | trans) }}</button>
+        {{ form_end(form) }}
 
         <div class="my-4">
             {% for listingFile in listing.listingFiles %}

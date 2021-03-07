@@ -324,6 +324,12 @@ a.use-visited-color:visited {
     border-top-right-radius: 0.25rem;
 }
 
+.listing-list-details {
+    max-height: 4.5rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 @media (min-width: 576px) {
     .listing-list-img {
         border-radius: 0.25rem;

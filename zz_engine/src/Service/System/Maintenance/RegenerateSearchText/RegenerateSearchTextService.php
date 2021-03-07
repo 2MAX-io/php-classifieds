@@ -77,6 +77,7 @@ class RegenerateSearchTextService
             foreach ($listings as $listing) {
                 ++$executedCount;
                 $this->saveListingService->saveSearchText($listing);
+                $this->saveListingService->saveCustomFieldsInline($listing);
                 $this->em->persist($listing);
 
                 $listingInternalData = $listing->getListingInternalData();

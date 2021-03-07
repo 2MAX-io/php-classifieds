@@ -7,7 +7,9 @@ namespace App\Entity;
 use App\Entity\System\ListingInternalData;
 use App\Helper\ContainerHelper;
 use App\Helper\DateHelper;
+use App\Helper\JsonHelper;
 use App\Helper\ResizedImagePath;
+use App\Service\Listing\CustomField\Dto\CustomFieldInlineDto;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\Criteria;
@@ -293,6 +295,14 @@ class Listing
     /**
      * @var null|string
      *
+     * @Assert\NotNull(groups={"skipAutomaticValidation"})
+     * @ORM\Column(type="string", length=1000, nullable=true)
+     */
+    private $customFieldsInlineJson;
+
+    /**
+     * @var null|string
+     *
      * @ORM\Column(type="string", length=150, nullable=true)
      */
     private $rejectionReason;
@@ -436,6 +446,29 @@ class Listing
     public function getHasLocationOnMap(): bool
     {
         return $this->getLocationLatitude() && $this->getLocationLongitude();
+    }
+
+    /**
+     * @return CustomFieldInlineDto[]
+     */
+    public function getCustomFieldsInline(): array
+    {
+        $return = [];
+
+        try {
+            $customFieldListArray = JsonHelper::toArray($this->getCustomFieldsInlineJson()) ?? [];
+            foreach ($customFieldListArray as $customFieldArray) {
+                $customFieldInline = new CustomFieldInlineDto();
+                $customFieldInline->name = $customFieldArray['name'];
+                $customFieldInline->value = $customFieldArray['value'];
+                $customFieldInline->type = $customFieldArray['type'];
+                $return[] = $customFieldInline;
+            }
+        } catch (\Throwable $e) {
+            return [];
+        }
+
+        return $return;
     }
 
     public function getId(): ?int
@@ -922,5 +955,15 @@ class Listing
         }
 
         return $this;
+    }
+
+    public function getCustomFieldsInlineJson(): ?string
+    {
+        return $this->customFieldsInlineJson;
+    }
+
+    public function setCustomFieldsInlineJson(?string $customFieldsInlineJson): void
+    {
+        $this->customFieldsInlineJson = $customFieldsInlineJson;
     }
 }

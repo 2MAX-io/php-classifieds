@@ -9,6 +9,11 @@
     <meta name="msapplication-TileColor" content="#edeef0">
     <meta name="theme-color" content="#edeef0">
     <meta name="robots" content="noindex">
+    {%- if favicon_dir ~%}
+        <link rel="apple-touch-icon" sizes="180x180" href="{{ asset(favicon_dir~'apple-touch-icon.png') }}">
+        <link rel="icon" type="image/png" sizes="32x32" href="{{ asset(favicon_dir~'favicon-32x32.png') }}">
+        <link rel="icon" type="image/png" sizes="16x16" href="{{ asset(favicon_dir~'favicon-16x16.png') }}">
+    {%- endif ~%}
     {% block stylesheets %}
         {{ encore_entry_link_tags('app_admin') }}
     {% endblock %}

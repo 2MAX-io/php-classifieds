@@ -199,7 +199,7 @@
                                                 >
                                             </a>
                                         </div>
-                                        <div class="card-text col-12 col-md-8 pb-3 pl-md-4">
+                                        <div class="col-12 col-md-8 pb-1 pl-md-4 card-text">
                                             <h5> {{- '' -}}
                                                 <strong> {{- '' -}}
                                                     <a {{- ' ' -}}
@@ -231,19 +231,36 @@
                                                 {%- endif ~%}
                                             </div>
 
-                                            {%- if listing.price is not empty ~%}
-                                                <div class="mt-1"> {{- '' -}}
-                                                    <span class="btn btn-dark btn-sm price mr-2">
-                                                        {{- 'trans.Price' | trans }}: {{ listing.price | money -}}
-                                                    </span>
-
-                                                    {%- if listing.priceFor -%}
-                                                        <span class="mr-2"> {{- '' -}}
-                                                            {{- ('trans.priceFor.'~listing.priceFor) | trans -}}
+                                            <div class="listing-list-details">
+                                                {%- if listing.price is not empty ~%}
+                                                    <div class="mt-1 d-inline-block"> {{- '' -}}
+                                                        <span class="btn btn-dark btn-sm price mr-2">
+                                                            {{- 'trans.Price' | trans }}: {{ listing.price | money -}}
                                                         </span>
-                                                    {%- endif -%}
-                                                </div>
-                                            {%- endif ~%}
+
+                                                        {%- if listing.priceFor -%}
+                                                            <span class="mr-1"> {{- '' -}}
+                                                                {{- ('trans.priceFor.'~listing.priceFor) | trans -}}
+                                                            </span>
+                                                        {%- endif -%}
+                                                    </div>
+                                                {%- endif ~%}
+
+                                                {%- for customFieldInline in listing.customFieldsInline -%}
+                                                    <div class="name-value-group mb-1 mr-1 small"> {{- '' -}}
+                                                        <div class="name text-break">
+                                                            {{- customFieldInline.name -}}
+                                                        </div> {{- '' -}}
+                                                        <strong class="text-break">
+                                                            {%- if customFieldInline.type == constant('\App\\Entity\\CustomField::INTEGER_RANGE') -%}
+                                                                {{- customFieldInline.value | thousandsSeparate -}}
+                                                            {%- else -%}
+                                                                {{- customFieldInline.value -}}
+                                                            {%- endif -%}
+                                                        </strong> {{- '' -}}
+                                                    </div>
+                                                {%- endfor ~%}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

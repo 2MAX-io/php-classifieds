@@ -49,9 +49,7 @@ if (mapElement) {
             id: listingOnMap.listingId,
             slug: listingOnMap.listingSlug,
         });
-        let popupContent = `
-        <a href='${url}'>${listingOnMap.listingTitle}</a>
-    `;
+        let popupContent = `<a href='${url}'>${listingOnMap.listingTitle}</a>`;
         if (leafletMarker.getPopup()) {
             leafletMarker.setPopupContent(popupContent);
         } else {

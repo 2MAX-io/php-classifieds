@@ -682,11 +682,11 @@ div.clickable-div a.clickable-div-link {
 
 .map-with-listings {
     width: 100%;
-    height: 70vh;
+    height: 60vh;
 }
 @media (min-width: 768px) {
     .map-with-listings {
-        height: 80vh;
+        height: 65vh;
     }
 }
 

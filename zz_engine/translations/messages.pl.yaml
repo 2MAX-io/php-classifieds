@@ -497,7 +497,7 @@ trans:
     'Upload logo': 'Wgraj logo'
     Add Administrator: 'Dodaj Administratora'
     No categories found, try again latter: 'Nie znaleziono ogłoszeń, spróbuj ponownie później'
-    No classified ads matching criteria were found: 'Nie znaleziono ogłoszeń spełniających kryteria'
+    No classifieds matching the criteria found: 'Nie znaleziono ogłoszeń spełniających kryteria'
     It is recommended to create a backup before this operation: 'Jest rekomendowane aby wykonać backup przed tą operacją'
     Link to contact page: 'Link do strony kontaktowej'
     Link to information about advertisement: 'Link do strony z informacjami o reklamie'
@@ -725,6 +725,7 @@ trans:
     used as fallback when category do not have advertisement zone id assigned: 'wartość zastępcza, używana gdy kategoria nie ma przypisanego id strefy reklamowej'
     List: 'Lista'
     Return to the list: 'Wróć do listy'
+    No classifieds matching the criteria found on map: 'Nie znaleziono ogłoszeń spełniających kryteria na mapie'
 
 '—': '—'
 Year: Rok

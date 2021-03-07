@@ -292,6 +292,7 @@ trans:
     used as fallback when category do not have advertisement zone id assigned: 'used as fallback when category do not have advertisement zone id assigned'
     List: 'List'
     Return to the list: 'Return to the list'
+    No classifieds matching the criteria found on map: 'No classifieds matching the criteria found on map'
 
 trans.customFieldType.SELECT_AS_CHECKBOXES: 'Checkboxes in filters, single select when editing'
 trans.customFieldType.SELECT_SINGLE: 'Single selection field'
@@ -780,7 +781,7 @@ trans.Preview: Preview
 'trans.Add Administrator': 'Add Administrator'
 'trans.No categories found, try again latter': 'No categories found, try again latter'
 'trans.No listings found, try again latter': 'No listings found, try again latter'
-'trans.No classified ads matching criteria were found': 'No classified ads matching criteria were found'
+'trans.No classifieds matching the criteria found': 'No classifieds matching the criteria found'
 'trans.Link to contact page': 'Link to contact page'
 'trans.Link to information about advertisement': 'Link to information about advertisement'
 'trans.Remove non standard characters in listing - Enabled': 'Remove non standard characters in listing - Enabled'

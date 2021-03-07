@@ -1082,7 +1082,7 @@ class SettingsDto
 
     public function getThousandSeparator(): ?string
     {
-        return $this->thousandSeparator;
+        return $this->thousandSeparator ?? '';
     }
 
     public function setThousandSeparator(?string $thousandSeparator): void

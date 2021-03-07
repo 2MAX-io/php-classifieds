@@ -166,7 +166,7 @@
                     {%- else ~%}
                         <div class="alert alert-info w-100">
                             <div class="mb-3">
-                                {{- 'trans.No classified ads matching criteria were found' | trans -}}
+                                {{- 'trans.No classifieds matching the criteria found on map' | trans -}}
                             </div>
                             <a {{- ' ' -}}
                                     href="{{ path(app.request.get('_route'), queryParameters | merge({'showOnMap': null})) }}" {{- ' ' -}}
@@ -250,7 +250,7 @@
                             </div>
                         {%- else ~%}
                             <div class="alert alert-info w-100">
-                                {{- 'trans.No classified ads matching criteria were found' | trans -}}
+                                {{- 'trans.No classifieds matching the criteria found' | trans -}}
                             </div>
                         {%- endfor ~%}
                     </div>

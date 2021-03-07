@@ -18,6 +18,8 @@ parameters:
     upgrade_available_check_disabled: '%env(resolve:bool:APP_UPGRADE_AVAILABLE_CHECK_DISABLED)%'
     env(APP_ASSET_VERSION): 1
     asset_version: '%env(resolve:APP_ASSET_VERSION)%'
+    env(APP_FAVICON_DIR): null
+    favicon_dir: '%env(resolve:APP_FAVICON_DIR)%'
     env(APP_ENVIRONMENT_CSS_CLASS): ''
     environment_css_class: '%env(resolve:APP_ENVIRONMENT_CSS_CLASS)%'
     router.request_context.host: '%env(resolve:APP_HTTP_HOST)%'

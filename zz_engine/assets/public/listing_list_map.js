@@ -49,11 +49,23 @@ if (mapElement) {
             id: listingOnMap.listingId,
             slug: listingOnMap.listingSlug,
         });
-        let popupContent = `<a href='${url}'>${listingOnMap.listingTitle}</a>`;
+
+        let image = "";
+        if (listingOnMap.mainImage) {
+            image = `<img src="${listingOnMap.mainImage}" class="map-popup-image float-left mr-2" alt="" />`;
+        }
+        let popupContent = `
+            <a href='${url}' class="map-popup-wrapper">
+                ${image}
+                ${listingOnMap.listingTitle}
+            </a>
+        `;
         if (leafletMarker.getPopup()) {
             leafletMarker.setPopupContent(popupContent);
         } else {
-            leafletMarker.bindPopup(popupContent);
+            leafletMarker.bindPopup(popupContent, {
+                autoPan: false,
+            });
         }
     };
 
@@ -63,6 +75,7 @@ if (mapElement) {
          * @typedef {Object} listingOnMap
          * @property {string} listingSlug
          * @property {string} listingTitle
+         * @property {string} mainImage
          */
         marker.data.listingOnMap = listingOnMap;
         pruneCluster.RegisterMarker(marker);

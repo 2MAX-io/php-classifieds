@@ -293,6 +293,7 @@ trans:
     List: 'List'
     Return to the list: 'Return to the list'
     No classifieds matching the criteria found on map: 'No classifieds matching the criteria found on map'
+    for free: 'for free'
 
 trans.customFieldType.SELECT_AS_CHECKBOXES: 'Checkboxes in filters, single select when editing'
 trans.customFieldType.SELECT_SINGLE: 'Single selection field'

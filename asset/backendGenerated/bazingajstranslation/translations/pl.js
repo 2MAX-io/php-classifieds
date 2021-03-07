@@ -724,6 +724,7 @@ t.add("trans.used as fallback when category do not have advertisement zone id as
 t.add("trans.List", "Lista", "messages", "pl");
 t.add("trans.Return to the list", "Wr\u00f3\u0107 do listy", "messages", "pl");
 t.add("trans.No classifieds matching the criteria found on map", "Nie znaleziono og\u0142osze\u0144 spe\u0142niaj\u0105cych kryteria na mapie", "messages", "pl");
+t.add("trans.for free", "za darmo", "messages", "pl");
 t.add("\u2014", "\u2014", "messages", "pl");
 t.add("Year", "Rok", "messages", "pl");
 t.add("Month", "Miesi\u0105c", "messages", "pl");

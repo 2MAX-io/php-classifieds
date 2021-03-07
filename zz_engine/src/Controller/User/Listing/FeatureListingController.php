@@ -45,6 +45,7 @@ class FeatureListingController extends AbstractUserController
         $this->dennyUnlessCurrentUserAllowed($listing);
 
         return $this->render('user/listing/feature_listing.twig', [
+            'displayUnderHeaderAdvert' => false,
             'listing' => $listing,
             'packages' => $featuredPackageService->getPackages($listing),
             'userBalance' => $userBalanceService->getCurrentBalance($currentUserService->getUserOrNull()),

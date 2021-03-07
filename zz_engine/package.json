@@ -12,6 +12,7 @@
     "bootstrap": "^4.6.0",
     "cleave.js": "^1.6.0",
     "core-js": "3",
+    "detect-touch-device": "^1.1.6",
     "exports-loader": "^2.0.0",
     "jquery": "^3.5.1",
     "leaflet": "^1.7.0",

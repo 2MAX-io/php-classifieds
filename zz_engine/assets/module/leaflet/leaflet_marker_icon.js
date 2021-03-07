@@ -7,7 +7,7 @@ let markerIcon = L.icon({
     iconUrl: mapMarkerIcon,
     iconSize: [22, 22],
     iconAnchor: [11, 11],
-    popupAnchor: [0, -11],
+    popupAnchor: [0, -4],
     shadowSize: false,
     shadowAnchor: false,
 });

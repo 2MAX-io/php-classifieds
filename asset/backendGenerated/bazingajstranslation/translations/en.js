@@ -291,6 +291,7 @@ t.add("trans.used as fallback when category do not have advertisement zone id as
 t.add("trans.List", "List", "messages", "en");
 t.add("trans.Return to the list", "Return to the list", "messages", "en");
 t.add("trans.No classifieds matching the criteria found on map", "No classifieds matching the criteria found on map", "messages", "en");
+t.add("trans.for free", "for free", "messages", "en");
 t.add("trans.customFieldType.SELECT_AS_CHECKBOXES", "Checkboxes in filters, single select when editing", "messages", "en");
 t.add("trans.customFieldType.SELECT_SINGLE", "Single selection field", "messages", "en");
 t.add("trans.customFieldType.YEAR_RANGE", "Field with year", "messages", "en");

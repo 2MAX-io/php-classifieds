@@ -116,8 +116,12 @@ class ListingCustomFieldsType extends AbstractType
 
             if (CustomField::INTEGER_RANGE === $customField->getType()) {
                 $maxIntegerValue = (int) \str_repeat('9', 12);
+                $label = $customField->getName();
+                if ($customField->getUnit()) {
+                    $label = $customField->getName().' ['.$customField->getUnit().']';
+                }
                 $builder->add($fieldName, IntegerType::class, [
-                    'label' => $customField->getName(),
+                    'label' => $label,
                     'translation_domain' => false,
                     'data' => $this->getValue($customField),
                     'constraints' => \array_merge(

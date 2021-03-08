@@ -107,6 +107,7 @@ class ListingEditForUserController extends AbstractUserController
             $listingCustomFieldsService->saveCustomFieldsToListing($listingSaveDto);
             $listingFileService->saveUploadedFiles($listingSaveDto);
             $saveListingService->modifyListingPostFormSubmit($listing, $form);
+            $saveListingService->saveCustomFieldsInline($listing);
             $policeLogForListingService->saveLog($listing);
             $this->em->flush();
 

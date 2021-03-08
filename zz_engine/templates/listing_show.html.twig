@@ -187,11 +187,13 @@
 
                 <!-- listing id -->
                 <div class="mb-2 d-none d-md-block">
-                    {{ 'trans.Listing identifier' | trans }}: {{ listing.id }}
-
                     <div class="float-md-right">
                         {{- 'trans.Views' | trans }}: {{ (listingShowDto.viewsCount+1) | thousandsSeparate -}}
                     </div>
+                    <div>{{ 'trans.Listing identifier' | trans }}: {{ listing.id }}</div>
+                    <a href="{{ path('app_report_listing', {'listing': listing.id}) }}" class="small">
+                        {{- 'trans.Report abuse' | trans -}}
+                    </a>
                 </div>
                 <!-- end main content -->
             </div>
@@ -446,6 +448,9 @@
                     <div>
                         {{- 'trans.Views' | trans }}: {{ (listingShowDto.viewsCount+1) | thousandsSeparate -}}
                     </div>
+                    <a href="{{ path('app_report_listing', {'listing': listing.id}) }}" class="small">
+                        {{- 'trans.Report abuse' | trans -}}
+                    </a>
                 </div>
             </div>
         </div>

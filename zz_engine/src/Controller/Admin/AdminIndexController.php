@@ -22,7 +22,7 @@ class AdminIndexController extends AbstractAdminController
     ): Response {
         $this->denyUnlessAdmin();
 
-        return $this->render('admin/index.html.twig', [
+        return $this->render('admin/admin_index.html.twig', [
             'adminStats' => $adminStatsService,
             'healthCheckProblemList' => $healthCheckService->getProblems(),
         ]);

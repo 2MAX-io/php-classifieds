@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Controller\Pub;
+namespace App\Controller\Pub\Secondary;
 
 use App\Service\Category\CategoryViewAllService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

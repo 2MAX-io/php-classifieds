@@ -297,6 +297,11 @@ trans:
     First Name: 'First Name'
     Last Name: 'Last Name'
     for individual purchases: 'for individual purchases'
+    Report listing: 'Report listing'
+    Reason for the report: 'Reason for the report'
+    Your report has been send: 'Your report has been send'
+    Abuse reports for lisings: 'Abuse reports for lisings'
+    Reported listings: 'Reported listings'
 
 trans.customFieldType.SELECT_AS_CHECKBOXES: 'Checkboxes in filters, single select when editing'
 trans.customFieldType.SELECT_SINGLE: 'Single selection field'

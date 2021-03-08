@@ -1,0 +1,74 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}{{ 'trans.Abuse reports for lisings' | trans }}{% endblock %}
+
+{% block body %}
+    <h1>{{ 'trans.Abuse reports for lisings' | trans }}</h1>
+
+    <table class="table table-responsive-sm">
+        <thead>
+        <tr>
+            <th class="mw-8-rem">{{ 'trans.Reason for the report' | trans }}</th>
+            <th>{{ 'trans.Listing' | trans }}</th>
+            <th></th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for listingReport in listingReportList %}
+            <tr>
+                <td>
+                    {{- listingReport.reportMessage | nl2br -}}
+                </td>
+                <td>
+                    <a href="{{ path('app_listing_show', {'id': listingReport.listing.id, 'slug': listingReport.listing.slug}) }}">
+                        {{- listingReport.listing.title -}}
+                    </a>
+                </td>
+                <td>
+                    <div class="mb-1">
+                        <div>
+                            {{- 'trans.Email' | trans -}}
+                            {{- ': ' -}}
+                            {{ listingReport.email }}
+                        </div>
+                        {%- if listingReport.user ~%}
+                            <div>
+                                {{- 'trans.User' | trans -}}
+                                {{- ': ' -}}
+                                <a href="{{ path('app_admin_user_edit', {'id': listingReport.user.id}) }}">
+                                    {{- listingReport.user.email | default(listingReport.user.username) -}}
+                                </a>
+                            </div>
+                        {%- endif ~%}
+                    </div>
+                    <div>{{ 'trans.Date' | trans }}: {{ listingReport.datetime | date }}</div>
+                    <div class="text-muted small">{{ 'trans.Log' | trans }}: {{ listingReport.policeLog }}</div>
+                </td>
+                <td>
+                    <form
+                            method="post"
+                            action="{{ path('app_admin_listing_report_remove', {'id': listingReport.id}) }}"
+                            data-confirm-message="{{ 'trans.Remove' | trans }}?"
+                            class="d-inline js__confirm"
+                    >
+                        <input type="hidden" name="_method" value="DELETE">
+                        <input type="hidden" name="_token" value="{{ csrf_token('csrf_listingReportRemove' ~ listingReport.id) }}">
+                        <button class="btn btn-danger mb-1">{{ 'trans.Remove' | trans }}</button>
+                    </form>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="99">{{ 'trans.no records found' | trans }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
+
+{% block js %}
+    {{ encore_entry_link_tags('admin_report_listing_list') }}
+    {{ encore_entry_script_tags('admin_report_listing_list') }}
+{% endblock %}
+

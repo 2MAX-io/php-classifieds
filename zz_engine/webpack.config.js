@@ -56,6 +56,7 @@ Encore
     .addEntry('admin_listing_show', './assets/admin/page/listing/admin_listing_show.js')
     .addEntry('admin_page_edit', './assets/admin/page/secondary/admin_page_edit.js')
     .addEntry('admin_upgrade', './assets/admin/page/secondary/admin_upgrade.js')
+    .addEntry('admin_report_listing_list', './assets/admin/page/secondary/admin_report_listing_list.js')
 
     // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
     // .enableStimulusBridge('./assets/controllers.json')

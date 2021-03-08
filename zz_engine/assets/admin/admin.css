@@ -81,14 +81,7 @@ textarea {
     position: absolute;
     left: 0;
     height: 65px;
-    border-left: 2px solid #ADB2B5;
     margin-top: 10px;
-}
-
-@media (min-width: 992px) {
-    .dashboard-stats-wrapper .dashboard-stats-item:first-child:before {
-        border-left: 0;
-    }
 }
 
 .dashboard-stats-wrapper .dashboard-stats-item span {

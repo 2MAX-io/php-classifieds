@@ -20,7 +20,7 @@
     {% block stylesheets %}
         {{- encore_entry_link_tags('app') -}}
     {% endblock %}
-    {% block css %}{% endblock %}
+    {% block head %}{% endblock head %}
 
     {%- if favicon_dir ~%}
         <link rel="apple-touch-icon" sizes="180x180" href="{{ asset(favicon_dir~'apple-touch-icon.png') }}">

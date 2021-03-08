@@ -7,7 +7,7 @@
     <h1>{{ 'trans.Admin Dashboard' | trans }}</h1>
 
     <div class="row no-gutters dashboard-stats-wrapper">
-        <div class="col-md-2 col-sm-4 col-xs-6 dashboard-stats-item">
+        <div class="col-xl-4 col-md-6 col-sm-7 col-xs-6 dashboard-stats-item">
             <span class="dashboard-stats-label">
                 <i class="fa fa-clock"></i>
                 {{- ' ' -}}
@@ -15,23 +15,36 @@
             </span>
             <div class="dashboard-stats-count">
                 {{ adminStats.toActivateCount | thousandsSeparate }}
-                <a href="{{ path('app_admin_listing_activate_list') }}" class="btn btn-primary">
+                <a href="{{ path('app_admin_listing_activate_list') }}" class="btn btn-primary mb-1">
                     {{- 'trans.Activate' | trans -}}
                 </a>
-                <div>
-                    {{ include('admin/listing/_action/_admin_next_waiting_form.html.twig', {"buttonText" : "trans.First waiting for Activation"}) }}
-                </div>
+                {{ include('admin/listing/_action/_admin_next_waiting_form.html.twig', {"buttonText" : "trans.First waiting for Activation"}) }}
             </div>
         </div>
-        <div class="col-md-2 col-sm-4 col-xs-6 dashboard-stats-item">
+        <div class="col-xl-3 col-md-6 col-sm-7 col-xs-6 dashboard-stats-item">
+            <span class="dashboard-stats-label">
+                <i class="fa fa-exclamation-circle"></i>
+                {{- ' ' -}}
+                {{- 'trans.Reported listings' | trans -}}
+            </span>
+            <div class="dashboard-stats-count">
+                {% set reportedListingsCount = adminStats.reportedListingsCount %}
+                <a href="{{ path('app_admin_listing_report_list') }}" class="btn {% if reportedListingsCount %}btn-danger{% else %}btn-outline-dark{% endif %}">
+                    {{- 'trans.Reported listings' | trans -}}
+                    {{- ': ' -}}
+                    {{- reportedListingsCount | thousandsSeparate -}}
+                </a>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-4 col-xs-6 dashboard-stats-item">
             <span class="dashboard-stats-label">
                 <i class="fa fa-plus-circle"></i> {{ 'trans.Added last 12h' | trans }}
             </span>
             <div class="dashboard-stats-count">
-                {{ adminStats.addedLastHours(12) | thousandsSeparate }}
+                {{- adminStats.addedLastHours(12) | thousandsSeparate -}}
             </div>
         </div>
-        <div class="col-md-2 col-sm-4 col-xs-6 dashboard-stats-item">
+        <div class="col-md-3 col-sm-4 col-xs-6 dashboard-stats-item">
             <span class="dashboard-stats-label">
                 <i class="fa fa-plus-circle"></i> {{ 'trans.Added last 24h' | trans }}
             </span>
@@ -39,7 +52,7 @@
                 {{ adminStats.addedLastHours(24) | thousandsSeparate }}
             </div>
         </div>
-        <div class="col-md-2 col-sm-4 col-xs-6 dashboard-stats-item">
+        <div class="col-md-3 col-sm-4 col-xs-6 dashboard-stats-item">
             <span class="dashboard-stats-label">
                 <i class="fa fa-plus-circle"></i> {{ 'trans.Added last 7 days' | trans }}
             </span>
@@ -47,7 +60,7 @@
                 {{ adminStats.addedLastHours(24*7) | thousandsSeparate }}
             </div>
         </div>
-        <div class="col-md-2 col-sm-4 col-xs-6 dashboard-stats-item">
+        <div class="col-md-3 col-sm-4 col-xs-6 dashboard-stats-item">
             <span class="dashboard-stats-label">
                 <i class="fa fa-plus-circle"></i> {{ 'trans.Added last 30 days' | trans }}
             </span>
@@ -55,7 +68,7 @@
                 {{ adminStats.addedLastHours(24*30) | thousandsSeparate }}
             </div>
         </div>
-        <div class="col-md-2 col-sm-4 col-xs-6 dashboard-stats-item">
+        <div class="col-md-3 col-sm-4 col-xs-6 dashboard-stats-item">
             <span class="dashboard-stats-label">
                 <i class="fa fa-plus-circle"></i> {{ 'trans.Added last year' | trans }}
             </span>
@@ -63,7 +76,7 @@
                 {{ adminStats.addedLastHours(24*365) | thousandsSeparate }}
             </div>
         </div>
-        <div class="col-md-2 col-sm-4 col-xs-6 dashboard-stats-item">
+        <div class="col-md-3 col-sm-4 col-xs-6 dashboard-stats-item">
             <span class="dashboard-stats-label">
                 <i class="fa fa-file"></i> {{ 'trans.Active listings count' | trans }}
             </span>
@@ -71,7 +84,7 @@
                 {{ adminStats.activeListingsCount | thousandsSeparate }}
             </div>
         </div>
-        <div class="col-md-2 col-sm-4 col-xs-6 dashboard-stats-item">
+        <div class="col-md-3 col-sm-4 col-xs-6 dashboard-stats-item">
             <span class="dashboard-stats-label">
                 <i class="fa fa-archive"></i> {{ 'trans.All listings count' | trans }}
             </span>
@@ -79,12 +92,20 @@
                 {{ adminStats.allListingsCount | thousandsSeparate }}
             </div>
         </div>
-        <div class="col-md-2 col-sm-4 col-xs-6 dashboard-stats-item">
+        <div class="col-md-3 col-sm-4 col-xs-6 dashboard-stats-item">
             <span class="dashboard-stats-label">
                 <i class="fa fa-users"></i> {{ 'trans.Users count' | trans }}
             </span>
             <div class="dashboard-stats-count">
                 {{ adminStats.userCount | thousandsSeparate }}
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-4 col-xs-6 dashboard-stats-item">
+            <span class="dashboard-stats-label">
+                <i class="fa fa-star"></i> {{ 'trans.Featured listings' | trans }}
+            </span>
+            <div class="dashboard-stats-count">
+                {{ adminStats.featuredListingsCount | thousandsSeparate }}
             </div>
         </div>
         <div class="col-md-4 col-sm-8 col-xs-6 dashboard-stats-item">
@@ -93,14 +114,6 @@
             </span>
             <div class="dashboard-stats-count">
                 {{ adminStats.listingViewsCount | thousandsSeparate }}
-            </div>
-        </div>
-        <div class="col-md-2 col-sm-4 col-xs-6 dashboard-stats-item">
-            <span class="dashboard-stats-label">
-                <i class="fa fa-star"></i> {{ 'trans.Featured listings' | trans }}
-            </span>
-            <div class="dashboard-stats-count">
-                {{ adminStats.featuredListingsCount | thousandsSeparate }}
             </div>
         </div>
     </div>

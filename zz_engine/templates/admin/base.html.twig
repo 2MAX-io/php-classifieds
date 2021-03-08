@@ -81,6 +81,12 @@
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link" href="{{ path('app_admin_listing_report_list') }}">
+                                <i class="svg fa fa-exclamation-circle"></i>
+                                {{ 'trans.Reported listings' | trans }}
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" href="{{ path('app_admin_user_list') }}">
                                 <i class="svg svg-users"></i>
                                 {{ 'trans.Users' | trans }}

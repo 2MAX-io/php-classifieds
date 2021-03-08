@@ -730,6 +730,11 @@ trans:
     First Name: 'Imie'
     Last Name: 'Nazwisko'
     for individual purchases: 'dla zakupów prywatnych'
+    Report listing: 'Zgłoś ogłoszenie'
+    Reason for the report: 'Powód zgłoszenia'
+    Your report has been send: 'Twoje zgłoszenie zostalo wysłane'
+    Abuse reports for lisings: 'Zgłoszenia naruszeń dla ogłoszeń'
+    Reported listings: 'Zgłoszenia ogłoszeń'
 
 '—': '—'
 Year: Rok

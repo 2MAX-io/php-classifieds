@@ -63,4 +63,14 @@ END;
 
         return $log;
     }
+
+    public function getShortLogString(): string
+    {
+        $log = $this->getPoliceLogData();
+        $logText = <<<END
+{$log->getRequestTimeString()}: {$log->getRealSourceIpBehindProxy()}{$log->getSourceIp()}:{$log->getSourcePort()} --> {$log->getDestinationIp()}:{$log->getDestinationPort()}
+END;
+
+        return $logText;
+    }
 }

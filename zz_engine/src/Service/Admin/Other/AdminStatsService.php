@@ -6,6 +6,7 @@ namespace App\Service\Admin\Other;
 
 use App\Entity\Listing;
 use App\Entity\ListingView;
+use App\Entity\System\ListingReport;
 use App\Entity\User;
 use App\Enum\AppCacheEnum;
 use App\Helper\DateHelper;
@@ -55,6 +56,16 @@ class AdminStatsService
         $qb = $this->listingActivateListService->getAwaitingActivationQueryBuilder();
         $qb->select($qb->expr()->count('listing.id'));
         $qb->resetDQLPart('orderBy');
+
+        return (int) $qb->getQuery()->getSingleScalarResult();
+    }
+
+    public function getReportedListingsCount(): int
+    {
+        $qb = $this->em->createQueryBuilder();
+        $qb->select($qb->expr()->count('listingReport.id'));
+        $qb->from(ListingReport::class, 'listingReport');
+        $qb->andWhere($qb->expr()->eq('listingReport.removed', 0));
 
         return (int) $qb->getQuery()->getSingleScalarResult();
     }

@@ -25,7 +25,6 @@ parameters:
     router.request_context.host: '%env(resolve:APP_HTTP_HOST)%'
     router.request_context.scheme: '%env(resolve:APP_HTTP_SCHEME)%'
     router.request_context.base_url: '%env(resolve:APP_HTTP_BASE_URL)%'
-    container.dumper.inline_factories: true
 
 services:
     # default configuration for services in *this* file

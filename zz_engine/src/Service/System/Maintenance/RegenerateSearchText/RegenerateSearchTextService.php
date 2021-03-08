@@ -61,7 +61,7 @@ class RegenerateSearchTextService
         $qb->andWhere($qb->expr()->eq('listing.adminRemoved', 0));
         $qb->andWhere($qb->expr()->eq('listing.userRemoved', 0));
         $qb->andWhere($qb->expr()->gt('listing.validUntilDate', ':validAfterDate'));
-        $qb->setParameter(':validAfterDate', DateHelper::carbonNow()->subYears(2));
+        $qb->setParameter(':validAfterDate', DateHelper::carbonNow()->subDays(90));
 
         $qb->orderBy('listingInternalData.lastSearchTextRegenerationDate', Criteria::ASC);
         $qb->groupBy('listing.id');

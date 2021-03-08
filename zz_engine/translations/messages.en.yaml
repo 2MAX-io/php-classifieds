@@ -283,7 +283,7 @@ trans:
     Exit Fullscreen: 'Exit Fullscreen'
     Date format: 'Date format'
     Date format short: 'Date format short'
-    Email for invoice: 'Email for invoice'
+    Email to which send the invoice: 'Email to which send the invoice'
     Invoiced to: 'Invoiced to'
     Do you need invoice for your company?: 'Do you need invoice for your company?'
     Enter invoice details: 'Enter invoice details'
@@ -294,6 +294,9 @@ trans:
     Return to the list: 'Return to the list'
     No classifieds matching the criteria found on map: 'No classifieds matching the criteria found on map'
     for free: 'for free'
+    First Name: 'First Name'
+    Last Name: 'Last Name'
+    for individual purchases: 'for individual purchases'
 
 trans.customFieldType.SELECT_AS_CHECKBOXES: 'Checkboxes in filters, single select when editing'
 trans.customFieldType.SELECT_SINGLE: 'Single selection field'

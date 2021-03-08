@@ -6,6 +6,7 @@ namespace App\Controller\User\Invoice;
 
 use App\Controller\User\Base\AbstractUserController;
 use App\Form\UserInvoiceDetailsType;
+use App\Security\CurrentUserService;
 use App\Service\System\FlashBag\FlashService;
 use App\Service\User\Invoice\UserInvoiceDetailsService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -20,9 +21,15 @@ class UserInvoiceDetailsController extends AbstractUserController
      */
     private $em;
 
-    public function __construct(EntityManagerInterface $em)
+    /**
+     * @var CurrentUserService
+     */
+    private $currentUserService;
+
+    public function __construct(CurrentUserService $currentUserService, EntityManagerInterface $em)
     {
         $this->em = $em;
+        $this->currentUserService = $currentUserService;
     }
 
     /**
@@ -36,6 +43,9 @@ class UserInvoiceDetailsController extends AbstractUserController
         $this->dennyUnlessUser();
 
         $userInvoiceDetails = $userInvoiceDetailsService->getOrCreateUserInvoiceDetails();
+        if (!$userInvoiceDetails->getEmailToSendInvoice()) {
+            $userInvoiceDetails->setEmailToSendInvoice($this->currentUserService->getUser()->getEmail());
+        }
         $form = $this->createForm(UserInvoiceDetailsType::class, $userInvoiceDetails);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {

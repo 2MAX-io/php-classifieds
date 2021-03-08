@@ -716,7 +716,7 @@ trans:
     Date format: 'Format daty'
     Date format short: 'Format daty krótki'
     Internal Payment ID: 'Wewnętrzny ID płatności'
-    Email for invoice: 'Email do faktury'
+    Email to which send the invoice: 'Email na który wysłać fakturę'
     Invoiced to: 'Nabywca'
     Do you need invoice for your company?: 'Potrzebujesz faktury dla swojej firmy?'
     Enter invoice details: 'Wprowadź dane do faktury'
@@ -727,6 +727,9 @@ trans:
     Return to the list: 'Wróć do listy'
     No classifieds matching the criteria found on map: 'Nie znaleziono ogłoszeń spełniających kryteria na mapie'
     for free: 'za darmo'
+    First Name: 'Imie'
+    Last Name: 'Nazwisko'
+    for individual purchases: 'dla zakupów prywatnych'
 
 '—': '—'
 Year: Rok

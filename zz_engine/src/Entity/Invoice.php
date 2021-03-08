@@ -251,7 +251,7 @@ class Invoice
      *
      * @ORM\Column(type="string", length=255, nullable=false)
      */
-    private $emailForInvoice;
+    private $emailToSendInvoice;
 
     /**
      * @var null|\DateTimeInterface
@@ -500,14 +500,14 @@ class Invoice
         return $this;
     }
 
-    public function getEmailForInvoice(): ?string
+    public function getEmailToSendInvoice(): ?string
     {
-        return $this->emailForInvoice;
+        return $this->emailToSendInvoice;
     }
 
-    public function setEmailForInvoice(string $emailForInvoice): self
+    public function setEmailToSendInvoice(string $emailToSendInvoice): self
     {
-        $this->emailForInvoice = $emailForInvoice;
+        $this->emailToSendInvoice = $emailToSendInvoice;
 
         return $this;
     }

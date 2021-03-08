@@ -29,11 +29,25 @@ class UserInvoiceDetails
     private $user;
 
     /**
-     * @var string
+     * @var null|string
      *
-     * @ORM\Column(type="string", length=255, nullable=false)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $companyName;
+
+    /**
+     * @var null|string
+     *
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $firstName;
+
+    /**
+     * @var null|string
+     *
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $lastName;
 
     /**
      * @var null|string
@@ -89,7 +103,7 @@ class UserInvoiceDetails
      *
      * @ORM\Column(type="string", length=255, nullable=false)
      */
-    private $emailForInvoice;
+    private $emailToSendInvoice;
 
     /**
      * @var \DateTimeInterface
@@ -115,7 +129,7 @@ class UserInvoiceDetails
         return $this->companyName;
     }
 
-    public function setCompanyName(string $companyName): self
+    public function setCompanyName(?string $companyName): self
     {
         $this->companyName = $companyName;
 
@@ -242,15 +256,35 @@ class UserInvoiceDetails
         return $this;
     }
 
-    public function getEmailForInvoice(): ?string
+    public function getEmailToSendInvoice(): ?string
     {
-        return $this->emailForInvoice;
+        return $this->emailToSendInvoice;
     }
 
-    public function setEmailForInvoice(string $emailForInvoice): self
+    public function setEmailToSendInvoice(string $emailToSendInvoice): self
     {
-        $this->emailForInvoice = $emailForInvoice;
+        $this->emailToSendInvoice = $emailToSendInvoice;
 
         return $this;
+    }
+
+    public function getFirstName(): ?string
+    {
+        return $this->firstName;
+    }
+
+    public function setFirstName(?string $firstName): void
+    {
+        $this->firstName = $firstName;
+    }
+
+    public function getLastName(): ?string
+    {
+        return $this->lastName;
+    }
+
+    public function setLastName(?string $lastName): void
+    {
+        $this->lastName = $lastName;
     }
 }

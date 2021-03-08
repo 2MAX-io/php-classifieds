@@ -6,6 +6,7 @@ namespace App\Controller\User\Account;
 
 use App\Controller\User\Base\AbstractUserController;
 use App\Exception\UserVisibleException;
+use App\Form\User\Account\Register\RegisterUserDto;
 use App\Helper\ExceptionHelper;
 use App\Helper\StringHelper;
 use App\Repository\UserRepository;
@@ -99,7 +100,8 @@ class LoginOauthController extends AbstractUserController
             $user = $this->userRepository->findOneBy(['email' => $email]);
             $userExists = null !== $user;
             if (!$userExists) {
-                $user = $createUserService->registerUser($email);
+                $registerUserDto = new RegisterUserDto();
+                $user = $createUserService->registerUser($registerUserDto);
                 $user->setEnabled(true);
                 $this->em->flush();
             }

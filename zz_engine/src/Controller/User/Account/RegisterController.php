@@ -9,7 +9,8 @@ use App\Entity\System\Token;
 use App\Entity\System\TokenField;
 use App\Entity\User;
 use App\Enum\ParamEnum;
-use App\Form\User\Account\RegisterType;
+use App\Form\User\Account\Register\RegisterType;
+use App\Form\User\Account\Register\RegisterUserDto;
 use App\Repository\UserRepository;
 use App\Service\System\FlashBag\FlashService;
 use App\Service\System\Token\TokenService;
@@ -41,10 +42,11 @@ class RegisterController extends AbstractUserController
         CreateUserService $createUserService,
         FlashService $flashService
     ): Response {
-        $form = $this->createForm(RegisterType::class, []);
+        $registerDto = new RegisterUserDto();
+        $form = $this->createForm(RegisterType::class, $registerDto);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $createUserService->registerUser($form->get(RegisterType::EMAIL_FIELD)->getData());
+            $createUserService->registerUser($registerDto);
             $this->em->flush();
 
             $flashService->addFlash(

@@ -7,7 +7,9 @@ namespace App\Service\User\Account;
 use App\Entity\System\Token;
 use App\Entity\System\TokenField;
 use App\Entity\User;
+use App\Form\User\Account\Register\RegisterUserDto;
 use App\Helper\DateHelper;
+use App\Helper\StringHelper;
 use App\Service\System\Token\TokenService;
 use App\Service\User\Account\Secondary\PasswordGenerateService;
 use App\Service\User\Account\Secondary\UserAccountEmailService;
@@ -55,9 +57,15 @@ class CreateUserService
         $this->tokenService = $tokenService;
     }
 
-    public function registerUser(string $email): User
+    public function registerUser(RegisterUserDto $registerDto): User
     {
-        $user = $this->getUser($email);
+        $user = $this->getUser($registerDto->getEmail());
+        if (!StringHelper::emptyTrim($registerDto->getPassword())) {
+            $user->setPlainPassword($registerDto->getPassword());
+            $user->setPassword(
+                $this->passwordEncoder->encodePassword($user, $user->getPlainPassword())
+            );
+        }
 
         $tokenDto = $this->tokenService->createToken(
             Token::USER_REGISTER_TYPE,

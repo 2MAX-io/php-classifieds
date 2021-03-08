@@ -50,9 +50,10 @@ if (mapElement) {
             slug: listingOnMap.listingSlug,
         });
 
+        let imageUrl = Routing.generate("app_public_dir") + listingOnMap.mainImage;
         let image = "";
         if (listingOnMap.mainImage) {
-            image = `<img src="${listingOnMap.mainImage}" class="map-popup-image float-left mr-2" alt="" />`;
+            image = `<img src="${imageUrl}" class="map-popup-image float-left mr-2" alt="" />`;
         }
         let popupContent = `
             <a href='${url}' class="map-popup-wrapper">

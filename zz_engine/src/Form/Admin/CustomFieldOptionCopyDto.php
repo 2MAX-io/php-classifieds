@@ -9,7 +9,7 @@ use App\Entity\CustomField;
 class CustomFieldOptionCopyDto
 {
     /**
-     * @var null|CustomField
+     * @var CustomField|null
      */
     private $sourceCustomField;
 

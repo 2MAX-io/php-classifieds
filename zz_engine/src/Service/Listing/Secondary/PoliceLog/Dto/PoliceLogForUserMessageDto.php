@@ -6,19 +6,19 @@ namespace App\Service\Listing\Secondary\PoliceLog\Dto;
 
 class PoliceLogForUserMessageDto
 {
-    /** @var null|int */
+    /** @var int|null */
     private $userId;
 
-    /** @var null|int */
+    /** @var int|null */
     private $listingId;
 
-    /** @var null|int */
+    /** @var int|null */
     private $threadId;
 
-    /** @var null|string */
+    /** @var string|null */
     private $query;
 
-    /** @var null|int */
+    /** @var int|null */
     private $page;
 
     /** @var string[] */

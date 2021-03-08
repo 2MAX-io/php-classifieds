@@ -52,7 +52,7 @@ class PaymentSmartPaySmsController extends AbstractController
             $numberToDaysMap['74068'] = 21;
 
             $featuredTimeDays = $numberToDaysMap[$smsPaymentNumber];
-            /** @var null|Listing $listing */
+            /** @var Listing|null $listing */
             $listing = $em->getRepository(Listing::class)->find($listingId);
             if (null === $listing) {
                 $logger->alert('[Featured Listing] IMPORTANT! listing not found, SMS text: {smsText}', [

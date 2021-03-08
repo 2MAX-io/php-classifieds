@@ -43,7 +43,7 @@ class UserBalanceChange
     private $balanceFinal;
 
     /**
-     * @var null|Payment
+     * @var Payment|null
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\Payment", inversedBy="userBalanceChanges")
      * @ORM\JoinColumn(nullable=true)

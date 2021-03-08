@@ -30,7 +30,7 @@ class Category
     private $id;
 
     /**
-     * @var null|Category
+     * @var Category|null
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="children")
      * @ORM\JoinColumn(nullable=true)
@@ -80,14 +80,14 @@ class Category
     private $slug;
 
     /**
-     * @var null|string
+     * @var string|null
      *
      * @ORM\Column(type="string", length=50, nullable=true)
      */
     private $advertisementZoneId;
 
     /**
-     * @var null|string
+     * @var string|null
      *
      * @ORM\Column(type="string", length=100, nullable=true)
      */

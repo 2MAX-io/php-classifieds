@@ -46,7 +46,7 @@ class User implements UserInterface, UserRoleEnum, EnablableInterface, EncoderAw
     protected $email;
 
     /**
-     * @var null|string
+     * @var string|null
      *
      * @ORM\Column(type="string", length=100, nullable=true)
      */
@@ -74,7 +74,7 @@ class User implements UserInterface, UserRoleEnum, EnablableInterface, EncoderAw
     protected $password;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     private $plainPassword;
 
@@ -86,7 +86,7 @@ class User implements UserInterface, UserRoleEnum, EnablableInterface, EncoderAw
     private $registrationDate;
 
     /**
-     * @var null|\DateTimeInterface
+     * @var \DateTimeInterface|null
      *
      * @ORM\Column(type="datetime", nullable=true)
      */

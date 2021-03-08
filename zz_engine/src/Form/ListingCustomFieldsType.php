@@ -201,7 +201,7 @@ class ListingCustomFieldsType extends AbstractType
     }
 
     /**
-     * @return null|array<int,null|string>|string
+     * @return array<int,string|null>|string|null
      */
     private function getValue(CustomField $customField)
     {

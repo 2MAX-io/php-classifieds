@@ -6,10 +6,10 @@ namespace App\Service\System\Maintenance\RegenerateSearchText\Dto;
 
 class RegenerateSearchTextDto
 {
-    /** @var null|int */
+    /** @var int|null */
     private $limit;
 
-    /** @var null|int */
+    /** @var int|null */
     private $timeLimitSeconds;
 
     public function getLimit(): ?int

@@ -54,7 +54,7 @@ class ListingCustomFieldValue
     private $customField;
 
     /**
-     * @var null|CustomFieldOption
+     * @var CustomFieldOption|null
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\CustomFieldOption")
      * @ORM\JoinColumn(nullable=true)

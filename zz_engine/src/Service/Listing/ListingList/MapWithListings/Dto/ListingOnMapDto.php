@@ -26,7 +26,7 @@ class ListingOnMapDto implements \JsonSerializable
     private $listingTitle;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     private $listingMainImage;
 
@@ -54,7 +54,7 @@ class ListingOnMapDto implements \JsonSerializable
     }
 
     /**
-     * @return array<string,null|float|int|string>
+     * @return array<string,float|int|string|null>
      */
     public function jsonSerialize(): array
     {

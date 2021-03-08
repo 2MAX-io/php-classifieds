@@ -27,10 +27,10 @@ class ValueExist extends Constraint
     /** @var string */
     public $repositoryMethod = 'findBy';
 
-    /** @var null|string[] */
+    /** @var string[]|null */
     public $fields = [];
 
-    /** @var null|string */
+    /** @var string|null */
     public $errorPath;
 
     /** @var bool */

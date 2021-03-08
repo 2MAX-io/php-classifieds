@@ -26,7 +26,7 @@ class Payment
     private $id;
 
     /**
-     * @var null|User
+     * @var User|null
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="payments")
      * @ORM\JoinColumn(nullable=false)
@@ -55,7 +55,7 @@ class Payment
     private $amount;
 
     /**
-     * @var null|int
+     * @var int|null
      *
      * @ORM\Column(type="integer", nullable=true)
      */
@@ -111,7 +111,7 @@ class Payment
     private $gatewayPaymentId;
 
     /**
-     * @var null|string
+     * @var string|null
      *
      * @ORM\Column(type="string", length=255, nullable=true)
      */
@@ -146,14 +146,14 @@ class Payment
     private $gatewayMode;
 
     /**
-     * @var null|PaymentForFeaturedPackage
+     * @var PaymentForFeaturedPackage|null
      *
      * @ORM\OneToOne(targetEntity="App\Entity\PaymentForFeaturedPackage", mappedBy="payment", fetch="EXTRA_LAZY")
      */
     private $paymentForFeaturedPackage;
 
     /**
-     * @var null|PaymentForBalanceTopUp
+     * @var PaymentForBalanceTopUp|null
      *
      * @ORM\OneToOne(targetEntity="App\Entity\PaymentForBalanceTopUp", mappedBy="payment", fetch="EXTRA_LAZY")
      */

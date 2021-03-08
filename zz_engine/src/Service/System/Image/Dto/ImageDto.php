@@ -17,12 +17,12 @@ class ImageDto
     private $type;
 
     /**
-     * @var null|int
+     * @var int|null
      */
     private $width;
 
     /**
-     * @var null|int
+     * @var int|null
      */
     private $height;
 

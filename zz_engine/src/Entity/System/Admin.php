@@ -58,7 +58,7 @@ class Admin implements UserInterface, UserRoleEnum, EnablableInterface
     private $password;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     private $plainPassword;
 

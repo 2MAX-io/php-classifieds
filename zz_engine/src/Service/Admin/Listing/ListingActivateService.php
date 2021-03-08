@@ -56,7 +56,7 @@ class ListingActivateService
         $qb->setFirstResult(\random_int(0, \max($count - $maxResultToGetFromDb, 0)));
         $qb->setMaxResults($maxResultToGetFromDb);
 
-        /** @var null|Listing $listing */
+        /** @var Listing|null $listing */
         $listing = RandomHelper::fromArray($qb->getQuery()->getResult());
 
         return $listing;

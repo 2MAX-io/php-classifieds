@@ -37,7 +37,7 @@ class CustomField
     private $name;
 
     /**
-     * @var null|string
+     * @var string|null
      *
      * @ORM\Column(type="string", length=50, nullable=true)
      */
@@ -72,7 +72,7 @@ class CustomField
     private $sort;
 
     /**
-     * @var null|string
+     * @var string|null
      *
      * @ORM\Column(type="string", length=25, nullable=true)
      */

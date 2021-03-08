@@ -9,7 +9,7 @@ services:
             dockerfile: Dockerfile
             args:
                 - WITH_XDEBUG=${WITH_XDEBUG}
-        ports: ['80:80', '443:443', '9000:9000']
+        ports: ['80:80', '443:443', '8080:8080']
         volumes:
             - './../../:/var/www/html'
             - './mysql/client_my.cnf:/var/www/.my.cnf'

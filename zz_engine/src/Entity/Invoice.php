@@ -21,7 +21,7 @@ class Invoice
     private $id;
 
     /**
-     * @var null|User
+     * @var User|null
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="invoices")
      * @ORM\JoinColumn(nullable=true)
@@ -29,7 +29,7 @@ class Invoice
     private $user;
 
     /**
-     * @var null|Payment
+     * @var Payment|null
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\Payment", inversedBy="invoices")
      * @ORM\JoinColumn(nullable=true)
@@ -37,14 +37,14 @@ class Invoice
     private $payment;
 
     /**
-     * @var null|string
+     * @var string|null
      *
      * @ORM\Column(type="string", length=100, nullable=true, unique=true)
      */
     private $invoiceNumber;
 
     /**
-     * @var null|\DateTimeInterface
+     * @var \DateTimeInterface|null
      *
      * @ORM\Column(type="datetime", nullable=true)
      */
@@ -65,21 +65,21 @@ class Invoice
     private $currency;
 
     /**
-     * @var null|string
+     * @var string|null
      *
      * @ORM\Column(type="string", nullable=true)
      */
     private $totalTaxMoney;
 
     /**
-     * @var null|string
+     * @var string|null
      *
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $externalSystemReference;
 
     /**
-     * @var null|string
+     * @var string|null
      *
      * @ORM\Column(type="string", length=255, nullable=true)
      */
@@ -121,63 +121,63 @@ class Invoice
     private $invoiceFilePath;
 
     /**
-     * @var null|string
+     * @var string|null
      *
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $companyName;
 
     /**
-     * @var null|string
+     * @var string|null
      *
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $individualClientName;
 
     /**
-     * @var null|string
+     * @var string|null
      *
      * @ORM\Column(type="string", length=50, nullable=true)
      */
     private $clientTaxNumber;
 
     /**
-     * @var null|string
+     * @var string|null
      *
      * @ORM\Column(type="string", length=100, nullable=true)
      */
     private $city;
 
     /**
-     * @var null|string
+     * @var string|null
      *
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $street;
 
     /**
-     * @var null|string
+     * @var string|null
      *
      * @ORM\Column(type="string", length=50, nullable=true)
      */
     private $buildingNumber;
 
     /**
-     * @var null|string
+     * @var string|null
      *
      * @ORM\Column(type="string", length=50, nullable=true)
      */
     private $unitNumber;
 
     /**
-     * @var null|string
+     * @var string|null
      *
      * @ORM\Column(type="string", length=50, nullable=true)
      */
     private $zipCode;
 
     /**
-     * @var null|string
+     * @var string|null
      *
      * @ORM\Column(type="string", length=50, nullable=true)
      */
@@ -191,7 +191,7 @@ class Invoice
     private $sellerCompanyName;
 
     /**
-     * @var null|string
+     * @var string|null
      *
      * @ORM\Column(type="string", length=50, nullable=true)
      */
@@ -205,7 +205,7 @@ class Invoice
     private $sellerCity;
 
     /**
-     * @var null|string
+     * @var string|null
      *
      * @ORM\Column(type="string", length=255, nullable=true)
      */
@@ -219,7 +219,7 @@ class Invoice
     private $sellerBuildingNumber;
 
     /**
-     * @var null|string
+     * @var string|null
      *
      * @ORM\Column(type="string", length=50, nullable=true)
      */
@@ -233,14 +233,14 @@ class Invoice
     private $sellerZipCode;
 
     /**
-     * @var null|string
+     * @var string|null
      *
      * @ORM\Column(type="string", length=50, nullable=true)
      */
     private $sellerCountry;
 
     /**
-     * @var null|string
+     * @var string|null
      *
      * @ORM\Column(type="string", length=100, nullable=true)
      */
@@ -254,14 +254,14 @@ class Invoice
     private $emailToSendInvoice;
 
     /**
-     * @var null|\DateTimeInterface
+     * @var \DateTimeInterface|null
      *
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $exportDate;
 
     /**
-     * @var null|\DateTimeInterface
+     * @var \DateTimeInterface|null
      *
      * @ORM\Column(type="datetime", nullable=true)
      */

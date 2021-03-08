@@ -147,7 +147,7 @@ class Listing
     private $featured = false;
 
     /**
-     * @var null|\DateTimeInterface
+     * @var \DateTimeInterface|null
      *
      * @ORM\Column(type="datetime", nullable=true)
      */
@@ -184,7 +184,7 @@ class Listing
     private $lastEditDate;
 
     /**
-     * @var null|\DateTimeInterface
+     * @var \DateTimeInterface|null
      *
      * @ORM\Column(type="datetime", nullable=true)
      */
@@ -205,35 +205,35 @@ class Listing
     private $description;
 
     /**
-     * @var null|float
+     * @var float|null
      *
      * @ORM\Column(type="float", nullable=true)
      */
     private $price;
 
     /**
-     * @var null|string
+     * @var string|null
      *
      * @ORM\Column(type="string", length=40, nullable=true)
      */
     private $priceFor;
 
     /**
-     * @var null|bool
+     * @var bool|null
      *
      * @ORM\Column(type="boolean", nullable=true)
      */
     private $priceNegotiable;
 
     /**
-     * @var null|string
+     * @var string|null
      *
      * @ORM\Column(type="string", length=20, nullable=true)
      */
     private $phone;
 
     /**
-     * @var null|string
+     * @var string|null
      *
      * @ORM\Column(type="string", length=70, nullable=true)
      */
@@ -247,14 +247,14 @@ class Listing
     private $emailShow;
 
     /**
-     * @var null|string
+     * @var string|null
      *
      * @ORM\Column(type="string", length=30, nullable=true)
      */
     private $city;
 
     /**
-     * @var null|float
+     * @var float|null
      *
      * @ORM\Column(type="float", nullable=true)
      * @Assert\Type(type="numeric")
@@ -262,7 +262,7 @@ class Listing
     private $locationLatitude;
 
     /**
-     * @var null|float
+     * @var float|null
      *
      * @ORM\Column(type="float", nullable=true)
      * @Assert\Type(type="numeric")
@@ -270,7 +270,7 @@ class Listing
     private $locationLongitude;
 
     /**
-     * @var null|string
+     * @var string|null
      *
      * @ORM\Column(type="string", length=255, nullable=true)
      */
@@ -293,7 +293,7 @@ class Listing
     private $searchText;
 
     /**
-     * @var null|string
+     * @var string|null
      *
      * @Assert\NotNull(groups={"skipAutomaticValidation"})
      * @ORM\Column(type="string", length=1000, nullable=true)
@@ -301,7 +301,7 @@ class Listing
     private $customFieldsInlineJson;
 
     /**
-     * @var null|string
+     * @var string|null
      *
      * @ORM\Column(type="string", length=150, nullable=true)
      */

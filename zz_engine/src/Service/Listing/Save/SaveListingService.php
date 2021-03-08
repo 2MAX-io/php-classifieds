@@ -105,9 +105,9 @@ class SaveListingService
     }
 
     /**
-     * @param array<string,null|string> $listingFormDataArray
+     * @param array<string,string|null> $listingFormDataArray
      *
-     * @return array<string,null|string>
+     * @return array<string,string|null>
      */
     public function modifyListingPreFormSubmit(array $listingFormDataArray): array
     {

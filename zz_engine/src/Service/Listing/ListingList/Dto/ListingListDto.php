@@ -33,7 +33,7 @@ class ListingListDto
     private $pageNumber;
 
     /**
-     * @var null|Pagerfanta
+     * @var Pagerfanta|null
      */
     private $pager;
 
@@ -48,7 +48,7 @@ class ListingListDto
     private $lastAddedList = false;
 
     /**
-     * @var null|int
+     * @var int|null
      */
     private $redirectToPageNumber;
 
@@ -58,32 +58,32 @@ class ListingListDto
     private $categoryCustomFields;
 
     /**
-     * @var null|User
+     * @var User|null
      */
     private $filterByUser;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     private $categorySlug;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     private $redirectToRoute;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     private $minPrice;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     private $maxPrice;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     private $searchQuery;
 
@@ -108,7 +108,7 @@ class ListingListDto
     private $paginationEnabled = true;
 
     /**
-     * @var null|int
+     * @var int|null
      */
     private $maxResults;
 

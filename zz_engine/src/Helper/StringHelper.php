@@ -67,7 +67,7 @@ class StringHelper
     }
 
     /**
-     * @return null|string[][]
+     * @return string[][]|null
      */
     public static function match(string $pattern, string $subject): ?array
     {

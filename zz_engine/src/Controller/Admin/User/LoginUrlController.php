@@ -59,7 +59,7 @@ class LoginUrlController extends AbstractAdminController
 
         $generatedHash = \sha1(\sha1((string) $time).$secret.$unique.$userEmail);
         if ($hash === $generatedHash) {
-            /** @var null|Admin $admin */
+            /** @var Admin|null $admin */
             $admin = $em->getRepository(Admin::class)->findOneBy(['email' => $userEmail]);
             if (null === $admin) {
                 throw new UserVisibleException('user not found');

@@ -21,7 +21,7 @@ class UserInvoiceDetails
     private $id;
 
     /**
-     * @var null|User
+     * @var User|null
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="userInvoiceDetails")
      * @ORM\JoinColumn(nullable=true)
@@ -29,28 +29,28 @@ class UserInvoiceDetails
     private $user;
 
     /**
-     * @var null|string
+     * @var string|null
      *
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $companyName;
 
     /**
-     * @var null|string
+     * @var string|null
      *
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $firstName;
 
     /**
-     * @var null|string
+     * @var string|null
      *
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $lastName;
 
     /**
-     * @var null|string
+     * @var string|null
      *
      * @ORM\Column(type="string", length=50, nullable=true)
      */
@@ -64,7 +64,7 @@ class UserInvoiceDetails
     private $city;
 
     /**
-     * @var null|string
+     * @var string|null
      *
      * @ORM\Column(type="string", length=255, nullable=true)
      */
@@ -78,7 +78,7 @@ class UserInvoiceDetails
     private $buildingNumber;
 
     /**
-     * @var null|string
+     * @var string|null
      *
      * @ORM\Column(type="string", length=50, nullable=true)
      */
@@ -92,7 +92,7 @@ class UserInvoiceDetails
     private $zipCode;
 
     /**
-     * @var null|string
+     * @var string|null
      *
      * @ORM\Column(type="string", length=50, nullable=true)
      */

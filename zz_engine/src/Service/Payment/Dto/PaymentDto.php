@@ -25,52 +25,52 @@ class PaymentDto
     private $makePaymentUrl;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     private $returnUrl;
 
     /**
-     * @var null|int
+     * @var int|null
      */
     private $amount;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     private $currency;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     private $gatewayPaymentId;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     private $gatewayToken;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     private $gatewayStatus;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     private $gatewayPaymentDescription;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     private $paymentAppToken;
 
     /**
-     * @var null|Payment
+     * @var Payment|null
      */
     private $paymentEntity;
 
     /**
-     * @var null|User
+     * @var User|null
      */
     private $user;
 

@@ -53,9 +53,7 @@ class FileHelper
     {
         $mustBeInsideDir = $mustBeInsideDir ?? FilePath::getStaticPath();
         if (Path::getLongestCommonBasePath([Path::canonicalize($path), $mustBeInsideDir]) !== $mustBeInsideDir) {
-            throw new UserVisibleException(
-                'detected file path change'
-            );
+            throw new UserVisibleException('detected file path change');
         }
 
         static::throwExceptionIfUnsafeExtension(\pathinfo($path, \PATHINFO_EXTENSION));
@@ -102,9 +100,7 @@ class FileHelper
                 'swf',
             ]
         )) {
-            throw new UserVisibleException(
-                "file extension {$fileExtension} is not allowed"
-            );
+            throw new UserVisibleException("file extension {$fileExtension} is not allowed");
         }
 
         if (ArrayHelper::inArray(
@@ -138,15 +134,11 @@ class FileHelper
                 'phar',
             ]
         )) {
-            throw new UserVisibleException(
-                "file extension {$fileExtension} is not allowed"
-            );
+            throw new UserVisibleException("file extension {$fileExtension} is not allowed");
         }
 
         if (\preg_match('~^php\d+~', $fileExtension)) {
-            throw new UserVisibleException(
-                "file extension {$fileExtension} is not allowed"
-            );
+            throw new UserVisibleException("file extension {$fileExtension} is not allowed");
         }
     }
 }

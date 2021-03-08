@@ -1,4 +1,6 @@
 {
+    "name": "2max/php_classified_ads",
+    "description": "php-classified-ads.2max.io - 2MAX.io PHP Classified Ads",
     "type": "project",
     "license": "proprietary",
     "require": {

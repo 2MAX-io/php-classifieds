@@ -7,7 +7,7 @@ namespace App\Service\System\HealthCheck;
 class HealthCheckResultDto
 {
     /**
-     * @var null|string
+     * @var string|null
      */
     private $message;
 

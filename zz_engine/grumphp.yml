@@ -5,12 +5,15 @@ grumphp:
     tasks:
         phpcsfixer:
             config: '.php_cs.dist'
+            using_cache: false
+            allow_risky: true
         phpstan:
             configuration: 'phpstan.neon.dist'
             level: 4
             memory_limit: "2G"
         psalm:
             config: psalm.xml
+            no_cache: true
         npm_script:
             script: 'prettier-check'
             triggered_by: [ js ]

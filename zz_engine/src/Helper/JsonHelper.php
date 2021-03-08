@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 class JsonHelper
 {
     /**
-     * @return null|array<string,mixed>
+     * @return array<string,mixed>|null
      */
     public static function toArray(?string $jsonString): ?array
     {
@@ -23,7 +23,7 @@ class JsonHelper
     /**
      * @param array<string,array|int|string> $default
      *
-     * @return null|array<string,array|int|string>
+     * @return array<string,array|int|string>|null
      */
     public static function toArrayFromRequestString(string $requestValue, array $default = []): ?array
     {

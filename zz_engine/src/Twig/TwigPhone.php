@@ -40,7 +40,7 @@ class TwigPhone implements RuntimeExtensionInterface
 
     public function phone(string $phoneString): string
     {
-        /** @var null|PhoneNumber $phoneNumber */
+        /** @var PhoneNumber|null $phoneNumber */
         $phoneNumber = $this->phoneNumberUtil->parse(
             $phoneString,
             $this->settingsDto->getCountryIso(),

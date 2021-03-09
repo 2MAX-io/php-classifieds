@@ -235,6 +235,8 @@
       <path value="$PROJECT_DIR$/zz_engine/vendor/zendframework/zend-code" />
       <path value="$PROJECT_DIR$/zz_engine/vendor/zendframework/zend-eventmanager" />
       <path value="$PROJECT_DIR$/zz_engine/vendor/doctrine/reflection" />
+      <path value="$PROJECT_DIR$/zz_engine/vendor/tijsverkoyen/css-to-inline-styles" />
+      <path value="$PROJECT_DIR$/zz_engine/vendor/twig/cssinliner-extra" />
     </include_path>
   </component>
   <component name="PhpInterpreters">

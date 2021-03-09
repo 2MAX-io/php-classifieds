@@ -62,6 +62,8 @@
         "symfony/webpack-encore-bundle": "^1.11",
         "symfony/yaml": "4.4.*",
         "ticketswap/omnipay-przelewy24": "^2.0",
+        "twig/cssinliner-extra": "^3.3",
+        "twig/extra-bundle": "^3.3",
         "twig/twig": "^3.0",
         "webmozart/path-util": "^2.3",
         "willdurand/js-translation-bundle": "^3.0"

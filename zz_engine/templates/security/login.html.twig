@@ -59,7 +59,7 @@
                         <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
                         <div class="form-group">
-                            <button class="btn btn-primary btn-block" type="submit">
+                            <button class="btn btn-primary btn-block mb-1" type="submit">
                                 {{- 'trans.Sign in' | trans -}}
                             </button>
                             <a href="{{ path('app_remind_password') }}">{{ 'trans.Forgot password?' | trans }}</a>

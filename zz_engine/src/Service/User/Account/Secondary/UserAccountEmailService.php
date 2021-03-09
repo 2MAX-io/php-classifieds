@@ -39,10 +39,27 @@ class UserAccountEmailService
         $email->subject($this->trans->trans('trans.Confirm account registration'));
         $email->to($user->getEmail());
         $email->htmlTemplate('email/account/registration.html.twig');
+        $email->textTemplate('email/account/registration.txt.twig');
         $email->context([
             'user' => $user,
             'plainPassword' => $user->getPlainPassword(),
             'token' => $token,
+        ]);
+        $this->mailer->send($email);
+    }
+
+    public function remindPasswordConfirmation(User $user, string $token): void
+    {
+        $email = $this->emailService->getTemplatedEmail();
+        $email->subject($this->trans->trans('trans.Password remind confirmation'));
+        $email->to($user->getEmail());
+
+        $email->htmlTemplate('email/account/remind_password_confirmation.html.twig');
+        $email->textTemplate('email/account/remind_password_confirmation.txt.twig');
+        $email->context([
+            'user' => $user,
+            'token' => $token,
+            'plainPassword' => $user->getPlainPassword(),
         ]);
         $this->mailer->send($email);
     }
@@ -54,6 +71,7 @@ class UserAccountEmailService
         $email->to($user->getEmail());
 
         $email->htmlTemplate('email/account/change_email_previous_email_confirmation.html.twig');
+        $email->textTemplate('email/account/change_email_previous_email_confirmation.txt.twig');
         $email->context([
             'user' => $user,
             'newEmail' => $newEmail,
@@ -69,6 +87,7 @@ class UserAccountEmailService
         $email->to($newEmail);
 
         $email->htmlTemplate('email/account/change_email_new_email_notification.html.twig');
+        $email->textTemplate('email/account/change_email_new_email_notification.txt.twig');
         $email->context([
             'user' => $user,
             'newEmail' => $newEmail,
@@ -85,24 +104,10 @@ class UserAccountEmailService
         $email->to($user->getEmail());
 
         $email->htmlTemplate('email/account/change_password_confirmation.html.twig');
+        $email->textTemplate('email/account/change_password_confirmation.txt.twig');
         $email->context([
             'user' => $user,
             'token' => $token,
-        ]);
-        $this->mailer->send($email);
-    }
-
-    public function remindPasswordConfirmation(User $user, string $token): void
-    {
-        $email = $this->emailService->getTemplatedEmail();
-        $email->subject($this->trans->trans('trans.Password remind confirmation'));
-        $email->to($user->getEmail());
-
-        $email->htmlTemplate('email/account/remind_password_confirmation.html.twig');
-        $email->context([
-            'user' => $user,
-            'token' => $token,
-            'plainPassword' => $user->getPlainPassword(),
         ]);
         $this->mailer->send($email);
     }

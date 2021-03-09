@@ -1,8 +1,8 @@
+{#- @var settings \App\Service\Setting\SettingsDto -#}
+{%- set settings = settings() -%}
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html lang="">
 <head>
-    {# @var settings \App\Service\Setting\SettingsDto #}
-    {% set settings = settings() %}
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>{{ settings.indexPageTitle }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -172,7 +172,7 @@
         -moz-user-select: none;
         -ms-user-select: none;
         user-select: none;
-        padding: .375rem .75rem;
+        padding: .9rem 1rem;
         font-size: 1rem;
         line-height: 1.5;
         border-radius: .25rem;
@@ -200,25 +200,38 @@
                 </tr>
                 <tr>
                     <td bgcolor="#ffffff" style="padding-bottom: 20px;">
-                        {% block content %}
-                        {% endblock content %}
+                        {% block content %}{% endblock content %}
                     </td>
                 </tr>
                 <tr>
                     <td bgcolor="#f5f5f5" class="footer">
-                        {{- settings.footerSiteCopyright | replace({"%year%": "now" | date('Y')}) -}}
-                        {{- ' • ' -}}
                         <a href="{{ url('app_index') }}">
                             {{- settings.indexPageTitle -}}
                         </a>
+
+                        {%- if settings.linkTermsConditions ~%}
+                            {{- ' • ' -}}
+                            <a href="{{ url('app_page', {'slug': settings.linkTermsConditions}) }}">
+                                {{- 'trans.Terms and conditions' | trans -}}
+                            </a>
+                        {%- endif ~%}
+
+                        {%- if settings.linkPrivacyPolicy ~%}
+                            {{- ' • ' -}}
+                            <a href="{{ url('app_page', {'slug': settings.linkPrivacyPolicy}) }}">
+                                {{- 'trans.Privacy policy' | trans -}}
+                            </a>
+                        {%- endif ~%}
+
+                        {%- if settings.linkContact ~%}
+                            {{- ' • ' -}}
+                            <a href="{{ url('app_page', {'slug': settings.linkContact}) }}">
+                                {{- 'trans.Contact' | trans -}}
+                            </a>
+                        {%- endif ~%}
+
                         {{- ' • ' -}}
-                        <a href="{{ url('app_page', {'slug': settings.linkTermsConditions}) }}">
-                            {{- 'trans.Terms and conditions' | trans -}}
-                        </a>
-                        {{- ' • ' -}}
-                        <a href="{{ url('app_page', {'slug': settings.linkPrivacyPolicy}) }}">
-                            {{- 'trans.Privacy policy' | trans -}}
-                        </a>
+                        {{- settings.footerSiteCopyright | replace({"%year%": "now" | date('Y')}) -}}
                     </td>
                 </tr>
             </table>

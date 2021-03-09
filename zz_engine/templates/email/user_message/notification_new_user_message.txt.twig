@@ -1,0 +1,19 @@
+{% extends 'email/email_base.txt.twig' %}
+{# @var newestUserMessage \App\Entity\UserMessage #}
+
+{% block content %}
+{{ 'trans.Message for listing' | trans }}:
+{{ listing.title }}
+{{ url('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}
+
+---------
+{% for userMessage in userMessageList ~%}
+{{ userMessage.message }}
+
+{%- endfor ~%}
+---------
+
+{{ 'trans.Reply to this message' | trans }}:
+
+{{ url('app_user_message_list_thread', {'userMessageThread': newestUserMessage.userMessageThread.id}) }}
+{% endblock content %}

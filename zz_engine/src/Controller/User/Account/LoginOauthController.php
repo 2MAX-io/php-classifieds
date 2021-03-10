@@ -101,6 +101,7 @@ class LoginOauthController extends AbstractUserController
             $userExists = null !== $user;
             if (!$userExists) {
                 $registerUserDto = new RegisterUserDto();
+                $registerUserDto->setEmail($email);
                 $user = $createUserService->registerUser($registerUserDto);
                 $user->setEnabled(true);
                 $this->em->flush();

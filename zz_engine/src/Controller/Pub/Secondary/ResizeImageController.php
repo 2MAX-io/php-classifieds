@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Controller\Pub;
+namespace App\Controller\Pub\Secondary;
 
 use App\Helper\FileHelper;
 use App\Helper\FilePath;
@@ -45,8 +45,13 @@ class ResizeImageController
     /**
      * @Route("/static/resized/{type}/{path}/{file}", name="app_resize_image", requirements={"path"=".+"})
      */
-    public function resizeImage(Request $request, SessionInterface $session, string $path, string $type, string $file): Response
-    {
+    public function resizeImage(
+        Request $request,
+        SessionInterface $session,
+        string $path,
+        string $type,
+        string $file
+    ): Response {
         if ($session->isStarted()) {
             $session->save();
         }

@@ -35,6 +35,7 @@ Encore
     .addEntry('listing_list_map', './assets/public/listing_list_map.js')
     .addEntry('listing_reject', './assets/public/listing_reject')
     .addEntry('listing_show', './assets/public/listing_show.js')
+    .addEntry('listing_contact_data', './assets/public/listing_contact_data.js')
     .addEntry('user_listing_list', './assets/public/user_listing_list.js')
     .addEntry('user_message', './assets/public/user_message.js')
 

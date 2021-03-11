@@ -33,6 +33,7 @@ export default class Map {
             })
             .addTo(this.leafletMap);
 
+        // noinspection JSUnusedGlobalSymbols
         L.control
             .locate({
                 position: "topright",
@@ -71,6 +72,10 @@ export default class Map {
         L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
         }).addTo(this.leafletMap);
+
+        // L.tileLayer(Routing.generate("app_map_image_cache_template") + "/{x}_{y}_{z}.png", {
+        //     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        // }).addTo(this.leafletMap);
 
         return this.leafletMap;
     }

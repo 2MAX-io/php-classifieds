@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Controller\User\Account;
 
 use App\Controller\User\Base\AbstractUserController;
-use App\Exception\UserVisibleException;
 use App\Form\User\Account\Register\RegisterUserDto;
 use App\Helper\ExceptionHelper;
 use App\Helper\StringHelper;
@@ -92,9 +91,9 @@ class LoginOauthController extends AbstractUserController
             $userProfile = $authentication->getUserProfile();
             $email = StringHelper::emptyTrim($userProfile->emailVerified) ? $userProfile->email : $userProfile->emailVerified;
             if (null === $email) {
-                $logger->error('could not find email address in oauth response');
+                $logger->debug('could not find email address in oauth response');
 
-                throw new UserVisibleException('trans.Share your email address to log in');
+                return $this->render('security/login_oauth_no_email_error.html.twig');
             }
 
             $user = $this->userRepository->findOneBy(['email' => $email]);

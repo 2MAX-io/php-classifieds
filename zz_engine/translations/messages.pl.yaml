@@ -132,6 +132,7 @@ trans:
     Enter current password to confirm email change: 'Wprowadź aktualne hasło do konta celem potwierdzenia zmiany emaila'
     New password: 'Nowe hasło'
     Repeat new password: 'Powtórz nowe hasło'
+    Repeat password: 'Powtórz hasło'
     Change password: 'Zmień hasło'
     New email: 'Nowy email'
     Repeat new email: 'Powtórz nowy email'
@@ -735,6 +736,14 @@ trans:
     Your report has been send: 'Twoje zgłoszenie zostalo wysłane'
     Abuse reports for lisings: 'Zgłoszenia naruszeń dla ogłoszeń'
     Reported listings: 'Zgłoszenia ogłoszeń'
+    Error occurred during logon: 'Wystąpił błąd podczas logowania. '
+    We were unable to obtain an email address, that is necessary to use the website: 'Nie mogliśmy uzyskać adresu email który jest niezbędny do korzystania z serwisu '
+    The reason is, that in service you use to log in, you did not give it permission to share your email address with us: 'Powodem tego jest to, że w serwisie którego użyłeś do logowania, nie zezwoliłeś na udostępnienie nam Twojego adresu email'
+    In order to log in, give permission to share your email address or register using your email address: 'Żeby się zalogować, zezwól na udostępnienie nam adresu email lub zarejestruj się używając adresu email'
+    The link to the registration and login using your email address is available down below: 'Link do rejestracji i logowania przy użyciu adresu email jest dostępny poniżej'
+    Register using email address: 'Zarejestruj się używając adresu email'
+    or if you chose to share email address: 'lub jeżeli zdecydujesz się na udostępnienie adresu email'
+
 
 '—': '—'
 Year: Rok

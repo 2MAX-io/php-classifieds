@@ -31,13 +31,13 @@ class RegisterType extends AbstractType
         ]);
         $builder->add('password', RepeatedType::class, [
             'first_options' => [
-                'label' => 'trans.New password',
+                'label' => 'trans.Password',
                 'attr' => [
                     'autocomplete' => 'new-password',
                 ],
             ],
             'second_options' => [
-                'label' => 'trans.Repeat new password',
+                'label' => 'trans.Repeat password',
                 'attr' => [
                     'autocomplete' => 'new-password',
                 ],

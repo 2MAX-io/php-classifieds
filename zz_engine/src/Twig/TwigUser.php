@@ -64,10 +64,12 @@ class TwigUser implements RuntimeExtensionInterface
 
     public function displayAsExpired(Listing $listing, bool $showListingPreviewForOwner = false): bool
     {
-        $showListingPreviewForOwner = $this->requestStack->getMasterRequest()->query->get(
-            ParamEnum::SHOW_LISTING_PREVIEW_FOR_OWNER,
-            $showListingPreviewForOwner,
-        );
+        if ($this->requestStack->getMasterRequest()) {
+            $showListingPreviewForOwner = $this->requestStack->getMasterRequest()->get(
+                ParamEnum::SHOW_LISTING_PREVIEW_FOR_OWNER,
+                $showListingPreviewForOwner,
+            );
+        }
 
         if ($showListingPreviewForOwner
             && (

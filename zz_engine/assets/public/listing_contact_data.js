@@ -2,7 +2,7 @@
 
 import dataForJs from "~/function/dataForJs";
 
-document.querySelector(".js__listingShowContactDetails").addEventListener("click", function () {
+document.querySelector(".js__listingShowContactDetails")?.addEventListener("click", function () {
     let ParamEnum = {};
     ParamEnum.LISTING_ID = "listingId";
     ParamEnum.SHOW_LISTING_PREVIEW_FOR_OWNER = "showListingPreviewForOwner";

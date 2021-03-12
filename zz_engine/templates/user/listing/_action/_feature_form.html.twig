@@ -7,8 +7,6 @@
     <input type="hidden" name="_method" value="PATCH">
     <input type="hidden" name="_token" value="{{ csrf_token('csrf_feature' ~ listing.id) }}">
     <button class="btn btn-block btn-primary">
-        {%- trans count package.daysFeaturedExpire with {'%featuredDays%': package.daysFeaturedExpire, '%price%': package.price | moneyPrecise} -%}
-            {1}trans.Feature for one day for %price%|]1,Inf[ Feature for %featuredDays% days for %price%
-        {%- endtrans -%}
+        {{ 'trans.Feature' | trans }}
     </button>
 </form>

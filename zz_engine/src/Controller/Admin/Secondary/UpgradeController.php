@@ -37,7 +37,6 @@ class UpgradeController extends AbstractAdminController
     public function upgrade(VersionCheckService $versionCheckService, CacheInterface $cache): Response
     {
         $this->denyUnlessAdmin();
-        $this->blockIfUpgradeDisabled();
 
         $cache->delete(AppCacheEnum::ADMIN_UPGRADE_CHECK);
 

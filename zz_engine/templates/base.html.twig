@@ -165,12 +165,6 @@
                         </ul>
                     </div>
                 </div>
-
-                {%- if app.user ~%}
-                    <a class="nav-link d-sm-none" href="{{ path('app_user_listing_list') }}">
-                        {{- 'trans.My listings' | trans -}}
-                    </a>
-                {%- endif ~%}
             </div>
         </nav>
     </div>

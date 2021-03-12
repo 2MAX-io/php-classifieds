@@ -34,6 +34,7 @@
 <body class="{{ environmentCssClass() }}">
 <div class="container-fluid page-top d-print-none">
     <div class="container container-remove-padding">
+        <!-- nav mobile -->
         <nav class="navbar navbar-top navbar-expand-lg navbar-light">
             <a class="navbar-brand" href="{{ path('app_index') }}" title="{{ settings.indexPageTitle }}"> {{- '' -}}
                 <img class="logo" src="{{ asset(settings.logoPath | default('static/system/logo_default.png')) }}" alt="{{ settings.indexPageTitle }}"/> {{- '' -}}
@@ -89,6 +90,30 @@
                             {{- 'trans.Last added' | trans -}}
                         </a> {{- '' -}}
                     </li>
+                    <li class="nav-item"> {{- '' -}}
+                        <a class="nav-link menu-top-item" href="{{ path('app_user_my_account') }}">
+                            {{- 'trans.My account' | trans -}}
+                        </a> {{- '' -}}
+                    </li>
+                    {%- if is_granted("ROLE_USER") ~%}
+                        <li class="nav-item"> {{- '' -}}
+                            <a class="nav-link menu-top-item" href="{{ path('app_listing_new') }}">
+                                {{- 'trans.Create Listing' | trans -}}
+                            </a> {{- '' -}}
+                        </li>
+                        {%- if settings.messageSystemEnabled ~%}
+                            <li class="nav-item"> {{- '' -}}
+                                <a class="nav-link menu-top-item" href="{{ path('app_user_message_list') }}">
+                                    {{- 'trans.Messages' | trans -}}
+                                </a> {{- '' -}}
+                            </li>
+                        {%- endif ~%}
+                        <li class="nav-item"> {{- '' -}}
+                            <a class="nav-link menu-top-item" href="{{ path('app_user_settings') }}">
+                                {{- 'trans.Settings' | trans -}}
+                            </a> {{- '' -}}
+                        </li>
+                    {%- endif ~%}
                 </ul>
 
                 {%- if isAdminInPublic() ~%}
@@ -124,7 +149,7 @@
                     </form>
                 </div>
 
-                <div class="col-md-4 container-remove-padding">
+                <div class="col-md-4 container-remove-padding d-none d-lg-block">
                     <div class="text-right mt-md-2">
                         <ul class="list-inline">
                             <li class="list-inline-item">
@@ -151,7 +176,7 @@
     </div>
 </div>
 
-<!-- navbar desktop -->
+<!-- nav desktop -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark d-none d-md-block menu-secondary d-print-none">
     <div class="container">
         <button {{- ' ' -}}

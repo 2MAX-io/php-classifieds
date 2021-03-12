@@ -13,24 +13,24 @@
             <i class="svg svg-plus-square mr-1"></i>
             <span>{{ 'trans.Create Listing' | trans }}</span>
         </a>
-        {% if settings.messageSystemEnabled %}
+        {%- if settings.messageSystemEnabled ~%}
             <a href="{{ path('app_user_message_list') }}" class="link-list-item text-dark">
                 <i class="svg svg-inbox mr-1"></i>
                 <span>{{ 'trans.Messages' | trans }}</span>
             </a>
-        {% endif %}
-        {% if settings.paymentAllowed %}
+        {%- endif ~%}
+        {%- if settings.paymentAllowed ~%}
             <a href="{{ path('app_user_balance_top_up') }}" class="link-list-item text-dark">
                 <i class="svg svg-money-check-alt mr-1"></i>
                 <span>{{ 'trans.Top up account' | trans }}</span>
             </a>
-        {% endif %}
-        {% if settings.paymentAllowed %}
+        {%- endif ~%}
+        {%- if settings.paymentAllowed ~%}
             <a href="{{ path('app_user_invoice_list') }}" class="link-list-item text-dark">
                 <i class="svg svg-envelope mr-1"></i>
                 <span>{{ 'trans.Invoices' | trans }}</span>
             </a>
-        {% endif %}
+        {%- endif ~%}
     </div>
 </div>
 

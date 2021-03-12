@@ -199,46 +199,6 @@ a.use-visited-color:visited {
     max-height: 80vh;
 }
 
-.cascader-main {
-    margin-bottom: 1rem;
-}
-
-.cascader-branch.cascader-click {
-    cursor: pointer;
-    padding-top: 0.3rem;
-    padding-bottom: 0.4rem;
-}
-
-.cascader-branch.cascader-click {
-    padding-left: 1rem;
-    padding-right: 1rem;
-}
-
-@media (min-width: 992px) {
-    .cascader-branch-list {
-        border-right: 1px solid #343a40;
-    }
-
-    .cascader-branch-list-header {
-        padding-left: 1rem;
-        padding-right: 1rem;
-    }
-
-    .cascader-level-0 .cascader-branch-list-header {
-        padding-left: 0;
-        padding-right: 0;
-    }
-}
-
-.cascader-branch.cascader-click:hover {
-    background-color: #e1e1e1;
-}
-
-.cascader-branch.cascader-click.cascader-selected {
-    background-color: #343a40;
-    color: white;
-}
-
 .index-category-title {
     margin-bottom: 0.75rem;
     font-size: 1.7rem;
@@ -743,55 +703,4 @@ div.clickable-div a.clickable-div-link {
     object-fit: cover;
     max-width: 4rem;
     height: 4rem;
-}
-
-.pricing .card {
-    border: 1px solid rgba(0, 0, 0, 0.125);
-    border-radius: 1rem;
-    transition: all 0.2s;
-}
-
-.pricing hr {
-    margin: 1.5rem 0;
-}
-
-.pricing .card-title {
-    margin: 0.5rem 0;
-    font-size: 0.9rem;
-    letter-spacing: .1rem;
-    font-weight: bold;
-}
-
-.pricing .card-price {
-    font-size: 3rem;
-    margin: 0;
-}
-
-.pricing .card-price .period {
-    font-size: 0.8rem;
-}
-
-.pricing .text-muted {
-    opacity: 0.7;
-}
-
-.pricing .btn {
-    font-size: 80%;
-    border-radius: 5rem;
-    letter-spacing: .1rem;
-    font-weight: bold;
-    padding: 1rem;
-    opacity: 0.7;
-    transition: all 0.2s;
-}
-
-/* Hover Effects on Card */
-
-@media (min-width: 992px) {
-    .pricing .card:hover {
-        border-color: rgba(0, 0, 0, 0.225);
-    }
-    .pricing .card:hover .btn {
-        opacity: 1;
-    }
 }

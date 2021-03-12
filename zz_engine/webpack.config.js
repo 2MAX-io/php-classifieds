@@ -29,7 +29,7 @@ Encore
     .addEntry('app_bottom', './assets/app_bottom.js')
     .addEntry('balance_top_up', './assets/public/payment/balance_top_up.js')
     .addEntry('payment_await_confirmation', './assets/public/payment/payment_await_confirmation.js')
-    .addEntry('feature_listing', './assets/public/feature_listing.js')
+    .addEntry('feature_listing', './assets/public/feature_listing/feature_listing.js')
     .addEntry('listing_edit', './assets/public/listing_edit.js')
     .addEntry('listing_list', './assets/public/listing_list.js')
     .addEntry('listing_list_map', './assets/public/listing_list_map.js')

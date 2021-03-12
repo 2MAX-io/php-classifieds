@@ -5,7 +5,7 @@
 {% block body %}
     <div class="container mt-4">
         <div class="row">
-            <div class="col-md-4 col-lg-3 mb-4">
+            <div class="col-md-4 col-lg-3 mb-4 d-none d-md-block">
                 {% include 'user/_part/user_navigation_card.html.twig' %}
             </div>
 
@@ -19,6 +19,10 @@
                     <a href="{{ path('app_user_change_email') }}" class="btn btn-secondary">
                         <i class="svg svg-envelope mr-1"></i>
                         <span>{{ 'trans.Change Email' | trans }}</span>
+                    </a>
+
+                    <a href="{{ path('app_logout_confirm') }}" class="btn btn-secondary">
+                        <span>{{ 'trans.Logout' | trans }}</span>
                     </a>
                 </div>
 

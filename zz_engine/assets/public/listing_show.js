@@ -16,7 +16,7 @@ $('[data-fancybox="file"]').fancybox({
     hash: false,
 });
 
-document.querySelector(".js__showListingOnMap").addEventListener("click", function () {
+document.querySelector(".js__showListingOnMap")?.addEventListener("click", function () {
     let $button = this;
     document.querySelector(".js__listingOnMap").style.display = "block";
     document.querySelector(".js__mapButtonWrapper").style.display = "none";

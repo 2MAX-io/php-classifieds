@@ -2,7 +2,8 @@
 
 import dataForJs from "~/function/dataForJs";
 
-document.querySelector(".js__listingShowContactDetails")?.addEventListener("click", function () {
+let onClick = function (event) {
+    event.preventDefault();
     let ParamEnum = {};
     ParamEnum.LISTING_ID = "listingId";
     ParamEnum.SHOW_LISTING_PREVIEW_FOR_OWNER = "showListingPreviewForOwner";
@@ -35,4 +36,7 @@ document.querySelector(".js__listingShowContactDetails")?.addEventListener("clic
             $button.style.display = "block";
             throw err;
         });
-});
+};
+
+document.querySelector(".js__listingShowContactDetails")?.addEventListener("click", onClick);
+document.querySelector(".js__listingShowContactDetails")?.addEventListener("touchstart", onClick);

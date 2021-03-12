@@ -6,8 +6,8 @@ import dataForJs from "~/function/dataForJs";
 import Routing from "~/module/Routing";
 import Translator from "~/module/Translator";
 import "~/module/fileuploader/jquery.fileuploader.min";
-import "~/module/fileuploader/jquery.fileuploader.min.css";
 import "~/module/fileuploader/font/font-fileuploader.css";
+import "~/module/fileuploader/jquery.fileuploader.min.css";
 import "~/function/fancy-confirm";
 
 let saveEditedImage = function (image, item) {
@@ -98,7 +98,9 @@ $("#js__listingFileUpload").fileuploader({
             // add sorter button to the item html
             item.html
                 .find(".fileuploader-action-remove")
-                .before('<a class="fileuploader-action fileuploader-action-sort" title="Sort"><i></i></a>');
+                .before(
+                    '<button type="button" class="fileuploader-action fileuploader-action-sort" title="Sort"><i class="fileuploader-icon-sort"></i></button>'
+                );
         },
         onImageLoaded: function (item) {
             // if (!item.html.find('.fileuploader-action-edit').length)

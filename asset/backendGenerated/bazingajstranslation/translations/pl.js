@@ -901,6 +901,7 @@ t.add("trans.In order to log in, give permission to share your email address or 
 t.add("trans.The link to the registration and login using your email address is available down below", "Link do rejestracji i logowania przy u\u017cyciu adresu email jest dost\u0119pny poni\u017cej", "messages", "pl");
 t.add("trans.Register using email address", "Zarejestruj si\u0119 u\u017cywaj\u0105c adresu email", "messages", "pl");
 t.add("trans.or if you chose to share email address", "lub je\u017celi zdecydujesz si\u0119 na udost\u0119pnienie adresu email", "messages", "pl");
+t.add("trans.Feature", "Wyr\u00f3\u017cnij", "messages", "pl");
 t.add("\u2014", "\u2014", "messages", "pl");
 t.add("Year", "Rok", "messages", "pl");
 t.add("Month", "Miesi\u0105c", "messages", "pl");

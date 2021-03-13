@@ -5,17 +5,9 @@
 {% block body %}
     <!-- cat header -->
     <div class="container mt-2 mt-md-3 mb-2">
-        <div class="d-flex flex-row">
+        <div class="flex-row d-none d-md-flex">
             <div class="flex-grow-1 d-none d-sm-block">
                 <h2>{{ 'trans.Categories' | trans }}</h2>
-            </div>
-            <div class="d-md-none">
-                <a href="{{ path('app_category_view_all') }}" class="btn btn-light">
-                    {{- 'trans.All categories' | trans -}}
-                </a>
-                <a href="{{ path('app_last_added') }}" class="btn btn-light">
-                    {{- 'trans.Last added' | trans -}}
-                </a>
             </div>
             <div class="d-none d-md-block">
                 <a href="{{ path('app_category_view_all') }}" class="btn btn-light">
@@ -26,6 +18,14 @@
                 </a>
             </div>
         </div>
+        <div class="d-md-none row container-padding">
+            <a href="{{ path('app_category_view_all') }}" class="btn btn-light col-6 text-truncate">
+                {{- 'trans.All categories' | trans -}}
+            </a>
+            <a href="{{ path('app_last_added') }}" class="btn btn-light col-6">
+                {{- 'trans.Last added' | trans -}}
+            </a>
+        </div>
     </div>
 
     <!-- cat list -->
@@ -33,18 +33,18 @@
         <div class="row">
             {%- for category in categoryList ~%}
             <div class="col-sm-6 col-lg-3 text-center mb-4">
-                <div class="card bg-light text-white">
+                <div class="card bg-light">
                     <a {{- ' ' -}}
                             href="{{ path('app_category', {'categorySlug': category.slug}) }}" {{- ' ' -}}
                             title="{{ category.name }}" {{- ' ' -}}
-                            class="text-white" {{- ' ' -}}
+                            class="index-category-link" {{- ' ' -}}
                     >
                         <img {{- ' ' -}}
                                 class="index-category-img" {{- ' ' -}}
                                 src="{{ asset(category.picture | default('static/system/blank.png')) }}" {{- ' ' -}}
                                 alt="{{ category.name }}" {{- ' ' -}}
                         >
-                        <div class="card-img-overlay"> {{- ' ' -}}
+                        <div class="index-category-img-overlay"> {{- ' ' -}}
                             <h5 class="card-title index-category-title">{{ category.name }}</h5> {{- ' ' -}}
                         </div>
                     </a>
@@ -57,6 +57,36 @@
             {%- endfor ~%}
         </div>
     </div>
+
+{#    <!-- cat list -->#}
+{#    <div class="container mb-0 mb-md-2">#}
+{#        <div class="row">#}
+{#            {%- for category in categoryList ~%}#}
+{#                <div class="col-sm-6 col-lg-3 mb-2">#}
+{#                    <div class="card index-category-card d-flex">#}
+{#                        <a {{- ' ' -}}#}
+{#                                href="{{ path('app_category', {'categorySlug': category.slug}) }}" {{- ' ' -}}#}
+{#                                title="{{ category.name }}" {{- ' ' -}}#}
+{#                                class="index-category-link" {{- ' ' -}}#}
+{#                        >#}
+{#                            <img {{- ' ' -}}#}
+{#                                    class="index-category-img" {{- ' ' -}}#}
+{#                                    src="{{ asset(category.picture | default('static/system/blank.png')) }}" {{- ' ' -}}#}
+{#                                    alt="{{ category.name }}" {{- ' ' -}}#}
+{#                            >#}
+{#                            <div class="mt-2 h-100">#}
+{#                                <h5 class="d-inline index-category-title align-middle">{{ category.name }}</h5> {{- ' ' -}}#}
+{#                            </div>#}
+{#                        </a>#}
+{#                    </div>#}
+{#                </div>#}
+{#            {%- else ~%}#}
+{#                <div class="alert alert-info w-100">#}
+{#                    {{ 'trans.No categories found, try again latter' | trans }}#}
+{#                </div>#}
+{#            {%- endfor ~%}#}
+{#        </div>#}
+{#    </div>#}
 
     <!-- latest listings -->
     {%- if recommendedListings and latestListings ~%}

@@ -7,6 +7,8 @@ import "~/function/fancy-confirm";
 import { preventDoubleClick } from "~/function/preventDoubleClick";
 import Translator from "~/module/Translator";
 import ParamEnum from "~/enum/ParamEnum";
+import Routing from "~/module/Routing";
+import defaultFileUpload from "~/module/fileuploader/fileuploader";
 
 new Cleave(".js__inputMoney", {
     numeral: true,
@@ -35,14 +37,33 @@ import("../../../node_modules/cleave.js/dist/addons/cleave-phone." + countryIso)
         throw error;
     });
 
+$("#js__listingFileUpload").fileuploader(
+    $.extend(defaultFileUpload, {
+        limit: 10,
+        files: dataForJs[ParamEnum.LISTING_FILES],
+        onRemove: function (item) {
+            if ("listingFileId" in item.data) {
+                $.post(Routing.generate("app_listing_file_remove"), {
+                    listingFileId: item.data.listingFileId,
+                });
+            }
+
+            return true;
+        },
+    })
+);
+
+let fileUploadInstance = $.fileuploader.getInstance("#js__listingFileUpload");
+
 let isUploadFinished = function () {
-    let chosenFiles = $.fileuploader.getInstance("#js__listingFileUpload").getChoosedFiles();
-    let noFilesUploaded = chosenFiles[0] === undefined;
-    if (noFilesUploaded) {
-        return true;
+    let chosenFiles = fileUploadInstance.getChoosedFiles();
+    for (let chosenFile of chosenFiles) {
+        if (!chosenFile.uploaded) {
+            return false;
+        }
     }
 
-    return chosenFiles[0].uploaded;
+    return true;
 };
 
 $(".js__listingFormSaveButton").on("click", function (event) {
@@ -61,23 +82,33 @@ $(".js__listingFormSaveButton").on("click", function (event) {
 
     event.preventDefault();
 
-    window.setTimeout(function () {
+    let confirmWindowDisplayed = false;
+    let checkUploadFinished = () => {
         if (isUploadFinished()) {
             $(button).trigger("click");
         } else {
-            $.fancyConfirm({
-                message: Translator.trans(
-                    "trans.Some files are still uploading, are you sure you want to submit form now?"
-                ),
-                okButton: Translator.trans("trans.Yes"),
-                noButton: Translator.trans("trans.Cancel"),
-                callback: function (confirmed) {
-                    if (confirmed) {
-                        $(button).data("force-submit", true);
-                        $(button).trigger("click");
-                    }
-                },
-            });
+            if (!confirmWindowDisplayed) {
+                confirmWindowDisplayed = true;
+                $.fancyConfirm({
+                    message: Translator.trans(
+                        "trans.Some files are still uploading, are you sure you want to submit form now?"
+                    ),
+                    okButton: Translator.trans("trans.Yes"),
+                    noButton: Translator.trans("trans.Cancel"),
+                    callback: function (confirmed) {
+                        if (confirmed) {
+                            $(button).data("force-submit", true);
+                            $(button).trigger("click");
+                        }
+                    },
+                });
+            }
+
+            window.setTimeout(function () {
+                checkUploadFinished();
+            }, 360);
         }
-    }, 1000);
+    };
+
+    checkUploadFinished();
 });

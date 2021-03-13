@@ -1,8 +1,6 @@
 "use strict";
 
 import $ from "jquery";
-import ParamEnum from "~/enum/ParamEnum";
-import dataForJs from "~/function/dataForJs";
 import Routing from "~/module/Routing";
 import Translator from "~/module/Translator";
 import "~/module/fileuploader/jquery.fileuploader.min";
@@ -61,13 +59,11 @@ let saveEditedImage = function (image, item) {
     }
 };
 
-$("#js__listingFileUpload").fileuploader({
+export default {
     fileMaxSize: 40,
     extensions: ["jpg", "jpeg", "png", "gif"],
-    limit: 10,
     addMore: true,
     enableApi: true,
-    files: dataForJs[ParamEnum.LISTING_FILES],
     thumbnails: {
         popup: {
             onShow: function (item) {
@@ -222,15 +218,6 @@ $("#js__listingFileUpload").fileuploader({
 
         return list;
     },
-    onRemove: function (item) {
-        if ("listingFileId" in item.data) {
-            $.post(Routing.generate("app_listing_file_remove"), {
-                listingFileId: item.data.listingFileId,
-            });
-        }
-
-        return true;
-    },
     sorter: {
         selectorExclude: null,
         placeholder: null,
@@ -303,4 +290,4 @@ $("#js__listingFileUpload").fileuploader({
             folderUpload: Translator.trans("trans.You are not allowed to upload folders"),
         },
     },
-});
+};

@@ -84,6 +84,9 @@ Encore
 
     .configureBabel((config) => {
         config.plugins.push('@babel/plugin-proposal-class-properties');
+        config.plugins.push('@babel/plugin-proposal-object-rest-spread');
+    }, {
+        includeNodeModules: ['bootstrap'],
     })
 
     // enables @babel/preset-env polyfills

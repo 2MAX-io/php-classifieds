@@ -6,6 +6,7 @@
   "dependencies": {},
   "devDependencies": {
     "@babel/plugin-proposal-class-properties": "^7.13.0",
+    "@babel/plugin-proposal-object-rest-spread": "^7.13.8",
     "@fancyapps/fancybox": "^3.5.7",
     "@fortawesome/fontawesome-free": "^5.2.0",
     "@symfony/webpack-encore": "^1.1.0",

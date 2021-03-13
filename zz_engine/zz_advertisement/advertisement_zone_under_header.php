@@ -38,5 +38,5 @@ if (empty($zoneId)) {
         if (document.mmm_fo) document.write ("&amp;mmm_fo=1");
         document.write ("'><\/scr"+"ipt>");
     </script>
-    <noscript><a href='http://www.jaslo4u.pl/revive-adserver-4.1.4/www/delivery/ck.php?n=ab5ccf51&amp;cb=INSERT_RANDOM_NUMBER_HERE' target='_blank'><img src='http://www.jaslo4u.pl/revive-adserver-4.1.4/www/delivery/avw.php?zoneid=<?php echo StringHelper::escape((string) $zoneId); ?>&amp;cb=INSERT_RANDOM_NUMBER_HERE&amp;n=ab5ccf51&amp;ct0=INSERT_CLICKURL_HERE' class="border-0" alt='' /></a></noscript>
+    <noscript><a href='http://www.jaslo4u.pl/revive-adserver-4.1.4/www/delivery/ck.php?n=ab5ccf51&amp;cb=INSERT_RANDOM_NUMBER_HERE' target='_blank'><img src='http://www.jaslo4u.pl/revive-adserver-4.1.4/www/delivery/avw.php?zoneid=<?php echo StringHelper::escape((string) $zoneId); ?>&amp;cb=INSERT_RANDOM_NUMBER_HERE&amp;n=ab5ccf51&amp;ct0=INSERT_CLICKURL_HERE' class="border-0" alt='' rel="noopener" /></a></noscript>
 </div>

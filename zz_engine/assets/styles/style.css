@@ -454,6 +454,10 @@ input.form-control, textarea.form-control, select.form-control {
     border: 1px solid #dddddd;
 }
 
+.listing-show-expired img {
+    filter: grayscale(95%);
+}
+
 .listing-contact-data-wrapper {
     min-height: 38px;
 }

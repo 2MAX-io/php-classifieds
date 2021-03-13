@@ -24,7 +24,7 @@
         {%- endfor ~%}
     </div>
 
-    <div class="container mt-3 listing-show">
+    <div class="container mt-3 listing-show {% if displayAsExpired %}listing-show-expired{% endif %}">
         <div class="row">
             <div class="col-md-7">
                 {%- if

@@ -2,18 +2,17 @@
 
 import dataForJs from "~/function/dataForJs";
 
-let onClick = function (event) {
-    event.preventDefault();
+let loadContactData = ($contactDataButton) => {
     let ParamEnum = {};
     ParamEnum.LISTING_ID = "listingId";
     ParamEnum.SHOW_LISTING_PREVIEW_FOR_OWNER = "showListingPreviewForOwner";
     ParamEnum.SHOW_CONTACT_HTML = "showContactHtml";
 
-    let $button = this;
     var formData = new FormData();
-    formData.append(ParamEnum.LISTING_ID, $button.getAttribute("data-listing-id"));
+    formData.append(ParamEnum.LISTING_ID, $contactDataButton.getAttribute("data-listing-id"));
     formData.append(ParamEnum.SHOW_LISTING_PREVIEW_FOR_OWNER, dataForJs[ParamEnum.SHOW_LISTING_PREVIEW_FOR_OWNER]);
-    fetch($button.getAttribute("data-route"), {
+
+    fetch($contactDataButton.getAttribute("data-route"), {
         method: "post",
         body: formData,
         headers: {
@@ -28,14 +27,27 @@ let onClick = function (event) {
 
             document.querySelector(".js__listingContactData")?.remove();
 
-            $button.insertAdjacentHTML("beforebegin", jsonData[ParamEnum.SHOW_CONTACT_HTML]);
-            $button.style.display = "none";
+            $contactDataButton.insertAdjacentHTML("beforebegin", jsonData[ParamEnum.SHOW_CONTACT_HTML]);
+            $contactDataButton.style.display = "none";
         })
         .catch((err) => {
             document.querySelectorAll(".js__listingContactData").forEach((element) => element.remove());
-            $button.style.display = "block";
+            $contactDataButton.style.display = "block";
             throw err;
         });
+};
+
+let onClick = function (event) {
+    event.preventDefault();
+    let $contactDataButton = this;
+    if (typeof window.fetch !== "function") {
+        import("whatwg-fetch").then((module) => {
+            window.fetch = module.fetch;
+            loadContactData($contactDataButton);
+        });
+        return;
+    }
+    loadContactData($contactDataButton);
 };
 
 document.querySelector(".js__listingShowContactDetails")?.addEventListener("click", onClick);

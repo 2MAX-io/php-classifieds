@@ -25,7 +25,8 @@
     "prunecluster": "^2.1.0",
     "sortablejs": "^1.13.0",
     "stacktrace-js": "^2.0.2",
-    "webpack-notifier": "^1.6.0"
+    "webpack-notifier": "^1.6.0",
+    "whatwg-fetch": "^3.6.2"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

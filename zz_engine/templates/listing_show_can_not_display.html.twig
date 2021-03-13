@@ -2,6 +2,10 @@
 
 {# @var settings \App\Service\Setting\SettingsDto #}
 {% set settings = settings() %}
+{% set isCurrentUserListing = isCurrentUserListing(listing) %}
+{% set isAdminInPublic = isAdminInPublic() %}
+{% set userOrAdmin = userOrAdmin(listing) %}
+{% set displayAsExpired = displayAsExpired(listing) %}
 
 {% block title -%}
     {{- listing.category.parent.name }}
@@ -11,27 +15,28 @@
 
 {% block body %}
     <div class="container mt-3 mb-3 text-break">
-        {%- if settings.masterSiteLinkShow -%}
+        {%- if settings.masterSiteLinkShow ~%}
             <a href="{{ settings.masterSiteUrl }}">{{ settings.masterSiteAnchorText }}</a>
             {{- ' > ' -}}
-        {%- endif -%}
+        {%- endif ~%}
 
         <a href="{{ path('app_index') }}">{{ 'trans.Classifieds' | trans }}</a>
 
-        {%- for category in categoryBreadcrumbs -%}
-            {{- ' > ' -}}<a href="{{ path('app_category', {'categorySlug': category.slug}) }}">{{ category.name }}</a>
-        {%- endfor -%}
+        {%- for category in categoryBreadcrumbs ~%}
+            {{- ' > ' -}}
+            <a href="{{ path('app_category', {'categorySlug': category.slug}) }}">{{ category.name }}</a>
+        {%- endfor ~%}
     </div>
 
     <div class="container mt-3 listing-show">
         <div class="row">
             <div class="col-md-7">
-                {% if userOrAdmin(listing) %}
+                {%- if userOrAdmin ~%}
                     <a href="{{ path('app_listing_show', {'id': listing.id, 'slug': listing.slug, 'showListingPreviewForOwner': 1}) }}" class="btn btn-primary w-100 mb-2">
                         <div>{{- 'trans.Current status' | trans -}}: <span class="{{ getListingStatusClass(listing) }}">{{ getListingStatus(listing) }}</span></div>
                         <div>{{- 'trans.Live view, click to preview how listing would look after activation' | trans -}}</div>
                     </a>
-                {% endif %}
+                {%- endif ~%}
                 <div class="alert alert-danger">
                     {% if listing.status in [constant('\App\\Entity\\Listing::STATUS_PENDING')] %}
                         <h1>{{ 'trans.Listing awaits activation' | trans }}</h1>
@@ -62,52 +67,56 @@
                     </div>
                 </div>
 
+                <!-- listing id -->
                 <div class="mb-2 d-none d-md-block">
-                    {{- 'trans.Listing identifier' | trans }}: {{ listing.id -}}
+                    <div>
+                        {{- 'trans.Listing identifier' | trans }}: {{ listing.id -}}
+                    </div>
+                    <a href="{{ path('app_report_listing', {'listing': listing.id}) }}" class="small">
+                        {{- 'trans.Report abuse' | trans -}}
+                    </a>
                 </div>
                 <!-- end main content -->
             </div>
 
             <!-- Sidebar -->
             <div class="col-md-5">
-                <div class="d-none-soft d-md-block">
-                    {% if isCurrentUserListing(listing) %}
+                <div class="d-none-soft d-md-block mb-2">
+                    {%- if isCurrentUserListing ~%}
                         <a href="{{ path('app_user_listing_edit', {'id': listing.id}) }}" class="btn btn-primary mb-2 mr-1">
                             {{- 'trans.Edit listing' | trans -}}
                         </a>
-                    {% endif %}
+                    {%- endif ~%}
 
-                    {% if isAdminInPublic() %}
+                    {%- if isAdminInPublic ~%}
                         <a href="{{ path('app_admin_listing_edit', {'id': listing.id}) }}" class="btn btn-outline-danger mb-2 mr-1">
                             {{- 'trans.Edit listing as Admin' | trans -}}
                         </a>
-                    {% endif %}
+                    {%- endif %}
 
-                    {% if userOrAdmin(listing) %}
-                        <span class="{{ getListingStatusClass(listing) }} text-nowrap">
-                            {{- getListingStatus(listing) -}}
-                        </span>
-                    {% endif %}
+                    {%- if userOrAdmin ~%}
+                        <span class="{{ getListingStatusClass(listing) }} text-nowrap">{{ getListingStatus(listing) }}</span>
+                    {%- endif %}
 
-                    {% if isAdminInPublic() %}
+                    {%- if isAdminInPublic ~%}
                         <div>
-                            {%- if listingToActivateForAdmin(listing) -%}
+                            {%- if listingToActivateForAdmin(listing) ~%}
                                 {{ include('admin/listing/_action/_admin_activate_redirect_to_next_waiting_form.html.twig') }}
-                            {% endif %}
+                            {%- endif %}
 
-                            {% if listingToRejectForAdmin(listing) %}
+                            {%- if listingToRejectForAdmin(listing) ~%}
                                 {{ include('admin/listing/_action/_admin_reject_form.html.twig') }}
-                            {% endif %}
+                            {%- endif ~%}
 
                             {{ include('admin/listing/_action/_admin_next_waiting_form.html.twig') }}
                         </div>
                     {% endif %}
                 </div>
 
-                <!-- info -->
+                <!-- contact, info panel -->
                 <div class="card mb-3 w-100">
-                    <div class="card-body">
-                        <div class="mb-2 py-2">
+                    <div class="card-body py-3">
+                        <div class="mb-3">
                             <div class="row">
                                 <div class="col-sm-4 col-md-5">
                                     {{- 'trans.Date added' | trans -}}
@@ -118,7 +127,7 @@
                             </div>
                         </div>
 
-                        <div class="mb-2 py-2">
+                        <div class="mb-3">
                             <div class="row">
                                 <div class="col-sm-4 col-md-5">
                                     {{- 'trans.Expiration date' | trans -}}
@@ -129,7 +138,28 @@
                             </div>
                         </div>
 
-                        <div class="mb-2 py-2">
+                        <div class="mb-3">
+                            <div class="row">
+                                <div class="col-sm-4 col-md-5">
+                                    {{- 'trans.User' | trans -}}
+                                </div>
+                                <div class="col-sm-8 col-md-7">
+                                    <span>{{ listing.user | displayUserName }}</span>
+                                    {%- if isCurrentUserListing and listing.user.displayUsername is null ~%}
+                                        <a href="{{ path('app_user_settings') }}#display-username" class="btn btn-sm btn-dark">
+                                            {{- 'trans.change' | trans -}}
+                                        </a>
+                                    {%- endif ~%}
+                                    <div>
+                                        <a href="{{ path('app_public_listings_of_user', {"user": listing.user.id}) }}">
+                                            {{- 'trans.other listings' | trans -}}
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
                             <div class="row">
                                 <div class="col-sm-4 col-md-5">
                                     {{- 'trans.Listing identifier' | trans -}}
@@ -141,16 +171,27 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- listing id -->
+                <div class="mb-2 px-1 d-md-none">
+                    <div>
+                        {{- 'trans.Listing identifier' | trans }}: {{ listing.id -}}
+                    </div>
+                    <a href="{{ path('app_report_listing', {'listing': listing.id}) }}" class="small">
+                        {{- 'trans.Report abuse' | trans -}}
+                    </a>
+                </div>
             </div>
         </div>
     </div>
 {% endblock body %}
 
 {% block js %}
+    {{ encore_entry_script_tags('listing_contact_data') }}
     {{ encore_entry_link_tags('listing_show') }}
     {{ encore_entry_script_tags('listing_show') }}
 
-    {% if isAdminInPublic() %}
+    {% if isAdminInPublic %}
         {{ encore_entry_link_tags('admin_listing_show') }}
         {{ encore_entry_script_tags('admin_listing_show') }}
     {% endif %}

@@ -12,9 +12,17 @@
     <h2 class="text-break">
         {{- 'trans.Report listing' | trans -}}
         {{- ': ' -}}
-        <a href="{{ path('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}">
-            {{- listing.title -}}
-        </a>
+        {%- if displayAsExpired(listing) ~%}
+            <a href="{{ path('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}">
+                {{- 'trans.Listing identifier' | trans -}}
+                {{- ': ' -}}
+                {{- listing.id -}}
+            </a>
+        {%- else ~%}
+            <a href="{{ path('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}">
+                {{- listing.title -}}
+            </a>
+        {%- endif ~%}
     </h2>
     <div class="text-muted mb-2">
         {{- 'trans.Listing identifier' | trans -}}

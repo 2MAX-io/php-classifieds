@@ -321,13 +321,11 @@
                                             {{- 'trans.change' | trans -}}
                                         </a>
                                     {%- endif ~%}
-                                    {%- if not displayAsExpired ~%}
-                                        <div>
-                                            <a href="{{ path('app_public_listings_of_user', {"user": listing.user.id}) }}">
-                                                {{- 'trans.other listings' | trans -}}
-                                            </a>
-                                        </div>
-                                    {%- endif ~%}
+                                    <div>
+                                        <a href="{{ path('app_public_listings_of_user', {"user": listing.user.id}) }}">
+                                            {{- 'trans.other listings' | trans -}}
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>

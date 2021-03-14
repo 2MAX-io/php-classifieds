@@ -498,6 +498,16 @@ input.form-control, textarea.form-control, select.form-control {
     filter: grayscale(95%);
 }
 
+.listing-show-contact-btn {
+    width: 100%;
+}
+
+@media (max-width: 1024px) {
+    .listing-show-contact-btn {
+        min-height: 3em;
+    }
+}
+
 .listing-contact-data-wrapper {
     min-height: 38px;
 }
@@ -735,6 +745,7 @@ div.clickable-div a.clickable-div-link {
     bottom: 2em;
     z-index: 1;
     width: 100%;
+    min-height: 3em;
 }
 
 .map-popup-wrapper {

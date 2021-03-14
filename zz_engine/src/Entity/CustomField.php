@@ -69,7 +69,7 @@ class CustomField
      *
      * @ORM\Column(type="boolean", nullable=false)
      */
-    private $inlineOnList;
+    private $inlineOnList = true;
 
     /**
      * @var int

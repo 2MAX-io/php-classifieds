@@ -20,6 +20,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraint;
+use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
 use Symfony\Component\Validator\Constraints\LessThanOrEqual;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -127,11 +128,13 @@ class ListingCustomFieldsType extends AbstractType
                     'constraints' => \array_merge(
                         $this->getConstraints($customField),
                         [
+                            new GreaterThanOrEqual(['value' => 0]),
                             new LessThanOrEqual(['value' => $maxIntegerValue]),
                         ],
                     ),
                     'required' => $customField->getRequired(),
                     'attr' => [
+                        'min' => 0,
                         'max' => $maxIntegerValue,
                     ],
                 ]);

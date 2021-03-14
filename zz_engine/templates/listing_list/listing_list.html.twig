@@ -258,6 +258,12 @@
                                                                 {{- customFieldInline.value -}}
                                                             {%- endif -%}
                                                         </strong> {{- '' -}}
+                                                        {%- if customFieldInline.unit  -%}
+                                                            <span class="small">
+                                                                {{- ' ' -}}
+                                                                {{- customFieldInline.unit -}}
+                                                            </span>
+                                                        {%- endif -%}
                                                     </div>
                                                 {%- endfor ~%}
                                             </div>

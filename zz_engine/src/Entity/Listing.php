@@ -458,11 +458,7 @@ class Listing
         try {
             $customFieldListArray = JsonHelper::toArray($this->getCustomFieldsInlineJson()) ?? [];
             foreach ($customFieldListArray as $customFieldArray) {
-                $customFieldInline = new CustomFieldInlineDto();
-                $customFieldInline->name = $customFieldArray['name'];
-                $customFieldInline->value = $customFieldArray['value'];
-                $customFieldInline->type = $customFieldArray['type'];
-                $return[] = $customFieldInline;
+                $return[] = CustomFieldInlineDto::fromArray($customFieldArray);
             }
         } catch (\Throwable $e) {
             return [];

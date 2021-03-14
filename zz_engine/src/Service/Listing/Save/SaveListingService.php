@@ -201,6 +201,7 @@ class SaveListingService
                 custom_field.name AS name,
                 COALESCE(custom_field_option.name, listing_custom_field_value.value) AS value,
                 custom_field.type AS type,
+                custom_field.unit AS unit,
                 null
             FROM listing_custom_field_value
             JOIN listing ON listing.id = listing_custom_field_value.listing_id
@@ -209,7 +210,9 @@ class SaveListingService
                 && custom_field_for_category.custom_field_id = custom_field.id
                 && custom_field_for_category.category_id = listing.category_id
             LEFT JOIN custom_field_option ON custom_field_option.id = listing_custom_field_value.custom_field_option_id
-            WHERE listing.id = :listing_id
+            WHERE true 
+                && listing.id = :listing_id
+                && custom_field.inline_on_list
             ORDER BY custom_field_for_category.sort ASC
             LIMIT 6
         ');

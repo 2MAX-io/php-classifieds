@@ -65,6 +65,13 @@ class CustomField
     private $searchable;
 
     /**
+     * @var bool
+     *
+     * @ORM\Column(type="boolean", nullable=false)
+     */
+    private $inlineOnList;
+
+    /**
      * @var int
      *
      * @ORM\Column(type="smallint", nullable=false, options={"unsigned"=true})
@@ -302,5 +309,15 @@ class CustomField
         $this->nameForAdmin = $nameForAdmin;
 
         return $this;
+    }
+
+    public function getInlineOnList(): bool
+    {
+        return $this->inlineOnList;
+    }
+
+    public function setInlineOnList(bool $inlineOnList): void
+    {
+        $this->inlineOnList = $inlineOnList;
     }
 }

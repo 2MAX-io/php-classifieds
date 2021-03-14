@@ -6,7 +6,8 @@ import Sortable from "sortablejs";
 import "~/function/jqueryAjaxaddCsrfHeader";
 import "~/module/confirm";
 
-let sortableElement = $(".js__sortable");
+/** @type {HTMLElement} */
+let sortableElement = document.querySelector(".js__sortable");
 if (sortableElement) {
     let sortable = new Sortable(sortableElement, {
         handle: ".js__sortableHandle",

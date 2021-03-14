@@ -467,6 +467,7 @@ t.add("trans.The link to the registration and login using your email address is 
 t.add("trans.Register using email address", "Register using email address", "messages", "en");
 t.add("trans.or if you chose to share email address", "or if you chose to share email address", "messages", "en");
 t.add("trans.Feature", "Feature", "messages", "en");
+t.add("trans.Inline on lists", "Inline on lists", "messages", "en");
 t.add("trans.customFieldType.SELECT_AS_CHECKBOXES", "Checkboxes in filters, single select when editing", "messages", "en");
 t.add("trans.customFieldType.SELECT_SINGLE", "Single selection field", "messages", "en");
 t.add("trans.customFieldType.YEAR_RANGE", "Field with year", "messages", "en");

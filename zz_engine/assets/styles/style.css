@@ -346,8 +346,9 @@ input.form-control, textarea.form-control, select.form-control {
 }
 
 .page-item.prev .page-link, .page-item.next .page-link {
-    text-align: center;
     min-width: 7rem;
+    text-align: center;
+    white-space: nowrap;
 }
 
 .page-item.prev .page-link {

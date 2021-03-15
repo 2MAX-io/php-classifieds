@@ -17,12 +17,12 @@
                         href="{{ _self.pagePath(pager.previousPage, _context) }}" {{- ' ' -}}
                         rel="prev" {{- ' ' -}}
                 >
-                    {{- '🢐 ' -}}
+                    {{- '< ' -}}
                     {{- 'trans.Previous' | trans -}}
                 </a>
             {%- else ~%}
                 <span class="page-link">
-                    {{- '🢐 ' -}}
+                    {{- '<🢐> ' -}}
                     {{- 'trans.Previous' | trans -}}
                 </span>
             {%- endif ~%}
@@ -73,7 +73,7 @@
                         rel="next" {{- ' ' -}}
                 >
                     {{- 'trans.Next' | trans -}}
-                    {{- ' 🢒' -}}
+                    {{- ' >' -}}
                 </a>
         </li>
         {%- endif ~%}

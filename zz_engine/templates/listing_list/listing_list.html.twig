@@ -234,20 +234,25 @@
                                             <div class="listing-list-details">
                                                 {%- if listing.price is not empty ~%}
                                                     <div class="mt-1 d-inline-block"> {{- '' -}}
-                                                        <span class="btn btn-dark btn-sm price mr-2">
-                                                            {{- 'trans.Price' | trans }}: {{ listing.price | money -}}
-                                                        </span>
-
-                                                        {%- if listing.priceFor -%}
-                                                            <span class="mr-1"> {{- '' -}}
-                                                                {{- ('trans.priceFor.'~listing.priceFor) | trans -}}
-                                                            </span>
-                                                        {%- endif -%}
+                                                        <div class="name-value-group d-none d-md-inline-block"> {{- '' -}}
+                                                            <div class="name text-break">
+                                                                {{- 'trans.Price' | trans -}}
+                                                            </div> {{- '' -}}
+                                                            <strong class="text-break">
+                                                                {{- listing.price | money -}}
+                                                            </strong>
+                                                            {%- if listing.priceFor -%}
+                                                                <span> {{- '' -}}
+                                                                    {{- ' ' -}}
+                                                                    {{- ('trans.priceFor.'~listing.priceFor) | trans -}}
+                                                                </span>
+                                                            {%- endif -%}
+                                                        </div>
                                                     </div>
                                                 {%- endif ~%}
 
                                                 {%- for customFieldInline in listing.customFieldsInline -%}
-                                                    <div class="name-value-group mb-1 mr-1 small d-none d-md-inline-block"> {{- '' -}}
+                                                    <div class="name-value-group d-none d-md-inline-block"> {{- '' -}}
                                                         <div class="name text-break">
                                                             {{- customFieldInline.name -}}
                                                         </div> {{- '' -}}

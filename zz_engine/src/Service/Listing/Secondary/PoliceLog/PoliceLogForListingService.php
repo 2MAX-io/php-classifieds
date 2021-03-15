@@ -111,7 +111,7 @@ Listing details:
     Title: {$listing->getTitle()}
     Phone: {$listing->getPhone()}
     Price: {$listing->getPrice()}
-    City: {$listing->getLocation()}
+    Location: {$listing->getLocation()}
     Email used in listing: {$listing->getEmail()}
     Registered user email: {$userEmail}
     Listing URL: {$listingUrl}

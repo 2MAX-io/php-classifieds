@@ -350,13 +350,14 @@ input.form-control, textarea.form-control, select.form-control {
 
 .listing-list-item {
     position: relative;
-    border: 1px solid rgba(0, 0, 0, .125);
-    border-bottom: 3px solid #e0e0e0;
     border-radius: 0.30rem;
     cursor: pointer;
     margin-bottom: 0.5rem;
     -webkit-user-drag: none;
     user-select: none;
+    background-color: #fff;
+    border: 1px solid #ececec;
+    border-bottom: 3px solid #e0e0e0;
 }
 
 .listing-list-item .name-value-group {
@@ -376,7 +377,7 @@ input.form-control, textarea.form-control, select.form-control {
     overflow: hidden;
 }
 
-@media (min-width: 576px) {
+@media (min-width: 768px) {
     .listing-list-details {
         max-height: 4.3rem;
     }
@@ -388,7 +389,6 @@ input.form-control, textarea.form-control, select.form-control {
     max-height: 8em;
     border-top-left-radius: 0.25rem;
     border-top-right-radius: 0.25rem;
-    background-color: #fff;
 }
 
 @media (min-width: 576px) {

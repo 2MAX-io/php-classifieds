@@ -16,12 +16,15 @@
                         class="page-link" {{- ' ' -}}
                         href="{{ _self.pagePath(pager.previousPage, _context) }}" {{- ' ' -}}
                         rel="prev" {{- ' ' -}}
-                        title="{{- 'trans.Previous' | trans -}}" {{- ' ' -}}
                 >
-                    {{- '⮜ ' -}}
+                    {{- '🢐 ' -}}
+                    {{- 'trans.Previous' | trans -}}
                 </a>
             {%- else ~%}
-                <span class="page-link">{{- '⮜ ' -}}</span>
+                <span class="page-link">
+                    {{- '🢐 ' -}}
+                    {{- 'trans.Previous' | trans -}}
+                </span>
             {%- endif ~%}
         </li>
         {%- if pager.currentPage == 1 ~%}
@@ -68,9 +71,9 @@
                         class="page-link" {{- ' ' -}}
                         href="{{ _self.pagePath(pager.nextPage, _context) }}" {{- ' ' -}}
                         rel="next" {{- ' ' -}}
-                        title="{{- 'trans.Next' | trans -}}" {{- ' ' -}}
                 >
-                    {{- ' ⮞' -}}
+                    {{- 'trans.Next' | trans -}}
+                    {{- ' 🢒' -}}
                 </a>
         </li>
         {%- endif ~%}

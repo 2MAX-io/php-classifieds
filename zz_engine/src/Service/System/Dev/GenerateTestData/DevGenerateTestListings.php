@@ -90,7 +90,7 @@ class DevGenerateTestListings
             $listing = new Listing();
             $listing->setTitle($faker->text(30));
             $listing->setDescription($faker->sentence(36));
-            $listing->setCity($faker->city);
+            $listing->setLocation($faker->city);
             $listing->setUser($this->getUser());
             $listing->setCategory($this->getRandomCategory());
             $listing->setEmailShow($this->randomBool(80));

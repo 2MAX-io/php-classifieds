@@ -212,11 +212,11 @@
                                             </h5>
 
                                             <div>
-                                                {%- if listing.city is not empty ~%}
+                                                {%- if listing.location is not empty ~%}
                                                     <span class="mr-1"> {{- '' -}}
                                                         <i class="svg svg-location"></i>
                                                         {{- '&nbsp;' | raw -}}
-                                                        {{- listing.city -}}
+                                                        {{- listing.location -}}
                                                     </span>
                                                 {%- endif ~%}
                                                 <span class="mr-1 text-nowrap">{{- '' -}}

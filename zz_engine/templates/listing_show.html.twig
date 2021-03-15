@@ -296,14 +296,14 @@
                             </div>
                         {%- endif ~%}
 
-                        {%- if listing.city is not empty and not displayAsExpired ~%}
+                        {%- if listing.location is not empty and not displayAsExpired ~%}
                             <div class="mb-3">
                                 <div class="row">
                                     <div class="col-sm-4 col-md-5">
-                                        {{- 'trans.City' | trans -}}
+                                        {{- 'trans.Location' | trans -}}
                                     </div>
                                     <div class="col-sm-8 col-md-7">
-                                        {{- listing.city -}}
+                                        {{- listing.location -}}
                                     </div>
                                 </div>
                             </div>

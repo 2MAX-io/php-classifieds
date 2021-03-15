@@ -251,7 +251,7 @@ class Listing
      *
      * @ORM\Column(type="string", length=30, nullable=true)
      */
-    private $city;
+    private $location;
 
     /**
      * @var float|null
@@ -537,14 +537,14 @@ class Listing
         return $this;
     }
 
-    public function getCity(): ?string
+    public function getLocation(): ?string
     {
-        return $this->city;
+        return $this->location;
     }
 
-    public function setCity(?string $city): self
+    public function setLocation(?string $location): self
     {
-        $this->city = $city;
+        $this->location = $location;
 
         return $this;
     }

@@ -154,7 +154,7 @@ class SaveListingService
         $searchText .= $listing->getDescription();
         $searchText .= ' ';
 
-        $searchText .= $listing->getCity();
+        $searchText .= $listing->getLocation();
         $searchText .= ' ';
 
         $searchText .= $listing->getPrice();

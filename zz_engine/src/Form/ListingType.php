@@ -155,8 +155,8 @@ class ListingType extends AbstractType
         $builder->add('priceFor', PriceForType::class, [
             'required' => false,
         ]);
-        $builder->add('city', TextType::class, [
-            'label' => 'trans.City',
+        $builder->add('location', TextType::class, [
+            'label' => 'trans.Location',
             'required' => false,
             'attr' => [
                 'maxlength' => 30,

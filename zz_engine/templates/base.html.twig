@@ -318,7 +318,11 @@
                 <h5>{{ 'trans.About' | trans }}</h5>
                 <ul class="list-unstyled text-small">
                     {%- if settings.linkAdvertisement ~%}
-                        <li><a class="text-danger mobile-link" href="https://www.jaslo4u.pl/reklama/">Reklama Jasło</a></li>
+                        <li> {{- '' -}}
+                            <a class="text-danger mobile-link" href="{{ path('app_page', {'slug': settings.linkAdvertisement}) }}">
+                                {{- 'trans.Advertisement' | trans -}}
+                            </a> {{- '' -}}
+                        </li>
                     {%- endif ~%}
 
                     {%- if settings.linkTermsConditions ~%}

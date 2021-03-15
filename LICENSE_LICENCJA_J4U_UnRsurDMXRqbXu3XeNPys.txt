@@ -1,5 +1,0 @@
-LPSOFTWARE.PL Łukasz Podolski, NIP 6852252965, właściciel praw autorskich do oprogramowania portalu ogłoszeń.
-Udziela licencji na niekomercyjne używanie tego oprogramowania w celach podglądowych firmie JASART Agnieszka Wnęk,
-jako wersja demonstracyjna przed zakupem do dnia 2021-12-31
-
-kontakt: lpsoftware@lpsoftware.pl

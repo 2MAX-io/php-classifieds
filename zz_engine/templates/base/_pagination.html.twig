@@ -10,8 +10,72 @@
     {%- endmacro -%}
     {{ '' }}
     <ul class="pagination d-print-none">
-        <li class="d-none d-sm-block">
-            <select class="js__selectChangeUrl pagination-per-page-select form-control d-inline-block mr-2">
+        <li class="page-item prev {% if not pager.hasPreviousPage %}disabled{%- endif ~%}">
+            {%- if pager.hasPreviousPage ~%}
+                <a {{- ' ' -}}
+                        class="page-link" {{- ' ' -}}
+                        href="{{ _self.pagePath(pager.previousPage, _context) }}" {{- ' ' -}}
+                        rel="prev" {{- ' ' -}}
+                        title="{{- 'trans.Previous' | trans -}}" {{- ' ' -}}
+                >
+                    {{- '⮜ ' -}}
+                </a>
+            {%- else ~%}
+                <span class="page-link">{{- '⮜ ' -}}</span>
+            {%- endif ~%}
+        </li>
+        {%- if pager.currentPage == 1 ~%}
+            <li class="page-item active"> {{- ' ' -}}
+                <span class="page-link">{{ pager.currentPage }} <span class="sr-only">(current)</span></span> {{- ' ' -}}
+            </li>
+        {%- else ~%}
+            <li class="page-item"><a class="page-link" href="{{ _self.pagePath(1, _context) }}">1</a></li>
+        {%- endif ~%}
+
+        {%- if pager.currentPage > 4 and pager.nbPages > 7 ~%}
+            <li class="page-item disabled"><span class="page-link">…</span></li>
+        {%- endif ~%}
+
+        {%- for page in (max(pager.currentPage-2+(min(pager.nbPages-(pager.currentPage+2), 0)), 2))..(min(pager.currentPage+2-(min(pager.currentPage-3, 0)), pager.nbPages)) ~%}
+            {%- if page == pager.currentPage ~%}
+                <li class="page-item active"> {{- ' ' -}}
+                    <span class="page-link">{{ pager.currentPage }} <span class="sr-only">(current)</span></span> {{- ' ' -}}
+                </li>
+            {%- else ~%}
+                <li class="page-item"> {{- ' ' -}}
+                    <a class="page-link" href="{{ _self.pagePath(page, _context) }}">
+                        {{- page -}}
+                    </a> {{- ' ' -}}
+                </li>
+            {%- endif -%}
+        {% endfor ~%}
+
+        {%- if pager.currentPage < pager.nbPages-3 and pager.nbPages > 7 ~%}
+            <li class="page-item disabled"><span class="page-link">…</span></li>
+        {%- endif ~%}
+
+        {%- if pager.currentPage < pager.nbPages-3 and pager.nbPages > 7 ~%}
+            <li class="page-item"> {{- ' ' -}}
+                <a class="page-link" href="{{ _self.pagePath(pager.nbPages, _context) }}">
+                    {{- pager.nbPages -}}
+                </a> {{- ' ' -}}
+            </li>
+        {%- endif ~%}
+
+        {%- if pager.hasNextPage ~%}
+        <li class="page-item next {% if not pager.hasNextPage %}disabled{%- endif ~%}">
+                <a {{- ' ' -}}
+                        class="page-link" {{- ' ' -}}
+                        href="{{ _self.pagePath(pager.nextPage, _context) }}" {{- ' ' -}}
+                        rel="next" {{- ' ' -}}
+                        title="{{- 'trans.Next' | trans -}}" {{- ' ' -}}
+                >
+                    {{- ' ⮞' -}}
+                </a>
+        </li>
+        {%- endif ~%}
+        <li class="d-none d-lg-block">
+            <select class="js__selectChangeUrl pagination-per-page-select form-control d-inline-block ml-2">
                 <option {{- ' ' -}}
                         {%- if app.request.get('perPage') == 10 -%}selected{%- endif -%} {{- ' ' -}}
                         value="{{ _self.perPagePath(10, _context) }}" {{- '' -}}
@@ -31,60 +95,6 @@
                     {{- '100' -}}{{- ' ' -}}{{- 'trans.per page' | trans -}}
                 </option>
             </select>
-        </li>
-        <li class="page-item prev {% if not pager.hasPreviousPage %}disabled{%- endif ~%}">
-            {%- if pager.hasPreviousPage ~%}
-                <a class="page-link" href="{{ _self.pagePath(pager.previousPage, _context) }}" rel="prev">
-                    {{- '← ' -}}
-                    {{- 'trans.Previous' | trans -}}
-                </a>
-            {%- else ~%}
-                <span class="page-link">← {{ 'trans.Previous' | trans }}</span>
-            {%- endif ~%}
-        </li>
-        {%- if pager.currentPage == 1 ~%}
-            <li class="page-item active"> {{- ' ' -}}
-                <span class="page-link">{{ pager.currentPage }} <span class="sr-only">(current)</span></span> {{- ' ' -}}
-            </li>
-        {%- else ~%}
-            <li class="page-item"><a class="page-link" href="{{ _self.pagePath(1, _context) }}">1</a></li>
-        {%- endif ~%}
-
-        {%- if pager.currentPage > 5 and pager.nbPages > 8 ~%}
-            <li class="page-item disabled"><span class="page-link">…</span></li>
-        {%- endif ~%}
-
-        {%- for page in (max(pager.currentPage-3+(min(pager.nbPages-(pager.currentPage+3), 0)), 2))..(min(pager.currentPage+3-(min(pager.currentPage-4, 0)), pager.nbPages)) ~%}
-            {%- if page == pager.currentPage ~%}
-                <li class="page-item active"> {{- ' ' -}}
-                    <span class="page-link">{{ pager.currentPage }} <span class="sr-only">(current)</span></span> {{- ' ' -}}
-                </li>
-            {%- else ~%}
-                <li class="page-item"><a class="page-link" href="{{ _self.pagePath(page, _context) }}">{{ page }}</a></li>
-            {%- endif -%}
-        {% endfor ~%}
-
-        {%- if pager.currentPage < pager.nbPages-4 and pager.nbPages > 8 ~%}
-            <li class="page-item disabled"><span class="page-link">…</span></li>
-        {%- endif ~%}
-
-        {%- if pager.currentPage < pager.nbPages-3 and pager.nbPages > 7 ~%}
-            <li class="page-item"> {{- ' ' -}}
-                <a class="page-link" href="{{ _self.pagePath(pager.nbPages, _context) }}">
-                    {{- pager.nbPages -}}
-                </a> {{- ' ' -}}
-            </li>
-        {%- endif ~%}
-
-        <li class="page-item next {% if not pager.hasNextPage %}disabled{%- endif ~%}">
-            {%- if pager.hasNextPage ~%}
-                <a class="page-link" href="{{ _self.pagePath(pager.nextPage, _context) }}" rel="next">
-                    {{- 'trans.Next' | trans -}}
-                    {{- ' →' -}}
-                </a>
-            {%- else ~%}
-                <span class="page-link">{{ 'trans.Next' | trans }} →</span>
-            {%- endif ~%}
         </li>
     </ul>
 {%- endif ~%}

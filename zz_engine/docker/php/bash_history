@@ -475,3 +475,4 @@ php zz_engine/bin/console doctrine:migrations:migrate --no-interaction
 (cd /var/www/html/zz_engine && npx prettier --write 'assets/**/*.js')
 bash zz_engine/dev/bin/build_assets.sh
 (cd /var/www/html/zz_engine && php vendor/bin/grumphp run)
+bash zz_engine/dev/bin/build_assets.sh

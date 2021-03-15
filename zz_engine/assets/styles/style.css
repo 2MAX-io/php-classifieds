@@ -372,9 +372,14 @@ input.form-control, textarea.form-control, select.form-control {
 }
 
 .listing-list-details {
-    max-height: 4.5rem;
+    max-height: 2.4rem;
     overflow: hidden;
-    text-overflow: ellipsis;
+}
+
+@media (min-width: 576px) {
+    .listing-list-details {
+        max-height: 4.3rem;
+    }
 }
 
 .listing-list-img {
@@ -516,8 +521,8 @@ input.form-control, textarea.form-control, select.form-control {
     height: 1.8rem;
     line-height: 1.8rem;
     padding-right: 0.3rem;
-    margin-top: 0.25rem;
-    margin-bottom: 0.25rem;
+    margin-top: 0.15rem;
+    margin-bottom: 0.15rem;
     margin-right: 0.25rem;
     vertical-align: middle;
     color: #303641;

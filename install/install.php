@@ -145,7 +145,7 @@ if ($isDockerDevEnvironment) {
     $formDefaultValue['db_pass'] = 'classifieds';
     $formDefaultValue['smtp_host'] = 'mailhog';
     $formDefaultValue['smtp_port'] = '1025';
-    $formDefaultValue['smtp_username'] = 'username@mail.com';
+    $formDefaultValue['smtp_username'] = '2max.io@2max.io';
     $formDefaultValue['smtp_password'] = 'passwordHere';
     $formDefaultValue['email_from_address'] = $formDefaultValue['smtp_username'];
     $formDefaultValue['app_timezone'] = 'UTC';
@@ -239,16 +239,21 @@ function saveConfig(): void
 
 function saveConfigToFile(array $config): void
 {
+    $requestUriDir = \dirname($_SERVER['REQUEST_URI']);
     $defaultConfig = [
+        'DATABASE_URL' => '',
+        'MAILER_URL' => '',
+        'APP_HTTP_HOST' => $_SERVER['HTTP_HOST'],
+        'APP_HTTP_SCHEME' => $_SERVER['REQUEST_SCHEME'],
+        'APP_HTTP_BASE_URL' => \substr($requestUriDir, 0, \strpos($requestUriDir, '/install') ?: 0),
         'APP_ENV' => 'prod',
         'APP_SECRET' => RandomHelper::string(64),
         'APP_LOCALE' => 'en',
         'APP_TIMEZONE' => 'UTC',
+
         'APP_UPGRADE_DISABLED' => false,
         'APP_UPGRADE_AVAILABLE_CHECK_DISABLED' => false,
-        'APP_ASSET_VERSION' => 1,
-        'DATABASE_URL' => '',
-        'MAILER_URL' => '',
+        'APP_NOT_PUBLIC_URL_SECRET' => RandomHelper::string(64),
     ];
     $configToSave = \array_replace($defaultConfig, $config);
     $configPhpString = \var_export($configToSave, true);

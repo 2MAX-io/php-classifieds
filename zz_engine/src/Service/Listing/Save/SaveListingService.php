@@ -114,8 +114,8 @@ class SaveListingService
         $listingFormDataArray['description'] = $this->textService->normalizeUserInput($listingFormDataArray['description']);
         $listingFormDataArray['title'] = $this->textService->normalizeUserInput($listingFormDataArray['title']);
         $listingFormDataArray['title'] = $this->textService->removeWordsFromTitle($listingFormDataArray['title']);
-        $listingFormDataArray['city'] = \ucwords(
-            $this->textService->normalizeUserInput($listingFormDataArray['city']),
+        $listingFormDataArray['location'] = \ucwords(
+            $this->textService->normalizeUserInput($listingFormDataArray['location']),
         );
         $listingFormDataArray['phone'] = StringHelper::replaceMultipleToSingle($listingFormDataArray['phone'], [' '], '');
 

@@ -135,19 +135,19 @@ include 'base/header.php';
             <h3>Load example data</h3>
 
             <div>
-                <input type="checkbox" name="load_categories" id="load-categories" class="custom-checkbox" value="1" <?php echo e(empty($_POST['load_categories']) ?: 'checked'); ?>>
+                <input type="checkbox" name="load_categories" id="load-categories" class="custom-checkbox" value="1" <?php echo e(checkedIfTrue($_POST['load_categories'] ?? null, true)); ?>>
                 <label for="load-categories">Load example categories</label>
             </div>
             <div>
-                <input type="checkbox" name="load_custom_fields" id="load-custom-fields" class="custom-checkbox" value="1" <?php echo e(empty($_POST['load_custom_fields']) ?: 'checked'); ?>>
+                <input type="checkbox" name="load_custom_fields" id="load-custom-fields" class="custom-checkbox" value="1" <?php echo e(checkedIfTrue($_POST['load_custom_fields'] ?? null, true)); ?>>
                 <label for="load-custom-fields">Load example custom fields</label>
             </div>
             <div>
-                <input type="checkbox" name="load_listings" id="load-listings" class="custom-checkbox" value="1" <?php echo e(empty($_POST['load_listings']) ?: 'checked'); ?>>
+                <input type="checkbox" name="load_listings" id="load-listings" class="custom-checkbox" value="1" <?php echo e(checkedIfTrue($_POST['load_listings'] ?? null, true)); ?>>
                 <label for="load-listings">Load example listings</label>
             </div>
             <div>
-                <input type="checkbox" name="load_pages" id="load-pages" class="custom-checkbox" value="1" <?php echo e(empty($_POST['load_pages']) ?: 'checked'); ?>>
+                <input type="checkbox" name="load_pages" id="load-pages" class="custom-checkbox" value="1" <?php echo e(checkedIfTrue($_POST['load_pages'] ?? null, true)); ?>>
                 <label for="load-pages">Load example sub-pages like terms and conditions</label>
             </div>
         </div>

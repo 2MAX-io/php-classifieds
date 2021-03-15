@@ -3,8 +3,13 @@
 declare(strict_types=1);
 
 use App\Exception\UserVisibleException;
+use App\Helper\BoolHelper;
 use App\Helper\FilePath;
 use Webmozart\PathUtil\Path;
+
+\define('INSTALL_DIR', \dirname(__DIR__));
+\define('PROJECT_DIR', \dirname(__DIR__, 2));
+\define('PUBLIC_DIR', \dirname(__DIR__, 2));
 
 \ini_set('display_errors', '1');
 \error_reporting(-1);
@@ -20,11 +25,13 @@ if (\version_compare(\PHP_VERSION, '7.3', '<')) {
     exit;
 }
 
-require __DIR__.'/../../zz_engine/vendor/autoload.php';
+require PROJECT_DIR.'/zz_engine/vendor/autoload.php';
+
+\define('INSTALL_URL', '/'.Path::makeRelative(\dirname($_SERVER['SCRIPT_FILENAME']), PUBLIC_DIR));
 
 $configFilePath = Path::canonicalize(FilePath::getProjectDir().'/zz_engine/.env.local.php');
 if (\file_exists($configFilePath)) {
-    include '../view/already_installed.php';
+    include INSTALL_DIR.'/view/already_installed.php';
 
     exit;
 }
@@ -42,4 +49,18 @@ function getProjectRootPath(): string
     }
 
     return $projectRootPath;
+}
+
+function checkedIfTrue($value, $default = false)
+{
+    $checkedBool = $default;
+    if (!empty($value)) {
+        $checkedBool = BoolHelper::isTrue($value);
+    }
+
+    if (!$checkedBool) {
+        return e('');
+    }
+
+    return e('checked');
 }

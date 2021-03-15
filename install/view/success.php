@@ -22,7 +22,7 @@ include 'base/header.php';
     <div class="alert alert-info">
         Set up cron
 
-        <textarea class="w-100 form-text"><?php echo e($crontabText ?? ''); ?></textarea>
+        <textarea class="w-100 form-text cron-textarea"><?php echo e($crontabText ?? ''); ?></textarea>
     </div>
 
     <div class="alert alert-info">

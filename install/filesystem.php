@@ -69,23 +69,18 @@ function canWriteToPhpFile(): bool
         $originalContent = @\file_get_contents($filePath);
         $successText = '!!success!!';
         $newContent = \str_replace('{{!REPLACE_THIS!}}', $successText, $originalContent);
-        $result = @\file_put_contents($filePath, $newContent);
-
-        if (\str_contains(@\file_get_contents($filePath), $successText)) {
-            @\file_put_contents($filePath, $originalContent); // restore original content
-
+        $writeToFileReturn = @\file_put_contents($filePath, $newContent);
+        $fileContentAfterChange = @\file_get_contents($filePath);
+        @\file_put_contents($filePath, $originalContent); // restore original content
+        if (false === \str_contains($fileContentAfterChange, $successText)) {
             return false;
         }
 
-        if (false !== $result && $result > 0) {
-            @\file_put_contents($filePath, $originalContent); // restore original content
-
-            return true;
+        if (false === $writeToFileReturn || $writeToFileReturn < 1) {
+            return false;
         }
 
-        @\file_put_contents($filePath, $originalContent); // restore original content
-
-        return false;
+        return true;
     } catch (\Throwable $e) {
         return false;
     }

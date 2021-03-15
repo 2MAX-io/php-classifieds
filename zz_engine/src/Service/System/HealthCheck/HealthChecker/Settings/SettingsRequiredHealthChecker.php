@@ -173,6 +173,7 @@ class SettingsRequiredHealthChecker implements HealthCheckerInterface
             'paymentPrzelewy24Crc',
             'invoiceSoldItemDescription',
             'invoiceNumberPrefix',
+            'defaultAdvertisementZoneId',
         ];
     }
 

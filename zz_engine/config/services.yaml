@@ -21,6 +21,7 @@ parameters:
     env(APP_FAVICON_DIR): null
     favicon_dir: '%env(resolve:APP_FAVICON_DIR)%'
     env(APP_ENVIRONMENT_CSS_CLASS): ''
+    env(APP_2MAX_URL_SECRET): 'secret-is9WCVzaXS2HUDjAzjWa4cFtFiNSSbLDYki6WmTiwh'
     environment_css_class: '%env(resolve:APP_ENVIRONMENT_CSS_CLASS)%'
     router.request_context.host: '%env(resolve:APP_HTTP_HOST)%'
     router.request_context.scheme: '%env(resolve:APP_HTTP_SCHEME)%'

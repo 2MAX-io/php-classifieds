@@ -144,7 +144,7 @@ class FilesystemChecker
     {
         $return = [];
         $patchList = [
-            FilePath::getProjectDir().'/asset/main.js',
+            FilePath::getProjectDir().'/asset/build/entrypoints.json',
             FilePath::getProjectDir().'/static/cache/.gitkeep',
             FilePath::getProjectDir().'/static/category/.gitkeep',
             FilePath::getProjectDir().'/static/listing/.gitkeep',

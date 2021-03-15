@@ -104,7 +104,7 @@ class TextService
 
     private function calculateUpperCaseScore(string $text): float
     {
-        $upperAllowedChars = \mb_strtoupper($this->settingsDto->getAllowedCharacters());
+        $upperAllowedChars = \mb_strtoupper($this->settingsDto->getAllowedCharacters() ?? '');
         $uppercaseLetters = \preg_replace('~[^A-Z'.$upperAllowedChars.']~', '', $text);
         $uppercaseCount = \mb_strlen($uppercaseLetters);
 

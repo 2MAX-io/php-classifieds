@@ -359,6 +359,18 @@ input.form-control, textarea.form-control, select.form-control {
     user-select: none;
 }
 
+.listing-list-item .name-value-group {
+    background-color: #f6f6f6;
+}
+
+.listing-list-item .name-value-group.price {
+    border: 1px solid #dbdbdb;
+}
+
+.listing-list-item .name-value-group .name {
+    background-color: #eeeeee;
+}
+
 .listing-list-details {
     max-height: 4.5rem;
     overflow: hidden;
@@ -501,25 +513,28 @@ input.form-control, textarea.form-control, select.form-control {
 
 .name-value-group {
     display: inline-block;
-    color: #303641;
-    background-color: #d6d6d8;
-    border-radius: 3px;
-    padding: 5px 8px 6px 0;
+    height: 1.8rem;
+    line-height: 1.8rem;
+    padding-right: 0.3rem;
     margin-top: 0.25rem;
     margin-bottom: 0.25rem;
     margin-right: 0.25rem;
+    vertical-align: middle;
+    color: #303641;
+    background-color: #d6d6d8;
+    border-radius: 3px;
     font-size: 80%;
     font-weight: 400;
-    vertical-align: middle;
-    height: 1.8rem;
 }
 
 .name-value-group .name {
-    display: inline;
-    background-color: #c3c3c7;
-    padding: 7px;
-    margin-right: 8px;
+    display: inline-block;
+    height: 100%;
+    margin-right: 5px;
+    padding-left: 0.3rem;
+    padding-right: 0.3rem;
     border-radius: 3px;
+    background-color: #c3c3c7;
 }
 
 .border-radius-1 {

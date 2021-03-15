@@ -112,6 +112,40 @@
                     </div>
                 {%- endif ~%}
 
+                {% if listing.price is not empty %}
+                    <div class="my-1 d-md-none">
+                        <div class="alert alert-dark price-tag">
+                            <span class="price-tag-price">
+                                {{- 'trans.Price' | trans -}}
+                                {{- ': ' -}}
+                                {{- listing.price | money -}}
+                            </span>
+
+                            {{- ' ' -}}
+
+                            {%- if listing.priceFor -%}
+                                <span class="text-nowrap">
+                                    {{- ('trans.priceFor.'~listing.priceFor) | trans -}}
+                                </span>
+                            {%- endif -%}
+
+                            {{- ' ' -}}
+
+                            {%- if listing.priceNegotiable is not null -%}
+                                {%- if listing.priceNegotiable -%}
+                                    <span class="badge badge-success">
+                                        {{- 'trans.negotiable' | trans -}}
+                                    </span>
+                                {%- else -%}
+                                    <span class="badge badge-danger">
+                                        {{- 'trans.NOT negotiable' | trans -}}
+                                    </span>
+                                {%- endif -%}
+                            {%- endif -%}
+                        </div>
+                    </div>
+                {% endif %}
+
                 {%- if listing.listingCustomFieldValues.count ~%}
                     <div class="mt-2 mb-1">
                         {% for listingCustomFieldValue in listing.listingCustomFieldValues %}
@@ -139,30 +173,6 @@
                         {% endfor %}
                     </div>
                 {%- endif ~%}
-
-                {% if listing.price is not empty %}
-                    <div class="my-1 d-md-none">
-                        <h3 class="btn btn-dark btn-lg">
-                            {{- 'trans.Price' | trans }}: {{ listing.price | money -}}
-                        </h3>
-
-                        {% if listing.priceFor %}
-                            <span>{{ ('trans.priceFor.'~listing.priceFor) | trans }}</span>
-                        {% endif %}
-
-                        {% if listing.priceNegotiable is not null %}
-                            {% if listing.priceNegotiable %}
-                                <span class="badge badge-success">
-                                    {{- 'trans.negotiable' | trans -}}
-                                </span>
-                            {% else %}
-                                <span class="badge badge-danger">
-                                    {{- 'trans.NOT negotiable' | trans -}}
-                                </span>
-                            {% endif %}
-                        {% endif %}
-                    </div>
-                {% endif %}
 
                 <!-- description -->
                 <div class="listing-show-description border-radius-1 mb-2 p-1 px-md-2 py-md-3">
@@ -247,27 +257,39 @@
                         </div>
                     {%- endif ~%}
 
-                    {% if listing.price is not empty %}
+                    {%- if listing.price is not empty ~%}
                         <div class="my-1">
-                            <div class="price-tag">{{ 'trans.Price' | trans }}: {{ listing.price | money }}</div>
+                            <div class="alert alert-dark price-tag">
+                                <span class="price-tag-price">
+                                    {{- 'trans.Price' | trans -}}
+                                    {{- ': ' -}}
+                                    {{- listing.price | money -}}
+                                </span>
 
-                            {% if listing.priceFor %}
-                                <span>{{ ('trans.priceFor.'~listing.priceFor) | trans }}</span>
-                            {% endif %}
+                                {{- ' ' -}}
 
-                            {% if listing.priceNegotiable is not null %}
-                                {% if listing.priceNegotiable %}
-                                    <span class="badge badge-success">
-                                        {{- 'trans.negotiable' | trans -}}
+                                {%- if listing.priceFor -%}
+                                    <span class="text-nowrap">
+                                        {{- ('trans.priceFor.'~listing.priceFor) | trans -}}
                                     </span>
-                                {% else %}
-                                    <span class="badge badge-danger">
-                                        {{- 'trans.NOT negotiable' | trans -}}
-                                    </span>
-                                {% endif %}
-                            {% endif %}
+                                {%- endif -%}
+
+                                {{- ' ' -}}
+
+                                {%- if listing.priceNegotiable is not null -%}
+                                    {%- if listing.priceNegotiable -%}
+                                        <span class="badge badge-success">
+                                            {{- 'trans.negotiable' | trans -}}
+                                        </span>
+                                    {%- else -%}
+                                        <span class="badge badge-danger">
+                                            {{- 'trans.NOT negotiable' | trans -}}
+                                        </span>
+                                    {%- endif -%}
+                                {%- endif -%}
+                            </div>
                         </div>
-                    {% endif %}
+                    {%- endif ~%}
                 </div>
 
                 <!-- contact, info panel -->

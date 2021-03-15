@@ -115,6 +115,7 @@ var stackTraceJsModule = (function (basicModule) {
                             file: file,
                             line: line,
                             column: col,
+                            url: document.location.href,
                             userAgent: navigator.userAgent,
                             platform: navigator.platform,
                             customContext: basicModule.fetchCustomContext(),

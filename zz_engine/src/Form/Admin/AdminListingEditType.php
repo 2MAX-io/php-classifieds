@@ -72,8 +72,8 @@ class AdminListingEditType extends AbstractType
         $builder->add('priceNegotiable', BoolType::class, [
             'label' => 'trans.Amount is negotiable?',
         ]);
-        $builder->add('city', TextType::class, [
-            'label' => 'trans.City',
+        $builder->add('location', TextType::class, [
+            'label' => 'trans.Location',
         ]);
         $builder->add(
             ListingCustomFieldsType::CUSTOM_FIELD_LIST_FIELD,

@@ -4,6 +4,7 @@ twig:
         dateFormatShort: '%date_format_short%'
         dateFormatYmd: 'Y-m-d'
         dateFormatYmdHis: 'Y-m-d H:i:s'
+        favicon_dir: '%favicon_dir%'
     default_path: '%kernel.project_dir%/templates'
     debug: '%kernel.debug%'
     strict_variables: '%kernel.debug%'

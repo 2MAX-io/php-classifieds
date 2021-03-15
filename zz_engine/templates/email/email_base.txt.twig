@@ -1,0 +1,7 @@
+{#- @var settings \App\Service\Setting\SettingsDto -#}
+{%- set settings = settings() -%}
+{% block content %}{% endblock content %}
+
+---
+{{ settings.indexPageTitle }}
+{{ url('app_index') }}

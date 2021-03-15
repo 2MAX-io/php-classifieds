@@ -39,6 +39,7 @@ class UserSettingsType extends AbstractType
             'attr' => [
                 'id' => 'display-username',
                 'placeholder' => $this->twigUser->displayUserName($this->currentUserService->getUser()),
+                'autocomplete' => 'name',
             ],
             'constraints' => [
                 new Length(['max' => 36]),

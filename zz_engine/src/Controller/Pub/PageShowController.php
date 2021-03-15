@@ -21,7 +21,7 @@ class PageShowController extends AbstractController
             throw $this->createNotFoundException();
         }
 
-        return $this->render('page_show.html.twig', [
+        return $this->render('secondary/page_show.html.twig', [
             'page' => $page,
             'relatedPages' => $pageRepository->getRelatedPages(),
         ]);

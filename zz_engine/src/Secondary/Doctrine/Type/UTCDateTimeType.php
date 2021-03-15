@@ -11,7 +11,7 @@ use Doctrine\DBAL\Types\DateTimeType;
 class UTCDateTimeType extends DateTimeType
 {
     /**
-     * @var null|\DateTimeZone
+     * @var \DateTimeZone|null
      */
     private static $utc;
 
@@ -48,11 +48,7 @@ class UTCDateTimeType extends DateTimeType
         );
 
         if (!$converted) {
-            throw ConversionException::conversionFailedFormat(
-                $value,
-                $this->getName(),
-                $platform->getDateTimeFormatString()
-            );
+            throw ConversionException::conversionFailedFormat($value, $this->getName(), $platform->getDateTimeFormatString());
         }
 
         return $converted;

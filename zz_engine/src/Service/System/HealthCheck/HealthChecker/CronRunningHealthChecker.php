@@ -37,7 +37,7 @@ class CronRunningHealthChecker implements HealthCheckerInterface
         $qb->from(SystemLog::class, 'systemLog');
         $qb->addOrderBy('systemLog.date', Criteria::DESC);
         $qb->setMaxResults(1);
-        /** @var null|SystemLog $lastCronRunSystemLog */
+        /** @var SystemLog|null $lastCronRunSystemLog */
         $lastCronRunSystemLog = $qb->getQuery()->getOneOrNullResult();
 
         if (null === $lastCronRunSystemLog) {

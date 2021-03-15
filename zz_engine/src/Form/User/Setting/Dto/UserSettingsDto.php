@@ -9,7 +9,7 @@ use App\Entity\User;
 class UserSettingsDto
 {
     /**
-     * @var null|string
+     * @var string|null
      */
     public $displayUsername;
 

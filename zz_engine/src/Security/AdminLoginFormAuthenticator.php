@@ -75,7 +75,7 @@ class AdminLoginFormAuthenticator extends AbstractFormLoginAuthenticator
             'password' => $request->request->get('password'),
             'csrf_token' => $request->request->get('_csrf_token'),
         ];
-        /** @var null|SessionInterface $session */
+        /** @var SessionInterface|null $session */
         $session = $request->getSession();
         if ($session instanceof SessionInterface) {
             $session->set(

@@ -1,0 +1,17 @@
+{%- extends 'email/email_base.txt.twig' -%}
+{#- @var user \App\Entity\User -#}
+{#- @var settings \App\Service\Setting\SettingsDto -#}
+{%- set settings = settings() -%}
+{%- set confirmRegisterUrl = url('app_register_confirm', {'token': token, 'username': user.username}) -%}
+
+{% block content %}
+{{ 'trans.Confirm registration by clicking link bellow' | trans }}
+
+{{ confirmRegisterUrl }}
+
+{{ 'trans.Login' | trans }}
+{{ user.username }}
+
+{{ 'trans.Password' | trans }}
+{{ plainPassword }}
+{% endblock content %}

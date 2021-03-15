@@ -37,7 +37,7 @@ class CustomField
     private $name;
 
     /**
-     * @var null|string
+     * @var string|null
      *
      * @ORM\Column(type="string", length=50, nullable=true)
      */
@@ -65,6 +65,13 @@ class CustomField
     private $searchable;
 
     /**
+     * @var bool
+     *
+     * @ORM\Column(type="boolean", nullable=false)
+     */
+    private $inlineOnList = true;
+
+    /**
      * @var int
      *
      * @ORM\Column(type="smallint", nullable=false, options={"unsigned"=true})
@@ -72,7 +79,7 @@ class CustomField
     private $sort;
 
     /**
-     * @var null|string
+     * @var string|null
      *
      * @ORM\Column(type="string", length=25, nullable=true)
      */
@@ -302,5 +309,15 @@ class CustomField
         $this->nameForAdmin = $nameForAdmin;
 
         return $this;
+    }
+
+    public function getInlineOnList(): bool
+    {
+        return $this->inlineOnList;
+    }
+
+    public function setInlineOnList(bool $inlineOnList): void
+    {
+        $this->inlineOnList = $inlineOnList;
     }
 }

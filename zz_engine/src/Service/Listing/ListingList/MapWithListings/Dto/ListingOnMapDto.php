@@ -6,6 +6,7 @@ namespace App\Service\Listing\ListingList\MapWithListings\Dto;
 
 use App\Entity\Listing;
 use App\Enum\ParamEnum;
+use App\Helper\ResizedImagePath;
 
 class ListingOnMapDto implements \JsonSerializable
 {
@@ -25,6 +26,11 @@ class ListingOnMapDto implements \JsonSerializable
     private $listingTitle;
 
     /**
+     * @var string|null
+     */
+    private $listingMainImage;
+
+    /**
      * @var float
      */
     private $latitude;
@@ -42,12 +48,13 @@ class ListingOnMapDto implements \JsonSerializable
         $listingOnMapDto->setListingTitle($listing->getTitle());
         $listingOnMapDto->setLatitude($listing->getLocationLatitude());
         $listingOnMapDto->setLongitude($listing->getLocationLongitude());
+        $listingOnMapDto->setListingMainImage($listing->getMainImage(ResizedImagePath::LIST));
 
         return $listingOnMapDto;
     }
 
     /**
-     * @return array<string,float|int|string>
+     * @return array<string,float|int|string|null>
      */
     public function jsonSerialize(): array
     {
@@ -55,6 +62,7 @@ class ListingOnMapDto implements \JsonSerializable
             ParamEnum::LISTING_ID => $this->getListingId(),
             'listingSlug' => $this->getListingSlug(),
             'listingTitle' => $this->getListingTitle(),
+            'mainImage' => $this->getListingMainImage(),
             ParamEnum::LATITUDE => $this->getLatitude(),
             ParamEnum::LONGITUDE => $this->getLongitude(),
         ];
@@ -108,5 +116,15 @@ class ListingOnMapDto implements \JsonSerializable
     public function setListingTitle(string $listingTitle): void
     {
         $this->listingTitle = $listingTitle;
+    }
+
+    public function getListingMainImage(): ?string
+    {
+        return $this->listingMainImage;
+    }
+
+    public function setListingMainImage(?string $listingMainImage): void
+    {
+        $this->listingMainImage = $listingMainImage;
     }
 }

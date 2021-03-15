@@ -461,7 +461,7 @@ bash zz_engine/dev/bin/build_assets.sh
 php zz_engine/bin/console debug:router --raw > /var/www/html/out.txt
 php zz_engine/bin/console debug:router --help
 bash zz_engine/dev/bin/build_assets.sh
-(cd /var/www/html/zz_engine && yarn encore dev-server --port 9000)
+(cd /var/www/html/zz_engine && yarn encore dev-server --port 8080)
 php zz_engine/bin/console app:dev:translation:yaml-to-xliff zz_engine/translations/messages.en.yaml
 php zz_engine/bin/console app:dev:translation:generate-en-from-other zz_engine/translations/messages.pl.yaml
 php zz_engine/bin/console app:dev:generate-test-listings 100
@@ -495,3 +495,6 @@ composer update -d zz_engine --optimize-autoloader
 php zz_engine/bin/console make:migration
 php zz_engine/bin/console doctrine:migrations:migrate --no-interaction
 php zz_engine/bin/console make:migration
+(cd /var/www/html/zz_engine && npx prettier --write 'assets/**/*.js')
+bash zz_engine/dev/bin/build_assets.sh
+(cd /var/www/html/zz_engine && php vendor/bin/grumphp run)

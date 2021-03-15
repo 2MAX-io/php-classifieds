@@ -9,27 +9,27 @@ use App\Entity\Payment;
 class ConfirmPaymentDto
 {
     /**
-     * @var null|string
+     * @var string|null
      */
     public $gatewayTransactionId;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     public $gatewayPaymentId;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     private $gatewayStatus;
 
     /**
-     * @var null|int
+     * @var int|null
      */
     private $gatewayAmount;
 
     /**
-     * @var null|Payment
+     * @var Payment|null
      */
     private $paymentEntity;
 

@@ -24,7 +24,7 @@
         {%- endfor ~%}
     </div>
 
-    <div class="container mt-3 listing-show">
+    <div class="container mt-3 listing-show {% if displayAsExpired %}listing-show-expired{% endif %}">
         <div class="row">
             <div class="col-md-7">
                 {%- if
@@ -37,6 +37,7 @@
                         <a href="{{ path('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}" class="btn btn-primary w-100 mb-2">
                             <div>
                                 {{- 'trans.Current status' | trans -}}
+                                {{- ': ' -}}
                                 <span class="{{ getListingStatusClass(listing) }}">{{ getListingStatus(listing) }}</span>
                             </div>
                             {{- 'trans.Preview, click to display same as for ordinary user' | trans -}}
@@ -187,11 +188,13 @@
 
                 <!-- listing id -->
                 <div class="mb-2 d-none d-md-block">
-                    {{ 'trans.Listing identifier' | trans }}: {{ listing.id }}
-
                     <div class="float-md-right">
                         {{- 'trans.Views' | trans }}: {{ (listingShowDto.viewsCount+1) | thousandsSeparate -}}
                     </div>
+                    <div>{{ 'trans.Listing identifier' | trans }}: {{ listing.id }}</div>
+                    <a href="{{ path('app_report_listing', {'listing': listing.id}) }}" class="small">
+                        {{- 'trans.Report abuse' | trans -}}
+                    </a>
                 </div>
                 <!-- end main content -->
             </div>
@@ -276,7 +279,11 @@
                                     {{- 'trans.Listing has expired, please refrain from contacting listing issuer' | trans -}}
                                 </div>
                             {%- else ~%}
-                                <button class="btn btn-success w-100 js__listingShowContactDetails" data-listing-id="{{ listing.id }}">
+                                <button {{- ' ' -}}
+                                        class="btn btn-success listing-show-contact-btn js__listingShowContactDetails" {{- ' ' -}}
+                                        data-listing-id="{{ listing.id }}" {{- ' ' -}}
+                                        data-route="{{ url('app_listing_contact_data') }}" {{- ' ' -}}
+                                >
                                     {{- 'trans.Show contact information' | trans -}}
                                 </button>
                             {%- endif ~%}
@@ -314,13 +321,11 @@
                                             {{- 'trans.change' | trans -}}
                                         </a>
                                     {%- endif ~%}
-                                    {%- if not displayAsExpired ~%}
-                                        <div>
-                                            <a href="{{ path('app_public_listings_of_user', {"user": listing.user.id}) }}">
-                                                {{- 'trans.other listings' | trans -}}
-                                            </a>
-                                        </div>
-                                    {%- endif ~%}
+                                    <div>
+                                        <a href="{{ path('app_public_listings_of_user', {"user": listing.user.id}) }}">
+                                            {{- 'trans.other listings' | trans -}}
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -446,6 +451,9 @@
                     <div>
                         {{- 'trans.Views' | trans }}: {{ (listingShowDto.viewsCount+1) | thousandsSeparate -}}
                     </div>
+                    <a href="{{ path('app_report_listing', {'listing': listing.id}) }}" class="small">
+                        {{- 'trans.Report abuse' | trans -}}
+                    </a>
                 </div>
             </div>
         </div>
@@ -453,6 +461,7 @@
 {% endblock body %}
 
 {% block js %}
+    {{ encore_entry_script_tags('listing_contact_data') }}
     {{ encore_entry_link_tags('listing_show') }}
     {{ encore_entry_script_tags('listing_show') }}
 

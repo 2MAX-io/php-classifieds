@@ -14,7 +14,7 @@ class CompletePurchaseDto
     private $isSuccess = false;
 
     /**
-     * @var null|Response
+     * @var Response|null
      */
     private $redirectResponse;
 

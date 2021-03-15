@@ -5,7 +5,7 @@
 {% block body %}
     <div class="container mt-2 mt-md-4">
         <div class="row">
-            <div class="col-md-4 col-lg-3 mb-4">
+            <div class="col-md-4 col-lg-3 mb-4 d-none d-md-block">
                 {% include 'user/_part/user_navigation_card.html.twig' %}
             </div>
 
@@ -44,43 +44,48 @@
                 {% endif %}
 
                 {% if listing.status in [constant('\App\\Entity\\Listing::STATUS_ACTIVE'), constant('\App\\Entity\\Listing::STATUS_ACTIVE_FEATURED')] %}
-                    <div class="row">
-                        {% for package in packages %}
-                            <div class="col-md-4 mb-3">
-                                <h4 class="text-break">{{ package.name }}</h4>
-
-                                <div>
-                                    <div class="mb-2 text-break">
-                                        {{ package.description | nl2br }}
+                    <section class="pricing">
+                        <div class="row px-3">
+                            {% for package in packages %}
+                                <!-- Package: {{ package.name }} -->
+                                <div class="card mb-5 mb-lg-0">
+                                    <div class="card-body">
+                                        <h5 class="card-title text-muted text-uppercase text-center">{{ package.name }}</h5>
+                                        <h6 class="card-price text-center">{{ package.price | moneyPrecise }}</h6>
+                                        <div class="text-muted small mb-2">
+                                            {%- trans count package.daysFeaturedExpire with {'%featuredDays%': package.daysFeaturedExpire, '%price%': package.price | moneyPrecise} -%}
+                                                {1}trans.Feature for one day for %price%|]1,Inf[ Feature for %featuredDays% days for %price%
+                                            {%- endtrans -%}
+                                        </div>
+                                        <hr>
+                                        <div class="mb-2">
+                                            {{ package.description | nl2br }}
+                                        </div>
                                     </div>
-
-                                    <div>
+                                    <div class="card-footer">
                                         {{ include('user/listing/_action/_feature_form.html.twig') }}
                                     </div>
                                 </div>
-
-                                <div class="border-bottom d-md-none"></div>
-                            </div>
-                        {% endfor %}
-
-                        {% if listing.featuredUntilDate is null %}
-                        <div class="col-md-4 mb-3">
-                            <h4>{{ 'trans.Try featured' | trans }}</h4>
-
-                            <div>
-                                {% if listing.featuredUntilDate is null %}
-                                    {{ include('user/listing/_action/_feature_as_demo_form.html.twig') }}
-                                {% else %}
-                                    <span class="btn btn-secondary btn-sm disabled">
-                                        {{- 'trans.Demonstration of featured has been used up' | trans -}}
-                                    </span>
-                                {% endif %}
-                            </div>
-
-                            <div class="border-bottom d-md-none"></div>
+                            {% endfor %}
+                            {% if listing.featuredUntilDate is null %}
+                                <!-- Trial -->
+                                <div class="col-lg-4">
+                                    <div class="card mb-5 mb-lg-0">
+                                        <div class="card-body">
+                                            <h5 class="card-title text-muted text-uppercase text-center">{{ 'trans.Try featured' | trans }}</h5>
+                                            <h6 class="card-price text-center">{{ 'trans.for free' | trans }}</h6>
+                                            <hr>
+                                            <div class="mb-2">
+                                                {{ 'trans.Feature as a demonstration for 30 minutes' | trans }}
+                                            </div>
+                                        </div>
+                                        <div class="card-footer">
+                                            {{ include('user/listing/_action/_feature_as_demo_form.html.twig') }}
+                                    </div>
+                                </div>
+                            {% endif %}
                         </div>
-                        {% endif %}
-                    </div>
+                    </section>
 
                     <div class="alert alert-info mt-3">
                         <div>

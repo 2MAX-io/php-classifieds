@@ -1,22 +1,22 @@
 security:
     encoders:
-      App\Entity\User:
-        algorithm: auto
-      App\Entity\System\Admin:
-        algorithm: auto # change install script when changing this
-      legacy_phpass:
-        id: 'App\Security\Encoder\PhpassPasswordEncoder'
+        App\Entity\User:
+            algorithm: auto
+        App\Entity\System\Admin:
+            algorithm: auto # change install script when changing this
+        legacy_phpass:
+            id: 'App\Security\Encoder\PhpassPasswordEncoder'
 
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
-      app_user_provider:
-        entity:
-          class: App\Entity\User
-          property: username
-      app_admin_provider:
-        entity:
-          class: App\Entity\System\Admin
-          property: email
+        app_user_provider:
+            entity:
+                class: App\Entity\User
+                property: username
+        app_admin_provider:
+            entity:
+                class: App\Entity\System\Admin
+                property: email
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
@@ -36,7 +36,7 @@ security:
                 failure_path: app_admin_login
                 default_target_path: app_admin_index
             logout:
-              path:   app_logout
+                path: app_logout
         main:
             anonymous: lazy
             provider: app_user_provider
@@ -45,12 +45,14 @@ security:
                     - App\Security\LoginFormAuthenticator
             user_checker: App\Security\UserChecker
             logout:
-              path:   app_logout
+                path: app_logout
             remember_me:
-              secret:   '%kernel.secret%'
-              lifetime: 315360000 # 10 year in seconds
-              path:     /
-              always_remember_me: true
+                secret: '%kernel.secret%'
+                lifetime: 315360000 # 10 year in seconds
+                path: /
+                always_remember_me: true
+
+            entry_point: App\Security\AuthenticationEntryPoint
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication
@@ -61,6 +63,6 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-         - { path: ^/admin/red5/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-         - { path: ^/admin/red5, roles: ROLE_ADMIN }
-         - { path: ^/user, roles: ROLE_USER }
+        - { path: ^/admin/red5/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/admin/red5, roles: ROLE_ADMIN }
+        - { path: ^/user, roles: ROLE_USER }

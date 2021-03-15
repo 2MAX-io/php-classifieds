@@ -29,12 +29,13 @@ Encore
     .addEntry('app_bottom', './assets/app_bottom.js')
     .addEntry('balance_top_up', './assets/public/payment/balance_top_up.js')
     .addEntry('payment_await_confirmation', './assets/public/payment/payment_await_confirmation.js')
-    .addEntry('feature_listing', './assets/public/feature_listing.js')
+    .addEntry('feature_listing', './assets/public/feature_listing/feature_listing.js')
     .addEntry('listing_edit', './assets/public/listing_edit.js')
     .addEntry('listing_list', './assets/public/listing_list.js')
     .addEntry('listing_list_map', './assets/public/listing_list_map.js')
     .addEntry('listing_reject', './assets/public/listing_reject')
     .addEntry('listing_show', './assets/public/listing_show.js')
+    .addEntry('listing_contact_data', './assets/public/listing_contact_data.js')
     .addEntry('user_listing_list', './assets/public/user_listing_list.js')
     .addEntry('user_message', './assets/public/user_message.js')
 
@@ -56,6 +57,7 @@ Encore
     .addEntry('admin_listing_show', './assets/admin/page/listing/admin_listing_show.js')
     .addEntry('admin_page_edit', './assets/admin/page/secondary/admin_page_edit.js')
     .addEntry('admin_upgrade', './assets/admin/page/secondary/admin_upgrade.js')
+    .addEntry('admin_report_listing_list', './assets/admin/page/secondary/admin_report_listing_list.js')
 
     // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
     // .enableStimulusBridge('./assets/controllers.json')
@@ -82,6 +84,9 @@ Encore
 
     .configureBabel((config) => {
         config.plugins.push('@babel/plugin-proposal-class-properties');
+        config.plugins.push('@babel/plugin-proposal-object-rest-spread');
+    }, {
+        includeNodeModules: ['bootstrap'],
     })
 
     // enables @babel/preset-env polyfills

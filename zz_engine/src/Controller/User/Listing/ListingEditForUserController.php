@@ -58,6 +58,7 @@ class ListingEditForUserController extends AbstractUserController
             $listingFileService->saveUploadedFiles($listingSaveDto);
             $policeLogForListingService->saveLog($listing);
             $saveListingService->saveSearchText($listing);
+            $saveListingService->saveCustomFieldsInline($listing);
             $this->em->flush();
 
             return $this->redirectToRoute('app_user_listing_edit', ['id' => $listing->getId()]);
@@ -106,6 +107,7 @@ class ListingEditForUserController extends AbstractUserController
             $listingCustomFieldsService->saveCustomFieldsToListing($listingSaveDto);
             $listingFileService->saveUploadedFiles($listingSaveDto);
             $saveListingService->modifyListingPostFormSubmit($listing, $form);
+            $saveListingService->saveCustomFieldsInline($listing);
             $policeLogForListingService->saveLog($listing);
             $this->em->flush();
 

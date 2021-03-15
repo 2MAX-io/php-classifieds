@@ -17,7 +17,8 @@ return PhpCsFixer\Config::create()
     ->setRiskyAllowed(true)
     ->setRules([
         '@PhpCsFixer' => true,
-        '@PHP71Migration:risky' => true, // Added only for consistency
+        '@Symfony' => true,
+        '@PHP71Migration:risky' => true,
         'ordered_class_elements' => [
             'order' => [
                 'use_trait', // traits

@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'trans.Report listing' | trans }}{% endblock %}
+
+{% block head %}
+    <meta name="robots" content="noindex">
+{% endblock head %}
+
+{% block body %}
+
+<div class="container mt-3 mt-md-4">
+    <h2 class="text-break">
+        {{- 'trans.Report listing' | trans -}}
+        {{- ': ' -}}
+        {%- if displayAsExpired(listing) ~%}
+            <a href="{{ path('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}">
+                {{- 'trans.Listing identifier' | trans -}}
+                {{- ': ' -}}
+                {{- listing.id -}}
+            </a>
+        {%- else ~%}
+            <a href="{{ path('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}">
+                {{- listing.title -}}
+            </a>
+        {%- endif ~%}
+    </h2>
+    <div class="text-muted mb-2">
+        {{- 'trans.Listing identifier' | trans -}}
+        {{- ': ' -}}
+        {{- listing.id -}}
+    </div>
+
+    <div class="text-break">
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <button class="btn btn-primary">{{ 'trans.Report abuse' | trans }}</button>
+        {{ form_end(form) }}
+    </div>
+</div>
+{% endblock body %}

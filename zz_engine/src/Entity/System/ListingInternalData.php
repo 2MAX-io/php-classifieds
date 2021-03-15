@@ -31,7 +31,7 @@ class ListingInternalData
     private $listing;
 
     /**
-     * @var null|\DateTimeInterface
+     * @var \DateTimeInterface|null
      *
      * @ORM\Column(type="datetime", nullable=true)
      */

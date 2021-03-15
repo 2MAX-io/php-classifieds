@@ -21,7 +21,7 @@ class UserInvoiceDetails
     private $id;
 
     /**
-     * @var null|User
+     * @var User|null
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="userInvoiceDetails")
      * @ORM\JoinColumn(nullable=true)
@@ -29,14 +29,28 @@ class UserInvoiceDetails
     private $user;
 
     /**
-     * @var string
+     * @var string|null
      *
-     * @ORM\Column(type="string", length=255, nullable=false)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $companyName;
 
     /**
-     * @var null|string
+     * @var string|null
+     *
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $firstName;
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $lastName;
+
+    /**
+     * @var string|null
      *
      * @ORM\Column(type="string", length=50, nullable=true)
      */
@@ -50,7 +64,7 @@ class UserInvoiceDetails
     private $city;
 
     /**
-     * @var null|string
+     * @var string|null
      *
      * @ORM\Column(type="string", length=255, nullable=true)
      */
@@ -64,7 +78,7 @@ class UserInvoiceDetails
     private $buildingNumber;
 
     /**
-     * @var null|string
+     * @var string|null
      *
      * @ORM\Column(type="string", length=50, nullable=true)
      */
@@ -78,7 +92,7 @@ class UserInvoiceDetails
     private $zipCode;
 
     /**
-     * @var null|string
+     * @var string|null
      *
      * @ORM\Column(type="string", length=50, nullable=true)
      */
@@ -89,7 +103,7 @@ class UserInvoiceDetails
      *
      * @ORM\Column(type="string", length=255, nullable=false)
      */
-    private $emailForInvoice;
+    private $emailToSendInvoice;
 
     /**
      * @var \DateTimeInterface
@@ -115,7 +129,7 @@ class UserInvoiceDetails
         return $this->companyName;
     }
 
-    public function setCompanyName(string $companyName): self
+    public function setCompanyName(?string $companyName): self
     {
         $this->companyName = $companyName;
 
@@ -242,15 +256,35 @@ class UserInvoiceDetails
         return $this;
     }
 
-    public function getEmailForInvoice(): ?string
+    public function getEmailToSendInvoice(): ?string
     {
-        return $this->emailForInvoice;
+        return $this->emailToSendInvoice;
     }
 
-    public function setEmailForInvoice(string $emailForInvoice): self
+    public function setEmailToSendInvoice(string $emailToSendInvoice): self
     {
-        $this->emailForInvoice = $emailForInvoice;
+        $this->emailToSendInvoice = $emailToSendInvoice;
 
         return $this;
+    }
+
+    public function getFirstName(): ?string
+    {
+        return $this->firstName;
+    }
+
+    public function setFirstName(?string $firstName): void
+    {
+        $this->firstName = $firstName;
+    }
+
+    public function getLastName(): ?string
+    {
+        return $this->lastName;
+    }
+
+    public function setLastName(?string $lastName): void
+    {
+        $this->lastName = $lastName;
     }
 }

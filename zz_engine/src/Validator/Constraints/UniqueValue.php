@@ -18,7 +18,7 @@ class UniqueValue extends Constraint
     /** @var string */
     public $message = 'This value is already used.';
 
-    /** @var null|string */
+    /** @var string|null */
     public $em;
 
     /** @var class-string */
@@ -27,10 +27,10 @@ class UniqueValue extends Constraint
     /** @var string */
     public $repositoryMethod = 'findBy';
 
-    /** @var null|string[]|UniqueValueDto[] */
+    /** @var string[]|UniqueValueDto[]|null */
     public $fields = [];
 
-    /** @var null|string */
+    /** @var string|null */
     public $errorPath;
 
     /** @var bool */

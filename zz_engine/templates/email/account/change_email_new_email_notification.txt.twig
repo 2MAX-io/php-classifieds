@@ -1,0 +1,15 @@
+{%- extends 'email/email_base.txt.twig' -%}
+{#- @var user \App\Entity\User -#}
+{#- @var settings \App\Service\Setting\SettingsDto -#}
+{%- set settings = settings() -%}
+
+{% block content %}
+{{ 'trans.We received request to change your account\'s email address to' | trans }}:
+{{ newEmail }}
+{{ 'trans.(this mailbox)' | trans }}
+
+{{ 'trans.From your previous email account' | trans }}:
+{{ oldEmail }}
+
+{{ 'trans.This email is just verification that new email address is correct' | trans }}
+{% endblock content %}

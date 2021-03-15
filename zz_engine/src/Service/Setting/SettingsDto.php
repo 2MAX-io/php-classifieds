@@ -7,116 +7,116 @@ namespace App\Service\Setting;
 class SettingsDto
 {
     /**
-     * @var null|string
+     * @var string|null
      */
     private $indexPageTitle;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     private $pageTitleSuffix;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     private $metaDescription;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     private $metaKeywords;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     private $rssTitle;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     private $rssDescription;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     private $footerSiteCopyright;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     private $emailFromAddress;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     private $emailFromName;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     private $emailReplyTo;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     private $linkTermsConditions;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     private $linkPrivacyPolicy;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     private $linkRejectionReason;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     private $linkContact;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     private $linkAdvertisement;
 
     /**
      * ISO 639
      *
-     * @var null|string
+     * @var string|null
      */
     private $languageIso;
 
     /**
      * ISO 3166
      *
-     * @var null|string
+     * @var string|null
      */
     private $countryIso;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     private $currency;
 
     /**
-     * @var null|bool
+     * @var bool|null
      */
     private $allowedCharactersEnabled = false;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     private $allowedCharacters;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     private $wordsToRemoveFromTitle;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     private $searchPlaceholder;
 
@@ -126,17 +126,17 @@ class SettingsDto
     private $masterSiteLinkShow = false;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     private $masterSiteUrl;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     private $masterSiteAnchorText;
 
     /**
-     * @var null|bool
+     * @var bool|null
      */
     private $requireListingAdminActivation = false;
 
@@ -146,237 +146,237 @@ class SettingsDto
     private $paymentAllowed = false;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     private $paymentGateway;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     private $paymentGatewayPaymentDescription;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     private $paymentPayPalMode;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     private $paymentPayPalClientId;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     private $paymentPayPalClientSecret;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     private $paymentPrzelewy24Mode;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     private $paymentPrzelewy24MerchantId;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     private $paymentPrzelewy24PosId;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     private $paymentPrzelewy24Crc;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     private $itemsPerPage;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     private $logoPath;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     private $customJavascriptBottom;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     private $customJavascriptInHead;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     private $customCss;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     private $license;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     private $facebookSignInEnabled;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     private $facebookSignInAppId;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     private $facebookSignInAppSecret;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     private $googleSignInEnabled;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     private $googleSignInClientId;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     private $googleSignInClientSecret;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     private $invoiceCompanyName;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     private $invoiceTaxNumber;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     private $invoiceCity;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     private $invoiceStreet;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     private $invoiceBuildingNumber;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     private $invoiceUnitNumber;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     private $invoiceZipCode;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     private $invoiceCountry;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     private $invoiceEmail;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     private $invoiceSoldItemDescription;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     private $invoiceGenerationStrategy;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     private $invoiceNumberPrefix;
 
     /**
-     * @var null|bool
+     * @var bool|null
      */
     private $messageSystemEnabled = false;
 
     /**
-     * @var null|bool
+     * @var bool|null
      */
     private $mapEnabled = false;
 
     /**
-     * @var null|float
+     * @var float|null
      */
     private $mapDefaultLatitude;
 
     /**
-     * @var null|float
+     * @var float|null
      */
     private $mapDefaultLongitude;
 
     /**
-     * @var null|int
+     * @var int|null
      */
     private $mapDefaultZoom;
 
     /**
-     * @var null|int
+     * @var int|null
      */
     private $mapDefaultZoomSingleListing;
 
     /**
-     * @var null|bool
+     * @var bool|null
      */
     private $deleteExpiredListingFilesEnabled = false;
 
     /**
-     * @var null|int
+     * @var int|null
      */
     private $deleteExpiredListingFilesOlderThanDays;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     private $timezone;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     private $dateFormat;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     private $dateFormatShort;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     private $decimalSeparator;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     private $thousandSeparator;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     private $defaultAdvertisementZoneId;
 
@@ -1082,7 +1082,7 @@ class SettingsDto
 
     public function getThousandSeparator(): ?string
     {
-        return $this->thousandSeparator;
+        return $this->thousandSeparator ?? '';
     }
 
     public function setThousandSeparator(?string $thousandSeparator): void

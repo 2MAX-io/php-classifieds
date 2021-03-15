@@ -45,7 +45,7 @@ class ListingFile
     private $filename;
 
     /**
-     * @var null|string
+     * @var string|null
      *
      * @ORM\Column(type="string", length=255, nullable=true)
      */
@@ -73,14 +73,14 @@ class ListingFile
     private $fileHash;
 
     /**
-     * @var null|int
+     * @var int|null
      *
      * @ORM\Column(type="smallint", nullable=true, options={"unsigned"=true})
      */
     private $imageWidth;
 
     /**
-     * @var null|int
+     * @var int|null
      *
      * @ORM\Column(type="smallint", nullable=true, options={"unsigned"=true})
      */
@@ -101,7 +101,7 @@ class ListingFile
     private $fileDeleted = false;
 
     /**
-     * @var null|\DateTimeInterface
+     * @var \DateTimeInterface|null
      *
      * @ORM\Column(type="datetime", nullable=true)
      */

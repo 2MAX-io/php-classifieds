@@ -161,7 +161,7 @@
                             {%- elseif invoice.city ~%}
                                 {{ invoice.city }}
                             {%- endif ~%}
-                            <div>{{ 'trans.Email' | trans }}: {{ invoice.emailForInvoice }}</div>
+                            <div>{{ 'trans.Email' | trans }}: {{ invoice.emailToSendInvoice }}</div>
                         </td>
                     </tr>
                 </table>

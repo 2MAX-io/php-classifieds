@@ -1,0 +1,123 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'trans.Feature listing' | trans }}{% endblock %}
+
+{% block body %}
+    <div class="container mt-2 mt-md-4">
+        <div class="row">
+            <div class="col-md-4 col-lg-3 mb-4 d-none d-md-block">
+                {% include 'user/_part/user_navigation_card.html.twig' %}
+            </div>
+
+            <div class="col-md-8 col-lg-9">
+                <h3 class="mb-3">
+                    {{ 'trans.Feature listing' | trans }}:
+                    <a href="{{ path('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}" class="text-break">
+                        {{- listing.title -}}
+                    </a>
+                </h3>
+
+                {% include 'form/_flash_above_form.html.twig' %}
+
+                {% if listing.featuredActive %}
+                    <div class="alert alert-success">
+                        {{ 'trans.Featured until' | trans }}:
+                        <strong>{{ listing.featuredUntilDate | date }}</strong>
+                    </div>
+                {% endif %}
+
+                {% if app.request.query.get('demoStarted') %}
+                    <div class="alert alert-success" role="alert">
+                        {{ 'trans.Listing has been featured for 30 minutes, to see how it looks click' | trans }}
+                        <a href="{{ path('app_category', {'categorySlug': listing.category.slug}) }}#listing-{{ listing.id }}">{{ 'trans.HERE' | trans }}</a>
+                    </div>
+                {% endif %}
+
+                {% if listing.status in [constant('\App\\Entity\\Listing::STATUS_ACTIVE'), constant('\App\\Entity\\Listing::STATUS_ACTIVE_FEATURED')] %}
+{#                    <div class="row">#}
+{#                        {% if listing.featuredUntilDate is null or (listing.featured and diffToNowWithinSeconds(listing.featuredUntilDate, -1800, 0)) %}#}
+{#                            <div class="col-md-4 mb-3">#}
+{#                                <h4>{{ 'trans.Try featured' | trans }}</h4>#}
+
+{#                                <div>#}
+{#                                    {% if listing.featuredUntilDate is null %}#}
+{#                                        {{ include('user/listing/_action/_feature_as_demo_form.html.twig') }}#}
+{#                                    {% else %}#}
+{#                                        <span class="btn btn-secondary btn-sm disabled">{{ 'trans.Demonstration of featured has been used up' | trans }}</span>#}
+{#                                    {% endif %}#}
+{#                                </div>#}
+
+{#                                <div class="border-bottom d-md-none"></div>#}
+{#                            </div>#}
+{#                        {% endif %}#}
+{#                    </div>#}
+                {% else %}
+                    <div class="alert alert-danger">
+                        {{ 'trans.You can not feature listing that is deactivated. Current listings status' | trans }}:
+                        <span class="{{ getListingStatusClass(listing) }}">{{ getListingStatus(listing) }}</span>
+                    </div>
+                {% endif %}
+
+                <div>
+                    Wyróżnienie w serwisie ogloszenia.jaslo4u.pl to:<br>
+                    <br>
+                    <a target="_blank" href="http://www.jaslo4u.pl/#box-ogloszenia">- rotacyjna promocja na stronie głównej portalu jaslo4u.pl</a><br>
+                    - pierwsze pozycje na liście ogłoszeń w kategorii<br>
+                    - kolorystyczne wyróżnienie na liście ogłoszeń<br>
+                    - za każdym razem, wyróżnienie podbija ogłoszenie na pierwsze miejsce w kategorii<br>
+                    <br>
+
+                    <h3>Wyróżnij ogłoszenie na 1 tydzień za 2.46 brutto</h3>
+                    <h3>lub na 3 tygodnie za 4.92 brutto (33% taniej)</h3>
+
+                    <table style="margin-top:30px;" class="table table-bordered table-responsive">
+                        <tbody>
+                        <tr>
+                            <td class="text-center">Wyróżnienie na <b>7 dni</b> (2.46 brutto)</td>
+                            <td class="text-center">Wyróżnienie na <u><b>21 dni</b></u> (4.92 brutto, <span style="color:red">33% taniej</span>)</td>
+                        </tr>
+                        <tr>
+                            <td class="p-3">
+                                <p>Aby aktywować wyróżnienie ogłoszenia o tytule:<br> {{- listing.title -}}<br> na <u><b>7 dni</b></u> za pomocą smsa należy wysłać wiadomość o treści:</p>
+                                <p style="font-size:30px;"><strong>TC.OGLJ4U.{{- listing.id -}}</strong></p>
+                                <p style="font-size:30px;">Pod numer: 72068</p>
+                                <p style="font-size:30px;">Koszt: 2.46 zł brutto</p>
+                            </td>
+                            <td class="p-3">
+                                <p>Aby aktywować wyróżnienie ogłoszenia o tytule:<br> {{- listing.title -}}<br> na <u><b>21 dni</b></u> za pomocą smsa należy wysłać wiadomość o treści:</p>
+                                <p style="font-size:30px;"><strong>TC.OGLJ4U.{{- listing.id -}}</strong></p>
+                                <p style="font-size:30px;">Pod numer: 74068</p>
+                                <p style="font-size:30px;">Koszt: 4.92 zł brutto</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="p-3" colspan="2">
+                                Oferujemy także wyróżnienie ogłoszenia na dłuższy okres.
+                                W celu zapoznania się z ofertą, prosimy o kontakt poprzez adres mailowy: <u>redakcja@jaslo4u.pl</u>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: center;" colspan="2">
+                                <p style="font-size:30px;">Po kilku minutach od wysłania sms'a ogłoszenie będzie wyróżnione w naszym serwisie. </p>
+                                <p>W przypadku braku wyróżnienia prosimy o kontakt z właścicielem serwisu:
+                                    <a href="mailto:redakcja@jaslo4u.pl">FHU JASART Agnieszka Wnęk, redakcja@jaslo4u.pl</a> oraz wypełnienie
+                                    <a href="https://smartpay.pl/complaint">formularza reklamacyjnego</a>
+                                </p>
+
+                                <p>Właścicielem serwisu jest: <a href="mailto:redakcja@jaslo4u.pl">FHU JASART Agnieszka Wnęk, redakcja@jaslo4u.pl</a>.
+                                    Usługa SMS dostępna jest u wszystkich operatorów: Era, Orange, Plus GSM, Play, Heyah, Sami Swoi. Serwis SMS obsługiwany przez CTM Mobiltek.
+                                    <a href="https://smartpay.pl/regulamin-klienta">Regulamin Usług i Serwisów SMS</a>.
+                                </p>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <br style="clear: both;">
+
+                    <br style="clear: both;">
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -80,7 +80,7 @@ class CreateInvoiceService
 
         if (null === $userInvoiceDetails) {
             $invoice->setIndividualClientName($user->getEmail());
-            $invoice->setEmailForInvoice($user->getEmail());
+            $invoice->setEmailToSendInvoice($user->getEmail());
         } else {
             $invoice->setCompanyName($userInvoiceDetails->getCompanyName());
             $invoice->setClientTaxNumber($userInvoiceDetails->getTaxNumber());
@@ -90,7 +90,7 @@ class CreateInvoiceService
             $invoice->setUnitNumber($userInvoiceDetails->getUnitNumber());
             $invoice->setZipCode($userInvoiceDetails->getZipCode());
             $invoice->setCountry($userInvoiceDetails->getCountry());
-            $invoice->setEmailForInvoice($userInvoiceDetails->getEmailForInvoice());
+            $invoice->setEmailToSendInvoice($userInvoiceDetails->getEmailToSendInvoice());
         }
 
         // seller

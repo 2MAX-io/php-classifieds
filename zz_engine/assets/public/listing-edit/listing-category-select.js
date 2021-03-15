@@ -1,6 +1,7 @@
 "use strict";
 
 import $ from "jquery";
+import "./cascader.css";
 
 let cascader = {};
 cascader.$mainElement = $("#js__cascaderCategorySelect");

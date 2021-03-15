@@ -72,7 +72,7 @@ class FeaturedPackage
     private $removed = false;
 
     /**
-     * @var null|string
+     * @var string|null
      *
      * @ORM\Column(type="string", length=10000, nullable=true)
      */
@@ -93,7 +93,7 @@ class FeaturedPackage
     private $paymentFeaturedPackage;
 
     /**
-     * @var null|float
+     * @var float|null
      *
      * used only for form auto validation, if saving empty featured package form successful can be removed
      */

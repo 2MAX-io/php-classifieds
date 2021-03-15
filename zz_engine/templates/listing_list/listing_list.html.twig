@@ -165,7 +165,15 @@
                         </div>
                     {%- else ~%}
                         <div class="alert alert-info w-100">
-                            {{- 'trans.No classified ads matching criteria were found' | trans -}}
+                            <div class="mb-3">
+                                {{- 'trans.No classifieds matching the criteria found on map' | trans -}}
+                            </div>
+                            <a {{- ' ' -}}
+                                    href="{{ path(app.request.get('_route'), queryParameters | merge({'showOnMap': null})) }}" {{- ' ' -}}
+                                    class="btn btn-light-gray w-100 mb-2" {{- ' ' -}}
+                            > {{- '' -}}
+                                {{- 'trans.Return to the list' | trans -}}
+                            </a>
                         </div>
                     {%- endif ~%}
                 {%- endif ~%}
@@ -191,7 +199,7 @@
                                                 >
                                             </a>
                                         </div>
-                                        <div class="card-text col-12 col-md-8 pb-3 pl-md-4">
+                                        <div class="col-12 col-md-8 pb-1 pl-md-4 card-text">
                                             <h5> {{- '' -}}
                                                 <strong> {{- '' -}}
                                                     <a {{- ' ' -}}
@@ -223,26 +231,49 @@
                                                 {%- endif ~%}
                                             </div>
 
-                                            {%- if listing.price is not empty ~%}
-                                                <div class="mt-1"> {{- '' -}}
-                                                    <span class="btn btn-dark btn-sm price mr-2">
-                                                        {{- 'trans.Price' | trans }}: {{ listing.price | money -}}
-                                                    </span>
-
-                                                    {%- if listing.priceFor -%}
-                                                        <span class="mr-2"> {{- '' -}}
-                                                            {{- ('trans.priceFor.'~listing.priceFor) | trans -}}
+                                            <div class="listing-list-details">
+                                                {%- if listing.price is not empty ~%}
+                                                    <div class="mt-1 d-inline-block"> {{- '' -}}
+                                                        <span class="btn btn-dark btn-sm price mr-2">
+                                                            {{- 'trans.Price' | trans }}: {{ listing.price | money -}}
                                                         </span>
-                                                    {%- endif -%}
-                                                </div>
-                                            {%- endif ~%}
+
+                                                        {%- if listing.priceFor -%}
+                                                            <span class="mr-1"> {{- '' -}}
+                                                                {{- ('trans.priceFor.'~listing.priceFor) | trans -}}
+                                                            </span>
+                                                        {%- endif -%}
+                                                    </div>
+                                                {%- endif ~%}
+
+                                                {%- for customFieldInline in listing.customFieldsInline -%}
+                                                    <div class="name-value-group mb-1 mr-1 small d-none d-md-inline-block"> {{- '' -}}
+                                                        <div class="name text-break">
+                                                            {{- customFieldInline.name -}}
+                                                        </div> {{- '' -}}
+                                                        <strong class="text-break">
+                                                            {%- if customFieldInline.type == constant('\App\\Entity\\CustomField::INTEGER_RANGE') -%}
+                                                                {{- customFieldInline.value | thousandsSeparate -}}
+                                                            {%- else -%}
+                                                                {{- customFieldInline.value -}}
+                                                            {%- endif -%}
+                                                        </strong> {{- '' -}}
+                                                        {%- if customFieldInline.unit  -%}
+                                                            <span class="small">
+                                                                {{- ' ' -}}
+                                                                {{- customFieldInline.unit -}}
+                                                            </span>
+                                                        {%- endif -%}
+                                                    </div>
+                                                {%- endfor ~%}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         {%- else ~%}
                             <div class="alert alert-info w-100">
-                                {{- 'trans.No classified ads matching criteria were found' | trans -}}
+                                {{- 'trans.No classifieds matching the criteria found' | trans -}}
                             </div>
                         {%- endfor ~%}
                     </div>

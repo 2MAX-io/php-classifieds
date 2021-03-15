@@ -35,15 +35,15 @@ class TwigSettings implements RuntimeExtensionInterface
         );
     }
 
-    public function money(float $money): string
+    public function money(float $money, int $decimals = 2): string
     {
-        if ($money < 40) {
-            return (string) \round($money, 2);
+        if (\abs($money - (int) $money) < 1 / 10 ** ($decimals + 1)) {
+            $decimals = 0;
         }
 
         return \number_format(
             $money,
-            0,
+            $decimals,
             $this->settingsService->getSettingsDto()->getDecimalSeparator(),
             $this->settingsService->getSettingsDto()->getThousandSeparator(),
         );

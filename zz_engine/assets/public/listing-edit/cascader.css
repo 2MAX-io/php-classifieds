@@ -1,0 +1,39 @@
+.cascader-main {
+    margin-bottom: 1rem;
+}
+
+.cascader-branch.cascader-click {
+    cursor: pointer;
+    padding-top: 0.3rem;
+    padding-bottom: 0.4rem;
+}
+
+.cascader-branch.cascader-click {
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+@media (min-width: 992px) {
+    .cascader-branch-list {
+        border-right: 1px solid #343a40;
+    }
+
+    .cascader-branch-list-header {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    .cascader-level-0 .cascader-branch-list-header {
+        padding-left: 0;
+        padding-right: 0;
+    }
+}
+
+.cascader-branch.cascader-click:hover {
+    background-color: #e1e1e1;
+}
+
+.cascader-branch.cascader-click.cascader-selected {
+    background-color: #343a40;
+    color: white;
+}

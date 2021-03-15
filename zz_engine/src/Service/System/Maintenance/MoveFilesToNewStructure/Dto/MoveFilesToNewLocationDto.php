@@ -9,7 +9,7 @@ class MoveFilesToNewLocationDto
     /** @var bool */
     private $performMove = false;
 
-    /** @var null|int */
+    /** @var int|null */
     private $limit;
 
     public function getPerformMove(): bool

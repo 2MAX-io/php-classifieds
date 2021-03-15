@@ -11,12 +11,12 @@ use App\Entity\UserMessageThread;
 class SendUserMessageDto
 {
     /**
-     * @var null|string
+     * @var string|null
      */
     private $message;
 
     /**
-     * @var null|Listing
+     * @var Listing|null
      */
     private $listing;
 
@@ -26,12 +26,12 @@ class SendUserMessageDto
     private $currentUser;
 
     /**
-     * @var null|UserMessageThread
+     * @var UserMessageThread|null
      */
     private $userMessageThread;
 
     /**
-     * @var null|bool
+     * @var bool|null
      */
     private $createThread;
 

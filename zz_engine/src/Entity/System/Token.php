@@ -57,7 +57,7 @@ class Token
     private $used = false;
 
     /**
-     * @var null|\DateTimeInterface
+     * @var \DateTimeInterface|null
      *
      * @ORM\Column(type="datetime", nullable=true)
      */
@@ -149,7 +149,7 @@ class Token
 
     public function getFieldByName(string $fieldName): ?string
     {
-        /** @var null|TokenField $field */
+        /** @var TokenField|null $field */
         $field = $this->getFields()->get($fieldName);
 
         if (null === $field) {

@@ -38,7 +38,7 @@ class SystemLog
     private $type;
 
     /**
-     * @var null|string
+     * @var string|null
      *
      * @ORM\Column(type="string", length=1000, nullable=true)
      */

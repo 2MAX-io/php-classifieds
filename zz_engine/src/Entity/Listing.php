@@ -7,7 +7,9 @@ namespace App\Entity;
 use App\Entity\System\ListingInternalData;
 use App\Helper\ContainerHelper;
 use App\Helper\DateHelper;
+use App\Helper\JsonHelper;
 use App\Helper\ResizedImagePath;
+use App\Service\Listing\CustomField\Dto\CustomFieldInlineDto;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\Criteria;
@@ -145,7 +147,7 @@ class Listing
     private $featured = false;
 
     /**
-     * @var null|\DateTimeInterface
+     * @var \DateTimeInterface|null
      *
      * @ORM\Column(type="datetime", nullable=true)
      */
@@ -182,7 +184,7 @@ class Listing
     private $lastEditDate;
 
     /**
-     * @var null|\DateTimeInterface
+     * @var \DateTimeInterface|null
      *
      * @ORM\Column(type="datetime", nullable=true)
      */
@@ -203,35 +205,35 @@ class Listing
     private $description;
 
     /**
-     * @var null|float
+     * @var float|null
      *
      * @ORM\Column(type="float", nullable=true)
      */
     private $price;
 
     /**
-     * @var null|string
+     * @var string|null
      *
      * @ORM\Column(type="string", length=40, nullable=true)
      */
     private $priceFor;
 
     /**
-     * @var null|bool
+     * @var bool|null
      *
      * @ORM\Column(type="boolean", nullable=true)
      */
     private $priceNegotiable;
 
     /**
-     * @var null|string
+     * @var string|null
      *
      * @ORM\Column(type="string", length=20, nullable=true)
      */
     private $phone;
 
     /**
-     * @var null|string
+     * @var string|null
      *
      * @ORM\Column(type="string", length=70, nullable=true)
      */
@@ -245,14 +247,14 @@ class Listing
     private $emailShow;
 
     /**
-     * @var null|string
+     * @var string|null
      *
      * @ORM\Column(type="string", length=30, nullable=true)
      */
     private $city;
 
     /**
-     * @var null|float
+     * @var float|null
      *
      * @ORM\Column(type="float", nullable=true)
      * @Assert\Type(type="numeric")
@@ -260,7 +262,7 @@ class Listing
     private $locationLatitude;
 
     /**
-     * @var null|float
+     * @var float|null
      *
      * @ORM\Column(type="float", nullable=true)
      * @Assert\Type(type="numeric")
@@ -268,7 +270,7 @@ class Listing
     private $locationLongitude;
 
     /**
-     * @var null|string
+     * @var string|null
      *
      * @ORM\Column(type="string", length=255, nullable=true)
      */
@@ -291,7 +293,15 @@ class Listing
     private $searchText;
 
     /**
-     * @var null|string
+     * @var string|null
+     *
+     * @Assert\NotNull(groups={"skipAutomaticValidation"})
+     * @ORM\Column(type="string", length=1000, nullable=true)
+     */
+    private $customFieldsInlineJson;
+
+    /**
+     * @var string|null
      *
      * @ORM\Column(type="string", length=150, nullable=true)
      */
@@ -436,6 +446,25 @@ class Listing
     public function getHasLocationOnMap(): bool
     {
         return $this->getLocationLatitude() && $this->getLocationLongitude();
+    }
+
+    /**
+     * @return CustomFieldInlineDto[]
+     */
+    public function getCustomFieldsInline(): array
+    {
+        $return = [];
+
+        try {
+            $customFieldListArray = JsonHelper::toArray($this->getCustomFieldsInlineJson()) ?? [];
+            foreach ($customFieldListArray as $customFieldArray) {
+                $return[] = CustomFieldInlineDto::fromArray($customFieldArray);
+            }
+        } catch (\Throwable $e) {
+            return [];
+        }
+
+        return $return;
     }
 
     public function getId(): ?int
@@ -922,5 +951,15 @@ class Listing
         }
 
         return $this;
+    }
+
+    public function getCustomFieldsInlineJson(): ?string
+    {
+        return $this->customFieldsInlineJson;
+    }
+
+    public function setCustomFieldsInlineJson(?string $customFieldsInlineJson): void
+    {
+        $this->customFieldsInlineJson = $customFieldsInlineJson;
     }
 }

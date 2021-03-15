@@ -18,6 +18,8 @@ parameters:
     upgrade_available_check_disabled: '%env(resolve:bool:APP_UPGRADE_AVAILABLE_CHECK_DISABLED)%'
     env(APP_ASSET_VERSION): 1
     asset_version: '%env(resolve:APP_ASSET_VERSION)%'
+    env(APP_FAVICON_DIR): null
+    favicon_dir: '%env(resolve:APP_FAVICON_DIR)%'
     env(APP_ENVIRONMENT_CSS_CLASS): ''
     environment_css_class: '%env(resolve:APP_ENVIRONMENT_CSS_CLASS)%'
     router.request_context.host: '%env(resolve:APP_HTTP_HOST)%'
@@ -71,19 +73,19 @@ services:
         public: true
 
     App\Service\Setting\SettingsDto:
-        factory: [ '@App\Service\Setting\SettingsService', 'getSettingsDto' ]
+        factory: ['@App\Service\Setting\SettingsService', 'getSettingsDto']
 
     App\Service\System\HealthCheck\HealthCheckService:
-        arguments: [ !tagged app.health_checker ]
+        arguments: [!tagged app.health_checker]
 
     App\Service\Payment\PaymentGatewayService:
-        arguments: [ !tagged app.payment_gateway_list ]
+        arguments: [!tagged app.payment_gateway_list]
 
     App\Service\System\Cron\CronService:
-        arguments: [ !tagged app.cron_action ]
+        arguments: [!tagged app.cron_action]
 
     App\Service\System\HealthCheck\HealthChecker\Settings\SettingsRequiredHealthChecker:
-        arguments: [ !tagged app.setting_type ]
+        arguments: [!tagged app.setting_type]
 
     Symfony\Component\HttpKernel\CacheClearer\CacheClearerInterface: '@cache_clearer'
 
@@ -91,4 +93,4 @@ services:
         tags: ['mailer.transport_factory']
 
     libphonenumber\PhoneNumberUtil:
-        factory: [ '@App\Service\System\Text\PhoneNumberService', 'factory' ]
+        factory: ['@App\Service\System\Text\PhoneNumberService', 'factory']

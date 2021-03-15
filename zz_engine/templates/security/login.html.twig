@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ 'trans.Log in!' | trans }}{% endblock %}
+{% block title %}{{ 'trans.Log in' | trans }}{% endblock %}
 
 {# @var settings \App\Service\Setting\SettingsDto #}
 {%- set settings = settings() -%}
@@ -10,7 +10,7 @@
     <div class="row">
         <div class="col-md-6 offset-md-3">
             <div class="card">
-                <h4 class="card-header"><strong>{{ 'trans.Sign in' | trans }}</strong></h4>
+                <h4 class="card-header"><strong>{{ 'trans.Log in' | trans }}</strong></h4>
 
                 <div class="card-body">
                     <form method="post" class="formUserLogin">
@@ -22,42 +22,42 @@
 
                         {% include 'form/_flash_above_form.html.twig' %}
 
-                        <h1 class="h3 mb-3 font-weight-normal">{{ 'trans.Please sign in' | trans }}</h1>
-
                         <div class="form-group">
                             {% include 'form/_flash_above_form.html.twig' %}
 
                             <label for="inputEmail" class="sr-only">{{ 'trans.Email' | trans }}</label>
-                            <input
-                                    type="text"
-                                    value="{{ last_username }}"
-                                    name="email"
-                                    id="inputEmail"
-                                    class="form-control"
-                                    placeholder="{{ 'trans.Email or Login' | trans }}"
-                                    required
-                                    autofocus
-                                    tabindex="0"
+                            <input {{- ' ' -}}
+                                    type="text" {{- ' ' -}}
+                                    value="{{ last_username }}" {{- ' ' -}}
+                                    name="email" {{- ' ' -}}
+                                    id="inputEmail" {{- ' ' -}}
+                                    class="form-control" {{- ' ' -}}
+                                    placeholder="{{ 'trans.Email or Login' | trans }}" {{- ' ' -}}
+                                    required {{- ' ' -}}
+                                    autofocus {{- ' ' -}}
+                                    tabindex="0" {{- ' ' -}}
+                                    autocomplete="username" {{- ' ' -}}
                             >
                         </div>
 
                         <div class="form-group">
                             <label for="inputPassword" class="sr-only">{{ 'trans.Password' | trans }}</label>
                             <input
-                                    type="password"
-                                    name="password"
-                                    id="inputPassword"
-                                    class="form-control"
-                                    placeholder="{{ 'trans.Password' | trans }}"
-                                    required
-                                    tabindex="0"
+                                    type="password" {{- ' ' -}}
+                                    name="password" {{- ' ' -}}
+                                    id="inputPassword" {{- ' ' -}}
+                                    class="form-control" {{- ' ' -}}
+                                    placeholder="{{ 'trans.Password' | trans }}" {{- ' ' -}}
+                                    required {{- ' ' -}}
+                                    tabindex="0" {{- ' ' -}}
+                                    autocomplete="current-password" {{- ' ' -}}
                             >
                         </div>
 
                         <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
                         <div class="form-group">
-                            <button class="btn btn-primary btn-block" type="submit">
+                            <button class="btn btn-primary btn-block mb-2" type="submit">
                                 {{- 'trans.Sign in' | trans -}}
                             </button>
                             <a href="{{ path('app_remind_password') }}">{{ 'trans.Forgot password?' | trans }}</a>

@@ -58,7 +58,7 @@ class Admin implements UserInterface, UserRoleEnum, EnablableInterface
     private $password;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     private $plainPassword;
 
@@ -105,8 +105,6 @@ class Admin implements UserInterface, UserRoleEnum, EnablableInterface
     public function getRoles(): array
     {
         $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
-        $roles[] = UserRoleEnum::ROLE_USER;
 
         return \array_unique($roles);
     }

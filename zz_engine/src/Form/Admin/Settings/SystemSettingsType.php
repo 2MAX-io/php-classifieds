@@ -91,14 +91,12 @@ class SystemSettingsType extends AbstractType implements SettingTypeInterface
             'label' => 'trans.Thousand separator in numbers',
             'required' => true,
             'choice_translation_domain' => false,
+            'expanded' => false,
             'choices' => [
                 $this->trans->trans('trans.space') => ' ',
                 ',' => ',',
                 '.' => '.',
                 $this->trans->trans('trans.none') => '',
-            ],
-            'constraints' => [
-                new NotBlank(),
             ],
         ]);
         $builder->add('deleteExpiredListingFilesEnabled', BoolRequiredType::class, [

@@ -20,8 +20,13 @@
     {% block stylesheets %}
         {{- encore_entry_link_tags('app') -}}
     {% endblock %}
-    {% block css %}{% endblock %}
+    {% block head %}{% endblock head %}
 
+    {%- if favicon_dir ~%}
+        <link rel="apple-touch-icon" sizes="180x180" href="{{ asset(favicon_dir~'apple-touch-icon.png') }}">
+        <link rel="icon" type="image/png" sizes="32x32" href="{{ asset(favicon_dir~'favicon-32x32.png') }}">
+        <link rel="icon" type="image/png" sizes="16x16" href="{{ asset(favicon_dir~'favicon-16x16.png') }}">
+    {%- endif ~%}
     <link rel='alternate' type='application/rss+xml' title='{{- settings.rssTitle }}' href='{{ url('app_rss') }}'/>
 
     {{- settings.customJavascriptInHead | raw ~}}
@@ -29,6 +34,7 @@
 <body class="{{ environmentCssClass() }}">
 <div class="container-fluid page-top d-print-none">
     <div class="container container-remove-padding">
+        <!-- nav mobile -->
         <nav class="navbar navbar-top navbar-expand-lg navbar-light">
             <a class="navbar-brand" href="{{ path('app_index') }}" title="{{ settings.indexPageTitle }}"> {{- '' -}}
                 <img class="logo" src="{{ asset(settings.logoPath | default('static/system/logo_default.png')) }}" alt="{{ settings.indexPageTitle }}"/> {{- '' -}}
@@ -84,6 +90,30 @@
                             {{- 'trans.Last added' | trans -}}
                         </a> {{- '' -}}
                     </li>
+                    <li class="nav-item"> {{- '' -}}
+                        <a class="nav-link menu-top-item" href="{{ path('app_user_my_account') }}">
+                            {{- 'trans.My account' | trans -}}
+                        </a> {{- '' -}}
+                    </li>
+                    {%- if is_granted("ROLE_USER") ~%}
+                        <li class="nav-item"> {{- '' -}}
+                            <a class="nav-link menu-top-item" href="{{ path('app_listing_new') }}">
+                                {{- 'trans.Create Listing' | trans -}}
+                            </a> {{- '' -}}
+                        </li>
+                        {%- if settings.messageSystemEnabled ~%}
+                            <li class="nav-item"> {{- '' -}}
+                                <a class="nav-link menu-top-item" href="{{ path('app_user_message_list') }}">
+                                    {{- 'trans.Messages' | trans -}}
+                                </a> {{- '' -}}
+                            </li>
+                        {%- endif ~%}
+                        <li class="nav-item"> {{- '' -}}
+                            <a class="nav-link menu-top-item" href="{{ path('app_user_settings') }}">
+                                {{- 'trans.Settings' | trans -}}
+                            </a> {{- '' -}}
+                        </li>
+                    {%- endif ~%}
                 </ul>
 
                 {%- if isAdminInPublic() ~%}
@@ -119,7 +149,7 @@
                     </form>
                 </div>
 
-                <div class="col-md-4 container-remove-padding">
+                <div class="col-md-4 container-remove-padding d-none d-lg-block">
                     <div class="text-right mt-md-2">
                         <ul class="list-inline">
                             <li class="list-inline-item">
@@ -135,18 +165,12 @@
                         </ul>
                     </div>
                 </div>
-
-                {%- if app.user ~%}
-                    <a class="nav-link d-sm-none" href="{{ path('app_user_listing_list') }}">
-                        {{- 'trans.My listings' | trans -}}
-                    </a>
-                {%- endif ~%}
             </div>
         </nav>
     </div>
 </div>
 
-<!-- navbar desktop -->
+<!-- nav desktop -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark d-none d-md-block menu-secondary d-print-none">
     <div class="container">
         <button {{- ' ' -}}
@@ -294,11 +318,7 @@
                 <h5>{{ 'trans.About' | trans }}</h5>
                 <ul class="list-unstyled text-small">
                     {%- if settings.linkAdvertisement ~%}
-                        <li> {{- '' -}}
-                            <a class="text-danger mobile-link" href="{{ path('app_page', {'slug': settings.linkAdvertisement}) }}">
-                                {{- 'trans.Advertisement' | trans -}}
-                            </a> {{- '' -}}
-                        </li>
+                        <li><a class="text-danger mobile-link" href="https://www.jaslo4u.pl/reklama/">Reklama Jasło</a></li>
                     {%- endif ~%}
 
                     {%- if settings.linkTermsConditions ~%}

@@ -10,7 +10,7 @@ use App\Helper\DateHelper;
 class UserMessageThreadDto
 {
     /**
-     * @var null|int
+     * @var int|null
      */
     private $userMessageThreadId;
 
@@ -25,32 +25,32 @@ class UserMessageThreadDto
     private $recipientUserId;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     private $recipientUserName;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     private $senderUserName;
 
     /**
-     * @var null|int
+     * @var int|null
      */
     private $listingId;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     private $listingSlug;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     private $listingTitle;
 
     /**
-     * @var null|int
+     * @var int|null
      */
     private $unreadCount;
 

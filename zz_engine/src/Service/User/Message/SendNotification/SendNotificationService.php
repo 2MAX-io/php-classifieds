@@ -92,6 +92,7 @@ class SendNotificationService
         ]));
         $email->to($messageToUserAggregateDto->getRecipientUser()->getEmail());
         $email->htmlTemplate('email/user_message/notification_new_user_message.html.twig');
+        $email->textTemplate('email/user_message/notification_new_user_message.txt.twig');
         $email->context([
             'listing' => $listing,
             'newestUserMessage' => $newestUserMessage,

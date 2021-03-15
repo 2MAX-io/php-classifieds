@@ -55,7 +55,7 @@ class DevGenerateTestListings
     private $logger;
 
     /**
-     * @var null|OutputInterface
+     * @var OutputInterface|null
      */
     private $outputInterface;
 

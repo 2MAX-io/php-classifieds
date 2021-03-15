@@ -12,7 +12,7 @@ class DeleteExpiredListingFilesDto
     /** @var bool */
     private $performFileDeletion = false;
 
-    /** @var null|int */
+    /** @var int|null */
     private $limit;
 
     public function getDaysOldToDelete(): int

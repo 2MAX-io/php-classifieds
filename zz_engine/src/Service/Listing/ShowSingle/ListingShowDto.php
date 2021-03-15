@@ -19,7 +19,7 @@ class ListingShowDto
     private $viewsCount;
 
     /**
-     * @param null|array<int|string,mixed> $result
+     * @param array<int|string,mixed>|null $result
      */
     public static function fromDoctrineResult(?array $result): ?ListingShowDto
     {

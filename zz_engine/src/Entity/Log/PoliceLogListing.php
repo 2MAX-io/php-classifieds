@@ -22,14 +22,14 @@ class PoliceLogListing
     private $id;
 
     /**
-     * @var null|int
+     * @var int|null
      *
      * @ORM\Column(type="integer", nullable=true, options={"unsigned"=true})
      */
     private $listingId;
 
     /**
-     * @var null|int
+     * @var int|null
      *
      * @ORM\Column(type="integer", nullable=true, options={"unsigned"=true})
      */

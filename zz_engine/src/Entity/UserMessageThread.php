@@ -31,7 +31,7 @@ class UserMessageThread
     private $createdByUser;
 
     /**
-     * @var null|Listing
+     * @var Listing|null
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\Listing")
      * @ORM\JoinColumn(nullable=true)

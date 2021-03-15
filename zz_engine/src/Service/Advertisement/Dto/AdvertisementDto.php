@@ -8,12 +8,12 @@ use App\Entity\Category;
 
 class AdvertisementDto
 {
-    /** @var null|int|string */
+    /** @var int|string|null */
     public $zoneId;
 
-    /** @var null|Category */
+    /** @var Category|null */
     public $category;
 
-    /** @var null|int|string */
+    /** @var int|string|null */
     public $defaultAdvertisementZoneId;
 }

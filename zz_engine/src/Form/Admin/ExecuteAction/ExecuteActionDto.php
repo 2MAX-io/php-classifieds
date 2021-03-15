@@ -11,17 +11,17 @@ use App\Service\Admin\Listing\Dto\AdminListingListDto;
 class ExecuteActionDto
 {
     /**
-     * @var null|string
+     * @var string|null
      */
     private $action;
 
     /**
-     * @var null|CustomFieldOption
+     * @var CustomFieldOption|null
      */
     private $customFieldOption;
 
     /**
-     * @var null|Category
+     * @var Category|null
      */
     private $category;
 

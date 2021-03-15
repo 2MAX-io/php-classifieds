@@ -115,14 +115,7 @@ class ValueExistValidator extends ConstraintValidator
                 throw new ConstraintDefinitionException(\sprintf('The "%s" entity repository does not support the "%s" entity. The entity should be an instance of or extend "%s".', $constraint->entityClass, $class->getName(), $supportedClass));
             }
         } else {
-            throw new ConstraintDefinitionException(
-                \sprintf(
-                    'entityClass must be set in Constraint: %s',
-                    \get_class(
-                        $constraint
-                    )
-                )
-            );
+            throw new ConstraintDefinitionException(\sprintf('entityClass must be set in Constraint: %s', \get_class($constraint)));
         }
 
         $result = $repository->{$constraint->repositoryMethod}($criteria);

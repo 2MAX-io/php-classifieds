@@ -14,28 +14,28 @@ class PoliceLogUserMessageItemDto
     /** @var int */
     private $threadId;
 
-    /** @var null|int */
+    /** @var int|null */
     private $listingId;
 
-    /** @var null|int */
+    /** @var int|null */
     private $senderUserId;
 
-    /** @var null|int */
+    /** @var int|null */
     private $recipientUserId;
 
-    /** @var null|string */
+    /** @var string|null */
     private $listingSlug;
 
-    /** @var null|string */
+    /** @var string|null */
     private $listingTitle;
 
     /** @var string */
     private $userMessage;
 
-    /** @var null|string */
+    /** @var string|null */
     private $sender;
 
-    /** @var null|string */
+    /** @var string|null */
     private $recipient;
 
     /** @var string */

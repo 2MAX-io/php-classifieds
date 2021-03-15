@@ -266,13 +266,14 @@ class FileUploader {
      */
 	private function readListInput($name = null) {
 		$inputName = 'fileuploader-list-' . ($name ? $name : $this->field['name']);
+		$input = isset($_POST[$inputName]) ? stripslashes($_POST[$inputName]) : null;
 		if (is_string($this->options['listInput']))
 			$inputName = $this->options['listInput'];
 		
-		if (isset($_POST[$inputName]) && $this->isJSON($_POST[$inputName])) {
+		if ($input && $this->isJSON($input)) {
 			$list = array(
 				'list' => array(),
-				'values' => json_decode($_POST[$inputName], true)
+				'values' => json_decode($input, true)
 			);
 			
 			foreach($list['values'] as $key=>$value) {
@@ -306,18 +307,14 @@ class FileUploader {
 			
             if (!$ini[0])
 				return $this->codeToMessage('file_uploads');
-            if ($this->options['required'] && (isset($_SERVER) && strtolower($_SERVER['REQUEST_METHOD']) == "post") && $this->field['count'] + count($this->options['files']) == 0)
+            if ($this->options['required'] && strtolower($_SERVER['REQUEST_METHOD']) == "post" && $this->field['count'] + count($this->options['files']) == 0)
 				return $this->codeToMessage('required_and_no_file');
             if (($this->options['limit'] && $this->field['count'] + count($this->options['files']) > $this->options['limit']) || ($ini[3] != 0 && ($this->field['count']) > $ini[3]))
 				return $this->codeToMessage('max_number_of_files');
             if (!file_exists($this->options['uploadDir']) || !is_writable($this->options['uploadDir']))
 				return $this->codeToMessage('invalid_folder_path');
 
-            $total_size = 0;
-            foreach($this->field['input']['size'] as $key=>$value) {
-                $total_size += $value;
-            }
-            $total_size = $total_size/1000000;
+            $total_size = 0; foreach($this->field['input']['size'] as $key=>$value){ $total_size += $value; } $total_size = $total_size/1000000;
             if ($ini[2] != 0 && $total_size > $ini[2])
 				return $this->codeToMessage('post_max_size');
 			if ($this->options['maxSize'] && $total_size > $this->options['maxSize'])
@@ -357,7 +354,7 @@ class FileUploader {
 	 * @param $rotation {Number} rotation degrees
      * @return {boolean} resizing was successful
      */
-	public static function resize($filename, $width = null, $height = null, $destination = null, $crop = false, $quality = 90, $rotation = 0) {
+	public static function resize($filename, $width = null, $height = null, $destination = null, $crop = false, $quality = 95, $rotation = 0) {
 		if (!is_file($filename) || !is_readable($filename))
 			return false;
 		
@@ -375,11 +372,11 @@ class FileUploader {
 		$hasCrop = is_array($crop) || $crop == true;
 		$hasResizing = $width || $height;
 		
-		if (!$hasRotation && !$hasCrop && !$hasResizing)
+		if (!$hasRotation && !$hasCrop && !$hasResizing && (!isset($exif['Orientation']) || $exif['Orientaiton'] == 1) && $filename == $destination)
 			return;
 		
 		// store image information
-		[$imageWidth, $imageHeight, $imageType] = $imageInfo;
+		list ($imageWidth, $imageHeight, $imageType) = $imageInfo;
 		$imageRatio = $imageWidth / $imageHeight;
 		
 		// create GD image
@@ -405,14 +402,35 @@ class FileUploader {
             // exif rotation
             if (!empty($exif['Orientation'])) {
                 switch ($exif['Orientation']) {
+                    case 2:
+                        imageflip($source, IMG_FLIP_HORIZONTAL);
+                        break;
                     case 3:
                         $source = imagerotate($source, 180, 0);
+                        break;
+                    case 4:
+                        $source = imagerotate($source, 180, 0);
+                        imageflip($source, IMG_FLIP_HORIZONTAL);
+                        break;
+                    case 5:
+                        $imageWidth = $cacheHeight;
+                        $imageHeight = $cacheWidth;
+
+                        $source = imagerotate($source, -90, 0);
+                        imageflip($source, IMG_FLIP_HORIZONTAL);
                         break;
                     case 6:
                         $imageWidth = $cacheHeight;
                         $imageHeight = $cacheWidth;
 
                         $source = imagerotate($source, -90, 0);
+                        break;
+                    case 7:
+                        $imageWidth = $cacheHeight;
+                        $imageHeight = $cacheWidth;
+
+                        $source = imagerotate($source, 90, 0);
+                        imageflip($source, IMG_FLIP_HORIZONTAL);
                         break;
                     case 8:
                         $imageWidth = $cacheHeight;
@@ -564,9 +582,8 @@ class FileUploader {
 		clearstatcache(true, $destination);
 		
 		return array(
-			'width' => $crop['width'],
-			'height' => $crop['height'],
-			'ratio' => $crop['width'] / $crop['height'],
+			'width' => round(isset($crop['newWidth']) ? $crop['newWidth'] : $width),
+			'height' => round(isset($crop['newHeight']) ? $crop['newHeight'] : $height),
 			'type' => $destExt
 		);
 	}
@@ -587,7 +604,7 @@ class FileUploader {
 		);
         $listInput = $this->field['listInput'];
 		$uploadDir = str_replace(getcwd() . '/', '', $this->options['uploadDir']);
-		$chunk = isset($_POST['_chunkedd']) && count($this->field['input']['name']) == 1 ? json_decode($_POST['_chunkedd'], true) : false;
+		$chunk = isset($_POST['_chunkedd']) && count($this->field['input']['name']) == 1 ? json_decode(stripslashes($_POST['_chunkedd']), true) : false;
 		
 		if ($this->field['input']) {
 			// validate ini settings and some generally options
@@ -654,7 +671,7 @@ class FileUploader {
 					$metas['chunked'] = $chunk;
 
 					// validate file
-					$validateFile = $this->validate(array_diff_key($metas, array_flip(['tmp_name', 'chunked'])));
+					$validateFile = $this->validate(array_diff_key($metas, array_flip(array('tmp_name', 'chunked'))));
 					
 					// check if file is in listInput
 					$listInputName = '0:/' . $metas['old_name'];
@@ -672,7 +689,8 @@ class FileUploader {
                                 unset($listInput['values'][$fileListIndex]);
                             }
 							
-							$metas['name'] = $this->generateFileName($this->options['title'], array_diff_key($metas, array_flip(['tmp_name', 'error', 'chunked'])));
+                            $metas['i'] = count($data['files']);
+							$metas['name'] = $this->generateFileName($this->options['title'], array_diff_key($metas, array_flip(array('tmp_name', 'error', 'chunked'))));
 							$metas['title'] = substr($metas['name'], 0, (strlen($metas['extension']) > 0 ? -(strlen($metas['extension'])+1) : strlen($metas['name'])));
 							$metas['file'] = $uploadDir . $metas['name'];
 							$metas['replaced'] = file_exists($metas['file']);
@@ -699,6 +717,7 @@ class FileUploader {
                 if (!$data['hasWarnings']) {
                     foreach($data['files'] as $key => $file) {
                         if ($file['chunked'] ? rename($file['tmp_name'], $file['file']) : $this->options['move_uploaded_file']($file['tmp_name'], $file['file'], $file)) {
+                            unset($data['files'][$key]['i']);
                             unset($data['files'][$key]['chunked']);
                             unset($data['files'][$key]['error']);
                             unset($data['files'][$key]['tmp_name']);
@@ -733,7 +752,7 @@ class FileUploader {
 				
 			}
 			
-			if ($this->options['required'] && (isset($_SERVER) && strtolower($_SERVER['REQUEST_METHOD']) == "post")) {
+			if ($this->options['required'] && strtolower($_SERVER['REQUEST_METHOD']) == "post") {
 				$data['hasWarnings'] = true;
 				$data['warnings'][] = $this->codeToMessage('required_and_no_file');
 			}
@@ -789,19 +808,12 @@ class FileUploader {
 			if (isset($item['listProps']) && isset($item['listProps']['editor'])) {
                 $item['editor'] = $item['listProps']['editor'];
             }
-            if (isset($item['uploaded']) && isset($_POST['_editorr']) && $this->isJSON($_POST['_editorr']) && count($this->field['input']['name']) == 1) {
-                $item['editor'] = json_decode($_POST['_editorr'], true);
+            if (isset($item['uploaded']) && isset($_POST['_editorr']) && $this->isJSON(stripcslashes($_POST['_editorr'])) && count($this->field['input']['name']) == 1) {
+                $item['editor'] = json_decode(stripslashes($_POST['_editorr']), true);
 			}
             
 			// edit file
-            if (
-                $this->options['editor'] != null
-                || (
-                    isset($item['editor'])
-                    && file_exists($file)
-                    && strpos($item['type'], 'image/') === 0
-                )
-            ) {
+			if (file_exists($file) && strpos($item['type'], 'image/') === 0) {
                 $width = isset($this->options['editor']['maxWidth']) ? $this->options['editor']['maxWidth'] : null;
                 $height = isset($this->options['editor']['maxHeight']) ? $this->options['editor']['maxHeight'] : null;
 				$quality = isset($this->options['editor']['quality']) ? $this->options['editor']['quality'] : 90;
@@ -810,7 +822,7 @@ class FileUploader {
 				$crop = isset($item['editor']['crop']) ? $item['editor']['crop'] : $crop;
 				
 				// edit
-				$this->options['files'][$key]['editor'] = self::resize($file, $width, $height, null, $crop, $quality, $rotation);
+				$this->options['files'][$key]['image'] = self::resize($file, $width, $height, null, $crop, $quality, $rotation);
 				$this->options['files'][$key]['size'] = filesize($file);
 				if (isset($this->options['files'][$key]['size2']))
 					$this->options['files'][$key]['size2'] = $this->formatSize($this->options['files'][$key]['size']);
@@ -884,6 +896,7 @@ class FileUploader {
 				$string = $type;
 				$string_extension = substr(strrchr($string, "."), 1);
 				
+				$string = str_replace("{i}", $item['i'] + 1, $string);
 				$string = str_replace("{random}", $random_string, $string);
 				$string = str_replace("{file_name}", $item['title'], $string);
 				$string = str_replace("{file_size}", $item['size'], $string);

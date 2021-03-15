@@ -49,6 +49,10 @@ class CustomFieldType extends AbstractType
             'label' => 'trans.Searchable?',
             'required' => false,
         ]);
+        $builder->add('inlineOnList', CheckboxType::class, [
+            'label' => 'trans.Inline on lists',
+            'required' => false,
+        ]);
         $builder->add('unit', TextType::class, [
             'label' => 'trans.Unit',
             'required' => false,

@@ -22,35 +22,35 @@ class PoliceLogUserMessage
     private $id;
 
     /**
-     * @var null|int
+     * @var int|null
      *
      * @ORM\Column(type="integer", nullable=true, options={"unsigned"=true})
      */
     private $listingId;
 
     /**
-     * @var null|int
+     * @var int|null
      *
      * @ORM\Column(type="integer", nullable=true, options={"unsigned"=true})
      */
     private $senderUserId;
 
     /**
-     * @var null|int
+     * @var int|null
      *
      * @ORM\Column(type="integer", nullable=true, options={"unsigned"=true})
      */
     private $recipientUserId;
 
     /**
-     * @var null|int
+     * @var int|null
      *
      * @ORM\Column(type="integer", nullable=true, options={"unsigned"=true})
      */
     private $userMessageId;
 
     /**
-     * @var null|int
+     * @var int|null
      *
      * @ORM\Column(type="integer", nullable=true, options={"unsigned"=true})
      */

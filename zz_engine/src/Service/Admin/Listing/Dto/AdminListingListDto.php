@@ -20,57 +20,57 @@ class AdminListingListDto
     private $pager;
 
     /**
-     * @var null|int
+     * @var int|null
      */
     private $currentPage;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     private $filterBySearchQuery;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     private $filterByUser;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     private $filterByCategory;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     private $filterByPublicDisplay;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     private $filterByAdminActivated;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     private $filterByAdminRejected;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     private $filterByAdminRemoved;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     private $filterByUserDeactivated;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     private $filterByUserRemoved;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     private $filterByFeatured;
 

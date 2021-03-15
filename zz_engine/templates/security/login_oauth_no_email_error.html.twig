@@ -1,0 +1,77 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'trans.Log in' | trans }}{% endblock %}
+
+{# @var settings \App\Service\Setting\SettingsDto #}
+{%- set settings = settings() -%}
+
+{% block body %}
+    <div class="container mt-3 mt-md-4">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <div class="card">
+                    <h4 class="card-header"><strong>{{ 'trans.Log in' | trans }}</strong></h4>
+
+                    <div class="card-body">
+                        <div class="alert alert-danger">
+                            <p>
+                                {{ 'trans.Error occurred during logon' | trans }}
+                            </p>
+                            <p>
+                                {{ 'trans.We were unable to obtain an email address, that is necessary to use the website' | trans }}
+                            </p>
+                            <p>
+                                {{ 'trans.The reason is, that in service you use to log in, you did not give it permission to share your email address with us' | trans }}
+                            </p>
+                            <p>
+                                {{ 'trans.In order to log in, give permission to share your email address or register using your email address' | trans }}.
+                                {{ 'trans.The link to the registration and login using your email address is available down below' | trans }}
+                            </p>
+                        </div>
+
+                        <a href="{{ path('app_register') }}" class="btn btn-primary w-100">
+                            {{ 'trans.Register using email address' | trans }}
+                        </a>
+
+                        <hr>
+
+                        <div class="row">
+                            <div class="col-12 mb-3">
+                                <div>{{ 'trans.or if you chose to share email address' | trans }}:</div>
+                            </div>
+
+                            {% if settings.facebookSignInEnabled %}
+                                <div class="col-md-6 mb-2">
+                                    <a
+                                            href="{{ path('app_login_oauth', {'provider': constant('\App\\Controller\\User\\Account\\LoginOauthController::FACEBOOK_PROVIDER')}) }}"
+                                            class="btn btn-secondary btn-block js__preventDoubleClick"
+                                            rel="nofollow"
+                                    >
+                                        {{- 'trans.Facebook' | trans -}}
+                                    </a>
+                                </div>
+                            {% endif %}
+
+                            {% if settings.googleSignInEnabled %}
+                                <div class="col-md-6 mb-2">
+                                    <a
+                                            href="{{ path('app_login_oauth', {'provider': constant('\App\\Controller\\User\\Account\\LoginOauthController::GOOGLE_PROVIDER')}) }}"
+                                            class="btn btn-secondary btn-block js__preventDoubleClick"
+                                            rel="nofollow"
+                                    >
+                                        {{- 'trans.Google' | trans -}}
+                                    </a>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="card-footer text-muted">
+                        {{ 'trans.Need an account?' | trans }}
+                        <a href="{{ path('app_register') }}">{{ 'trans.Register' | trans }}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

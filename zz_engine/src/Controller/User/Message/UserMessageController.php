@@ -43,7 +43,7 @@ class UserMessageController extends AbstractUserController
     ): Response {
         $this->dennyUnlessUser();
 
-        /** @var null|Listing $listing */
+        /** @var Listing|null $listing */
         $listing = $userMessageThread ? $userMessageThread->getListing() : null;
         $currentUser = $currentUserService->getUser();
 

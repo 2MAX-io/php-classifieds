@@ -655,8 +655,13 @@ div.clickable-div a.clickable-div-link {
 }
 
 .price-tag {
-    padding: 0.15rem .75rem 0.15rem 1.36rem;
-    margin-bottom: .5rem;
+    position: relative;
+    padding: 0.15rem .75rem 0.10rem 1.36rem;
+    margin-bottom: .4rem;
+    color: #1b1e21;
+    background-color: #f2f2f2;
+    border: 1px solid #d9dadb;
+    border-radius: .25rem;
 }
 
 .price-tag-price {

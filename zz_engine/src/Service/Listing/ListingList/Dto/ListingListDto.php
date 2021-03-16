@@ -105,6 +105,11 @@ class ListingListDto
     /**
      * @var bool
      */
+    private $filterByUserObservedListings = false;
+
+    /**
+     * @var bool
+     */
     private $paginationEnabled = true;
 
     /**
@@ -118,6 +123,14 @@ class ListingListDto
     public function getResults(): iterable
     {
         return $this->results;
+    }
+
+    /**
+     * @param iterable|Listing[] $results
+     */
+    public function setResults(iterable $results): void
+    {
+        $this->results = $results;
     }
 
     public function getPager(): ?Pagerfanta
@@ -152,14 +165,6 @@ class ListingListDto
     public function setCategory(Category $category): void
     {
         $this->category = $category;
-    }
-
-    /**
-     * @param iterable|Listing[] $results
-     */
-    public function setResults(iterable $results): void
-    {
-        $this->results = $results;
     }
 
     public function getPageNumber(): int
@@ -342,5 +347,15 @@ class ListingListDto
     public function setResultsCount(int $resultsCount): void
     {
         $this->resultsCount = $resultsCount;
+    }
+
+    public function getFilterByUserObservedListings(): bool
+    {
+        return $this->filterByUserObservedListings;
+    }
+
+    public function setFilterByUserObservedListings(bool $filterByUserObservedListings): void
+    {
+        $this->filterByUserObservedListings = $filterByUserObservedListings;
     }
 }

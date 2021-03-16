@@ -33,6 +33,7 @@ class ListingListController extends AbstractController
      * @Route("/listing/search", name="app_listing_search")
      * @Route("/listings-of-user", name="app_public_listings_of_user")
      * @Route("/map", name="app_map")
+     * @Route("/user/observed-listings", name="app_user_observed_listings")
      */
     public function listingList(
         Request $request,
@@ -104,6 +105,7 @@ class ListingListController extends AbstractController
             'longitude' => $request->query->get('longitude'),
             'zoom' => $request->query->get('zoom'),
             'categorySlug' => $categorySlug,
+            'userObserved' => $listingListDto->getFilterByUserObservedListings(),
         ];
         if (\in_array($queryParameters['showOnMap'], ['0', false, null], true)) {
             unset($queryParameters['showOnMap']);

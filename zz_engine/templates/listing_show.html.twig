@@ -10,6 +10,7 @@
 {% block title %}{{ listing.title }}{% endblock %}
 
 {% block body %}
+    {#- breadcrumbs -#}
     <div class="container mt-3 mb-3 text-break">
         {%- if settings.masterSiteLinkShow ~%}
             <a href="{{ settings.masterSiteUrl }}">{{ settings.masterSiteAnchorText }}</a>
@@ -26,6 +27,7 @@
 
     <div class="container mt-3 listing-show {% if displayAsExpired %}listing-show-expired{% endif %}">
         <div class="row">
+            {#- preview for owner info -#}
             <div class="col-md-7">
                 {%- if
                     userOrAdmin
@@ -69,6 +71,7 @@
                     </div>
                 {%- endif ~%}
 
+                {#- title of listing -#}
                 <div class="row mb-2">
                     <div class="col-sm-10">
                         <h4 class="text-break {% if displayAsExpired %}text-muted{% endif %}">
@@ -77,6 +80,7 @@
                     </div>
                 </div>
 
+                {#- action buttons mobile -#}
                 <div class="d-md-none mb-2">
                     {%- if isCurrentUserListing ~%}
                         <a href="{{ path('app_user_listing_edit', {'id': listing.id}) }}" class="btn btn-primary mb-2 mr-1">
@@ -95,6 +99,42 @@
                             {{- getListingStatus(listing) -}}
                         </span>
                     {%- endif ~%}
+
+                    {%- if not isCurrentUserListing ~%}
+                        {%- if is_granted('ROLE_USER') ~%}
+                            {%- if listing.observed ~%}
+                                <div
+                                        class="btn btn-secondary mb-2 js__observe"
+                                        data-listing-id="{{ listing.id }}"
+                                        data-observed="{{ listing.observed }}" {{- ' ' -}}
+                                >
+                                    <i class="svg svg-heart"></i>
+                                    {{- ' ' -}}
+                                    {{- 'trans.Observe' | trans -}}
+                                </div>
+                            {%- else ~%}
+                                <div {{- ' ' -}}
+                                        class="btn btn-secondary mb-2 js__observe" {{- ' ' -}}
+                                        data-listing-id="{{ listing.id }}" {{- ' ' -}}
+                                        data-observed="{{ listing.observed }}" {{- ' ' -}}
+                                >
+                                    <i class="svg svg-heart-outline"></i>
+                                    {{- ' ' -}}
+                                    {{- 'trans.Observe' | trans -}}
+                                </div>
+                            {%- endif ~%}
+                        {%- else ~%}
+                            <a {{- ' ' -}}
+                                    class="btn btn-secondary mb-2" {{- ' ' -}}
+                                    href="{{ path('app_login') }}"
+                                    target="_blank"
+                            >
+                                <i class="svg svg-heart-outline"></i>
+                                {{- ' ' -}}
+                                {{- 'trans.Observe' | trans -}}
+                            </a>
+                        {%- endif ~%}
+                    {%- endif ~%}
                 </div>
 
                 {%- if listing.listingFiles is not empty ~%}
@@ -112,6 +152,7 @@
                     </div>
                 {%- endif ~%}
 
+                {#- price tag mobile -#}
                 {% if listing.price is not empty %}
                     <div class="my-1 d-md-none">
                         <div class="price-tag">
@@ -196,7 +237,7 @@
                     </div>
                 {% endif %}
 
-                <!-- listing id -->
+                {#- listing id, views desktop -#}
                 <div class="mb-2 d-none d-md-block">
                     <div class="float-md-right">
                         {{- 'trans.Views' | trans }}: {{ (listingShowDto.viewsCount+1) | thousandsSeparate -}}
@@ -212,6 +253,7 @@
             <!-- Sidebar -->
             <div class="col-md-5">
                 <div class="d-none-soft d-md-block mb-2">
+                    {#- action buttons desktop -#}
                     {%- if isCurrentUserListing ~%}
                         <a href="{{ path('app_user_listing_edit', {'id': listing.id}) }}" class="btn btn-primary mb-2 mr-1">
                             {{- 'trans.Edit listing' | trans -}}
@@ -225,8 +267,46 @@
                     {%- endif %}
 
                     {%- if userOrAdmin ~%}
-                        <span class="{{ getListingStatusClass(listing) }} text-nowrap">{{ getListingStatus(listing) }}</span>
+                        <span class="{{ getListingStatusClass(listing) }} text-nowrap">
+                            {{- getListingStatus(listing) -}}
+                        </span>
                     {%- endif %}
+
+                    {%- if not isCurrentUserListing ~%}
+                        {%- if is_granted('ROLE_USER') ~%}
+                            {%- if listing.observed ~%}
+                                <div
+                                        class="btn btn-secondary mb-2 js__observe"
+                                        data-listing-id="{{ listing.id }}"
+                                        data-observed="{{ listing.observed }}" {{- ' ' -}}
+                                >
+                                    <i class="svg svg-heart"></i>
+                                    {{- ' ' -}}
+                                    {{- 'trans.Observe' | trans -}}
+                                </div>
+                            {%- else ~%}
+                                <div {{- ' ' -}}
+                                        class="btn btn-secondary mb-2 js__observe" {{- ' ' -}}
+                                        data-listing-id="{{ listing.id }}" {{- ' ' -}}
+                                        data-observed="{{ listing.observed }}" {{- ' ' -}}
+                                >
+                                    <i class="svg svg-heart-outline"></i>
+                                    {{- ' ' -}}
+                                    {{- 'trans.Observe' | trans -}}
+                                </div>
+                            {%- endif ~%}
+                        {%- else ~%}
+                            <a {{- ' ' -}}
+                                    class="btn btn-secondary mb-2" {{- ' ' -}}
+                                    href="{{ path('app_login') }}"
+                                    target="_blank"
+                            >
+                                <i class="svg svg-heart-outline"></i>
+                                {{- ' ' -}}
+                                {{- 'trans.Observe' | trans -}}
+                            </a>
+                        {%- endif ~%}
+                    {%- endif ~%}
 
                     {%- if isAdminInPublic ~%}
                         <div>
@@ -257,6 +337,7 @@
                         </div>
                     {%- endif ~%}
 
+                    {#- price tag desktop -#}
                     {%- if listing.price is not empty ~%}
                         <div class="my-1">
                             <div class="price-tag">
@@ -437,8 +518,8 @@
                     </div>
                 {% endif %}
 
-                <!-- share listing -->
                 {%- if not displayAsExpired ~%}
+                    <!-- share listing -->
                     <div class="card mb-3 d-none d-md-block d-print-none">
                         <h5 class="card-header card-header-small">{{ 'trans.Share This Listing' | trans }}</h5>
 
@@ -465,7 +546,7 @@
                     </div>
                 {%- endif ~%}
 
-                <!-- listing id -->
+                {#- listing id, views mobile -#}
                 <div class="mb-2 px-1 d-md-none">
                     <div>
                         {{- 'trans.Listing identifier' | trans }}: {{ listing.id -}}

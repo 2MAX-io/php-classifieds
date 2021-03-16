@@ -335,12 +335,20 @@ class Listing
      */
     private $listingInternalData;
 
+    /**
+     * @var Collection|UserObservedListing[]
+     *
+     * @ORM\OneToMany(targetEntity="App\Entity\UserObservedListing", mappedBy="listing", fetch="EXTRA_LAZY")
+     */
+    private $userObservedListings;
+
     public function __construct()
     {
         $this->listingCustomFieldValues = new ArrayCollection();
         $this->listingFiles = new ArrayCollection();
         $this->paymentFeaturedPackage = new ArrayCollection();
         $this->listingInternalData = new ArrayCollection();
+        $this->userObservedListings = new ArrayCollection();
     }
 
     public function getStatus(): string
@@ -465,6 +473,11 @@ class Listing
         }
 
         return $return;
+    }
+
+    public function isObserved(): bool
+    {
+        return $this->getUserObservedListings()->count() > 0;
     }
 
     public function getId(): ?int
@@ -961,5 +974,35 @@ class Listing
     public function setCustomFieldsInlineJson(?string $customFieldsInlineJson): void
     {
         $this->customFieldsInlineJson = $customFieldsInlineJson;
+    }
+
+    /**
+     * @return Collection|UserObservedListing[]
+     */
+    public function getUserObservedListings(): Collection
+    {
+        return $this->userObservedListings;
+    }
+
+    public function addUserObservedListing(UserObservedListing $userObservedListing): self
+    {
+        if (!$this->userObservedListings->contains($userObservedListing)) {
+            $this->userObservedListings[] = $userObservedListing;
+            $userObservedListing->setListing($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserObservedListing(UserObservedListing $userObservedListing): self
+    {
+        if ($this->userObservedListings->removeElement($userObservedListing)) {
+            // set the owning side to null (unless already changed)
+            if ($userObservedListing->getListing() === $this) {
+                $userObservedListing->setListing(null);
+            }
+        }
+
+        return $this;
     }
 }

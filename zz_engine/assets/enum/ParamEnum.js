@@ -25,5 +25,6 @@ ParamEnum.LATITUDE = "latitude";
 ParamEnum.ZOOM = "zoom";
 ParamEnum.THOUSAND_SEPARATOR = "thousandSeparator";
 ParamEnum.NUMERAL_DECIMAL_MARK = "numeralDecimalMark";
+ParamEnum.OBSERVED = "observed";
 
 export { ParamEnum as default };

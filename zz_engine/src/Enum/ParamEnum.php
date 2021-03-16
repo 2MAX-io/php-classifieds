@@ -33,4 +33,5 @@ class ParamEnum
     public const ZOOM = 'zoom';
     public const THOUSAND_SEPARATOR = 'thousandSeparator';
     public const NUMERAL_DECIMAL_MARK = 'numeralDecimalMark';
+    public const OBSERVED = 'observed';
 }

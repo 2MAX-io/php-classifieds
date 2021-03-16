@@ -7,6 +7,7 @@ namespace App\Service\Listing\ShowSingle;
 use App\Entity\Listing;
 use App\Entity\ListingView;
 use App\Helper\DateHelper;
+use App\Security\CurrentUserService;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr\Join;
@@ -18,8 +19,14 @@ class ListingShowSingleService
      */
     private $em;
 
-    public function __construct(EntityManagerInterface $em)
+    /**
+     * @var CurrentUserService
+     */
+    private $currentUserService;
+
+    public function __construct(CurrentUserService $currentUserService, EntityManagerInterface $em)
     {
+        $this->currentUserService = $currentUserService;
         $this->em = $em;
     }
 
@@ -56,6 +63,15 @@ class ListingShowSingleService
                 $qb->expr()->eq('customFieldForCategory.category', 'listing.category'),
             )
         );
+
+        $currentUser = $this->currentUserService->getUserOrNull();
+        $qb->addSelect('userObservedListing');
+        $qb->leftJoin('listing.userObservedListings',
+            'userObservedListing',
+            Join::WITH,
+            (string) $qb->expr()->eq('userObservedListing.user', ':currentUserId'),
+        );
+        $qb->setParameter(':currentUserId', $currentUser ? $currentUser->getId() : 0);
 
         $qb->andWhere($qb->expr()->eq('listing.id', ':listingId'));
         $qb->setParameter(':listingId', $listingId);

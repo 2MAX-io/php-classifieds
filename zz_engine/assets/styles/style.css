@@ -209,6 +209,18 @@ input.form-control, textarea.form-control, select.form-control {
     background-image: url(../../node_modules/@fortawesome/fontawesome-free/svgs/solid/lock.svg);
 }
 
+.svg-heart-outline {
+    width: 16px;
+    height: 16px;
+    background-image: url(../../node_modules/@fortawesome/fontawesome-free/svgs/regular/heart.svg);
+}
+
+.svg-heart {
+    width: 16px;
+    height: 16px;
+    background-image: url(../../node_modules/@fortawesome/fontawesome-free/svgs/solid/heart.svg);
+}
+
 .svg-spinner {
     width: 16px;
     height: 16px;
@@ -462,6 +474,14 @@ input.form-control, textarea.form-control, select.form-control {
 
 .listing-list-item .row {
     min-height: 9rem;
+}
+
+.listing-list-observe {
+    position: absolute;
+    right: 5px;
+    bottom: 5px;
+    cursor: pointer;
+    z-index: 20;
 }
 
 .show-more-subcategories {

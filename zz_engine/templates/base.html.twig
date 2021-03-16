@@ -101,6 +101,11 @@
                                 {{- 'trans.Create Listing' | trans -}}
                             </a> {{- '' -}}
                         </li>
+                        <li class="nav-item"> {{- '' -}}
+                            <a class="nav-link menu-top-item" href="{{ path('app_user_observed_listings') }}">
+                                {{- 'trans.Observed Listings' | trans -}}
+                            </a> {{- '' -}}
+                        </li>
                         {%- if settings.messageSystemEnabled ~%}
                             <li class="nav-item"> {{- '' -}}
                                 <a class="nav-link menu-top-item" href="{{ path('app_user_message_list') }}">

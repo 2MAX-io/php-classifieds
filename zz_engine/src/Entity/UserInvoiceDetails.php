@@ -24,7 +24,7 @@ class UserInvoiceDetails
      * @var User|null
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="userInvoiceDetails")
-     * @ORM\JoinColumn(nullable=true)
+     * @ORM\JoinColumn(nullable=false)
      */
     private $user;
 

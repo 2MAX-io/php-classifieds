@@ -13,6 +13,7 @@ use App\Helper\SearchHelper;
 use App\Helper\StringHelper;
 use App\Repository\CategoryRepository;
 use App\Repository\UserRepository;
+use App\Security\CurrentUserService;
 use App\Service\Listing\ListingList\Dto\ListingListDto;
 use App\Service\Listing\ListingList\MapWithListings\Dto\ListingOnMapDto;
 use App\Service\Listing\ListingPublicDisplayService;
@@ -49,6 +50,11 @@ class ListingListService
     private $userRepository;
 
     /**
+     * @var CurrentUserService
+     */
+    private $currentUserService;
+
+    /**
      * @var PaginationService
      */
     private $paginationService;
@@ -63,6 +69,7 @@ class ListingListService
         SaveSearchHistoryService $saveSearchHistory,
         CategoryRepository $categoryRepository,
         UserRepository $userRepository,
+        CurrentUserService $currentUserService,
         PaginationService $paginationService,
         EntityManagerInterface $em
     ) {
@@ -70,6 +77,7 @@ class ListingListService
         $this->saveSearchHistory = $saveSearchHistory;
         $this->categoryRepository = $categoryRepository;
         $this->userRepository = $userRepository;
+        $this->currentUserService = $currentUserService;
         $this->paginationService = $paginationService;
         $this->em = $em;
     }
@@ -203,6 +211,20 @@ class ListingListService
             }
         }
 
+        $currentUser = $this->currentUserService->getUserOrNull();
+        if ($currentUser) {
+            $qb->leftJoin('listing.userObservedListings',
+                'userObservedListing',
+                Join::WITH,
+                (string) $qb->expr()->eq('userObservedListing.user', ':currentUserId'),
+            );
+            $qb->setParameter(':currentUserId', $currentUser->getId());
+
+            if ($listingListDto->getFilterByUserObservedListings()) {
+                $qb->andWhere($qb->expr()->isNotNull('userObservedListing.id'));
+            }
+        }
+
         if ($listingListDto->getShowOnMap()) {
             $qb->andWhere($qb->expr()->isNotNull('listing.locationLatitude'));
             $qb->andWhere($qb->expr()->isNotNull('listing.locationLongitude'));
@@ -216,6 +238,10 @@ class ListingListService
         $qb->addOrderBy('listing.id', Criteria::DESC);
 
         if ($listingListDto->isLastAddedList()) {
+            $qb->orderBy('listing.firstCreatedDate', Criteria::DESC);
+        }
+
+        if ($listingListDto->getFilterByUserObservedListings()) {
             $qb->orderBy('listing.firstCreatedDate', Criteria::DESC);
         }
 
@@ -311,6 +337,9 @@ class ListingListService
         if ('app_map' === $listingListDto->getRoute()) {
             $listingListDto->setMapFullWidth(true);
             $listingListDto->setShowOnMap(true);
+        }
+        if ('app_user_observed_listings' === $listingListDto->getRoute() || $request->get('userObserved')) {
+            $listingListDto->setFilterByUserObservedListings(true);
         }
 
         if ($listingListDto->getCategorySlug()) {

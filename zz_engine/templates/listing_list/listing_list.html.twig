@@ -16,6 +16,9 @@
     {%- if app.request.get('_route') == 'app_public_listings_of_user' -%}
         {{- 'trans.Listings of user' | trans -}}
     {%- endif -%}
+    {%- if app.request.get('_route') == 'app_user_observed_listings' -%}
+        {{- 'trans.Observed Listings' | trans -}}
+    {%- endif -%}
 {% endblock %}
 
 {% block body %}
@@ -43,6 +46,9 @@
         {%- endif ~%}
         {%- if app.request.get('_route') == 'app_public_listings_of_user' ~%}
             {{- ' > ' }} {{ 'trans.Listings of user' | trans }}
+        {%- endif ~%}
+        {%- if app.request.get('_route') == 'app_user_observed_listings' ~%}
+            {{- ' > ' }} {{ 'trans.Observed Listings' | trans }}
         {%- endif ~%}
 
         {%- if listingListDto.filterByUser ~%}
@@ -157,6 +163,12 @@
                     </div>
                 {%- endif ~%}
 
+                {%- if listingListDto.filterByUserObservedListings ~%}
+                    <div class="mb-2">
+                        <h4>{{- 'trans.Observed Listings' | trans }}</h4>
+                    </div>
+                {%- endif ~%}
+
                 {%- if listingListDto.showOnMap ~%}
                     {%- if listingListDto.results ~%}
                         <!-- map -->
@@ -199,6 +211,31 @@
                                                 >
                                             </a>
                                         </div>
+
+                                        {%- if not isCurrentUserListing(listing) ~%}
+                                            {%- if is_granted('ROLE_USER') ~%}
+                                                {%- if listing.observed ~%}
+                                                    <i {{- ' ' -}}
+                                                            class="svg svg-heart listing-list-observe js__observe" {{- ' ' -}}
+                                                            data-listing-id="{{ listing.id }}" {{- ' ' -}}
+                                                            data-observed="{{ listing.observed }}" {{- ' ' -}}
+                                                    ></i>
+                                                {%- else ~%}
+                                                    <i {{- ' ' -}}
+                                                            class="svg svg-heart-outline listing-list-observe js__observe" {{- ' ' -}}
+                                                            data-listing-id="{{ listing.id }}" {{- ' ' -}}
+                                                            data-observed="{{ listing.observed }}" {{- ' ' -}}
+                                                    ></i>
+                                                {%- endif ~%}
+                                            {%- else ~%}
+                                                <a {{- ' ' -}}
+                                                        class="svg svg-heart-outline listing-list-observe" {{- ' ' -}}
+                                                        href="{{ path('app_login') }}"
+                                                        target="_blank"
+                                                ></a>
+                                            {%- endif ~%}
+                                        {%- endif ~%}
+
                                         <div class="col-12 col-md-8 pb-1 pl-md-4 card-text">
                                             <h5> {{- '' -}}
                                                 <strong> {{- '' -}}

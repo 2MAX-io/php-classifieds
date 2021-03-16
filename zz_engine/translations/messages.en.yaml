@@ -311,6 +311,8 @@ trans:
     or if you chose to share email address: 'or if you chose to share email address'
     Feature: 'Feature'
     Inline on lists: 'Inline on lists'
+    Observe: 'Observe'
+    Observed Listings: 'Observed Listings'
 
 trans.customFieldType.SELECT_AS_CHECKBOXES: 'Checkboxes in filters, single select when editing'
 trans.customFieldType.SELECT_SINGLE: 'Single selection field'

@@ -8,6 +8,7 @@ import { onClickCopyToClipboard } from "~/function/copyTextToClipboard";
 import "@fancyapps/fancybox/dist/jquery.fancybox";
 import "@fancyapps/fancybox/dist/jquery.fancybox.css";
 import Map from "~/module/leaflet/map";
+import "~/module/listing_observe";
 
 onClickCopyToClipboard();
 

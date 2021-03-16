@@ -22,7 +22,7 @@
 {% block form_label -%}
     {{ parent() }}
     {% if required and (label is not same as(false)) and (errors|length < 1) -%}
-        <span class="badge badge-primary">{{ 'trans.required' | trans }}</span>
+        <span class="form-required-badge"><span class="text-danger">* </span>{{ 'trans.required' | trans }}</span>
     {% endif %}
 {%- endblock form_label %}
 

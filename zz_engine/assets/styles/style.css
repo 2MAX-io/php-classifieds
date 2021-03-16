@@ -646,6 +646,27 @@ input.form-control, textarea.form-control, select.form-control {
     padding-top: 0;
 }
 
+@media (max-width: 768px) {
+    label {
+        margin-bottom: 0.2rem;
+    }
+}
+
+.form-required-badge {
+    display: inline-block;
+    padding: .25em .4em;
+    font-size: 65%;
+    font-weight: 700;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    border-radius: .25rem;
+    color: #fff;
+    background-color: #587ea8;
+    margin-bottom: 0.2rem;
+}
+
 .d-inline-block-soft {
     display: inline-block;
 }

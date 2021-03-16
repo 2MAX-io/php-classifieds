@@ -212,6 +212,7 @@ class ListingListService
         }
 
         $currentUser = $this->currentUserService->getUserOrNull();
+        $qb->addSelect('userObservedListing');
         $qb->leftJoin('listing.userObservedListings',
             'userObservedListing',
             Join::WITH,

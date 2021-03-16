@@ -662,9 +662,8 @@ input.form-control, textarea.form-control, select.form-control {
     white-space: nowrap;
     vertical-align: middle;
     border-radius: .25rem;
-    color: #fff;
-    background-color: #587ea8;
-    margin-bottom: 0.2rem;
+    margin-bottom: .2rem;
+    border: 1px solid #999;
 }
 
 .d-inline-block-soft {

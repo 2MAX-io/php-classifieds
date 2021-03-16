@@ -12,6 +12,7 @@ use App\Service\System\Maintenance\RegenerateListing\Dto\RegenerateListingDto;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query;
+use Psr\Log\LoggerInterface;
 
 class RegenerateListingService
 {
@@ -25,10 +26,19 @@ class RegenerateListingService
      */
     private $saveListingService;
 
-    public function __construct(SaveListingService $saveListingService, EntityManagerInterface $em)
-    {
+    /**
+     * @var LoggerInterface
+     */
+    private $logger;
+
+    public function __construct(
+        SaveListingService $saveListingService,
+        EntityManagerInterface $em,
+        LoggerInterface $logger
+    ) {
         $this->em = $em;
         $this->saveListingService = $saveListingService;
+        $this->logger = $logger;
     }
 
     public function regenerate(RegenerateListingDto $regenerateSearchTextDto): void
@@ -43,6 +53,8 @@ class RegenerateListingService
         $qb->addSelect('category3');
         $qb->addSelect('category4');
         $qb->addSelect('category5');
+        $qb->addSelect('listingInternalData');
+        $qb->addSelect('listingCustomFieldValues');
         $qb->leftJoin('listing.category', 'category0');
         $qb->leftJoin('category0.parent', 'category1');
         $qb->leftJoin('category1.parent', 'category2');
@@ -75,9 +87,14 @@ class RegenerateListingService
         $executedCount = 0;
         while ($listings = $this->iterate($query, $executedCount, 36)) {
             foreach ($listings as $listing) {
+                $this->logger->debug('processing listing id: {listingId}', [
+                    'listingId' => $listing->getId(),
+                ]);
                 ++$executedCount;
                 $this->saveListingService->saveSearchText($listing);
-                $this->saveListingService->saveCustomFieldsInline($listing);
+                if ($listing->getListingCustomFieldValues()->count()) {
+                    $this->saveListingService->saveCustomFieldsInline($listing);
+                }
                 $this->em->persist($listing);
 
                 $listingInternalData = $listing->getListingInternalData();

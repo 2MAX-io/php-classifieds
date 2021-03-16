@@ -383,10 +383,24 @@ yarn install -- help
 (cd /var/www/html/zz_engine && yarn add @symfony/webpack-encore --dev)
 (cd /var/www/html/zz_engine && yarn add webpack-notifier@^1.6.0 --dev)
 (cd /var/www/html/zz_engine && yarn add @fortawesome/fontawesome-free@^5.2.0 --dev)
+bash zz_engine/dev/bin/build_assets.sh
 (cd /var/www/html/zz_engine && yarn encore dev)
 (cd /var/www/html/zz_engine && yarn encore dev --watch)
+bash zz_engine/dev/bin/build_assets.sh 
 (cd /var/www/html/zz_engine && yarn encore dev --watch)
+bash zz_engine/dev/bin/build_assets.sh
+bash zz_engine/dev/bin/build_assets.sh 
+bash zz_engine/dev/bin/build_assets.sh 
+bash zz_engine/dev/bin/build_assets.sh 
+bash zz_engine/dev/bin/build_assets.sh 
+bash zz_engine/dev/bin/build_assets.sh 
+bash zz_engine/dev/bin/build_assets.sh 
+bash zz_engine/dev/bin/build_assets.sh 
+bash zz_engine/dev/bin/build_assets.sh 
+bash zz_engine/dev/bin/build_assets.sh 
 (cd /var/www/html/zz_engine && yarn encore dev)
+bash zz_engine/dev/bin/build_assets.sh
+bash zz_engine/dev/bin/build_assets.sh 
 php zz_engine/bin/console doctrine:schema:update -f
 php zz_engine/bin/console doctrine:schema:update -f
 php zz_engine/bin/console doctrine:schema:update --dump-sql 
@@ -436,11 +450,16 @@ php zz_engine/bin/console app:cron:main
 php zz_engine/bin/console app:cron:main  --ignore-delay
 php zz_engine/bin/console app:cron:main  --ignore-delay
 (cd /var/www/html/zz_engine && yarn encore dev)
+bash zz_engine/dev/bin/build_assets.sh 
+bash zz_engine/dev/bin/build_assets.sh 
+bash zz_engine/dev/bin/build_assets.sh
 php zz_engine/bin/console make:entity --regenerate "App"
-php zz_engine/bin/console app:search-text-regenerate
-php zz_engine/bin/console app:search-text-regenerate --limit-time-seconds=10
+php zz_engine/bin/console app:regenerate-listings
+php zz_engine/bin/console app:regenerate-listings --limit-time-seconds=10
+bash zz_engine/dev/bin/build_assets.sh
 php zz_engine/bin/console debug:router --raw > /var/www/html/out.txt
 php zz_engine/bin/console debug:router --help
+bash zz_engine/dev/bin/build_assets.sh
 (cd /var/www/html/zz_engine && yarn encore dev-server --port 8080)
 php zz_engine/bin/console app:dev:translation:yaml-to-xliff zz_engine/translations/messages.en.yaml
 php zz_engine/bin/console app:dev:translation:generate-en-from-other zz_engine/translations/messages.pl.yaml
@@ -462,16 +481,21 @@ php zz_engine/bin/console make:entity --regenerate "App"
 (cd /var/www/html/zz_engine && php vendor/bin/phpcs)
 (cd /var/www/html/zz_engine && php vendor/bin/psalm -m) > out.txt
 (cd /var/www/html/zz_engine && yarn encore dev --watch)
+bash zz_engine/dev/bin/build_assets.sh
+(cd /var/www/html/zz_engine && php vendor/bin/grumphp run)
 (cd /var/www/html/zz_engine && npx prettier --write 'assets/**/*.js')
 (cd /var/www/html/zz_engine && npx prettier --check 'assets/**/*.js')
 php zz_engine/bin/console app:dev:generate-paramEnum-for-js
 php zz_engine/bin/console debug:router --raw > /var/www/html/out.txt
 sort -o out.txt out.txt
+bash zz_engine/dev/bin/build_assets.sh
 (cd /var/www/html/zz_engine && php vendor/bin/php-cs-fixer fix --dry-run)
 composer update -d zz_engine --optimize-autoloader
 php zz_engine/bin/console make:migration
 php zz_engine/bin/console doctrine:migrations:migrate --no-interaction
+php zz_engine/bin/console make:migration
 (cd /var/www/html/zz_engine && npx prettier --write 'assets/**/*.js')
 bash zz_engine/dev/bin/build_assets.sh
 (cd /var/www/html/zz_engine && php vendor/bin/grumphp run)
 php zz_engine/bin/console app:delete-expired-listing-files 700 --limit 100 -vvv --dry-run
+php zz_engine/bin/console app:regenerate-listings --limit-time-seconds=10

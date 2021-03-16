@@ -13,9 +13,9 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-class SearchTextRegenerateCommand extends Command
+class RegenerateListingsCommand extends Command
 {
-    protected static $defaultName = 'app:search-text-regenerate';
+    protected static $defaultName = 'app:regenerate-listings';
 
     /**
      * @var RegenerateListingService

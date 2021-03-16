@@ -37,7 +37,12 @@ a, a.h1, a.h2, a.h3, a.h4, a.h5, a.h6 {
     text-decoration: none;
 }
 
-a:hover, a:focus {
+a:focus {
+    color: #0073bb;
+    text-decoration: none;
+}
+
+a:hover {
     color: #0073bb;
     text-decoration: underline;
     text-decoration-thickness: 1px;

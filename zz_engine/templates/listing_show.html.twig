@@ -10,7 +10,7 @@
 {% block title %}{{ listing.title }}{% endblock %}
 
 {% block body %}
-    {#- breadcrumbs -#}
+    {#- breadcrumbs ~#}
     <div class="container mt-3 mb-3 text-break">
         {%- if settings.masterSiteLinkShow ~%}
             <a href="{{ settings.masterSiteUrl }}">{{ settings.masterSiteAnchorText }}</a>
@@ -30,7 +30,7 @@
             typeof="schema:Product" {{- ' ' -}}
     >
         <div class="row">
-            {#- preview for owner info -#}
+            {#- preview for owner info ~#}
             <div class="col-md-7">
                 {%- if
                     userOrAdmin
@@ -74,7 +74,7 @@
                     </div>
                 {%- endif ~%}
 
-                {#- observe -#}
+                {#- observe ~#}
                 {%- if not isCurrentUserListing(listing) ~%}
                     {%- if is_granted('ROLE_USER') ~%}
                         {%- if listing.observed ~%}
@@ -101,7 +101,7 @@
                     {%- endif ~%}
                 {%- endif ~%}
 
-                {#- title of listing -#}
+                {#- title of listing ~#}
                 <h4 {{- ' ' -}}
                         class="text-break mb-2 {% if displayAsExpired %}text-muted{% endif %}" {{- ' ' -}}
                         property="schema:name" {{- ' ' -}}
@@ -110,7 +110,7 @@
                     {{- listing.title -}}
                 </h4>
 
-                {#- action buttons mobile -#}
+                {#- action buttons mobile ~#}
                 <div class="d-md-none mb-2">
                     {%- if isCurrentUserListing ~%}
                         <a href="{{ path('app_user_listing_edit', {'id': listing.id}) }}" class="btn btn-primary mb-2 mr-1">
@@ -131,12 +131,12 @@
                     {%- endif ~%}
                 </div>
 
-                {#- main image -#}
+                {#- main image ~#}
                 {%- if listing.listingFiles is not empty ~%}
                     <div class="mb-2 text-center">
-                        <a
-                                class="fancybox cursor-zoom"
-                                data-fancybox-trigger="file"
+                        <a {{- ' ' -}}
+                                class="fancybox cursor-zoom" {{- ' ' -}}
+                                data-fancybox-trigger="file" {{- ' ' -}}
                         >
                             <img {{- ' ' -}}
                                     src="{{ asset(listing.mainImageNoCache.pathInNormalSize) }}" {{- ' ' -}}
@@ -148,10 +148,10 @@
                     </div>
                 {%- endif ~%}
 
-                {#- price tag mobile -#}
+                {#- price tag mobile ~#}
                 {% if listing.price is not empty %}
                     <div class="my-1 d-md-none">
-                        <div class="price-tag">
+                        <div class="price-tag"> {{- ' ' -}}
                             <span class="price-tag-price">
                                 {{- 'trans.Price' | trans -}}
                                 {{- ': ' -}}
@@ -233,7 +233,7 @@
                     </div>
                 {% endif %}
 
-                {#- listing id, views desktop -#}
+                {#- listing id, views desktop ~#}
                 <div class="mb-2 d-none d-md-block">
                     <div class="float-md-right">
                         {{- 'trans.Views' | trans }}: {{ (listingShowDto.viewsCount+1) | thousandsSeparate -}}
@@ -249,7 +249,7 @@
             <!-- Sidebar -->
             <div class="col-md-5" rel="schema:offers" typeof="schema:Offer">
                 <div class="d-none-soft d-md-block mb-2">
-                    {#- action buttons desktop -#}
+                    {#- action buttons desktop ~#}
                     {%- if isCurrentUserListing ~%}
                         <a href="{{ path('app_user_listing_edit', {'id': listing.id}) }}" class="btn btn-primary mb-2 mr-1">
                             {{- 'trans.Edit listing' | trans -}}
@@ -297,7 +297,7 @@
                         </div>
                     {%- endif ~%}
 
-                    {#- price tag desktop -#}
+                    {#- price tag desktop ~#}
                     {%- if listing.price is not empty ~%}
                         <div class="my-1">
                             <div class="price-tag" property="schema:priceCurrency" content="{{ settings.currency }}">
@@ -316,7 +316,7 @@
                                     <span class="text-nowrap">
                                         {{- ('trans.priceFor.'~listing.priceFor) | trans -}}
                                     </span>
-                                {%- endif -%}
+                                {%- endif ~%}
 
                                 {{- ' ' -}}
 
@@ -330,7 +330,7 @@
                                             {{- 'trans.NOT negotiable' | trans -}}
                                         </span>
                                     {%- endif -%}
-                                {%- endif -%}
+                                {%- endif ~%}
                             </div>
                         </div>
                     {%- endif ~%}
@@ -513,7 +513,7 @@
                     </div>
                 {%- endif ~%}
 
-                {#- listing id, views mobile -#}
+                {#- listing id, views mobile ~#}
                 <div class="mb-2 px-1 d-md-none">
                     <div>
                         {{- 'trans.Listing identifier' | trans }}: {{ listing.id -}}

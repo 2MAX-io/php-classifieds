@@ -83,12 +83,14 @@
                                                 class="svg svg-heart ml-2 cursor-pointer js__observe" {{- ' ' -}}
                                                 data-listing-id="{{ listing.id }}" {{- ' ' -}}
                                                 data-observed="{{ listing.observed }}" {{- ' ' -}}
+                                                title="{{ 'trans.Observe' | trans }}" {{- ' ' -}}
                                         ></i>
                                     {%- else ~%}
                                         <i {{- ' ' -}}
                                                 class="svg svg-heart-outline ml-2 cursor-pointer js__observe" {{- ' ' -}}
                                                 data-listing-id="{{ listing.id }}" {{- ' ' -}}
                                                 data-observed="{{ listing.observed }}" {{- ' ' -}}
+                                                title="{{ 'trans.Observe' | trans }}" {{- ' ' -}}
                                         ></i>
                                     {%- endif ~%}
                                 {%- else ~%}

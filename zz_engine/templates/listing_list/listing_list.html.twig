@@ -219,12 +219,14 @@
                                                             class="svg svg-heart listing-list-observe js__observe" {{- ' ' -}}
                                                             data-listing-id="{{ listing.id }}" {{- ' ' -}}
                                                             data-observed="{{ listing.observed }}" {{- ' ' -}}
+                                                            title="{{ 'trans.Observe' | trans }}" {{- ' ' -}}
                                                     ></i>
                                                 {%- else ~%}
                                                     <i {{- ' ' -}}
                                                             class="svg svg-heart-outline listing-list-observe js__observe" {{- ' ' -}}
                                                             data-listing-id="{{ listing.id }}" {{- ' ' -}}
                                                             data-observed="{{ listing.observed }}" {{- ' ' -}}
+                                                            title="{{ 'trans.Observe' | trans }}" {{- ' ' -}}
                                                     ></i>
                                                 {%- endif ~%}
                                             {%- else ~%}

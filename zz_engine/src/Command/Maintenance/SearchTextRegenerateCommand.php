@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Command\Maintenance;
 
 use App\Enum\ConsoleReturnEnum;
-use App\Service\System\Maintenance\RegenerateSearchText\Dto\RegenerateSearchTextDto;
-use App\Service\System\Maintenance\RegenerateSearchText\RegenerateSearchTextService;
+use App\Service\System\Maintenance\RegenerateListing\Dto\RegenerateListingDto;
+use App\Service\System\Maintenance\RegenerateListing\RegenerateListingService;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -18,15 +18,15 @@ class SearchTextRegenerateCommand extends Command
     protected static $defaultName = 'app:search-text-regenerate';
 
     /**
-     * @var RegenerateSearchTextService
+     * @var RegenerateListingService
      */
-    private $regenerateSearchTextCron;
+    private $regenerateListingService;
 
-    public function __construct(RegenerateSearchTextService $regenerateSearchTextCron)
+    public function __construct(RegenerateListingService $regenerateListingService)
     {
         parent::__construct();
 
-        $this->regenerateSearchTextCron = $regenerateSearchTextCron;
+        $this->regenerateListingService = $regenerateListingService;
     }
 
     protected function configure(): void
@@ -40,14 +40,14 @@ class SearchTextRegenerateCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
 
-        $regenerateSearchTextDto = new RegenerateSearchTextDto();
+        $regenerateListingDto = new RegenerateListingDto();
         if ($input->getOption('limit')) {
-            $regenerateSearchTextDto->setLimit((int) $input->getOption('limit'));
+            $regenerateListingDto->setLimit((int) $input->getOption('limit'));
         }
         if ($input->getOption('limit-time-seconds')) {
-            $regenerateSearchTextDto->setTimeLimitSeconds((int) $input->getOption('limit-time-seconds'));
+            $regenerateListingDto->setTimeLimitSeconds((int) $input->getOption('limit-time-seconds'));
         }
-        $this->regenerateSearchTextCron->regenerate($regenerateSearchTextDto);
+        $this->regenerateListingService->regenerate($regenerateListingDto);
 
         $io->success('done');
 

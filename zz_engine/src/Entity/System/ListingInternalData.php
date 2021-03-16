@@ -35,21 +35,21 @@ class ListingInternalData
      *
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $lastSearchTextRegenerationDate;
+    private $lastListingRegenerationDate;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getLastSearchTextRegenerationDate(): ?\DateTimeInterface
+    public function getLastListingRegenerationDate(): ?\DateTimeInterface
     {
-        return $this->lastSearchTextRegenerationDate;
+        return $this->lastListingRegenerationDate;
     }
 
-    public function setLastSearchTextRegenerationDate(?\DateTimeInterface $lastSearchTextRegenerationDate): self
+    public function setLastListingRegenerationDate(?\DateTimeInterface $lastListingRegenerationDate): self
     {
-        $this->lastSearchTextRegenerationDate = $lastSearchTextRegenerationDate;
+        $this->lastListingRegenerationDate = $lastListingRegenerationDate;
 
         return $this;
     }

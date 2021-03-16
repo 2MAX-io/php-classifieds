@@ -23,8 +23,9 @@ class DeleteExpiredListingFilesCommand extends Command
      */
     private $deleteExpiredListingFilesService;
 
-    public function __construct(DeleteExpiredListingFilesService $deleteExpiredListingFilesService)
-    {
+    public function __construct(
+        DeleteExpiredListingFilesService $deleteExpiredListingFilesService
+    ) {
         parent::__construct();
 
         $this->deleteExpiredListingFilesService = $deleteExpiredListingFilesService;
@@ -33,7 +34,11 @@ class DeleteExpiredListingFilesCommand extends Command
     protected function configure(): void
     {
         $this->setDescription('delete expired listing files');
-        $this->addArgument('days', InputArgument::REQUIRED, 'delete listing files older than given number of days');
+        $this->addArgument(
+            'days',
+            InputArgument::OPTIONAL,
+            'delete listing files older than given number of days',
+        );
         $this->addOption('dry-run', null, InputOption::VALUE_NONE, 'dry run, do not perform delete');
         $this->addOption('limit', null, InputOption::VALUE_REQUIRED, 'limit of records to update');
     }

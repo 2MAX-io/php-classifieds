@@ -2,18 +2,18 @@
 
 declare(strict_types=1);
 
-namespace App\Service\System\Maintenance\RegenerateSearchText;
+namespace App\Service\System\Maintenance\RegenerateListing;
 
 use App\Entity\Listing;
 use App\Entity\System\ListingInternalData;
 use App\Helper\DateHelper;
 use App\Service\Listing\Save\SaveListingService;
-use App\Service\System\Maintenance\RegenerateSearchText\Dto\RegenerateSearchTextDto;
+use App\Service\System\Maintenance\RegenerateListing\Dto\RegenerateListingDto;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query;
 
-class RegenerateSearchTextService
+class RegenerateListingService
 {
     /**
      * @var EntityManagerInterface
@@ -31,7 +31,7 @@ class RegenerateSearchTextService
         $this->saveListingService = $saveListingService;
     }
 
-    public function regenerate(RegenerateSearchTextDto $regenerateSearchTextDto): void
+    public function regenerate(RegenerateListingDto $regenerateSearchTextDto): void
     {
         $qb = $this->em->createQueryBuilder();
         $qb->select('listing');
@@ -63,7 +63,7 @@ class RegenerateSearchTextService
         $qb->andWhere($qb->expr()->gt('listing.validUntilDate', ':validAfterDate'));
         $qb->setParameter(':validAfterDate', DateHelper::carbonNow()->subDays(90));
 
-        $qb->orderBy('listingInternalData.lastSearchTextRegenerationDate', Criteria::ASC);
+        $qb->orderBy('listingInternalData.lastListingRegenerationDate', Criteria::ASC);
         $qb->groupBy('listing.id');
 
         $query = $qb->getQuery();
@@ -85,7 +85,7 @@ class RegenerateSearchTextService
                     $listingInternalData = new ListingInternalData();
                     $listingInternalData->setListing($listing);
                 }
-                $listingInternalData->setLastSearchTextRegenerationDate(DateHelper::create());
+                $listingInternalData->setLastListingRegenerationDate(DateHelper::create());
                 $this->em->persist($listingInternalData);
 
                 if ($stopExecutionTime && DateHelper::timestamp() > $stopExecutionTime) {

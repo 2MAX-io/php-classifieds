@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Service\System\Maintenance\RegenerateSearchText\Dto;
+namespace App\Service\System\Maintenance\RegenerateListing\Dto;
 
-class RegenerateSearchTextDto
+class RegenerateListingDto
 {
     /** @var int|null */
     private $limit;

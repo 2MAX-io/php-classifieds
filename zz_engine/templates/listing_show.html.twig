@@ -25,7 +25,10 @@
         {%- endfor ~%}
     </div>
 
-    <div class="container mt-3 listing-show {% if displayAsExpired %}listing-show-expired{% endif %}">
+    <div {{- ' ' -}}
+            class="container mt-3 listing-show {% if displayAsExpired %}listing-show-expired{% endif %}" {{- ' ' -}}
+            typeof="schema:Product" {{- ' ' -}}
+    >
         <div class="row">
             {#- preview for owner info -#}
             <div class="col-md-7">
@@ -99,7 +102,11 @@
                 {%- endif ~%}
 
                 {#- title of listing -#}
-                <h4 class="text-break mb-2 {% if displayAsExpired %}text-muted{% endif %}">
+                <h4 {{- ' ' -}}
+                        class="text-break mb-2 {% if displayAsExpired %}text-muted{% endif %}" {{- ' ' -}}
+                        property="schema:name" {{- ' ' -}}
+                        content="{{- listing.title -}}" {{- ' ' -}}
+                >
                     {{- listing.title -}}
                 </h4>
 
@@ -124,16 +131,18 @@
                     {%- endif ~%}
                 </div>
 
+                {#- main image -#}
                 {%- if listing.listingFiles is not empty ~%}
                     <div class="mb-2 text-center">
                         <a
                                 class="fancybox cursor-zoom"
                                 data-fancybox-trigger="file"
                         >
-                            <img
-                                    src="{{ asset(listing.mainImageNoCache.pathInNormalSize) }}"
-                                    class="listing-show-top-image"
-                                    alt="{{ listing.title }}"
+                            <img {{- ' ' -}}
+                                    src="{{ asset(listing.mainImageNoCache.pathInNormalSize) }}" {{- ' ' -}}
+                                    class="listing-show-top-image" {{- ' ' -}}
+                                    alt="{{ listing.title }}" {{- ' ' -}}
+                                    rel="schema:image" resource="{{ absolute_url(listing.mainImageNoCache.pathInNormalSize) }}" {{- ' ' -}}
                             />
                         </a>
                     </div>
@@ -204,7 +213,7 @@
 
                 <!-- description -->
                 <div class="listing-show-description border-radius-1 mb-2 p-1 px-md-2 py-md-3">
-                    <div class="{% if displayAsExpired %}text-muted{% endif %} listing-show-description-content text-break px-2 px-md-3 py-2">
+                    <div class="{% if displayAsExpired %}text-muted{% endif %} listing-show-description-content text-break px-2 px-md-3 py-2" property="schema:description">
                         {{ listing.description | nl2br | linkify }}
                     </div>
                 </div>
@@ -238,7 +247,7 @@
             </div>
 
             <!-- Sidebar -->
-            <div class="col-md-5">
+            <div class="col-md-5" rel="schema:offers" typeof="schema:Offer">
                 <div class="d-none-soft d-md-block mb-2">
                     {#- action buttons desktop -#}
                     {%- if isCurrentUserListing ~%}
@@ -291,8 +300,11 @@
                     {#- price tag desktop -#}
                     {%- if listing.price is not empty ~%}
                         <div class="my-1">
-                            <div class="price-tag">
-                                <span class="price-tag-price">
+                            <div class="price-tag" property="schema:priceCurrency" content="{{ settings.currency }}">
+                                <span {{- ' ' -}}
+                                        class="price-tag-price" {{- ' ' -}}
+                                        property="schema:price" content="{{ listing.price }}" {{- ' ' -}}
+                                >
                                     {{- 'trans.Price' | trans -}}
                                     {{- ': ' -}}
                                     {{- listing.price | money -}}
@@ -400,7 +412,11 @@
                                 <div class="col-sm-4 col-md-5">
                                     {{- 'trans.Expiration date' | trans -}}
                                 </div>
-                                <div class="col-sm-8 col-md-7">
+                                <div {{- ' ' -}}
+                                        class="col-sm-8 col-md-7" {{- ' ' -}}
+                                        property="schema:priceValidUntil" {{- ' ' -}}
+                                        content="{{ listing.validUntilDate | date('Y-m-d') }}" {{- ' ' -}}
+                                >
                                     {{- listing.validUntilDate | date(dateFormatShort) -}}
                                 </div>
                             </div>

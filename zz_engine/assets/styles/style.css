@@ -400,18 +400,6 @@ input.form-control, textarea.form-control, select.form-control {
     text-underline-offset: 6px;
 }
 
-.listing-list-item .name-value-group {
-    background-color: #f6f6f6;
-}
-
-.listing-list-item .name-value-group.price {
-    border: 1px solid #dbdbdb;
-}
-
-.listing-list-item .name-value-group .name {
-    background-color: #eeeeee;
-}
-
 .listing-list-details {
     max-height: 2.4rem;
     overflow: hidden;
@@ -567,7 +555,7 @@ input.form-control, textarea.form-control, select.form-control {
     margin-right: 0.25rem;
     vertical-align: middle;
     color: #303641;
-    background-color: #d6d6d8;
+    background-color: #ecedef;
     border-radius: 3px;
     font-size: 80%;
     font-weight: 400;
@@ -580,7 +568,19 @@ input.form-control, textarea.form-control, select.form-control {
     padding-left: 0.3rem;
     padding-right: 0.3rem;
     border-radius: 3px;
-    background-color: #c3c3c7;
+    background-color: #dddddd;
+}
+
+.listing-list-item .name-value-group {
+    background-color: #f6f6f6;
+}
+
+.listing-list-item .name-value-group.price {
+    border: 1px solid #dbdbdb;
+}
+
+.listing-list-item .name-value-group .name {
+    background-color: #eeeeee;
 }
 
 .border-radius-1 {
@@ -689,7 +689,7 @@ div.clickable-div a.clickable-div-link {
 }
 
 .price-tag-price {
-    font-family: "Courier New", monospace;
+    font-family: "Courier", monospace;
     font-weight: 300;
     font-size: 22px;
     line-height: 38px;

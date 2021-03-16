@@ -212,17 +212,15 @@ class ListingListService
         }
 
         $currentUser = $this->currentUserService->getUserOrNull();
-        if ($currentUser) {
-            $qb->leftJoin('listing.userObservedListings',
-                'userObservedListing',
-                Join::WITH,
-                (string) $qb->expr()->eq('userObservedListing.user', ':currentUserId'),
-            );
-            $qb->setParameter(':currentUserId', $currentUser->getId());
+        $qb->leftJoin('listing.userObservedListings',
+            'userObservedListing',
+            Join::WITH,
+            (string) $qb->expr()->eq('userObservedListing.user', ':currentUserId'),
+        );
+        $qb->setParameter(':currentUserId', $currentUser ? $currentUser->getId() : 0);
 
-            if ($listingListDto->getFilterByUserObservedListings()) {
-                $qb->andWhere($qb->expr()->isNotNull('userObservedListing.id'));
-            }
+        if ($listingListDto->getFilterByUserObservedListings()) {
+            $qb->andWhere($qb->expr()->isNotNull('userObservedListing.id'));
         }
 
         if ($listingListDto->getShowOnMap()) {

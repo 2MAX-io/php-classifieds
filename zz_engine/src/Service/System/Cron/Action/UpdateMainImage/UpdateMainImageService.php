@@ -81,13 +81,16 @@ class UpdateMainImageService implements CronActionInterface, CronAtNightInterfac
                         path,
                         null
                     FROM listing_file
-                    WHERE listing_file.user_removed = 0
+                    WHERE true
+                        && listing_file.user_removed = 0
+                        && listing_file.file_deleted = 0
                     GROUP BY listing_id
                 ) AS listingWithMinSort
                      ON true
                          && listing_file.listing_id = listingWithMinSort.listing_id
                          && listing_file.sort = listingWithMinSort.minSort
                          && listing_file.user_removed = 0
+                         && listing_file.file_deleted = 0
             ) AS listingMainImage
             ON listing.id = listingMainImage.listing_id
             SET listing.main_image = listingMainImage.main_image

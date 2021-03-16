@@ -7,11 +7,11 @@ namespace App\Service\System\Maintenance\DeleteOldListingFiles;
 use App\Entity\Listing;
 use App\Helper\DateHelper;
 use App\Helper\FilePath;
+use App\Helper\StringHelper;
 use App\Service\System\Maintenance\DeleteOldListingFiles\Dto\DeleteExpiredListingFilesDto;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
-use SlevomatCodingStandard\Helpers\StringHelper;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 use Webmozart\PathUtil\Path;
@@ -45,6 +45,7 @@ class DeleteExpiredListingFilesService
         if ($deleteExpiredListingFilesDto->getDaysOldToDelete() < 1) {
             throw new \UnexpectedValueException('number of days must be greater than 0');
         }
+        $deleteBeforeDate = DateHelper::carbonNow()->subDays($deleteExpiredListingFilesDto->getDaysOldToDelete());
 
         $qb = $this->em->createQueryBuilder();
         $qb->addSelect('listing');
@@ -53,7 +54,6 @@ class DeleteExpiredListingFilesService
         $qb->join('listing.listingFiles', 'listingFile');
 
         $qb->andWhere($qb->expr()->lt('listing.validUntilDate', ':deleteBeforeDate'));
-        $deleteBeforeDate = DateHelper::carbonNow()->subDays($deleteExpiredListingFilesDto->getDaysOldToDelete());
         $qb->setParameter(':deleteBeforeDate', $deleteBeforeDate->format('Y-m-d H:i:s'));
 
         $qb->andWhere($qb->expr()->eq('listingFile.fileDeleted', 0));
@@ -111,6 +111,9 @@ class DeleteExpiredListingFilesService
                     $listingFile->setFileDeleted(true);
                     $listingFile->setUserRemoved(true);
                     $this->em->persist($listingFile);
+
+                    $listing->setMainImage(null);
+                    $this->em->persist($listing);
                 }
 
                 if (!$deleteExpiredListingFilesDto->getPerformFileDeletion()) {

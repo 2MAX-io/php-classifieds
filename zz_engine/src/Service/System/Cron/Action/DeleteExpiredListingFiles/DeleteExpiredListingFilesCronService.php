@@ -73,6 +73,7 @@ class DeleteExpiredListingFilesCronService implements CronActionInterface, CronA
             $daysOldToDelete = $settingsDto->getDeleteExpiredListingFilesOlderThanDays();
             $deleteOldListingFilesDto = new DeleteExpiredListingFilesDto();
             $deleteOldListingFilesDto->setDaysOldToDelete($daysOldToDelete);
+            $deleteOldListingFilesDto->setPerformFileDeletion(true);
             $this->deleteExpiredListingFilesService->deleteExpiredListingFiles($deleteOldListingFilesDto);
         } finally {
             $lock->release();

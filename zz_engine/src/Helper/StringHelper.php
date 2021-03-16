@@ -183,4 +183,14 @@ class StringHelper
     {
         return \htmlspecialchars($string, \ENT_QUOTES | \ENT_SUBSTITUTE);
     }
+
+    public static function startsWith(string $haystack, string $needle): bool
+    {
+        return '' === $needle || 0 === \strpos($haystack, $needle);
+    }
+
+    public static function endsWith(string $haystack, string $needle): bool
+    {
+        return '' === $needle || \substr($haystack, -\strlen($needle)) === $needle;
+    }
 }

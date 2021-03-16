@@ -8,11 +8,11 @@ use App\Entity\Listing;
 use App\Helper\FileHelper;
 use App\Helper\FilePath;
 use App\Helper\ListingFileHelper;
+use App\Helper\StringHelper;
 use App\Service\System\Maintenance\MoveFilesToNewStructure\Dto\MoveFilesToNewLocationDto;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
-use SlevomatCodingStandard\Helpers\StringHelper;
 use Symfony\Component\Filesystem\Filesystem;
 use Webmozart\PathUtil\Path;
 

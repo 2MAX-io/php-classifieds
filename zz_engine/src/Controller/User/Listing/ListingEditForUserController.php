@@ -98,7 +98,9 @@ class ListingEditForUserController extends AbstractUserController
 
         $listingSaveDto = $saveListingService->getListingSaveDtoFromRequest($request, $listing);
         $form = $this->createForm(ListingType::class, $listing);
-        $form->remove('validityTimeDays');
+        if (!$listing->isExpired() && !$listing->getUserDeactivated()) {
+            $form->remove('validityTimeDays');
+        }
         if ($listing->isFeaturedActive()) {
             $form->remove('category');
         }

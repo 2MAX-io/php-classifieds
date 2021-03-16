@@ -130,6 +130,7 @@ class SaveListingService
                 (int) $form->get('validityTimeDays')->getData()
             );
         }
+        $listing->setUserDeactivated(false);
         $listing->setAdminActivated(false);
         if ($this->settingsService->getSettingsDto()->getRequireListingAdminActivation()) {
             $listing->setAdminRejected(false);

@@ -499,3 +499,4 @@ bash zz_engine/dev/bin/build_assets.sh
 (cd /var/www/html/zz_engine && php vendor/bin/grumphp run)
 php zz_engine/bin/console app:delete-expired-listing-files 700 --limit 100 -vvv --dry-run
 php zz_engine/bin/console app:regenerate-listings --limit-time-seconds=10
+php zz_engine/bin/console app:move-files-new-location -vvv --dry-run

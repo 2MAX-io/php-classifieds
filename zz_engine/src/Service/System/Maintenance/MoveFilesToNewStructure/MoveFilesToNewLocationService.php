@@ -58,9 +58,11 @@ class MoveFilesToNewLocationService
             $qb->setMaxResults($moveFilesToNewLocationDto->getLimit());
         }
 
+        $executedCount = 0;
         /** @var Listing[] $listingList */
         $listingList = $qb->getQuery()->getResult();
         foreach ($listingList as $listing) {
+            ++$executedCount;
             foreach ($listing->getListingFilesAll() as $listingFile) {
                 $oldFilePath = Path::makeAbsolute($listingFile->getPath(), FilePath::getPublicDir());
 
@@ -114,6 +116,15 @@ class MoveFilesToNewLocationService
                         'validUntil' => $listing->getValidUntilDateStringOrNull(),
                     ]);
                 }
+            }
+
+            if ($listing->getMainImageNoCache()) {
+                $listing->setMainImage($listing->getMainImageNoCache()->getPath());
+                $this->em->persist($listing);
+                $this->em->flush();
+            }
+            if (0 === $executedCount % 100) {
+                $this->em->clear();
             }
         }
     }

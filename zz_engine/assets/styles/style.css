@@ -655,6 +655,12 @@ input.form-control, textarea.form-control, select.form-control {
     }
 }
 
+.listing-show-observe {
+    float: right;
+    margin-top: 0.4em;
+    cursor: pointer;
+}
+
 .force-single-line {
     white-space: nowrap;
     overflow: hidden;

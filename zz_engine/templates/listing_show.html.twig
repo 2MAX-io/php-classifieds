@@ -71,39 +71,37 @@
                     </div>
                 {%- endif ~%}
 
+                {#- observe -#}
+                {%- if not isCurrentUserListing(listing) ~%}
+                    {%- if is_granted('ROLE_USER') ~%}
+                        {%- if listing.observed ~%}
+                            <i {{- ' ' -}}
+                                    class="svg svg-heart listing-show-observe js__observe" {{- ' ' -}}
+                                    data-listing-id="{{ listing.id }}" {{- ' ' -}}
+                                    data-observed="{{ listing.observed }}" {{- ' ' -}}
+                                    title="{{ 'trans.Observe' | trans }}" {{- ' ' -}}
+                            ></i>
+                        {%- else ~%}
+                            <i {{- ' ' -}}
+                                    class="svg svg-heart-outline listing-show-observe js__observe" {{- ' ' -}}
+                                    data-listing-id="{{ listing.id }}" {{- ' ' -}}
+                                    data-observed="{{ listing.observed }}" {{- ' ' -}}
+                                    title="{{ 'trans.Observe' | trans }}" {{- ' ' -}}
+                            ></i>
+                        {%- endif ~%}
+                    {%- else ~%}
+                        <a {{- ' ' -}}
+                                class="svg svg-heart-outline listing-show-observe" {{- ' ' -}}
+                                href="{{ path('app_login') }}"
+                                target="_blank"
+                        ></a>
+                    {%- endif ~%}
+                {%- endif ~%}
+
                 {#- title of listing -#}
-                <div class="row mb-2">
-                    <div class="col-sm-10">
-                        <h4 class="text-break {% if displayAsExpired %}text-muted{% endif %}">
-                            {{- listing.title -}}
-                            {%- if not isCurrentUserListing(listing) ~%}
-                                {%- if is_granted('ROLE_USER') ~%}
-                                    {%- if listing.observed ~%}
-                                        <i {{- ' ' -}}
-                                                class="svg svg-heart ml-2 cursor-pointer js__observe" {{- ' ' -}}
-                                                data-listing-id="{{ listing.id }}" {{- ' ' -}}
-                                                data-observed="{{ listing.observed }}" {{- ' ' -}}
-                                                title="{{ 'trans.Observe' | trans }}" {{- ' ' -}}
-                                        ></i>
-                                    {%- else ~%}
-                                        <i {{- ' ' -}}
-                                                class="svg svg-heart-outline ml-2 cursor-pointer js__observe" {{- ' ' -}}
-                                                data-listing-id="{{ listing.id }}" {{- ' ' -}}
-                                                data-observed="{{ listing.observed }}" {{- ' ' -}}
-                                                title="{{ 'trans.Observe' | trans }}" {{- ' ' -}}
-                                        ></i>
-                                    {%- endif ~%}
-                                {%- else ~%}
-                                    <a {{- ' ' -}}
-                                            class="svg svg-heart-outline" {{- ' ' -}}
-                                            href="{{ path('app_login') }}"
-                                            target="_blank"
-                                    ></a>
-                                {%- endif ~%}
-                            {%- endif ~%}
-                        </h4>
-                    </div>
-                </div>
+                <h4 class="text-break mb-2 {% if displayAsExpired %}text-muted{% endif %}">
+                    {{- listing.title -}}
+                </h4>
 
                 {#- action buttons mobile -#}
                 <div class="d-md-none mb-2">

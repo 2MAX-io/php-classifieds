@@ -212,13 +212,13 @@ input.form-control, textarea.form-control, select.form-control {
 .svg-heart-outline {
     width: 16px;
     height: 16px;
-    background-image: url(../../node_modules/@fortawesome/fontawesome-free/svgs/regular/heart.svg);
+    background-image: url(../img/icon/heart-outline.svg);
 }
 
 .svg-heart {
     width: 16px;
     height: 16px;
-    background-image: url(../../node_modules/@fortawesome/fontawesome-free/svgs/solid/heart.svg);
+    background-image: url(../img/icon/heart.svg);
 }
 
 .svg-spinner {

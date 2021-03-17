@@ -87,10 +87,11 @@
                         </div>
                     {%- else ~%}
                         <a {{- ' ' -}}
-                                class="svg svg-heart-outline listing-show-observe" {{- ' ' -}}
+                                class="listing-list-observe" {{- ' ' -}}
                                 href="{{ path('app_login') }}" {{- ' ' -}}
                                 target="_blank" {{- ' ' -}}
-                        ></a>
+                                title="{{ 'trans.Observe' | trans }}" {{- ' ' -}}
+                        ><i class="svg svg-heart-outline"></i></a>
                     {%- endif ~%}
                 {%- endif ~%}
 

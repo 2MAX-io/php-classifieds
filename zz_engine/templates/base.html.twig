@@ -262,7 +262,7 @@
 {% endif %}
 
 <!-- CONTENT -->
-{% block body %}{% endblock body %}
+{% block body -%}{%- endblock body ~%}
 
 {{- advertisementZone('bottom', advertisementDto | default(null)) ~}}
 
@@ -366,8 +366,8 @@
     </footer>
 </div>
 
-{{ encore_entry_link_tags('app_bottom') }}
-{{ settings.customCss | raw }}
+{{- encore_entry_link_tags('app_bottom') ~}}
+{{- settings.customCss | raw ~}}
 
 {% block javascripts %}
     <input type="hidden" id="js__dataForJs" value="{{ dataForJs | default([]) | processDataForJs }}">

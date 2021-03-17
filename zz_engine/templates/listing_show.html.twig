@@ -178,29 +178,31 @@
 
                 {%- if listing.listingCustomFieldValues.count ~%}
                     <div class="mt-2 mb-1">
-                        {% for listingCustomFieldValue in listing.listingCustomFieldValues %}
-                            {# @var listingCustomFieldValue \App\Entity\ListingCustomFieldValue #}
+                        {%- for listingCustomFieldValue in listing.listingCustomFieldValues ~%}
+                            {#- @var listingCustomFieldValue \App\Entity\ListingCustomFieldValue ~#}
                             <div class="name-value-group mb-lg-1 mr-1 mr-md-2">
                                 <div class="name text-break">
                                     {{- listingCustomFieldValue.customField.name -}}
                                 </div>
-                                {% if listingCustomFieldValue.customFieldOption is empty %}
-                                    {% if listingCustomFieldValue.customField.type == constant('\App\\Entity\\CustomField::INTEGER_RANGE') %}
+                                {%- if listingCustomFieldValue.customFieldOption is empty ~%}
+                                    {%- if listingCustomFieldValue.customField.type == constant('\App\\Entity\\CustomField::INTEGER_RANGE') ~%}
                                         <strong class="text-break">
                                             {{- listingCustomFieldValue.value | thousandsSeparate -}}
-                                            {{- ' ' -}}
-                                            {{- listingCustomFieldValue.customField.unit | default -}}
+                                            {%- if listingCustomFieldValue.customField.unit -%}
+                                                {{- ' ' -}}
+                                                {{- listingCustomFieldValue.customField.unit | default -}}
+                                            {%- endif -%}
                                         </strong>
-                                    {% else %}
+                                    {%- else ~%}
                                         <strong class="text-break">{{ listingCustomFieldValue.value }}</strong>
-                                    {% endif %}
-                                {% else %}
+                                    {%- endif ~%}
+                                {%- else ~%}
                                     <strong class="text-break">
                                         {{- listingCustomFieldValue.customFieldOption.name -}}
                                     </strong>
-                                {% endif %}
+                                {%- endif ~%}
                             </div>
-                        {% endfor %}
+                        {%- endfor ~%}
                     </div>
                 {%- endif ~%}
 
@@ -496,9 +498,9 @@
                                 </a>
                             </div>
 
-                            <button
-                                    class="js__copyToClipboard btn btn-sm btn-secondary d-block mb-2"
-                                    data-clipboard-value="{{ url('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}"
+                            <button {{- ' ' -}}
+                                    class="js__copyToClipboard btn btn-sm btn-secondary d-block mb-2" {{- ' ' -}}
+                                    data-clipboard-value="{{ url('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}" {{- ' ' -}}
                             >
                                 {{- 'trans.Copy link to this listing' | trans -}}
                             </button>

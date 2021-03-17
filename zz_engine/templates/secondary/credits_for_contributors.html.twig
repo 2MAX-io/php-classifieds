@@ -35,11 +35,11 @@
                     <h5 class="card-header">{{ 'trans.Related pages' | trans }}</h5>
 
                     <div class="card-body">
-                        {% for page in relatedPages %}
-                            <div>
-                                <a href="{{ path('app_page', {'slug': page.slug}) }}">{{ page.title }}</a>
-                            </div>
-                        {% endfor %}
+                        {%- for page in relatedPages ~%}
+                            <a href="{{ path('app_page', {'slug': page.slug}) }}" class="d-block pb-2 pb-lg-1">
+                                {{- page.title -}}
+                            </a>
+                        {%- endfor ~%}
                     </div>
                 </div>
             </div>

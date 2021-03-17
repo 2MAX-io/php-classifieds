@@ -63,7 +63,7 @@
 
             {#- @var customField \App\Entity\CustomField -#}
             {%- for customField in customFieldList ~%}
-                {% set customFieldData = app.request.get('customField')[customField.id] | default([]) %}
+                {% set customFieldData = app.request.get('customField')[customField.id] | default([]) -%}
                 <!-- custom field: {{ customField.name }} [{{ customField.id }}] -->
 
                 {%- if customField.type == constant('\App\\Entity\\CustomField::SELECT_AS_CHECKBOXES') and customField.customFieldOptions is not empty ~%}

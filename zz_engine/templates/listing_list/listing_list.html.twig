@@ -82,7 +82,7 @@
                             >
                                 {{- 'trans.Select category' | trans -}}
                             </div>
-                        {% endif %}
+                        {%- endif ~%}
 
                         {%- if settings.mapEnabled ~%}
                             {%- if listingListDto.showOnMap ~%}
@@ -245,7 +245,7 @@
                                             </div>
 
                                             <div class="listing-list-details">
-                                                {%- if listing.price is not empty ~%}
+                                                {%- if listing.price is not empty -%}
                                                     <div class="mt-1 d-inline-block"> {{- '' -}}
                                                         <div class="name-value-group price"> {{- '' -}}
                                                             <div class="name text-break">
@@ -262,7 +262,7 @@
                                                             {%- endif -%}
                                                         </div>
                                                     </div>
-                                                {%- endif ~%}
+                                                {%- endif -%}
 
                                                 {%- for customFieldInline in listing.customFieldsInline -%}
                                                     <div class="name-value-group"> {{- '' -}}
@@ -283,7 +283,7 @@
                                                             </span>
                                                         {%- endif -%}
                                                     </div>
-                                                {%- endfor ~%}
+                                                {%- endfor -%}
                                             </div>
                                         </div>
                                     </div>

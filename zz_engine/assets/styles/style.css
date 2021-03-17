@@ -478,10 +478,12 @@ input.form-control, textarea.form-control, select.form-control {
 
 .listing-list-observe {
     position: absolute;
-    right: 5px;
-    bottom: 5px;
-    cursor: pointer;
     z-index: 20;
+    top: 0;
+    right: 0;
+    padding: 0.1rem 0.1rem 0.4rem 0.4rem;
+    line-height: 1;
+    cursor: pointer;
 }
 
 .show-more-subcategories {
@@ -657,7 +659,8 @@ input.form-control, textarea.form-control, select.form-control {
 
 .listing-show-observe {
     float: right;
-    margin-top: 0.4em;
+    padding: 0.3rem 0.1rem 0.4rem 0.4rem;
+    line-height: 1;
     cursor: pointer;
 }
 

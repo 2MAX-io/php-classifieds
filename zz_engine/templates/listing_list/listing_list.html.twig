@@ -285,35 +285,29 @@
                                                     </div>
                                                 {%- endfor ~%}
                                             </div>
-
-                                            {%- if not isCurrentUserListing(listing) ~%}
-                                                {%- if is_granted('ROLE_USER') ~%}
-                                                    {%- if listing.observed ~%}
-                                                        <i {{- ' ' -}}
-                                                                class="svg svg-heart listing-list-observe js__observe" {{- ' ' -}}
-                                                                data-listing-id="{{ listing.id }}" {{- ' ' -}}
-                                                                data-observed="{{ listing.observed }}" {{- ' ' -}}
-                                                                title="{{ 'trans.Observe' | trans }}" {{- ' ' -}}
-                                                        ></i>
-                                                    {%- else ~%}
-                                                        <i {{- ' ' -}}
-                                                                class="svg svg-heart-outline listing-list-observe js__observe" {{- ' ' -}}
-                                                                data-listing-id="{{ listing.id }}" {{- ' ' -}}
-                                                                data-observed="{{ listing.observed }}" {{- ' ' -}}
-                                                                title="{{ 'trans.Observe' | trans }}" {{- ' ' -}}
-                                                        ></i>
-                                                    {%- endif ~%}
-                                                {%- else ~%}
-                                                    <a {{- ' ' -}}
-                                                            class="svg svg-heart-outline listing-list-observe" {{- ' ' -}}
-                                                            href="{{ path('app_login') }}"
-                                                            target="_blank"
-                                                    ></a>
-                                                {%- endif ~%}
-                                            {%- endif ~%}
                                         </div>
                                     </div>
                                 </div>
+
+                                {%- if not isCurrentUserListing(listing) ~%}
+                                    {%- if is_granted('ROLE_USER') ~%}
+                                        <div {{- ' ' -}}
+                                                class="listing-list-observe js__observe" {{- ' ' -}}
+                                                data-listing-id="{{ listing.id }}" {{- ' ' -}}
+                                                data-observed="{{ listing.observed }}" {{- ' ' -}}
+                                                title="{{ 'trans.Observe' | trans }}" {{- ' ' -}}
+                                        > {{- '' -}}
+                                            <i class="svg {% if listing.observed %}svg-heart{% else %}svg-heart-outline{% endif %}"></i> {{- '' -}}
+                                        </div>
+                                    {%- else ~%}
+                                        <a {{- ' ' -}}
+                                                class="svg svg-heart-outline listing-list-observe" {{- ' ' -}}
+                                                href="{{ path('app_login') }}" {{- ' ' -}}
+                                                target="_blank" {{- ' ' -}}
+                                                title="{{ 'trans.Observe' | trans }}" {{- ' ' -}}
+                                        ></a>
+                                    {%- endif ~%}
+                                {%- endif ~%}
                             </div>
                         {%- else ~%}
                             <div class="alert alert-info w-100">

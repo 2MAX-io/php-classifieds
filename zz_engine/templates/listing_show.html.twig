@@ -77,26 +77,19 @@
                 {#- observe ~#}
                 {%- if not isCurrentUserListing(listing) ~%}
                     {%- if is_granted('ROLE_USER') ~%}
-                        {%- if listing.observed ~%}
-                            <i {{- ' ' -}}
-                                    class="svg svg-heart listing-show-observe js__observe" {{- ' ' -}}
-                                    data-listing-id="{{ listing.id }}" {{- ' ' -}}
-                                    data-observed="{{ listing.observed }}" {{- ' ' -}}
-                                    title="{{ 'trans.Observe' | trans }}" {{- ' ' -}}
-                            ></i>
-                        {%- else ~%}
-                            <i {{- ' ' -}}
-                                    class="svg svg-heart-outline listing-show-observe js__observe" {{- ' ' -}}
-                                    data-listing-id="{{ listing.id }}" {{- ' ' -}}
-                                    data-observed="{{ listing.observed }}" {{- ' ' -}}
-                                    title="{{ 'trans.Observe' | trans }}" {{- ' ' -}}
-                            ></i>
-                        {%- endif ~%}
+                        <div {{- ' ' -}}
+                                class="listing-show-observe js__observe" {{- ' ' -}}
+                                data-listing-id="{{ listing.id }}" {{- ' ' -}}
+                                data-observed="{{ listing.observed }}" {{- ' ' -}}
+                                title="{{ 'trans.Observe' | trans }}" {{- ' ' -}}
+                        > {{- '' -}}
+                            <i class="svg {% if listing.observed %}svg-heart{% else %}svg-heart-outline{% endif %}"></i> {{- '' -}}
+                        </div>
                     {%- else ~%}
                         <a {{- ' ' -}}
                                 class="svg svg-heart-outline listing-show-observe" {{- ' ' -}}
-                                href="{{ path('app_login') }}"
-                                target="_blank"
+                                href="{{ path('app_login') }}" {{- ' ' -}}
+                                target="_blank" {{- ' ' -}}
                         ></a>
                     {%- endif ~%}
                 {%- endif ~%}

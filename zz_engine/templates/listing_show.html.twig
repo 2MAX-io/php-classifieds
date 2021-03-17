@@ -10,25 +10,25 @@
 {% block title %}{{ listing.title }}{% endblock %}
 
 {% block body %}
-    {#- breadcrumbs ~#}
-    <div class="container mt-3 mb-3 text-break">
-        {%- if settings.masterSiteLinkShow ~%}
-            <a href="{{ settings.masterSiteUrl }}">{{ settings.masterSiteAnchorText }}</a>
-            {{- ' > ' -}}
-        {%- endif ~%}
-
-        <a href="{{ path('app_index') }}">{{ 'trans.Classifieds' | trans }}</a>
-
-        {%- for category in categoryBreadcrumbs ~%}
-            {{- ' > ' -}}
-            <a href="{{ path('app_category', {'categorySlug': category.slug}) }}">{{ category.name }}</a>
-        {%- endfor ~%}
-    </div>
-
     <div {{- ' ' -}}
-            class="container mt-3 listing-show {% if displayAsExpired %}listing-show-expired{% endif %}" {{- ' ' -}}
+            class="container-fluid container-lg mt-3 listing-show {% if displayAsExpired %}listing-show-expired{% endif %}" {{- ' ' -}}
             typeof="schema:Product" {{- ' ' -}}
     >
+        {#- breadcrumbs ~#}
+        <div class="mb-2 text-break">
+            {%- if settings.masterSiteLinkShow ~%}
+                <a href="{{ settings.masterSiteUrl }}">{{ settings.masterSiteAnchorText }}</a>
+                {{- ' > ' -}}
+            {%- endif ~%}
+
+            <a href="{{ path('app_index') }}">{{ 'trans.Classifieds' | trans }}</a>
+
+            {%- for category in categoryBreadcrumbs ~%}
+                {{- ' > ' -}}
+                <a href="{{ path('app_category', {'categorySlug': category.slug}) }}">{{ category.name }}</a>
+            {%- endfor ~%}
+        </div>
+
         <div class="row">
             {#- preview for owner info ~#}
             <div class="col-md-7">

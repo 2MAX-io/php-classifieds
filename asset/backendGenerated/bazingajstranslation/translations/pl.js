@@ -905,6 +905,7 @@ t.add("trans.Feature", "Wyr\u00f3\u017cnij", "messages", "pl");
 t.add("trans.Inline on lists", "Skr\u00f3t na listach", "messages", "pl");
 t.add("trans.Observe", "Obserwuj", "messages", "pl");
 t.add("trans.Observed Listings", "Obserwowane og\u0142oszenia", "messages", "pl");
+t.add("trans.Menu", "Menu", "messages", "pl");
 t.add("\u2014", "\u2014", "messages", "pl");
 t.add("Year", "Rok", "messages", "pl");
 t.add("Month", "Miesi\u0105c", "messages", "pl");

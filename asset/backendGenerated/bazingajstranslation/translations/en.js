@@ -470,6 +470,7 @@ t.add("trans.Feature", "Feature", "messages", "en");
 t.add("trans.Inline on lists", "Inline on lists", "messages", "en");
 t.add("trans.Observe", "Observe", "messages", "en");
 t.add("trans.Observed Listings", "Observed Listings", "messages", "en");
+t.add("trans.Menu", "Menu", "messages", "en");
 t.add("trans.customFieldType.SELECT_AS_CHECKBOXES", "Checkboxes in filters, single select when editing", "messages", "en");
 t.add("trans.customFieldType.SELECT_SINGLE", "Single selection field", "messages", "en");
 t.add("trans.customFieldType.YEAR_RANGE", "Field with year", "messages", "en");

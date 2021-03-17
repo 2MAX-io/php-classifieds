@@ -313,6 +313,7 @@ trans:
     Inline on lists: 'Inline on lists'
     Observe: 'Observe'
     Observed Listings: 'Observed Listings'
+    Menu: 'Menu'
 
 trans.customFieldType.SELECT_AS_CHECKBOXES: 'Checkboxes in filters, single select when editing'
 trans.customFieldType.SELECT_SINGLE: 'Single selection field'

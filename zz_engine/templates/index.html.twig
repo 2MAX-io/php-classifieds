@@ -4,7 +4,7 @@
 
 {% block body %}
     <!-- cat header -->
-    <div class="container mt-2 mt-md-3 mb-2">
+    <div class="container-fluid container-lg mt-2 mt-md-3 mb-2">
         <div class="flex-row d-none d-md-flex">
             <div class="flex-grow-1 d-none d-sm-block">
                 <h2>{{ 'trans.Categories' | trans }}</h2>
@@ -29,7 +29,7 @@
     </div>
 
     <!-- cat list -->
-    <div class="container mb-0 mb-md-2">
+    <div class="container-fluid container-lg mb-0 mb-md-2">
         <div class="row">
             {%- for category in categoryList ~%}
             <div class="col-sm-6 col-lg-3 text-center mb-4">

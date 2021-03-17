@@ -32,8 +32,8 @@
     {{- settings.customJavascriptInHead | raw ~}}
 </head>
 <body class="{{ environmentCssClass() }}">
-<div class="container-fluid page-top d-print-none">
-    <div class="container container-remove-padding">
+<div class="page-top d-print-none">
+    <div class="container-fluid container-lg container-remove-padding">
         <!-- nav mobile -->
         <nav class="navbar navbar-top navbar-expand-lg navbar-light">
             <a class="navbar-brand" href="{{ path('app_index') }}" title="{{ settings.indexPageTitle }}"> {{- '' -}}
@@ -177,7 +177,8 @@
 
 <!-- nav desktop -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark d-none d-md-block menu-secondary d-print-none">
-    <div class="container">
+    <div class="container-fluid container-lg">
+        <a class="navbar-brand d-lg-none" href="#">{{ 'trans.Menu' | trans }}</a>
         <button {{- ' ' -}}
                 class="navbar-toggler" {{- ' ' -}}
                 type="button" {{- ' ' -}}

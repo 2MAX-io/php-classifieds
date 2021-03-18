@@ -84,6 +84,14 @@ a.use-visited-color:visited {
     padding-bottom: 0;
 }
 
+#main-navbar .nav-link:first-child {
+    padding-left: 0;
+}
+
+#main-navbar .nav-link:last-child {
+    padding-right: 0;
+}
+
 @media (min-width: 768px) {
     .navbar {
         padding: 0.25rem 1rem;

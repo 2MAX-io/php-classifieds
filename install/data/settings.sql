@@ -50,7 +50,7 @@ INSERT INTO setting (name, value, last_update_date) VALUES ('mapDefaultZoom', '1
 INSERT INTO setting (name, value, last_update_date) VALUES ('mapEnabled', '1', '2010-01-01 00:00:00');
 INSERT INTO setting (name, value, last_update_date) VALUES ('mapDefaultZoomSingleListing', '22', '2010-01-01 00:00:00');
 INSERT INTO setting (name, value, last_update_date) VALUES ('deleteExpiredListingFilesEnabled', '0', '2010-01-01 00:00:00');
-INSERT INTO setting (name, value, last_update_date) VALUES ('deleteExpiredListingFilesOlderThanDays', '736', '2010-01-01 00:00:00');
+INSERT INTO setting (name, value, last_update_date) VALUES ('deleteExpiredListingFilesOlderThanDays', '100', '2010-01-01 00:00:00');
 INSERT INTO setting (name, value, last_update_date) VALUES ('timezone', 'UTC', '2010-01-01 00:00:00');
 INSERT INTO setting (name, value, last_update_date) VALUES ('decimalSeparator', '.', '2010-01-01 00:00:00');
 INSERT INTO setting (name, value, last_update_date) VALUES ('thousandSeparator', ' ', '2010-01-01 00:00:00');

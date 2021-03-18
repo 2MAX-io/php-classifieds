@@ -191,17 +191,17 @@
         </button>
 
         <div class="collapse navbar-collapse" id="main-navbar">
-            <ul class="navbar-nav justify-content-between w-100">
+            <ul class="navbar-nav submenu-list">
                 {%- if settings.masterSiteLinkShow ~%}
                     <li class="nav-item"> {{- '' -}}
-                        <a class="nav-link" href="{{ settings.masterSiteUrl }}">{{ settings.masterSiteAnchorText }}</a> {{- '' -}}
+                        <a class="nav-link pl-0" href="{{ settings.masterSiteUrl }}">{{ settings.masterSiteAnchorText }}</a> {{- '' -}}
                     </li>
                     <li class="nav-item"> {{- '' -}}
                         <a class="nav-link" href="{{ path('app_index') }}">{{ 'trans.Classifieds' | trans }}</a> {{- '' -}}
                     </li>
                 {%- else ~%}
                     <li class="nav-item active"> {{- '' -}}
-                        <a class="nav-link" href="{{ path('app_index') }}">{{ 'trans.Home page' | trans }}</a> {{- '' -}}
+                        <a class="nav-link pl-0" href="{{ path('app_index') }}">{{ 'trans.Home page' | trans }}</a> {{- '' -}}
                     </li>
                 {%- endif ~%}
                 <li class="nav-item"> {{- '' -}}

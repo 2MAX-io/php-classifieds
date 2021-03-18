@@ -74,11 +74,6 @@ a.use-visited-color:visited {
     font-weight: 900;
 }
 
-.container-remove-padding {
-    padding-right: 0;
-    padding-left: 0;
-}
-
 .container-padding {
     padding-right: 15px;
     padding-left: 15px;
@@ -303,6 +298,11 @@ input.form-control, textarea.form-control, select.form-control {
             #fffef2,
             white 40%
     );
+}
+
+.footer {
+    max-width: 1110px;
+    border-top: 1px solid #dee2e6;
 }
 
 .edit-listing-description-textarea {

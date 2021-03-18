@@ -33,7 +33,7 @@
 </head>
 <body class="{{ environmentCssClass() }}">
 <div class="page-top d-print-none">
-    <div class="container-fluid container-lg container-remove-padding">
+    <div class="container-fluid container-lg px-0">
         <!-- nav mobile -->
         <nav class="navbar navbar-top navbar-expand-lg navbar-light">
             <a class="navbar-brand" href="{{ path('app_index') }}" title="{{ settings.indexPageTitle }}"> {{- '' -}}
@@ -127,15 +127,15 @@
                     </a>
                 {%- endif ~%}
 
-                <div class="col-md-8 container-remove-padding">
+                {#- search ~#}
+                <div class="col-md-8 px-0">
                     <form class="form-inline my-2 my-lg-0" method="get" action="{{ path('app_listing_search') }}">
-                        <div class="col-md-8 container-remove-padding">
+                        <div class="col-md-8 px-0">
                             <label class="sr-only" for="query">{{ 'trans.keyword'|trans }}</label>
                             <div class="input-group mb-2 mr-md-2">
                                 <div class="input-group-prepend">
                                     <div class="input-group-text"><i class="svg svg-search"></i></div>
                                 </div>
-
                                 <input {{- ' ' -}}
                                         type="text" {{- ' ' -}}
                                         class="form-control" {{- ' ' -}}
@@ -146,7 +146,7 @@
                                 >
                             </div>
                         </div>
-                        <div class="col-md-4 container-remove-padding">
+                        <div class="col-md-4 px-0">
                             <button type="submit" class="btn btn-primary btn-block mb-2">
                                 {{- 'trans.Search' | trans -}}
                             </button>
@@ -154,21 +154,20 @@
                     </form>
                 </div>
 
-                <div class="col-md-4 container-remove-padding d-none d-lg-block">
-                    <div class="text-right mt-md-2">
-                        <ul class="list-inline">
-                            <li class="list-inline-item">
-                                <a href="{{ path('app_user_my_account') }}">{{ 'trans.My account' | trans }}</a>
-                            </li>
-                            <li class="list-inline-item">
-                                <a href="{{ path('app_listing_new') }}" class="btn btn-primary">
-                                    {{- 'trans.Add listing' | trans -}}
-                                    {{- ' ' -}}
-                                    <i class="svg svg-add"></i> {{- ' ' -}}
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
+                {#- my acccount, add listing ~#}
+                <div class="col-md-4 d-none d-lg-block text-right px-0 mt-md-2">
+                    <ul class="list-inline">
+                        <li class="list-inline-item">
+                            <a href="{{ path('app_user_my_account') }}">{{ 'trans.My account' | trans }}</a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="{{ path('app_listing_new') }}" class="btn btn-primary">
+                                {{- 'trans.Add listing' | trans -}}
+                                {{- ' ' -}}
+                                <i class="svg svg-add"></i> {{- ' ' -}}
+                            </a>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </nav>
@@ -192,7 +191,7 @@
         </button>
 
         <div class="collapse navbar-collapse" id="main-navbar">
-            <ul class="navbar-nav justify-content-around w-100">
+            <ul class="navbar-nav justify-content-between w-100">
                 {%- if settings.masterSiteLinkShow ~%}
                     <li class="nav-item"> {{- '' -}}
                         <a class="nav-link" href="{{ settings.masterSiteUrl }}">{{ settings.masterSiteAnchorText }}</a> {{- '' -}}
@@ -267,104 +266,102 @@
 {{- advertisementZone('bottom', advertisementDto | default(null)) ~}}
 
 <!-- FOOTER -->
-<div class="container mt-1 mt-md-2 d-print-none">
-    <footer class="pt-1 pt-md-3 border-top">
-        <div class="row">
-            <div class="col-12 col-md">
-                <small class="d-block mb-1 text-muted">
-                    {{- settings.footerSiteCopyright | replace({"%year%": "now" | date('Y')}) -}}
-                </small>
-                {%- if app.user ~%}
-                    <div> {{- '' -}}
-                        <a class="text-muted mobile-link mb-1" href="{{ path('app_logout_confirm') }}">
-                            {{- 'trans.Logout' | trans -}}
-                        </a> {{- '' -}}
-                    </div>
-                {%- endif ~%}
-            </div>
-            <div class="col-6 col-md">
-                <h5>{{ 'trans.Quick links' | trans }}</h5>
-                <ul class="list-unstyled text-small">
-                    {%- if- settings.masterSiteLinkShow ~%}
-                        <li> {{- '' -}}
-                            <a class="text-muted mobile-link" href="{{ settings.masterSiteUrl }}">
-                                {{- settings.masterSiteAnchorText -}}
-                            </a> {{- '' -}}
-                        </li>
-                        <li> {{- '' -}}
-                            <a class="text-muted mobile-link" href="{{ path('app_index') }}">
-                                {{- 'trans.Classifieds' | trans -}}
-                            </a> {{- '' -}}
-                        </li>
-                    {%- else ~%}
-                        <li> {{- '' -}}
-                            <a class="text-muted mobile-link" href="{{ path('app_index') }}">
-                                {{- 'trans.Home page' | trans -}}
-                            </a> {{- '' -}}
-                        </li>
-                    {%- endif ~%}
-                    <li> {{- '' -}}
-                        <a class="text-muted mobile-link" href="{{ path('app_listing_new') }}">
-                            {{- 'trans.Add listing' | trans -}}
-                        </a> {{- '' -}}
-                    </li>
-                    <li> {{- '' -}}
-                        <a class="text-muted mobile-link" href="{{ path('app_user_my_account') }}">
-                            {{- 'trans.My account' | trans -}}
-                        </a> {{- '' -}}
-                    </li>
-                    <li> {{- '' -}}
-                        <a class="text-muted mobile-link" href="{{ path('app_last_added') }}">
-                            {{- 'trans.Last added' | trans -}}
-                        </a> {{- '' -}}
-                    </li>
-                </ul>
-            </div>
-            <div class="col-6 col-md">
-                <h5>{{ 'trans.About' | trans }}</h5>
-                <ul class="list-unstyled text-small">
-                    {%- if settings.linkAdvertisement ~%}
-                        <li> {{- '' -}}
-                            <a class="text-danger mobile-link" href="{{ path('app_page', {'slug': settings.linkAdvertisement}) }}">
-                                {{- 'trans.Advertisement' | trans -}}
-                            </a> {{- '' -}}
-                        </li>
-                    {%- endif ~%}
-
-                    {%- if settings.linkTermsConditions ~%}
-                        <li> {{- '' -}}
-                            <a class="text-muted mobile-link" href="{{ path('app_page', {'slug': settings.linkTermsConditions}) }}">
-                                {{- 'trans.Terms and conditions' | trans -}}
-                            </a> {{- '' -}}
-                        </li>
-                    {%- endif ~%}
-
-                    {%- if settings.linkPrivacyPolicy ~%}
-                        <li> {{- '' -}}
-                            <a class="text-muted mobile-link" href="{{ path('app_page', {'slug': settings.linkPrivacyPolicy}) }}">
-                                {{- 'trans.Privacy policy' | trans -}}
-                            </a> {{- '' -}}
-                        </li>
-                    {%- endif ~%}
-
-                    <li> {{- '' -}}
-                        <a class="text-muted mobile-link" href="{{ path('app_credits') }}">
-                            {{- 'trans.Credits' | trans -}}
-                        </a> {{- '' -}}
-                    </li>
-
-                    {%- if settings.linkContact ~%}
-                        <li> {{- '' -}}
-                            <a class="text-muted mobile-link" href="{{ path('app_page', {'slug': settings.linkContact}) }}">
-                                {{- 'trans.Contact' | trans -}}
-                            </a> {{- '' -}}
-                        </li>
-                    {%- endif ~%}
-                </ul>
-            </div>
+<footer class="container footer d-print-none mt-1 mt-md-2 pt-1 pt-md-3">
+    <div class="row">
+        <div class="col-12 col-md">
+            <small class="d-block mb-1 text-muted">
+                {{- settings.footerSiteCopyright | replace({"%year%": "now" | date('Y')}) -}}
+            </small>
+            {%- if app.user ~%}
+                <div> {{- '' -}}
+                    <a class="text-muted mobile-link mb-1" href="{{ path('app_logout_confirm') }}">
+                        {{- 'trans.Logout' | trans -}}
+                    </a> {{- '' -}}
+                </div>
+            {%- endif ~%}
         </div>
-    </footer>
-</div>
+        <div class="col-6 col-md">
+            <h5>{{ 'trans.Quick links' | trans }}</h5>
+            <ul class="list-unstyled text-small">
+                {%- if settings.masterSiteLinkShow ~%}
+                    <li> {{- '' -}}
+                        <a class="text-muted mobile-link" href="{{ settings.masterSiteUrl }}">
+                            {{- settings.masterSiteAnchorText -}}
+                        </a> {{- '' -}}
+                    </li>
+                    <li> {{- '' -}}
+                        <a class="text-muted mobile-link" href="{{ path('app_index') }}">
+                            {{- 'trans.Classifieds' | trans -}}
+                        </a> {{- '' -}}
+                    </li>
+                {%- else ~%}
+                    <li> {{- '' -}}
+                        <a class="text-muted mobile-link" href="{{ path('app_index') }}">
+                            {{- 'trans.Home page' | trans -}}
+                        </a> {{- '' -}}
+                    </li>
+                {%- endif ~%}
+                <li> {{- '' -}}
+                    <a class="text-muted mobile-link" href="{{ path('app_listing_new') }}">
+                        {{- 'trans.Add listing' | trans -}}
+                    </a> {{- '' -}}
+                </li>
+                <li> {{- '' -}}
+                    <a class="text-muted mobile-link" href="{{ path('app_user_my_account') }}">
+                        {{- 'trans.My account' | trans -}}
+                    </a> {{- '' -}}
+                </li>
+                <li> {{- '' -}}
+                    <a class="text-muted mobile-link" href="{{ path('app_last_added') }}">
+                        {{- 'trans.Last added' | trans -}}
+                    </a> {{- '' -}}
+                </li>
+            </ul>
+        </div>
+        <div class="col-6 col-md">
+            <h5>{{ 'trans.About' | trans }}</h5>
+            <ul class="list-unstyled text-small">
+                {%- if settings.linkAdvertisement ~%}
+                    <li> {{- '' -}}
+                        <a class="text-danger mobile-link" href="{{ path('app_page', {'slug': settings.linkAdvertisement}) }}">
+                            {{- 'trans.Advertisement' | trans -}}
+                        </a> {{- '' -}}
+                    </li>
+                {%- endif ~%}
+
+                {%- if settings.linkTermsConditions ~%}
+                    <li> {{- '' -}}
+                        <a class="text-muted mobile-link" href="{{ path('app_page', {'slug': settings.linkTermsConditions}) }}">
+                            {{- 'trans.Terms and conditions' | trans -}}
+                        </a> {{- '' -}}
+                    </li>
+                {%- endif ~%}
+
+                {%- if settings.linkPrivacyPolicy ~%}
+                    <li> {{- '' -}}
+                        <a class="text-muted mobile-link" href="{{ path('app_page', {'slug': settings.linkPrivacyPolicy}) }}">
+                            {{- 'trans.Privacy policy' | trans -}}
+                        </a> {{- '' -}}
+                    </li>
+                {%- endif ~%}
+
+                <li> {{- '' -}}
+                    <a class="text-muted mobile-link" href="{{ path('app_credits') }}">
+                        {{- 'trans.Credits' | trans -}}
+                    </a> {{- '' -}}
+                </li>
+
+                {%- if settings.linkContact ~%}
+                    <li> {{- '' -}}
+                        <a class="text-muted mobile-link" href="{{ path('app_page', {'slug': settings.linkContact}) }}">
+                            {{- 'trans.Contact' | trans -}}
+                        </a> {{- '' -}}
+                    </li>
+                {%- endif ~%}
+            </ul>
+        </div>
+    </div>
+</footer>
 
 {{- encore_entry_link_tags('app_bottom') ~}}
 {{- settings.customCss | raw ~}}

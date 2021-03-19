@@ -102,6 +102,7 @@ class DevGenerateTestListings
             if ($this->randomBool(20)) {
                 $listing->setTitle($faker->text(70));
             }
+            $listing->setTitle(\rtrim($listing->getTitle(), '.'));
             /** @var string $description */
             $description = $faker->paragraphs(\random_int(1, 20), true);
             $listing->setDescription($description);

@@ -75,7 +75,15 @@ if (!empty($_POST)) {
 
                     if ($_POST['load_listings'] ?? false) {
                         loadSql(__DIR__.'/data/example/listing_demo_user.sql');
-                        loadSql(__DIR__.'/data/example/listing.large.sql');
+                        if (\file_exists(__DIR__.'/data/example/large_git_ignored/listing.sql')) {
+                            loadSql(__DIR__.'/data/example/large_git_ignored/listing.sql');
+                        }
+                        if (\file_exists(__DIR__.'/data/example/large_git_ignored/listing_file.sql')) {
+                            loadSql(__DIR__.'/data/example/large_git_ignored/listing_file.sql');
+                        }
+                        if (\file_exists(__DIR__.'/data/example/large_git_ignored/listing_custom_field_value.sql')) {
+                            loadSql(__DIR__.'/data/example/large_git_ignored/listing_custom_field_value.sql');
+                        }
 
                         $stmt = $pdo->prepare(/* @lang MySQL */ 'UPDATE listing SET valid_until_date = :validUntilDate WHERE 1');
                         $stmt->bindValue('validUntilDate', \date('Y-m-d 23:59:59', \time() + 3600 * 24 * 7));
@@ -166,6 +174,9 @@ function loadSql(string $filePath): void
     $currentQuery = '';
 
     $handle = \fopen($filePath, 'rb');
+    if (!$handle) {
+        throw new \RuntimeException('could not get file handle');
+    }
     while ($line = \fgets($handle)) {
         $currentQuery .= $line;
         if (\preg_match('~;$~', $line)) {

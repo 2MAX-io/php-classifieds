@@ -91,7 +91,7 @@ class FilesystemChecker
          * creates directory in exact path, so path must be to non existent test directory, like /test.
          */
         $patchList = [
-            FilePath::getProjectDir().'/static/cache/test',
+            FilePath::getProjectDir().'/static/tmp/resize_image_cache/test',
             FilePath::getProjectDir().'/static/listing/test',
             FilePath::getProjectDir().'/static/resized/test',
             FilePath::getProjectDir().'/static/tmp/file_upload/test',
@@ -116,7 +116,7 @@ class FilesystemChecker
     {
         $return = [];
         $patchList = [
-            FilePath::getProjectDir().'/static/cache',
+            FilePath::getProjectDir().'/static/tmp/resize_image_cache',
             FilePath::getProjectDir().'/static/category',
             FilePath::getProjectDir().'/static/listing',
             FilePath::getProjectDir().'/static/logo/',
@@ -145,7 +145,7 @@ class FilesystemChecker
         $return = [];
         $patchList = [
             FilePath::getProjectDir().'/asset/build/entrypoints.json',
-            FilePath::getProjectDir().'/static/cache/.gitkeep',
+            FilePath::getProjectDir().'/static/tmp/resize_image_cache/.gitkeep',
             FilePath::getProjectDir().'/static/category/.gitkeep',
             FilePath::getProjectDir().'/static/listing/.gitkeep',
             FilePath::getProjectDir().'/static/logo/.gitkeep',

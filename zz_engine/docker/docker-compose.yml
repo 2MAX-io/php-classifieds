@@ -12,7 +12,7 @@ services:
         ports: ['80:80', '443:443', '8080:8080']
         volumes:
             - './../../:/var/www/html'
-            - './mysql/client_my.cnf:/var/www/.my.cnf'
+            - './php/client_my.cnf:/var/www/.my.cnf'
             - './php/php.ini:/usr/local/etc/php/php.ini'
             - './php/xdebug_out:/tmp/xdebug_out'
             - './php/ssl/localhost.crt:/etc/ssl/certs/ssl-cert-snakeoil.pem'
@@ -43,9 +43,8 @@ services:
         ports: ['3306:3306']
         user: '1000'
         volumes:
-            - './../../zz_engine/var/mysql:/var/www/html/zz_engine/var/mysql'
+            - './../../:/var/www/html/'
             - './../../zz_engine/var/mysql:/sql'
-            - './../../zz_engine/dev/sql:/var/www/html/zz_engine/dev/sql'
             - './mysql/data:/var/lib/mysql'
             - './mysql/my.cnf:/etc/mysql/conf.d/my.cnf'
             - './mysql/bash_history:/root/.bash_history'

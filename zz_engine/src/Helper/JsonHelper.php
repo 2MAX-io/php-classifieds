@@ -41,7 +41,7 @@ class JsonHelper
     }
 
     /**
-     * @param array<string,mixed> $array
+     * @param array<mixed> $array
      */
     public static function toString(array $array): string
     {

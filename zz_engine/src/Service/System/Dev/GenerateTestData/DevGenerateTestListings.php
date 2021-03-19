@@ -15,9 +15,12 @@ use App\Enum\SortConfig;
 use App\Form\Type\PriceForType;
 use App\Helper\ArrayHelper;
 use App\Helper\DateHelper;
+use App\Helper\JsonHelper;
 use App\Helper\RandomHelper;
 use App\Helper\SlugHelper;
 use App\Repository\CategoryRepository;
+use App\Service\Listing\CustomField\Dto\CustomFieldInlineDto;
+use App\Service\Setting\SettingsDto;
 use App\Service\System\Cache\RuntimeCacheService;
 use App\Service\User\Account\CreateUserService;
 use Doctrine\Common\Collections\Criteria;
@@ -45,6 +48,11 @@ class DevGenerateTestListings
     private $categoryRepository;
 
     /**
+     * @var SettingsDto
+     */
+    private $settingsDto;
+
+    /**
      * @var EntityManagerInterface
      */
     private $em;
@@ -63,12 +71,14 @@ class DevGenerateTestListings
         CreateUserService $createUserService,
         RuntimeCacheService $runtimeCache,
         CategoryRepository $categoryRepository,
+        SettingsDto $settingsDto,
         EntityManagerInterface $em,
         LoggerInterface $logger
     ) {
         $this->createUserService = $createUserService;
         $this->runtimeCache = $runtimeCache;
         $this->categoryRepository = $categoryRepository;
+        $this->settingsDto = $settingsDto;
         $this->em = $em;
         $this->logger = $logger;
     }
@@ -89,7 +99,12 @@ class DevGenerateTestListings
         for ($i = 0; $i < $count; ++$i) {
             $listing = new Listing();
             $listing->setTitle($faker->text(30));
-            $listing->setDescription($faker->sentence(36));
+            if ($this->randomBool(20)) {
+                $listing->setTitle($faker->text(70));
+            }
+            /** @var string $description */
+            $description = $faker->paragraphs(\random_int(1, 20), true);
+            $listing->setDescription($description);
             $listing->setLocation($faker->city);
             $listing->setUser($this->getUser());
             $listing->setCategory($this->getRandomCategory());
@@ -125,8 +140,23 @@ class DevGenerateTestListings
             }
 
             if ($this->randomBool(60)) {
-                $listing->setLocationLatitude(RandomHelper::float(49, 54, 6));
-                $listing->setLocationLongitude(RandomHelper::float(14, 24, 6));
+                $margin = 0.2;
+                if ($this->randomBool(20)) {
+                    $margin = 0.5;
+                }
+                if ($this->randomBool(3)) {
+                    $margin = 1;
+                }
+                $listing->setLocationLatitude(RandomHelper::float(
+                    ($this->settingsDto->getMapDefaultLatitude() ?? 51.0) - $margin,
+                    ($this->settingsDto->getMapDefaultLatitude() ?? 51.0) + $margin,
+                    6,
+                ));
+                $listing->setLocationLongitude(RandomHelper::float(
+                    ($this->settingsDto->getMapDefaultLongitude() ?? -1.0) - $margin,
+                    ($this->settingsDto->getMapDefaultLongitude() ?? -1.0) + $margin,
+                    6,
+                ));
             }
 
             $this->setCustomFields($listing);
@@ -152,6 +182,26 @@ class DevGenerateTestListings
             $this->setYearRange($listing, $customField);
             $this->setIntegerRange($listing, $customField);
         }
+
+        $customFieldInlineDtoList = [];
+        foreach ($listing->getListingCustomFieldValues() as $listingCustomFieldValue) {
+            $customFieldInlineDto = new CustomFieldInlineDto();
+            $customField = $listingCustomFieldValue->getCustomField();
+            if (null === $customField) {
+                continue;
+            }
+            $customFieldInlineDto->name = $customField->getName();
+            if ($listingCustomFieldValue->getCustomFieldOption()) {
+                $customFieldInlineDto->value = $listingCustomFieldValue->getCustomFieldOption()->getName();
+            } else {
+                $customFieldInlineDto->value = $listingCustomFieldValue->getValue();
+            }
+            $customFieldInlineDto->type = $customField->getType();
+            $customFieldInlineDto->unit = $customField->getUnit();
+            $customFieldInlineDtoList[] = $customFieldInlineDto;
+        }
+
+        $listing->setCustomFieldsInlineJson(JsonHelper::toString($customFieldInlineDtoList));
     }
 
     private function addMultipleCustomFieldValues(Listing $listing, CustomField $customField): void

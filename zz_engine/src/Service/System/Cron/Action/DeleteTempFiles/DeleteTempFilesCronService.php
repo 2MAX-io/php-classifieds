@@ -6,6 +6,7 @@ namespace App\Service\System\Cron\Action\DeleteTempFiles;
 
 use App\Helper\DateHelper;
 use App\Helper\FilePath;
+use App\Helper\IniHelper;
 use App\Helper\StringHelper;
 use App\Service\System\Cron\Action\Base\CronActionInterface;
 use App\Service\System\Cron\Action\Base\CronAtNightInterface;
@@ -48,6 +49,7 @@ class DeleteTempFilesCronService implements CronActionInterface, CronAtNightInte
 
     public function __invoke(DeleteTempFilesMessage $deleteExpiredListingFilesMessage): void
     {
+        IniHelper::setMemoryLimitIfLessThanMb(128);
         $lockName = 'lock_deleteTempFilesLock';
         $lock = $this->lockFactory->createLock($lockName, 3600);
         if (!$lock->acquire()) {
@@ -122,7 +124,7 @@ class DeleteTempFilesCronService implements CronActionInterface, CronAtNightInte
 
     private function deleteImageResizeCache(): void
     {
-        $cachePath = FilePath::getStaticPath().'/cache';
+        $cachePath = FilePath::getTempResizeImageCache();
 
         $localAdapter = new Local($cachePath);
         $filesystem = new Filesystem($localAdapter);

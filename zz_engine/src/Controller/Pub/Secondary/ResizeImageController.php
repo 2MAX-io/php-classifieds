@@ -127,7 +127,7 @@ class ResizeImageController
             [
                 'source' => FilePath::getStaticPath(),
                 'cache' => FilePath::getStaticPath(),
-                'cache_path_prefix' => 'cache',
+                'cache_path_prefix' => Path::makeRelative(FilePath::getTempResizeImageCache(), FilePath::getStaticPath()),
                 'response' => new SymfonyResponseFactory($request),
             ]
         );

@@ -7,7 +7,7 @@ namespace App\Service\System\Cron\Action\DeleteTempFiles;
 use App\Service\System\Messenger\Base\OneAtTimeMessageInterface;
 
 /**
- * @see CleanDatabaseCronService
+ * @see DeleteTempFilesCronService
  */
 class DeleteTempFilesMessage implements OneAtTimeMessageInterface
 {

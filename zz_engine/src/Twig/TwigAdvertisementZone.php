@@ -14,7 +14,7 @@ class TwigAdvertisementZone implements RuntimeExtensionInterface
     /**
      * @var SettingsDto
      */
-    private $settingsDto;
+    public $settingsDto;
 
     public function __construct(SettingsDto $settingsDto)
     {

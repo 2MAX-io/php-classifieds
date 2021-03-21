@@ -123,11 +123,14 @@ include 'base/header.php';
             <h3>License</h3>
 
             <div class="form-group">
-                <label>Copy content of license file into textarea bellow</label>
-                <div class="mb-2">
-                    <a href="https://documentation.2max.io/display/CLAS/Get+license+file+for+installation" target="_blank">instruction: how to get license file?</a>
+                <label>Do you have license for 2MAX.io PHP Classified Ads?</label>
+                <select name="license" class="form-control">
+                    <option>No, install as non-commercial use preview</option>
+                    <option>Yes</option>
+                </select>
+                <div class="mt-2">
+                    <a href="https://php-classified-ads.2max.io/" target="_blank">can be bought here</a>
                 </div>
-                <textarea name="license" class="form-control"><?php echo e($_POST['license'] ?? $formDefaultValue['license']); ?></textarea>
             </div>
         </div>
 

@@ -54,10 +54,6 @@ if (!empty($_POST)) {
         $errors[] = 'Can not connect to database, error: '.$e->getMessage();
     }
 
-    if (!\preg_match('~(\\w{8})-((\\w{4})-){3}(\\w{12})~m', $_POST['license'] ?? '')) {
-        $errors[] = 'Please enter valid license, current license is not valid';
-    }
-
     if (0 === \count($errors)) {
         $pdo->beginTransaction();
 

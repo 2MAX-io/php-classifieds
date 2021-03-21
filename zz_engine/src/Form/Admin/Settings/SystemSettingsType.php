@@ -150,6 +150,14 @@ class SystemSettingsType extends AbstractType implements SettingTypeInterface
                 ]),
             ],
         ]);
+        $builder->add('license', BoolRequiredType::class, [
+            'label' => 'trans.Do you have license for 2MAX.io PHP Classified Ads?',
+            'required' => true,
+            'empty_data' => 0,
+            'constraints' => [
+                new NotBlank(),
+            ],
+        ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

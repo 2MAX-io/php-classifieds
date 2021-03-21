@@ -748,6 +748,8 @@ trans:
     Observe: 'Obserwuj'
     Observed Listings: 'Obserwowane ogłoszenia'
     Menu: 'Menu'
+    License: 'Licencja'
+    Do you have license for 2MAX.io PHP Classified Ads?: 'Masz licencje na 2MAX.io PHP Classified Ads?'
 
 
 '—': '—'

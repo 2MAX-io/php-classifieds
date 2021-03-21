@@ -12,7 +12,7 @@ declare(strict_types=1);
 use App\Twig\TwigAdvertisementZone;
 
 /** @var TwigAdvertisementZone $this */
-if (empty($this->settingsDto->getLicense())) {
+if (!empty($this->settingsDto->getLicense())) {
     return;
 }
 

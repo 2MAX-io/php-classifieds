@@ -9,6 +9,9 @@ use Symfony\Component\HttpFoundation\Request;
 /*
  * @copyright 2MAX.io Classified Ads
  * @link https://2max.io
+ *
+ * documentation:
+ * https://php-classified-ads.2max.io/documentation/
  */
 \ini_set('log_errors', 'On');
 \ini_set('error_log', 'zz_engine/var/log/PHP_native_error_'.\date('Y-m-d').'.log');

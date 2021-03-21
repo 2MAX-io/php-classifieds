@@ -9,7 +9,7 @@ include 'base/header.php';
     <h1>Installation - Server and PHP requirements</h1>
 
     <div class="alert alert-info">
-        You can find more information about requirements in <a href="https://documentation.2max.io/display/CLAS/Requirements">documentation</a>
+        You can find more information about requirements in <a href="https://php-classified-ads.2max.io/requirements/">documentation</a>
     </div>
 
     <?php foreach ($errors as $error) { ?>

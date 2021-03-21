@@ -3,7 +3,7 @@ Quick installation guide:
   create SMTP email account for sending emails,
   prepare license file you got after purchase
 - check if your server meets requirements, main minimal requirements are PHP 7.3 and MYSQL 5.6,
-  full requirements: https://documentation.2max.io/display/CLAS/Requirements
+  full requirements: https://php-classified-ads.2max.io/requirements/
 - put zip file in directory where you want it to be installed, public_html directory of domain or subdirectory of domain
 - unpack zip file, you can use web hosting's file manager to do that (cPanel's File Manager of DirectAdmin's Files)
 - remove zip file
@@ -13,19 +13,19 @@ Quick installation guide:
 - follow installation steps
 
 Complete installation guide can be found in documentation:
-https://documentation.2max.io/display/CLAS/Installation
+https://php-classified-ads.2max.io/installation/
 
 cPanel requirements guide:
-https://documentation.2max.io/display/CLAS/cPanel+configuration
+https://php-classified-ads.2max.io/cpanel-configuration/
 
 DirectAdmin requirements guide:
-https://documentation.2max.io/display/CLAS/DirectAdmin+configuration
+https://php-classified-ads.2max.io/directadmin-configuration/
 
 General requirements guide:
-https://documentation.2max.io/display/CLAS/Requirements
+https://php-classified-ads.2max.io/requirements/
 
 Full documentation:
-https://documentation.2max.io/display/CLAS/2MAX.io+Classified+Ads+with+Custom+Fields+PHP+script
+https://php-classified-ads.2max.io/documentation/
 
 _______________________________________________________________________________________________________________________
 2MAX.io Classified Ads

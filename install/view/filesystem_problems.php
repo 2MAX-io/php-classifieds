@@ -8,15 +8,15 @@ include 'base/header.php';
 ?>
 
 <div class="container">
-    <div class="float-right mt-2"><a href="https://documentation.2max.io/display/CLAS/Required+permissions" class="btn btn-info" target="_blank">documentation</a></div>
+    <div class="float-right mt-2"><a href="https://php-classified-ads.2max.io/documentation/" class="btn btn-info" target="_blank">documentation</a></div>
     <h1>Installation - 2max.io Classified Ads</h1>
     <h2>Filesystem problems</h2>
 
-    <div class="float-right"><a href="https://documentation.2max.io/display/CLAS/Requirements" class="btn btn-info">documentation</a></div>
+    <div class="float-right"><a href="https://php-classified-ads.2max.io/requirements/" class="btn btn-info">documentation</a></div>
 
     <div class="alert alert-danger">
         <h4 class="text-danger">Invalid permissions, before installation begins, you need to apply correct permissions.</h4>
-        <p>One way to do that, is to use commands from textarea bellow in <a href="https://documentation.2max.io/display/CLAS/Where+is+app+root+directory" target="_blank">root path of this app</a>.</p>
+        <p>One way to do that, is to use commands from textarea bellow in <a href="https://php-classified-ads.2max.io/where-is-app-root-directory/" target="_blank">root path of this app</a>.</p>
         <p>Root path of this app is directory with file: zzzz_2max_io_classified_ads_project_root.txt</p>
 
         <textarea class="w-100 form-control chmod-commands">
@@ -37,7 +37,7 @@ chown -R www-data:www-data <?php echo e($projectRootPath); ?>;
 
         <p>in commands above change <u>www-data</u> to group of your webserver process, if it is different</p>
         
-        <p>More info about setting up correct permissions can be found in <a href="https://documentation.2max.io/display/CLAS/Required+permissions" target="_blank">documentation</a></p>
+        <p>More info about setting up correct permissions can be found in <a href="https://php-classified-ads.2max.io/required-permissions-for-installation/" target="_blank">documentation</a></p>
     </div>
 
     <div class="mb-2">

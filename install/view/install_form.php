@@ -7,7 +7,7 @@ include 'base/header.php';
 
 <div class="container">
     <form method="post">
-        <div class="float-right mt-2"><a href="https://documentation.2max.io/display/CLAS/Installation" class="btn btn-info" target="_blank">documentation</a></div>
+        <div class="float-right mt-2"><a href="https://php-classified-ads.2max.io/installation/" class="btn btn-info" target="_blank">documentation</a></div>
         <h1>Installation</h1>
 
         <?php foreach ($errors as $error) { ?>
@@ -18,7 +18,7 @@ include 'base/header.php';
 
         <?php if (\count($errors)) { ?>
             <div>
-                <a href="https://documentation.2max.io/display/CLAS/Installation" class="btn btn-info mb-2" target="_blank">to find help with errors check documentation</a>
+                <a href="https://php-classified-ads.2max.io/installation/" class="btn btn-info mb-2" target="_blank">to find help with errors check documentation</a>
             </div>
         <?php } ?>
 

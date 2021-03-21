@@ -12,7 +12,7 @@ include 'base/header.php';
 
     <div class="alert alert-success">
         Installation has been successful.
-        Steps to take after installation can be found in <a href="https://documentation.2max.io/display/CLAS/Installation">documentation</a>
+        Steps to take after installation can be found in <a href="https://php-classified-ads.2max.io/installation/">documentation</a>
     </div>
 
     <div class="alert alert-info">

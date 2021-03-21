@@ -1,1 +1,5 @@
 install instructions are located in install subdirectory next to this file
+
+https://php-classified-ads.2max.io/installation/
+
+https://php-classified-ads.2max.io/documentation/

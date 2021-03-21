@@ -37,7 +37,7 @@ chown -R www-data:www-data <?php echo e($projectRootPath); ?>;
 
         <p>in commands above change <u>www-data</u> to group of your webserver process, if it is different</p>
         
-        <p>More info about setting up correct permissions can be found in <a href="https://php-classified-ads.2max.io/required-permissions-for-installation/" target="_blank">documentation</a></p>
+        <p>More info about setting up correct permissions can be found in <a href="https://php-classified-ads.2max.io/required-permissions/" target="_blank">documentation</a></p>
     </div>
 
     <div class="mb-2">

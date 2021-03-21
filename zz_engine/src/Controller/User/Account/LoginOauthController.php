@@ -87,26 +87,32 @@ class LoginOauthController extends AbstractUserController
 
         try {
             $hybridAuth = new Hybridauth($config);
+            $hybridAuth->disconnectAllAdapters();
             $authentication = $hybridAuth->authenticate($oauthProviderName);
-            $userProfile = $authentication->getUserProfile();
-            $email = StringHelper::emptyTrim($userProfile->emailVerified) ? $userProfile->email : $userProfile->emailVerified;
-            if (null === $email) {
-                $logger->debug('could not find email address in oauth response');
+            if ($authentication->isConnected()) {
+                $userProfile = $authentication->getUserProfile();
+                $email = StringHelper::emptyTrim($userProfile->emailVerified) ? $userProfile->email : $userProfile->emailVerified;
+                if (null === $email) {
+                    $logger->debug('could not find email address in oauth response');
 
-                return $this->render('security/login_oauth_no_email_error.html.twig');
-            }
+                    return $this->render('security/login_oauth_no_email_error.html.twig');
+                }
 
-            $user = $this->userRepository->findOneBy(['email' => $email]);
-            $userExists = null !== $user;
-            if (!$userExists) {
-                $registerUserDto = new RegisterUserDto();
-                $registerUserDto->setEmail($email);
-                $user = $createUserService->registerUser($registerUserDto);
-                $user->setEnabled(true);
-                $this->em->flush();
+                $user = $this->userRepository->findOneBy(['email' => $email]);
+                $userExists = null !== $user;
+                if (!$userExists) {
+                    $registerUserDto = new RegisterUserDto();
+                    $registerUserDto->setEmail($email);
+                    $user = $createUserService->registerUser($registerUserDto);
+                    $user->setEnabled(true);
+                    $this->em->flush();
+                }
+                $userChecker->checkPreAuth($user);
+                $loginUserProgrammaticallyService->loginUser($user, $request);
+            } else {
+                $logger->error('user not connected with ouath provider, $authentication->isConnected() is false');
+                $flashService->addFlash(FlashService::ERROR_ABOVE_FORM, 'trans.Sorry, could not login');
             }
-            $userChecker->checkPreAuth($user);
-            $loginUserProgrammaticallyService->loginUser($user, $request);
             $authentication->disconnect();
         } catch (\Exception $e) {
             $logger->critical('error during oauth login', ExceptionHelper::flatten($e));

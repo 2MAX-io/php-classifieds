@@ -129,7 +129,7 @@ include 'base/header.php';
                     <option>Yes</option>
                 </select>
                 <div class="mt-2">
-                    <a href="https://php-classified-ads.2max.io/" target="_blank">can be bought here</a>
+                    <a href="https://php-classified-ads.2max.io/purchase/" target="_blank">can be bought here</a>
                 </div>
             </div>
         </div>

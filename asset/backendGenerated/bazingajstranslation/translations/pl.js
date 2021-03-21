@@ -906,6 +906,8 @@ t.add("trans.Inline on lists", "Skr\u00f3t na listach", "messages", "pl");
 t.add("trans.Observe", "Obserwuj", "messages", "pl");
 t.add("trans.Observed Listings", "Obserwowane og\u0142oszenia", "messages", "pl");
 t.add("trans.Menu", "Menu", "messages", "pl");
+t.add("trans.License", "Licencja", "messages", "pl");
+t.add("trans.Do you have license for 2MAX.io PHP Classified Ads?", "Masz licencje na 2MAX.io PHP Classified Ads?", "messages", "pl");
 t.add("\u2014", "\u2014", "messages", "pl");
 t.add("Year", "Rok", "messages", "pl");
 t.add("Month", "Miesi\u0105c", "messages", "pl");

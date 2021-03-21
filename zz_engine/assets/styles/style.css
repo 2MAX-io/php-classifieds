@@ -494,6 +494,12 @@ input.form-control, textarea.form-control, select.form-control {
     padding: 0.1rem 0.1rem 0.4rem 0.4rem;
     line-height: 1;
     cursor: pointer;
+    mix-blend-mode: difference;
+    opacity: 0.5;
+}
+
+.listing-list-observe .svg {
+    filter: brightness(0.5);
 }
 
 .show-more-subcategories {

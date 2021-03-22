@@ -124,25 +124,7 @@ EOT;
     }
 }
 
-$formDefaultValue = [];
-$formDefaultValue['db_host'] = 'localhost';
-$formDefaultValue['db_port'] = '3306';
-$formDefaultValue['db_name'] = '';
-$formDefaultValue['db_user'] = '';
-$formDefaultValue['db_pass'] = '';
-$formDefaultValue['smtp_host'] = '';
-$formDefaultValue['smtp_port'] = '465';
-$formDefaultValue['smtp_username'] = '';
-$formDefaultValue['smtp_password'] = '';
-$formDefaultValue['email_from_address'] = '';
-$formDefaultValue['app_timezone'] = 'UTC';
-$formDefaultValue['admin_email'] = '';
-$formDefaultValue['admin_password'] = '';
-$formDefaultValue['license'] = '';
-$formDefaultValue['load_categories'] = '';
-$formDefaultValue['load_custom_fields'] = '';
-$formDefaultValue['load_listings'] = '';
-$formDefaultValue['load_pages'] = '';
+$formDefaultValue = include INSTALL_DIR.'/include/install_default_config.php';
 
 $isDockerDevEnvironment = \str_contains($_SERVER['SERVER_ADDR'], '192.168.205');
 if ($isDockerDevEnvironment) {
@@ -159,7 +141,6 @@ if ($isDockerDevEnvironment) {
     $formDefaultValue['app_timezone'] = 'UTC';
     $formDefaultValue['admin_email'] = 'admin@2max.io';
     $formDefaultValue['admin_password'] = 'demo';
-    $formDefaultValue['license'] = 'trial000-demo-demo-demo-trial0trial0';
     $formDefaultValue['load_categories'] = true;
     $formDefaultValue['load_custom_fields'] = '';
     $formDefaultValue['load_listings'] = '';

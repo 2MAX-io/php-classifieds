@@ -15,7 +15,7 @@ rm -r ${INSTALLER_DIR}/zz_engine/docker
 #rm ${INSTALLER_DIR}/.gitignore
 #rm ${INSTALLER_DIR}/jsconfig.json
 
-cp ${PROJECT_DIR}/install/data/example/listing.large.sql ${INSTALLER_DIR}/install/data/example/listing.large.sql
+cp ${PROJECT_DIR}/install/data/example/large_git_ignored/* ${INSTALLER_DIR}/install/data/example/large_git_ignored
 
 mkdir -p ${INSTALLER_DIR}/zz_engine/var/cache
 mkdir -p ${INSTALLER_DIR}/zz_engine/var/cache/upgrade

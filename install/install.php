@@ -101,9 +101,13 @@ if (!empty($_POST)) {
             $pdo->exec('ALTER TABLE user AUTO_INCREMENT = 1001;');
             saveConfig();
 
-            $pdo->commit();
+            if ($pdo->inTransaction()) {
+                $pdo->commit();
+            }
         } catch (\Throwable $e) {
-            $pdo->rollBack();
+            if ($pdo->inTransaction()) {
+                $pdo->rollBack();
+            }
 
             throw $e;
         }

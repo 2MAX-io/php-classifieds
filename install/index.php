@@ -5,6 +5,8 @@ declare(strict_types=1);
 \ini_set('display_errors', '1');
 \error_reporting(-1);
 
+include 'include/bootstrap.php';
+
 $errors = [];
 
 /* @noinspection ConstantCanBeUsedInspection */
@@ -103,13 +105,3 @@ if (0 === \count($errors)) {
 }
 
 include 'view/php_requirements.php';
-
-/**
- * @param mixed|string $string
- *
- * @return mixed|string
- */
-function e($string)
-{
-    return \htmlspecialchars($string, \ENT_QUOTES | \ENT_SUBSTITUTE);
-}

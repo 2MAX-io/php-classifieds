@@ -503,7 +503,8 @@ php zz_engine/bin/console app:move-files-new-location -vvv --dry-run
 (cd /var/www/html/zz_engine && yarn upgrade)
 bash zz_engine/dev/bin/build_assets.sh
 mysql classifieds < install/data/example/listing_demo_user.sql
-php zz_engine/bin/console app:dev:generate-test-listings 3636
-mysqldump classifieds listing --result-file="/var/www/html/install/data/example/large_git_ignored/listing.sql"
-mysqldump classifieds listing_custom_field_value --result-file="/var/www/html/install/data/example/large_git_ignored/listing_custom_field_value.sql"
-mysqldump classifieds listing_file --result-file="/var/www/html/install/data/example/large_git_ignored/listing_file.sql"
+php zz_engine/bin/console app:dev:generate-test-listings 3000
+mysqldump classifieds listing --no-create-info --skip-add-drop-table --skip-add-locks --skip-disable-keys --skip-set-charset --compact --skip-extended-insert --skip-opt --complete-insert --result-file="/var/www/html/install/data/example/large_git_ignored/listing.sql"
+mysqldump classifieds listing_custom_field_value --no-create-info --skip-add-drop-table --skip-add-locks --skip-disable-keys --skip-set-charset --compact --skip-extended-insert --skip-opt --complete-insert --result-file="/var/www/html/install/data/example/large_git_ignored/listing_custom_field_value.sql"
+mysqldump classifieds listing_file --no-create-info --skip-add-drop-table --skip-add-locks --skip-disable-keys --skip-set-charset --compact --skip-extended-insert --skip-opt --complete-insert --result-file="/var/www/html/install/data/example/large_git_ignored/listing_file.sql"
+bash zz_engine/dev/bin/DEV_build_installer.sh

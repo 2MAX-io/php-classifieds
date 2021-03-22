@@ -21,6 +21,10 @@ if (\file_exists($configFilePath)) {
     exit;
 }
 
+if (isset($_GET['execute-no-interaction'])) {
+    $_POST = include INSTALL_DIR.'/include/install_default_config.php';
+}
+
 if (!empty($_POST)) {
     $pdo = null;
     $dbName = $_POST['db_name'];

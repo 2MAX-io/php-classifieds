@@ -125,8 +125,8 @@ include 'base/header.php';
             <div class="form-group">
                 <label>Do you have license for 2MAX.io PHP Classified Ads?</label>
                 <select name="license" class="form-control">
-                    <option>No, install as non-commercial use preview</option>
-                    <option>Yes</option>
+                    <option value="0">No, install as non-commercial use preview</option>
+                    <option value="1">Yes</option>
                 </select>
                 <div class="mt-2">
                     <a href="https://php-classified-ads.2max.io/purchase/" target="_blank">can be bought here</a>

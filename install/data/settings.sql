@@ -10,7 +10,7 @@ INSERT INTO setting (name, value, last_update_date) VALUES ('currency', 'USD', '
 INSERT INTO setting (name, value, last_update_date) VALUES ('allowedCharactersEnabled', '0', '2010-01-01 00:00:00');
 INSERT INTO setting (name, value, last_update_date) VALUES ( 'allowedCharacters', '', '2010-01-01 00:00:00');
 INSERT INTO setting (name, value, last_update_date) VALUES ( 'searchPlaceholder', '"Audi A6", transpor*', '2010-01-01 00:00:00');
-INSERT INTO setting (name, value, last_update_date) VALUES ( 'masterSiteUrl', 'https://2MAX.io', '2010-01-01 00:00:00');
+INSERT INTO setting (name, value, last_update_date) VALUES ( 'masterSiteUrl', 'https://php-classified-ads.2max.io/', '2010-01-01 00:00:00');
 INSERT INTO setting (name, value, last_update_date) VALUES ( 'masterSiteAnchorText', '2MAX.io', '2010-01-01 00:00:00');
 INSERT INTO setting (name, value, last_update_date) VALUES ( 'masterSiteLinkShow', '1', '2010-01-01 00:00:00');
 INSERT INTO setting (name, value, last_update_date) VALUES ( 'linkPrivacyPolicy', '', '2010-01-01 00:00:00');

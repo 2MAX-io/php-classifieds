@@ -31,6 +31,7 @@ class SelfSignedEmailTransportFactory extends AbstractTransportFactory
             $stream->setStreamOptions([
                 'ssl' => [
                     'verify_peer' => false,
+                    'verify_peer_name' => false,
                     'allow_self_signed' => true,
                 ],
             ]);

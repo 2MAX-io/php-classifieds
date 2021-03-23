@@ -228,7 +228,7 @@ function saveConfig(): void
     $smtpPass = \urlencode($_POST['smtp_password']);
     saveConfigToFile([
         'DATABASE_URL' => "mysql://{$_POST['db_user']}{$dbPass}@{$_POST['db_host']}:{$_POST['db_port']}/{$_POST['db_name']}",
-        'MAILER_URL' => "smtp://{$_POST['smtp_host']}:{$_POST['smtp_port']}?encryption=ssl&auth_mode=plain&username={$_POST['smtp_username']}&password={$smtpPass}",
+        'MAILER_URL' => "selfsignedsmtp://{$_POST['smtp_host']}:{$_POST['smtp_port']}?encryption=ssl&auth_mode=plain&username={$_POST['smtp_username']}&password={$smtpPass}",
         'APP_TIMEZONE' => $_POST['app_timezone'],
     ]);
 }

@@ -54,7 +54,7 @@
 
             <!-- navbar mobile -->
             <div class="collapse navbar-collapse" id="navbarPageTop">
-                <ul class="navbar-nav justify-content-around d-sm-none mb-2">
+                <ul class="navbar-nav justify-content-around d-lg-none mb-2">
                     {%- if settings.masterSiteLinkShow ~%}
                         <li class="nav-item menu-top-item"> {{- '' -}}
                             <a class="nav-link" href="{{ settings.masterSiteUrl }}">
@@ -175,7 +175,7 @@
 </div>
 
 <!-- nav desktop -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark d-none d-md-block menu-secondary d-print-none">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark d-none d-lg-block menu-secondary d-print-none">
     <div class="container-fluid container-lg">
         <a class="navbar-brand d-lg-none" href="#">{{ 'trans.Menu' | trans }}</a>
         <button {{- ' ' -}}

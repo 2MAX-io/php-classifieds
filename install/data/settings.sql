@@ -37,7 +37,7 @@ INSERT INTO setting (name, value, last_update_date) VALUES ('customJavascriptInH
 INSERT INTO setting (name, value, last_update_date) VALUES ('customCss', '', '2010-01-01 00:00:00');
 INSERT INTO setting (name, value, last_update_date) VALUES ('paymentAllowed', '0', '2010-01-01 00:00:00');
 INSERT INTO setting (name, value, last_update_date) VALUES ('license', '', '2010-01-01 00:00:00');
-INSERT INTO setting (name, value, last_update_date) VALUES ('googleSignInEnabled', '1', '2010-01-01 00:00:00');
+INSERT INTO setting (name, value, last_update_date) VALUES ('googleSignInEnabled', '0', '2010-01-01 00:00:00');
 INSERT INTO setting (name, value, last_update_date) VALUES ('googleSignInClientId', '', '2010-01-01 00:00:00');
 INSERT INTO setting (name, value, last_update_date) VALUES ('googleSignInClientSecret', '', '2010-01-01 00:00:00');
 INSERT INTO setting (name, value, last_update_date) VALUES ('facebookSignInEnabled', '0', '2010-01-01 00:00:00');

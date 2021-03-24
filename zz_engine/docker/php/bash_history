@@ -508,3 +508,7 @@ mysqldump classifieds listing --no-create-info --skip-add-drop-table --skip-add-
 mysqldump classifieds listing_custom_field_value --no-create-info --skip-add-drop-table --skip-add-locks --skip-disable-keys --skip-set-charset --compact --skip-extended-insert --skip-opt --complete-insert --result-file="/var/www/html/install/data/example/large_git_ignored/listing_custom_field_value.sql"
 mysqldump classifieds listing_file --no-create-info --skip-add-drop-table --skip-add-locks --skip-disable-keys --skip-set-charset --compact --skip-extended-insert --skip-opt --complete-insert --result-file="/var/www/html/install/data/example/large_git_ignored/listing_file.sql"
 bash zz_engine/dev/bin/DEV_build_installer.sh
+php zz_engine/bin/console app:dev:translation:unused --remove-unused zz_engine/translations/messages.en.yaml -vvv
+php zz_engine/bin/console app:dev:translation:unused --remove-unused zz_engine/translations/messages.pl.yaml -vvv
+php zz_engine/bin/console debug:translation en --only-missing
+php zz_engine/bin/console debug:translation pl --only-missing

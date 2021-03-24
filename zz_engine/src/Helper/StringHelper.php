@@ -6,9 +6,9 @@ namespace App\Helper;
 
 class StringHelper
 {
-    public static function beginsWith(string $string, string $beginsWith): bool
+    public static function beginsWith(string $haystack, string $beginsWith): bool
     {
-        return 0 === \strpos($string, $beginsWith);
+        return 0 === \strpos($haystack, $beginsWith);
     }
 
     /**

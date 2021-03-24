@@ -22,10 +22,8 @@ class TranslationConvertYamlToXliffCommand extends Command
 
     protected function configure(): void
     {
-        $this
-            ->setDescription('convert yaml translation to xliff')
-            ->addArgument('sourceFile', InputArgument::OPTIONAL, 'Source file')
-        ;
+        $this->setDescription('convert yaml translation to xliff');
+        $this->addArgument('sourceFile', InputArgument::REQUIRED, 'Source file');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int

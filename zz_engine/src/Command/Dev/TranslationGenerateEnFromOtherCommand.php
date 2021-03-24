@@ -20,10 +20,8 @@ class TranslationGenerateEnFromOtherCommand extends Command
 
     protected function configure(): void
     {
-        $this
-            ->setDescription('generate en translations from other language')
-            ->addArgument('sourceFile', InputArgument::OPTIONAL, 'Source file')
-        ;
+        $this->setDescription('generate en translations from other language');
+        $this->addArgument('sourceFile', InputArgument::REQUIRED, 'Source file');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int

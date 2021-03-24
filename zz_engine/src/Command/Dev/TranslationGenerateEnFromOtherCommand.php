@@ -35,7 +35,7 @@ class TranslationGenerateEnFromOtherCommand extends Command
         $translationKeys = \array_keys($translations);
         $translationValues = \array_map(static function (string $element) {
             // use key value after `trans.` as translation value
-            return \preg_replace('`^trans.(.*)`', '$1', $element);
+            return \preg_replace('`^trans\.(.*)`', '$1', $element);
         }, $translationKeys);
         $translations = \array_combine($translationKeys, $translationValues);
 

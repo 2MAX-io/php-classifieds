@@ -13,9 +13,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Yaml\Yaml;
 
-class TranslationKeyDifferencesCommand extends Command
+class TranslationDiffCommand extends Command
 {
-    protected static $defaultName = 'app:dev:translation:missing';
+    protected static $defaultName = 'app:dev:translation:diff';
 
     protected function configure(): void
     {

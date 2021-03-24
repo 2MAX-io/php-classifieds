@@ -28,7 +28,7 @@ class RemindPasswordType extends AbstractType
                 new ValueExist([
                     'fields' => 'email',
                     'entityClass' => User::class,
-                    'message' => 'trans.User with this email address was not found',
+                    'message' => 'User with this email address was not found',
                 ]),
             ],
         ]);

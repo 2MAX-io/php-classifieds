@@ -150,7 +150,7 @@ EOF;
         } catch (\Throwable $e) {
             $this->flashService->addFlash(
                 FlashService::ERROR_ABOVE_FORM,
-                'trans.Could not save to config file .env.local.php. Check permissions and logs.'
+                'Could not save to config file .env.local.php. Check permissions and logs.'
             );
         }
     }

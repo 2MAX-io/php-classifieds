@@ -1,5 +1,5 @@
 'Value could not be found.': 'Nie znaleziono tej wartości'
-trans.User with this email address was not found: 'Nie znaleziono użytkownika z takim adresem email'
+User with this email address was not found: 'Nie znaleziono użytkownika z takim adresem email'
 'This email is already used by another user.': 'Ten email jest już wykorzystywany przez innego użytkownika'
 Enter email or phone, both can not be empty: 'Podaj email lub telefon, oba nie mogą być puste'
 Phone number is incorrect.: 'Numer telefonu jest niepoprawny'

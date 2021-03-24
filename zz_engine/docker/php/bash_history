@@ -512,3 +512,4 @@ php zz_engine/bin/console app:dev:translation:unused --remove-unused zz_engine/t
 php zz_engine/bin/console app:dev:translation:unused --remove-unused zz_engine/translations/messages.pl.yaml -vvv
 php zz_engine/bin/console debug:translation en --only-missing
 php zz_engine/bin/console debug:translation pl --only-missing
+php zz_engine/bin/console app:dev:translation:missing  zz_engine/translations/messages.en.yaml zz_engine/translations/messages.pl.yaml

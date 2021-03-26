@@ -1,0 +1,29 @@
+{# @var settings \App\Service\Setting\SettingsDto #}
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}{{ 'trans.License setting' | trans }}{% endblock %}
+
+{% block body %}
+    <div class="container mt-3">
+        {% include 'admin/settings/_partial/_settings_menu.html.twig' %}
+
+        {{ form_start(form) }}
+
+        <h2>{{ 'trans.License' | trans }}</h2>
+
+        {%- if not settings.licenseValid ~%}
+            <div class="alert alert-danger">
+                {{- 'trans.License is not valid' | trans -}}
+                {{- ', ' -}}
+                <a href="https://php-classified-ads.2max.io/purchase/" target="_blank">
+                    {{- 'trans.can be bought here' | trans -}}
+                </a>
+            </div>
+        {%- endif ~%}
+
+        {{ form_row(form.license) }}
+
+        <button class="btn btn-primary">{{ button_label | default('trans.Save' | trans) }}</button>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

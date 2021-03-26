@@ -6,6 +6,7 @@ namespace App\Controller\Admin\Secondary\Settings;
 
 use App\Controller\Admin\Base\AbstractAdminController;
 use App\Form\Admin\Settings\CustomizationSettingsType;
+use App\Form\Admin\Settings\LicenseSettingsType;
 use App\Form\Admin\Settings\LoginSettingsType;
 use App\Form\Admin\Settings\PaymentInvoiceSettingsType;
 use App\Form\Admin\Settings\SettingsType;
@@ -118,6 +119,31 @@ class AdminSettingsController extends AbstractAdminController
         }
 
         return $this->render('admin/settings/customization/customization_settings.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/admin/red5/settings/license", name="app_admin_settings_license")
+     */
+    public function licenseSettings(Request $request, SettingsSaveService $settingsSaveService): Response
+    {
+        $this->denyUnlessAdmin();
+
+        $settingsDto = $settingsSaveService->getSettingsDtoWithoutCache();
+        $form = $this->createForm(LicenseSettingsType::class, $settingsDto);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $settingsDto->setLicenseValid(false);
+            if (!empty($settingsDto->getLicense())) {
+                $settingsDto->setLicenseValid(true);
+            }
+            $settingsSaveService->save($settingsDto);
+
+            return $this->redirectToRoute($request->get('_route'));
+        }
+
+        return $this->render('admin/settings/license/license_settings.html.twig', [
             'form' => $form->createView(),
         ]);
     }

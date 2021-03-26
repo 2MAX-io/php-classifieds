@@ -1,3 +1,4 @@
+{# @var settings \App\Service\Setting\SettingsDto #}
 <div class="mb-2">
     <a href="{{ path('app_admin_settings') }}" class="btn btn-secondary mb-1">
         {{- 'trans.Settings' | trans -}}
@@ -18,4 +19,10 @@
     <a href="{{ path('app_admin_logo_upload') }}" class="btn btn-secondary mb-1">
         {{- 'trans.Webpage Logo' | trans -}}
     </a>
+
+    {%- if not settings.licenseValid ~%}
+        <a href="{{ path('app_admin_settings_license') }}" class="btn btn-secondary mb-1">
+            {{- 'trans.License' | trans -}}
+        </a>
+    {%- endif ~%}
 </div>

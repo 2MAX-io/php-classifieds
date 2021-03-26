@@ -221,6 +221,11 @@ class SettingsDto
     private $license;
 
     /**
+     * @var bool|null
+     */
+    private $licenseValid;
+
+    /**
      * @var string|null
      */
     private $facebookSignInEnabled;
@@ -1118,5 +1123,15 @@ class SettingsDto
     public function setDefaultAdvertisementZoneId(?string $defaultAdvertisementZoneId): void
     {
         $this->defaultAdvertisementZoneId = $defaultAdvertisementZoneId;
+    }
+
+    public function getLicenseValid(): ?bool
+    {
+        return $this->licenseValid;
+    }
+
+    public function setLicenseValid(?bool $licenseValid): void
+    {
+        $this->licenseValid = $licenseValid;
     }
 }

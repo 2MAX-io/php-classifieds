@@ -5,6 +5,7 @@ declare(strict_types=1);
 use App\Enum\UserRoleEnum;
 use App\Helper\FilePath;
 use App\Helper\RandomHelper;
+use App\Service\System\Signature\LicenseValidService;
 use Symfony\Component\Security\Core\Encoder\NativePasswordEncoder;
 use Symfony\Component\Security\Core\Encoder\SodiumPasswordEncoder;
 use Webmozart\PathUtil\Path;
@@ -98,7 +99,7 @@ if (!empty($_POST)) {
 
             insertAdmin($_POST['admin_email'], $_POST['admin_password']);
             setEmailSettings($_POST['email_from_address']);
-            setLicense($_POST['license']);
+            setLicense(\trim($_POST['license']));
 
             $pdo->exec("UPDATE setting SET last_update_date = '2010-01-01 00:00:00' WHERE 1");
             $pdo->exec("UPDATE listing SET order_by_date = '2010-01-01 00:00:00' WHERE 1");
@@ -274,9 +275,12 @@ function setEmailSettings(string $emailFromAddress): void
     setSetting('emailReplyTo', $emailFromAddress);
 }
 
-function setLicense(string $license): void
+function setLicense(string $licenseText): void
 {
-    setSetting('license', $license);
+    setSetting('license', $licenseText);
+    if (LicenseValidService::isLicenseValid($licenseText)) {
+        setSetting('licenseValid', '1');
+    }
 }
 
 function setSetting(string $name, string $value): void

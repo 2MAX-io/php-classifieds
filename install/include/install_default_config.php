@@ -21,6 +21,6 @@ $formDefaultValue['load_categories'] = '';
 $formDefaultValue['load_custom_fields'] = '';
 $formDefaultValue['load_listings'] = '';
 $formDefaultValue['load_pages'] = '';
-$formDefaultValue['license'] = '0';
+$formDefaultValue['license'] = '';
 
 return $formDefaultValue;

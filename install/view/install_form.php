@@ -124,10 +124,12 @@ include 'base/header.php';
 
             <div class="form-group">
                 <label>Do you have license for 2MAX.io PHP Classified Ads?</label>
-                <select name="license" class="form-control">
-                    <option value="0" <?php echo e('0' === (string) ($_POST['license'] ?? $formDefaultValue['license']) ? 'selected' : ''); ?>>No, install as non-commercial use preview</option>
-                    <option value="1" <?php echo e('1' === (string) ($_POST['license'] ?? $formDefaultValue['license']) ? 'selected' : ''); ?>>Yes</option>
-                </select>
+                <textarea
+                    name="license"
+                    rows="5"
+                    class="form-control"
+                    placeholder="Enter license or leave empty for demo / preview version. Can be set latter in admin panel."
+                ><?php echo $_POST['license'] ?? $formDefaultValue['license'] ?></textarea>
                 <div class="mt-2">
                     <a href="https://php-classified-ads.2max.io/purchase/" target="_blank">can be bought here</a>
                 </div>

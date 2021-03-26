@@ -179,11 +179,8 @@
       <path value="$PROJECT_DIR$/zz_engine/vendor/phpstan/phpstan" />
       <path value="$PROJECT_DIR$/zz_engine/vendor/stefano/stefano-tree" />
       <path value="$PROJECT_DIR$/zz_engine/vendor/phpstan/phpstan-symfony" />
-      <path value="$PROJECT_DIR$/zz_engine/vendor/laminas/laminas-escaper" />
-      <path value="$PROJECT_DIR$/zz_engine/vendor/laminas/laminas-stdlib" />
       <path value="$PROJECT_DIR$/zz_engine/vendor/laminas/laminas-zendframework-bridge" />
       <path value="$PROJECT_DIR$/zz_engine/vendor/laminas/laminas-code" />
-      <path value="$PROJECT_DIR$/zz_engine/vendor/laminas/laminas-feed" />
       <path value="$PROJECT_DIR$/zz_engine/vendor/laminas/laminas-eventmanager" />
       <path value="$PROJECT_DIR$/zz_engine/vendor/monolog/monolog" />
       <path value="$PROJECT_DIR$/zz_engine/vendor/minwork/array" />

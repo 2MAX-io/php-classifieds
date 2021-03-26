@@ -198,17 +198,8 @@
     "laminas/laminas-code": {
         "version": "3.4.1"
     },
-    "laminas/laminas-escaper": {
-        "version": "2.6.1"
-    },
     "laminas/laminas-eventmanager": {
         "version": "3.3.0"
-    },
-    "laminas/laminas-feed": {
-        "version": "2.12.0"
-    },
-    "laminas/laminas-stdlib": {
-        "version": "3.2.1"
     },
     "laminas/laminas-zendframework-bridge": {
         "version": "1.0.0"

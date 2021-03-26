@@ -26,3 +26,12 @@
         </a>
     {%- endif ~%}
 </div>
+
+{%- if not settings.licenseValid ~%}
+    <div class="alert alert-danger">
+        {{ 'trans.License for 2MAX.io PHP Classified Ads is not valid' | trans }}.
+        {{ 'trans.If you have valid license you can' | trans }}
+        {{- ' ' -}}
+        <a href="{{ path('app_admin_settings_license') }}">{{ 'trans.enter valid license it here' | trans }}</a>
+    </div>
+{%- endif ~%}

@@ -728,3 +728,6 @@ trans.Yes: Tak
 'trans.Enter license for 2MAX.io PHP Classified Ads': 'Wpisz licencję dla 2MAX.io PHP Classified Ads'
 'trans.License is not valid': 'Licencja jest nieprawidłowa'
 'trans.can be bought here': 'można ją kupić tutaj'
+'trans.License for 2MAX.io PHP Classified Ads is not valid': 'Licencja 2MAX.io PHP Classified Ads jest nieprawidłowa'
+'trans.If you have valid license you can': 'Jeżeli posiadasz ważną licencję możesz'
+'trans.enter valid license it here': 'wpisać prawidłową licencję ją tutaj'

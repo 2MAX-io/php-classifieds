@@ -30,8 +30,8 @@ INSERT INTO setting (name, value, last_update_date) VALUES ( 'emailFromAddress',
 INSERT INTO setting (name, value, last_update_date) VALUES ( 'logoPath', '', '2010-01-01 00:00:00');
 INSERT INTO setting (name, value, last_update_date) VALUES ( 'linkContact', '', '2010-01-01 00:00:00');
 INSERT INTO setting (name, value, last_update_date) VALUES ( 'linkAdvertisement', '', '2010-01-01 00:00:00');
-INSERT INTO setting (name, value, last_update_date) VALUES ('paymentPayPalClientId', 'AYSq3RDGsmBLJE-otTkBtM-jBRd1TCQwFf9RGfwddNXWz0uFU9ztymylOhRS', '2010-01-01 00:00:00');
-INSERT INTO setting (name, value, last_update_date) VALUES ('paymentPayPalClientSecret', 'EGnHDxD_qRPdaLdZz8iCr8N7_MzF-YHPTkjs6NKYQvQSBngp4PTTVWkPZRbL', '2010-01-01 00:00:00');
+INSERT INTO setting (name, value, last_update_date) VALUES ('paymentPayPalClientId', '', '2010-01-01 00:00:00');
+INSERT INTO setting (name, value, last_update_date) VALUES ('paymentPayPalClientSecret', '', '2010-01-01 00:00:00');
 INSERT INTO setting (name, value, last_update_date) VALUES ('customJavascriptBottom', '', '2010-01-01 00:00:00');
 INSERT INTO setting (name, value, last_update_date) VALUES ('customJavascriptInHead', '', '2010-01-01 00:00:00');
 INSERT INTO setting (name, value, last_update_date) VALUES ('customCss', '', '2010-01-01 00:00:00');

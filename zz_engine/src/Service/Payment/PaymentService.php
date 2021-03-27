@@ -183,11 +183,10 @@ class PaymentService
         $paymentEntity->setAmount($paymentDto->getAmount());
         $paymentEntity->setCurrency($paymentDto->getCurrency());
         $paymentEntity->setGatewayPaymentId($paymentDto->getGatewayPaymentId());
-        $paymentEntity->setGatewayToken($paymentDto->getGatewayToken());
         $paymentEntity->setGatewayStatus($paymentDto->getGatewayStatus());
         $paymentEntity->setGatewayName($paymentGateway::getName());
         $paymentEntity->setGatewayMode($paymentGateway->getGatewayMode());
-        $paymentEntity->setAppToken($paymentDto->getPaymentAppToken());
+        $paymentEntity->setAppPaymentToken($paymentDto->getPaymentAppToken());
         $paymentEntity->setUser($paymentDto->getUser());
         $paymentEntity->setType($paymentDto->getPaymentType());
         $paymentEntity->setDescription($paymentDto->getPaymentDescription());
@@ -206,7 +205,7 @@ class PaymentService
         $paymentGateway = $this->paymentGatewayService->getPaymentGateway();
         $confirmPaymentDto = $paymentGateway->confirmPayment($confirmPaymentConfigDto);
 
-        if ($paymentEntity->getGatewayTransactionId() !== $confirmPaymentDto->getGatewayTransactionId()) {
+        if ($paymentEntity->getGatewayPaymentId() !== $confirmPaymentDto->getGatewayPaymentId()) {
             $this->logger->error('transaction id do not match one in payment entity', [
                 $confirmPaymentDto,
                 $paymentEntity,
@@ -214,7 +213,6 @@ class PaymentService
 
             throw new \RuntimeException('transaction id do not match one in payment entity');
         }
-        $paymentEntity->setGatewayTransactionId($confirmPaymentDto->getGatewayTransactionId());
         $paymentEntity->setPaid(true);
         $paymentEntity->setGatewayAmountPaid($confirmPaymentDto->getGatewayAmount());
         $paymentEntity->setGatewayStatus($confirmPaymentDto->getGatewayStatus());
@@ -267,16 +265,9 @@ class PaymentService
         }
     }
 
-    public function isPaid(ConfirmPaymentDto $confirmPaymentDto): bool
-    {
-        $paymentAppToken = $confirmPaymentDto->getPaymentEntityNotNull()->getAppToken();
-
-        return $this->getPaymentEntity($paymentAppToken)->getPaid();
-    }
-
     public function isDelivered(ConfirmPaymentDto $confirmPaymentDto): bool
     {
-        $paymentAppToken = $confirmPaymentDto->getPaymentEntityNotNull()->getAppToken();
+        $paymentAppToken = $confirmPaymentDto->getPaymentEntityNotNull()->getAppPaymentToken();
 
         return $this->getPaymentEntity($paymentAppToken)->getDelivered();
     }
@@ -366,7 +357,7 @@ class PaymentService
 
     public function markDelivered(ConfirmPaymentDto $confirmPaymentDto): void
     {
-        $paymentAppToken = $confirmPaymentDto->getPaymentEntityNotNull()->getAppToken();
+        $paymentAppToken = $confirmPaymentDto->getPaymentEntityNotNull()->getAppPaymentToken();
         $paymentEntity = $this->getPaymentEntity($paymentAppToken);
         $paymentEntity->setDelivered(true);
 
@@ -376,7 +367,7 @@ class PaymentService
     public function getPaymentEntity(string $paymentAppToken): Payment
     {
         $payment = $this->em->getRepository(Payment::class)->findOneBy([
-            'appToken' => $paymentAppToken,
+            'appPaymentToken' => $paymentAppToken,
         ]);
         if (null === $payment) {
             throw new \RuntimeException("payment not found by: `{$paymentAppToken}`");

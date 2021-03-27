@@ -71,7 +71,6 @@ class PayPalPaymentGateway implements PaymentGatewayInterface
 
             if ($response->isSuccessful()) {
                 $paymentDto->setGatewayPaymentId($data['id']);
-                $paymentDto->setGatewayToken($data['id']);
                 $paymentDto->setGatewayStatus($data['state']);
                 if ($response instanceof RedirectResponseInterface && $response->isRedirect()) {
                     $paymentDto->setMakePaymentUrl($response->getRedirectUrl());
@@ -111,7 +110,6 @@ class PayPalPaymentGateway implements PaymentGatewayInterface
                     'responseData' => $data,
                 ]);
 
-                $confirmPaymentDto->setGatewayTransactionId($data['id']);
                 $confirmPaymentDto->setGatewayPaymentId($data['id']);
                 $confirmPaymentDto->setGatewayStatus($data['state']);
                 $confirmPaymentDto->setConfirmed($response->isSuccessful());

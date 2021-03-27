@@ -62,36 +62,32 @@
                 </td>
             </tr>
             <tr>
-                <th>{{ 'trans.Payment gateway - transaction ID' | trans }}</th>
+                <th>{{ 'trans.Payment gateway ID' | trans }}</th>
                 <td>
                     {% set paymentTransactionIdShown = false %}
                     {% if payment.gatewayName in [constant('\App\\Service\\Payment\\Enum\\PaymentGatewayEnum::PAYPAL'), constant('\App\\Service\\Payment\\Enum\\PaymentGatewayEnum::PAYPAL_NATIVE')] %}
                         {% set paymentTransactionIdShown = true %}
-                        <a href="https://www.paypal.com/activity/payment/{{ payment.gatewayTransactionId }}">
-                            {{- payment.gatewayTransactionId -}}
+                        <a href="https://www.paypal.com/activity/payment/{{ payment.gatewayPaymentId }}">
+                            {{- payment.gatewayPaymentId -}}
                         </a>
                     {% endif %}
                     {% if payment.gatewayName == constant('\App\\Service\\Payment\\Enum\\PaymentGatewayEnum::PRZELEWY24') %}
                         {% set paymentTransactionIdShown = true %}
                         {% if payment.gatewayMode == constant('\App\\Service\\Payment\\Enum\\GatewayModeEnum::SANDBOX') %}
-                            <a href="https://sandbox.przelewy24.pl/panel/transakcja.php?id={{ payment.gatewayTransactionId }}">
-                                {{- payment.gatewayTransactionId -}}
+                            <a href="https://sandbox.przelewy24.pl/panel/transakcja.php?id={{ payment.gatewayPaymentId }}">
+                                {{- payment.gatewayPaymentId -}}
                             </a>
                         {% else %}
-                            <a href="https://panel.przelewy24.pl/transakcja.php?id={{ payment.gatewayTransactionId }}">
-                                {{- payment.gatewayTransactionId -}}
+                            <a href="https://panel.przelewy24.pl/transakcja.php?id={{ payment.gatewayPaymentId }}">
+                                {{- payment.gatewayPaymentId -}}
                             </a>
                         {% endif %}
                     {% endif %}
 
                     {% if paymentTransactionIdShown == false %}
-                        {{ payment.gatewayTransactionId }}
+                        {{ payment.gatewayPaymentId }}
                     {% endif %}
                 </td>
-            </tr>
-            <tr>
-                <th>GatewayToken</th>
-                <td>{{ payment.gatewayToken }}</td>
             </tr>
             <tr>
                 <th>GatewayPaymentId</th>

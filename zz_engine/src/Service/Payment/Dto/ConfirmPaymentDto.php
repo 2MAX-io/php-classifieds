@@ -11,11 +11,6 @@ class ConfirmPaymentDto
     /**
      * @var string|null
      */
-    public $gatewayTransactionId;
-
-    /**
-     * @var string|null
-     */
     public $gatewayPaymentId;
 
     /**
@@ -56,16 +51,6 @@ class ConfirmPaymentDto
     public function setConfirmed(bool $confirmed): void
     {
         $this->confirmed = $confirmed;
-    }
-
-    public function getGatewayTransactionId(): ?string
-    {
-        return $this->gatewayTransactionId;
-    }
-
-    public function setGatewayTransactionId(?string $gatewayTransactionId): void
-    {
-        $this->gatewayTransactionId = $gatewayTransactionId;
     }
 
     public function getGatewayAmount(): ?int

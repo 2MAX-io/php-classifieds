@@ -111,25 +111,11 @@ class Payment
     private $gatewayPaymentId;
 
     /**
-     * @var string|null
-     *
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $gatewayTransactionId;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(type="string", length=255, nullable=false)
-     */
-    private $gatewayToken;
-
-    /**
      * @var string
      *
      * @ORM\Column(type="string", length=70, nullable=false)
      */
-    private $appToken;
+    private $appPaymentToken;
 
     /**
      * @var string
@@ -232,18 +218,6 @@ class Payment
         return $this;
     }
 
-    public function getGatewayTransactionId(): ?string
-    {
-        return $this->gatewayTransactionId;
-    }
-
-    public function setGatewayTransactionId(string $gatewayTransactionId): self
-    {
-        $this->gatewayTransactionId = $gatewayTransactionId;
-
-        return $this;
-    }
-
     public function getPaymentForFeaturedPackage(): ?PaymentForFeaturedPackage
     {
         return $this->paymentForFeaturedPackage;
@@ -258,18 +232,6 @@ class Payment
         if ($newPayment !== $paymentForFeaturedPackage->getPayment()) {
             $paymentForFeaturedPackage->setPayment($newPayment);
         }
-
-        return $this;
-    }
-
-    public function getGatewayToken(): ?string
-    {
-        return $this->gatewayToken;
-    }
-
-    public function setGatewayToken(string $gatewayToken): self
-    {
-        $this->gatewayToken = $gatewayToken;
 
         return $this;
     }
@@ -383,14 +345,14 @@ class Payment
         return $this;
     }
 
-    public function getAppToken(): ?string
+    public function getAppPaymentToken(): ?string
     {
-        return $this->appToken;
+        return $this->appPaymentToken;
     }
 
-    public function setAppToken(string $appToken): self
+    public function setAppPaymentToken(string $appPaymentToken): self
     {
-        $this->appToken = $appToken;
+        $this->appPaymentToken = $appPaymentToken;
 
         return $this;
     }

@@ -47,11 +47,6 @@ class PaymentDto
     /**
      * @var string|null
      */
-    private $gatewayToken;
-
-    /**
-     * @var string|null
-     */
     private $gatewayStatus;
 
     /**
@@ -132,16 +127,6 @@ class PaymentDto
     public function setPaymentEntity(?Payment $paymentEntity): void
     {
         $this->paymentEntity = $paymentEntity;
-    }
-
-    public function getGatewayToken(): ?string
-    {
-        return $this->gatewayToken;
-    }
-
-    public function setGatewayToken(?string $gatewayToken): void
-    {
-        $this->gatewayToken = $gatewayToken;
     }
 
     public function getUser(): ?User

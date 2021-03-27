@@ -499,7 +499,7 @@ trans.Payment: Płatność
 'trans.Payment gateway - mode': 'Bramka płatności - tryb'
 'trans.Payment gateway - payment description': 'Bramka płatności - opis płatności'
 'trans.Payment gateway - status': 'Bramka płatności - status'
-'trans.Payment gateway - transaction ID': 'Bramka płatności - ID transakcji'
+'trans.Payment gateway ID': 'Bramka płatności - ID transakcji'
 trans.Payments: Płatności
 'trans.Payments - PayPal Client ID': 'Płatności - PayPal Client ID'
 'trans.Payments - PayPal Client secret': 'Płatności - PayPal Client secret'

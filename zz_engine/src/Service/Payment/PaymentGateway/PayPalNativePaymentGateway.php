@@ -98,7 +98,6 @@ class PayPalNativePaymentGateway implements PaymentGatewayInterface
 
             $paymentDto->setMakePaymentUrl($approvalUrl);
             $paymentDto->setGatewayPaymentId($payment->getId());
-            $paymentDto->setGatewayToken($payment->getToken());
             $paymentDto->setGatewayStatus($payment->getState());
 
             // Redirect the customer to $approvalUrl
@@ -122,7 +121,6 @@ class PayPalNativePaymentGateway implements PaymentGatewayInterface
         try {
             $payment = $payment->execute($execution, $apiContext);
 
-            $confirmPaymentDto->setGatewayTransactionId($payment->getTransactions()[0]->getRelatedResources()[0]->getSale()->getId());
             $confirmPaymentDto->setGatewayPaymentId($payment->getId());
             $confirmPaymentDto->setGatewayStatus($payment->getState());
             $confirmPaymentDto->setConfirmed('approved' === $payment->getState());

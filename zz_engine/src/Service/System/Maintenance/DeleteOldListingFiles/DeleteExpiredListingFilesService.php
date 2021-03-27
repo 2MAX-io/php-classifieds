@@ -153,7 +153,7 @@ class DeleteExpiredListingFilesService
         }
 
         if ($mustContain && !\str_contains(\basename($parentDirectory), $mustContain)) {
-            $this->logger->debug('path does not contain expected string', [
+            $this->logger->warning('path does not contain expected string', [
                 'path' => $path,
                 'mustContain' => $mustContain,
             ]);
@@ -169,7 +169,7 @@ class DeleteExpiredListingFilesService
                 'parentDirectory' => $parentDirectory,
             ]);
         } else {
-            $this->logger->info('parent directory is not empty: {parentDirectory}', [
+            $this->logger->debug('parent directory is not empty: {parentDirectory}', [
                 'parentDirectory' => $parentDirectory,
             ]);
         }

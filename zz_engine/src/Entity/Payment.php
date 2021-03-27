@@ -106,7 +106,7 @@ class Payment
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=255, nullable=false)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $gatewayPaymentId;
 
@@ -314,7 +314,7 @@ class Payment
         return $this->gatewayPaymentId;
     }
 
-    public function setGatewayPaymentId(string $gatewayPaymentId): self
+    public function setGatewayPaymentId(?string $gatewayPaymentId): self
     {
         $this->gatewayPaymentId = $gatewayPaymentId;
 

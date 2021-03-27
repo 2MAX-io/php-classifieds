@@ -92,12 +92,8 @@ class FeaturedListingService
         Payment $payment = null
     ): UserBalanceChange {
         $paymentAndListingHaveSameUser = null === $payment || $listing->getUser() === $payment->getUser();
-        $listingOfCurrentUser = $listing->getUser() === $this->currentUserService->getUserOrNull();
         if (!$paymentAndListingHaveSameUser) {
             throw new \RuntimeException('payment and listing does not have same user');
-        }
-        if (!$listingOfCurrentUser) {
-            throw new \RuntimeException('not current user listing');
         }
 
         try {

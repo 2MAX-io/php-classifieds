@@ -77,7 +77,6 @@ class Przelewy24PaymentGateway implements PaymentGatewayInterface
             ]);
 
             if ($response->isSuccessful()) {
-                $paymentDto->setGatewayPaymentId($data['token']);
                 $paymentDto->setGatewayStatus($data['error']);
                 if ($response instanceof RedirectResponseInterface && $response->isRedirect()) {
                     $paymentDto->setMakePaymentUrl($response->getRedirectUrl());
@@ -115,6 +114,7 @@ class Przelewy24PaymentGateway implements PaymentGatewayInterface
                 $data = $response->getData();
                 $this->logger->info('[payment] payment confirmation response', [
                     'responseData' => $data,
+                    'query' => $confirmPaymentConfigDto->getRequest()->request->all(),
                 ]);
 
                 $confirmPaymentDto->setGatewayPaymentId($transactionId);

@@ -11,6 +11,7 @@ use App\Helper\StringHelper;
 use App\Service\System\Maintenance\DeleteOldListingFiles\Dto\DeleteExpiredListingFilesDto;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Query;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
@@ -64,69 +65,80 @@ class DeleteExpiredListingFilesService
         if ($deleteExpiredListingFilesDto->getLimit()) {
             $qb->setMaxResults($deleteExpiredListingFilesDto->getLimit());
         }
+        $query = $qb->getQuery();
 
-        /** @var Listing[] $listingList */
-        $listingList = $qb->getQuery()->getResult();
-        foreach ($listingList as $listing) {
-            foreach ($listing->getListingFilesAll() as $listingFile) {
-                $fileAbsolutePath = Path::makeAbsolute($listingFile->getPath(), FilePath::getPublicDir());
-
-                if (!\file_exists($fileAbsolutePath)) {
-                    $this->logger->error('[DeleteExpiredListingFilesService] file does not exists, from listing id: {listingId}, valid until: {validUntil}, path: {path}', [
-                        'path' => $fileAbsolutePath,
-                        'listingId' => $listing->getId(),
-                        'validUntil' => $listing->getValidUntilDateStringOrNull(),
-                    ]);
+        $executedCount = 0;
+        while ($listingList = $this->iterate($query, $executedCount, 50)) {
+            foreach ($listingList as $listing) {
+                if ($deleteExpiredListingFilesDto->getLimit() && $executedCount >= $deleteExpiredListingFilesDto->getLimit()) {
+                    break 2;
                 }
+                ++$executedCount;
+                foreach ($listing->getListingFilesAll() as $listingFile) {
+                    $fileAbsolutePath = Path::makeAbsolute($listingFile->getPath(), FilePath::getPublicDir());
 
-                if (!StringHelper::startsWith($fileAbsolutePath, FilePath::getListingFilePath())) {
-                    $this->logger->error('[DeleteExpiredListingFilesService] listing file path outside of expected, skipping: {path}', [
-                        'path' => $fileAbsolutePath,
-                        'listingId' => $listing->getId(),
-                        'validUntil' => $listing->getValidUntilDateStringOrNull(),
-                    ]);
+                    if (!\file_exists($fileAbsolutePath)) {
+                        $this->logger->error('[DeleteExpiredListingFilesService] file does not exists, from listing id: {listingId}, valid until: {validUntil}, path: {path}', [
+                            'path' => $fileAbsolutePath,
+                            'listingId' => $listing->getId(),
+                            'validUntil' => $listing->getValidUntilDateStringOrNull(),
+                        ]);
+                    }
 
-                    continue;
-                }
+                    if (!StringHelper::startsWith($fileAbsolutePath, FilePath::getListingFilePath())) {
+                        $this->logger->error('[DeleteExpiredListingFilesService] listing file path outside of expected, skipping: {path}', [
+                            'path' => $fileAbsolutePath,
+                            'listingId' => $listing->getId(),
+                            'validUntil' => $listing->getValidUntilDateStringOrNull(),
+                        ]);
 
-                if ($deleteExpiredListingFilesDto->getPerformFileDeletion()) {
-                    $this->logger->info('[DeleteExpiredListingFilesService] deleting files from listing id: {listingId}, valid until: {validUntil}, path: {path}', [
-                        'path' => $fileAbsolutePath,
-                        'listingId' => $listing->getId(),
-                        'validUntil' => $listing->getValidUntilDateStringOrNull(),
-                    ]);
+                        continue;
+                    }
 
-                    $this->filesystem->remove($fileAbsolutePath);
-                    $this->filesystem->remove($listingFile->getPathInListSize());
-                    $this->filesystem->remove($listingFile->getPathInNormalSize());
+                    if ($deleteExpiredListingFilesDto->getPerformFileDeletion()) {
+                        $this->logger->info('[DeleteExpiredListingFilesService] deleting files from listing id: {listingId}, valid until: {validUntil}, path: {path}', [
+                            'path' => $fileAbsolutePath,
+                            'listingId' => $listing->getId(),
+                            'validUntil' => $listing->getValidUntilDateStringOrNull(),
+                        ]);
 
-                    $this->removeParentDirectory($fileAbsolutePath, 1, 'listing_');
-                    $this->removeParentDirectory($listingFile->getPathInListSize(), 1, 'listing_');
-                    $this->removeParentDirectory($listingFile->getPathInNormalSize(), 1, 'listing_');
+                        $this->filesystem->remove($fileAbsolutePath);
+                        $this->filesystem->remove($listingFile->getPathInListSize());
+                        $this->filesystem->remove($listingFile->getPathInNormalSize());
 
-                    $this->removeParentDirectory($fileAbsolutePath, 2, 'user_');
-                    $this->removeParentDirectory($listingFile->getPathInListSize(), 2, 'user_');
-                    $this->removeParentDirectory($listingFile->getPathInNormalSize(), 2, 'user_');
+                        $this->removeParentDirectory($fileAbsolutePath, 1, 'listing_');
+                        $this->removeParentDirectory($listingFile->getPathInListSize(), 1, 'listing_');
+                        $this->removeParentDirectory($listingFile->getPathInNormalSize(), 1, 'listing_');
 
-                    $listingFile->setFileDeleted(true);
-                    $listingFile->setUserRemoved(true);
-                    $this->em->persist($listingFile);
+                        $this->removeParentDirectory($fileAbsolutePath, 2, 'user_');
+                        $this->removeParentDirectory($listingFile->getPathInListSize(), 2, 'user_');
+                        $this->removeParentDirectory($listingFile->getPathInNormalSize(), 2, 'user_');
 
-                    $listing->setMainImage(null);
-                    $this->em->persist($listing);
-                }
+                        $listingFile->setFileDeleted(true);
+                        $listingFile->setUserRemoved(true);
+                        $this->em->persist($listingFile);
 
-                if (!$deleteExpiredListingFilesDto->getPerformFileDeletion()) {
-                    $this->logger->info('[DeleteExpiredListingFilesService] DRY RUN, would delete from: listing id: {listingId}, valid until: {validUntil}, path: {path}', [
-                        'path' => $fileAbsolutePath,
-                        'listingId' => $listing->getId(),
-                        'validUntil' => $listing->getValidUntilDateStringOrNull(),
-                    ]);
+                        $listing->setMainImage(null);
+                        $this->em->persist($listing);
+                    }
+
+                    if (!$deleteExpiredListingFilesDto->getPerformFileDeletion()) {
+                        $this->logger->info('[DeleteExpiredListingFilesService] DRY RUN, would delete from: listing id: {listingId}, valid until: {validUntil}, path: {path}', [
+                            'path' => $fileAbsolutePath,
+                            'listingId' => $listing->getId(),
+                            'validUntil' => $listing->getValidUntilDateStringOrNull(),
+                        ]);
+                    }
                 }
             }
+
+            $this->em->flush();
+            $this->em->clear();
+            \gc_collect_cycles();
         }
 
         $this->em->flush();
+        $this->em->clear();
     }
 
     private function removeParentDirectory(string $path, int $levels = 1, string $mustContain = null): void
@@ -161,5 +173,18 @@ class DeleteExpiredListingFilesService
                 'parentDirectory' => $parentDirectory,
             ]);
         }
+    }
+
+    /**
+     * @return Listing[]
+     */
+    private function iterate(Query $query, int $offset, int $limit): array
+    {
+        $query->setFirstResult($offset);
+        if (!$query->getMaxResults()) {
+            $query->setMaxResults($limit);
+        }
+
+        return $query->getResult();
     }
 }

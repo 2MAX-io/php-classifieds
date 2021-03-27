@@ -206,6 +206,14 @@ class PaymentService
         $paymentGateway = $this->paymentGatewayService->getPaymentGateway();
         $confirmPaymentDto = $paymentGateway->confirmPayment($confirmPaymentConfigDto);
 
+        if ($paymentEntity->getGatewayTransactionId() !== $confirmPaymentDto->getGatewayTransactionId()) {
+            $this->logger->error('transaction id do not match one in payment entity', [
+                $confirmPaymentDto,
+                $paymentEntity,
+            ]);
+
+            throw new \RuntimeException('transaction id do not match one in payment entity');
+        }
         $paymentEntity->setGatewayTransactionId($confirmPaymentDto->getGatewayTransactionId());
         $paymentEntity->setPaid(true);
         $paymentEntity->setGatewayAmountPaid($confirmPaymentDto->getGatewayAmount());

@@ -77,7 +77,6 @@ class RegenerateListingService
 
         $qb->orderBy('listingInternalData.lastListingRegenerationDate', Criteria::ASC);
         $qb->groupBy('listing.id');
-
         $query = $qb->getQuery();
 
         $stopExecutionTime = null;
@@ -85,7 +84,7 @@ class RegenerateListingService
             $stopExecutionTime = DateHelper::timestamp() + $regenerateSearchTextDto->getTimeLimitSeconds();
         }
         $executedCount = 0;
-        while ($listings = $this->iterate($query, $executedCount, 36)) {
+        while ($listings = $this->iterate($query, $executedCount, 50)) {
             foreach ($listings as $listing) {
                 $this->logger->debug('processing listing id: {listingId}', [
                     'listingId' => $listing->getId(),
@@ -115,8 +114,8 @@ class RegenerateListingService
 
             $this->em->flush();
             $this->em->clear();
-
             unset($listing);
+            \gc_collect_cycles();
         }
 
         $this->em->flush();

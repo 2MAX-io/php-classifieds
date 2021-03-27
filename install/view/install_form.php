@@ -128,7 +128,7 @@ include 'base/header.php';
                     name="license"
                     rows="5"
                     class="form-control"
-                    placeholder="Enter license or leave empty for demo / preview version. Can be set latter in admin panel."
+                    placeholder="Enter license or leave empty for demo version. Can be set latter in admin panel."
                 ><?php echo $_POST['license'] ?? $formDefaultValue['license'] ?></textarea>
                 <div class="mt-2">
                     <a href="https://php-classified-ads.2max.io/purchase/" target="_blank">can be bought here</a>

@@ -6,7 +6,7 @@ namespace App\Controller\User\Payment;
 
 use App\Exception\UserVisibleException;
 use App\Helper\ExceptionHelper;
-use App\Service\Payment\Dto\ConfirmPaymentConfigDto;
+use App\Service\Payment\Dto\ConfirmPaymentDto;
 use App\Service\Payment\PaymentService;
 use App\Service\Setting\SettingsService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -44,10 +44,10 @@ class PaymentNotifyByPaymentProcessorController extends AbstractController
 
         try {
             $this->em->beginTransaction();
-            $confirmPaymentConfigDto = new ConfirmPaymentConfigDto();
-            $confirmPaymentConfigDto->setRequest($request);
-            $confirmPaymentConfigDto->setPaymentAppToken($paymentAppToken);
-            $completePurchaseDto = $paymentService->confirmPayment($confirmPaymentConfigDto);
+            $confirmPaymentDto = new ConfirmPaymentDto();
+            $confirmPaymentDto->setRequest($request);
+            $confirmPaymentDto->setPaymentAppToken($paymentAppToken);
+            $completePurchaseDto = $paymentService->confirmPayment($confirmPaymentDto);
             if ($this->em->getConnection()->isTransactionActive()) {
                 $this->em->flush();
                 $this->em->commit();

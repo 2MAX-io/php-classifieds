@@ -12,7 +12,6 @@ use App\Entity\Payment;
 use App\Entity\UserBalanceChange;
 use App\Exception\UserVisibleException;
 use App\Helper\DateHelper;
-use App\Security\CurrentUserService;
 use App\Service\Listing\ValidityExtend\ValidUntilSetService;
 use App\Service\Money\UserBalanceService;
 use Carbon\Carbon;
@@ -33,11 +32,6 @@ class FeaturedListingService
     private $userBalanceService;
 
     /**
-     * @var CurrentUserService
-     */
-    private $currentUserService;
-
-    /**
      * @var EntityManager|EntityManagerInterface
      */
     private $em;
@@ -45,12 +39,10 @@ class FeaturedListingService
     public function __construct(
         UserBalanceService $userBalanceService,
         ValidUntilSetService $validUntilSetService,
-        CurrentUserService $currentUserService,
         EntityManagerInterface $em
     ) {
         $this->validUntilSetService = $validUntilSetService;
         $this->userBalanceService = $userBalanceService;
-        $this->currentUserService = $currentUserService;
         $this->em = $em;
     }
 

@@ -6,7 +6,6 @@ namespace App\Form;
 
 use App\Service\Setting\SettingsDto;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -39,14 +38,6 @@ class TopUpBalanceType extends AbstractType
             'constraints' => [
                 new NotBlank(),
                 new GreaterThanOrEqual(['value' => 0]),
-            ],
-        ]);
-        $builder->add('accept', CheckboxType::class, [
-            'mapped' => false,
-            'required' => true,
-            'label' => 'trans.I accept and confirm, that the paid but unused funds are not refundable',
-            'constraints' => [
-                new NotBlank(),
             ],
         ]);
     }

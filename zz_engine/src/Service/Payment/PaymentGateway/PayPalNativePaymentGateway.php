@@ -10,7 +10,6 @@ use App\Helper\ExceptionHelper;
 use App\Helper\FilePath;
 use App\Helper\IntegerHelper;
 use App\Service\Payment\Base\PaymentGatewayInterface;
-use App\Service\Payment\Dto\ConfirmPaymentConfigDto;
 use App\Service\Payment\Dto\ConfirmPaymentDto;
 use App\Service\Payment\Dto\PaymentDto;
 use App\Service\Payment\Enum\PaymentGatewayEnum;
@@ -108,15 +107,14 @@ class PayPalNativePaymentGateway implements PaymentGatewayInterface
         }
     }
 
-    public function confirmPayment(ConfirmPaymentConfigDto $confirmPaymentConfigDto): ConfirmPaymentDto
+    public function confirmPayment(ConfirmPaymentDto $confirmPaymentDto): ConfirmPaymentDto
     {
-        $confirmPaymentDto = new ConfirmPaymentDto();
-        $paymentId = $confirmPaymentConfigDto->getRequest()->get('paymentId');
+        $paymentId = $confirmPaymentDto->getRequest()->get('paymentId');
         $apiContext = $this->getApiContext();
         $payment = Payment::get($paymentId, $apiContext);
 
         $execution = new PaymentExecution();
-        $execution->setPayerId($confirmPaymentConfigDto->getRequest()->get('PayerID'));
+        $execution->setPayerId($confirmPaymentDto->getRequest()->get('PayerID'));
 
         try {
             $payment = $payment->execute($execution, $apiContext);

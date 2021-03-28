@@ -8,7 +8,6 @@ use App\Exception\UserVisibleException;
 use App\Helper\ExceptionHelper;
 use App\Helper\IntegerHelper;
 use App\Service\Payment\Base\PaymentGatewayInterface;
-use App\Service\Payment\Dto\ConfirmPaymentConfigDto;
 use App\Service\Payment\Dto\ConfirmPaymentDto;
 use App\Service\Payment\Dto\PaymentDto;
 use App\Service\Payment\Enum\GatewayModeEnum;
@@ -72,24 +71,22 @@ class Przelewy24PaymentGateway implements PaymentGatewayInterface
             ]);
             $response = $transaction->send();
             $data = $response->getData();
-            $this->logger->info('[payment][przelewy24] payment created response', [
+            $this->logger->debug('[payment][przelewy24] payment created response', [
                 'responseData' => $data,
             ]);
 
-            if ($response->isSuccessful()) {
-                $paymentDto->setGatewayStatus($data['error']);
-                if ($response instanceof RedirectResponseInterface && $response->isRedirect()) {
-                    $paymentDto->setMakePaymentUrl($response->getRedirectUrl());
-                }
+            if (!$response->isSuccessful()) {
+                $this->logger->critical('[payment][przelewy24] payment creation failed', [
+                    'data' => $data,
+                ]);
 
-                return;
+                throw UserVisibleException::fromPrevious('trans.Failed to create payment, please try again later');
             }
 
-            $this->logger->critical('[payment][przelewy24] payment creation failed', [
-                'data' => $data,
-            ]);
-
-            throw UserVisibleException::fromPrevious('trans.Failed to create payment, please try again later');
+            $paymentDto->setGatewayStatus($data['error']);
+            if ($response instanceof RedirectResponseInterface && $response->isRedirect()) {
+                $paymentDto->setMakePaymentUrl($response->getRedirectUrl());
+            }
         } catch (\Exception $e) {
             $this->logger->critical('[payment][przelewy24] error while creating payment', ExceptionHelper::flatten($e));
 
@@ -97,30 +94,29 @@ class Przelewy24PaymentGateway implements PaymentGatewayInterface
         }
     }
 
-    public function confirmPayment(ConfirmPaymentConfigDto $confirmPaymentConfigDto): ConfirmPaymentDto
+    public function confirmPayment(ConfirmPaymentDto $confirmPaymentDto): ConfirmPaymentDto
     {
         try {
-            $confirmPaymentDto = new ConfirmPaymentDto();
             $gateway = $this->getGateway();
-            $transactionId = $confirmPaymentConfigDto->getRequest()->get('p24_order_id');
+            $transactionId = $confirmPaymentDto->getRequest()->get('p24_order_id');
             $transaction = $gateway->completePurchase([
-                'sessionId' => $confirmPaymentConfigDto->getPaymentAppToken(),
-                'amount' => $confirmPaymentConfigDto->getPaymentEntity()->getAmount() / 100,
-                'currency' => $confirmPaymentConfigDto->getPaymentEntity()->getCurrency(),
+                'sessionId' => $confirmPaymentDto->getPaymentAppToken(),
+                'amount' => $confirmPaymentDto->getPaymentEntityNotNull()->getAmount() / 100,
+                'currency' => $confirmPaymentDto->getPaymentEntityNotNull()->getCurrency(),
                 'transactionId' => $transactionId,
             ]);
             $response = $transaction->send();
             if ($response->isSuccessful()) {
                 $data = $response->getData();
-                $this->logger->info('[payment] payment confirmation response', [
+                $this->logger->debug('[payment] payment confirmation response', [
                     'responseData' => $data,
-                    'query' => $confirmPaymentConfigDto->getRequest()->request->all(),
+                    'query' => $confirmPaymentDto->getRequest()->request->all(),
                 ]);
 
                 $confirmPaymentDto->setGatewayPaymentId($transactionId);
                 $confirmPaymentDto->setGatewayStatus($data['error']);
                 $confirmPaymentDto->setConfirmed($response->isSuccessful());
-                $confirmPaymentDto->setGatewayAmount(IntegerHelper::toInteger($confirmPaymentConfigDto->getRequest()->get('p24_amount')));
+                $confirmPaymentDto->setGatewayAmount(IntegerHelper::toInteger($confirmPaymentDto->getRequest()->get('p24_amount')));
 
                 return $confirmPaymentDto;
             }

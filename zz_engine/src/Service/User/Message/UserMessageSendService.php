@@ -123,8 +123,12 @@ class UserMessageSendService
         $this->saveUserMessagePoliceLog($userMessage);
         $this->em->flush();
 
-        if ($this->messengerHelperService->countMessages(SendNotificationMessage::class) < 3) {
-            $this->messageBus->dispatch(new SendNotificationMessage());
+        if ($userMessage->getRecipientUser()->getNotificationByEmailNewMessage()) {
+            if ($this->messengerHelperService->countMessages(SendNotificationMessage::class) < 3) {
+                $this->messageBus->dispatch(new SendNotificationMessage());
+            }
+        } else {
+            $userMessage->setRecipientNotified(true);
         }
     }
 

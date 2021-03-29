@@ -87,6 +87,7 @@ class UserMessageListService
                 WHERE true
                     && user_message.recipient_read = 0
                     && user_message.recipient_user_id = :user_id
+                GROUP BY user_message.user_message_thread_id
             ) AS unread_count ON user_message_thread.id = unread_count.user_message_thread_id
             WHERE true 
             && (

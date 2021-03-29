@@ -23,4 +23,7 @@
     {{ 'trans.If the link above does not work, try to copy the link below to your browser' | trans }}:
 </p>
 <pre>{{ url('app_user_message_list_thread', {'userMessageThread': newestUserMessage.userMessageThread.id}) }}</pre>
+<p>
+    <a href="{{ url('app_user_settings') }}">{{ 'trans.Change notification settings' | trans }}</a>
+</p>
 {% endblock content %}

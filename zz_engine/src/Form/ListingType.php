@@ -11,6 +11,7 @@ use App\Form\Type\CategoryType;
 use App\Form\Type\PriceForType;
 use App\Service\Listing\Save\SaveListingService;
 use App\Service\Listing\ValidityExtend\ValidUntilSetService;
+use App\Service\Setting\SettingsDto;
 use App\Validator\Constraints\HasLetterNumber;
 use App\Validator\Constraints\Phone;
 use Symfony\Component\Form\AbstractType;
@@ -49,10 +50,19 @@ class ListingType extends AbstractType
      */
     private $validUntilSetService;
 
-    public function __construct(SaveListingService $saveListingService, ValidUntilSetService $validUntilSetService)
-    {
+    /**
+     * @var SettingsDto
+     */
+    private $settingsDto;
+
+    public function __construct(
+        SaveListingService $saveListingService,
+        ValidUntilSetService $validUntilSetService,
+        SettingsDto $settingsDto
+    ) {
         $this->saveListingService = $saveListingService;
         $this->validUntilSetService = $validUntilSetService;
+        $this->settingsDto = $settingsDto;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -206,8 +216,12 @@ class ListingType extends AbstractType
             [
                 'data_class' => Listing::class,
                 'constraints' => [
-                    new Callback(['callback' => static function (Listing $listing, ExecutionContextInterface $context): void {
-                        if (empty($listing->getPhone()) && (empty($listing->getEmail()) || !$listing->getEmailShow())) {
+                    new Callback(['callback' => function (Listing $listing, ExecutionContextInterface $context): void {
+                        if ($this->settingsDto->getMessageSystemEnabled() && $listing->getUserNotNull()->getMessagesEnabled()) {
+                            return;
+                        }
+
+                        if (!$listing->hasContactData()) {
                             $context->buildViolation('Enter email or phone, both can not be empty')
                                 ->atPath('phone')
                                 ->addViolation()

@@ -18,5 +18,11 @@ include 'base/header.php';
         </div>
     <?php } ?>
 
-    <a href="" class="btn btn-primary">Refresh</a>
+    <div class="mb-2">
+        <a href="" class="btn btn-primary">Refresh</a>
+    </div>
+
+    <div class="mb-2">
+        <a href="<?php echo INSTALL_URL; ?>/filesystem.php" class="btn btn-danger">Skip pre installation verification</a>
+    </div>
 </div>

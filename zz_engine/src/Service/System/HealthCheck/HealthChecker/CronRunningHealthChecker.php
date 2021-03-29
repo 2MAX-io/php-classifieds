@@ -56,6 +56,28 @@ class CronRunningHealthChecker implements HealthCheckerInterface
             ]));
         }
 
+        if ($this->countUnhandledQueueMessages() > 0) {
+            return new HealthCheckResultDto(true, $this->trans->trans('trans.Cron executing message queue is not working'));
+        }
+
         return new HealthCheckResultDto(false);
+    }
+
+    private function countUnhandledQueueMessages(): int
+    {
+        /** @var \PDO $pdo */
+        $pdo = $this->em->getConnection();
+        $stmt = $pdo->prepare(<<<'EOT'
+            SELECT COUNT(1)
+            FROM zzzz_messenger_messages
+            WHERE true 
+            && delivered_at IS NULL
+            && queue_name != 'failed'
+            && available_at < :before_datetime
+EOT);
+        $stmt->bindValue(':before_datetime', DateHelper::carbonNow()->subHours(6));
+        $stmt->execute();
+
+        return (int) $stmt->fetchColumn();
     }
 }

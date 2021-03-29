@@ -7,7 +7,7 @@ namespace App\Service\User\Message\Messenger\SendNotification;
 use App\Service\System\Messenger\Base\AsyncMessageInterface;
 
 /**
- * @see DeleteExpiredListingFilesHandler
+ * @see SendNotificationHandler
  */
 class SendNotificationMessage implements AsyncMessageInterface
 {

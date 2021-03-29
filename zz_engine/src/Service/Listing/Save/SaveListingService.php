@@ -99,6 +99,7 @@ class SaveListingService
 
         if ($this->currentUserService->getUserOrNull()) {
             $listing->setEmail($this->currentUserService->getUserOrNull()->getEmail());
+            $listing->setUser($this->currentUserService->getUserOrNull());
         }
 
         return $listing;

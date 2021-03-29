@@ -335,22 +335,25 @@
                 <!-- contact, info panel -->
                 <div class="card mb-3 w-100">
                     <div class="card-body py-3">
-                        <div class="mb-3">
-                            {%- if displayAsExpired ~%}
+                        {%- if displayAsExpired ~%}
+                            <div class="mb-3">
                                 <div class="alert alert-warning">
                                     {{- 'trans.Listing has expired, please refrain from contacting listing issuer' | trans -}}
                                 </div>
-                            {%- else ~%}
-                                <button {{- ' ' -}}
-                                        class="btn btn-success listing-show-contact-btn js__listingShowContactDetails" {{- ' ' -}}
-                                        data-listing-id="{{ listing.id }}" {{- ' ' -}}
-                                        data-route="{{ path('app_listing_contact_data') }}" {{- ' ' -}}
-                                >
-                                    {{- 'trans.Show contact information' | trans -}}
-                                </button>
-                            {%- endif ~%}
-                        </div>
-                        {%- if settings.messageSystemEnabled and not isCurrentUserListing and not displayAsExpired ~%}
+                            </div>
+                        {%- endif ~%}
+                        {%- if not displayAsExpired and listing.contactData ~%}
+                            <div class="mb-3">
+                                    <button {{- ' ' -}}
+                                            class="btn btn-success listing-show-contact-btn js__listingShowContactDetails" {{- ' ' -}}
+                                            data-listing-id="{{ listing.id }}" {{- ' ' -}}
+                                            data-route="{{ path('app_listing_contact_data') }}" {{- ' ' -}}
+                                    >
+                                        {{- 'trans.Show contact information' | trans -}}
+                                    </button>
+                            </div>
+                        {%- endif ~%}
+                        {%- if settings.messageSystemEnabled and listing.user.messagesEnabled and not isCurrentUserListing and not displayAsExpired ~%}
                             <div class="mb-3">
                                 <a class="btn btn-dark d-block" href="{{ path('app_user_message_respond_to_listing', {'listing': listing.id}) }}">
                                     {{- 'trans.Write Message' | trans -}}

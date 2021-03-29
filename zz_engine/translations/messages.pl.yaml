@@ -730,3 +730,8 @@ trans.Yes: Tak
 'trans.License for 2MAX.io PHP Classified Ads is not valid': 'Licencja 2MAX.io PHP Classified Ads jest nieprawidłowa'
 'trans.If you have valid license you can': 'Jeżeli posiadasz ważną licencję możesz'
 'trans.enter valid license it here': 'wpisać prawidłową licencję ją tutaj'
+'trans.Notify by email about new message': 'Powiadomienie email o nowej wiadomości'
+'trans.Change notification settings': 'Zmień ustawienia powiadomień'
+'trans.Cron executing message queue is not working': 'Cron obsługujący kolejkę wiadomości nie działa'
+'trans.Direct messages enabled': 'Wiadomości bezpośrednie włączone'
+'trans.Write message button is displayed for your listings': 'Przycisk wyślij wiadomość jest wyświetlany w Twoich ogłoszeniach'

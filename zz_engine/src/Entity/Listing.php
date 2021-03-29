@@ -480,6 +480,11 @@ class Listing
         return $this->getUserObservedListings()->count() > 0;
     }
 
+    public function hasContactData(): bool
+    {
+        return !empty($this->getPhone()) || (!empty($this->getEmail()) && $this->getEmailShow());
+    }
+
     public function getId(): ?int
     {
         return $this->id;

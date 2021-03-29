@@ -46,13 +46,6 @@ class User implements UserInterface, UserRoleEnum, EnablableInterface, EncoderAw
     protected $email;
 
     /**
-     * @var string|null
-     *
-     * @ORM\Column(type="string", length=100, nullable=true)
-     */
-    protected $displayUsername;
-
-    /**
      * @var string[]
      *
      * @ORM\Column(type="json", nullable=false)
@@ -65,6 +58,27 @@ class User implements UserInterface, UserRoleEnum, EnablableInterface, EncoderAw
      * @ORM\Column(type="boolean", nullable=false)
      */
     protected $enabled;
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(type="string", length=100, nullable=true)
+     */
+    protected $displayUsername;
+
+    /**
+     * @var bool|null
+     *
+     * @ORM\Column(type="boolean", nullable=false)
+     */
+    protected $notificationByEmailNewMessage = true;
+
+    /**
+     * @var bool|null
+     *
+     * @ORM\Column(type="boolean", nullable=false)
+     */
+    protected $messagesEnabled = true;
 
     /**
      * @var string The hashed password
@@ -515,5 +529,25 @@ class User implements UserInterface, UserRoleEnum, EnablableInterface, EncoderAw
     public function setDisplayUsername(?string $displayUsername): void
     {
         $this->displayUsername = $displayUsername;
+    }
+
+    public function getNotificationByEmailNewMessage(): ?bool
+    {
+        return $this->notificationByEmailNewMessage;
+    }
+
+    public function setNotificationByEmailNewMessage(?bool $notificationByEmailNewMessage): void
+    {
+        $this->notificationByEmailNewMessage = $notificationByEmailNewMessage;
+    }
+
+    public function getMessagesEnabled(): ?bool
+    {
+        return $this->messagesEnabled;
+    }
+
+    public function setMessagesEnabled(?bool $messagesEnabled): void
+    {
+        $this->messagesEnabled = $messagesEnabled;
     }
 }

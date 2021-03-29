@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Controller\User\Setting;
 
 use App\Controller\User\Base\AbstractUserController;
-use App\Form\User\Setting\Dto\UserSettingsDto;
 use App\Form\User\Setting\UserSettingsType;
 use App\Security\CurrentUserService;
 use App\Service\User\Settings\UserSettingsService;
@@ -37,11 +36,10 @@ class UserSettingsController extends AbstractUserController
         $this->dennyUnlessUser();
 
         $user = $currentUserService->getUser();
-        $userSettingsDto = UserSettingsDto::fromUser($user);
-        $form = $this->createForm(UserSettingsType::class, $userSettingsDto);
+        $form = $this->createForm(UserSettingsType::class, $user);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $userSettingsService->save($userSettingsDto, $user);
+            $userSettingsService->save($user);
             $this->em->flush();
 
             return $this->redirectToRoute('app_user_settings');

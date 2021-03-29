@@ -16,4 +16,7 @@
 {{ 'trans.Reply to this message' | trans }}:
 
 {{ url('app_user_message_list_thread', {'userMessageThread': newestUserMessage.userMessageThread.id}) }}
+
+{{ 'trans.Change notification settings' | trans }}
+{{ url('app_user_settings') }}
 {% endblock content %}

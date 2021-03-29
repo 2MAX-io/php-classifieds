@@ -151,4 +151,7 @@ chown -R www-data:www-data <?php echo e($projectRootPath); ?>;
             </div>
         <?php } ?>
     </div>
+    <div>
+        <a href="<?php echo INSTALL_URL; ?>/install.php" class="btn btn-danger">Skip pre installation verification</a>
+    </div>
 </div>

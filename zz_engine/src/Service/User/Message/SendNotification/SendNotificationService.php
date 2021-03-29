@@ -19,7 +19,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class SendNotificationService
 {
-    public const RETRY_NOTIFICATION_TIME_SECONDS = 5 * 60;
+    public const RETRY_NOTIFICATION_TIME_SECONDS = 6 * 60;
     public const NOTIFICATION_DELAY_SECONDS = 5 * 60;
 
     /**

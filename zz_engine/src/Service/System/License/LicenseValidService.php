@@ -17,6 +17,10 @@ class LicenseValidService
             return false;
         }
 
+        if (!isset($licenseDecoded['payload'], $licenseDecoded['payloadSignature'])) {
+            return false;
+        }
+
         $signatureCorrect = VerifySignature::authenticate(
             $licenseDecoded['payload'],
             $licenseDecoded['payloadSignature'],

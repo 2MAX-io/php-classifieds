@@ -174,6 +174,8 @@ class SettingsRequiredHealthChecker implements HealthCheckerInterface
             'invoiceSoldItemDescription',
             'invoiceNumberPrefix',
             'defaultAdvertisementZoneId',
+            'paymentPayPalClientId',
+            'paymentPayPalClientSecret',
         ];
     }
 

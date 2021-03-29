@@ -48,8 +48,8 @@ class ResizeImageController
     public function resizeImage(
         Request $request,
         SessionInterface $session,
-        string $path,
         string $type,
+        string $path,
         string $file
     ): Response {
         if ($session->isStarted()) {
@@ -57,9 +57,17 @@ class ResizeImageController
         }
         IniHelper::setMemoryLimitIfLessThanMb(256);
 
-        $requestUriWithoutGet = \strtok($request->getRequestUri(), '?');
+        $requestUriWithoutGet = \strtok($request->getRequestUri(), '?') ?: '';
+        $urlPath = '/static/resized/'
+            .\basename($type).'/'
+            .$path.'/'
+            .\basename($file);
+        $targetPath = Path::canonicalize(FilePath::getPublicDir().$urlPath);
         $sourcePath = $path.'/'.$file;
-        $targetPath = Path::canonicalize(FilePath::getPublicDir().$requestUriWithoutGet);
+
+        if (!\str_contains($requestUriWithoutGet, $urlPath)) {
+            throw new \RuntimeException('url path does not match filesystem path');
+        }
 
         return $this->getImageResponse($request, $type, $sourcePath, $targetPath);
     }

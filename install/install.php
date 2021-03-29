@@ -5,7 +5,7 @@ declare(strict_types=1);
 use App\Enum\UserRoleEnum;
 use App\Helper\FilePath;
 use App\Helper\RandomHelper;
-use App\Service\System\Signature\LicenseValidService;
+use App\Service\System\License\LicenseValidService;
 use Symfony\Component\Security\Core\Encoder\NativePasswordEncoder;
 use Symfony\Component\Security\Core\Encoder\SodiumPasswordEncoder;
 use Webmozart\PathUtil\Path;
@@ -278,7 +278,7 @@ function setEmailSettings(string $emailFromAddress): void
 function setLicense(string $licenseText): void
 {
     setSetting('license', $licenseText);
-    if (LicenseValidService::isLicenseValid($licenseText)) {
+    if (!empty($licenseText) && LicenseValidService::isLicenseValid($licenseText)) {
         setSetting('licenseValid', '1');
     }
 }

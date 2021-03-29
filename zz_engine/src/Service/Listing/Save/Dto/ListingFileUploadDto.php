@@ -36,7 +36,10 @@ class ListingFileUploadDto
      */
     public static function fromUploadedFileFromRequest(array $fileUploaderListElement): self
     {
-        $sourceFilePath = FilePath::getPublicDir().'/'.$fileUploaderListElement['data']['tmpFilePath'];
+        $sourceFilePath = $fileUploaderListElement['data']['tmpFilePath'];
+        if (!\str_starts_with($sourceFilePath, FilePath::getPublicDir())) {
+            $sourceFilePath = FilePath::getPublicDir().'/'.$sourceFilePath;
+        }
         FileHelper::throwExceptionIfPathOutsideDir($sourceFilePath, FilePath::getTempFileUpload());
         FileHelper::throwExceptionIfUnsafeFilename($fileUploaderListElement['name']);
 

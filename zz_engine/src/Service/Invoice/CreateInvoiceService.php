@@ -94,15 +94,15 @@ class CreateInvoiceService
         }
 
         // seller
-        $invoice->setSellerCompanyName($settingsDto->getInvoiceCompanyName());
-        $invoice->setSellerTaxNumber($settingsDto->getInvoiceTaxNumber());
-        $invoice->setSellerCity($settingsDto->getInvoiceCity());
-        $invoice->setSellerStreet($settingsDto->getInvoiceStreet());
-        $invoice->setSellerBuildingNumber($settingsDto->getInvoiceBuildingNumber());
-        $invoice->setSellerUnitNumber($settingsDto->getInvoiceUnitNumber());
-        $invoice->setSellerZipCode($settingsDto->getInvoiceZipCode());
-        $invoice->setSellerCountry($settingsDto->getInvoiceCountry());
-        $invoice->setSellerEmail($settingsDto->getInvoiceEmail());
+        $invoice->setSellerCompanyName($settingsDto->getInvoiceCompanyName() ?? '');
+        $invoice->setSellerTaxNumber($settingsDto->getInvoiceTaxNumber() ?? '');
+        $invoice->setSellerCity($settingsDto->getInvoiceCity() ?? '');
+        $invoice->setSellerStreet($settingsDto->getInvoiceStreet() ?? '');
+        $invoice->setSellerBuildingNumber($settingsDto->getInvoiceBuildingNumber() ?? '');
+        $invoice->setSellerUnitNumber($settingsDto->getInvoiceUnitNumber() ?? '');
+        $invoice->setSellerZipCode($settingsDto->getInvoiceZipCode() ?? '');
+        $invoice->setSellerCountry($settingsDto->getInvoiceCountry() ?? '');
+        $invoice->setSellerEmail($settingsDto->getInvoiceEmail() ?? '');
 
         $this->em->persist($invoice);
         $this->em->flush();

@@ -498,7 +498,6 @@ t.add("trans.History of listings featuring", "Historia wyr\u00f3\u017cnie\u0144 
 t.add("trans.Home page", "Strona g\u0142\u00f3wna", "messages", "pl");
 t.add("trans.Home page title", "Tytu\u0142 strony g\u0142\u00f3wnej", "messages", "pl");
 t.add("trans.I accept", "Akceptuje", "messages", "pl");
-t.add("trans.I accept and confirm, that the paid but unused funds are not refundable", "Akceptuj\u0119 i potwierdzam, \u017ce wp\u0142acone lecz niewykorzystane \u015brodki nie podlegaj\u0105 zwrotowi", "messages", "pl");
 t.add("trans.I confirm change of email address to", "Potwierdzam zmian\u0119 adresu email na", "messages", "pl");
 t.add("trans.I confirm password change", "Potwierdzam zmian\u0119 has\u0142a", "messages", "pl");
 t.add("trans.I confirm password reset", "Potwierdzam reset has\u0142a", "messages", "pl");
@@ -661,7 +660,7 @@ t.add("trans.Payment Gateway", "Bramka p\u0142atno\u015bci", "messages", "pl");
 t.add("trans.Payment gateway - mode", "Bramka p\u0142atno\u015bci - tryb", "messages", "pl");
 t.add("trans.Payment gateway - payment description", "Bramka p\u0142atno\u015bci - opis p\u0142atno\u015bci", "messages", "pl");
 t.add("trans.Payment gateway - status", "Bramka p\u0142atno\u015bci - status", "messages", "pl");
-t.add("trans.Payment gateway - transaction ID", "Bramka p\u0142atno\u015bci - ID transakcji", "messages", "pl");
+t.add("trans.Payment gateway ID", "Bramka p\u0142atno\u015bci - ID transakcji", "messages", "pl");
 t.add("trans.Payments", "P\u0142atno\u015bci", "messages", "pl");
 t.add("trans.Payments - PayPal Client ID", "P\u0142atno\u015bci - PayPal Client ID", "messages", "pl");
 t.add("trans.Payments - PayPal Client secret", "P\u0142atno\u015bci - PayPal Client secret", "messages", "pl");

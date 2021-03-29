@@ -5,6 +5,7 @@ ParamEnum.DATA_FOR_JS = "dataForJs";
 ParamEnum.CSRF_TOKEN = "csrfToken";
 ParamEnum.LANGUAGE_ISO = "languageIso";
 ParamEnum.COUNTRY_ISO = "countryIso";
+ParamEnum.BASE_URL = "baseUrl";
 ParamEnum.SUCCESS = "success";
 ParamEnum.ERROR = "error";
 ParamEnum.USERNAME = "username";

@@ -497,7 +497,6 @@ t.add("trans.History of listings featuring", "History of listings featuring", "m
 t.add("trans.Home page", "Home page", "messages", "en");
 t.add("trans.Home page title", "Home page title", "messages", "en");
 t.add("trans.I accept", "I accept", "messages", "en");
-t.add("trans.I accept and confirm, that the paid but unused funds are not refundable", "I accept and confirm, that the paid but unused funds are not refundable", "messages", "en");
 t.add("trans.I confirm change of email address to", "I confirm change of email address to", "messages", "en");
 t.add("trans.I confirm password change", "I confirm password change", "messages", "en");
 t.add("trans.I confirm password reset", "I confirm password reset", "messages", "en");
@@ -660,7 +659,7 @@ t.add("trans.Payment Gateway", "Payment Gateway", "messages", "en");
 t.add("trans.Payment gateway - mode", "Payment gateway - mode", "messages", "en");
 t.add("trans.Payment gateway - payment description", "Payment gateway - payment description", "messages", "en");
 t.add("trans.Payment gateway - status", "Payment gateway - status", "messages", "en");
-t.add("trans.Payment gateway - transaction ID", "Payment gateway - transaction ID", "messages", "en");
+t.add("trans.Payment gateway ID", "Payment gateway ID", "messages", "en");
 t.add("trans.Payments", "Payments", "messages", "en");
 t.add("trans.Payments - PayPal Client ID", "Payments - PayPal Client ID", "messages", "en");
 t.add("trans.Payments - PayPal Client secret", "Payments - PayPal Client secret", "messages", "en");

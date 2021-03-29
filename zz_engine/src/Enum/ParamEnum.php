@@ -13,6 +13,7 @@ class ParamEnum
     public const CSRF_TOKEN = 'csrfToken';
     public const LANGUAGE_ISO = 'languageIso';
     public const COUNTRY_ISO = 'countryIso';
+    public const BASE_URL = 'baseUrl';
     public const SUCCESS = 'success';
     public const ERROR = 'error';
     public const USERNAME = 'username';

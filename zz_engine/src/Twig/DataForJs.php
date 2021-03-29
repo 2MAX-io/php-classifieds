@@ -7,6 +7,7 @@ namespace App\Twig;
 use App\Enum\ParamEnum;
 use App\Helper\JsonHelper;
 use App\Service\Setting\SettingsDto;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Twig\Extension\RuntimeExtensionInterface;
 
 class DataForJs implements RuntimeExtensionInterface
@@ -16,9 +17,15 @@ class DataForJs implements RuntimeExtensionInterface
      */
     private $settingsDto;
 
-    public function __construct(SettingsDto $settingsDto)
+    /**
+     * @var UrlGeneratorInterface
+     */
+    private $urlGenerator;
+
+    public function __construct(SettingsDto $settingsDto, UrlGeneratorInterface $urlGenerator)
     {
         $this->settingsDto = $settingsDto;
+        $this->urlGenerator = $urlGenerator;
     }
 
     /**
@@ -30,6 +37,11 @@ class DataForJs implements RuntimeExtensionInterface
         $dataForJs[ParamEnum::COUNTRY_ISO] = $this->settingsDto->getCountryIso();
         $dataForJs[ParamEnum::THOUSAND_SEPARATOR] = $this->settingsDto->getThousandSeparator();
         $dataForJs[ParamEnum::NUMERAL_DECIMAL_MARK] = $this->settingsDto->getDecimalSeparator();
+        $dataForJs[ParamEnum::BASE_URL] = $this->urlGenerator->generate(
+            'app_public_dir',
+            [],
+            UrlGeneratorInterface::ABSOLUTE_PATH,
+        );
 
         return \base64_encode(JsonHelper::toString($dataForJs));
     }

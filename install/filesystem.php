@@ -9,6 +9,7 @@ use Webmozart\PathUtil\Path;
 include 'include/bootstrap.php';
 
 $errors = [];
+$isWindowsOs = \PHP_OS_FAMILY === 'Windows';
 
 $configFilePath = Path::canonicalize(FilePath::getProjectDir().'/zz_engine/.env.local.php');
 if (\file_exists($configFilePath)) {
@@ -17,14 +18,21 @@ if (\file_exists($configFilePath)) {
     exit;
 }
 
-$incorrectFilePermissionList = FilesystemChecker::incorrectFilePermissionList();
-if (\count($incorrectFilePermissionList)) {
-    $errors[] = 'Some files have incorrect permissions';
-}
+if (!$isWindowsOs) {
+    $incorrectFilePermissionList = FilesystemChecker::incorrectFilePermissionList();
+    if (\count($incorrectFilePermissionList)) {
+        $errors[] = 'Some files have incorrect permissions';
+    }
 
-$incorrectDirPermissionList = FilesystemChecker::incorrectDirPermissionList();
-if (\count($incorrectDirPermissionList)) {
-    $errors[] = 'Some directories have incorrect permissions';
+    $incorrectDirPermissionList = FilesystemChecker::incorrectDirPermissionList();
+    if (\count($incorrectDirPermissionList)) {
+        $errors[] = 'Some directories have incorrect permissions';
+    }
+
+    $canExecuteConsole = canExecuteConsole();
+    if (!$canExecuteConsole) {
+        $errors[] = 'Could not execute zz_engine/bin/console, add execution permissions for this file using chmod +x';
+    }
 }
 
 $creatingDirFailedList = FilesystemChecker::creatingDirFailedList();
@@ -45,11 +53,6 @@ if (\count($writingFileFailedList)) {
 $canWriteToPhpFile = canWriteToPhpFile();
 if (!$canWriteToPhpFile) {
     $errors[] = 'Could not change php file install/data/test.php, check permissions for all files';
-}
-
-$canExecuteConsole = canExecuteConsole();
-if (!$canExecuteConsole) {
-    $errors[] = 'Could not execute zz_engine/bin/console, add execution permissions for this file using chmod +x';
 }
 
 if (\count($errors) < 1) {

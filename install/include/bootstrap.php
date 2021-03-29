@@ -27,7 +27,7 @@ if (\version_compare(\PHP_VERSION, '7.3', '<')) {
 
 require PROJECT_DIR.'/zz_engine/vendor/autoload.php';
 
-\define('INSTALL_URL', '/'.Path::makeRelative(\dirname($_SERVER['SCRIPT_FILENAME']), PUBLIC_DIR));
+\define('INSTALL_URL', '/'.Path::makeRelative(INSTALL_DIR, $_SERVER['DOCUMENT_ROOT']));
 
 $configFilePath = Path::canonicalize(FilePath::getProjectDir().'/zz_engine/.env.local.php');
 if (\file_exists($configFilePath)) {

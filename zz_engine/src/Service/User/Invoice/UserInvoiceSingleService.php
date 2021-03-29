@@ -52,7 +52,7 @@ class UserInvoiceSingleService
         $settingsDto = $this->settingsService->getSettingsDtoWithoutCache();
         $logoPath = FilePath::getPublicDir().\DIRECTORY_SEPARATOR.$settingsDto->getLogoPath();
         if (null === $settingsDto->getLogoPath() || !\file_exists($logoPath)) {
-            $logoPath = FilePath::getPublicDir().'static/system/logo_default.png';
+            $logoPath = FilePath::getPublicDir().'/static/system/logo_default.png';
             FileHelper::throwExceptionIfPathOutsideDir($logoPath, FilePath::getStaticPath());
         } else {
             FileHelper::throwExceptionIfPathOutsideDir($logoPath, FilePath::getLogoPath());

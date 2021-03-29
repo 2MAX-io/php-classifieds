@@ -28,6 +28,7 @@ class InvoiceRepository extends ServiceEntityRepository
         $qb = $this->createQueryBuilder('invoice');
         $qb->andWhere($qb->expr()->eq('invoice.user', ':user'));
         $qb->setParameter(':user', $user->getId());
+        $qb->andWhere($qb->expr()->eq('invoice.displayToUser', 1));
 
         $qb->addOrderBy('invoice.id', Criteria::DESC);
         $qb->setMaxResults(100);

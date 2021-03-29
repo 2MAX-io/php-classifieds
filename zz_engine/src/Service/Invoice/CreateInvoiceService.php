@@ -69,7 +69,7 @@ class CreateInvoiceService
         $invoice->setUuid(\uuid_create(\UUID_TYPE_RANDOM));
         $invoice->setExported(false);
         $invoice->setSentToUser(false);
-        $invoice->setInvoiceFilePath(''); // todo
+        $invoice->setInvoiceFilePath(null);
         $invoice->setCreatedDate($currentDatetime);
         $invoice->setUpdatedDate($currentDatetime);
 
@@ -125,15 +125,7 @@ class CreateInvoiceService
             return true;
         }
 
-        if (\in_array(
-            $invoiceGenerationStrategy,
-            [
-                InvoiceGenerationStrategyEnum::MANUAL,
-                InvoiceGenerationStrategyEnum::EXTERNAL_SYSTEM,
-                InvoiceGenerationStrategyEnum::INFAKT_PL,
-            ],
-            true
-        )) {
+        if (InvoiceGenerationStrategyEnum::EXTERNAL_SYSTEM === $invoiceGenerationStrategy) {
             return false;
         }
 

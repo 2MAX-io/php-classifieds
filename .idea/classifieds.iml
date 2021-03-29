@@ -18,6 +18,7 @@
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor" />
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/src/Migrations" />
       <excludeFolder url="file://$MODULE_DIR$/install" />
+      <excludeFolder url="file://$MODULE_DIR$/zz_engine/bin/.phpunit" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

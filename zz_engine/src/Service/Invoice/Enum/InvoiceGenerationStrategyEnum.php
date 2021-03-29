@@ -6,9 +6,7 @@ namespace App\Service\Invoice\Enum;
 
 class InvoiceGenerationStrategyEnum
 {
-    public const AUTO = 'auto';
-    public const MANUAL = 'manual';
-    public const EXTERNAL_SYSTEM = 'external_system';
-    public const INFAKT_PL = 'infakt_pl';
     public const DISABLED = 'disabled';
+    public const AUTO = 'auto';
+    public const EXTERNAL_SYSTEM = 'external_system';
 }

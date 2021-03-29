@@ -116,7 +116,7 @@ class Invoice
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=255, nullable=false)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $invoiceFilePath;
 
@@ -409,7 +409,7 @@ class Invoice
         return $this->invoiceFilePath;
     }
 
-    public function setInvoiceFilePath(string $invoiceFilePath): self
+    public function setInvoiceFilePath(?string $invoiceFilePath): self
     {
         $this->invoiceFilePath = $invoiceFilePath;
 

@@ -158,10 +158,7 @@ class PaymentInvoiceSettingsType extends AbstractType implements SettingTypeInte
             'choices' => [
                 'trans.invoice_generation_strategy.disabled' => InvoiceGenerationStrategyEnum::DISABLED,
                 'trans.invoice_generation_strategy.auto' => InvoiceGenerationStrategyEnum::AUTO,
-                // todo: remove / disable
-                // 'trans.invoice_generation_strategy.manual' => InvoiceGenerationStrategyEnum::MANUAL,
-                // 'trans.invoice_generation_strategy.external_system' => InvoiceGenerationStrategyEnum::EXTERNAL_SYSTEM,
-                // 'trans.invoice_generation_strategy.infakt_pl' => InvoiceGenerationStrategyEnum::INFAKT_PL,
+                'trans.invoice_generation_strategy.external_system' => InvoiceGenerationStrategyEnum::EXTERNAL_SYSTEM,
             ],
         ]);
         $builder->add('invoiceNumberPrefix', TextType::class, [

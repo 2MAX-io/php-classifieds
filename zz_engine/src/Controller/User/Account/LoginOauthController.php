@@ -10,7 +10,7 @@ use App\Helper\ExceptionHelper;
 use App\Helper\StringHelper;
 use App\Repository\UserRepository;
 use App\Security\LoginUserProgrammaticallyService;
-use App\Security\UserChecker;
+use App\Security\UserCheckerService;
 use App\Service\Setting\SettingsService;
 use App\Service\System\FlashBag\FlashService;
 use App\Service\User\Account\CreateUserService;
@@ -50,7 +50,7 @@ class LoginOauthController extends AbstractUserController
         Request $request,
         LoginUserProgrammaticallyService $loginUserProgrammaticallyService,
         CreateUserService $createUserService,
-        UserChecker $userChecker,
+        UserCheckerService $userChecker,
         UrlGeneratorInterface $urlGenerator,
         SettingsService $settingsService,
         FlashService $flashService,

@@ -6,7 +6,7 @@ namespace App\Command\Dev;
 
 use App\Enum\ConsoleReturnEnum;
 use App\Helper\MegabyteHelper;
-use App\Service\System\Dev\GenerateTestData\DevGenerateTestListings;
+use App\Service\System\Dev\GenerateTestData\DevGenerateTestListingsService;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -18,11 +18,11 @@ class DevGenerateTestListingsCommand extends Command
     protected static $defaultName = 'app:dev:generate-test-listings';
 
     /**
-     * @var DevGenerateTestListings
+     * @var DevGenerateTestListingsService
      */
     private $devGenerateTestListings;
 
-    public function __construct(DevGenerateTestListings $devGenerateTestListings)
+    public function __construct(DevGenerateTestListingsService $devGenerateTestListings)
     {
         parent::__construct();
 

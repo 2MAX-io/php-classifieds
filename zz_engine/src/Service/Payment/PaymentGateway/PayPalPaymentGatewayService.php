@@ -19,7 +19,7 @@ use Omnipay\Common\Message\RedirectResponseInterface;
 use Omnipay\Omnipay;
 use Psr\Log\LoggerInterface;
 
-class PayPalPaymentGateway implements PaymentGatewayInterface
+class PayPalPaymentGatewayService implements PaymentGatewayInterface
 {
     /**
      * @var PaymentHelperService

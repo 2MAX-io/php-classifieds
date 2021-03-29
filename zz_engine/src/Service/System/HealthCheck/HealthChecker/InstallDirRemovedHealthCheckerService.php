@@ -9,7 +9,7 @@ use App\Service\System\HealthCheck\Base\HealthCheckerInterface;
 use App\Service\System\HealthCheck\HealthCheckResultDto;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class InstallDirRemovedHealthChecker implements HealthCheckerInterface
+class InstallDirRemovedHealthCheckerService implements HealthCheckerInterface
 {
     /**
      * @var TranslatorInterface

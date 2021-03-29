@@ -13,7 +13,7 @@ use Symfony\Contracts\Cache\CacheInterface;
 use Symfony\Contracts\Cache\ItemInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class UpgradeHealthChecker implements HealthCheckerInterface
+class UpgradeHealthCheckerService implements HealthCheckerInterface
 {
     /**
      * @var VersionCheckService

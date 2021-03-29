@@ -30,7 +30,7 @@ use Faker\Factory;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class DevGenerateTestListings
+class DevGenerateTestListingsService
 {
     /**
      * @var CreateUserService

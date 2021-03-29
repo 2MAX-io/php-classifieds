@@ -17,7 +17,7 @@ use App\Service\System\HealthCheck\HealthCheckResultDto;
 use Psr\Log\LoggerInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class SettingsRequiredHealthChecker implements HealthCheckerInterface
+class SettingsRequiredHealthCheckerService implements HealthCheckerInterface
 {
     /**
      * @var SettingsService

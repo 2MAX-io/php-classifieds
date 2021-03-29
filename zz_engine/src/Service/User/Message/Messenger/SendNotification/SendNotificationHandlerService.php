@@ -10,7 +10,7 @@ use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 /**
  * @see SendNotificationMessage
  */
-class SendNotificationHandler implements MessageHandlerInterface
+class SendNotificationHandlerService implements MessageHandlerInterface
 {
     /**
      * @var SendNotificationService

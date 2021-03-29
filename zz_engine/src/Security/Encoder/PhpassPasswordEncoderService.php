@@ -9,7 +9,7 @@ use Symfony\Component\Security\Core\Encoder\BasePasswordEncoder;
 use Symfony\Component\Security\Core\Encoder\SelfSaltingEncoderInterface;
 use Symfony\Component\Security\Core\Exception\BadCredentialsException;
 
-class PhpassPasswordEncoder extends BasePasswordEncoder implements SelfSaltingEncoderInterface
+class PhpassPasswordEncoderService extends BasePasswordEncoder implements SelfSaltingEncoderInterface
 {
     /**
      * {@inheritdoc}

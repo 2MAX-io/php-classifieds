@@ -19,7 +19,7 @@ use Symfony\Component\HttpFoundation\UrlHelper;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Webmozart\PathUtil\Path;
 
-class SecurityHealthChecker implements HealthCheckerInterface
+class SecurityHealthCheckerService implements HealthCheckerInterface
 {
     public const /* @noinspection SpellCheckingInspection */ SECURITY_CHECK_STRING = 'zbD2vXzqDyiFqE2iqFPPM';
 

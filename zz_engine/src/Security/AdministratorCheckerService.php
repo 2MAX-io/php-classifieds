@@ -9,7 +9,7 @@ use Symfony\Component\Security\Core\Exception\DisabledException;
 use Symfony\Component\Security\Core\User\UserCheckerInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-class AdministratorChecker implements UserCheckerInterface
+class AdministratorCheckerService implements UserCheckerInterface
 {
     public function checkPreAuth(UserInterface $admin): void
     {

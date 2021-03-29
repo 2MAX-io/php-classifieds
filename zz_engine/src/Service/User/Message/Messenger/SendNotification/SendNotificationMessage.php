@@ -7,7 +7,7 @@ namespace App\Service\User\Message\Messenger\SendNotification;
 use App\Service\System\Messenger\Base\AsyncMessageInterface;
 
 /**
- * @see SendNotificationHandler
+ * @see SendNotificationHandlerService
  */
 class SendNotificationMessage implements AsyncMessageInterface
 {

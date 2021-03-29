@@ -20,7 +20,7 @@ use Omnipay\Omnipay;
 use Omnipay\Przelewy24\Gateway;
 use Psr\Log\LoggerInterface;
 
-class Przelewy24PaymentGateway implements PaymentGatewayInterface
+class Przelewy24PaymentGatewayService implements PaymentGatewayInterface
 {
     /**
      * @var PaymentHelperService

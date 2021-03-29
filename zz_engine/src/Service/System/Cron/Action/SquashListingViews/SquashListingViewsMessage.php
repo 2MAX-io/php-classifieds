@@ -7,7 +7,7 @@ namespace App\Service\System\Cron\Action\SquashListingViews;
 use App\Service\System\Messenger\Base\OneAtTimeMessageInterface;
 
 /**
- * @see SquashListingViewsMessage
+ * @see SquashListingViewsService
  */
 class SquashListingViewsMessage implements OneAtTimeMessageInterface
 {

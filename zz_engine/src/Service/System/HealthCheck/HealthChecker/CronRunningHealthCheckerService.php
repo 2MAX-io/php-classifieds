@@ -12,7 +12,7 @@ use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class CronRunningHealthChecker implements HealthCheckerInterface
+class CronRunningHealthCheckerService implements HealthCheckerInterface
 {
     /**
      * @var TranslatorInterface

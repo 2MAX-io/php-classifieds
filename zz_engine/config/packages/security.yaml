@@ -5,7 +5,7 @@ security:
         App\Entity\System\Admin:
             algorithm: auto # change install script when changing this
         legacy_phpass:
-            id: 'App\Security\Encoder\PhpassPasswordEncoder'
+            id: 'App\Security\Encoder\PhpassPasswordEncoderService'
 
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
@@ -27,9 +27,9 @@ security:
             anonymous: true
             guard:
                 authenticators:
-                    - App\Security\AdminLoginFormAuthenticator
-            user_checker: App\Security\AdministratorChecker
-            entry_point: App\Security\AdminLoginFormAuthenticator
+                    - App\Security\AdminLoginFormAuthenticatorService
+            user_checker: App\Security\AdministratorCheckerService
+            entry_point: App\Security\AdminLoginFormAuthenticatorService
             form_login:
                 check_path: app_admin_login
                 login_path: app_admin_login
@@ -42,8 +42,8 @@ security:
             provider: app_user_provider
             guard:
                 authenticators:
-                    - App\Security\LoginFormAuthenticator
-            user_checker: App\Security\UserChecker
+                    - App\Security\LoginFormAuthenticatorService
+            user_checker: App\Security\UserCheckerService
             logout:
                 path: app_logout
             remember_me:
@@ -52,7 +52,7 @@ security:
                 path: /
                 always_remember_me: true
 
-            entry_point: App\Security\AuthenticationEntryPoint
+            entry_point: App\Security\AuthenticationEntryPointService
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication

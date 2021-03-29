@@ -12,7 +12,7 @@ use Doctrine\DBAL\Connection;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class InvalidLinkToPagesHealthChecker implements HealthCheckerInterface
+class InvalidLinkToPagesHealthCheckerService implements HealthCheckerInterface
 {
     /**
      * @var SettingsService

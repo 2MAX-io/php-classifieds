@@ -516,3 +516,5 @@ php zz_engine/bin/console app:dev:translation:diff  zz_engine/translations/messa
 php zz_engine/bin/console app:dev:translation:find-missing  zz_engine/translations/messages.en.yaml
 bash zz_engine/dev/bin/build_assets.sh
 (cd /var/www/html/zz_engine && npx prettier --write 'assets/**/*.js')
+composer require -d  zz_engine --dev phpunit
+COMPOSER_MEMORY_LIMIT=-1 composer require -d  zz_engine --dev symfony/test-pack

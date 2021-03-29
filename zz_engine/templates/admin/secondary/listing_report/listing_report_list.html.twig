@@ -18,7 +18,14 @@
         {% for listingReport in listingReportList %}
             <tr>
                 <td>
-                    {{- listingReport.reportMessage | nl2br -}}
+                    <div class="mb-2">
+                        {{- listingReport.reportMessage | nl2br -}}
+                    </div>
+                    <div>
+                        {{- 'trans.Email' | trans -}}
+                        {{- ': ' -}}
+                        {{ listingReport.email }}
+                    </div>
                 </td>
                 <td>
                     <a href="{{ path('app_listing_show', {'id': listingReport.listing.id, 'slug': listingReport.listing.slug}) }}">
@@ -27,11 +34,6 @@
                 </td>
                 <td>
                     <div class="mb-1">
-                        <div>
-                            {{- 'trans.Email' | trans -}}
-                            {{- ': ' -}}
-                            {{ listingReport.email }}
-                        </div>
                         {%- if listingReport.user ~%}
                             <div>
                                 {{- 'trans.User' | trans -}}

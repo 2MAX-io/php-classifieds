@@ -31,7 +31,6 @@
         "omnipay/paypal": "^3.0",
         "pagerfanta/pagerfanta": "^2.1",
         "paragonie/sodium_compat": "^1.13",
-        "paypal/rest-api-sdk-php": "^1.14",
         "psr/simple-cache": "^1.0",
         "sensio/framework-extra-bundle": "^5.5",
         "stefano/stefano-tree": "^4.1",

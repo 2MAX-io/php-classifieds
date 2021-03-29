@@ -70,8 +70,6 @@
       <path value="$PROJECT_DIR$/zz_engine/vendor/paragonie/sodium_compat" />
       <path value="$PROJECT_DIR$/zz_engine/vendor/hautelook/phpass" />
       <path value="$PROJECT_DIR$/zz_engine/vendor/ralouphie/getallheaders" />
-      <path value="$PROJECT_DIR$/zz_engine/vendor/phpseclib/phpseclib" />
-      <path value="$PROJECT_DIR$/zz_engine/vendor/firebase/php-jwt" />
       <path value="$PROJECT_DIR$/zz_engine/vendor/doctrine/instantiator" />
       <path value="$PROJECT_DIR$/zz_engine/vendor/moneyphp/money" />
       <path value="$PROJECT_DIR$/zz_engine/vendor/gitonomy/gitlib" />
@@ -184,7 +182,6 @@
       <path value="$PROJECT_DIR$/zz_engine/vendor/laminas/laminas-eventmanager" />
       <path value="$PROJECT_DIR$/zz_engine/vendor/monolog/monolog" />
       <path value="$PROJECT_DIR$/zz_engine/vendor/minwork/array" />
-      <path value="$PROJECT_DIR$/zz_engine/vendor/paypal/rest-api-sdk-php" />
       <path value="$PROJECT_DIR$/zz_engine/vendor/ondram/ci-detector" />
       <path value="$PROJECT_DIR$/zz_engine/vendor/stesie/phpcs-doctrine-annotation-rules" />
       <path value="$PROJECT_DIR$/zz_engine/vendor/sensio/framework-extra-bundle" />
@@ -234,6 +231,9 @@
       <path value="$PROJECT_DIR$/zz_engine/vendor/doctrine/reflection" />
       <path value="$PROJECT_DIR$/zz_engine/vendor/tijsverkoyen/css-to-inline-styles" />
       <path value="$PROJECT_DIR$/zz_engine/vendor/twig/cssinliner-extra" />
+      <path value="$PROJECT_DIR$/zz_engine/vendor/laminas/laminas-escaper" />
+      <path value="$PROJECT_DIR$/zz_engine/vendor/laminas/laminas-stdlib" />
+      <path value="$PROJECT_DIR$/zz_engine/vendor/laminas/laminas-feed" />
     </include_path>
   </component>
   <component name="PhpInterpreters">

@@ -129,9 +129,6 @@
     "felixfbecker/language-server-protocol": {
         "version": "1.5.1"
     },
-    "firebase/php-jwt": {
-        "version": "v5.2.0"
-    },
     "friendsofphp/php-cs-fixer": {
         "version": "2.16",
         "recipe": {
@@ -270,9 +267,6 @@
     "paragonie/sodium_compat": {
         "version": "v1.10.0"
     },
-    "paypal/rest-api-sdk-php": {
-        "version": "1.14.0"
-    },
     "phenx/php-font-lib": {
         "version": "0.5.2"
     },
@@ -314,9 +308,6 @@
     },
     "phpro/grumphp": {
         "version": "v1.3.1"
-    },
-    "phpseclib/phpseclib": {
-        "version": "2.0.30"
     },
     "phpstan/phpdoc-parser": {
         "version": "0.3.4"

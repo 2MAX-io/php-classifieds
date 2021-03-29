@@ -65,7 +65,7 @@
                 <th>{{ 'trans.Payment gateway ID' | trans }}</th>
                 <td>
                     {% set paymentTransactionIdShown = false %}
-                    {% if payment.gatewayName in [constant('\App\\Service\\Payment\\Enum\\PaymentGatewayEnum::PAYPAL'), constant('\App\\Service\\Payment\\Enum\\PaymentGatewayEnum::PAYPAL_NATIVE')] %}
+                    {% if payment.gatewayName in [constant('\App\\Service\\Payment\\Enum\\PaymentGatewayEnum::PAYPAL')] %}
                         {% set paymentTransactionIdShown = true %}
                         <a href="https://www.paypal.com/activity/payment/{{ payment.gatewayPaymentId }}">
                             {{- payment.gatewayPaymentId -}}

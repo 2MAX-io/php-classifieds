@@ -11,6 +11,10 @@ use Doctrine\ORM\Tools\SchemaTool;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class MigrationsTest extends AppIntegrationTest
 {
     use DatabaseTestHelper;

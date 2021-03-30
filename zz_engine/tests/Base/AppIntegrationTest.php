@@ -4,13 +4,17 @@ declare(strict_types=1);
 
 namespace App\Tests\Base;
 
+use Psr\Container\ContainerInterface;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class AppIntegrationTest extends WebTestCase
 {
-    public function getTestContainer(): \Symfony\Bundle\FrameworkBundle\Test\TestContainer
+    public function getTestContainer(): ContainerInterface
     {
-        /* @noinspection PhpIncompatibleReturnTypeInspection */
         return self::$container;
     }
 }

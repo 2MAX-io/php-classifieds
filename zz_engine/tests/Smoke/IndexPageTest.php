@@ -7,6 +7,10 @@ namespace App\Tests\Smoke;
 use App\Tests\Base\AppIntegrationTest;
 use App\Tests\Base\DatabaseTestHelper;
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class IndexPageTest extends AppIntegrationTest
 {
     use DatabaseTestHelper;

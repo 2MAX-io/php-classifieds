@@ -19,48 +19,61 @@ class UrlWithoutParamsSmokeTest extends WebTestCase
      */
     private $skippedRoutes = [];
 
+    /**
+     * @var array<string, mixed>
+     */
+    private $configForRouteList;
+
     public function testUrls(): void
     {
         $client = static::createClient();
+        $this->generateConfigForRouteList();
 
         foreach ($this->getRoutes() as $routeName => $route) {
-            if (\str_starts_with($routeName, 'app_admin_')) {
-                $this->skippedRoutes[] = $routeName;
-                continue;
-            }
-            if (\str_starts_with($routeName, 'app_user_')) {
-                $this->skippedRoutes[] = $routeName;
-                continue;
-            }
-            if (\str_starts_with($route->getPath(), '/user/')) {
-                $this->skippedRoutes[] = $routeName;
-                continue;
-            }
-            if (\in_array(
-                $routeName, [
-                    'app_listing_contact_data',
-                    'app_file_upload',
-                    'app_map_image_cache_template',
-                    'app_listing_get_custom_fields',
-                    'app_logout',
-                    'nelmio_js_logger_log',
-                ],
-                true)
-            ) {
-                $this->skippedRoutes[] = $routeName;
-                continue;
+            $hasRouteConfig = isset($this->configForRouteList[$routeName]);
+            if ($hasRouteConfig) {
+                $url = $this->configForRouteList[$routeName]['url'];
+            } else {
+                if (\str_starts_with($routeName, 'app_admin_')) {
+                    $this->skippedRoutes[] = $routeName;
+                    continue;
+                }
+                if (\str_starts_with($routeName, 'app_user_')) {
+                    $this->skippedRoutes[] = $routeName;
+                    continue;
+                }
+                if (\str_starts_with($route->getPath(), '/user/')) {
+                    $this->skippedRoutes[] = $routeName;
+                    continue;
+                }
+                if (\in_array(
+                    $routeName, [
+                        'app_listing_contact_data',
+                        'app_file_upload',
+                        'app_map_image_cache_template',
+                        'app_listing_get_custom_fields',
+                        'app_logout',
+                        'nelmio_js_logger_log',
+                    ],
+                    true)
+                ) {
+                    $this->skippedRoutes[] = $routeName;
+                    continue;
+                }
+
+                if (\str_contains($route->getPath(), '{')) {
+                    $this->skippedRoutes[] = (string) $routeName;
+                    continue;
+                }
+
+                $url = $this->getRouter()->generate((string) $routeName);
             }
 
-            if (\str_contains($route->getPath(), '{')) {
-                $this->skippedRoutes[] = (string) $routeName;
-                continue;
-            }
-
-            $url = $this->getRouter()->generate((string) $routeName);
             $client->request('GET', $url);
+            $response = $client->getResponse();
             self::assertEquals(
                 200,
-                $client->getResponse()->getStatusCode(),
+                $response->getStatusCode(),
                 "failed for route: `{$routeName}`, url: {$url}",
             );
         }
@@ -77,5 +90,19 @@ class UrlWithoutParamsSmokeTest extends WebTestCase
     protected function getRouter(): RouterInterface
     {
         return static::$kernel->getContainer()->get('router');
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    private function generateConfigForRouteList(): array
+    {
+        $this->configForRouteList['app_listing_show'] = [
+            'url' => $this->getRouter()->generate(
+                'app_listing_show', ['id' => 1, 'slug' => 'at-sit-aliquam-reprehenderit']
+            ),
+        ];
+
+        return $this->configForRouteList;
     }
 }

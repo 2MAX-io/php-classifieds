@@ -144,7 +144,7 @@ if ($isDockerDevEnvironment) {
     $formDefaultValue['smtp_password'] = 'passwordHere';
     $formDefaultValue['email_from_address'] = $formDefaultValue['smtp_username'];
     $formDefaultValue['app_timezone'] = 'UTC';
-    $formDefaultValue['admin_email'] = 'admin@2max.io';
+    $formDefaultValue['admin_email'] = 'admin-demo@2max.io';
     $formDefaultValue['admin_password'] = 'demo';
     $formDefaultValue['load_categories'] = true;
     $formDefaultValue['load_custom_fields'] = '';

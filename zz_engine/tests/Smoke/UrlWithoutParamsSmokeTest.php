@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace App\Tests\Smoke;
 
+use App\Tests\Base\AppIntegrationTest;
+use App\Tests\Base\DatabaseTestHelper;
 use App\Tests\Base\LoginTrait;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\Routing\Route;
 use Symfony\Component\Routing\RouterInterface;
 
@@ -13,9 +14,10 @@ use Symfony\Component\Routing\RouterInterface;
  * @internal
  * @coversNothing
  */
-class UrlWithoutParamsSmokeTest extends WebTestCase
+class UrlWithoutParamsSmokeTest extends AppIntegrationTest
 {
     use LoginTrait;
+    use DatabaseTestHelper;
 
     /**
      * @var string[]
@@ -31,6 +33,7 @@ class UrlWithoutParamsSmokeTest extends WebTestCase
     {
         $client = static::createClient();
         $GLOBALS['kernel'] = static::$kernel;
+        $this->clearDatabase();
 
         $this->generateConfigForRouteList();
 
@@ -109,7 +112,7 @@ class UrlWithoutParamsSmokeTest extends WebTestCase
     {
         $this->configForRouteList['app_listing_show'] = [
             'url' => $this->getRouter()->generate(
-                'app_listing_show', ['id' => 1, 'slug' => 'at-sit-aliquam-reprehenderit']
+                'app_listing_show', ['id' => 1, 'slug' => 'test-listing-title']
             ),
         ];
 

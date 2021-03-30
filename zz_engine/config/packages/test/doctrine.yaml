@@ -1,0 +1,4 @@
+doctrine:
+    dbal:
+        override_url: true
+        url: 'mysql://classifieds_test:classifieds_test@mysql_test:3306/classifieds_test?serverVersion=5.7'

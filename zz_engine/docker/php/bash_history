@@ -520,3 +520,5 @@ composer require -d  zz_engine --dev phpunit
 COMPOSER_MEMORY_LIMIT=-1 composer require -d  zz_engine --dev symfony/test-pack
 php zz_engine/bin/console debug:router --raw > /var/www/html/out.txt
 sort -o out.txt out.txt
+php zz_engine/bin/console messenger:consume async -vvv
+php zz_engine/bin/console doctrine:migrations:migrate --no-interaction

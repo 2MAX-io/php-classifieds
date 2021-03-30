@@ -4,13 +4,17 @@ declare(strict_types=1);
 
 namespace App\Tests\Smoke;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use App\Tests\Base\AppIntegrationTest;
+use App\Tests\Base\DatabaseTestHelper;
 
-class IndexPageTest extends WebTestCase
+class IndexPageTest extends AppIntegrationTest
 {
+    use DatabaseTestHelper;
+
     public function testIndexPage(): void
     {
         $client = static::createClient();
+        $this->clearDatabase();
 
         $client->request('GET', '/');
 

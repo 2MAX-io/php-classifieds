@@ -1,0 +1,2 @@
+mysqldump --no-data classifieds > /var/www/html/zz_engine/var/mysql/db_backup_schema_$(date +%Y-%m-%d_%H%M%S).sql  && chown -R 1000:1000 /var/www/html/zz_engine/var/mysql/
+mysqldump --no-data classifieds > /var/www/html/zz_engine/var/mysql/db.sql  && chown -R 1000:1000 /var/www/html/zz_engine/var/mysql/

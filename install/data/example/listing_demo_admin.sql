@@ -1,0 +1,1 @@
+INSERT INTO admin (id, email, roles, enabled, password) VALUES (1, 'admin-demo@2max.io', '["ROLE_ADMIN"]', 1, '$argon2id$v=19$m=65536,t=4,p=1$np40WSQ98hPiMRb0dQmsng$FciR5V2JtLqzG2Akktm3uMpdXz7TFIW35gdjXrmHeWM');

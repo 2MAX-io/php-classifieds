@@ -59,6 +59,32 @@ services:
             classifieds.localhost:
                 aliases:
                     - "mysql"
+    mysql_test:
+        container_name: classifieds_mysql_test
+        command: mysqld --sql_mode="STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION"
+        build:
+            context: './mysql/'
+            dockerfile: Dockerfile
+        ports: ['3307:3306']
+        tmpfs:
+            - /var/lib/mysql/:rw,noexec,nosuid,size=300m
+            - /tmp/:rw,noexec,nosuid,size=100m
+        volumes:
+            - './../../:/var/www/html/'
+            - './../../zz_engine/var/mysql:/sql'
+            - './mysql_test/my.cnf:/etc/mysql/conf.d/my.cnf'
+            - './mysql_test/bash_history:/root/.bash_history'
+        networks:
+            classifieds.localhost:
+                aliases:
+                    - "mysql_test"
+        environment:
+            - MYSQL_ALLOW_EMPTY_PASSWORD=true
+            - MYSQL_ROOT_PASSWORD=
+            - MYSQL_DATABASE=classifieds_test
+            - MYSQL_USER=classifieds_test
+            - MYSQL_PASSWORD=classifieds_test
+            - PROMPT_COMMAND=history -a
     mailhog:
         image: mailhog/mailhog
         container_name: classifieds_mail

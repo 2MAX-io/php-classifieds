@@ -12,15 +12,16 @@ use Symfony\Component\Routing\RouterInterface;
  * @internal
  * @coversNothing
  */
-class AdminIndexPageTest extends WebTestCase
+class UserMyAccountPageTest extends WebTestCase
 {
     use LoginTrait;
 
-    public function testIndexPage(): void
+    public function testUserMyAccountPage(): void
     {
         $client = static::createClient();
-        $this->loginAdmin($client);
-        $url = $this->getRouter()->generate('app_admin_index');
+        $GLOBALS['kernel'] = static::$kernel;
+        $this->loginUser($client);
+        $url = $this->getRouter()->generate('app_user_my_account');
 
         $client->request('GET', $url);
         self::assertEquals(200, $client->getResponse()->getStatusCode());

@@ -13,7 +13,7 @@ class ContainerHelper
 {
     public static function getContainer(): ContainerInterface
     {
-        if (!isset($GLOBALS['kernel']) && !$GLOBALS['kernel'] instanceof KernelInterface) {
+        if (!isset($GLOBALS['kernel']) || !$GLOBALS['kernel'] instanceof KernelInterface) {
             throw new \RuntimeException('could not find container');
         }
 

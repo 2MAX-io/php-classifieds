@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Smoke;
 
+use App\Tests\Base\LoginTrait;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\Routing\Route;
 use Symfony\Component\Routing\RouterInterface;
@@ -14,6 +15,8 @@ use Symfony\Component\Routing\RouterInterface;
  */
 class UrlWithoutParamsSmokeTest extends WebTestCase
 {
+    use LoginTrait;
+
     /**
      * @var string[]
      */
@@ -27,25 +30,22 @@ class UrlWithoutParamsSmokeTest extends WebTestCase
     public function testUrls(): void
     {
         $client = static::createClient();
+        $GLOBALS['kernel'] = static::$kernel;
+
         $this->generateConfigForRouteList();
 
         foreach ($this->getRoutes() as $routeName => $route) {
+            if (\str_starts_with($routeName, 'app_admin_')) {
+                $this->loginAdmin($client);
+            }
+            if (\str_starts_with($route->getPath(), '/user/')) {
+                $this->loginUser($client);
+            }
+
             $hasRouteConfig = isset($this->configForRouteList[$routeName]);
             if ($hasRouteConfig) {
                 $url = $this->configForRouteList[$routeName]['url'];
             } else {
-                if (\str_starts_with($routeName, 'app_admin_')) {
-                    $this->skippedRoutes[] = $routeName;
-                    continue;
-                }
-                if (\str_starts_with($routeName, 'app_user_')) {
-                    $this->skippedRoutes[] = $routeName;
-                    continue;
-                }
-                if (\str_starts_with($route->getPath(), '/user/')) {
-                    $this->skippedRoutes[] = $routeName;
-                    continue;
-                }
                 if (\in_array(
                     $routeName, [
                         'app_listing_contact_data',
@@ -54,6 +54,16 @@ class UrlWithoutParamsSmokeTest extends WebTestCase
                         'app_listing_get_custom_fields',
                         'app_logout',
                         'nelmio_js_logger_log',
+                        'app_admin_listing_redirect_next_waiting_activation',
+                        'app_admin_listing_activate_action_on_selected',
+                        'app_admin_listing_search',
+                        'app_admin_category_save_order',
+                        'app_admin_category_custom_fields_save_order',
+                        'app_admin_custom_field_save_order',
+                        'app_admin_custom_field_options_save_order',
+                        'app_admin_upgrade_run',
+                        'app_listing_file_remove',
+                        'app_payment_status_refresh',
                     ],
                     true)
                 ) {

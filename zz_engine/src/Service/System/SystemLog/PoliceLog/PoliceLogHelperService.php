@@ -41,10 +41,10 @@ class PoliceLogHelperService
         }
 
         $log = new PoliceLogDataDto();
-        $log->setSourceIp($_SERVER['REMOTE_ADDR']);
-        $log->setDestinationIp($_SERVER['SERVER_ADDR']);
-        $log->setSourcePort($_SERVER['REMOTE_PORT']);
-        $log->setDestinationPort($_SERVER['SERVER_PORT']);
+        $log->setSourceIp($_SERVER['REMOTE_ADDR'] ?? '');
+        $log->setDestinationIp($_SERVER['SERVER_ADDR'] ?? '');
+        $log->setSourcePort((string) ($_SERVER['REMOTE_PORT'] ?? ''));
+        $log->setDestinationPort((string) ($_SERVER['SERVER_PORT'] ?? ''));
         $log->setRealSourceIpBehindProxy($realIpBehindProxy);
         $log->setDatetime($datetimeFromRequestTime);
         $log->setRequestTimeFloat($_SERVER['REQUEST_TIME_FLOAT']);

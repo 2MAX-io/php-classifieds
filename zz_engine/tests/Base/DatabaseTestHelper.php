@@ -13,16 +13,16 @@ trait DatabaseTestHelper
     public function clearDatabase(): void
     {
         $this->dropAndCreateDatabase();
-        $pdo = $this->getTestContainer()->get(EntityManagerInterface::class)->getConnection();
-        $pdo->exec(\file_get_contents(__DIR__.'/../../../install/data/_schema.sql'));
-        $pdo->exec(\file_get_contents(__DIR__.'/../../../install/data/_required_data.sql'));
-        $pdo->exec(\file_get_contents(__DIR__.'/../../../install/data/settings.sql'));
-        $pdo->exec(\file_get_contents(__DIR__.'/../../../install/data/example/listing_demo_user.sql'));
-        $pdo->exec(\file_get_contents(__DIR__.'/../../../install/data/example/listing_demo_admin.sql'));
-        $pdo->exec(\file_get_contents(__DIR__.'/../../../install/data/example/category.sql'));
-        $pdo->exec(\file_get_contents(__DIR__.'/../../../install/data/example/custom_field.sql'));
-        $pdo->exec(\file_get_contents(__DIR__.'/../../../install/data/example/page.sql'));
-        $pdo->exec(\file_get_contents(__DIR__.'/../../../zz_engine/tests/Data/test_listings.sql'));
+        $this->executeSql(\file_get_contents(__DIR__.'/../../../install/data/_schema.sql'));
+        $this->executeSql(\file_get_contents(__DIR__.'/../../../install/data/_required_data.sql'));
+        $this->executeSql(\file_get_contents(__DIR__.'/../../../install/data/settings.sql'));
+        $this->executeSql(\file_get_contents(__DIR__.'/../../../install/data/example/listing_demo_user.sql'));
+        $this->executeSql(\file_get_contents(__DIR__.'/../../../install/data/example/listing_demo_admin.sql'));
+        $this->executeSql(\file_get_contents(__DIR__.'/../../../install/data/example/category.sql'));
+        $this->executeSql(\file_get_contents(__DIR__.'/../../../install/data/example/custom_field.sql'));
+        $this->executeSql(\file_get_contents(__DIR__.'/../../../install/data/example/page.sql'));
+        $this->executeSql(\file_get_contents(__DIR__.'/../../../zz_engine/tests/Data/test_listings.sql'));
+        $this->executeSql(\file_get_contents(__DIR__.'/../../../zz_engine/tests/Data/test_admin.sql'));
         \usleep(50);
     }
 
@@ -49,5 +49,15 @@ trait DatabaseTestHelper
     public function getConnection(): Connection
     {
         return $this->getTestContainer()->get(EntityManagerInterface::class)->getConnection();
+    }
+
+    public function executeSql(string $sql): void
+    {
+        /** @var \Pdo $pdo */
+        $pdo = $this->getTestContainer()->get(EntityManagerInterface::class)->getConnection();
+        $result = $pdo->exec($sql);
+        if (false === $result) {
+            throw new \RuntimeException("error while executing SQL: \n".\print_r($pdo->errorInfo(), true)."\n".$sql);
+        }
     }
 }

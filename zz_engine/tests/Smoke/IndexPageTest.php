@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace App\Tests\Smoke;
 
-use App\Tests\Base\AppIntegrationTest;
-use App\Tests\Base\DatabaseTestHelper;
+use App\Tests\Base\AppIntegrationTestCase;
+use App\Tests\Traits\DatabaseTestTrait;
 
 /**
  * @internal
  * @coversNothing
  */
-class IndexPageTest extends AppIntegrationTest
+class IndexPageTest extends AppIntegrationTestCase
 {
-    use DatabaseTestHelper;
+    use DatabaseTestTrait;
 
     public function testIndexPage(): void
     {

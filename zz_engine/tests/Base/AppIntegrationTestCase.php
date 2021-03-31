@@ -11,7 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
  * @internal
  * @coversNothing
  */
-class AppIntegrationTest extends WebTestCase
+class AppIntegrationTestCase extends WebTestCase
 {
     public function getTestContainer(): ContainerInterface
     {

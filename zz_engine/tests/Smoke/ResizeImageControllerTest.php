@@ -5,18 +5,18 @@ declare(strict_types=1);
 namespace App\Tests\Smoke;
 
 use App\Helper\FilePath;
-use App\Tests\Base\AppIntegrationTest;
-use App\Tests\Base\DatabaseTestHelper;
-use App\Tests\Base\RouterHelper;
+use App\Tests\Base\AppIntegrationTestCase;
+use App\Tests\Traits\DatabaseTestTrait;
+use App\Tests\Traits\RouterTestTrait;
 
 /**
  * @internal
  * @coversNothing
  */
-class ResizeImageControllerTest extends AppIntegrationTest
+class ResizeImageControllerTest extends AppIntegrationTestCase
 {
-    use DatabaseTestHelper;
-    use RouterHelper;
+    use DatabaseTestTrait;
+    use RouterTestTrait;
 
     public function testPage(): void
     {

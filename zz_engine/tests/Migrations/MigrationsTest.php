@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Tests\Migrations;
 
-use App\Tests\Base\AppIntegrationTest;
-use App\Tests\Base\DatabaseTestHelper;
+use App\Tests\Base\AppIntegrationTestCase;
+use App\Tests\Traits\DatabaseTestTrait;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Tools\SchemaTool;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
@@ -15,9 +15,9 @@ use Symfony\Component\Console\Tester\CommandTester;
  * @internal
  * @coversNothing
  */
-class MigrationsTest extends AppIntegrationTest
+class MigrationsTest extends AppIntegrationTestCase
 {
-    use DatabaseTestHelper;
+    use DatabaseTestTrait;
 
     public function testSchemaUpdateForceEmptyFromInstall(): void
     {

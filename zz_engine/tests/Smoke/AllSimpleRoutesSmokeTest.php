@@ -4,21 +4,21 @@ declare(strict_types=1);
 
 namespace App\Tests\Smoke;
 
-use App\Tests\Base\AppIntegrationTest;
-use App\Tests\Base\DatabaseTestHelper;
-use App\Tests\Base\LoginTrait;
-use App\Tests\Base\RouterHelper;
+use App\Tests\Base\AppIntegrationTestCase;
+use App\Tests\Traits\DatabaseTestTrait;
+use App\Tests\Traits\LoginTestTrait;
+use App\Tests\Traits\RouterTestTrait;
 use Symfony\Component\Routing\Route;
 
 /**
  * @internal
  * @coversNothing
  */
-class AllSimpleRoutesSmokeTest extends AppIntegrationTest
+class AllSimpleRoutesSmokeTest extends AppIntegrationTestCase
 {
-    use LoginTrait;
-    use DatabaseTestHelper;
-    use RouterHelper;
+    use LoginTestTrait;
+    use DatabaseTestTrait;
+    use RouterTestTrait;
 
     /**
      * @var string[]

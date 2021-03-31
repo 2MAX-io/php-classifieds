@@ -4,19 +4,20 @@ declare(strict_types=1);
 
 namespace App\Tests\Smoke;
 
-use App\Tests\Base\AppIntegrationTest;
-use App\Tests\Base\DatabaseTestHelper;
-use App\Tests\Base\LoginTrait;
-use Symfony\Component\Routing\RouterInterface;
+use App\Tests\Base\AppIntegrationTestCase;
+use App\Tests\Traits\DatabaseTestTrait;
+use App\Tests\Traits\LoginTestTrait;
+use App\Tests\Traits\RouterTestTrait;
 
 /**
  * @internal
  * @coversNothing
  */
-class UserMyAccountPageTest extends AppIntegrationTest
+class UserMyAccountPageTest extends AppIntegrationTestCase
 {
-    use LoginTrait;
-    use DatabaseTestHelper;
+    use LoginTestTrait;
+    use DatabaseTestTrait;
+    use RouterTestTrait;
 
     public function testUserMyAccountPage(): void
     {
@@ -28,10 +29,5 @@ class UserMyAccountPageTest extends AppIntegrationTest
 
         $client->request('GET', $url);
         self::assertEquals(200, $client->getResponse()->getStatusCode());
-    }
-
-    protected function getRouter(): RouterInterface
-    {
-        return static::$kernel->getContainer()->get('router');
     }
 }

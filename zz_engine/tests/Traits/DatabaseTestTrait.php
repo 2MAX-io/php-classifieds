@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Base;
+namespace App\Tests\Traits;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 
-trait DatabaseTestHelper
+trait DatabaseTestTrait
 {
     public function clearDatabase(): void
     {

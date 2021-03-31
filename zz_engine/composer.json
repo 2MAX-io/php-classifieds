@@ -67,6 +67,7 @@
         "willdurand/js-translation-bundle": "^3.0"
     },
     "require-dev": {
+        "ext-posix": "*",
         "friendsofphp/php-cs-fixer": "^2.18",
         "fzaninotto/faker": "^1.9",
         "phpro/grumphp": "^1.3",

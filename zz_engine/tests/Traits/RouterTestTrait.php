@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Base;
+namespace App\Tests\Traits;
 
 use Symfony\Component\Routing\RouterInterface;
 
-trait RouterHelper
+trait RouterTestTrait
 {
     protected function getRouter(): RouterInterface
     {

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Base;
+namespace App\Tests\Traits;
 
 use App\Entity\System\Admin;
 use App\Entity\User;
@@ -11,7 +11,7 @@ use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Component\BrowserKit\Cookie;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
-trait LoginTrait
+trait LoginTestTrait
 {
     public function loginUser(KernelBrowser $client, string $userEmail = 'user-demo@2max.io'): void
     {

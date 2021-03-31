@@ -20,9 +20,9 @@ class AdminListingSearchControllerTest extends AppIntegrationTestCase implements
     use RouterTestTrait;
     use LoginTestTrait;
 
-    public static function getRouteName(): string
+    public static function getRouteNames(): array
     {
-        return 'app_admin_listing_search';
+        return ['app_admin_listing_search'];
     }
 
     public function testPage(): void

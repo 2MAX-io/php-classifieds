@@ -22,9 +22,9 @@ class LicenseControllerTest extends AppIntegrationTestCase implements SmokeTestF
     use RouterTestTrait;
     use LoginTestTrait;
 
-    public static function getRouteName(): string
+    public static function getRouteNames(): array
     {
-        return 'app_license_show';
+        return ['app_license_show'];
     }
 
     public function test(): void

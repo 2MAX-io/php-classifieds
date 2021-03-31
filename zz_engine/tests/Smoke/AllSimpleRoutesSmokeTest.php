@@ -21,6 +21,8 @@ class AllSimpleRoutesSmokeTest extends AppIntegrationTestCase
     use DatabaseTestTrait;
     use RouterTestTrait;
 
+    private const EXPECTED_SKIPPED_COUNT = 43;
+
     /**
      * @var string[]
      */
@@ -94,7 +96,7 @@ class AllSimpleRoutesSmokeTest extends AppIntegrationTestCase
 
         $this->skippedRoutes = \array_diff($this->skippedRoutes, $this->getTestedRoutes());
         self::assertLessThanOrEqual(
-            47,
+            self::EXPECTED_SKIPPED_COUNT,
             \count($this->skippedRoutes),
             \implode("\n", $this->skippedRoutes),
         );
@@ -221,7 +223,8 @@ class AllSimpleRoutesSmokeTest extends AppIntegrationTestCase
                 \class_implements($className) ?: [],
                 true,
             )) {
-                $routes[] = $className::getRouteName();
+                /** @noinspection SlowArrayOperationsInLoopInspection */
+                $routes = \array_merge($routes, $className::getRouteNames());
             }
         }
 

@@ -19,9 +19,9 @@ class ResizeImageControllerTest extends AppIntegrationTestCase implements SmokeT
     use DatabaseTestTrait;
     use RouterTestTrait;
 
-    public static function getRouteName(): string
+    public static function getRouteNames(): array
     {
-        return 'app_resize_image';
+        return ['app_resize_image'];
     }
 
     public function testPage(): void

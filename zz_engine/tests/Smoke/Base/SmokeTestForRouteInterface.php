@@ -6,5 +6,8 @@ namespace App\Tests\Smoke\Base;
 
 interface SmokeTestForRouteInterface
 {
-    public static function getRouteName(): string;
+    /**
+     * @return string[]
+     */
+    public static function getRouteNames(): array;
 }

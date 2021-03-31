@@ -55,7 +55,7 @@ class DeleteExpiredListingFilesService
         $qb->join('listing.listingFiles', 'listingFile');
 
         $qb->andWhere($qb->expr()->lt('listing.validUntilDate', ':deleteBeforeDate'));
-        $qb->setParameter(':deleteBeforeDate', $deleteBeforeDate->format('Y-m-d H:i:s'));
+        $qb->setParameter(':deleteBeforeDate', $deleteBeforeDate->format(DateHelper::MYSQL_FORMAT));
 
         $qb->andWhere($qb->expr()->eq('listingFile.fileDeleted', 0));
         $qb->andWhere($qb->expr()->eq('listing.userDeactivated', 1));

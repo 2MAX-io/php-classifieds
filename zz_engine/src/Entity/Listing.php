@@ -443,7 +443,7 @@ class Listing
             return null;
         }
 
-        return $this->getValidUntilDate()->format('Y-m-d H:i:s');
+        return $this->getValidUntilDate()->format(DateHelper::MYSQL_FORMAT);
     }
 
     public function isExpired(): bool

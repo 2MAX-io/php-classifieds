@@ -44,7 +44,7 @@ class RemoveFeaturedWhenExpiredService implements CronActionInterface
                 && featured = 1 
                 && (featured_until_date <= :now OR featured_until_date IS NULL)
         ');
-        $query->bindValue(':now', DateHelper::date('Y-m-d H:i:s'));
+        $query->bindValue(':now', DateHelper::date(DateHelper::MYSQL_FORMAT));
         $query->execute();
     }
 }

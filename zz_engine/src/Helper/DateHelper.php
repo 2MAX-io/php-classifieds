@@ -8,6 +8,8 @@ use Carbon\Carbon;
 
 class DateHelper
 {
+    public const MYSQL_FORMAT = 'Y-m-d H:i:s';
+
     public static function create(): \DateTime
     {
         return new \DateTime();

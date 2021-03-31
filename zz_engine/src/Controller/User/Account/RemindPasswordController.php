@@ -109,7 +109,7 @@ class RemindPasswordController extends AbstractUserController
             return $this->redirectToRoute('app_remind_password');
         }
 
-        $remindPasswordService->setHashedPassword(
+        $remindPasswordService->remindPasswordConfirmed(
             $user,
             $newHashedPassword,
         );

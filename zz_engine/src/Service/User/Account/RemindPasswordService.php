@@ -89,7 +89,7 @@ class RemindPasswordService
         );
     }
 
-    public function setHashedPassword(User $user, string $newPasswordHash): void
+    public function remindPasswordConfirmed(User $user, string $newPasswordHash): void
     {
         $user->setPassword($newPasswordHash);
 

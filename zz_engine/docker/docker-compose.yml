@@ -48,6 +48,8 @@ services:
             - './mysql/data:/var/lib/mysql'
             - './mysql/my.cnf:/etc/mysql/conf.d/my.cnf'
             - './mysql/bash_history:/root/.bash_history'
+            - './mysql/bash_history:/var/www/.bash_history'
+            - './mysql/client_my.cnf:/var/www/.my.cnf'
         environment:
             - MYSQL_ALLOW_EMPTY_PASSWORD=true
             - MYSQL_ROOT_PASSWORD=
@@ -74,6 +76,7 @@ services:
             - './../../zz_engine/var/mysql:/sql'
             - './mysql_test/my.cnf:/etc/mysql/conf.d/my.cnf'
             - './mysql_test/bash_history:/root/.bash_history'
+            - './mysql_test/bash_history:/var/www/.bash_history'
         networks:
             classifieds.localhost:
                 aliases:

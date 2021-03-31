@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\Smoke;
 
 use App\Tests\Base\AppIntegrationTestCase;
+use App\Tests\Smoke\Base\SmokeTestForRouteInterface;
 use App\Tests\Traits\DatabaseTestTrait;
 use App\Tests\Traits\LoginTestTrait;
 use App\Tests\Traits\RouterTestTrait;
@@ -91,7 +92,13 @@ class AllSimpleRoutesSmokeTest extends AppIntegrationTestCase
                 "failed for route: `{$routeName}`, url: {$url}\n\n".$response->getContent(),
             );
         }
-//        self::assertCount(0, $this->skippedRoutes, \implode("\n", $this->skippedRoutes));
+
+        $this->skippedRoutes = \array_diff($this->skippedRoutes, $this->getTestedRoutes());
+        self::assertLessThanOrEqual(
+            50,
+            \count($this->skippedRoutes),
+            \implode("\n", $this->skippedRoutes),
+        );
     }
 
     /**
@@ -198,5 +205,24 @@ class AllSimpleRoutesSmokeTest extends AppIntegrationTestCase
         }
 
         return $this->configForRouteList;
+    }
+
+    /**
+     * @return string[]
+     */
+    private function getTestedRoutes(): array
+    {
+        $routes = [];
+        foreach (\get_declared_classes() as $className) {
+            if (\in_array(
+                SmokeTestForRouteInterface::class,
+                \class_implements($className) ?: [],
+                true,
+            )) {
+                $routes[] = $className::getRouteName();
+            }
+        }
+
+        return $routes;
     }
 }

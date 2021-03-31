@@ -6,6 +6,7 @@ namespace App\Tests\Smoke;
 
 use App\Helper\FilePath;
 use App\Tests\Base\AppIntegrationTestCase;
+use App\Tests\Smoke\Base\SmokeTestForRouteInterface;
 use App\Tests\Traits\DatabaseTestTrait;
 use App\Tests\Traits\RouterTestTrait;
 
@@ -13,10 +14,15 @@ use App\Tests\Traits\RouterTestTrait;
  * @internal
  * @coversNothing
  */
-class ResizeImageControllerTest extends AppIntegrationTestCase
+class ResizeImageControllerTest extends AppIntegrationTestCase implements SmokeTestForRouteInterface
 {
     use DatabaseTestTrait;
     use RouterTestTrait;
+
+    public static function getRouteName(): string
+    {
+        return 'app_resize_image';
+    }
 
     public function testPage(): void
     {

@@ -58,11 +58,13 @@ class DeleteNotEnabledUsersCronService implements CronActionInterface, CronAtNig
         try {
             $pdo = $this->em->getConnection();
             $pdo->executeQuery('
-                DELETE FROM user
+                DELETE user FROM user
+                LEFT JOIN listing ON user.id = listing.user_id
                 WHERE TRUE
                     && user.enabled = FALSE
                     && user.last_login IS NULL
                     && user.registration_date < :deleteOlderThan
+                    && listing.id IS NULL
             ', [
                 'deleteOlderThan' => DateHelper::carbonNow()->subHours(16)->format(DateHelper::MYSQL_FORMAT),
             ]);

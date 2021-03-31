@@ -523,3 +523,4 @@ sort -o out.txt out.txt
 php zz_engine/bin/console messenger:consume async -vvv
 php zz_engine/bin/console doctrine:migrations:migrate --no-interaction
 php /var/www/html/zz_engine/bin/phpunit --bootstrap /var/www/html/zz_engine/tests/bootstrap.php --configuration /var/www/html/zz_engine/phpunit.xml.dist
+php -dxdebug.start_with_request=yes zz_engine/bin/console app:dev:translation:find-missing  zz_engine/translations/messages.en.yaml

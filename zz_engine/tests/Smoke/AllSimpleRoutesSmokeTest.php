@@ -94,7 +94,7 @@ class AllSimpleRoutesSmokeTest extends AppIntegrationTestCase
 
         $this->skippedRoutes = \array_diff($this->skippedRoutes, $this->getTestedRoutes());
         self::assertLessThanOrEqual(
-            50,
+            47,
             \count($this->skippedRoutes),
             \implode("\n", $this->skippedRoutes),
         );
@@ -192,6 +192,9 @@ class AllSimpleRoutesSmokeTest extends AppIntegrationTestCase
         ]);
         $urlList[] = $this->getRouter()->generate('app_user_message_respond_to_listing', [
             'listing' => 1,
+        ]);
+        $urlList[] = $this->getRouter()->generate('app_user_message_list_thread', [
+            'userMessageThread' => 1,
         ]);
 
         $router = $this->getRouter();

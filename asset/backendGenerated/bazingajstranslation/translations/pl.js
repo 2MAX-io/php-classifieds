@@ -892,4 +892,9 @@ t.add("trans.can be bought here", "mo\u017cna j\u0105 kupi\u0107 tutaj", "messag
 t.add("trans.License for 2MAX.io PHP Classified Ads is not valid", "Licencja 2MAX.io PHP Classified Ads jest nieprawid\u0142owa", "messages", "pl");
 t.add("trans.If you have valid license you can", "Je\u017celi posiadasz wa\u017cn\u0105 licencj\u0119 mo\u017cesz", "messages", "pl");
 t.add("trans.enter valid license it here", "wpisa\u0107 prawid\u0142ow\u0105 licencj\u0119 j\u0105 tutaj", "messages", "pl");
+t.add("trans.Notify by email about new message", "Powiadomienie email o nowej wiadomo\u015bci", "messages", "pl");
+t.add("trans.Change notification settings", "Zmie\u0144 ustawienia powiadomie\u0144", "messages", "pl");
+t.add("trans.Cron executing message queue is not working", "Cron obs\u0142uguj\u0105cy kolejk\u0119 wiadomo\u015bci nie dzia\u0142a", "messages", "pl");
+t.add("trans.Direct messages enabled", "Wiadomo\u015bci bezpo\u015brednie w\u0142\u0105czone", "messages", "pl");
+t.add("trans.Write message button is displayed for your listings", "Przycisk wy\u015blij wiadomo\u015b\u0107 jest wy\u015bwietlany w Twoich og\u0142oszeniach", "messages", "pl");
 })(Translator);

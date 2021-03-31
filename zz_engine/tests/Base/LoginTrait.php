@@ -17,6 +17,9 @@ trait LoginTrait
     {
         $session = self::$container->get('session');
 
+        /**
+         * @psalm-suppress UndefinedClass
+         */
         $user = static::$kernel->getContainer()->get(EntityManagerInterface::class)->getRepository(User::class)->findOneBy([
             'email' => $userEmail,
         ]);

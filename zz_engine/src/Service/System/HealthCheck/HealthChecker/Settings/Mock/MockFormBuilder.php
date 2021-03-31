@@ -27,7 +27,7 @@ class MockFormBuilder implements \IteratorAggregate, FormBuilderInterface
 
     /**
      * @param FormBuilderInterface|string $child
-     * @param null|mixed|string $type
+     * @param mixed|string|null $type
      * @param array<array-key,mixed> $options
      */
     public function add($child, $type = null, array $options = []): FormBuilderInterface

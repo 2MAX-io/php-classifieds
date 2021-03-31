@@ -7,7 +7,7 @@ namespace App\Tests\Smoke;
 use App\Helper\FilePath;
 use App\Tests\Base\AppIntegrationTest;
 use App\Tests\Base\DatabaseTestHelper;
-use Symfony\Component\Routing\RouterInterface;
+use App\Tests\Base\RouterHelper;
 
 /**
  * @internal
@@ -16,6 +16,7 @@ use Symfony\Component\Routing\RouterInterface;
 class ResizeImageControllerTest extends AppIntegrationTest
 {
     use DatabaseTestHelper;
+    use RouterHelper;
 
     public function testPage(): void
     {
@@ -36,13 +37,10 @@ class ResizeImageControllerTest extends AppIntegrationTest
         $client->request('GET', $url);
         $response = $client->getResponse();
         \ob_end_clean();
-        \unlink($testImagePath);
+        if (\file_exists($testImagePath)) {
+            \unlink($testImagePath);
+        }
 
         self::assertEquals(200, $response->getStatusCode(), (string) $response->getContent());
-    }
-
-    protected function getRouter(): RouterInterface
-    {
-        return static::$kernel->getContainer()->get('router');
     }
 }

@@ -78,7 +78,7 @@ class TranslationFindMissingCommand extends Command
             if (\str_contains($grepResultRow, '`'.$transPrefix.'`')) {
                 continue;
             }
-            $translationKeyFromGrep = StringHelper::matchSingle('~(?P<return>trans\.[^\'\"\n]+)~', $grepResultRow);
+            $translationKeyFromGrep = StringHelper::matchSingle(/** @lang text */ '~(?P<return>trans\.[^\'\"\n]+)~', $grepResultRow);
             if (!$translationKeyFromGrep) {
                 $io->writeln($grepResultRow);
                 ++$missingTranslationsCount;
@@ -127,16 +127,19 @@ class TranslationFindMissingCommand extends Command
         }
         $transPrefix = $pluralizationPrefix.'trans.';
         $transPrefixPos = \strpos($grepResultRow, $transPrefix);
+        if (false === $transPrefixPos) {
+            throw new \RuntimeException('could not find translation prefix in: '.$grepResultRow);
+        }
         $stringDelimiter = $grepResultRow[$transPrefixPos - 1] ?? null;
         if (!\in_array($stringDelimiter, ['"', "'", '`'])) {
             $stringDelimiter = null;
         }
 
-        $fromTransPrefixSubstr = \substr($grepResultRow, $transPrefixPos);
-        $fromTransPrefixSubstrLen = \mb_strlen($fromTransPrefixSubstr);
+        $substrFromTransPrefixPos = \substr($grepResultRow, $transPrefixPos);
+        $substrFromTransPrefixPosLength = \mb_strlen($substrFromTransPrefixPos);
         $prevChar = null;
-        for ($i = 0; $i < $fromTransPrefixSubstrLen; ++$i) {
-            $char = $fromTransPrefixSubstr[$i];
+        for ($i = 0; $i < $substrFromTransPrefixPosLength; ++$i) {
+            $char = $substrFromTransPrefixPos[$i];
             if ("\n" === $char) {
                 break;
             }
@@ -151,6 +154,10 @@ class TranslationFindMissingCommand extends Command
         $translationKey = StringHelper::replaceMultiple($translationKey, [
             "\\'" => "'",
         ]);
+
+        if ('' === $translationKey) {
+            return null;
+        }
 
         return $translationKey;
     }

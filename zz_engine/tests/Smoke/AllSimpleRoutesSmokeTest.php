@@ -7,8 +7,8 @@ namespace App\Tests\Smoke;
 use App\Tests\Base\AppIntegrationTest;
 use App\Tests\Base\DatabaseTestHelper;
 use App\Tests\Base\LoginTrait;
+use App\Tests\Base\RouterHelper;
 use Symfony\Component\Routing\Route;
-use Symfony\Component\Routing\RouterInterface;
 
 /**
  * @internal
@@ -18,6 +18,7 @@ class AllSimpleRoutesSmokeTest extends AppIntegrationTest
 {
     use LoginTrait;
     use DatabaseTestHelper;
+    use RouterHelper;
 
     /**
      * @var string[]
@@ -82,10 +83,8 @@ class AllSimpleRoutesSmokeTest extends AppIntegrationTest
                 $url = $this->getRouter()->generate((string) $routeName);
             }
 
-            \ob_start();
             $client->request('GET', $url);
             $response = $client->getResponse();
-            \ob_clean();
             self::assertEquals(
                 200,
                 $response->getStatusCode(),
@@ -101,11 +100,6 @@ class AllSimpleRoutesSmokeTest extends AppIntegrationTest
     protected function getRoutes(): array
     {
         return $this->getRouter()->getRouteCollection()->all();
-    }
-
-    protected function getRouter(): RouterInterface
-    {
-        return static::$kernel->getContainer()->get('router');
     }
 
     /**

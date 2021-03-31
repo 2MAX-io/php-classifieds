@@ -1001,11 +1001,9 @@ class Listing
 
     public function removeUserObservedListing(UserObservedListing $userObservedListing): self
     {
-        if ($this->userObservedListings->removeElement($userObservedListing)) {
-            // set the owning side to null (unless already changed)
-            if ($userObservedListing->getListing() === $this) {
-                $userObservedListing->setListing(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->userObservedListings->removeElement($userObservedListing) && $userObservedListing->getListing() === $this) {
+            $userObservedListing->setListing(null);
         }
 
         return $this;

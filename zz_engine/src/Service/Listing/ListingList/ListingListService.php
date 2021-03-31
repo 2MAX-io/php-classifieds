@@ -238,10 +238,12 @@ class ListingListService
 
         if ($listingListDto->isLastAddedList()) {
             $qb->orderBy('listing.firstCreatedDate', Criteria::DESC);
+            $qb->addOrderBy('listing.id', Criteria::DESC);
         }
 
         if ($listingListDto->getFilterByUserObservedListings()) {
             $qb->orderBy('listing.firstCreatedDate', Criteria::DESC);
+            $qb->addOrderBy('listing.id', Criteria::DESC);
         }
 
         $qb->groupBy('listing.id');

@@ -45,32 +45,34 @@
 
                 {% if listing.status in [constant('\App\\Entity\\Listing::STATUS_ACTIVE'), constant('\App\\Entity\\Listing::STATUS_ACTIVE_FEATURED')] %}
                     <section class="pricing">
-                        <div class="row px-3">
+                        <div class="row">
                             {% for package in packages %}
                                 <!-- Package: {{ package.name }} -->
-                                <div class="card mb-5 mb-lg-0 mr-lg-1">
-                                    <div class="card-body">
-                                        <h5 class="card-title text-muted text-uppercase text-center">{{ package.name }}</h5>
-                                        <h6 class="card-price text-center">{{ package.price | moneyPrecise }}</h6>
-                                        <div class="text-muted small mb-2">
-                                            {%- trans count package.daysFeaturedExpire with {'%featuredDays%': package.daysFeaturedExpire, '%price%': package.price | moneyPrecise} -%}
-                                                {1}trans.Feature for one day for %price%|]1,Inf[ Feature for %featuredDays% days for %price%
-                                            {%- endtrans -%}
+                                <div class="col-lg-4">
+                                    <div class="card mb-2">
+                                        <div class="card-body">
+                                            <h5 class="card-title text-muted text-uppercase text-center">{{ package.name }}</h5>
+                                            <h6 class="card-price text-center">{{ package.price | moneyPrecise }}</h6>
+                                            <div class="text-muted small mb-2">
+                                                {%- trans count package.daysFeaturedExpire with {'%featuredDays%': package.daysFeaturedExpire, '%price%': package.price | moneyPrecise} -%}
+                                                    {1}trans.Feature for one day for %price%|]1,Inf[ Feature for %featuredDays% days for %price%
+                                                {%- endtrans -%}
+                                            </div>
+                                            <hr>
+                                            <div class="mb-2">
+                                                {{ package.description | nl2br }}
+                                            </div>
                                         </div>
-                                        <hr>
-                                        <div class="mb-2">
-                                            {{ package.description | nl2br }}
+                                        <div class="card-footer">
+                                            {{ include('user/listing/_action/_feature_form.html.twig') }}
                                         </div>
-                                    </div>
-                                    <div class="card-footer">
-                                        {{ include('user/listing/_action/_feature_form.html.twig') }}
                                     </div>
                                 </div>
                             {% endfor %}
                             {% if listing.featuredUntilDate is null %}
                                 <!-- Trial -->
                                 <div class="col-lg-4">
-                                    <div class="card mb-5 mb-lg-0">
+                                    <div class="card mb-2">
                                         <div class="card-body">
                                             <h5 class="card-title text-muted text-uppercase text-center">{{ 'trans.Try featured' | trans }}</h5>
                                             <h6 class="card-price text-center">{{ 'trans.for free' | trans }}</h6>
@@ -81,6 +83,7 @@
                                         </div>
                                         <div class="card-footer">
                                             {{ include('user/listing/_action/_feature_as_demo_form.html.twig') }}
+                                        </div>
                                     </div>
                                 </div>
                             {% endif %}

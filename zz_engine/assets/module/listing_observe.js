@@ -13,7 +13,7 @@ $(".js__observe").on("click", function () {
 
     var formData = new FormData();
     formData.append(ParamEnum.LISTING_ID, listingId);
-    formData.append(ParamEnum.OBSERVED, newObservedValue);
+    formData.append(ParamEnum.OBSERVED, newObservedValue ? '1' : '0');
     fetch(Routing.generate("app_user_observed_listing_set"), {
         method: "post",
         body: formData,
@@ -30,7 +30,7 @@ $(".js__observe").on("click", function () {
             $button.attr("data-observed", jsonData[ParamEnum.OBSERVED] | 0);
             let $icon = $button;
             if (!$icon.is(".svg")) {
-                $icon = $icon.find(".svg");
+                $icon = $icon.find($(".svg"));
             }
 
             if (jsonData[ParamEnum.OBSERVED]) {

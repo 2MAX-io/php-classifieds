@@ -12,7 +12,6 @@ use App\Service\System\Pagination\Dto\PagerfantaAdapter;
 use App\Service\System\Pagination\Dto\PaginationDto;
 use App\Service\System\Pagination\PaginationService;
 use Doctrine\DBAL\Connection;
-use Doctrine\DBAL\Statement;
 use Doctrine\ORM\EntityManagerInterface;
 
 class PoliceLogForUserMessageService
@@ -134,8 +133,7 @@ class PoliceLogForUserMessageService
         $whereSql = \implode(' && ', $policeLogForUserMessageDto->getWhere());
 
         $pdo = $this->em->getConnection();
-        /** @var Statement|Statement[] $stmt */
-        $stmt = $pdo->prepare("
+        $result = $pdo->executeQuery("
             SELECT
                 COUNT(1)
             FROM zzzz_police_log_user_message AS log
@@ -144,11 +142,8 @@ class PoliceLogForUserMessageService
             LEFT JOIN user AS user_sender ON user_sender.id = log.sender_user_id
             LEFT JOIN user AS user_recipient ON user_recipient.id = log.recipient_user_id
             WHERE {$whereSql}
-        ");
+        ", $policeLogForUserMessageDto->getSqlParameters());
 
-        DbHelper::bindParamsFromArray($policeLogForUserMessageDto->getSqlParameters(), $stmt);
-        $stmt->execute();
-
-        return (int) $stmt->fetchOne();
+        return (int) $result->fetchOne();
     }
 }

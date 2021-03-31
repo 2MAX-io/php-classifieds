@@ -44,6 +44,7 @@ class LicenseController extends AbstractController
         )) {
             return $this->json([
                 ParamEnum::ERROR => 'invalid signature',
+                'originalRequest' => $requestContent,
             ], Response::HTTP_FORBIDDEN);
         }
 
@@ -56,7 +57,7 @@ class LicenseController extends AbstractController
             UrlGeneratorInterface::ABSOLUTE_URL,
         );
         $urlFromRequest = $requestArray['licenseShowAbsoluteUrl'] ?? '';
-        $signedUrlMatchActualUrl = $urlFromRequest !== $appGeneratedUrl;
+        $signedUrlMatchActualUrl = $urlFromRequest === $appGeneratedUrl;
         if (!$signedUrlMatchActualUrl) {
             return $this->json([
                 ParamEnum::ERROR => 'payload for invalid licenseShowAbsoluteUrl',

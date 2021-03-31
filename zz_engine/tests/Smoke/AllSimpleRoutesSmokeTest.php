@@ -61,7 +61,6 @@ class AllSimpleRoutesSmokeTest extends AppIntegrationTestCase
                         'nelmio_js_logger_log',
                         'app_admin_listing_redirect_next_waiting_activation',
                         'app_admin_listing_activate_action_on_selected',
-                        'app_admin_listing_search',
                         'app_admin_category_save_order',
                         'app_admin_category_custom_fields_save_order',
                         'app_admin_custom_field_save_order',

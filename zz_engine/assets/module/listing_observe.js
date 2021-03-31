@@ -13,7 +13,7 @@ $(".js__observe").on("click", function () {
 
     var formData = new FormData();
     formData.append(ParamEnum.LISTING_ID, listingId);
-    formData.append(ParamEnum.OBSERVED, newObservedValue ? '1' : '0');
+    formData.append(ParamEnum.OBSERVED, newObservedValue ? "1" : "0");
     fetch(Routing.generate("app_user_observed_listing_set"), {
         method: "post",
         body: formData,

@@ -67,6 +67,7 @@ class CronController extends AbstractController
             '--memory-limit' => '128M',
             '--limit' => '1',
             '--time-limit' => 5,
+            '--quiet' => '--quiet',
         ]);
         $application->run($input);
 
@@ -75,6 +76,7 @@ class CronController extends AbstractController
             'receivers' => ['async'],
             '--time-limit' => 20,
             '--memory-limit' => '128M',
+            '--quiet' => '--quiet',
         ]);
         $application->run($input);
 

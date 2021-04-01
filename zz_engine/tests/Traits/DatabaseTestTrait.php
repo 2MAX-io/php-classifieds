@@ -21,8 +21,7 @@ trait DatabaseTestTrait
         $this->executeSql(\file_get_contents(__DIR__.'/../../../install/data/example/category.sql'));
         $this->executeSql(\file_get_contents(__DIR__.'/../../../install/data/example/custom_field.sql'));
         $this->executeSql(\file_get_contents(__DIR__.'/../../../install/data/example/page.sql'));
-        $this->executeSql(\file_get_contents(__DIR__.'/../../../zz_engine/tests/Data/test_listings.sql'));
-        $this->executeSql(\file_get_contents(__DIR__.'/../../../zz_engine/tests/Data/test_admin.sql'));
+        $this->executeSql(\file_get_contents(__DIR__.'/../../../zz_engine/tests/Data/test_database.sql'));
         \usleep(50);
     }
 
@@ -56,7 +55,7 @@ trait DatabaseTestTrait
         /** @var \Pdo $pdo */
         $pdo = $this->getTestContainer()->get(EntityManagerInterface::class)->getConnection();
         $result = $pdo->exec($sql);
-        if (false === $result) {
+        if (false === $result || '00000' !== $pdo->errorCode()) {
             throw new \RuntimeException("error while executing SQL: \n".\print_r($pdo->errorInfo(), true)."\n".$sql);
         }
     }

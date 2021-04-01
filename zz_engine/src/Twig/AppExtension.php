@@ -45,6 +45,7 @@ class AppExtension extends AbstractExtension
             new TwigFilter('displayTextWarning', [TwigNoDependencies::class, 'displayTextWarning']),
             new TwigFilter('isExpired', [TwigNoDependencies::class, 'isExpired']),
             new TwigFilter('boolGreenRedClass', [TwigNoDependencies::class, 'boolGreenRedClass']),
+            new TwigFilter('unique', [TwigNoDependencies::class, 'unique']),
             new TwigFilter('defaultTrans', [TwigTranslator::class, 'defaultTrans']),
             new TwigFilter('phone', [TwigPhone::class, 'phone']),
             new TwigFilter('displayUserName', [TwigUser::class, 'displayUserName']),

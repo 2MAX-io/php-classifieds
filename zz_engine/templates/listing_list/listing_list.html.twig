@@ -88,7 +88,7 @@
                             {%- if listingListDto.showOnMap ~%}
                                 <a {{- ' ' -}}
                                         href="{{ path(app.request.get('_route'), queryParameters | merge({'showOnMap': null})) }}" {{- ' ' -}}
-                                        class="btn btn-light-gray mb-2 float-right" {{- ' ' -}}
+                                        class="btn btn-light-gray mb-2 float-right js__linkToMap" {{- ' ' -}}
                                 > {{- '' -}}
                                     {{- 'trans.List' | trans -}}
                                 </a>

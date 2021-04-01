@@ -79,24 +79,18 @@
         {%- endif ~%}
         <li class="d-none d-lg-block">
             <select class="js__selectChangeUrl pagination-per-page-select form-control d-inline-block ml-2">
-                <option {{- ' ' -}}
-                        {%- if app.request.get('perPage') == 10 -%}selected{%- endif -%} {{- ' ' -}}
-                        value="{{ _self.perPagePath(10, _context) }}" {{- '' -}}
-                >
-                    {{- '10' -}}{{- ' ' -}}{{- 'trans.per page' | trans -}}
-                </option>
-                <option
-                        {%- if app.request.get('perPage') == 50 -%}selected{%- endif -%} {{- ' ' -}}
-                        value="{{ _self.perPagePath(50, _context) }}" {{- '' -}}
-                >
-                    {{- '50' -}}{{- ' ' -}}{{- 'trans.per page' | trans -}}
-                </option>
-                <option {{- ' ' -}}
-                        {%- if app.request.get('perPage') == 100 -%}selected{%- endif -%} {{- ' ' -}}
-                        value="{{ _self.perPagePath(100, _context) }}" {{- '' -}}
-                >
-                    {{- '100' -}}{{- ' ' -}}{{- 'trans.per page' | trans -}}
-                </option>
+                {%- set perPageOptions = [10,50,100,settings.itemsPerPage] -%}
+                {%- if app.request.get('perPage') is not empty -%}
+                    {%- set perPageOptions = perPageOptions | merge([app.request.get('perPage')]) -%}
+                {%- endif -%}
+                {%- for perPage in perPageOptions | unique | sort ~%}
+                    <option {{- ' ' -}}
+                            {%- if app.request.get('perPage') == perPage -%}selected{%- endif -%} {{- ' ' -}}
+                            value="{{ _self.perPagePath(perPage, _context) }}" {{- '' -}}
+                    >
+                        {{- perPage -}}{{- ' ' -}}{{- 'trans.per page' | trans -}}
+                    </option>
+                {%- endfor ~%}
             </select>
         </li>
     </ul>

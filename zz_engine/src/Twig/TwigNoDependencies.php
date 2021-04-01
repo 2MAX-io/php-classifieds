@@ -80,4 +80,18 @@ class TwigNoDependencies implements RuntimeExtensionInterface
 
         return $linkify->process($text, ['attr' => []]);
     }
+
+    /**
+     * @param array<mixed>|null $array
+     *
+     * @return array<mixed>|null
+     */
+    public function unique(?array $array): ?array
+    {
+        if (null === $array) {
+            return null;
+        }
+
+        return \array_unique($array);
+    }
 }

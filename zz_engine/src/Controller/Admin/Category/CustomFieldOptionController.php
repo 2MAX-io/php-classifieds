@@ -7,6 +7,7 @@ namespace App\Controller\Admin\Category;
 use App\Controller\Admin\Base\AbstractAdminController;
 use App\Entity\CustomField;
 use App\Entity\CustomFieldOption;
+use App\Enum\ParamEnum;
 use App\Enum\SortConfig;
 use App\Form\Admin\CustomFieldOptionType;
 use App\Helper\JsonHelper;
@@ -183,7 +184,7 @@ class CustomFieldOptionController extends AbstractAdminController
     ): Response {
         $this->denyUnlessAdmin();
 
-        if (!$this->isCsrfTokenValid(self::CSRF_SAVE_ORDER, $request->headers->get('x-csrf-token'))) {
+        if (!$this->isCsrfTokenValid(self::CSRF_SAVE_ORDER, $request->headers->get(ParamEnum::CSRF_HEADER))) {
             throw new InvalidCsrfTokenException('token not valid');
         }
 

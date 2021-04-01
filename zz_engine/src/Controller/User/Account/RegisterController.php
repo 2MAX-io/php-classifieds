@@ -124,6 +124,6 @@ class RegisterController extends AbstractUserController
             $request->getSession()->set(Security::LAST_USERNAME, $request->get(ParamEnum::USERNAME));
         }
 
-        return $this->redirectToRoute('app_listing_new');
+        return $this->redirectToRoute('app_user_listing_new');
     }
 }

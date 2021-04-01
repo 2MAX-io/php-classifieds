@@ -7,6 +7,7 @@ namespace App\Controller\Admin\Category;
 use App\Controller\Admin\Base\AbstractAdminController;
 use App\Entity\Category;
 use App\Entity\CustomFieldForCategory;
+use App\Enum\ParamEnum;
 use App\Enum\SortConfig;
 use App\Form\Admin\CategoryAddCustomFieldType;
 use App\Helper\JsonHelper;
@@ -83,7 +84,7 @@ class CategoryCustomFieldController extends AbstractAdminController
 
         if (!$this->isCsrfTokenValid(
             self::CSRF_CUSTOM_FIELDS_FOR_CATEGORY_ORDER_SAVE,
-            $request->headers->get('x-csrf-token')
+            $request->headers->get(ParamEnum::CSRF_HEADER)
         )) {
             throw new InvalidCsrfTokenException('token not valid');
         }

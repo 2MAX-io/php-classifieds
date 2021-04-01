@@ -11,6 +11,7 @@ class ParamEnum
 {
     public const DATA_FOR_JS = 'dataForJs';
     public const CSRF_TOKEN = 'csrfToken';
+    public const CSRF_HEADER = 'x-csrf-token';
     public const LANGUAGE_ISO = 'languageIso';
     public const COUNTRY_ISO = 'countryIso';
     public const BASE_URL = 'baseUrl';
@@ -18,6 +19,7 @@ class ParamEnum
     public const ERROR = 'error';
     public const USERNAME = 'username';
     public const LISTING_ID = 'listingId';
+    public const CATEGORY_ID = 'categoryId';
     public const LISTING_LIST = 'listingList';
     public const LISTING_FILES = 'listingFiles';
     public const CUSTOM_FIELD = 'customField';

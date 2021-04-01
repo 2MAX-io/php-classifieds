@@ -50,7 +50,10 @@ class AdminListingActivateController extends AbstractAdminController
     }
 
     /**
-     * @Route("/admin/red5/listing/activate/list/action-on-selected", name="app_admin_listing_activate_action_on_selected")
+     * @Route("/admin/red5/listing/activate/list/action-on-selected",
+     *     name="app_admin_listing_activate_action_on_selected",
+     *     methods={"POST"},
+     * )
      */
     public function actionForSelected(
         Request $request,

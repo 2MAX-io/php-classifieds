@@ -18,21 +18,28 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 class ListingEditForUserController extends AbstractUserController
 {
+    /**
+     * @var CsrfTokenManagerInterface
+     */
+    private $csrfTokenManager;
+
     /**
      * @var EntityManagerInterface
      */
     private $em;
 
-    public function __construct(EntityManagerInterface $em)
+    public function __construct(CsrfTokenManagerInterface $csrfTokenManager, EntityManagerInterface $em)
     {
+        $this->csrfTokenManager = $csrfTokenManager;
         $this->em = $em;
     }
 
     /**
-     * @Route("/user/listing/new", name="app_listing_new", methods={"GET","POST"})
+     * @Route("/user/listing/new", name="app_user_listing_new", methods={"GET","POST"})
      */
     public function new(
         Request $request,
@@ -75,6 +82,7 @@ class ListingEditForUserController extends AbstractUserController
                     ParamEnum::MAP_DEFAULT_LATITUDE => $settingsService->getSettingsDto()->getMapDefaultLatitude(),
                     ParamEnum::MAP_DEFAULT_LONGITUDE => $settingsService->getSettingsDto()->getMapDefaultLongitude(),
                     ParamEnum::MAP_DEFAULT_ZOOM => $settingsService->getSettingsDto()->getMapDefaultZoom(),
+                    ParamEnum::CSRF_TOKEN => $this->csrfTokenManager->getToken('csrf_listingFileRemove')->getValue(),
                 ],
                 'form' => $form->createView(),
             ]
@@ -133,6 +141,7 @@ class ListingEditForUserController extends AbstractUserController
                         ParamEnum::LATITUDE => $listing->getLocationLatitude(),
                         ParamEnum::LONGITUDE => $listing->getLocationLongitude(),
                     ],
+                    ParamEnum::CSRF_TOKEN => $this->csrfTokenManager->getToken('csrf_listingFileRemove')->getValue(),
                 ],
                 'form' => $form->createView(),
             ]

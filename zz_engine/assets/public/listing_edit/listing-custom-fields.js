@@ -17,11 +17,10 @@ customFields.loadFromBackend = function () {
         return;
     }
     customFields.category = categoryId;
-    let request = {
-        listingId: listingId,
-        categoryId: categoryId,
-    };
-    $.get(Routing.generate("app_listing_get_custom_fields", request), function (html) {
+    let request = {};
+    request[ParamEnum.LISTING_ID] = listingId;
+    request[ParamEnum.CATEGORY_ID] = categoryId;
+    $.post(Routing.generate("app_listing_get_custom_fields", request), function (html) {
         customFields.$customFieldListWrapper.html(html);
         customFields.restoreUserEnteredValues();
     });

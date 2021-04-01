@@ -80,14 +80,21 @@ class RefererService
     public function getRouteNameFromReferer(): ?string
     {
         $this->router->getContext()->setMethod(Request::METHOD_GET);
-        $routeArray = $this->router->match($this->getRelativeRefererUrl());
+        $relativeRefererUrl = $this->getRelativeRefererUrl();
+        if (null === $relativeRefererUrl) {
+            return null;
+        }
+        $routeArray = $this->router->match($relativeRefererUrl);
 
         return $routeArray['_route'] ?? null;
     }
 
-    public function getRelativeRefererUrl(): string
+    public function getRelativeRefererUrl(): ?string
     {
         $referer = $this->requestStack->getMasterRequest()->headers->get('referer');
+        if (null === $referer) {
+            return null;
+        }
 
         $url = \parse_url($referer, \PHP_URL_PATH);
         if (!\is_string($url)) {

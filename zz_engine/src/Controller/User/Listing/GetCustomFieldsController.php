@@ -7,6 +7,7 @@ namespace App\Controller\User\Listing;
 use App\Controller\User\Base\AbstractUserController;
 use App\Entity\Category;
 use App\Entity\Listing;
+use App\Enum\ParamEnum;
 use App\Form\ListingCustomFieldsType;
 use App\Form\ListingType;
 use App\Security\CurrentUserService;
@@ -36,12 +37,15 @@ class GetCustomFieldsController extends AbstractUserController
     }
 
     /**
-     * @Route("/listing/get-custom-fields", name="app_listing_get_custom_fields", options={"expose"=true})
+     * @Route("/listing/get-custom-fields", name="app_listing_get_custom_fields",
+     *     methods={"POST"},
+     *     options={"expose"=true},
+     * )
      */
     public function getCustomFields(Request $request): Response
     {
-        if ($request->query->has('listingId')) {
-            $listingId = $request->query->get('listingId');
+        if ($request->query->has(ParamEnum::LISTING_ID)) {
+            $listingId = $request->query->get(ParamEnum::LISTING_ID);
             $listing = $this->getDoctrine()->getRepository(Listing::class)->find($listingId);
             if (null === $listing) {
                 throw new \UnexpectedValueException('listing not found by ID');

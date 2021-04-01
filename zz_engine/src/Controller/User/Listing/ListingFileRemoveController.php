@@ -6,12 +6,14 @@ namespace App\Controller\User\Listing;
 
 use App\Controller\User\Base\AbstractUserController;
 use App\Entity\ListingFile;
+use App\Enum\ParamEnum;
 use App\Service\Listing\Save\OnListingFileModificationService;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Exception\InvalidCsrfTokenException;
 
 class ListingFileRemoveController extends AbstractUserController
 {
@@ -26,7 +28,7 @@ class ListingFileRemoveController extends AbstractUserController
     }
 
     /**
-     * @Route("/user/listing/file/remove", name="app_listing_file_remove", methods={"POST"}, options={"expose": true})
+     * @Route("/user/listing/file/remove", name="app_user_listing_file_remove", methods={"POST"}, options={"expose": true})
      */
     public function removeListingFile(
         Request $request,
@@ -34,6 +36,12 @@ class ListingFileRemoveController extends AbstractUserController
         LoggerInterface $logger
     ): Response {
         $fileId = $request->request->get('listingFileId');
+        if (!$this->isCsrfTokenValid(
+            'csrf_listingFileRemove',
+            $request->headers->get(ParamEnum::CSRF_HEADER)
+        )) {
+            throw new InvalidCsrfTokenException('token not valid');
+        }
         $listingFile = $this->getDoctrine()->getRepository(ListingFile::class)->find($fileId);
         if (!$listingFile) {
             $logger->error('can not remove, listing file with id `{listingFileId}` not found', [

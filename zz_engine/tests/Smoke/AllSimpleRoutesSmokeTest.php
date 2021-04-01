@@ -21,7 +21,38 @@ class AllSimpleRoutesSmokeTest extends AppIntegrationTestCase
     use DatabaseTestTrait;
     use RouterTestTrait;
 
-    private const EXPECTED_SKIPPED_COUNT = 43;
+    /** @var string[] */
+    private static $skipRoutes = [
+        'nelmio_js_logger_log',
+        'app_logout',
+        'app_admin_upgrade_run',
+        'app_map_image_cache_template',
+        'app_payment_status_refresh',
+    ];
+
+    /** @var string[] */
+    private static $allowedToSkipRoutes = [
+        'fos_js_routing_js',
+        'bazinga_jstranslation_js',
+        'nelmio_js_logger_log',
+        'app_logout',
+        'app_cron',
+        'app_admin_upgrade_run',
+        'app_file_upload',
+        'app_map_image_cache',
+        'app_map_image_cache_template',
+        'app_user_change_email_previous_email_confirmation',
+        'app_user_change_password_confirm',
+        'app_login_oauth',
+        'app_register_confirm',
+        'app_remind_password_confirm',
+        'app_payment_await_confirmation',
+        'app_payment_status_refresh',
+        'app_payment_await_confirmation_redirect',
+        'app_payment_cancel',
+        'app_payment_notify',
+        'app_payment_success',
+    ];
 
     /**
      * @var string[]
@@ -40,8 +71,15 @@ class AllSimpleRoutesSmokeTest extends AppIntegrationTestCase
         $this->clearDatabase();
 
         $this->generateConfigForRouteList();
+        $testedRoutes = $this->getTestedRoutes();
 
         foreach ($this->getRoutes() as $routeName => $route) {
+            if (!empty($route->getMethods()) && !\in_array('GET', $route->getMethods(), true)) {
+                if (!\in_array($routeName, $testedRoutes, true)) {
+                    $this->skippedRoutes[] = $routeName;
+                }
+                continue;
+            }
             if (\str_starts_with($routeName, 'app_admin_')) {
                 $this->loginAdmin($client);
             }
@@ -53,26 +91,7 @@ class AllSimpleRoutesSmokeTest extends AppIntegrationTestCase
             if ($hasRouteConfig) {
                 $url = $this->configForRouteList[$routeName]['url'];
             } else {
-                if (\in_array(
-                    $routeName, [
-                        'app_listing_contact_data',
-                        'app_file_upload',
-                        'app_map_image_cache_template',
-                        'app_listing_get_custom_fields',
-                        'app_logout',
-                        'nelmio_js_logger_log',
-                        'app_admin_listing_redirect_next_waiting_activation',
-                        'app_admin_listing_activate_action_on_selected',
-                        'app_admin_category_save_order',
-                        'app_admin_category_custom_fields_save_order',
-                        'app_admin_custom_field_save_order',
-                        'app_admin_custom_field_options_save_order',
-                        'app_admin_upgrade_run',
-                        'app_listing_file_remove',
-                        'app_payment_status_refresh',
-                    ],
-                    true)
-                ) {
+                if (\in_array($routeName, static::$skipRoutes, true)) {
                     $this->skippedRoutes[] = $routeName;
                     continue;
                 }
@@ -94,9 +113,14 @@ class AllSimpleRoutesSmokeTest extends AppIntegrationTestCase
             );
         }
 
-        $this->skippedRoutes = \array_diff($this->skippedRoutes, $this->getTestedRoutes());
+        $this->skippedRoutes = \array_diff(
+            $this->skippedRoutes,
+            $testedRoutes,
+            static::$allowedToSkipRoutes,
+        );
+        \sort($this->skippedRoutes);
         self::assertLessThanOrEqual(
-            self::EXPECTED_SKIPPED_COUNT,
+            0,
             \count($this->skippedRoutes),
             \implode("\n", $this->skippedRoutes),
         );

@@ -7,6 +7,7 @@ let loadContactData = ($contactDataButton) => {
     ParamEnum.LISTING_ID = "listingId";
     ParamEnum.SHOW_LISTING_PREVIEW_FOR_OWNER = "showListingPreviewForOwner";
     ParamEnum.SHOW_CONTACT_HTML = "showContactHtml";
+    ParamEnum.CSRF_TOKEN = "csrfToken";
 
     var formData = new FormData();
     formData.append(ParamEnum.LISTING_ID, $contactDataButton.getAttribute("data-listing-id"));

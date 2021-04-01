@@ -119,6 +119,6 @@ class LoginOauthController extends AbstractUserController
             $flashService->addFlash(FlashService::ERROR_ABOVE_FORM, 'trans.Sorry, could not login');
         }
 
-        return $this->redirectToRoute('app_listing_new');
+        return $this->redirectToRoute('app_user_listing_new');
     }
 }

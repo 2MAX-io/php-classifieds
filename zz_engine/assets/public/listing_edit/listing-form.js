@@ -9,6 +9,7 @@ import Translator from "~/module/Translator";
 import ParamEnum from "~/enum/ParamEnum";
 import Routing from "~/module/Routing";
 import defaultFileUpload from "~/module/fileuploader/fileuploader";
+import "~/function/jqueryAjaxaddCsrfHeader";
 
 new Cleave(".js__inputMoney", {
     numeral: true,
@@ -43,7 +44,7 @@ $("#js__listingFileUpload").fileuploader(
         files: dataForJs[ParamEnum.LISTING_FILES],
         onRemove: function (item) {
             if ("listingFileId" in item.data) {
-                $.post(Routing.generate("app_listing_file_remove"), {
+                $.post(Routing.generate("app_user_listing_file_remove"), {
                     listingFileId: item.data.listingFileId,
                 });
             }

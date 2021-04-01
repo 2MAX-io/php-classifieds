@@ -97,7 +97,7 @@
                     </li>
                     {%- if is_granted("ROLE_USER") ~%}
                         <li class="nav-item"> {{- '' -}}
-                            <a class="nav-link menu-top-item" href="{{ path('app_listing_new') }}">
+                            <a class="nav-link menu-top-item" href="{{ path('app_user_listing_new') }}">
                                 {{- 'trans.Create Listing' | trans -}}
                             </a> {{- '' -}}
                         </li>
@@ -161,7 +161,7 @@
                             <a href="{{ path('app_user_my_account') }}">{{ 'trans.My account' | trans }}</a>
                         </li>
                         <li class="list-inline-item">
-                            <a href="{{ path('app_listing_new') }}" class="btn btn-primary">
+                            <a href="{{ path('app_user_listing_new') }}" class="btn btn-primary">
                                 {{- 'trans.Add listing' | trans -}}
                                 {{- ' ' -}}
                                 <i class="svg svg-add"></i> {{- ' ' -}}
@@ -302,7 +302,7 @@
                     </li>
                 {%- endif ~%}
                 <li> {{- '' -}}
-                    <a class="text-muted mobile-link" href="{{ path('app_listing_new') }}">
+                    <a class="text-muted mobile-link" href="{{ path('app_user_listing_new') }}">
                         {{- 'trans.Add listing' | trans -}}
                     </a> {{- '' -}}
                 </li>

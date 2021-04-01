@@ -202,7 +202,7 @@ class CustomFieldController extends AbstractAdminController
     ): Response {
         $this->denyUnlessAdmin();
 
-        if (!$this->isCsrfTokenValid(static::CSRF_CUSTOM_FIELDS_SAVE_ORDER, $request->headers->get('x-csrf-token'))) {
+        if (!$this->isCsrfTokenValid(static::CSRF_CUSTOM_FIELDS_SAVE_ORDER, $request->headers->get(ParamEnum::CSRF_HEADER))) {
             throw new InvalidCsrfTokenException('token not valid');
         }
 

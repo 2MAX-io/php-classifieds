@@ -3,6 +3,7 @@
 var ParamEnum = {};
 ParamEnum.DATA_FOR_JS = "dataForJs";
 ParamEnum.CSRF_TOKEN = "csrfToken";
+ParamEnum.CSRF_HEADER = "x-csrf-token";
 ParamEnum.LANGUAGE_ISO = "languageIso";
 ParamEnum.COUNTRY_ISO = "countryIso";
 ParamEnum.BASE_URL = "baseUrl";
@@ -10,6 +11,7 @@ ParamEnum.SUCCESS = "success";
 ParamEnum.ERROR = "error";
 ParamEnum.USERNAME = "username";
 ParamEnum.LISTING_ID = "listingId";
+ParamEnum.CATEGORY_ID = "categoryId";
 ParamEnum.LISTING_LIST = "listingList";
 ParamEnum.LISTING_FILES = "listingFiles";
 ParamEnum.CUSTOM_FIELD = "customField";

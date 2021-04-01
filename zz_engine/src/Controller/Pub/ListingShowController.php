@@ -15,10 +15,14 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Exception\InvalidCsrfTokenException;
+use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Twig\Environment;
 
 class ListingShowController extends AbstractController
 {
+    public const CSRF_SHOW_CONTACT_DATA = 'csrf_listingShowContactData';
+
     /**
      * @Route("/l/{id}/{slug}", name="app_listing_show", options={"expose": true})
      */
@@ -29,7 +33,8 @@ class ListingShowController extends AbstractController
         ListingShowSingleService $listingShowSingleService,
         CategoryListService $categoryListService,
         ListingPublicDisplayService $listingPublicDisplayService,
-        EventDispatcherInterface $eventDispatcher
+        EventDispatcherInterface $eventDispatcher,
+        CsrfTokenManagerInterface $csrfTokenManager
     ): Response {
         $listingShowDto = $listingShowSingleService->getSingle($id);
         if (!$listingShowDto) {
@@ -91,6 +96,7 @@ class ListingShowController extends AbstractController
                         ParamEnum::LONGITUDE => $listing->getLocationLongitude(),
                         ParamEnum::LATITUDE => $listing->getLocationLatitude(),
                     ],
+                    ParamEnum::CSRF_TOKEN => $csrfTokenManager->getToken(static::CSRF_SHOW_CONTACT_DATA.$listing->getId())->getValue(),
                 ],
             ]
         );
@@ -111,6 +117,12 @@ class ListingShowController extends AbstractController
         Environment $twig
     ): Response {
         $listingId = (int) $request->request->get(ParamEnum::LISTING_ID);
+        if (!$this->isCsrfTokenValid(
+            static::CSRF_SHOW_CONTACT_DATA.$listingId,
+            $request->headers->get(ParamEnum::CSRF_HEADER)
+        )) {
+            throw new InvalidCsrfTokenException('token not valid');
+        }
         $listingShowDto = $listingShowSingleService->getSingle($listingId);
         if (!$listingShowDto) {
             throw $this->createNotFoundException();

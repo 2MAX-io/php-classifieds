@@ -208,7 +208,7 @@ class AdminCategoryController extends AbstractAdminController
     ): Response {
         $this->denyUnlessAdmin();
 
-        if (!$this->isCsrfTokenValid(static::CSRF_CATEGORY_SORT_SAVE, $request->headers->get('x-csrf-token'))) {
+        if (!$this->isCsrfTokenValid(static::CSRF_CATEGORY_SORT_SAVE, $request->headers->get(ParamEnum::CSRF_HEADER))) {
             throw new InvalidCsrfTokenException('token not valid');
         }
         $requestContentArray = JsonHelper::toArray($request->getContent());

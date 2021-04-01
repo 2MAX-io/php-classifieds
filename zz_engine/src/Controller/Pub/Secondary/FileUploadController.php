@@ -16,7 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class FileUploadController extends AbstractController
 {
     /**
-     * @Route("/private/file-upload", name="app_file_upload", options={"expose": true})
+     * @Route("/private/file-upload", name="app_file_upload", methods={"POST"}, options={"expose": true})
      */
     public function uploadFile(Filesystem $filesystem): Response
     {

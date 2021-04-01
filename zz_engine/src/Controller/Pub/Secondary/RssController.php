@@ -22,7 +22,7 @@ class RssController extends AbstractController
         $settingsDto = $settingsService->getSettingsDto();
 
         return $this->render('secondary/rss.xml.twig', [
-            'listingList' => $recentListingsService->getLatestListings(360),
+            'listingList' => $recentListingsService->getListingsForRss(),
             'settingsDto' => $settingsDto,
         ]);
     }

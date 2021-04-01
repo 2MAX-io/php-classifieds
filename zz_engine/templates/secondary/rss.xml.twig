@@ -5,7 +5,7 @@
         <description>{{ settingsDto.rssDescription }}</description>
         <link>{{ url('app_index') }}</link>
 
-        {% for listing in listingList %}
+        {%- for listing in listingList ~%}
             <item>
                 <title>{{ listing.title }}</title>
                 <description>{{ listing.description | slice(0, 200) }}</description>
@@ -13,6 +13,6 @@
                 <guid>{{ url('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}</guid>
                 <pubDate>{{ listing.firstCreatedDate|date(format='r', timezone='GMT') }}</pubDate>
             </item>
-        {% endfor %}
+        {%- endfor ~%}
     </channel>
 </rss>

@@ -85,7 +85,7 @@
                 {%- endif -%}
                 {%- for perPage in perPageOptions | unique | sort ~%}
                     <option {{- ' ' -}}
-                            {%- if app.request.get('perPage') == perPage -%}selected{%- endif -%} {{- ' ' -}}
+                            {%- if app.request.get('perPage') | default(settings.itemsPerPage) == perPage -%}selected{%- endif -%} {{- ' ' -}}
                             value="{{ _self.perPagePath(perPage, _context) }}" {{- '' -}}
                     >
                         {{- perPage -}}{{- ' ' -}}{{- 'trans.per page' | trans -}}

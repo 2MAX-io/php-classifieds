@@ -105,7 +105,7 @@ class ListingListController extends AbstractController
             'longitude' => $request->query->get('longitude'),
             'zoom' => $request->query->get('zoom'),
             'categorySlug' => $categorySlug,
-            'userObserved' => $listingListDto->getFilterByUserObservedListings(),
+            'userObserved' => $listingListDto->getFilterByUserObservedListings() ?: null,
         ];
         if (\in_array($queryParameters['showOnMap'], ['0', false, null], true)) {
             unset($queryParameters['showOnMap']);

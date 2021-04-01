@@ -6,9 +6,11 @@ namespace App\Controller\User\Payment\Invoice;
 
 use App\Controller\User\Base\AbstractUserController;
 use App\Entity\Invoice;
+use App\Enum\EnvironmentEnum;
 use App\Helper\SlugHelper;
 use App\Security\CurrentUserService;
 use App\Service\User\Invoice\UserInvoiceSingleService;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -32,7 +34,7 @@ class UserInvoiceDownloadController extends AbstractUserController
         Invoice $invoice,
         UserInvoiceSingleService $userInvoiceSingleService,
         TranslatorInterface $translator
-    ): void {
+    ): Response {
         $this->dennyUnlessUser();
         $this->dennyUnlessUserAllowedInvoice($invoice);
 
@@ -41,12 +43,17 @@ class UserInvoiceDownloadController extends AbstractUserController
             $translator->trans('trans.invoice_file_prefix').$invoice->getInvoiceNumber(),
             '_',
         );
+        if (EnvironmentEnum::TEST === ($_ENV['APP_ENV'] ?? '')) {
+            return new Response($domPdf->output(), Response::HTTP_OK);
+        }
         $domPdf->stream(
             $invoiceFileName,
             [
                 'Attachment' => true,
             ],
         );
+
+        return new Response('response should be streamed', Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
     private function dennyUnlessUserAllowedInvoice(Invoice $invoice): void

@@ -27,8 +27,6 @@ class UserInvoiceDownloadControllerTest extends AppIntegrationTestCase implement
 
     public function test(): void
     {
-        self::markTestSkipped('todo problem with testing stream response'); // todo
-        /* @phpstan-ignore-next-line */
         $client = static::createClient();
         $this->clearDatabase();
         $this->loginUser($client);
@@ -36,11 +34,10 @@ class UserInvoiceDownloadControllerTest extends AppIntegrationTestCase implement
         $url = $this->getRouter()->generate('app_user_invoice_download', [
             'invoice' => 1,
         ]);
-        \ob_start();
         $client->request('GET', $url);
         $response = $client->getResponse();
-        \ob_end_clean();
 
         self::assertEquals(200, $response->getStatusCode(), (string) $response->getContent());
+        self::assertStringContainsString('PDF', (string) $response->getContent());
     }
 }

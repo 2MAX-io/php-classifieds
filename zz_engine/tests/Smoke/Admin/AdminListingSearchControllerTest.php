@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Smoke;
+namespace App\Tests\Smoke\Admin;
 
 use App\Tests\Base\AppIntegrationTestCase;
 use App\Tests\Smoke\Base\SmokeTestForRouteInterface;

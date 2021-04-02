@@ -274,6 +274,6 @@ class AdminActionTest extends AppIntegrationTestCase implements SmokeTestForRout
         $response = $client->getResponse();
 
         self::assertEquals(302, $response->getStatusCode(), (string) $response->getContent());
-        self::assertEquals('/l/1/test-listing-title?showListingPreviewForOwner=1', $client->getResponse()->headers->get('location'));
+        self::assertEquals('/l/2/test-listing-title?showListingPreviewForOwner=1', $client->getResponse()->headers->get('location'));
     }
 }

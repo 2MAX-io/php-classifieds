@@ -527,3 +527,4 @@ php -dxdebug.start_with_request=yes zz_engine/bin/console app:dev:translation:fi
 (cd /var/www/html/zz_engine && php vendor/bin/php-cs-fixer fix --dry-run)
 (cd /var/www/html/zz_engine && php vendor/bin/php-cs-fixer fix)
 (cd /var/www/html/zz_engine && php vendor/bin/php-cs-fixer fix)
+(cd /var/www/html/zz_engine && php vendor/bin/php-cs-fixer fix)

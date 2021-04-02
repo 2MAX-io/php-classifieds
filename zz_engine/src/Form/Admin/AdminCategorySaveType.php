@@ -68,7 +68,7 @@ class AdminCategorySaveType extends AbstractType
             'label' => 'trans.Advertisement zone id',
             'required' => false,
             'constraints' => [
-                new Length(['min' => 1]),
+                new Length(['min' => 1, 'allowEmptyString' => false]),
             ],
         ]);
         $builder->add('picture', FileType::class, [

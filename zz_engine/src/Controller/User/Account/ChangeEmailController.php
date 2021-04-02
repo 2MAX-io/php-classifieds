@@ -64,7 +64,7 @@ class ChangeEmailController extends AbstractUserController
 
     /**
      * @Route(
-     *     "/confirm/user-email-change/previous/{token}",
+     *     "/private/confirm/user-email-change/previous/{token}",
      *     name="app_user_change_email_previous_email_confirmation"
      * )
      */

@@ -63,7 +63,7 @@ class ChangePasswordController extends AbstractUserController
     }
 
     /**
-     * @Route("/confirm/user-password-change/{token}", name="app_user_change_password_confirm")
+     * @Route("/private/confirm/user-password-change/{token}", name="app_user_change_password_confirm")
      */
     public function changePasswordConfirm(
         string $token,

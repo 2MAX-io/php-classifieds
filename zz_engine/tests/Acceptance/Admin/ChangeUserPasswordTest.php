@@ -28,7 +28,7 @@ class ChangeUserPasswordTest extends AppIntegrationTestCase implements SmokeTest
         ];
     }
 
-    public function testChangeUserBalance(): void
+    public function testChangePassword(): void
     {
         $client = static::createClient();
         $this->clearDatabase();

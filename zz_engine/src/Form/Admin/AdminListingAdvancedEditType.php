@@ -12,7 +12,6 @@ use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\DateTime;
 use Symfony\Component\Validator\Constraints\LessThan;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
@@ -29,9 +28,6 @@ class AdminListingAdvancedEditType extends AbstractType
         $builder->add('featuredUntilDate', AppDateTimeType::class, [
             'required' => false,
             'label' => 'trans.Featured until',
-            'constraints' => [
-                new DateTime(),
-            ],
         ]);
         $builder->add('featuredWeight', IntegerType::class, [
             'label' => 'trans.Featured weight',
@@ -43,7 +39,6 @@ class AdminListingAdvancedEditType extends AbstractType
             'label' => 'trans.Date of last raising',
             'constraints' => [
                 new NotBlank(),
-                new DateTime(),
                 new LessThan('+2 day'),
             ],
         ]);
@@ -51,30 +46,21 @@ class AdminListingAdvancedEditType extends AbstractType
             'label' => 'trans.Valid until',
             'constraints' => [
                 new NotBlank(),
-                new DateTime(),
             ],
         ]);
         $builder->add('firstCreatedDate', AppDateTimeType::class, [
             'label' => 'trans.Date added',
             'constraints' => [
                 new NotBlank(),
-                new DateTime(),
                 new LessThan('+2 day'),
             ],
         ]);
         $builder->add('lastEditDate', AppDateTimeType::class, [
             'label' => 'trans.Last edit',
-            'constraints' => [
-                new NotBlank(),
-                new DateTime(),
-            ],
         ]);
         $builder->add('adminLastActivationDate', AppDateTimeType::class, [
             'required' => false,
             'label' => 'trans.Admin last activation',
-            'constraints' => [
-                new DateTime(),
-            ],
         ]);
         $builder->add('adminActivated', BoolRequiredType::class, [
             'label' => 'trans.Activated by Admin?',

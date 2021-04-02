@@ -73,7 +73,11 @@ export default class Map {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
         }).addTo(this.leafletMap);
 
-        // L.tileLayer(Routing.generate("app_map_image_cache_template") + "/{x}_{y}_{z}.png", {
+        // L.tileLayer(Routing.generate("app_map_image_cache", {
+        //     z: 1,
+        //     x: 2,
+        //     y: 3,
+        // }).replace('1_2_3.png', '{z}_{x}_{y}.png'), {
         //     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
         // }).addTo(this.leafletMap);
 

@@ -28,18 +28,13 @@ class MapImageCacheController
 
     /**
      * @Route(
-     *      "/static/cache/map/{x}_{y}_{z}.png",
+     *      "/static/cache/map/{z}_{x}_{y}.png",
      *      name="app_map_image_cache",
      *      requirements={
      *          "z"="\d+",
      *          "x"="\d+",
      *          "y"="\d+",
      *      },
-     *      options={"expose": true},
-     * )
-     * @Route(
-     *      "/static/cache/map",
-     *      name="app_map_image_cache_template",
      *      options={"expose": true},
      * )
      */

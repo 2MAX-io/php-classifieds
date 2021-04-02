@@ -15,7 +15,7 @@ use Symfony\Component\Routing\Route;
  * @internal
  * @coversNothing
  */
-class AllSimpleRoutesSmokeTest extends AppIntegrationTestCase
+class AllRoutesSmokeTest extends AppIntegrationTestCase
 {
     use LoginTestTrait;
     use DatabaseTestTrait;
@@ -23,10 +23,9 @@ class AllSimpleRoutesSmokeTest extends AppIntegrationTestCase
 
     /** @var string[] */
     private static $skipRoutes = [
-        'nelmio_js_logger_log',
-        'app_logout',
+        'nelmio_js_logger_log', // bundle url
+        'app_logout', // tested but redirects, so must be skipped
         'app_admin_upgrade_run',
-        'app_map_image_cache_template',
         'app_payment_status_refresh',
     ];
 
@@ -38,8 +37,6 @@ class AllSimpleRoutesSmokeTest extends AppIntegrationTestCase
         'app_login_oauth',
         'app_admin_upgrade_run',
         'app_file_upload',
-        'app_map_image_cache',
-        'app_map_image_cache_template',
         'app_payment_gateway_notify',
         'app_payment_gateway_success',
     ];
@@ -212,7 +209,11 @@ class AllSimpleRoutesSmokeTest extends AppIntegrationTestCase
         $urlList[] = $this->getRouter()->generate('app_user_message_list_thread', [
             'userMessageThread' => 1,
         ]);
-
+        $urlList[] = $this->getRouter()->generate('app_map_image_cache', [
+            'z' => 14,
+            'x' => 9163,
+            'y' => 5578,
+        ]);
         $router = $this->getRouter();
         foreach ($urlList as $url) {
             $routeName = (string) $router->match($url)['_route'];

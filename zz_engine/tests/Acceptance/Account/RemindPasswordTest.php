@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\Acceptance\Account;
 
 use App\Tests\Base\AppIntegrationTestCase;
+use App\Tests\Enum\TestLoginEnum;
 use App\Tests\Smoke\Base\SmokeTestForRouteInterface;
 use App\Tests\Traits\DatabaseTestTrait;
 use App\Tests\Traits\LoginTestTrait;
@@ -16,30 +17,26 @@ use Symfony\Component\DomCrawler\Crawler;
  * @internal
  * @coversNothing
  */
-class RegisterAccountTest extends AppIntegrationTestCase implements SmokeTestForRouteInterface
+class RemindPasswordTest extends AppIntegrationTestCase implements SmokeTestForRouteInterface
 {
     use DatabaseTestTrait;
     use RouterTestTrait;
     use LoginTestTrait;
-    public const LOGIN = 'test@example.com';
-    public const PASSWORD = 'testpass';
 
     public static function getRouteNames(): array
     {
-        return ['app_register_confirm'];
+        return ['app_remind_password_confirm'];
     }
 
-    public function testUserRegister(): void
+    public function testRemindPassword(): void
     {
         $client = static::createClient();
         $this->clearDatabase();
 
-        // register
-        $client->request('GET', $this->getRouter()->generate('app_register'));
-        $client->submitForm('Register', [
-            'register[email]' => static::LOGIN,
-            'register[password][first]' => static::PASSWORD,
-            'register[password][second]' => static::PASSWORD,
+        // remind password
+        $client->request('GET', $this->getRouter()->generate('app_remind_password'));
+        $client->submitForm('Remind password', [
+            'remind_password[email]' => TestLoginEnum::LOGIN,
         ]);
         $response = $client->getResponse();
         self::assertEquals(302, $response->getStatusCode(), (string) $response->getContent());
@@ -48,28 +45,28 @@ class RegisterAccountTest extends AppIntegrationTestCase implements SmokeTestFor
         /** @var TemplatedEmail $message */
         $message = $this->getTestContainer()->get('mailer.logger_message_listener')->getEvents()->getMessages()[0];
         $emailCrawler = new Crawler((string) $message->getHtmlBody());
-        $confirmRegistrationUrl = $emailCrawler->selectLink('I confirm registration')->link()->getUri();
+        $confirmRegistrationUrl = $emailCrawler->selectLink('I confirm password reset')->link()->getUri();
+        $newPassword = $message->getContext()['plainPassword'];
 
-        // follow redirect after register submit
+        // follow redirect after remind password submit
         $client->followRedirect();
         self::assertStringContainsString(
-            'To finish registration, click confirmation link that you will receive in your email',
+            'To remind password, please click confirmation link that you would receive on your email address',
             $client->getResponse()->getContent() ?: '',
         );
 
         // click confirm link
         $client->request('GET', $confirmRegistrationUrl);
         $client->followRedirect();
-        $client->followRedirect();
         self::assertStringContainsString(
-            'You have been successfully registered. Now you can add some listings',
+            'Password reset has been successful',
             $client->getResponse()->getContent() ?: '',
         );
 
         // login
         $client->submitForm('Sign in', [
-            'email' => static::LOGIN,
-            'password' => static::PASSWORD,
+            'email' => TestLoginEnum::LOGIN,
+            'password' => $newPassword,
         ]);
         self::assertEquals(302, $response->getStatusCode(), (string) $response->getContent());
         $client->followRedirect();

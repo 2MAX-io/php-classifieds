@@ -26,7 +26,7 @@ class ListingActionForUserController extends AbstractUserController
     }
 
     /**
-     * @Route("/user/listing/{id}", name="app_user_listing_remove", methods={"DELETE"})
+     * @Route("/user/listing/{id}/remove", name="app_user_listing_remove", methods={"DELETE"})
      */
     public function removeListing(
         Request $request,

@@ -29,7 +29,7 @@ class PaymentNotifyByPaymentProcessorController extends AbstractController
     }
 
     /**
-     * @Route("/private/payment/notify/{paymentAppToken}", name="app_payment_notify")
+     * @Route("/private/payment/notify/{paymentAppToken}", name="app_payment_gateway_notify")
      */
     public function payment(
         Request $request,

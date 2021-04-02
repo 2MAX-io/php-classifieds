@@ -29,7 +29,7 @@ class PaymentSuccessController extends AbstractController
     }
 
     /**
-     * @Route("/user/payment/success/{paymentAppToken}", name="app_payment_success")
+     * @Route("/user/payment/success/{paymentAppToken}", name="app_payment_gateway_success")
      */
     public function paymentSuccess(
         Request $request,

@@ -45,8 +45,8 @@ class AllSimpleRoutesSmokeTest extends AppIntegrationTestCase
         'app_user_change_password_confirm',
         'app_register_confirm',
         'app_remind_password_confirm',
-        'app_payment_notify',
-        'app_payment_success',
+        'app_payment_gateway_notify',
+        'app_payment_gateway_success',
     ];
 
     /**

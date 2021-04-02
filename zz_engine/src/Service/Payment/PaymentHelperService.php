@@ -21,7 +21,7 @@ class PaymentHelperService
 
     public function getSuccessUrl(PaymentDto $paymentDto): string
     {
-        return $this->urlGenerator->generate('app_payment_success', [
+        return $this->urlGenerator->generate('app_payment_gateway_success', [
             'paymentAppToken' => $paymentDto->getPaymentAppToken(),
         ], UrlGeneratorInterface::ABSOLUTE_URL);
     }
@@ -35,7 +35,7 @@ class PaymentHelperService
 
     public function getPaymentNotifyUrl(PaymentDto $paymentDto): string
     {
-        return $this->urlGenerator->generate('app_payment_notify', [
+        return $this->urlGenerator->generate('app_payment_gateway_notify', [
             'paymentAppToken' => $paymentDto->getPaymentAppToken(),
         ], UrlGeneratorInterface::ABSOLUTE_URL);
     }

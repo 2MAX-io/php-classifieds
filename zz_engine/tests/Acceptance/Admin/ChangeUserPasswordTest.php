@@ -13,7 +13,6 @@ use App\Tests\Traits\RouterTestTrait;
 
 /**
  * @internal
- * @coversNothing
  */
 class ChangeUserPasswordTest extends AppIntegrationTestCase implements SmokeTestForRouteInterface
 {

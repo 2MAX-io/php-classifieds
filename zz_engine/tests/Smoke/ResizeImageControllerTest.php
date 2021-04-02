@@ -12,7 +12,6 @@ use App\Tests\Traits\RouterTestTrait;
 
 /**
  * @internal
- * @coversNothing
  */
 class ResizeImageControllerTest extends AppIntegrationTestCase implements SmokeTestForRouteInterface
 {

@@ -13,7 +13,6 @@ use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 /**
  * @internal
- * @coversNothing
  */
 class FeatureListingControllerTest extends AppIntegrationTestCase implements SmokeTestForRouteInterface
 {

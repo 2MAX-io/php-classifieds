@@ -9,7 +9,6 @@ use App\Tests\Traits\DatabaseTestTrait;
 
 /**
  * @internal
- * @coversNothing
  */
 class IndexPageTest extends AppIntegrationTestCase
 {

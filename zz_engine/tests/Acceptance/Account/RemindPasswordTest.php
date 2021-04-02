@@ -15,7 +15,6 @@ use Symfony\Component\DomCrawler\Crawler;
 
 /**
  * @internal
- * @coversNothing
  */
 class RemindPasswordTest extends AppIntegrationTestCase implements SmokeTestForRouteInterface
 {

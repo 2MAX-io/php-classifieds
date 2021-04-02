@@ -15,7 +15,6 @@ use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 /**
  * @internal
- * @coversNothing
  */
 class GetCustomFieldsControllerTest extends AppIntegrationTestCase implements SmokeTestForRouteInterface
 {

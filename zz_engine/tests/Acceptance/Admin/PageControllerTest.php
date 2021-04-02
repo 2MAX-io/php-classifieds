@@ -12,7 +12,6 @@ use App\Tests\Traits\RouterTestTrait;
 
 /**
  * @internal
- * @coversNothing
  */
 class PageControllerTest extends AppIntegrationTestCase implements SmokeTestForRouteInterface
 {

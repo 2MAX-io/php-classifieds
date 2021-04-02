@@ -12,7 +12,6 @@ use App\Tests\Traits\RouterTestTrait;
 
 /**
  * @internal
- * @coversNothing
  */
 class AdminListingEditAdvancedControllerTest extends AppIntegrationTestCase implements SmokeTestForRouteInterface
 {

@@ -13,7 +13,6 @@ use App\Tests\Traits\RouterTestTrait;
 
 /**
  * @internal
- * @coversNothing
  */
 class SendMessageTest extends AppIntegrationTestCase implements SmokeTestForRouteInterface
 {

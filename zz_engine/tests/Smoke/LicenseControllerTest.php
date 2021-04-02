@@ -14,7 +14,6 @@ use App\Tests\Traits\RouterTestTrait;
 
 /**
  * @internal
- * @coversNothing
  */
 class LicenseControllerTest extends AppIntegrationTestCase implements SmokeTestForRouteInterface
 {

@@ -13,7 +13,6 @@ use App\Tests\Traits\RouterTestTrait;
 
 /**
  * @internal
- * @coversNothing
  */
 class PaymentActionTest extends AppIntegrationTestCase implements SmokeTestForRouteInterface
 {

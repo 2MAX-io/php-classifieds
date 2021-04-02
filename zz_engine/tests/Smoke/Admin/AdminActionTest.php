@@ -13,7 +13,6 @@ use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 /**
  * @internal
- * @coversNothing
  */
 class AdminActionTest extends AppIntegrationTestCase implements SmokeTestForRouteInterface
 {
@@ -274,6 +273,7 @@ class AdminActionTest extends AppIntegrationTestCase implements SmokeTestForRout
         $response = $client->getResponse();
 
         self::assertEquals(302, $response->getStatusCode(), (string) $response->getContent());
-        self::assertEquals('/l/2/test-listing-title?showListingPreviewForOwner=1', $client->getResponse()->headers->get('location'));
+        $client->followRedirect();
+        self::assertEquals('app_listing_show', $client->getRequest()->get('_route'));
     }
 }

@@ -9,7 +9,6 @@ use App\Tests\Base\AppTestCase;
 
 /**
  * @internal
- * @coversNothing
  */
 class MegabyteHelperTest extends AppTestCase
 {

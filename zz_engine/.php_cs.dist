@@ -59,6 +59,7 @@ return PhpCsFixer\Config::create()
         'return_assignment' => false,
         'phpdoc_align' => false,
         'phpdoc_to_comment' => false,
+        'php_unit_test_class_requires_covers' => false,
     ])
     ->setFinder($finder)
 ;

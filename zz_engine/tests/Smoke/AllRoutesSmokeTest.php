@@ -13,7 +13,6 @@ use Symfony\Component\Routing\Route;
 
 /**
  * @internal
- * @coversNothing
  */
 class AllRoutesSmokeTest extends AppIntegrationTestCase
 {

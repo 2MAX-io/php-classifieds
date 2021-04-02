@@ -11,7 +11,6 @@ use App\Tests\Traits\RouterTestTrait;
 
 /**
  * @internal
- * @coversNothing
  */
 class UserMyAccountPageTest extends AppIntegrationTestCase
 {

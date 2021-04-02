@@ -14,7 +14,6 @@ use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 /**
  * @internal
- * @coversNothing
  */
 class AdminListingActivateControllerTest extends AppIntegrationTestCase implements SmokeTestForRouteInterface
 {

@@ -14,7 +14,6 @@ use Symfony\Component\DomCrawler\Crawler;
 
 /**
  * @internal
- * @coversNothing
  */
 class RegisterAccountTest extends AppIntegrationTestCase implements SmokeTestForRouteInterface
 {

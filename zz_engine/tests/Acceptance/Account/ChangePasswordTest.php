@@ -15,7 +15,6 @@ use Symfony\Component\DomCrawler\Crawler;
 
 /**
  * @internal
- * @coversNothing
  */
 class ChangePasswordTest extends AppIntegrationTestCase implements SmokeTestForRouteInterface
 {

@@ -13,7 +13,6 @@ use Symfony\Component\Console\Tester\CommandTester;
 
 /**
  * @internal
- * @coversNothing
  */
 class MigrationsTest extends AppIntegrationTestCase
 {

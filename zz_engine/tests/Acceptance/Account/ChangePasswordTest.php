@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\Acceptance\Account;
 
 use App\Tests\Base\AppIntegrationTestCase;
-use App\Tests\Enum\TestLoginEnum;
+use App\Tests\Enum\TestUserLoginEnum;
 use App\Tests\Smoke\Base\SmokeTestForRouteInterface;
 use App\Tests\Traits\DatabaseTestTrait;
 use App\Tests\Traits\LoginTestTrait;
@@ -38,7 +38,7 @@ class ChangePasswordTest extends AppIntegrationTestCase implements SmokeTestForR
         // change password
         $client->request('GET', $this->getRouter()->generate('app_user_change_password'));
         $client->submitForm('Change Password', [
-            'change_password[currentPassword]' => TestLoginEnum::PASSWORD,
+            'change_password[currentPassword]' => TestUserLoginEnum::PASSWORD,
             'change_password[newPassword][first]' => static::NEW_PASSWORD,
             'change_password[newPassword][second]' => static::NEW_PASSWORD,
         ]);
@@ -69,7 +69,7 @@ class ChangePasswordTest extends AppIntegrationTestCase implements SmokeTestForR
 
         // login
         $client->submitForm('Sign in', [
-            'email' => TestLoginEnum::LOGIN,
+            'email' => TestUserLoginEnum::LOGIN,
             'password' => static::NEW_PASSWORD,
         ]);
         self::assertEquals(302, $response->getStatusCode(), (string) $response->getContent());

@@ -526,3 +526,4 @@ php /var/www/html/zz_engine/bin/phpunit --bootstrap /var/www/html/zz_engine/test
 php -dxdebug.start_with_request=yes zz_engine/bin/console app:dev:translation:find-missing  zz_engine/translations/messages.en.yaml
 (cd /var/www/html/zz_engine && php vendor/bin/php-cs-fixer fix --dry-run)
 (cd /var/www/html/zz_engine && php vendor/bin/php-cs-fixer fix)
+(cd /var/www/html/zz_engine && php vendor/bin/php-cs-fixer fix)

@@ -204,7 +204,7 @@ class AllRoutesSmokeTest extends AppIntegrationTestCase
             'categorySlug' => 'automotive',
         ]);
         $urlList[] = $this->getRouter()->generate('app_user_message_respond_to_listing', [
-            'listing' => 1,
+            'listing' => 2,
         ]);
         $urlList[] = $this->getRouter()->generate('app_user_message_list_thread', [
             'userMessageThread' => 1,

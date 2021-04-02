@@ -7,6 +7,7 @@ namespace App\Tests\Enum;
 class TestUserLoginEnum
 {
     public const LOGIN = 'user-demo@2max.io';
+    public const LOGIN2 = 'user-demo2@2max.io';
     public const LOGIN_ADMIN = 'admin-demo@2max.io';
     public const PASSWORD = 'demo';
 }

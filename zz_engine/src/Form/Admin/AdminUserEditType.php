@@ -63,7 +63,7 @@ class AdminUserEditType extends AbstractType
             'type' => PasswordType::class,
             'invalid_message' => 'Repeated value does note match',
             'constraints' => [
-                new Length(['min' => 8]),
+                new Length(['min' => 8, 'allowEmptyString' => true]),
             ],
         ]);
         $builder->add('enabled', null, [

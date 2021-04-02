@@ -49,6 +49,7 @@ class ChangeUserPasswordTest extends AppIntegrationTestCase implements SmokeTest
         $client->followRedirect();
         self::assertSame('app_admin_user_edit', $client->getRequest()->attributes->get('_route'));
 
+        self::ensureKernelShutdown();
         $client = static::createClient();
         $client->request('GET', $this->getRouter()->generate('app_login'));
         $client->submitForm('Sign in', [

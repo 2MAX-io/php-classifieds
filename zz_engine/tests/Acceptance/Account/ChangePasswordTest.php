@@ -17,26 +17,30 @@ use Symfony\Component\DomCrawler\Crawler;
  * @internal
  * @coversNothing
  */
-class RemindPasswordTest extends AppIntegrationTestCase implements SmokeTestForRouteInterface
+class ChangePasswordTest extends AppIntegrationTestCase implements SmokeTestForRouteInterface
 {
     use DatabaseTestTrait;
     use RouterTestTrait;
     use LoginTestTrait;
+    public const NEW_PASSWORD = 'testnewpassword';
 
     public static function getRouteNames(): array
     {
-        return ['app_remind_password_confirm'];
+        return ['app_user_change_password_confirm'];
     }
 
     public function testRemindPassword(): void
     {
         $client = static::createClient();
         $this->clearDatabase();
+        $this->loginUser($client);
 
-        // remind password
-        $client->request('GET', $this->getRouter()->generate('app_remind_password'));
-        $client->submitForm('Remind password', [
-            'remind_password[email]' => TestLoginEnum::LOGIN,
+        // change password
+        $client->request('GET', $this->getRouter()->generate('app_user_change_password'));
+        $client->submitForm('Change Password', [
+            'change_password[currentPassword]' => TestLoginEnum::PASSWORD,
+            'change_password[newPassword][first]' => static::NEW_PASSWORD,
+            'change_password[newPassword][second]' => static::NEW_PASSWORD,
         ]);
         $response = $client->getResponse();
         self::assertEquals(302, $response->getStatusCode(), (string) $response->getContent());
@@ -45,31 +49,31 @@ class RemindPasswordTest extends AppIntegrationTestCase implements SmokeTestForR
         /** @var TemplatedEmail $message */
         $message = $this->getTestContainer()->get('mailer.logger_message_listener')->getEvents()->getMessages()[0];
         $emailCrawler = new Crawler((string) $message->getHtmlBody());
-        $confirmUrl = $emailCrawler->selectLink('I confirm password reset')->link()->getUri();
-        $newPassword = $message->getContext()['plainPassword'];
+        $confirmUrl = $emailCrawler->selectLink('I confirm password change')->link()->getUri();
 
-        // follow redirect after remind password submit
+        // follow redirect after submit
         $client->followRedirect();
         self::assertStringContainsString(
-            'To remind password, please click confirmation link that you would receive on your email address',
+            'To finalize password change, open your email account and click confirmation link',
             $client->getResponse()->getContent() ?: '',
         );
 
         // click confirm link
         $client->request('GET', $confirmUrl);
         $client->followRedirect();
+        $client->followRedirect();
         self::assertStringContainsString(
-            'Password reset has been successful',
+            'Password change has been successful',
             $client->getResponse()->getContent() ?: '',
         );
 
         // login
         $client->submitForm('Sign in', [
             'email' => TestLoginEnum::LOGIN,
-            'password' => $newPassword,
+            'password' => static::NEW_PASSWORD,
         ]);
         self::assertEquals(302, $response->getStatusCode(), (string) $response->getContent());
         $client->followRedirect();
-        self::assertSame('app_user_listing_new', $client->getRequest()->attributes->get('_route'));
+        self::assertSame('app_user_change_password', $client->getRequest()->attributes->get('_route'));
     }
 }

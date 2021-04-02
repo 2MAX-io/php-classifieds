@@ -48,7 +48,7 @@ class RegisterAccountTest extends AppIntegrationTestCase implements SmokeTestFor
         /** @var TemplatedEmail $message */
         $message = $this->getTestContainer()->get('mailer.logger_message_listener')->getEvents()->getMessages()[0];
         $emailCrawler = new Crawler((string) $message->getHtmlBody());
-        $confirmRegistrationUrl = $emailCrawler->selectLink('I confirm registration')->link()->getUri();
+        $confirmUrl = $emailCrawler->selectLink('I confirm registration')->link()->getUri();
 
         // follow redirect after register submit
         $client->followRedirect();
@@ -58,7 +58,7 @@ class RegisterAccountTest extends AppIntegrationTestCase implements SmokeTestFor
         );
 
         // click confirm link
-        $client->request('GET', $confirmRegistrationUrl);
+        $client->request('GET', $confirmUrl);
         $client->followRedirect();
         $client->followRedirect();
         self::assertStringContainsString(

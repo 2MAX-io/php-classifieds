@@ -41,7 +41,6 @@ class AllSimpleRoutesSmokeTest extends AppIntegrationTestCase
         'app_map_image_cache',
         'app_map_image_cache_template',
         'app_user_change_email_previous_email_confirmation',
-        'app_user_change_password_confirm',
         'app_payment_gateway_notify',
         'app_payment_gateway_success',
     ];

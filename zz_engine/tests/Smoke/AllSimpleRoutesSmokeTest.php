@@ -35,7 +35,6 @@ class AllSimpleRoutesSmokeTest extends AppIntegrationTestCase
         'fos_js_routing_js',
         'bazinga_jstranslation_js',
         'nelmio_js_logger_log',
-        'app_logout',
         'app_login_oauth',
         'app_admin_upgrade_run',
         'app_file_upload',

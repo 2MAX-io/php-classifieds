@@ -23,6 +23,14 @@ class TranslationUnusedCommand extends Command
     protected static $defaultName = 'app:dev:translation:unused';
 
     /**
+     * @var string[]
+     */
+    private static $ignoredTranslations = [
+        "trans.We received request to change your account's email address to",
+        'trans.enter here, all characters specific to your language, except for standard characters A-Z, 0-9, for example: ąĄßöИ, if needed',
+    ];
+
+    /**
      * @var LoggerInterface
      */
     private $logger;
@@ -43,6 +51,7 @@ class TranslationUnusedCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        $unusedCount = 0;
         $io = new SymfonyStyle($input, $output);
         $sourceFile = $input->getArgument('sourceFile');
 
@@ -76,8 +85,16 @@ class TranslationUnusedCommand extends Command
                     continue;
                 }
 
+                if (\in_array($translationKey, static::$ignoredTranslations, true)) {
+                    $this->logger->debug('skipped: `{translationKey}`', [
+                        'translationKey' => $translationKey,
+                    ]);
+                    continue;
+                }
+
                 $io->writeln($translationKey);
                 unset($translations[$translationKey]);
+                ++$unusedCount;
             }
         }
 
@@ -119,7 +136,11 @@ class TranslationUnusedCommand extends Command
             );
         }
 
-        $io->success('done');
+        if (0 === $unusedCount) {
+            $io->success('no unused found');
+        } else {
+            $io->error('unused translations found');
+        }
 
         return ConsoleReturnEnum::SUCCESS;
     }

@@ -57,6 +57,7 @@ class CustomFieldOptionControllerTest extends AppIntegrationTestCase implements 
         ]));
         $client->submitForm('Save', [
             'custom_field_option[name]' => 'test custom field option',
+            'custom_field_option[value]' => 'test-custom-field-option',
         ]);
         $response = $client->getResponse();
         self::assertEquals(302, $response->getStatusCode(), (string) $response->getContent());

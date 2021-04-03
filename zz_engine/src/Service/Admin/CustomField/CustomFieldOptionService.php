@@ -75,7 +75,7 @@ class CustomFieldOptionService
         $qb = $this->em->createQueryBuilder();
         $qb->select('listingCustomFieldValue');
         $qb->from(ListingCustomFieldValue::class, 'listingCustomFieldValue');
-        $qb->select($qb->expr()->count('listingCustomFieldValue.id'), 'countResult');
+        $qb->select($qb->expr()->count('listingCustomFieldValue.id'));
         $qb->andWhere($qb->expr()->eq('listingCustomFieldValue.customField', ':customField'));
         $qb->andWhere($qb->expr()->eq('listingCustomFieldValue.value', ':oldValue'));
         $qb->setParameter('customField', $customFieldOption->getCustomField());

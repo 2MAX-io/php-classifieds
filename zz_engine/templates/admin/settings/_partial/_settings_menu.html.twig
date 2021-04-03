@@ -20,6 +20,10 @@
         {{- 'trans.Webpage Logo' | trans -}}
     </a>
 
+    <a href="{{ path('app_admin_cache') }}" class="btn btn-secondary mb-1">
+        {{- 'trans.Cache' | trans -}}
+    </a>
+
     {%- if not settings.licenseValid ~%}
         <a href="{{ path('app_admin_settings_license') }}" class="btn btn-secondary mb-1">
             {{- 'trans.License' | trans -}}

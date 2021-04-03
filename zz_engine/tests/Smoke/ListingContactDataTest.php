@@ -16,7 +16,7 @@ use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 /**
  * @internal
  */
-class ListingShowControllerTest extends AppIntegrationTestCase implements SmokeTestForRouteInterface
+class ListingContactDataTest extends AppIntegrationTestCase implements SmokeTestForRouteInterface
 {
     use DatabaseTestTrait;
     use RouterTestTrait;

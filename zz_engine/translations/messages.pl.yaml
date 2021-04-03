@@ -734,3 +734,5 @@ trans.Yes: Tak
 'trans.Cron executing message queue is not working': 'Cron obsługujący kolejkę wiadomości nie działa'
 'trans.Direct messages enabled': 'Wiadomości bezpośrednie włączone'
 'trans.Write message button is displayed for your listings': 'Przycisk wyślij wiadomość jest wyświetlany w Twoich ogłoszeniach'
+'trans.Cache': 'Cache'
+'trans.Clear cache': 'Wyczyść cache'

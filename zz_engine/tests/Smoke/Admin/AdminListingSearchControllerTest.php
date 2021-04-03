@@ -24,7 +24,7 @@ class AdminListingSearchControllerTest extends AppIntegrationTestCase implements
         return ['app_admin_listing_search'];
     }
 
-    public function testPage(): void
+    public function test(): void
     {
         $client = static::createClient();
         $this->clearDatabase();
@@ -32,6 +32,21 @@ class AdminListingSearchControllerTest extends AppIntegrationTestCase implements
 
         $url = $this->getRouter()->generate('app_admin_listing_search', [
             'query' => 'test',
+        ]);
+        $client->request('GET', $url);
+        $response = $client->getResponse();
+
+        self::assertEquals(200, $response->getStatusCode(), (string) $response->getContent());
+    }
+
+    public function testHidden(): void
+    {
+        $client = static::createClient();
+        $this->clearDatabase();
+        $this->loginAdmin($client);
+
+        $url = $this->getRouter()->generate('app_admin_listing_search', [
+            'publicDisplay' => '0',
         ]);
         $client->request('GET', $url);
         $response = $client->getResponse();

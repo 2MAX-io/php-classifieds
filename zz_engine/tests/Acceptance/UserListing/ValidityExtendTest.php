@@ -11,8 +11,6 @@ use App\Tests\Traits\LoginTestTrait;
 use App\Tests\Traits\RouterTestTrait;
 
 /**
- * @covers \App\Controller\User\Listing\ValidityExtendController
- *
  * @internal
  */
 class ValidityExtendTest extends AppIntegrationTestCase implements SmokeTestForRouteInterface

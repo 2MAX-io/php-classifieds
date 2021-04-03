@@ -128,9 +128,9 @@ class ListingFileUploadService
             $listingFile->setPath(Path::makeRelative($newFilePath, FilePath::getPublicDir()));
             $listingFile->setFilename(\basename($listingFile->getPath()));
             $listingFile->setUserOriginalFilename(\mb_substr($fileUploadDto->getOriginalFilename(), 0, 255));
-            $listingFile->setMimeType(\mime_content_type($listingFile->getPath()) ?: '');
-            $listingFile->setSizeBytes(\filesize($listingFile->getPath()) ?: 0);
-            $listingFile->setFileHash(\hash_file('sha256', $listingFile->getPath()) ?: '');
+            $listingFile->setMimeType(\mime_content_type($newFilePath) ?: '');
+            $listingFile->setSizeBytes(\filesize($newFilePath) ?: 0);
+            $listingFile->setFileHash(\hash_file('sha256', $newFilePath) ?: '');
             $listingFile->setImageWidth($imageWidth);
             $listingFile->setImageHeight($imageHeight);
             $listingFile->setUploadDate(DateHelper::create());

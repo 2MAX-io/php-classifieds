@@ -24,7 +24,7 @@ class CronControllerTest extends AppIntegrationTestCase implements SmokeTestForR
         ];
     }
 
-    public function testShowContractInformation(): void
+    public function testCronViaUrl(): void
     {
         $client = static::createClient();
         $this->clearDatabase();

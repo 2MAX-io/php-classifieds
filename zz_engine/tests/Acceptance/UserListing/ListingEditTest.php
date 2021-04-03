@@ -11,8 +11,6 @@ use App\Tests\Traits\LoginTestTrait;
 use App\Tests\Traits\RouterTestTrait;
 
 /**
- * @covers \App\Controller\User\Listing\ListingEditForUserController
- *
  * @internal
  */
 class ListingEditTest extends AppIntegrationTestCase implements SmokeTestForRouteInterface

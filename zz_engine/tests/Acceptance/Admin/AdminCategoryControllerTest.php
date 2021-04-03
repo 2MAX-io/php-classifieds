@@ -9,6 +9,7 @@ use App\Tests\Smoke\Base\SmokeTestForRouteInterface;
 use App\Tests\Traits\DatabaseTestTrait;
 use App\Tests\Traits\LoginTestTrait;
 use App\Tests\Traits\RouterTestTrait;
+use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 /**
  * @internal
@@ -62,5 +63,27 @@ class AdminCategoryControllerTest extends AppIntegrationTestCase implements Smok
         self::assertEquals(302, $response->getStatusCode(), (string) $response->getContent());
         $client->followRedirect();
         self::assertSame('app_admin_category_edit', $client->getRequest()->attributes->get('_route'));
+    }
+
+    public function testDeleteCategoryWithListings(): void
+    {
+        $client = static::createClient();
+        $this->clearDatabase();
+        $this->loginAdmin($client);
+
+        $id = 140;
+        $csrfToken = $this->getTestContainer()->get(CsrfTokenManagerInterface::class)->getToken('csrf_deleteCategory'.$id);
+        $url = $this->getRouter()->generate('app_admin_category_delete', [
+            'id' => $id,
+        ]);
+        $client->request('DELETE', $url, [
+            '_token' => $csrfToken->getValue(),
+        ]);
+        $response = $client->getResponse();
+
+        self::assertEquals(302, $response->getStatusCode(), (string) $response->getContent());
+        $client->followRedirect();
+        self::assertEquals('app_admin_category_edit', $client->getRequest()->get('_route'));
+        self::assertStringContainsString('To delete category, you must first delete or move all dependencies like', (string) $client->getResponse()->getContent());
     }
 }

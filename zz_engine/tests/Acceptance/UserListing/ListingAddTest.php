@@ -79,7 +79,7 @@ class ListingAddTest extends AppIntegrationTestCase implements SmokeTestForRoute
                 ],
             ],
         ]);
-        $crawler = $client->request(
+        $client->request(
             $form->getMethod(),
             $form->getUri(),
             $values,

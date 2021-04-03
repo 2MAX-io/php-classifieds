@@ -64,4 +64,23 @@ class CustomFieldOptionControllerTest extends AppIntegrationTestCase implements 
         $client->followRedirect();
         self::assertSame('app_admin_custom_field_option_edit', $client->getRequest()->attributes->get('_route'));
     }
+
+    public function testChangeToExisting(): void
+    {
+        $client = static::createClient();
+        $this->clearDatabase();
+        $this->loginAdmin($client);
+
+        $client->request('GET', $this->getRouter()->generate('app_admin_custom_field_option_edit', [
+            'id' => 1,
+        ]));
+        $client->submitForm('Save', [
+            'custom_field_option[name]' => 'test custom field option',
+            'custom_field_option[value]' => 'bmw',
+        ]);
+        $response = $client->getResponse();
+        $content = (string) $response->getContent();
+        self::assertEquals(200, $response->getStatusCode(), $content);
+        self::assertStringContainsString('This value is already used', $content);
+    }
 }

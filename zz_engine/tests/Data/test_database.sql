@@ -13,6 +13,7 @@ INSERT INTO payment (id, user_id, type, description, amount, gateway_amount_paid
 INSERT INTO payment_for_featured_package (id, payment_id, featured_package_id, listing_id) VALUES (1, 1, 1, 1);
 INSERT INTO invoice (id, user_id, payment_id, invoice_number, invoice_date, total_money, currency, total_tax_money, external_system_reference, external_system_reference_secondary, uuid, display_to_user, exported, sent_to_user, invoice_file_path, company_name, individual_client_name, client_tax_number, city, street, building_number, unit_number, zip_code, country, seller_company_name, seller_tax_number, seller_city, seller_street, seller_building_number, seller_unit_number, seller_zip_code, seller_country, seller_email, email_to_send_invoice, export_date, sent_to_user_date, created_date, updated_date) VALUES (1, 1, 1, '1', '2021-03-30 14:23:37', '1', 'USD', null, null, null, '070b1fae-834e-40af-8cd2-9b155f5ff38d', 1, 0, 0, null, null, 'user-demo@2max.io', null, null, null, null, null, null, null, '', '', '', '', '', '', '', '', '', 'user-demo@2max.io', null, null, '2021-03-30 14:23:37', '2021-03-30 14:23:37');
 UPDATE setting SET value = '1' WHERE name = 'paymentAllowed';
+UPDATE setting SET value = 'auto' WHERE name = 'invoiceGenerationStrategy';
 
 CREATE TABLE `zzzz_messenger_messages` (
    `id` bigint(20) NOT NULL AUTO_INCREMENT,

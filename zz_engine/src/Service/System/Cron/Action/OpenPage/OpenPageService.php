@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Service\System\Cron\Action\OpenPage;
 
 use App\Enum\AppCacheEnum;
+use App\Enum\EnvironmentEnum;
 use App\Service\System\Cron\Action\Base\CronActionInterface;
 use App\Service\System\Cron\Dto\CronDto;
 use App\Service\System\RunEvery\RunEveryService;
@@ -57,6 +58,10 @@ class OpenPageService implements CronActionInterface, MessageHandlerInterface
 
     public function openPage(): void
     {
+        if (EnvironmentEnum::TEST === ($_ENV['APP_ENV'] ?? '')) {
+            return; // skip in tests
+        }
+
         $client = new Client(
             [
                 RequestOptions::TIMEOUT => 30,

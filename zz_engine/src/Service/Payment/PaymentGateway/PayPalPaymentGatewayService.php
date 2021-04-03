@@ -36,6 +36,11 @@ class PayPalPaymentGatewayService implements PaymentGatewayInterface
      */
     private $logger;
 
+    /**
+     * @var GatewayInterface|null
+     */
+    private $gateway;
+
     public function __construct(
         PaymentHelperService $paymentHelperService,
         SettingsService $settingsService,
@@ -135,9 +140,17 @@ class PayPalPaymentGatewayService implements PaymentGatewayInterface
         return $paymentPayPalMode;
     }
 
+    public function setGateway(GatewayInterface $gateway): void
+    {
+        $this->gateway = $gateway;
+    }
+
     private function getGateway(): GatewayInterface
     {
-        $gateway = Omnipay::create('PayPal_Rest');
+        $gateway = $this->gateway;
+        if (null === $gateway) {
+            $gateway = Omnipay::create('PayPal_Rest');
+        }
         $gateway->initialize([
             'clientId' => $this->settingsService->getSettingsDto()->getPaymentPayPalClientId(),
             'secret' => $this->settingsService->getSettingsDto()->getPaymentPayPalClientSecret(),

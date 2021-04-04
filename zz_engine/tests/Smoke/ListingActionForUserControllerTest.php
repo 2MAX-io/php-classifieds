@@ -45,7 +45,7 @@ class ListingActionForUserControllerTest extends AppIntegrationTestCase implemen
         ]);
         $response = $client->getResponse();
 
-        self::assertEquals(302, $response->getStatusCode(), (string) $response->getContent());
+        self::assertEquals(302, $response->getStatusCode());
         self::assertEquals('/', $client->getResponse()->headers->get('location'));
     }
 
@@ -65,7 +65,7 @@ class ListingActionForUserControllerTest extends AppIntegrationTestCase implemen
         ]);
         $response = $client->getResponse();
 
-        self::assertEquals(302, $response->getStatusCode(), (string) $response->getContent());
+        self::assertEquals(302, $response->getStatusCode());
         self::assertEquals('/', $client->getResponse()->headers->get('location'));
     }
 
@@ -85,7 +85,7 @@ class ListingActionForUserControllerTest extends AppIntegrationTestCase implemen
         ]);
         $response = $client->getResponse();
 
-        self::assertEquals(302, $response->getStatusCode(), (string) $response->getContent());
+        self::assertEquals(302, $response->getStatusCode());
         self::assertEquals('/', $client->getResponse()->headers->get('location'));
     }
 }

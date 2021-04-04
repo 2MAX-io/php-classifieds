@@ -41,7 +41,7 @@ class ListingEditTest extends AppIntegrationTestCase implements SmokeTestForRout
             'listing[description]' => 'test listing',
         ]);
         $response = $client->getResponse();
-        self::assertEquals(302, $response->getStatusCode(), (string) $response->getContent());
+        self::assertEquals(302, $response->getStatusCode());
         $client->followRedirect();
         self::assertSame('app_user_listing_edit', $client->getRequest()->attributes->get('_route'));
     }

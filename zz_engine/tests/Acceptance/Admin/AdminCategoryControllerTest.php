@@ -49,7 +49,7 @@ class AdminCategoryControllerTest extends AppIntegrationTestCase implements Smok
         $pictureField->upload(FilePath::getProjectDir().'/static/system/1920x1080.png');
         $client->submit($form);
         $response = $client->getResponse();
-        self::assertEquals(302, $response->getStatusCode(), (string) $response->getContent());
+        self::assertEquals(302, $response->getStatusCode());
         $client->followRedirect();
         self::assertSame('app_admin_category_edit', $client->getRequest()->attributes->get('_route'));
     }
@@ -67,7 +67,7 @@ class AdminCategoryControllerTest extends AppIntegrationTestCase implements Smok
             'admin_category_save[name]' => 'test cat edit',
         ]);
         $response = $client->getResponse();
-        self::assertEquals(302, $response->getStatusCode(), (string) $response->getContent());
+        self::assertEquals(302, $response->getStatusCode());
         $client->followRedirect();
         self::assertSame('app_admin_category_edit', $client->getRequest()->attributes->get('_route'));
     }
@@ -88,7 +88,7 @@ class AdminCategoryControllerTest extends AppIntegrationTestCase implements Smok
         ]);
         $response = $client->getResponse();
 
-        self::assertEquals(302, $response->getStatusCode(), (string) $response->getContent());
+        self::assertEquals(302, $response->getStatusCode());
         $client->followRedirect();
         self::assertEquals('app_admin_category_edit', $client->getRequest()->get('_route'));
         self::assertStringContainsString('To delete category, you must first delete or move all dependencies like', (string) $client->getResponse()->getContent());

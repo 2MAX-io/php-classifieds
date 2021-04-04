@@ -43,7 +43,7 @@ class ChangeUserBalanceTest extends AppIntegrationTestCase implements SmokeTestF
             'user_change_balance[changeReason]' => 'test change reason',
         ]);
         $response = $client->getResponse();
-        self::assertEquals(302, $response->getStatusCode(), (string) $response->getContent());
+        self::assertEquals(302, $response->getStatusCode());
 
         // follow redirect after submit
         $client->followRedirect();

@@ -41,7 +41,7 @@ class RegisterAccountTest extends AppIntegrationTestCase implements SmokeTestFor
             'register[password][second]' => static::PASSWORD,
         ]);
         $response = $client->getResponse();
-        self::assertEquals(302, $response->getStatusCode(), (string) $response->getContent());
+        self::assertEquals(302, $response->getStatusCode());
 
         // get confirmation link from email message
         /** @var TemplatedEmail $message */
@@ -70,7 +70,7 @@ class RegisterAccountTest extends AppIntegrationTestCase implements SmokeTestFor
             'email' => static::LOGIN,
             'password' => static::PASSWORD,
         ]);
-        self::assertEquals(302, $response->getStatusCode(), (string) $response->getContent());
+        self::assertEquals(302, $response->getStatusCode());
         $client->followRedirect();
         self::assertSame('app_user_listing_new', $client->getRequest()->attributes->get('_route'));
     }

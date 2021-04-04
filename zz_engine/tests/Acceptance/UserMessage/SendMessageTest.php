@@ -47,7 +47,7 @@ class SendMessageTest extends AppIntegrationTestCase implements SmokeTestForRout
             'send_user_message[message]' => 'test user message',
         ]);
         $response = $client->getResponse();
-        self::assertEquals(302, $response->getStatusCode(), (string) $response->getContent());
+        self::assertEquals(302, $response->getStatusCode());
 
         // follow redirect after submit
         $client->followRedirect();
@@ -88,7 +88,7 @@ class SendMessageTest extends AppIntegrationTestCase implements SmokeTestForRout
             'send_user_message[message]' => 'test user message',
         ]);
         $response = $client->getResponse();
-        self::assertEquals(302, $response->getStatusCode(), (string) $response->getContent());
+        self::assertEquals(302, $response->getStatusCode());
 
         // follow redirect after submit
         $client->followRedirect();

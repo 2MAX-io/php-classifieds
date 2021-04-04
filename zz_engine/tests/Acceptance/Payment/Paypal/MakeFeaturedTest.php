@@ -56,7 +56,7 @@ class MakeFeaturedTest extends AppIntegrationTestCase
             '_token' => $csrfToken->getValue(),
         ]);
         $response = $client->getResponse();
-        self::assertEquals(302, $response->getStatusCode(), (string) $response->getContent());
+        self::assertEquals(302, $response->getStatusCode());
 
         // go to success url
         $successUrl = $client->getResponse()->headers->get('location');

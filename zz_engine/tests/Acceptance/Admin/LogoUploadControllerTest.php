@@ -34,7 +34,7 @@ class LogoUploadControllerTest extends AppIntegrationTestCase
         $pictureField->upload(FilePath::getProjectDir().'/static/system/1920x1080.png');
         $client->submit($form);
         $response = $client->getResponse();
-        self::assertEquals(302, $response->getStatusCode(), (string) $response->getContent());
+        self::assertEquals(302, $response->getStatusCode());
         $client->followRedirect();
         self::assertSame('app_admin_logo_upload', $client->getRequest()->attributes->get('_route'));
     }

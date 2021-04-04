@@ -42,7 +42,7 @@ class PaymentActionTest extends AppIntegrationTestCase implements SmokeTestForRo
         $client->request('GET', $url);
         $response = $client->getResponse();
 
-        self::assertEquals(302, $response->getStatusCode(), (string) $response->getContent());
+        self::assertEquals(302, $response->getStatusCode());
         self::assertEquals('/user/feature/1', $client->getResponse()->headers->get('location'));
     }
 
@@ -58,7 +58,7 @@ class PaymentActionTest extends AppIntegrationTestCase implements SmokeTestForRo
         $client->request('GET', $url);
         $response = $client->getResponse();
 
-        self::assertEquals(302, $response->getStatusCode(), (string) $response->getContent());
+        self::assertEquals(302, $response->getStatusCode());
         self::assertEquals('/user/feature/1', $client->getResponse()->headers->get('location'));
     }
 
@@ -74,7 +74,7 @@ class PaymentActionTest extends AppIntegrationTestCase implements SmokeTestForRo
         $client->request('GET', $url);
         $response = $client->getResponse();
 
-        self::assertEquals(200, $response->getStatusCode(), (string) $response->getContent());
+        self::assertEquals(200, $response->getStatusCode());
     }
 
     public function testAwaitConfirmation(): void
@@ -89,6 +89,6 @@ class PaymentActionTest extends AppIntegrationTestCase implements SmokeTestForRo
         $client->request('GET', $url);
         $response = $client->getResponse();
 
-        self::assertEquals(200, $response->getStatusCode(), (string) $response->getContent());
+        self::assertEquals(200, $response->getStatusCode());
     }
 }

@@ -41,7 +41,7 @@ class CustomFieldOptionControllerTest extends AppIntegrationTestCase implements 
             'custom_field_option[value]' => 'test-custom-field-option',
         ]);
         $response = $client->getResponse();
-        self::assertEquals(302, $response->getStatusCode(), (string) $response->getContent());
+        self::assertEquals(302, $response->getStatusCode());
         $client->followRedirect();
         self::assertSame('app_admin_custom_field_option_edit', $client->getRequest()->attributes->get('_route'));
     }
@@ -60,7 +60,7 @@ class CustomFieldOptionControllerTest extends AppIntegrationTestCase implements 
             'custom_field_option[value]' => 'test-custom-field-option',
         ]);
         $response = $client->getResponse();
-        self::assertEquals(302, $response->getStatusCode(), (string) $response->getContent());
+        self::assertEquals(302, $response->getStatusCode());
         $client->followRedirect();
         self::assertSame('app_admin_custom_field_option_edit', $client->getRequest()->attributes->get('_route'));
     }

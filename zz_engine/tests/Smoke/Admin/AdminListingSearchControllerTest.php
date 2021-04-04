@@ -36,7 +36,7 @@ class AdminListingSearchControllerTest extends AppIntegrationTestCase implements
         $client->request('GET', $url);
         $response = $client->getResponse();
 
-        self::assertEquals(200, $response->getStatusCode(), (string) $response->getContent());
+        self::assertEquals(200, $response->getStatusCode());
     }
 
     public function testHidden(): void
@@ -51,6 +51,6 @@ class AdminListingSearchControllerTest extends AppIntegrationTestCase implements
         $client->request('GET', $url);
         $response = $client->getResponse();
 
-        self::assertEquals(200, $response->getStatusCode(), (string) $response->getContent());
+        self::assertEquals(200, $response->getStatusCode());
     }
 }

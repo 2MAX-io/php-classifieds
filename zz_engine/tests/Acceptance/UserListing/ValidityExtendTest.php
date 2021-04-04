@@ -37,7 +37,7 @@ class ValidityExtendTest extends AppIntegrationTestCase implements SmokeTestForR
             'validity_extend[validityTimeDays]' => 31,
         ]);
         $response = $client->getResponse();
-        self::assertEquals(302, $response->getStatusCode(), (string) $response->getContent());
+        self::assertEquals(302, $response->getStatusCode());
         $client->followRedirect();
         self::assertSame('app_user_validity_extend', $client->getRequest()->attributes->get('_route'));
     }

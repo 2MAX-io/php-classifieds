@@ -67,7 +67,7 @@ class MakeFeaturedTest extends AppIntegrationTestCase
             '_token' => $csrfToken->getValue(),
         ]);
         $response = $client->getResponse();
-        self::assertEquals(302, $response->getStatusCode(), (string) $response->getContent());
+        self::assertEquals(302, $response->getStatusCode());
         $returnUrl = $client->getResponse()->headers->get('location');
 
         // notify from payment gateway

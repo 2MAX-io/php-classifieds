@@ -43,7 +43,7 @@ class ChangeUserPasswordTest extends AppIntegrationTestCase implements SmokeTest
             'admin_user_edit[plainPassword][second]' => static::NEW_PASSWORD,
         ]);
         $response = $client->getResponse();
-        self::assertEquals(302, $response->getStatusCode(), (string) $response->getContent());
+        self::assertEquals(302, $response->getStatusCode());
 
         // follow redirect after submit
         $client->followRedirect();
@@ -56,7 +56,7 @@ class ChangeUserPasswordTest extends AppIntegrationTestCase implements SmokeTest
             'email' => TestUserLoginEnum::LOGIN,
             'password' => static::NEW_PASSWORD,
         ]);
-        self::assertEquals(302, $response->getStatusCode(), (string) $response->getContent());
+        self::assertEquals(302, $response->getStatusCode());
         $client->followRedirect();
         self::assertSame('app_user_listing_new', $client->getRequest()->attributes->get('_route'));
     }

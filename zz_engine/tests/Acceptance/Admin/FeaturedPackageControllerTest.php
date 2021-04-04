@@ -42,7 +42,7 @@ class FeaturedPackageControllerTest extends AppIntegrationTestCase implements Sm
             'featured_package[daysListingExpire]' => '1',
         ]);
         $response = $client->getResponse();
-        self::assertEquals(302, $response->getStatusCode(), (string) $response->getContent());
+        self::assertEquals(302, $response->getStatusCode());
         $client->followRedirect();
         self::assertSame('app_admin_featured_package_edit', $client->getRequest()->attributes->get('_route'));
     }
@@ -69,7 +69,7 @@ class FeaturedPackageControllerTest extends AppIntegrationTestCase implements Sm
             $form->getPhpFiles()
         );
         $response = $client->getResponse();
-        self::assertEquals(302, $response->getStatusCode(), (string) $response->getContent());
+        self::assertEquals(302, $response->getStatusCode());
         $client->followRedirect();
         self::assertSame('app_admin_featured_package_edit', $client->getRequest()->attributes->get('_route'));
     }

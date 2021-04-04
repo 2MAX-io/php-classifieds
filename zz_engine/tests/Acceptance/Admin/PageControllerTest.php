@@ -40,7 +40,7 @@ class PageControllerTest extends AppIntegrationTestCase implements SmokeTestForR
             'page[content]' => 'test page content',
         ]);
         $response = $client->getResponse();
-        self::assertEquals(302, $response->getStatusCode(), (string) $response->getContent());
+        self::assertEquals(302, $response->getStatusCode());
         $client->followRedirect();
         self::assertSame('app_admin_page_edit', $client->getRequest()->attributes->get('_route'));
     }
@@ -58,7 +58,7 @@ class PageControllerTest extends AppIntegrationTestCase implements SmokeTestForR
             'page[title]' => 'test page title',
         ]);
         $response = $client->getResponse();
-        self::assertEquals(302, $response->getStatusCode(), (string) $response->getContent());
+        self::assertEquals(302, $response->getStatusCode());
         $client->followRedirect();
         self::assertSame('app_admin_page_edit', $client->getRequest()->attributes->get('_route'));
     }

@@ -54,7 +54,7 @@ class AdminActionTest extends AppIntegrationTestCase implements SmokeTestForRout
         ]);
         $response = $client->getResponse();
 
-        self::assertEquals(302, $response->getStatusCode(), (string) $response->getContent());
+        self::assertEquals(302, $response->getStatusCode());
         self::assertEquals('/', $client->getResponse()->headers->get('location'));
     }
 
@@ -74,7 +74,7 @@ class AdminActionTest extends AppIntegrationTestCase implements SmokeTestForRout
         ]);
         $response = $client->getResponse();
 
-        self::assertEquals(302, $response->getStatusCode(), (string) $response->getContent());
+        self::assertEquals(302, $response->getStatusCode());
         self::assertEquals('/', $client->getResponse()->headers->get('location'));
     }
 
@@ -94,7 +94,7 @@ class AdminActionTest extends AppIntegrationTestCase implements SmokeTestForRout
         ]);
         $response = $client->getResponse();
 
-        self::assertEquals(302, $response->getStatusCode(), (string) $response->getContent());
+        self::assertEquals(302, $response->getStatusCode());
     }
 
     public function testFeatureForWeek(): void
@@ -113,7 +113,7 @@ class AdminActionTest extends AppIntegrationTestCase implements SmokeTestForRout
         ]);
         $response = $client->getResponse();
 
-        self::assertEquals(302, $response->getStatusCode(), (string) $response->getContent());
+        self::assertEquals(302, $response->getStatusCode());
         self::assertEquals('/', $client->getResponse()->headers->get('location'));
     }
 
@@ -133,7 +133,7 @@ class AdminActionTest extends AppIntegrationTestCase implements SmokeTestForRout
         ]);
         $response = $client->getResponse();
 
-        self::assertEquals(302, $response->getStatusCode(), (string) $response->getContent());
+        self::assertEquals(302, $response->getStatusCode());
         self::assertEquals('/admin/red5/listing/edit/1', $client->getResponse()->headers->get('location'));
     }
 
@@ -153,7 +153,7 @@ class AdminActionTest extends AppIntegrationTestCase implements SmokeTestForRout
         ]);
         $response = $client->getResponse();
 
-        self::assertEquals(302, $response->getStatusCode(), (string) $response->getContent());
+        self::assertEquals(302, $response->getStatusCode());
         self::assertEquals('/admin/red5/featured-package', $client->getResponse()->headers->get('location'));
     }
 
@@ -174,7 +174,7 @@ class AdminActionTest extends AppIntegrationTestCase implements SmokeTestForRout
         ]);
         $response = $client->getResponse();
 
-        self::assertEquals(302, $response->getStatusCode(), (string) $response->getContent());
+        self::assertEquals(302, $response->getStatusCode());
         self::assertEquals('/admin/red5/listing-report', $client->getResponse()->headers->get('location'));
     }
 
@@ -194,7 +194,7 @@ class AdminActionTest extends AppIntegrationTestCase implements SmokeTestForRout
         ]);
         $response = $client->getResponse();
 
-        self::assertEquals(302, $response->getStatusCode(), (string) $response->getContent());
+        self::assertEquals(302, $response->getStatusCode());
         self::assertEquals('/admin/red5/custom-field/1/edit', $client->getResponse()->headers->get('location'));
     }
 
@@ -215,7 +215,7 @@ class AdminActionTest extends AppIntegrationTestCase implements SmokeTestForRout
         ]);
         $response = $client->getResponse();
 
-        self::assertEquals(302, $response->getStatusCode(), (string) $response->getContent());
+        self::assertEquals(302, $response->getStatusCode());
         self::assertEquals('/admin/red5/custom-field/list', $client->getResponse()->headers->get('location'));
     }
 
@@ -235,7 +235,7 @@ class AdminActionTest extends AppIntegrationTestCase implements SmokeTestForRout
         ]);
         $response = $client->getResponse();
 
-        self::assertEquals(302, $response->getStatusCode(), (string) $response->getContent());
+        self::assertEquals(302, $response->getStatusCode());
         self::assertEquals('/admin/red5/category/2/edit', $client->getResponse()->headers->get('location'));
     }
 
@@ -255,7 +255,7 @@ class AdminActionTest extends AppIntegrationTestCase implements SmokeTestForRout
         ]);
         $response = $client->getResponse();
 
-        self::assertEquals(302, $response->getStatusCode(), (string) $response->getContent());
+        self::assertEquals(302, $response->getStatusCode());
         self::assertEquals('/admin/red5/page', $client->getResponse()->headers->get('location'));
     }
 
@@ -272,7 +272,7 @@ class AdminActionTest extends AppIntegrationTestCase implements SmokeTestForRout
         ]);
         $response = $client->getResponse();
 
-        self::assertEquals(302, $response->getStatusCode(), (string) $response->getContent());
+        self::assertEquals(302, $response->getStatusCode());
         $client->followRedirect();
         self::assertEquals('app_listing_show', $client->getRequest()->get('_route'));
     }

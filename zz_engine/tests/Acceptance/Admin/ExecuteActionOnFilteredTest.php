@@ -40,7 +40,7 @@ class ExecuteActionOnFilteredTest extends AppIntegrationTestCase implements Smok
             'execute_action[category]' => 3,
         ]);
         $response = $client->getResponse();
-        self::assertEquals(302, $response->getStatusCode(), (string) $response->getContent());
+        self::assertEquals(302, $response->getStatusCode());
 
         // follow redirect after submit
         $client->followRedirect();
@@ -60,7 +60,7 @@ class ExecuteActionOnFilteredTest extends AppIntegrationTestCase implements Smok
             'execute_action[customFieldOption]' => 2,
         ]);
         $response = $client->getResponse();
-        self::assertEquals(302, $response->getStatusCode(), (string) $response->getContent());
+        self::assertEquals(302, $response->getStatusCode());
 
         // follow redirect after submit
         $client->followRedirect();

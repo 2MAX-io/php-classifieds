@@ -40,7 +40,7 @@ class CustomFieldControllerTest extends AppIntegrationTestCase implements SmokeT
             'custom_field[type]' => CustomField::SELECT_SINGLE,
         ]);
         $response = $client->getResponse();
-        self::assertEquals(302, $response->getStatusCode(), (string) $response->getContent());
+        self::assertEquals(302, $response->getStatusCode());
         $client->followRedirect();
         self::assertSame('app_admin_custom_field_edit', $client->getRequest()->attributes->get('_route'));
     }
@@ -58,7 +58,7 @@ class CustomFieldControllerTest extends AppIntegrationTestCase implements SmokeT
             'custom_field[name]' => 'test custom field name',
         ]);
         $response = $client->getResponse();
-        self::assertEquals(302, $response->getStatusCode(), (string) $response->getContent());
+        self::assertEquals(302, $response->getStatusCode());
         $client->followRedirect();
         self::assertSame('app_admin_custom_field_edit', $client->getRequest()->attributes->get('_route'));
     }

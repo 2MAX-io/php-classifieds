@@ -44,7 +44,7 @@ class FeatureListingControllerTest extends AppIntegrationTestCase implements Smo
         ]);
         $response = $client->getResponse();
 
-        self::assertEquals(302, $response->getStatusCode(), (string) $response->getContent());
+        self::assertEquals(302, $response->getStatusCode());
         self::assertEquals('/user/feature/1?demoStarted=1', $client->getResponse()->headers->get('location'));
     }
 
@@ -69,7 +69,7 @@ class FeatureListingControllerTest extends AppIntegrationTestCase implements Smo
         ]);
         $response = $client->getResponse();
 
-        self::assertEquals(302, $response->getStatusCode(), (string) $response->getContent());
+        self::assertEquals(302, $response->getStatusCode());
         self::assertEquals('/user/feature/1', $client->getResponse()->headers->get('location'));
     }
 }

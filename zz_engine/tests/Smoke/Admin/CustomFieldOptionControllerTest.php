@@ -45,6 +45,6 @@ EOT;
         ], $requestContent);
         $response = $client->getResponse();
 
-        self::assertEquals(200, $response->getStatusCode(), (string) $response->getContent());
+        self::assertEquals(200, $response->getStatusCode());
     }
 }

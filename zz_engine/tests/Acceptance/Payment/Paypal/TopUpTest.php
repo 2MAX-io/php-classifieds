@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Acceptance\Payment;
+namespace App\Tests\Acceptance\Payment\Paypal;
 
 use App\Service\Payment\PaymentGateway\PayPalPaymentGatewayService;
 use App\Tests\Base\AppIntegrationTestCase;
@@ -28,9 +28,11 @@ class TopUpTest extends AppIntegrationTestCase
         $this->clearDatabase();
         $this->loginUser($client);
 
+        // go to top up page
         $crawler = $client->request('GET', $this->getRouter()->generate('app_user_balance_top_up'));
         $getFormResponse = $client->getResponse();
 
+        // prepare services state
         $client = static::createClient();
         $client->getCookieJar()->updateFromSetCookie([(string) $getFormResponse->headers->get('set-cookie')]);
         $gatewayStub = $this->createMock(RestGateway::class);
@@ -50,11 +52,11 @@ class TopUpTest extends AppIntegrationTestCase
         });
         self::$container->get(PayPalPaymentGatewayService::class)->setGateway($gatewayStub);
 
+        // submit top up form
         $buttonNode = $crawler->selectButton('Top up account');
         $form = $buttonNode->form([
             'top_up_balance[topUpAmount]' => '1',
         ], 'POST');
-
         $client->submit($form);
         $response = $client->getResponse();
         self::assertEquals(302, $response->getStatusCode(), (string) $response->getContent());

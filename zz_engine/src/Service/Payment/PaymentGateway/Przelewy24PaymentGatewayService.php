@@ -37,6 +37,11 @@ class Przelewy24PaymentGatewayService implements PaymentGatewayInterface
      */
     private $logger;
 
+    /**
+     * @var GatewayInterface|null
+     */
+    private $gateway;
+
     public function __construct(
         PaymentHelperService $paymentHelperService,
         SettingsDto $settingsDto,
@@ -99,6 +104,7 @@ class Przelewy24PaymentGatewayService implements PaymentGatewayInterface
         try {
             $gateway = $this->getGateway();
             $transactionId = $confirmPaymentDto->getRequest()->get('p24_order_id');
+            $amount = $confirmPaymentDto->getRequest()->get('p24_amount');
             $transaction = $gateway->completePurchase([
                 'sessionId' => $confirmPaymentDto->getPaymentAppToken(),
                 'amount' => $confirmPaymentDto->getPaymentEntityNotNull()->getAmount() / 100,
@@ -106,26 +112,26 @@ class Przelewy24PaymentGatewayService implements PaymentGatewayInterface
                 'transactionId' => $transactionId,
             ]);
             $response = $transaction->send();
-            if ($response->isSuccessful()) {
-                $data = $response->getData();
-                $this->logger->debug('[payment] payment confirmation response', [
-                    'responseData' => $data,
-                    'query' => $confirmPaymentDto->getRequest()->request->all(),
+            if (!$response->isSuccessful()) {
+                $this->logger->critical('[payment][przelewy24] Payment confirmation failed', [
+                    'responseData' => $response->getData(),
                 ]);
 
-                $confirmPaymentDto->setGatewayPaymentId($transactionId);
-                $confirmPaymentDto->setGatewayStatus($data['error']);
-                $confirmPaymentDto->setConfirmed($response->isSuccessful());
-                $confirmPaymentDto->setGatewayAmount(IntegerHelper::toInteger($confirmPaymentDto->getRequest()->get('p24_amount')));
-
-                return $confirmPaymentDto;
+                throw new UserVisibleException('trans.Payment confirmation failed, if you have been charged and did not receive service, please contact us');
             }
 
-            $this->logger->critical('[payment][przelewy24] Payment confirmation failed', [
-                'responseData' => $response->getData(),
+            $data = $response->getData();
+            $this->logger->debug('[payment] payment confirmation response', [
+                'responseData' => $data,
+                'query' => $confirmPaymentDto->getRequest()->request->all(),
             ]);
 
-            throw new UserVisibleException('trans.Payment confirmation failed, if you have been charged and did not receive service, please contact us');
+            $confirmPaymentDto->setGatewayPaymentId($transactionId);
+            $confirmPaymentDto->setGatewayStatus($data['error']);
+            $confirmPaymentDto->setConfirmed($response->isSuccessful());
+            $confirmPaymentDto->setGatewayAmount(IntegerHelper::toInteger($amount));
+
+            return $confirmPaymentDto;
         } catch (\Throwable $e) {
             $this->logger->critical('[payment][przelewy24] error while payment confirmation', ExceptionHelper::flatten($e));
 
@@ -143,9 +149,17 @@ class Przelewy24PaymentGatewayService implements PaymentGatewayInterface
         return $paymentPrzelewy24Mode;
     }
 
+    public function setGateway(GatewayInterface $gateway): void
+    {
+        $this->gateway = $gateway;
+    }
+
     private function getGateway(): GatewayInterface
     {
-        $gateway = Omnipay::create('Przelewy24');
+        $gateway = $this->gateway;
+        if (null === $gateway) {
+            $gateway = Omnipay::create('Przelewy24');
+        }
         $gateway->initialize([
             'merchantId' => $this->settingsDto->getPaymentPrzelewy24MerchantId(),
             'posId' => $this->settingsDto->getPaymentPrzelewy24PosId(),

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Acceptance\Payment;
+namespace App\Tests\Acceptance\Payment\Paypal;
 
 use App\Service\Payment\PaymentGateway\PayPalPaymentGatewayService;
 use App\Tests\Base\AppIntegrationTestCase;

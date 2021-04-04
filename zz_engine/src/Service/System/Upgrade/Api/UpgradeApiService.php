@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace App\Service\System\Upgrade\Api;
 
+use App\Enum\EnvironmentEnum;
 use App\Enum\RuntimeCacheEnum;
 use App\Helper\ExceptionHelper;
 use App\Helper\JsonHelper;
 use App\Service\System\Cache\RuntimeCacheService;
 use App\Service\System\License\LicenseService;
 use App\Service\System\Signature\VerifySignature;
-use App\Service\System\Upgrade\Base\UpgradeApi;
+use App\Service\System\Upgrade\Base\UpgradeApiEnum;
 use App\Service\System\Upgrade\Dto\LatestVersionDto;
 use App\Version;
 use GuzzleHttp\Client;
@@ -63,7 +64,7 @@ class UpgradeApiService
             ]);
             $request = new Request(
                 'GET',
-                UpgradeApi::LATEST_VERSION_URL,
+                $this->getLatestVersionUrl(),
                 [
                     'x-license' => \base64_encode($this->licenseService->getLicenseText()),
                     'x-license-url' => $this->licenseService->getCurrentUrlOfLicense(),
@@ -72,7 +73,7 @@ class UpgradeApiService
             $response = $client->send($request);
             if (Response::HTTP_OK === $response->getStatusCode()) {
                 $responseBody = $response->getBody()->getContents();
-                $signature = $response->getHeader(UpgradeApi::HEADER_SIGNATURE)[0] ?? null;
+                $signature = $response->getHeader(UpgradeApiEnum::HEADER_SIGNATURE)[0] ?? null;
                 if (null === $signature) {
                     $this->logger->error('missing signature', ['$responseBody' => $responseBody]);
 
@@ -114,7 +115,7 @@ class UpgradeApiService
 
             $request = new Request(
                 'POST',
-                UpgradeApi::UPGRADE_LIST_URL,
+                $this->getUpgradeListUrl(),
                 [
                     'x-license' => \base64_encode($this->licenseService->getLicenseText()),
                     'x-license-url' => $this->licenseService->getCurrentUrlOfLicense(),
@@ -123,7 +124,7 @@ class UpgradeApiService
             );
             $response = $client->send($request);
             $responseBody = $response->getBody()->getContents();
-            $signature = $response->getHeader(UpgradeApi::HEADER_SIGNATURE)[0] ?? null;
+            $signature = $response->getHeader(UpgradeApiEnum::HEADER_SIGNATURE)[0] ?? null;
             if (null === $signature) {
                 $this->logger->error('missing signature', ['$responseBody' => $responseBody]);
 
@@ -141,5 +142,23 @@ class UpgradeApiService
         }
 
         return null;
+    }
+
+    public function getLatestVersionUrl(): string
+    {
+        if (EnvironmentEnum::TEST === ($_ENV['APP_ENV'] ?? '')) {
+            return 'https://classified-upgrade-dev.2max.io/latest-version.json';
+        }
+
+        return 'https://classified-upgrade-dev.2max.io/latest-version.json';
+    }
+
+    public function getUpgradeListUrl(): string
+    {
+        if (EnvironmentEnum::TEST === ($_ENV['APP_ENV'] ?? '')) {
+            return 'https://classified-upgrade-dev.2max.io/upgrade-list.json';
+        }
+
+        return 'https://classified-upgrade-dev.2max.io/upgrade-list.json';
     }
 }

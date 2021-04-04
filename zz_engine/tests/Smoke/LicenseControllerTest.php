@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\Smoke;
 
 use App\Helper\JsonHelper;
-use App\Service\System\Upgrade\Base\UpgradeApi;
+use App\Service\System\Upgrade\Base\UpgradeApiEnum;
 use App\Tests\Base\AppIntegrationTestCase;
 use App\Tests\Smoke\Base\SmokeTestForRouteInterface;
 use App\Tests\Traits\DatabaseTestTrait;
@@ -43,7 +43,7 @@ EOT;
             'licenseShowAbsoluteUrl' => 'http://localhost/zzzz/TEST_APP_2MAX_URL_SECRET/license/show-license',
         ];
         $client->request('GET', $url, [], [], [
-            'HTTP_'.UpgradeApi::HEADER_SIGNATURE => $signature,
+            'HTTP_'.UpgradeApiEnum::HEADER_SIGNATURE => $signature,
         ],
             \json_encode($requestArray, \JSON_PRETTY_PRINT) ?: 'error while encoding json'
         );

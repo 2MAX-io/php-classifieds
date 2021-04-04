@@ -9,7 +9,7 @@ use App\Exception\UserVisibleException;
 use App\Helper\JsonHelper;
 use App\Service\System\License\LicenseService;
 use App\Service\System\Signature\VerifySignature;
-use App\Service\System\Upgrade\Base\UpgradeApi;
+use App\Service\System\Upgrade\Base\UpgradeApiEnum;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -40,7 +40,7 @@ class LicenseController extends AbstractController
         $requestContent = $request->getContent();
         if (!VerifySignature::authenticate(
             $requestContent,
-            $request->headers->get(UpgradeApi::HEADER_SIGNATURE, '')
+            $request->headers->get(UpgradeApiEnum::HEADER_SIGNATURE, '')
         )) {
             return $this->json([
                 ParamEnum::ERROR => 'invalid signature',

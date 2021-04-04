@@ -293,10 +293,6 @@ input.form-control, textarea.form-control, select.form-control {
     background-position: 50% 50%;
 }
 
-.file-simple .fileuploader {
-    margin: 0;
-}
-
 .listing-recommended {
     background-image: linear-gradient(
             to left,
@@ -689,13 +685,15 @@ input.form-control, textarea.form-control, select.form-control {
     min-width: 0; /* flex fix */
 }
 
-.fileuploader-items .fileuploader-item .fileuploader-action.fileuploader-action-download {
-    display: none;
-}
-
 .fileuploader.fileuploader-theme-default {
     margin-top: 0;
     padding-top: 0;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.fileuploader-items .fileuploader-item .fileuploader-action.fileuploader-action-download {
+    display: none;
 }
 
 @media (max-width: 768px) {

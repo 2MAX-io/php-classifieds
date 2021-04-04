@@ -7,15 +7,12 @@ namespace App\Tests\Acceptance\Translation;
 use App\Helper\FilePath;
 use App\Service\System\Dev\MissingTranslations\FindMissingTranslationsService;
 use App\Tests\Base\AppIntegrationTestCase;
-use App\Tests\Traits\DatabaseTestTrait;
 
 /**
  * @internal
  */
 class MissingTranslationsTest extends AppIntegrationTestCase
 {
-    use DatabaseTestTrait;
-
     public function test(): void
     {
         static::createClient();

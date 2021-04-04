@@ -391,7 +391,6 @@ t.add("trans.Do you confirm logout?", "Do you confirm logout?", "messages", "en"
 t.add("trans.Do you feature frequently?", "Do you feature frequently?", "messages", "en");
 t.add("trans.Do you feature many listings?", "Do you feature many listings?", "messages", "en");
 t.add("trans.Do you feature many listings or feature frequently? After account top up, you will be able to feature listing by one click, using your account balance. Without need to make payment for every single listing separately", "Do you feature many listings or feature frequently? After account top up, you will be able to feature listing by one click, using your account balance. Without need to make payment for every single listing separately", "messages", "en");
-t.add("trans.Do you have license for 2MAX.io PHP Classified Ads?", "Do you have license for 2MAX.io PHP Classified Ads?", "messages", "en");
 t.add("trans.Do you need invoice for your company?", "Do you need invoice for your company?", "messages", "en");
 t.add("trans.Drop the files here to Upload", "Drop the files here to Upload", "messages", "en");
 t.add("trans.Duration", "Duration", "messages", "en");
@@ -896,4 +895,6 @@ t.add("trans.Change notification settings", "Change notification settings", "mes
 t.add("trans.Cron executing message queue is not working", "Cron executing message queue is not working", "messages", "en");
 t.add("trans.Direct messages enabled", "Direct messages enabled", "messages", "en");
 t.add("trans.Write message button is displayed for your listings", "Write message button is displayed for your listings", "messages", "en");
+t.add("trans.Cache", "Cache", "messages", "en");
+t.add("trans.Clear cache", "Clear cache", "messages", "en");
 })(Translator);

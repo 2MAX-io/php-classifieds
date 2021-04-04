@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Acceptance\Secondary;
+namespace App\Tests\Acceptance\Listing;
 
 use App\Tests\Base\AppIntegrationTestCase;
 use App\Tests\Enum\TestUserLoginEnum;

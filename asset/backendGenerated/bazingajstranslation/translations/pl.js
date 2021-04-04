@@ -392,7 +392,6 @@ t.add("trans.Do you confirm logout?", "Potwierdzasz wylogowanie?", "messages", "
 t.add("trans.Do you feature frequently?", "Cz\u0119sto wyr\u00f3\u017cniasz og\u0142oszenia?", "messages", "pl");
 t.add("trans.Do you feature many listings?", "Wyr\u00f3\u017cniasz wiele og\u0142osze\u0144?", "messages", "pl");
 t.add("trans.Do you feature many listings or feature frequently? After account top up, you will be able to feature listing by one click, using your account balance. Without need to make payment for every single listing separately", "Wyr\u00f3\u017cniasz wiele og\u0142osze\u0144 lub wyr\u00f3\u017cniasz cz\u0119sto? Po do\u0142adowaniu konta, b\u0119dziesz m\u00f3g\u0142 wyr\u00f3\u017cnia\u0107 og\u0142oszenia poprzez jedno klikni\u0119cie, u\u017cywaj\u0105c salda Twojego konta. Bez potrzeby wykonywania p\u0142atno\u015bci dla ka\u017cdego og\u0142oszenia z osobna.", "messages", "pl");
-t.add("trans.Do you have license for 2MAX.io PHP Classified Ads?", "Masz licencje na 2MAX.io PHP Classified Ads?", "messages", "pl");
 t.add("trans.Do you need invoice for your company?", "Potrzebujesz faktury dla swojej firmy?", "messages", "pl");
 t.add("trans.Drop the files here to Upload", "Upu\u015b\u0107 pliki tutaj aby je wgra\u0107", "messages", "pl");
 t.add("trans.Duration", "Czas", "messages", "pl");
@@ -897,4 +896,6 @@ t.add("trans.Change notification settings", "Zmie\u0144 ustawienia powiadomie\u0
 t.add("trans.Cron executing message queue is not working", "Cron obs\u0142uguj\u0105cy kolejk\u0119 wiadomo\u015bci nie dzia\u0142a", "messages", "pl");
 t.add("trans.Direct messages enabled", "Wiadomo\u015bci bezpo\u015brednie w\u0142\u0105czone", "messages", "pl");
 t.add("trans.Write message button is displayed for your listings", "Przycisk wy\u015blij wiadomo\u015b\u0107 jest wy\u015bwietlany w Twoich og\u0142oszeniach", "messages", "pl");
+t.add("trans.Cache", "Cache", "messages", "pl");
+t.add("trans.Clear cache", "Wyczy\u015b\u0107 cache", "messages", "pl");
 })(Translator);

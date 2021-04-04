@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Acceptance\Anonymous;
+namespace App\Tests\Acceptance\Listing;
 
 use App\Tests\Base\AppIntegrationTestCase;
 use App\Tests\Traits\DatabaseTestTrait;

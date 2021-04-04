@@ -208,9 +208,6 @@ class AllRoutesSmokeTest extends AppIntegrationTestCase
         $urlList[] = $this->getRouter()->generate('app_user_message_list_thread', [
             'userMessageThread' => 1,
         ]);
-        $urlList[] = $this->getRouter()->generate('app_public_listings_of_user', [
-            'user' => 1,
-        ]);
         $urlList[] = $this->getRouter()->generate('app_map_image_cache', [
             'z' => 14,
             'x' => 9163,

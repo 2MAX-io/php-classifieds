@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Command\Dev;
 
 use App\Enum\ConsoleReturnEnum;
-use App\Helper\DateHelper;
 use Minwork\Helper\Arr;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -21,7 +20,8 @@ class TranslationGenerateEnFromOtherCommand extends Command
     protected function configure(): void
     {
         $this->setDescription('generate en translations from other language');
-        $this->addArgument('sourceFile', InputArgument::REQUIRED, 'Source file');
+        $this->addArgument('sourceFile', InputArgument::REQUIRED);
+        $this->addArgument('outputFile', InputArgument::REQUIRED);
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -40,7 +40,7 @@ class TranslationGenerateEnFromOtherCommand extends Command
         $translations = \array_combine($translationKeys, $translationValues);
 
         \file_put_contents(
-            \dirname($sourceFile).'/'.DateHelper::date('Y-m-d H:i:s_').\basename($sourceFile),
+            $input->getArgument('outputFile'),
             Yaml::dump($translations)
         );
 

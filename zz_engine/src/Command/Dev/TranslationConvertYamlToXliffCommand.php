@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Command\Dev;
 
 use App\Enum\ConsoleReturnEnum;
-use App\Helper\DateHelper;
 use Minwork\Helper\Arr;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -24,6 +23,7 @@ class TranslationConvertYamlToXliffCommand extends Command
     {
         $this->setDescription('convert yaml translation to xliff');
         $this->addArgument('sourceFile', InputArgument::REQUIRED, 'Source file');
+        $this->addArgument('outputFile', InputArgument::REQUIRED, 'Output file');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -38,14 +38,8 @@ class TranslationConvertYamlToXliffCommand extends Command
         $messageCatalogue = new MessageCatalogue('en');
         $messageCatalogue->add($translations);
 
-        $fileName = \pathinfo($sourceFile, \PATHINFO_FILENAME);
-        $filePath = \dirname($sourceFile)
-            .'/'.DateHelper::date('Y-m-d H:i:s_')
-            .\basename($fileName)
-            .'.xliff'
-        ;
         \file_put_contents(
-            $filePath,
+            $input->getArgument('outputFile'),
             $xliffFileDumper->formatCatalogue($messageCatalogue, 'messages')
         );
 

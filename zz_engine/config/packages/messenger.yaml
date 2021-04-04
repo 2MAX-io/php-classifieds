@@ -9,7 +9,7 @@ framework:
 
         transports:
             # https://symfony.com/doc/current/messenger.html#transport-configuration
-            async: 'doctrine://default?table_name=zzzz_messenger_messages'
+            async: 'doctrine://default?queue_name=async&table_name=zzzz_messenger_messages'
             one_at_time: 'doctrine://default?queue_name=one_at_time&table_name=zzzz_messenger_messages'
             failed: 'doctrine://default?queue_name=failed&table_name=zzzz_messenger_messages'
             sync: 'sync://'

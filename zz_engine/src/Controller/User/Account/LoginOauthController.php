@@ -37,6 +37,9 @@ class LoginOauthController extends AbstractUserController
      */
     private $em;
 
+    /** @var Hybridauth|null */
+    private $hybridauth;
+
     public function __construct(UserRepository $userRepository, EntityManagerInterface $em)
     {
         $this->userRepository = $userRepository;
@@ -86,7 +89,10 @@ class LoginOauthController extends AbstractUserController
         ];
 
         try {
-            $hybridAuth = new Hybridauth($config);
+            $hybridAuth = $this->getHybridauth();
+            if (!$hybridAuth) {
+                $hybridAuth = new Hybridauth($config);
+            }
             $hybridAuth->disconnectAllAdapters();
             $authentication = $hybridAuth->authenticate($oauthProviderName);
             if ($authentication->isConnected()) {
@@ -120,5 +126,15 @@ class LoginOauthController extends AbstractUserController
         }
 
         return $this->redirectToRoute('app_user_listing_new');
+    }
+
+    public function getHybridauth(): ?Hybridauth
+    {
+        return $this->hybridauth;
+    }
+
+    public function setHybridauth(?Hybridauth $hybridauth): void
+    {
+        $this->hybridauth = $hybridauth;
     }
 }

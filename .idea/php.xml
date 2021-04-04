@@ -254,12 +254,22 @@
       <path value="$PROJECT_DIR$/zz_engine/vendor/netresearch/jsonmapper" />
       <path value="$PROJECT_DIR$/zz_engine/vendor/stefano/stefano-tree" />
       <path value="$PROJECT_DIR$/zz_engine/vendor/doctrine/deprecations" />
+      <path value="$PROJECT_DIR$/zz_engine/vendor/ocramius/package-versions" />
+      <path value="$PROJECT_DIR$/zz_engine/vendor/zendframework/zend-code" />
+      <path value="$PROJECT_DIR$/zz_engine/vendor/zendframework/zend-eventmanager" />
+      <path value="$PROJECT_DIR$/zz_engine/vendor/doctrine/reflection" />
+      <path value="$PROJECT_DIR$/zz_engine/vendor/laminas/laminas-escaper" />
+      <path value="$PROJECT_DIR$/zz_engine/vendor/laminas/laminas-stdlib" />
+      <path value="$PROJECT_DIR$/zz_engine/vendor/laminas/laminas-feed" />
+      <path value="$PROJECT_DIR$/zz_engine/vendor/phpseclib/phpseclib" />
+      <path value="$PROJECT_DIR$/zz_engine/vendor/firebase/php-jwt" />
+      <path value="$PROJECT_DIR$/zz_engine/vendor/paypal/rest-api-sdk-php" />
     </include_path>
   </component>
   <component name="PhpInterpreters">
     <interpreters>
       <interpreter id="db13f681-6324-4916-a563-f4b8ea6e3438" name="php" home="docker-compose://DATA" debugger_id="php.debugger.XDebug">
-        <remote_data INTERPRETER_PATH="php" HELPERS_PATH="/opt/.phpstorm_helpers" INITIALIZED="false" VALID="true" RUN_AS_ROOT_VIA_SUDO="false" DOCKER_ACCOUNT_NAME="Docker" DOCKER_COMPOSE_SERVICE_NAME="php" DOCKER_REMOTE_PROJECT_PATH="/opt/project">
+        <remote_data INTERPRETER_PATH="/var/www/html/zz_engine/docker/php/bin/docker_php_wrapper.sh" HELPERS_PATH="/opt/.phpstorm_helpers" INITIALIZED="false" VALID="true" RUN_AS_ROOT_VIA_SUDO="false" DOCKER_ACCOUNT_NAME="Docker" DOCKER_COMPOSE_SERVICE_NAME="php" DOCKER_REMOTE_PROJECT_PATH="/opt/project">
           <type_data command="RUN" />
           <dockerComposeConfigurationPaths>
             <item value="$PROJECT_DIR$/zz_engine/docker/docker-compose.yml" />
@@ -336,7 +346,6 @@
   <component name="PhpUnit">
     <phpunit_settings>
       <phpunit_by_interpreter interpreter_id="db13f681-6324-4916-a563-f4b8ea6e3438" load_method="PHPUNIT_PHAR" bootstrap_file_path="/var/www/html/zz_engine/tests/bootstrap.php" configuration_file_path="/var/www/html/zz_engine/phpunit.xml.dist" custom_loader_path="/var/www/html/zz_engine/vendor/autoload.php" phpunit_phar_path="/var/www/html/zz_engine/bin/phpunit" use_bootstrap_file="true" use_configuration_file="true" />
-      <PhpUnitSettings custom_loader_path="$PROJECT_DIR$/zz_engine/vendor/autoload.php" />
     </phpunit_settings>
   </component>
   <component name="Psalm">

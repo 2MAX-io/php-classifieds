@@ -53,4 +53,6 @@ fi;
 #COPY ./../../composer.json zz_engine
 #RUN bash -c "composer install -d /var/www/html/zz_engine --optimize-autoloader"
 
+RUN apt-get install --no-install-recommends -y sudo
+
 EXPOSE 443

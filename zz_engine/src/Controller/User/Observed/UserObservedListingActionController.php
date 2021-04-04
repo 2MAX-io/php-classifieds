@@ -35,7 +35,7 @@ class UserObservedListingActionController extends AbstractUserController
     }
 
     /**
-     * @Route("/user/listing/observed", name="app_user_observed_listing_set", options={"expose": true})
+     * @Route("/user/listing/observed", name="app_user_observed_listing_set", methods={"POST"}, options={"expose": true})
      */
     public function markUserObservedListing(Request $request): Response
     {

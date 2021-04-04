@@ -42,7 +42,7 @@ class ChangeEmailTest extends AppIntegrationTestCase implements SmokeTestForRout
             'change_email[newEmail][second]' => static::NEW_EMAIL,
         ]);
         $response = $client->getResponse();
-        self::assertEquals(302, $response->getStatusCode(), (string) $response->getContent());
+        self::assertEquals(302, $response->getStatusCode());
 
         // get confirmation link from email message
         /** @var TemplatedEmail $message */
@@ -71,7 +71,7 @@ class ChangeEmailTest extends AppIntegrationTestCase implements SmokeTestForRout
             'email' => static::NEW_EMAIL,
             'password' => TestUserLoginEnum::PASSWORD,
         ]);
-        self::assertEquals(302, $response->getStatusCode(), (string) $response->getContent());
+        self::assertEquals(302, $response->getStatusCode());
         $client->followRedirect();
         self::assertSame('app_user_change_email', $client->getRequest()->attributes->get('_route'));
     }

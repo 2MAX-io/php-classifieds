@@ -266,18 +266,10 @@ cd www
 ls
 cd html/
 ls
-bash zz_engine/dev/bin/j4u_load_existing_db.sh 
-bash zz_engine/dev/bin/j4u_load_existing_db.sh 
-bash zz_engine/dev/bin/j4u_load_existing_db.sh 
-bash zz_engine/dev/bin/j4u_load_existing_db.sh 
-bash zz_engine/dev/bin/j4u_load_existing_db.sh 
-bash zz_engine/dev/bin/j4u_load_existing_db.sh 
 pwd
-bash zz_engine/dev/bin/j4u_load_existing_db.sh 
 cd ~
 pwd
 mysql classifieds
-bash zz_engine/dev/bin/j4u_load_existing_db.sh 
 composer install
 cd zz_engine/
 composer install
@@ -332,7 +324,6 @@ ls
 npm install
 cd zz_engine/
 npm install
- sudo chown -R 1000:33 "/var/www/.npm"
 chown -R 1000:33 "/var/www/.npm"
 ls -la /var/www/
 cd zz_engine/

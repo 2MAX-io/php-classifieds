@@ -70,12 +70,8 @@ mysql classifieds < /var/www/html/zz_engine/var/mysql/admin_ogloszenia.sql
 mysql -e "DROP DATABASE admin_ogloszenia; CREATE DATABASE admin_ogloszenia;"
 mysql admin_ogloszenia < /var/www/html/zz_engine/var/mysql/admin_ogloszenia.sql 
 mysql -e "DROP DATABASE classifieds; CREATE DATABASE classifieds;"
-mysql classifieds < /var/www/html/zz_engine/var/mysql/j4u_ogloszenia.sql 
-mysql classifieds < /var/www/html/zz_engine/var/mysql/j4u_ogloszenia.sql 
 mysql -e "DROP DATABASE classifieds; CREATE DATABASE classifieds;"
-time mysql --max_allowed_packet=1G classifieds < /var/www/html/zz_engine/var/mysql/j4u_ogloszenia.sql 
 mysql -e "DROP DATABASE classifieds; CREATE DATABASE classifieds;"
-time mysql --max_allowed_packet=1G classifieds < /var/www/html/zz_engine/var/mysql/j4u_ogloszenia.sql 
 time mysqldump classifieds > /sql/db_backup_$(date +%Y-%m-%d_%H%M%S).sql && chown -R 1000:1000 /sql
 time mysqldump classifieds > /var/www/html/zz_engine/var/mysql//db_backup_$(date +%Y-%m-%d_%H%M%S).sql && chown -R 1000:1000 /var/www/html/zz_engine/var/mysql/
 mysql -e "DROP DATABASE classifieds; CREATE DATABASE classifieds;"
@@ -119,12 +115,6 @@ mysql -e "DROP DATABASE admin_ogloszenia; CREATE DATABASE admin_ogloszenia;"
 mysql -e "DROP DATABASE IF EXISTS admin_ogloszenia; CREATE DATABASE admin_ogloszenia;"
 mysql admin_ogloszenia < /var/www/html/zz_engine/var/mysql/admin_ogloszenia.sql 
 mysql admin_ogloszenia < /var/www/html/zz_engine/var/mysql/admin_ogloszenia.sql 
-mysql admin_ogloszenia < /var/www/html/zz_engine/var/mysql/admin_ogloszenia.sql 
-mysql classifieds < /var/www/html/zz_engine/var/mysql/j4u_ogloszenia.sql
+mysql admin_ogloszenia < /var/www/html/zz_engine/var/mysql/admin_ogloszenia.sql
 time mysqldump classifieds > /var/www/html/zz_engine/var/mysql/db_backup_$(date +%Y-%m-%d_%H%M%S).sql && chown -R 1000:1000 /var/www/html/zz_engine/var/mysql/
-mysql classifieds < /var/www/html/zz_engine/var/mysql/j4u_ogloszenia.sql
-mysql classifieds < /var/www/html/zz_engine/var/mysql/j4u_ogloszenia.sql
 time mysqldump classifieds > /var/www/html/zz_engine/var/mysql/db_backup_$(date +%Y-%m-%d_%H%M%S).sql && chown -R 1000:1000 /var/www/html/zz_engine/var/mysql/
-mysql classifieds < /var/www/html/zz_engine/var/mysql/j4u_ogloszenia.sql
-mysql classifieds < /var/www/html/zz_engine/var/mysql/j4u_ogloszenia.sql
-mysql classifieds < /var/www/html/zz_engine/var/mysql/j4u_ogloszenia.sql

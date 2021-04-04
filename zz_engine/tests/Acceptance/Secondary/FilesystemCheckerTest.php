@@ -14,7 +14,7 @@ class FilesystemCheckerTest extends AppIntegrationTestCase
 {
     public function test(): void
     {
-        self::assertCount(0, FilesystemChecker::incorrectFilePermissionList());
+        self::assertCount(0, FilesystemChecker::incorrectFilePermissionList(), \print_r(FilesystemChecker::incorrectFilePermissionList(), true));
         self::assertCount(0, FilesystemChecker::incorrectDirPermissionList());
         self::assertCount(0, FilesystemChecker::creatingDirFailedList());
         self::assertCount(0, FilesystemChecker::writingFileFailedList());

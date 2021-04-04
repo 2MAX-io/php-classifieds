@@ -58,7 +58,7 @@ class SendMessageTest extends AppIntegrationTestCase implements SmokeTestForRout
         $client->request('GET', $this->getRouter()->generate('app_admin_police_log_user_message', [
             'user' => 1,
         ]));
-        self::assertEquals(200, $client->getResponse()->getStatusCode(), (string) $client->getResponse()->getContent());
+        self::assertEquals(200, $client->getResponse()->getStatusCode());
 
         // test messages send
         Carbon::setTestNow(Carbon::now()->addMinutes(10));

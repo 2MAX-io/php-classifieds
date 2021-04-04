@@ -107,7 +107,7 @@ class MakeFeaturedTest extends AppIntegrationTestCase
         $client->request('GET', $this->getRouter()->generate('app_payment_await_confirmation_redirect', [
             'paymentAppToken' => $appPaymentToken,
         ]));
-        self::assertSame(302, $client->getResponse()->getStatusCode(), (string) $client->getResponse()->getContent());
+        self::assertSame(302, $client->getResponse()->getStatusCode());
         $client->followRedirect();
         self::assertSame('app_user_feature_listing', $client->getRequest()->get('_route'));
     }

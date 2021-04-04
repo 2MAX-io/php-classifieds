@@ -5,3 +5,7 @@ services:
         autoconfigure: true
 
     Doctrine\ORM\EntityManagerInterface: '@doctrine.orm.default_entity_manager'
+
+    App\Tests\TestController\:
+        resource: '../../../tests/TestController/'
+        tags: ['controller.service_arguments']

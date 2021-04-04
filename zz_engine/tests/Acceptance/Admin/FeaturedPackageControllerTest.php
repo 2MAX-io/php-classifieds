@@ -53,12 +53,21 @@ class FeaturedPackageControllerTest extends AppIntegrationTestCase implements Sm
         $this->clearDatabase();
         $this->loginAdmin($client);
 
-        $client->request('GET', $this->getRouter()->generate('app_admin_featured_package_edit', [
+        $crawler = $client->request('GET', $this->getRouter()->generate('app_admin_featured_package_edit', [
             'id' => 1,
         ]));
-        $client->submitForm('Update', [
+        $submitButton = $crawler->selectButton('Update');
+        $form = $submitButton->form([
             'featured_package[name]' => 'test feature package name',
         ]);
+        $values = $form->getPhpValues();
+        $values['selectedCategories'][] = 3;
+        $client->request(
+            $form->getMethod(),
+            $form->getUri(),
+            $values,
+            $form->getPhpFiles()
+        );
         $response = $client->getResponse();
         self::assertEquals(302, $response->getStatusCode(), (string) $response->getContent());
         $client->followRedirect();

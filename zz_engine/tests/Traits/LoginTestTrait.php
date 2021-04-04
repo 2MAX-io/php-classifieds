@@ -17,13 +17,7 @@ trait LoginTestTrait
     public function loginUser(KernelBrowser $client, string $userEmail = TestUserLoginEnum::LOGIN): void
     {
         $session = self::$container->get('session');
-
-        /**
-         * @psalm-suppress UndefinedClass
-         */
-        $user = static::$kernel->getContainer()->get(EntityManagerInterface::class)->getRepository(User::class)->findOneBy([
-            'email' => $userEmail,
-        ]);
+        $user = $this->getUser($userEmail);
 
         $firewallName = 'main';
         // if you don't define multiple connected firewalls, the context defaults to the firewall name
@@ -59,5 +53,35 @@ trait LoginTestTrait
 
         $cookie = new Cookie($session->getName(), $session->getId());
         $client->getCookieJar()->set($cookie);
+    }
+
+    public function getUser(string $email): User
+    {
+        /**
+         * @psalm-suppress UndefinedClass
+         */
+        $user = static::$kernel->getContainer()->get(EntityManagerInterface::class)->getRepository(User::class)->findOneBy([
+            'email' => $email,
+        ]);
+        if (null === $user) {
+            throw new \RuntimeException('user not found');
+        }
+
+        return $user;
+    }
+
+    public function getAdmin(string $email): Admin
+    {
+        /**
+         * @psalm-suppress UndefinedClass
+         */
+        $admin = static::$kernel->getContainer()->get(EntityManagerInterface::class)->getRepository(Admin::class)->findOneBy([
+            'email' => $email,
+        ]);
+        if (null === $admin) {
+            throw new \RuntimeException('admin not found');
+        }
+
+        return $admin;
     }
 }

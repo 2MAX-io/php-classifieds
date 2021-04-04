@@ -47,6 +47,12 @@ class SendMessageTest extends AppIntegrationTestCase implements SmokeTestForRout
         // follow redirect after submit
         $client->followRedirect();
         self::assertSame('app_user_message_list_thread', $client->getRequest()->attributes->get('_route'));
+
+        $this->loginAdmin($client);
+        $client->request('GET', $this->getRouter()->generate('app_admin_police_log_user_message', [
+            'user' => 1,
+        ]));
+        self::assertEquals(200, $client->getResponse()->getStatusCode(), (string) $client->getResponse()->getContent());
     }
 
     public function testRespondToListing(): void

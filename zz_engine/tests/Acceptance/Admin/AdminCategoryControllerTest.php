@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace App\Tests\Acceptance\Admin;
 
+use App\Helper\FilePath;
 use App\Tests\Base\AppIntegrationTestCase;
 use App\Tests\Smoke\Base\SmokeTestForRouteInterface;
 use App\Tests\Traits\DatabaseTestTrait;
 use App\Tests\Traits\LoginTestTrait;
 use App\Tests\Traits\RouterTestTrait;
+use Symfony\Component\DomCrawler\Field\FileFormField;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 /**
@@ -34,13 +36,18 @@ class AdminCategoryControllerTest extends AppIntegrationTestCase implements Smok
         $this->clearDatabase();
         $this->loginAdmin($client);
 
-        $client->request('GET', $this->getRouter()->generate('app_admin_category_new'));
-        $client->submitForm('Save', [
+        $crawler = $client->request('GET', $this->getRouter()->generate('app_admin_category_new'));
+        $buttonCrawlerNode = $crawler->selectButton('Save');
+        $form = $buttonCrawlerNode->form([
             'admin_category_save[name]' => 'test cat edit',
             'admin_category_save[slug]' => 'test-cat-slug',
             'admin_category_save[parent]' => '2',
             'admin_category_save[sort]' => '101',
         ]);
+        /** @var FileFormField $pictureField */
+        $pictureField = $form['admin_category_save[picture]'];
+        $pictureField->upload(FilePath::getProjectDir().'/static/system/1920x1080.png');
+        $client->submit($form);
         $response = $client->getResponse();
         self::assertEquals(302, $response->getStatusCode(), (string) $response->getContent());
         $client->followRedirect();

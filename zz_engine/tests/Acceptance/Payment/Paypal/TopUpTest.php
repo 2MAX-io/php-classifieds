@@ -33,6 +33,7 @@ class TopUpTest extends AppIntegrationTestCase
         $getFormResponse = $client->getResponse();
 
         // prepare services state
+        self::ensureKernelShutdown();
         $client = static::createClient();
         $client->getCookieJar()->updateFromSetCookie([(string) $getFormResponse->headers->get('set-cookie')]);
         $gatewayStub = $this->createMock(RestGateway::class);

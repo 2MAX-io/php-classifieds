@@ -41,6 +41,7 @@ class TopUpTest extends AppIntegrationTestCase
         $getFormResponse = $client->getResponse();
 
         // prepare service states
+        self::ensureKernelShutdown();
         $client = static::createClient();
         $client->getCookieJar()->updateFromSetCookie([(string) $getFormResponse->headers->get('set-cookie')]);
         $this->getTestContainer()->get(SettingsDto::class)->setPaymentGateway(PaymentGatewayEnum::PRZELEWY24);

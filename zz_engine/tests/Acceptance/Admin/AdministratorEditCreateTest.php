@@ -46,7 +46,7 @@ class AdministratorEditCreateTest extends AppIntegrationTestCase implements Smok
             'administrator_edit[plainPassword][second]' => static::NEW_PASSWORD,
         ]);
         $response = $client->getResponse();
-        self::assertEquals(302, $response->getStatusCode());
+        self::assertSame(302, $response->getStatusCode());
 
         // follow redirect after submit
         $client->followRedirect();
@@ -57,7 +57,7 @@ class AdministratorEditCreateTest extends AppIntegrationTestCase implements Smok
             'email' => TestUserLoginEnum::LOGIN_ADMIN,
             'password' => static::NEW_PASSWORD,
         ]);
-        self::assertEquals(302, $response->getStatusCode());
+        self::assertSame(302, $response->getStatusCode());
         $client->followRedirect();
         self::assertSame('app_admin_index', $client->getRequest()->attributes->get('_route'));
     }
@@ -78,7 +78,7 @@ class AdministratorEditCreateTest extends AppIntegrationTestCase implements Smok
             'administrator_new[plainPassword][second]' => static::NEW_PASSWORD,
         ]);
         $response = $client->getResponse();
-        self::assertEquals(302, $response->getStatusCode());
+        self::assertSame(302, $response->getStatusCode());
         $client->followRedirect();
         self::assertSame('app_admin_administrator_edit', $client->getRequest()->attributes->get('_route'));
 
@@ -88,7 +88,7 @@ class AdministratorEditCreateTest extends AppIntegrationTestCase implements Smok
             'email' => static::NEW_LOGIN,
             'password' => static::NEW_PASSWORD,
         ]);
-        self::assertEquals(302, $response->getStatusCode());
+        self::assertSame(302, $response->getStatusCode());
         $client->followRedirect();
         self::assertSame('app_admin_index', $client->getRequest()->attributes->get('_route'));
     }
@@ -104,7 +104,7 @@ class AdministratorEditCreateTest extends AppIntegrationTestCase implements Smok
             'email' => TestUserLoginEnum::LOGIN_ADMIN,
             'password' => TestUserLoginEnum::PASSWORD,
         ]);
-        self::assertEquals(302, $client->getResponse()->getStatusCode());
+        self::assertSame(302, $client->getResponse()->getStatusCode());
         $client->followRedirect();
         self::assertSame('app_admin_index', $client->getRequest()->attributes->get('_route'));
 
@@ -119,7 +119,7 @@ class AdministratorEditCreateTest extends AppIntegrationTestCase implements Smok
         $enabled->untick();
         $client->submit($form);
         $response = $client->getResponse();
-        self::assertEquals(302, $response->getStatusCode());
+        self::assertSame(302, $response->getStatusCode());
         $client->followRedirect();
         self::assertSame('app_admin_administrator_edit', $client->getRequest()->attributes->get('_route'));
 
@@ -131,7 +131,7 @@ class AdministratorEditCreateTest extends AppIntegrationTestCase implements Smok
             'email' => TestUserLoginEnum::LOGIN_ADMIN,
             'password' => TestUserLoginEnum::PASSWORD,
         ]);
-        self::assertEquals(302, $client->getResponse()->getStatusCode());
+        self::assertSame(302, $client->getResponse()->getStatusCode());
         $client->followRedirect();
         self::assertSame('app_admin_login', $client->getRequest()->attributes->get('_route'));
         self::assertStringContainsString('Account is disabled', (string) $client->getResponse()->getContent());

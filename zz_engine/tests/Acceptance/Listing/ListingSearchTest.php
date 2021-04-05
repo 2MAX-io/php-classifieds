@@ -25,6 +25,6 @@ class ListingSearchTest extends AppIntegrationTestCase
             'query' => 'test',
         ]));
 
-        self::assertEquals(200, $client->getResponse()->getStatusCode());
+        self::assertSame(200, $client->getResponse()->getStatusCode());
     }
 }

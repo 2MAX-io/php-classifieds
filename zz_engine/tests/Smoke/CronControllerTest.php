@@ -37,6 +37,6 @@ class CronControllerTest extends AppIntegrationTestCase implements SmokeTestForR
         $response = $client->getResponse();
         $responseContent = (string) $response->getContent();
         \ob_end_clean();
-        self::assertEquals(200, $response->getStatusCode(), $responseContent);
+        self::assertSame(200, $response->getStatusCode(), $responseContent);
     }
 }

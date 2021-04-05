@@ -56,7 +56,7 @@ class MakeFeaturedTest extends AppIntegrationTestCase
             '_token' => $csrfToken->getValue(),
         ]);
         $response = $client->getResponse();
-        self::assertEquals(302, $response->getStatusCode());
+        self::assertSame(302, $response->getStatusCode());
 
         // go to success url
         $successUrl = $client->getResponse()->headers->get('location');
@@ -85,7 +85,7 @@ class MakeFeaturedTest extends AppIntegrationTestCase
         $this->getTestContainer()->get(PayPalPaymentGatewayService::class)->setGateway($gatewayStub);
 
         $client->request('GET', $successUrl);
-        self::assertEquals('app_payment_gateway_success', $client->getRequest()->get('_route'));
+        self::assertSame('app_payment_gateway_success', $client->getRequest()->get('_route'));
         $client->followRedirect();
         self::assertStringContainsString('app_user_feature_listing', $client->getRequest()->get('_route'));
     }

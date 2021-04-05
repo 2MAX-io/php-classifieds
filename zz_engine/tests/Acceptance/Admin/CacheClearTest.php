@@ -46,8 +46,8 @@ class CacheClearTest extends AppIntegrationTestCase implements SmokeTestForRoute
         ]);
         $response = $client->getResponse();
 
-        self::assertEquals(302, $response->getStatusCode());
+        self::assertSame(302, $response->getStatusCode());
         $client->followRedirect();
-        self::assertEquals('app_admin_cache', $client->getRequest()->get('_route'));
+        self::assertSame('app_admin_cache', $client->getRequest()->get('_route'));
     }
 }

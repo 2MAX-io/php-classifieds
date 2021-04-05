@@ -42,7 +42,7 @@ class ChangePasswordTest extends AppIntegrationTestCase implements SmokeTestForR
             'change_password[newPassword][second]' => static::NEW_PASSWORD,
         ]);
         $response = $client->getResponse();
-        self::assertEquals(302, $response->getStatusCode());
+        self::assertSame(302, $response->getStatusCode());
 
         // get confirmation link from email message
         /** @var TemplatedEmail $message */
@@ -71,7 +71,7 @@ class ChangePasswordTest extends AppIntegrationTestCase implements SmokeTestForR
             'email' => TestUserLoginEnum::LOGIN,
             'password' => static::NEW_PASSWORD,
         ]);
-        self::assertEquals(302, $response->getStatusCode());
+        self::assertSame(302, $response->getStatusCode());
         $client->followRedirect();
         self::assertSame('app_user_change_password', $client->getRequest()->attributes->get('_route'));
     }

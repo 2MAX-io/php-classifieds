@@ -39,7 +39,7 @@ class CustomFieldOptionCopyControllerTest extends AppIntegrationTestCase impleme
             'custom_field_option_copy[sourceCustomField]' => '3',
         ]);
         $response = $client->getResponse();
-        self::assertEquals(302, $response->getStatusCode());
+        self::assertSame(302, $response->getStatusCode());
         $client->followRedirect();
         self::assertSame('app_admin_custom_field_edit', $client->getRequest()->attributes->get('_route'));
     }

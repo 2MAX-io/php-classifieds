@@ -54,8 +54,8 @@ class AdminActionTest extends AppIntegrationTestCase implements SmokeTestForRout
         ]);
         $response = $client->getResponse();
 
-        self::assertEquals(302, $response->getStatusCode());
-        self::assertEquals('/', $client->getResponse()->headers->get('location'));
+        self::assertSame(302, $response->getStatusCode());
+        self::assertSame('/', $client->getResponse()->headers->get('location'));
     }
 
     public function testRemove(): void
@@ -74,8 +74,8 @@ class AdminActionTest extends AppIntegrationTestCase implements SmokeTestForRout
         ]);
         $response = $client->getResponse();
 
-        self::assertEquals(302, $response->getStatusCode());
-        self::assertEquals('/', $client->getResponse()->headers->get('location'));
+        self::assertSame(302, $response->getStatusCode());
+        self::assertSame('/', $client->getResponse()->headers->get('location'));
 
         // check listing displayed correctly
         self::ensureKernelShutdown();
@@ -104,7 +104,7 @@ class AdminActionTest extends AppIntegrationTestCase implements SmokeTestForRout
         ]);
         $response = $client->getResponse();
 
-        self::assertEquals(302, $response->getStatusCode());
+        self::assertSame(302, $response->getStatusCode());
     }
 
     public function testFeatureForWeek(): void
@@ -123,8 +123,8 @@ class AdminActionTest extends AppIntegrationTestCase implements SmokeTestForRout
         ]);
         $response = $client->getResponse();
 
-        self::assertEquals(302, $response->getStatusCode());
-        self::assertEquals('/', $client->getResponse()->headers->get('location'));
+        self::assertSame(302, $response->getStatusCode());
+        self::assertSame('/', $client->getResponse()->headers->get('location'));
     }
 
     public function testListingFileRemove(): void
@@ -143,8 +143,8 @@ class AdminActionTest extends AppIntegrationTestCase implements SmokeTestForRout
         ]);
         $response = $client->getResponse();
 
-        self::assertEquals(302, $response->getStatusCode());
-        self::assertEquals('/admin/red5/listing/edit/1', $client->getResponse()->headers->get('location'));
+        self::assertSame(302, $response->getStatusCode());
+        self::assertSame('/admin/red5/listing/edit/1', $client->getResponse()->headers->get('location'));
     }
 
     public function testFeaturePackageDelete(): void
@@ -163,8 +163,8 @@ class AdminActionTest extends AppIntegrationTestCase implements SmokeTestForRout
         ]);
         $response = $client->getResponse();
 
-        self::assertEquals(302, $response->getStatusCode());
-        self::assertEquals('/admin/red5/package', $client->getResponse()->headers->get('location'));
+        self::assertSame(302, $response->getStatusCode());
+        self::assertSame('/admin/red5/package', $client->getResponse()->headers->get('location'));
     }
 
     public function testListingReportRemove(): void
@@ -184,8 +184,8 @@ class AdminActionTest extends AppIntegrationTestCase implements SmokeTestForRout
         ]);
         $response = $client->getResponse();
 
-        self::assertEquals(302, $response->getStatusCode());
-        self::assertEquals('/admin/red5/listing-report', $client->getResponse()->headers->get('location'));
+        self::assertSame(302, $response->getStatusCode());
+        self::assertSame('/admin/red5/listing-report', $client->getResponse()->headers->get('location'));
     }
 
     public function testCustomFieldOptionDelete(): void
@@ -204,8 +204,8 @@ class AdminActionTest extends AppIntegrationTestCase implements SmokeTestForRout
         ]);
         $response = $client->getResponse();
 
-        self::assertEquals(302, $response->getStatusCode());
-        self::assertEquals('/admin/red5/custom-field/1/edit', $client->getResponse()->headers->get('location'));
+        self::assertSame(302, $response->getStatusCode());
+        self::assertSame('/admin/red5/custom-field/1/edit', $client->getResponse()->headers->get('location'));
     }
 
     public function testCustomFieldDelete(): void
@@ -225,8 +225,8 @@ class AdminActionTest extends AppIntegrationTestCase implements SmokeTestForRout
         ]);
         $response = $client->getResponse();
 
-        self::assertEquals(302, $response->getStatusCode());
-        self::assertEquals('/admin/red5/custom-field/list', $client->getResponse()->headers->get('location'));
+        self::assertSame(302, $response->getStatusCode());
+        self::assertSame('/admin/red5/custom-field/list', $client->getResponse()->headers->get('location'));
     }
 
     public function testCustomFieldForCategoryDelete(): void
@@ -245,8 +245,8 @@ class AdminActionTest extends AppIntegrationTestCase implements SmokeTestForRout
         ]);
         $response = $client->getResponse();
 
-        self::assertEquals(302, $response->getStatusCode());
-        self::assertEquals('/admin/red5/category/2/edit', $client->getResponse()->headers->get('location'));
+        self::assertSame(302, $response->getStatusCode());
+        self::assertSame('/admin/red5/category/2/edit', $client->getResponse()->headers->get('location'));
     }
 
     public function testPageDelete(): void
@@ -265,8 +265,8 @@ class AdminActionTest extends AppIntegrationTestCase implements SmokeTestForRout
         ]);
         $response = $client->getResponse();
 
-        self::assertEquals(302, $response->getStatusCode());
-        self::assertEquals('/admin/red5/page', $client->getResponse()->headers->get('location'));
+        self::assertSame(302, $response->getStatusCode());
+        self::assertSame('/admin/red5/page', $client->getResponse()->headers->get('location'));
     }
 
     public function testRedirectToNextListingWaitingActivation(): void
@@ -282,8 +282,8 @@ class AdminActionTest extends AppIntegrationTestCase implements SmokeTestForRout
         ]);
         $response = $client->getResponse();
 
-        self::assertEquals(302, $response->getStatusCode());
+        self::assertSame(302, $response->getStatusCode());
         $client->followRedirect();
-        self::assertEquals('app_listing_show', $client->getRequest()->get('_route'));
+        self::assertSame('app_listing_show', $client->getRequest()->get('_route'));
     }
 }

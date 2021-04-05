@@ -45,8 +45,8 @@ class ListingActionForUserControllerTest extends AppIntegrationTestCase implemen
         ]);
         $response = $client->getResponse();
 
-        self::assertEquals(302, $response->getStatusCode());
-        self::assertEquals('/', $client->getResponse()->headers->get('location'));
+        self::assertSame(302, $response->getStatusCode());
+        self::assertSame('/', $client->getResponse()->headers->get('location'));
 
         // check listing displayed correctly
         self::ensureKernelShutdown();
@@ -75,8 +75,8 @@ class ListingActionForUserControllerTest extends AppIntegrationTestCase implemen
         ]);
         $response = $client->getResponse();
 
-        self::assertEquals(302, $response->getStatusCode());
-        self::assertEquals('/', $client->getResponse()->headers->get('location'));
+        self::assertSame(302, $response->getStatusCode());
+        self::assertSame('/', $client->getResponse()->headers->get('location'));
     }
 
     public function testRemove(): void
@@ -95,7 +95,7 @@ class ListingActionForUserControllerTest extends AppIntegrationTestCase implemen
         ]);
         $response = $client->getResponse();
 
-        self::assertEquals(302, $response->getStatusCode());
-        self::assertEquals('/', $client->getResponse()->headers->get('location'));
+        self::assertSame(302, $response->getStatusCode());
+        self::assertSame('/', $client->getResponse()->headers->get('location'));
     }
 }

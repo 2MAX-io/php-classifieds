@@ -44,7 +44,7 @@ class UserControllerTest extends AppIntegrationTestCase implements SmokeTestForR
             'admin_user_edit[plainPassword][second]' => static::NEW_PASSWORD,
         ]);
         $response = $client->getResponse();
-        self::assertEquals(302, $response->getStatusCode());
+        self::assertSame(302, $response->getStatusCode());
 
         // follow redirect after submit
         $client->followRedirect();
@@ -57,7 +57,7 @@ class UserControllerTest extends AppIntegrationTestCase implements SmokeTestForR
             'email' => TestUserLoginEnum::LOGIN,
             'password' => static::NEW_PASSWORD,
         ]);
-        self::assertEquals(302, $response->getStatusCode());
+        self::assertSame(302, $response->getStatusCode());
         $client->followRedirect();
         self::assertSame('app_user_listing_new', $client->getRequest()->attributes->get('_route'));
     }
@@ -73,7 +73,7 @@ class UserControllerTest extends AppIntegrationTestCase implements SmokeTestForR
             'email' => TestUserLoginEnum::LOGIN,
             'password' => TestUserLoginEnum::PASSWORD,
         ]);
-        self::assertEquals(302, $client->getResponse()->getStatusCode());
+        self::assertSame(302, $client->getResponse()->getStatusCode());
         $client->followRedirect();
         self::assertSame('app_user_listing_new', $client->getRequest()->attributes->get('_route'));
 
@@ -89,7 +89,7 @@ class UserControllerTest extends AppIntegrationTestCase implements SmokeTestForR
         $enabled->untick();
         $client->submit($form);
         $response = $client->getResponse();
-        self::assertEquals(302, $response->getStatusCode());
+        self::assertSame(302, $response->getStatusCode());
         $client->followRedirect();
         self::assertSame('app_admin_user_edit', $client->getRequest()->attributes->get('_route'));
 
@@ -101,7 +101,7 @@ class UserControllerTest extends AppIntegrationTestCase implements SmokeTestForR
             'email' => TestUserLoginEnum::LOGIN,
             'password' => TestUserLoginEnum::PASSWORD,
         ]);
-        self::assertEquals(302, $client->getResponse()->getStatusCode());
+        self::assertSame(302, $client->getResponse()->getStatusCode());
         $client->followRedirect();
         self::assertSame('app_login', $client->getRequest()->attributes->get('_route'));
         self::assertStringContainsString('Account is disabled', (string) $client->getResponse()->getContent());

@@ -35,7 +35,7 @@ class UpgradeControllerTest extends AppIntegrationTestCase
         self::assertStringContainsString('New version available, you can upgrade now', (string) $client->getResponse()->getContent());
         $client->submitForm('Execute upgrade');
         $response = $client->getResponse();
-        self::assertEquals(200, $response->getStatusCode());
+        self::assertSame(200, $response->getStatusCode());
         self::assertStringContainsString('Upgrade has been executed', (string) $client->getResponse()->getContent());
         self::assertFileExists($testUpgradedFilePath);
         \unlink($testUpgradedFilePath);

@@ -47,7 +47,7 @@ class GetCustomFieldsControllerTest extends AppIntegrationTestCase implements Sm
         $response = $client->getResponse();
 
         $responseContent = (string) $response->getContent();
-        self::assertEquals(200, $response->getStatusCode(), $responseContent);
+        self::assertSame(200, $response->getStatusCode(), $responseContent);
         self::assertStringContainsString('listing_customFieldList', $responseContent);
     }
 }

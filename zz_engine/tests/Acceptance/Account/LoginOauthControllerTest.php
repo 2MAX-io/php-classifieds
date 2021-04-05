@@ -49,6 +49,6 @@ class LoginOauthControllerTest extends AppIntegrationTestCase
         $client->followRedirect();
         self::assertSame('app_user_listing_new', $client->getRequest()->attributes->get('_route'));
         $client->request('GET', $this->getRouter()->generate('app_user_my_account'));
-        self::assertEquals(200, $client->getResponse()->getStatusCode());
+        self::assertSame(200, $client->getResponse()->getStatusCode());
     }
 }

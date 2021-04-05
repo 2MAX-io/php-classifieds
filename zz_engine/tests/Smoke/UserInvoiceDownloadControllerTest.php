@@ -36,7 +36,7 @@ class UserInvoiceDownloadControllerTest extends AppIntegrationTestCase implement
         $client->request('GET', $url);
         $response = $client->getResponse();
 
-        self::assertEquals(200, $response->getStatusCode());
+        self::assertSame(200, $response->getStatusCode());
         self::assertStringContainsString('PDF', (string) $response->getContent());
     }
 }

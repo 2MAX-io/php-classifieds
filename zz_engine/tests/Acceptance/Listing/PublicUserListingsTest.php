@@ -25,7 +25,7 @@ class PublicUserListingsTest extends AppIntegrationTestCase
             'user' => 1,
         ]));
 
-        self::assertEquals(200, $client->getResponse()->getStatusCode());
+        self::assertSame(200, $client->getResponse()->getStatusCode());
         self::assertStringContainsString('Listings of user', (string) $client->getResponse()->getContent());
     }
 }

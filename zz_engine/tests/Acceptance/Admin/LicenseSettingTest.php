@@ -41,7 +41,7 @@ class LicenseSettingTest extends AppIntegrationTestCase implements SmokeTestForR
             'license_settings[license]' => $_ENV['APP_TEST_LICENSE'],
         ]);
         $response = $client->getResponse();
-        self::assertEquals(302, $response->getStatusCode());
+        self::assertSame(302, $response->getStatusCode());
         $client->followRedirect();
         self::assertSame('app_admin_settings_license', $client->getRequest()->attributes->get('_route'));
     }
@@ -57,7 +57,7 @@ class LicenseSettingTest extends AppIntegrationTestCase implements SmokeTestForR
             'license_settings[license]' => 'invalid license',
         ]);
         $response = $client->getResponse();
-        self::assertEquals(200, $response->getStatusCode());
+        self::assertSame(200, $response->getStatusCode());
         self::assertStringContainsString('License could not be decoded', (string) $response->getContent());
     }
 }

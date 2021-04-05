@@ -26,6 +26,6 @@ class AdminIndexPageTest extends AppIntegrationTestCase
         $url = $this->getRouter()->generate('app_admin_index');
 
         $client->request('GET', $url);
-        self::assertEquals(200, $client->getResponse()->getStatusCode());
+        self::assertSame(200, $client->getResponse()->getStatusCode());
     }
 }

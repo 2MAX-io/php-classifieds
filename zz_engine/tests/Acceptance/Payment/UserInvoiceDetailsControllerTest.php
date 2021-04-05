@@ -38,7 +38,7 @@ class UserInvoiceDetailsControllerTest extends AppIntegrationTestCase
             'user_invoice_details[country]' => 'Poland',
         ]);
         $response = $client->getResponse();
-        self::assertEquals(302, $response->getStatusCode());
+        self::assertSame(302, $response->getStatusCode());
         $client->followRedirect();
         self::assertSame('app_user_invoice_details', $client->getRequest()->attributes->get('_route'));
     }

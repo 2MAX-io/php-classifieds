@@ -27,6 +27,6 @@ class UserMyAccountPageTest extends AppIntegrationTestCase
         $url = $this->getRouter()->generate('app_user_my_account');
 
         $client->request('GET', $url);
-        self::assertEquals(200, $client->getResponse()->getStatusCode());
+        self::assertSame(200, $client->getResponse()->getStatusCode());
     }
 }

@@ -38,7 +38,7 @@ class RemindPasswordTest extends AppIntegrationTestCase implements SmokeTestForR
             'remind_password[email]' => TestUserLoginEnum::LOGIN,
         ]);
         $response = $client->getResponse();
-        self::assertEquals(302, $response->getStatusCode());
+        self::assertSame(302, $response->getStatusCode());
 
         // get confirmation link from email message
         /** @var TemplatedEmail $message */
@@ -67,7 +67,7 @@ class RemindPasswordTest extends AppIntegrationTestCase implements SmokeTestForR
             'email' => TestUserLoginEnum::LOGIN,
             'password' => $newPassword,
         ]);
-        self::assertEquals(302, $response->getStatusCode());
+        self::assertSame(302, $response->getStatusCode());
         $client->followRedirect();
         self::assertSame('app_user_listing_new', $client->getRequest()->attributes->get('_route'));
     }

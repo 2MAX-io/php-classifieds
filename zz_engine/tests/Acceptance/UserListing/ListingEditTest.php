@@ -41,7 +41,7 @@ class ListingEditTest extends AppIntegrationTestCase implements SmokeTestForRout
             'listing[description]' => 'test listing',
         ]);
         $response = $client->getResponse();
-        self::assertEquals(302, $response->getStatusCode());
+        self::assertSame(302, $response->getStatusCode());
         $client->followRedirect();
         self::assertSame('app_user_listing_edit', $client->getRequest()->attributes->get('_route'));
     }
@@ -86,7 +86,7 @@ class ListingEditTest extends AppIntegrationTestCase implements SmokeTestForRout
 
         $response = $client->getResponse();
         $content = (string) $response->getContent();
-        self::assertEquals(500, $response->getStatusCode(), $content);
+        self::assertSame(500, $response->getStatusCode(), $content);
         self::assertStringContainsString('file extension php is not allowed', $content);
     }
 }

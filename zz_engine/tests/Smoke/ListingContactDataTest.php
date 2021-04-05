@@ -44,7 +44,7 @@ class ListingContactDataTest extends AppIntegrationTestCase implements SmokeTest
         $response = $client->getResponse();
 
         $responseContent = (string) $response->getContent();
-        self::assertEquals(200, $response->getStatusCode(), $responseContent);
+        self::assertSame(200, $response->getStatusCode(), $responseContent);
         self::assertArrayHasKey(ParamEnum::SHOW_CONTACT_HTML, JsonHelper::toArray($responseContent));
     }
 }

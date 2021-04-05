@@ -28,7 +28,7 @@ class AdminSettingsControllerTest extends AppIntegrationTestCase
         $client->request('GET', $this->getRouter()->generate('app_admin_settings'));
         $client->submitForm('Save');
         $response = $client->getResponse();
-        self::assertEquals(302, $response->getStatusCode());
+        self::assertSame(302, $response->getStatusCode());
         $client->followRedirect();
         self::assertSame('app_admin_settings', $client->getRequest()->attributes->get('_route'));
     }
@@ -43,7 +43,7 @@ class AdminSettingsControllerTest extends AppIntegrationTestCase
         $client->request('GET', $this->getRouter()->generate('app_admin_settings_system'));
         $client->submitForm('Save');
         $response = $client->getResponse();
-        self::assertEquals(302, $response->getStatusCode());
+        self::assertSame(302, $response->getStatusCode());
         $client->followRedirect();
         self::assertSame('app_admin_settings_system', $client->getRequest()->attributes->get('_route'));
     }
@@ -58,7 +58,7 @@ class AdminSettingsControllerTest extends AppIntegrationTestCase
         $client->request('GET', $this->getRouter()->generate('app_admin_settings_payment_invoice'));
         $client->submitForm('Save');
         $response = $client->getResponse();
-        self::assertEquals(302, $response->getStatusCode());
+        self::assertSame(302, $response->getStatusCode());
         $client->followRedirect();
         self::assertSame('app_admin_settings_payment_invoice', $client->getRequest()->attributes->get('_route'));
     }
@@ -73,7 +73,7 @@ class AdminSettingsControllerTest extends AppIntegrationTestCase
         $client->request('GET', $this->getRouter()->generate('app_admin_settings_login'));
         $client->submitForm('Save');
         $response = $client->getResponse();
-        self::assertEquals(302, $response->getStatusCode());
+        self::assertSame(302, $response->getStatusCode());
         $client->followRedirect();
         self::assertSame('app_admin_settings_login', $client->getRequest()->attributes->get('_route'));
     }
@@ -88,7 +88,7 @@ class AdminSettingsControllerTest extends AppIntegrationTestCase
         $client->request('GET', $this->getRouter()->generate('app_admin_settings_customization'));
         $client->submitForm('Save');
         $response = $client->getResponse();
-        self::assertEquals(302, $response->getStatusCode());
+        self::assertSame(302, $response->getStatusCode());
         $client->followRedirect();
         self::assertSame('app_admin_settings_customization', $client->getRequest()->attributes->get('_route'));
     }

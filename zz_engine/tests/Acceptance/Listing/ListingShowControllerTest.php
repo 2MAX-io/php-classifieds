@@ -28,7 +28,7 @@ class ListingShowControllerTest extends AppIntegrationTestCase
             'id' => 1,
             'slug' => 'test-listing-title',
         ]));
-        self::assertEquals(200, $client->getResponse()->getStatusCode());
+        self::assertSame(200, $client->getResponse()->getStatusCode());
         self::assertStringNotContainsString('Listing has expired', (string) $client->getResponse()->getContent());
 
         // set as expired
@@ -39,7 +39,7 @@ EOT);
             'id' => 1,
             'slug' => 'test-listing-title',
         ]));
-        self::assertEquals(200, $client->getResponse()->getStatusCode());
+        self::assertSame(200, $client->getResponse()->getStatusCode());
         self::assertStringContainsString('Listing has expired', (string) $client->getResponse()->getContent());
     }
 }

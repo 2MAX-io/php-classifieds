@@ -42,7 +42,7 @@ class PackageControllerTest extends AppIntegrationTestCase implements SmokeTestF
             'package[daysListingExpire]' => '1',
         ]);
         $response = $client->getResponse();
-        self::assertEquals(302, $response->getStatusCode());
+        self::assertSame(302, $response->getStatusCode());
         $client->followRedirect();
         self::assertSame('app_admin_package_edit', $client->getRequest()->attributes->get('_route'));
     }
@@ -69,7 +69,7 @@ class PackageControllerTest extends AppIntegrationTestCase implements SmokeTestF
             $form->getPhpFiles()
         );
         $response = $client->getResponse();
-        self::assertEquals(302, $response->getStatusCode());
+        self::assertSame(302, $response->getStatusCode());
         $client->followRedirect();
         self::assertSame('app_admin_package_edit', $client->getRequest()->attributes->get('_route'));
     }

@@ -37,7 +37,7 @@ class AdminListingEditAdvancedControllerTest extends AppIntegrationTestCase impl
             'admin_listing_advanced_edit[rejectionReason]' => 'test rejection reason',
         ]);
         $response = $client->getResponse();
-        self::assertEquals(302, $response->getStatusCode());
+        self::assertSame(302, $response->getStatusCode());
         $client->followRedirect();
         self::assertSame('app_admin_listing_edit_advanced', $client->getRequest()->attributes->get('_route'));
     }

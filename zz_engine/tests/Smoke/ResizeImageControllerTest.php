@@ -46,6 +46,6 @@ class ResizeImageControllerTest extends AppIntegrationTestCase implements SmokeT
             \unlink($testImagePath);
         }
 
-        self::assertEquals(200, $response->getStatusCode());
+        self::assertSame(200, $response->getStatusCode());
     }
 }

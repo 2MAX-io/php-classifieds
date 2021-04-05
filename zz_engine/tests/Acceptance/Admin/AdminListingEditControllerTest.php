@@ -37,7 +37,7 @@ class AdminListingEditControllerTest extends AppIntegrationTestCase implements S
             'listing[title]' => 'test listing',
         ]);
         $response = $client->getResponse();
-        self::assertEquals(302, $response->getStatusCode());
+        self::assertSame(302, $response->getStatusCode());
         $client->followRedirect();
         self::assertSame('app_admin_listing_edit', $client->getRequest()->attributes->get('_route'));
     }

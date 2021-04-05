@@ -41,7 +41,7 @@ class CustomFieldOptionControllerTest extends AppIntegrationTestCase implements 
             'custom_field_option[value]' => 'test-custom-field-option',
         ]);
         $response = $client->getResponse();
-        self::assertEquals(302, $response->getStatusCode());
+        self::assertSame(302, $response->getStatusCode());
         $client->followRedirect();
         self::assertSame('app_admin_custom_field_option_edit', $client->getRequest()->attributes->get('_route'));
     }
@@ -60,7 +60,7 @@ class CustomFieldOptionControllerTest extends AppIntegrationTestCase implements 
             'custom_field_option[value]' => 'test-custom-field-option',
         ]);
         $response = $client->getResponse();
-        self::assertEquals(302, $response->getStatusCode());
+        self::assertSame(302, $response->getStatusCode());
         $client->followRedirect();
         self::assertSame('app_admin_custom_field_option_edit', $client->getRequest()->attributes->get('_route'));
     }
@@ -80,7 +80,7 @@ class CustomFieldOptionControllerTest extends AppIntegrationTestCase implements 
         ]);
         $response = $client->getResponse();
         $content = (string) $response->getContent();
-        self::assertEquals(200, $response->getStatusCode(), $content);
+        self::assertSame(200, $response->getStatusCode(), $content);
         self::assertStringContainsString('This value is already used', $content);
     }
 }

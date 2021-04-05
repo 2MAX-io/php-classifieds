@@ -69,7 +69,7 @@ class TopUpTest extends AppIntegrationTestCase
         ], 'POST');
         $client->submit($form);
         $response = $client->getResponse();
-        self::assertEquals(302, $response->getStatusCode());
+        self::assertSame(302, $response->getStatusCode());
         $returnUrl = $client->getResponse()->headers->get('location');
 
         // notify from payment gateway
@@ -95,14 +95,14 @@ class TopUpTest extends AppIntegrationTestCase
             'p24_order_id' => '1111',
             'p24_amount' => '100',
         ]);
-        self::assertEquals(200, $client->getResponse()->getStatusCode());
+        self::assertSame(200, $client->getResponse()->getStatusCode());
 
         // go to return url
         self::ensureKernelShutdown();
         $client = static::createClient();
         $this->loginUser($client);
         $client->request('GET', $returnUrl);
-        self::assertEquals('app_payment_await_confirmation', $client->getRequest()->get('_route'));
+        self::assertSame('app_payment_await_confirmation', $client->getRequest()->get('_route'));
 
         // follow redirect after payment success
         $client->request('GET', $this->getRouter()->generate('app_payment_await_confirmation_redirect', [

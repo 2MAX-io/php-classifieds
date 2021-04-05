@@ -47,8 +47,8 @@ class AdminCategoryControllerTest extends AppIntegrationTestCase implements Smok
         ]);
         $response = $client->getResponse();
 
-        self::assertEquals(302, $response->getStatusCode());
-        self::assertEquals('/admin/red5/category', $client->getResponse()->headers->get('location'));
+        self::assertSame(302, $response->getStatusCode());
+        self::assertSame('/admin/red5/category', $client->getResponse()->headers->get('location'));
     }
 
     public function testSaveOrder(): void
@@ -68,6 +68,6 @@ EOT;
         ], $requestContent);
         $response = $client->getResponse();
 
-        self::assertEquals(200, $response->getStatusCode());
+        self::assertSame(200, $response->getStatusCode());
     }
 }

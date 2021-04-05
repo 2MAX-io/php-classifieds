@@ -40,7 +40,7 @@ class ListingAddTest extends AppIntegrationTestCase implements SmokeTestForRoute
             'listing[category]' => '140',
         ]);
         $response = $client->getResponse();
-        self::assertEquals(302, $response->getStatusCode());
+        self::assertSame(302, $response->getStatusCode());
         $client->followRedirect();
         self::assertSame('app_user_listing_edit', $client->getRequest()->attributes->get('_route'));
     }
@@ -89,7 +89,7 @@ class ListingAddTest extends AppIntegrationTestCase implements SmokeTestForRoute
         );
 
         $response = $client->getResponse();
-        self::assertEquals(302, $response->getStatusCode());
+        self::assertSame(302, $response->getStatusCode());
         $client->followRedirect();
         self::assertSame('app_user_listing_edit', $client->getRequest()->attributes->get('_route'));
     }

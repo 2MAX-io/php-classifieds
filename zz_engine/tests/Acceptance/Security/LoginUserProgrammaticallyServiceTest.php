@@ -37,7 +37,7 @@ class LoginUserProgrammaticallyServiceTest extends AppIntegrationTestCase implem
         ]));
 
         $client->request('GET', $this->getRouter()->generate('app_user_my_account'));
-        self::assertEquals(200, $client->getResponse()->getStatusCode());
+        self::assertSame(200, $client->getResponse()->getStatusCode());
     }
 
     public function testProgrammaticallyLoginAdmin(): void
@@ -50,6 +50,6 @@ class LoginUserProgrammaticallyServiceTest extends AppIntegrationTestCase implem
         ]));
 
         $client->request('GET', $this->getRouter()->generate('app_admin_index'));
-        self::assertEquals(200, $client->getResponse()->getStatusCode());
+        self::assertSame(200, $client->getResponse()->getStatusCode());
     }
 }

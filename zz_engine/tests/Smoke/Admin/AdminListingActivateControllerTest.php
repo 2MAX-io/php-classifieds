@@ -43,8 +43,8 @@ class AdminListingActivateControllerTest extends AppIntegrationTestCase implemen
         ]);
         $response = $client->getResponse();
 
-        self::assertEquals(302, $response->getStatusCode());
-        self::assertEquals('/', $client->getResponse()->headers->get('location'));
+        self::assertSame(302, $response->getStatusCode());
+        self::assertSame('/', $client->getResponse()->headers->get('location'));
     }
 
     public function testRejectSelected(): void
@@ -62,7 +62,7 @@ class AdminListingActivateControllerTest extends AppIntegrationTestCase implemen
         ]);
         $response = $client->getResponse();
 
-        self::assertEquals(302, $response->getStatusCode());
-        self::assertEquals('/', $client->getResponse()->headers->get('location'));
+        self::assertSame(302, $response->getStatusCode());
+        self::assertSame('/', $client->getResponse()->headers->get('location'));
     }
 }

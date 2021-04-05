@@ -41,7 +41,7 @@ class ReportListingTest extends AppIntegrationTestCase implements SmokeTestForRo
             'listing_report[email]' => 'test-report-listing@example.com',
         ]);
         $response = $client->getResponse();
-        self::assertEquals(302, $response->getStatusCode());
+        self::assertSame(302, $response->getStatusCode());
 
         // follow redirect after submit
         $client->followRedirect();
@@ -63,7 +63,7 @@ class ReportListingTest extends AppIntegrationTestCase implements SmokeTestForRo
             'listing_report[email]' => TestUserLoginEnum::LOGIN,
         ]);
         $response = $client->getResponse();
-        self::assertEquals(302, $response->getStatusCode());
+        self::assertSame(302, $response->getStatusCode());
 
         // follow redirect after submit
         $client->followRedirect();

@@ -45,6 +45,6 @@ EOT;
         ], $requestContent);
         $response = $client->getResponse();
 
-        self::assertEquals(200, $response->getStatusCode());
+        self::assertSame(200, $response->getStatusCode());
     }
 }

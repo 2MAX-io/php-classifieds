@@ -92,7 +92,7 @@ class AllRoutesSmokeTest extends AppIntegrationTestCase
 
             $client->request('GET', $url);
             $response = $client->getResponse();
-            self::assertEquals(
+            self::assertSame(
                 200,
                 $response->getStatusCode(),
                 "failed for route: `{$routeName}`, url: {$url}\n\n".$response->getContent(),

@@ -42,7 +42,7 @@ class PhpassPasswordEncoderServiceTest extends AppIntegrationTestCase
             'password' => $password,
         ]);
         $response = $client->getResponse();
-        self::assertEquals(302, $response->getStatusCode());
+        self::assertSame(302, $response->getStatusCode());
         $client->followRedirect();
         self::assertSame('app_user_listing_new', $client->getRequest()->attributes->get('_route'));
     }

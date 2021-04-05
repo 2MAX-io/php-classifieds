@@ -28,7 +28,7 @@ class UserSettingsControllerTest extends AppIntegrationTestCase
         $client->request('GET', $this->getRouter()->generate('app_user_settings'));
         $client->submitForm('Save');
         $response = $client->getResponse();
-        self::assertEquals(302, $response->getStatusCode());
+        self::assertSame(302, $response->getStatusCode());
         $client->followRedirect();
         self::assertSame('app_user_settings', $client->getRequest()->attributes->get('_route'));
     }

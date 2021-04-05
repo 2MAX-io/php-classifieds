@@ -50,12 +50,12 @@ EOT;
         $response = $client->getResponse();
 
         $content = (string) $response->getContent();
-        self::assertEquals(
+        self::assertSame(
             200,
             $response->getStatusCode(),
             \print_r(JsonHelper::toArray($content), true)
         );
         $responseArray = JsonHelper::toArray($content);
-        self::assertEquals('test_license', $responseArray['license']);
+        self::assertSame('test_license', $responseArray['license']);
     }
 }

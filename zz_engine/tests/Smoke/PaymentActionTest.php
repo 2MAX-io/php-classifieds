@@ -42,8 +42,8 @@ class PaymentActionTest extends AppIntegrationTestCase implements SmokeTestForRo
         $client->request('GET', $url);
         $response = $client->getResponse();
 
-        self::assertEquals(302, $response->getStatusCode());
-        self::assertEquals('/user/feature/1', $client->getResponse()->headers->get('location'));
+        self::assertSame(302, $response->getStatusCode());
+        self::assertSame('/user/feature/1', $client->getResponse()->headers->get('location'));
     }
 
     public function testRedirectAfterConfirmationAwait(): void
@@ -58,8 +58,8 @@ class PaymentActionTest extends AppIntegrationTestCase implements SmokeTestForRo
         $client->request('GET', $url);
         $response = $client->getResponse();
 
-        self::assertEquals(302, $response->getStatusCode());
-        self::assertEquals('/user/feature/1', $client->getResponse()->headers->get('location'));
+        self::assertSame(302, $response->getStatusCode());
+        self::assertSame('/user/feature/1', $client->getResponse()->headers->get('location'));
     }
 
     public function testRefreshConfirmation(): void
@@ -74,7 +74,7 @@ class PaymentActionTest extends AppIntegrationTestCase implements SmokeTestForRo
         $client->request('GET', $url);
         $response = $client->getResponse();
 
-        self::assertEquals(200, $response->getStatusCode());
+        self::assertSame(200, $response->getStatusCode());
     }
 
     public function testAwaitConfirmation(): void
@@ -89,6 +89,6 @@ class PaymentActionTest extends AppIntegrationTestCase implements SmokeTestForRo
         $client->request('GET', $url);
         $response = $client->getResponse();
 
-        self::assertEquals(200, $response->getStatusCode());
+        self::assertSame(200, $response->getStatusCode());
     }
 }

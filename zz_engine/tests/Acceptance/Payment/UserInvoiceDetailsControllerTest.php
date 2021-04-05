@@ -7,6 +7,7 @@ namespace App\Tests\Acceptance\Payment;
 use App\Tests\Base\AppIntegrationTestCase;
 use App\Tests\Traits\DatabaseTestTrait;
 use App\Tests\Traits\LoginTestTrait;
+use App\Tests\Traits\MakePaymentPaypalTestTrait;
 use App\Tests\Traits\RouterTestTrait;
 
 /**
@@ -17,6 +18,7 @@ class UserInvoiceDetailsControllerTest extends AppIntegrationTestCase
     use DatabaseTestTrait;
     use RouterTestTrait;
     use LoginTestTrait;
+    use MakePaymentPaypalTestTrait;
 
     public function test(): void
     {
@@ -41,5 +43,7 @@ class UserInvoiceDetailsControllerTest extends AppIntegrationTestCase
         self::assertSame(302, $response->getStatusCode());
         $client->followRedirect();
         self::assertSame('app_user_invoice_details', $client->getRequest()->attributes->get('_route'));
+
+        $this->makePayPalPayment();
     }
 }

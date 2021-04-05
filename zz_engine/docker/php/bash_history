@@ -222,3 +222,4 @@ php -dxdebug.start_with_request=yes zz_engine/bin/console app:dev:translation:fi
 php -dxdebug.mode=coverage /var/www/html/zz_engine/bin/phpunit --coverage-text=out.txt --bootstrap /var/www/html/zz_engine/tests/bootstrap.php --configuration /var/www/html/zz_engine/phpunit.xml.dist
 sudo chown -R 1000:33 /var/www/html
 tac zz_engine/docker/php/bash_history | awk '!($0 in S) {print; S[$0]}' | tac > zz_engine/docker/php/bash_history_temp && mv zz_engine/docker/php/bash_history_temp zz_engine/docker/php/bash_history
+(cd /var/www/html/zz_engine/var/mysql/ ; mysql --max_allowed_packet=1G classifieds < $(ls -t | head -1))

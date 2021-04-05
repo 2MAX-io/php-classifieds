@@ -114,7 +114,11 @@ class DevGenerateTestListingsService
             $listing->setLastEditDate($currentDate);
             $listing->setOrderByDate($currentDate);
             $listing->setEmail('user@example.com');
-            $listing->setPhone('12345555555');
+            $listing->setPhone(RandomHelper::fromArray([
+                '+48800000000',
+                '+447441426038',
+                '+18778518180',
+            ]));
             $listing->setSlug(SlugHelper::getSlug($listing->getTitle()));
             $listing->setSearchText($listing->getTitle().' '.$listing->getDescription());
             $listing->setValidUntilDate(DateHelper::carbonNow()->addDays(7));

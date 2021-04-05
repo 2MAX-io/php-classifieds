@@ -23,6 +23,7 @@ class RegenerateListingsCommandTest extends AppIntegrationTestCase
         $commandTester = new CommandTester($command);
         $commandTester->execute([
             '--limit' => 2,
+            '--limit-time-seconds' => 10,
         ]);
 
         $output = $commandTester->getDisplay();

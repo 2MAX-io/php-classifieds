@@ -34,11 +34,20 @@ class CustomFieldControllerTest extends AppIntegrationTestCase implements SmokeT
         $this->clearDatabase();
         $this->loginAdmin($client);
 
-        $client->request('GET', $this->getRouter()->generate('app_admin_custom_field_new'));
-        $client->submitForm('Save', [
+        $crawler = $client->request('GET', $this->getRouter()->generate('app_admin_custom_field_new'));
+        $submitButton = $crawler->selectButton('Save');
+        $form = $submitButton->form([
             'custom_field[name]' => 'test custom field name',
             'custom_field[type]' => CustomField::SELECT_SINGLE,
         ]);
+        $values = $form->getPhpValues();
+        $values['selectedCategories'][] = 3;
+        $client->request(
+            $form->getMethod(),
+            $form->getUri(),
+            $values,
+            $form->getPhpFiles()
+        );
         $response = $client->getResponse();
         self::assertSame(302, $response->getStatusCode());
         $client->followRedirect();

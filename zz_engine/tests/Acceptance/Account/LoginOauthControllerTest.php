@@ -51,4 +51,33 @@ class LoginOauthControllerTest extends AppIntegrationTestCase
         $client->request('GET', $this->getRouter()->generate('app_user_my_account'));
         self::assertSame(200, $client->getResponse()->getStatusCode());
     }
+
+    public function testNotExisting(): void
+    {
+        $client = static::createClient();
+        $this->clearDatabase();
+
+        $hybridauthStub = $this->createMock(Hybridauth::class);
+        $hybridauthStub->method('authenticate')->willReturnCallback(function () {
+            $authenticationStub = $this->createMock(AdapterInterface::class);
+            $authenticationStub->method('isConnected')->willReturn(true);
+            $authenticationStub->method('getUserProfile')->willReturnCallback(function () {
+                $profile = new Profile();
+                $profile->emailVerified = 'test-new-account@example.com';
+
+                return $profile;
+            });
+
+            return $authenticationStub;
+        });
+        $this->getTestContainer()->get(LoginOauthController::class)->setHybridauth($hybridauthStub);
+
+        $client->request('GET', $this->getRouter()->generate('app_login_oauth', [
+            'provider' => LoginOauthController::GOOGLE_PROVIDER,
+        ]));
+        $client->followRedirect();
+        self::assertSame('app_user_listing_new', $client->getRequest()->attributes->get('_route'));
+        $client->request('GET', $this->getRouter()->generate('app_user_my_account'));
+        self::assertSame(200, $client->getResponse()->getStatusCode());
+    }
 }

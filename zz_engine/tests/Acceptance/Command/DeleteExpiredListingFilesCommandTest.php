@@ -29,6 +29,7 @@ class DeleteExpiredListingFilesCommandTest extends AppIntegrationTestCase
         $commandTester->execute([
             'days' => 1,
             '--dry-run' => '--dry-run',
+            '--limit' => 1,
         ]);
 
         $output = $commandTester->getDisplay();

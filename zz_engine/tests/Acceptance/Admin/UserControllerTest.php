@@ -106,4 +106,29 @@ class UserControllerTest extends AppIntegrationTestCase implements SmokeTestForR
         self::assertSame('app_login', $client->getRequest()->attributes->get('_route'));
         self::assertStringContainsString('Account is disabled', (string) $client->getResponse()->getContent());
     }
+
+    public function testListSearch(): void
+    {
+        $client = static::createClient();
+        $this->clearDatabase();
+        $this->loginAdmin($client);
+
+        $client->request('GET', $this->getRouter()->generate('app_admin_user_list'));
+        self::assertSame(200, $client->getResponse()->getStatusCode());
+        self::assertStringContainsString(TestUserLoginEnum::LOGIN, (string) $client->getResponse()->getContent());
+
+        // should not find
+        $client->request('GET', $this->getRouter()->generate('app_admin_user_list', [
+            'query' => 'should not find any',
+        ]));
+        self::assertSame(200, $client->getResponse()->getStatusCode());
+        self::assertStringContainsString('no records found', (string) $client->getResponse()->getContent());
+
+        // should find
+        $client->request('GET', $this->getRouter()->generate('app_admin_user_list', [
+            'query' => TestUserLoginEnum::LOGIN,
+        ]));
+        self::assertSame(200, $client->getResponse()->getStatusCode());
+        self::assertStringContainsString(TestUserLoginEnum::LOGIN, (string) $client->getResponse()->getContent());
+    }
 }

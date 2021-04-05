@@ -554,7 +554,7 @@ t.add("trans.Listing", "Listing", "messages", "en");
 t.add("trans.Listing awaits activation", "Listing awaits activation", "messages", "en");
 t.add("trans.Listing awaits activation, you can extend listing duration, but listing would only appear to the public after acceptation", "Listing awaits activation, you can extend listing duration, but listing would only appear to the public after acceptation", "messages", "en");
 t.add("trans.Listing currently valid until", "Listing currently valid until", "messages", "en");
-t.add("trans.Listing has been deleted", "Listing has been deleted", "messages", "en");
+t.add("trans.Listing has been removed by Administrator", "Listing has been removed by Administrator", "messages", "en");
 t.add("trans.Listing has been featured for 30 minutes, to see how it looks click", "Listing has been featured for 30 minutes, to see how it looks click", "messages", "en");
 t.add("trans.Listing has been rejected", "Listing has been rejected", "messages", "en");
 t.add("trans.Listing has been removed", "Listing has been removed", "messages", "en");

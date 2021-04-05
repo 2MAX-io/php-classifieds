@@ -555,7 +555,7 @@ t.add("trans.Listing", "Og\u0142oszenie", "messages", "pl");
 t.add("trans.Listing awaits activation", "Og\u0142oszenie oczekuje na aktywacje", "messages", "pl");
 t.add("trans.Listing awaits activation, you can extend listing duration, but listing would only appear to the public after acceptation", "Og\u0142oszenie oczekuje na aktywacj\u0119, mo\u017cesz je przed\u0142u\u017cy\u0107, jednak og\u0142oszenie uka\u017ce si\u0119\u00a0dopiero po akceptacji", "messages", "pl");
 t.add("trans.Listing currently valid until", "Og\u0142oszenie jest obecnie wa\u017cne do", "messages", "pl");
-t.add("trans.Listing has been deleted", "Og\u0142oszenie zosta\u0142o usuni\u0119te", "messages", "pl");
+t.add("trans.Listing has been removed by Administrator", "Og\u0142oszenie zosta\u0142o usuni\u0119te przez Administratora", "messages", "pl");
 t.add("trans.Listing has been featured for 30 minutes, to see how it looks click", "Og\u0142oszenie zosta\u0142o wyr\u00f3\u017cnione na 30 minut, aby zobaczy\u0107 jak wygl\u0105da kliknij", "messages", "pl");
 t.add("trans.Listing has been rejected", "Og\u0142oszenie zosta\u0142o odrzucone", "messages", "pl");
 t.add("trans.Listing has been removed", "Og\u0142oszenie zosta\u0142o usuni\u0119te", "messages", "pl");

@@ -1,4 +1,3 @@
-cd zz_engine/
 php bin/console make:entity
 php bin/console list
 php bin/console generate:controller
@@ -7,64 +6,24 @@ php zz_engine/bin/console list
 php zz_engine/bin/console doctrine:schema:update --force
 php zz_engine/bin/console make:crud Listing
 php zz_engine/bin/console make:crud
-php zz_engine/bin/console make:entity --regenerate "App\Entity"
-chmod -R 775 asset/user/listing
-chown -R 1000:www-data asset/user/listing
 php zz_engine/bin/console make:user
 php zz_engine/bin/console make:auth
-chown -R 1000:www-data zz_engine/config/
 php zz_engine/bin/console help
 php zz_engine/bin/console security:encode-password
 chown -R 1000:www-data *.php *.js
 chown -R 1000:www-data ./*.php ./*.js
 chown -R 1000:www-data *.php
-chown -R 1000:www-data zz_engine/src/Entity/TokenField.php
 find . ! -name "content" | xargs -I {} echo {}
 find . ! -name ".git" | xargs -I {} echo {}
 find . -not -path "*/zz_engine/docker/mysql*" -type f -exec echo {} \;
 find . -not -path "*/zz_engine/docker/mysql*" -type f -exec echo {} \; | grep mysql
-chown -R 1000:www-data zz_engine/src/Entity/*.php
-chmod -R 775 static/
-chown -R 1000:www-data static/
-ls /var/www/html/static/user/listing/zzzz/2019/
-php zz_engine/bin/old_generate_csv.php
-php zz_engine/bin/importer_import_to_new.php
-chown -R 1000:www-data old_classifieds_export.csv importer_import_to_new.sql
-php zz_engine/bin/importer_export_from_old.php
 mysqldump --help
 mysqldump
-ls -l static/user/listing/0000_legacy/images/galeria/0/10957/
-[A
-chown -R 1000:www-data importer_export_from_old.csv importer_import_to_new.sql
-sudo
-su www-data
-su -i www-data
-php zz_engine/bin/importer_export_from_old.php /var/www/html/zz_engine/docker/mysql/sql/importer_export_from_old.csv
-cat zz_engine/bin/importer_export_from_old.php
-php zz_engine/bin/importer_import_to_new.php /var/www/html/zz_engine/docker/mysql/sql/importer_export_from_old.csv /var/www/html/zz_engine/docker/mysql/sql/importer_import_to_new.sql
-su
-grep "0000-" /var/www/html/zz_engine/docker/mysql/sql/importer_export_from_old.csv
-grep "0000-00" /var/www/html/zz_engine/docker/mysql/sql/importer_export_from_old.csv
-head -1 /var/www/html/zz_engine/docker/mysql/sql/importer_export_from_old.csv
-grep "0000-00" -C5 /var/www/html/zz_engine/docker/mysql/sql/importer_export_from_old.csv
-grep "0000-00" -C2 /var/www/html/zz_engine/docker/mysql/sql/importer_export_from_old.csv
-rm static/user/listing/0000_legacy/images/galeria/0/9083/sdb3b8fb0db792343f42bf3535a10d385.jpg
-rm static/user/listing/0000_legacy/images/galeria/0/9083/size_list_sdb3b8fb0db792343f42bf3535a10d385.jpg
-ls -l static/user/*/size
-rm static/user/*/size_*.jpg
-rm -R static/user/*/size_*.jpg
-cat user/listing/0000_legacy/images/galeria/0/31419/s10649644ab0f7395930022cfba94412d.jpg
-cat static/user/listing/0000_legacy/images/galeria/0/31419/s10649644ab0f7395930022cfba94412d.jpg
-exit
-ls /var/www/html/static/cache/user/listing/0000_legacy/images/galeria/0/31419/s10649644ab0f7395930022cfba94412d.jpg/769e883b630928e10466e75e0e8c631c
-ls zz
 chown -R 1000:www-data static
 chown -R www-data:www-data static
-ls /tmp/xdebug_out
 ls -la
 ls -l /tmp/xdebug_out
 composer dump-autoload --optimize
-composer ==help
 composer --help
 composer dump-autoload --optimize -d zz_engine
 chown -R www-data:www-data /var/www/html/
@@ -72,7 +31,6 @@ chown -R 1000:www-data /var/www/html/
 pgrep php
 pgrep apache
 pgrep -fa apache
-pa aux
 ps
 ps aux
 id -u www-data
@@ -81,24 +39,14 @@ less /etc/passwd
 cat /etc/passwd
 ls /var/www/.composer/
 ls -l /var/www/
-ls
 ls- la
 ls -la /var/www
 mkdir .composer
 mkdir /var/www/.composer
 php zz_engine/bin/importer_export_from_old.php /var/www/html/zz_engine/docker/mysql/sql/importer_export_from_old.csv > out.txt
-history
 php zz_engine/bin/console doctrine:schema:update --help
 php zz_engine/bin/console doctrine:schema:update --dump-sql
 php zz_engine/bin/console make:command
-composer install install
-composer install hautelook/phpass
-composer require -w zz_engine hautelook/phpass
-cd zz_engine
-cd ..
-composer require -d zz_engine hautelook/phpass
-composer install -d zz_engine
-composer require -d zz_engine zendframework/zend-feed
 composer require -d zz_engine symfony/property-info
 php zz_engine/bin/console app:cron:main
 php zz_engine/bin/console doctrine:schema:validate
@@ -111,50 +59,22 @@ composer require -d zz_engine giggsey/libphonenumber-for-php
 php zz_engine/bin/console container:debug
 php zz_engine/bin/console list | grep container
 php zz_engine/bin/console debug:container
-php zz_engine/bin/console debug:container | grep array
-php zz_engine/bin/convert_insert_set_to_values.php
-php zz_engine/bin/convert_insert_set_to_values.php /var/www/html/zz_engine/docker/mysql/sql/importer_import_to_new.sql /var/www/html/zz_engine/docker/mysql/sql/importer_import_to_new_values.sql
-composer require -d easycorp/easy-log-handler
-composer require -d zz_engine easycorp/easy-log-handler
-composer remove -d zz_engine easycorp/easy-log-handler
-composer remove -d zz_engine update
-composer remove -d zz_engine upgrade
 composer -d zz_engine update
-composer update -d zz_engine
-composer require -d zz_engine monolog/monolog
-composer remove -d zz_engine monolog/monolog
-composer remove -d zz_engine monolog/monolog-bundle
-composer require -d zz_engine monolog/monolog-bundle
-composer require -d zz_engine monolog/
-composer require -d zz_engine monolog
-composer remove -d zz_engine monolog
 composer dump-env dev
-composer dump-env dev -d zz_engine
 composer require -d zz_engine minwork/array
 php zz_engine/bin/console translation:update --dump-messages --force en AppBundle
 php zz_engine/bin/console translation:update --dump-messages --force en App
 php zz_engine/bin/console translation:update --dump-messages --force en
 composer require -d zz_engine symfony/lock
-httpd -M | grep expires
-apache2 " grep expires
-apache2 | grep expires
-a2enmod expires
 composer dump-autoload -a -d zz_engine
 php zz_engine/bin/console list doctrine
 php zz_engine/bin/console
 php zz_engine/bin/console doctrine:ensure-production-settings --env=prod
-php zz_engine/bin/console doctrine:database:create --help
-php zz_engine/bin/console doctrine:schema:create --help
 php zz_engine/bin/console doctrine:schema:create --dump-sql
 php zz_engine/bin/console doctrine:schema:create --dump-sql > install/_schema.sql
-php zz_engine/bin/console doctrine:schema:create --dump-sql > install/data/_schema.sql
 php zz_engine/bin/console doctrine:schema:create --dump-sql --no-debug
 composer require-dev -d zz_engine symfony/requirements-checker
-composer require -dev -d zz_engine symfony/requirements-checker
-composer require --help
-composer require --dev -d zz_engine symfony/requirements-checker
 composer remove --dev -d zz_engine symfony/requirements-checker
-composer install --help
 cd zz_engine/var/installer/
 zip -rq installer_$(date +%Y-%m-%d_%H%M%S).zip .
 php zz_engine/bin/console assets:install
@@ -163,89 +83,42 @@ php zz_engine/bin/console assets:install asset
 php zz_engine/bin/console doctrine:migrations:migrate
 php zz_engine/bin/console doctrine:migrations:dump-schema
 php zz_engine/bin/console doctrine:migrations:dump-schema --help
-php zz_engine/bin/console debug:container | grep assets._default_package
 cat /usr/local/etc/php/php.ini
-ls -la zz_engine/src/Controller/
-chmod -R 000 zz_engine/src/Controller/
-chmod -R 000 zz_engine/src/Service
-chmod -R 000 zz_engine/src/Repository/CustomFieldRepository.php
-stat zz_engine/src/System/Localization/AppNumberFormatter.php
-stat zz_engine/src/System/Localization
 find /var/www/html -type d -exec chmod 750 {} \;
 find /var/www/html -type d -exec chmod 775 {} \;
-chmod -R 655 zz_engine/src/Repository/CustomFieldRepository.php
-chmod -R 660 zz_engine/src/Repository/CustomFieldRepository.php
 php zz_engine/bin/console doctrine:schema:create --dump-sql 
-php zz_engine/bin/console doctrine:schema:update --dump-sql 
 php zz_engine/bin/console doctrine:schema:update --f
-php zz_engine/bin/console doctrine:schema:update -f
 composer require --dev -d zz_engine fzaninotto/faker
-/var/www/html/zz_engine/bin/console app:dev:generate-test-listings
-/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 100
-/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 100000
-/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 10000
-git stash
 composer update "symfony/*" --with-all-dependencies -d zz_engine
 composer update symfony/symfony --with-all-dependencies -d zz_engine
 composer require psr/simple-cache -d zz_engine
-composer help list
 composer list
 composer help check-platform-reqs
-composer slevomat/coding-standard -d zz_engine
-composer require slevomat/coding-standard -d zz_engine
-composer require --dev -d zz_engine the "contrib" repository, which is open to community contributions.
 composer require --dev -d zz_engine slevomat/coding-standard
 php zz_engine/bin/console router:match
 php zz_engine/bin/console debug:router
 php zz_engine/bin/console debug:router > /var/www/html/out.txt
-php zz_engine/bin/console debug:router --help
-php zz_engine/bin/console debug:router --raw > /var/www/html/out.txt
-php zz_engine/bin/console debug:container | grep cache
-php zz_engine/bin/console debug:container | grep Psr16Cache
-php zz_engine/bin/console debug:container | grep cache.app.simple
-/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 1
-composer install -d zz_engine --optimize
-composer install -d zz_engine --optimize-autoloader
-/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 30000
-/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 5000
 composer update --help
-composer update -d zz_engine --optimize-autoloader
 composer require --dev -d zz_engine stesie/phpcs-doctrine-annotation-rules
 composer require --dev -d zz_engine paragonie/sodium_compat
 composer require -d zz_engine paragonie/sodium_compat
-uname -r
-uname -d
-uname --help
 uname -a
 wget https://classifieds.localhost/
 apt install wget
 ping https://classifieds.localhost/
 trace https://classifieds.localhost/
-cat /var/log/apache2/error.log 
-/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 15000
-/var/www/html/zz_engine/bin/console app:dev:generate-test-listings 2000
-composer require -w zz_engine "hybridauth/hybridauth" : "~3.0"
-composer require -d zz_engine 
+cat /var/log/apache2/error.log
 composer require -d zz_engine hybridauth/hybridauth ~3.0
-pwd
 find /var/www/html -type f -exec chmod 640 {} \;
 chmod +x /var/www/html/zz_engine/bin/console;
-        
-composer update
-composer install
 composer require league/omnipay:^3 omnipay/paypal
 composer require symfony/mailer
 composer require ticketswap/omnipay-przelewy24
-ping wp.pl
 composer require symfony/maker-bundle --dev
-php bin/console make:entity --regenerate App
-php bin/console make:entity --regenerate "App\Entity"
-php bin/console make:entity --regenerate "App"
 php bin/console make:entity --help
 php zz_engine/bin/console list | grep config
 php zz_engine/bin/console debug:config profiler
 php zz_engine/bin/console debug:config web_profiler
-php zz_engine/bin/console make:entity 
 composer require php-http/curl-client guzzlehttp/psr7 php-http/message
 composer require http
 composer require symfony/psr-http-message-bridge
@@ -255,245 +128,76 @@ composer require -d zz_engine php-http/curl-client guzzlehttp/psr7 php-http/mess
 composer require -d zz_engine http-factory-guzzle
 composer require -d zz_engine http-interop/http-factory-guzzle
 composer require nelmio/js-logger-bundle
-awk '!visited[$0]++' zz_engine/docker/php/bash_history > zz_engine/docker/php/bash_history.temp && mv zz_engine/docker/php/bash_history.temp zz_engine/docker/php/bash_history
-ls
-cd ..
-ls
-cd ..
-ls
-pwd
-cd www
-ls
-cd html/
-ls
-pwd
-cd ~
 pwd
 mysql classifieds
-composer install
-cd zz_engine/
-composer install
-composer install --optimize-autoloader
-composer update -d zz_engine --optimize-autoloader
 php zz_engine/bin/console doctrine:schema:create --dump-sql > install/data/_schema.sql
-bash zz_engine/dev/bin/DEV_build_installer.sh
 composer require willdurand/js-translation-bundle
-composer require willdurand/js-translation-bundle
-composer require willdurand/js-translation-bundle
-cd zz_engine/
-composer require willdurand/js-translation-bundle
-php zz_engine/bin/console make:entity 
 php zz_engine/bin/console make:form
-php zz_engine/bin/console make:form
-php bin/console make:entity --regenerate "App"
-php zz_engine/bin/console make:entity --regenerate "App"
-php zz_engine/bin/console doctrine:schema:update -f
-php zz_engine/bin/console make:entity --regenerate "App"
-php zz_engine/bin/console doctrine:schema:update -f
-php zz_engine/bin/console doctrine:schema:update -f
 php zz_engine/bin/console make:entity 
-php zz_engine/bin/console make:entity --regenerate "App"
-php zz_engine/bin/console doctrine:schema:update -f
-php zz_engine/bin/console doctrine:schema:update -f
-php zz_engine/bin/console make:entity --regenerate "App"
-php zz_engine/bin/console doctrine:schema:update -f
-php zz_engine/bin/console make:entity --regenerate "App"
-php zz_engine/bin/console doctrine:schema:update -f
-php zz_engine/bin/console doctrine:schema:update -f
-php zz_engine/bin/console doctrine:schema:update -f
-php zz_engine/bin/console make:entity --regenerate "App"
-php zz_engine/bin/console doctrine:schema:update -f
-php zz_engine/bin/console doctrine:schema:update -f
-php zz_engine/bin/console doctrine:schema:update -f
-composer update -d zz_engine --optimize-autoloader
-composer update -d zz_engine --optimize-autoloader
-composer install --optimize-autoloader
-composer install -d zz_engine --optimize-autoloader
-composer update -d zz_engine --optimize-autoloader
 composer update -d zz_engine --lock
-php zz_engine/bin/console doctrine:schema:update -f
-bash zz_engine/dev/bin/DEV_build_installer.sh
 php zz_engine/bin/console app:delete-old-listing-files 10
 php zz_engine/bin/console app:delete-old-listing-files 10 --limit 100 -vvv
 php zz_engine/bin/console app:cron:main --ignore-delay -vvv
-composer install -d zz_engine --optimize-autoloader
-composer install -d zz_engine --optimize-autoloader
-php zz_engine/bin/console doctrine:schema:update -f
 gulp --help
-ls
-npm install
 cd zz_engine/
+cd ~
 npm install
-ls -la /var/www/
-cd zz_engine/
-ls
-npm install
-composer update -d zz_engine --optimize-autoloader
-php zz_engine/bin/console doctrine:schema:update -f
-php zz_engine/bin/console doctrine:schema:update -f
-php zz_engine/bin/console doctrine:schema:update -f
-php zz_engine/bin/console make:entity --regenerate "App"
-php zz_engine/bin/console make:entity --regenerate "App"
-php zz_engine/bin/console doctrine:schema:update -f
-php zz_engine/bin/console doctrine:schema:update -f
-php zz_engine/bin/console doctrine:schema:update -f
-php zz_engine/bin/console doctrine:schema:update -f
-php zz_engine/bin/console doctrine:schema:update -f
-php zz_engine/bin/console doctrine:schema:update -f
-php zz_engine/bin/console doctrine:schema:update -f
 export XDEBUG_CONFIG="mode=debug client_host=192.168.205.1 start_with_request=yes"
 env
-php -r "xdebug_info();"
 export XDEBUG_CONFIG="mode=debug client_host=192.168.205.1 client_port=9003 start_with_request=yes"
 php -r "xdebug_info();"
-php -r "xdebug_info();"
-php -r "xdebug_info();"
 composer require -d zz_engine symfony/messenger
-composer install -d zz_engine --optimize-autoloader
-composer dump-env dev -d zz_engine
-php zz_engine/bin/console messenger:consume async --time-limit=55
 php zz_engine/bin/console messenger:consume one_at_time --time-limit=55 --limit=1
 php zz_engine/bin/console messenger:consume async --time-limit=55
 composer dump-env dev -d zz_engine
-php zz_engine/bin/console messenger:consume async -vvv
-php zz_engine/bin/console doctrine:schema:update --dump-sql 
-php zz_engine/bin/console doctrine:schema:update --dump-sql 
 composer require -d zz_engine symfony/webpack-encore-bundle
 yarn install
-yarn install -- help
+yarn install --help
 (cd /var/www/zz_engine && yarn install)
 (cd /var/www/htmml/zz_engine && yarn install)
-(cd /var/www/html/zz_engine && yarn install)
-(cd /var/www/html/zz_engine && yarn encore dev)
-(cd /var/www/html/zz_engine && pm run dev)
 (cd /var/www/html/zz_engine && npm run dev)
-(cd /var/www/html/zz_engine && yarn encore dev)
 (cd /var/www/html/zz_engine && yarn install)
 (cd /var/www/html/zz_engine && yarn encore production)
 (cd /var/www/html/zz_engine && yarn add @symfony/webpack-encore --dev)
 (cd /var/www/html/zz_engine && yarn add webpack-notifier@^1.6.0 --dev)
 (cd /var/www/html/zz_engine && yarn add @fortawesome/fontawesome-free@^5.2.0 --dev)
-bash zz_engine/dev/bin/build_assets.sh
-(cd /var/www/html/zz_engine && yarn encore dev)
-(cd /var/www/html/zz_engine && yarn encore dev --watch)
-bash zz_engine/dev/bin/build_assets.sh 
-(cd /var/www/html/zz_engine && yarn encore dev --watch)
-bash zz_engine/dev/bin/build_assets.sh
-bash zz_engine/dev/bin/build_assets.sh 
-bash zz_engine/dev/bin/build_assets.sh 
-bash zz_engine/dev/bin/build_assets.sh 
-bash zz_engine/dev/bin/build_assets.sh 
-bash zz_engine/dev/bin/build_assets.sh 
-bash zz_engine/dev/bin/build_assets.sh 
-bash zz_engine/dev/bin/build_assets.sh 
-bash zz_engine/dev/bin/build_assets.sh 
-bash zz_engine/dev/bin/build_assets.sh 
-(cd /var/www/html/zz_engine && yarn encore dev)
-bash zz_engine/dev/bin/build_assets.sh
-bash zz_engine/dev/bin/build_assets.sh 
-php zz_engine/bin/console doctrine:schema:update -f
 php zz_engine/bin/console doctrine:schema:update -f
 php zz_engine/bin/console doctrine:schema:update --dump-sql 
-php zz_engine/bin/console doctrine:schema:update -f
-php zz_engine/bin/console doctrine:schema:update -f
-php zz_engine/bin/console doctrine:schema:update --dump-sql 
-php zz_engine/bin/console doctrine:schema:update --dump-sql 
-php zz_engine/bin/console app:cron:main 
-php zz_engine/bin/console app:cron:main 
-php zz_engine/bin/console app:cron:main 
-php zz_engine/bin/console app:cron:main 
-php zz_engine/bin/console app:cron:main 
-php zz_engine/bin/console app:cron:main --night --ignore-delay
 php zz_engine/bin/console messenger:consume one_at_time --limit=1 -vvv
 php zz_engine/bin/console app:cron:main --night --ignore-delay
-php zz_engine/bin/console app:cron:main --night --ignore-delay
-php zz_engine/bin/console app:cron:main --night --ignore-delay
-php zz_engine/bin/console messenger:consume one_at_time --limit=1 -vvv
-php zz_engine/bin/console messenger:consume one_at_time --limit=1 -vvv
-php zz_engine/bin/console messenger:consume one_at_time --limit=1 -vvv
-php zz_engine/bin/console messenger:consume one_at_time --limit=1 -vvv
-php zz_engine/bin/console messenger:consume one_at_time --limit=1 -vvv
-php zz_engine/bin/console app:cron:main --night --ignore-delay
-php zz_engine/bin/console messenger:consume one_at_time --limit=1 -vvv
-php zz_engine/bin/console messenger:consume one_at_time --limit=1 -vvv
-php zz_engine/bin/console messenger:consume one_at_time --limit=1 -vvv
-php zz_engine/bin/console messenger:consume one_at_time --limit=1 -vvv
-php zz_engine/bin/console app:cron:main --night --ignore-delay
-php zz_engine/bin/console messenger:consume one_at_time  -vvv
-php zz_engine/bin/console app:cron:main --night --ignore-delay
-php zz_engine/bin/console messenger:consume one_at_time  -vvv
-php zz_engine/bin/console app:cron:main --night --ignore-delay
-php zz_engine/bin/console messenger:consume one_at_time  -vvv
-php zz_engine/bin/console app:cron:main --night --ignore-delay
-php zz_engine/bin/console messenger:consume one_at_time  -vvv
-php zz_engine/bin/console messenger:consume one_at_time  -vvv
-php zz_engine/bin/console app:cron:main --night --ignore-delay
-php zz_engine/bin/console messenger:consume one_at_time  -vvv
-php zz_engine/bin/console messenger:consume one_at_time  -vvv
-php zz_engine/bin/console app:cron:main --night --ignore-delay
-php zz_engine/bin/console messenger:consume one_at_time  -vvv
-php zz_engine/bin/console app:cron:main --night --ignore-delay
-php zz_engine/bin/console messenger:consume one_at_time  -vvv
-php zz_engine/bin/console app:cron:main 
 php zz_engine/bin/console messenger:consume one_at_time  -vvv
 php zz_engine/bin/console app:cron:main 
 php zz_engine/bin/console app:cron:main  --ignore-delay
-php zz_engine/bin/console app:cron:main  --ignore-delay
 (cd /var/www/html/zz_engine && yarn encore dev)
 bash zz_engine/dev/bin/build_assets.sh 
-bash zz_engine/dev/bin/build_assets.sh 
-bash zz_engine/dev/bin/build_assets.sh
-php zz_engine/bin/console make:entity --regenerate "App"
 php zz_engine/bin/console app:regenerate-listings
-php zz_engine/bin/console app:regenerate-listings --limit-time-seconds=10
-bash zz_engine/dev/bin/build_assets.sh
-php zz_engine/bin/console debug:router --raw > /var/www/html/out.txt
 php zz_engine/bin/console debug:router --help
-bash zz_engine/dev/bin/build_assets.sh
 (cd /var/www/html/zz_engine && yarn encore dev-server --port 8080)
 php zz_engine/bin/console app:dev:translation:yaml-to-xliff zz_engine/translations/messages.en.yaml zz_engine/translations/messages.en.xliff
 php zz_engine/bin/console app:dev:translation:generate-en-from-other zz_engine/translations/messages.pl.yaml zz_engine/translations/messages.en.generated.yaml
 php zz_engine/bin/console app:dev:generate-test-listings 100
 (cd /var/www/html/zz_engine && php vendor/bin/php-cs-fixer)
-(cd /var/www/html/zz_engine && php vendor/bin/php-cs-fixer fix)
-(cd /var/www/html/zz_engine && php vendor/bin/phpcs)
 (cd /var/www/html/zz_engine && php vendor/phpstan/phpstan/phpstan analyse --level=2 src --memory-limit=2G)
 (cd /var/www/html/zz_engine && php vendor/bin/psalm)
-composer update -d zz_engine --optimize-autoloader
 (cd /var/www/html/zz_engine && php vendor/phpstan/phpstan/phpstan analyse  src --memory-limit=2G)
-(cd /var/www/html/zz_engine && php vendor/phpstan/phpstan/phpstan analyse  src --memory-limit=2G)
-(cd /var/www/html/zz_engine && php vendor/bin/php-cs-fixer fix)
 (cd /var/www/html/zz_engine && php vendor/phpstan/phpstan/phpstan analyse  src --memory-limit=2G) > out.txt
-(cd /var/www/html/zz_engine && php vendor/bin/php-cs-fixer fix)
 composer install -d zz_engine --optimize-autoloader
 php zz_engine/bin/console make:entity --regenerate "App"
-(cd /var/www/html/zz_engine && php vendor/bin/psalm -m) > out.txt
 (cd /var/www/html/zz_engine && php vendor/bin/phpcs)
 (cd /var/www/html/zz_engine && php vendor/bin/psalm -m) > out.txt
 (cd /var/www/html/zz_engine && yarn encore dev --watch)
-bash zz_engine/dev/bin/build_assets.sh
-(cd /var/www/html/zz_engine && php vendor/bin/grumphp run)
-(cd /var/www/html/zz_engine && npx prettier --write 'assets/**/*.js')
 (cd /var/www/html/zz_engine && npx prettier --check 'assets/**/*.js')
 php zz_engine/bin/console app:dev:generate-paramEnum-for-js
-php zz_engine/bin/console debug:router --raw > /var/www/html/out.txt
-sort -o out.txt out.txt
-bash zz_engine/dev/bin/build_assets.sh
 (cd /var/www/html/zz_engine && php vendor/bin/php-cs-fixer fix --dry-run)
 composer update -d zz_engine --optimize-autoloader
 php zz_engine/bin/console make:migration
-php zz_engine/bin/console doctrine:migrations:migrate --no-interaction
-php zz_engine/bin/console make:migration
-(cd /var/www/html/zz_engine && npx prettier --write 'assets/**/*.js')
-bash zz_engine/dev/bin/build_assets.sh
 (cd /var/www/html/zz_engine && php vendor/bin/grumphp run)
 php zz_engine/bin/console app:delete-expired-listing-files 700 --limit 100 -vvv --dry-run
 php zz_engine/bin/console app:regenerate-listings --limit-time-seconds=10
 php zz_engine/bin/console app:move-files-new-location -vvv --dry-run
 (cd /var/www/html/zz_engine && yarn upgrade)
-bash zz_engine/dev/bin/build_assets.sh
 mysql classifieds < install/data/example/listing_demo_user.sql
-php zz_engine/bin/console app:dev:generate-test-listings 3000
+php zz_engine/bin/console app:dev:generate-test-listings 1
 mysqldump classifieds listing --no-create-info --skip-add-drop-table --skip-add-locks --skip-disable-keys --skip-set-charset --compact --skip-extended-insert --skip-opt --complete-insert --result-file="/var/www/html/install/data/example/large_git_ignored/listing.sql"
 mysqldump classifieds listing_custom_field_value --no-create-info --skip-add-drop-table --skip-add-locks --skip-disable-keys --skip-set-charset --compact --skip-extended-insert --skip-opt --complete-insert --result-file="/var/www/html/install/data/example/large_git_ignored/listing_custom_field_value.sql"
 mysqldump classifieds listing_file --no-create-info --skip-add-drop-table --skip-add-locks --skip-disable-keys --skip-set-charset --compact --skip-extended-insert --skip-opt --complete-insert --result-file="/var/www/html/install/data/example/large_git_ignored/listing_file.sql"
@@ -517,3 +221,4 @@ php -dxdebug.start_with_request=yes zz_engine/bin/console app:dev:translation:fi
 (cd /var/www/html/zz_engine && php vendor/bin/php-cs-fixer fix)
 php -dxdebug.mode=coverage /var/www/html/zz_engine/bin/phpunit --coverage-text=out.txt --bootstrap /var/www/html/zz_engine/tests/bootstrap.php --configuration /var/www/html/zz_engine/phpunit.xml.dist
 sudo chown -R 1000:33 /var/www/html
+tac zz_engine/docker/php/bash_history | awk '!($0 in S) {print; S[$0]}' | tac > zz_engine/docker/php/bash_history_temp && mv zz_engine/docker/php/bash_history_temp zz_engine/docker/php/bash_history

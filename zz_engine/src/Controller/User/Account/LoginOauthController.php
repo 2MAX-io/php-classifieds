@@ -7,7 +7,6 @@ namespace App\Controller\User\Account;
 use App\Controller\User\Base\AbstractUserController;
 use App\Form\User\Account\Register\RegisterUserDto;
 use App\Helper\ExceptionHelper;
-use App\Helper\StringHelper;
 use App\Repository\UserRepository;
 use App\Security\LoginUserProgrammaticallyService;
 use App\Security\UserCheckerService;
@@ -97,7 +96,7 @@ class LoginOauthController extends AbstractUserController
             $authentication = $hybridAuth->authenticate($oauthProviderName);
             if ($authentication->isConnected()) {
                 $userProfile = $authentication->getUserProfile();
-                $email = StringHelper::emptyTrim($userProfile->emailVerified) ? $userProfile->email : $userProfile->emailVerified;
+                $email = $userProfile->emailVerified;
                 if (null === $email) {
                     $logger->debug('could not find email address in oauth response');
 

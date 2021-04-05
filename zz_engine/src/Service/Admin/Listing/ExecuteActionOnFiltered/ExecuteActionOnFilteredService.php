@@ -135,6 +135,22 @@ class ExecuteActionOnFilteredService
         $stmt->execute();
     }
 
+    public function rejectListing(ExecuteActionDto $executeActionDto): void
+    {
+        $this->createTempTableWithFiltered($executeActionDto);
+
+        $pdo = $this->em->getConnection();
+        $stmt = $pdo->prepare('
+            # noinspection SqlResolveForFile
+            
+            UPDATE listing 
+            JOIN zzzz_filtered_id_list ON listing.id = zzzz_filtered_id_list.id
+            SET admin_rejected = 1
+            WHERE 1
+        ');
+        $stmt->execute();
+    }
+
     public function createTempTableWithFiltered(ExecuteActionDto $executeActionDto): void
     {
         $pdo = $this->em->getConnection();

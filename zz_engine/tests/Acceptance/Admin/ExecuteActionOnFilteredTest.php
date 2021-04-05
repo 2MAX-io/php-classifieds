@@ -66,4 +66,23 @@ class ExecuteActionOnFilteredTest extends AppIntegrationTestCase implements Smok
         $client->followRedirect();
         self::assertSame('app_admin_listing_execute_on_filtered', $client->getRequest()->attributes->get('_route'));
     }
+
+    public function testReject(): void
+    {
+        $client = static::createClient();
+        $this->clearDatabase();
+        $this->loginAdmin($client);
+
+        // submit form
+        $client->request('GET', $this->getRouter()->generate('app_admin_listing_execute_on_filtered'));
+        $client->submitForm('Execute action on filtered listings', [
+            'execute_action[action]' => ExecuteActionType::ACTION_REJECT,
+        ]);
+        $response = $client->getResponse();
+        self::assertSame(302, $response->getStatusCode());
+
+        // follow redirect after submit
+        $client->followRedirect();
+        self::assertSame('app_admin_listing_execute_on_filtered', $client->getRequest()->attributes->get('_route'));
+    }
 }

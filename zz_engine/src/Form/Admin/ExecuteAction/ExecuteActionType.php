@@ -25,6 +25,7 @@ class ExecuteActionType extends AbstractType
 
     public const ACTION_SET_CUSTOM_FIELD_OPTION_WHEN_NOT_SET = 'ACTION_SET_CUSTOM_FIELD_OPTION_WHEN_NOT_SET';
     public const ACTION_SET_CATEGORY = 'ACTION_SET_CATEGORY';
+    public const ACTION_REJECT = 'ACTION_REJECT';
 
     /**
      * @var EntityManagerInterface
@@ -44,6 +45,7 @@ class ExecuteActionType extends AbstractType
             'choices' => [
                 'trans.Set custom field option, if custom field not set' => static::ACTION_SET_CUSTOM_FIELD_OPTION_WHEN_NOT_SET,
                 'trans.Set category' => static::ACTION_SET_CATEGORY,
+                'trans.Reject listing' => static::ACTION_REJECT,
             ],
             'constraints' => [
                 new NotBlank(),

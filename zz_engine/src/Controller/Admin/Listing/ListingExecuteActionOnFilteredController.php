@@ -43,6 +43,10 @@ class ListingExecuteActionOnFilteredController extends AbstractAdminController
                 $executeActionOnFilteredService->setCategory($executeActionDto);
             }
 
+            if (ExecuteActionType::ACTION_REJECT === $action) {
+                $executeActionOnFilteredService->rejectListing($executeActionDto);
+            }
+
             return $refererService->redirectToRefererResponse();
         }
 

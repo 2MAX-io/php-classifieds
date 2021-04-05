@@ -51,7 +51,7 @@ class UserSettingsType extends AbstractType
                 'autocomplete' => 'name',
             ],
             'constraints' => [
-                new Length(['max' => 36]),
+                new Length(['max' => 36, 'allowEmptyString' => false]),
             ],
         ]);
 

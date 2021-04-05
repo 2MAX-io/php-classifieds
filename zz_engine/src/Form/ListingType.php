@@ -72,7 +72,7 @@ class ListingType extends AbstractType
             'empty_data' => '',
             'constraints' => [
                 new NotBlank(),
-                new Length(['min' => 5]),
+                new Length(['min' => 5, 'allowEmptyString' => false]),
                 new HasLetterNumber(),
             ],
             'attr' => [
@@ -92,6 +92,7 @@ class ListingType extends AbstractType
                     'min' => 10,
                     'max' => static::DESCRIPTION_MAX_LENGTH + 1000,
                     'maxMessage' => 'This value is too long. It should have 10 000 character or less.|This value is too long. It should have 10 000 characters or less.',
+                    'allowEmptyString' => false,
                 ]),
                 new HasLetterNumber(),
             ],

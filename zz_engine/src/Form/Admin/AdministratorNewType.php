@@ -54,7 +54,7 @@ class AdministratorNewType extends AbstractType
                 'invalid_message' => 'Repeated value does note match',
                 'constraints' => [
                     new NotBlank(),
-                    new Length(['min' => 8, 'max' => 100]),
+                    new Length(['min' => 8, 'max' => 100, 'allowEmptyString' => false]),
                 ],
             ]
         );

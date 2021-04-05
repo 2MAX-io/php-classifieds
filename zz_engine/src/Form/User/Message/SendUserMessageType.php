@@ -21,7 +21,7 @@ class SendUserMessageType extends AbstractType
             'required' => true,
             'constraints' => [
                 new NotBlank(),
-                new Length(['min' => 1, 'max' => 3600]),
+                new Length(['min' => 1, 'max' => 3600, 'allowEmptyString' => false]),
             ],
             'attr' => [
                 'class' => 'form-control border-0 py-2 bg-primary rounded text-white user-message-textarea js__messageTextarea',

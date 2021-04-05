@@ -44,7 +44,7 @@ class AdminUserEditType extends AbstractType
             'invalid_message' => 'Repeated value does note match',
             'constraints' => [
                 new NotBlank(),
-                new Length(['min' => 2]),
+                new Length(['min' => 2, 'allowEmptyString' => false]),
             ],
         ]);
         $builder->add('plainPassword', RepeatedType::class, [
@@ -63,7 +63,7 @@ class AdminUserEditType extends AbstractType
             'type' => PasswordType::class,
             'invalid_message' => 'Repeated value does note match',
             'constraints' => [
-                new Length(['min' => 8, 'allowEmptyString' => true]),
+                new Length(['min' => 8, 'allowEmptyString' => false]),
             ],
         ]);
         $builder->add('enabled', null, [

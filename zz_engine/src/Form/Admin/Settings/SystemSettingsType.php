@@ -123,7 +123,7 @@ class SystemSettingsType extends AbstractType implements SettingTypeInterface
             'empty_data' => '',
             'constraints' => [
                 new NotBlank(),
-                new Length(['min' => 4]),
+                new Length(['min' => 4, 'allowEmptyString' => false]),
                 new Email([
                     'mode' => Email::VALIDATION_MODE_STRICT,
                 ]),
@@ -135,7 +135,7 @@ class SystemSettingsType extends AbstractType implements SettingTypeInterface
             'empty_data' => '',
             'constraints' => [
                 new NotBlank(),
-                new Length(['min' => 4, 'max' => 40]),
+                new Length(['min' => 4, 'max' => 40, 'allowEmptyString' => false]),
             ],
         ]);
         $builder->add('emailReplyTo', EmailType::class, [
@@ -144,7 +144,7 @@ class SystemSettingsType extends AbstractType implements SettingTypeInterface
             'empty_data' => '',
             'constraints' => [
                 new NotBlank(),
-                new Length(['min' => 4]),
+                new Length(['min' => 4, 'allowEmptyString' => false]),
                 new Email([
                     'mode' => Email::VALIDATION_MODE_STRICT,
                 ]),

@@ -53,4 +53,17 @@ class AdminListingSearchControllerTest extends AppIntegrationTestCase implements
 
         self::assertEquals(200, $response->getStatusCode());
     }
+
+    public function testMultipleConditions(): void
+    {
+        $client = static::createClient();
+        $this->clearDatabase();
+        $this->loginAdmin($client);
+
+        $url = '/admin/red5/listing/search?query=query&user=%40&category=1&publicDisplay=1&featured=1&adminActivated=1&adminRejected=1&adminRemoved=0&userDeactivated=1&userRemoved=0';
+        $client->request('GET', $url);
+        $response = $client->getResponse();
+
+        self::assertEquals(200, $response->getStatusCode());
+    }
 }

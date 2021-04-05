@@ -10,6 +10,7 @@ use App\Tests\Smoke\Base\SmokeTestForRouteInterface;
 use App\Tests\Traits\DatabaseTestTrait;
 use App\Tests\Traits\LoginTestTrait;
 use App\Tests\Traits\RouterTestTrait;
+use Symfony\Component\DomCrawler\Field\ChoiceFormField;
 
 /**
  * @internal
@@ -78,9 +79,8 @@ class AdministratorEditCreateTest extends AppIntegrationTestCase implements Smok
         ]);
         $response = $client->getResponse();
         self::assertEquals(302, $response->getStatusCode());
-
-        // follow redirect after submit
         $client->followRedirect();
+        self::assertSame('app_admin_administrator_edit', $client->getRequest()->attributes->get('_route'));
 
         // login
         $client->request('GET', $this->getRouter()->generate('app_admin_login'));
@@ -91,5 +91,49 @@ class AdministratorEditCreateTest extends AppIntegrationTestCase implements Smok
         self::assertEquals(302, $response->getStatusCode());
         $client->followRedirect();
         self::assertSame('app_admin_index', $client->getRequest()->attributes->get('_route'));
+    }
+
+    public function testDisabledAdminCannotLogin(): void
+    {
+        $client = static::createClient();
+        $this->clearDatabase();
+
+        // login
+        $client->request('GET', $this->getRouter()->generate('app_admin_login'));
+        $client->submitForm('Sign in', [
+            'email' => TestUserLoginEnum::LOGIN_ADMIN,
+            'password' => TestUserLoginEnum::PASSWORD,
+        ]);
+        self::assertEquals(302, $client->getResponse()->getStatusCode());
+        $client->followRedirect();
+        self::assertSame('app_admin_index', $client->getRequest()->attributes->get('_route'));
+
+        // disable
+        $crawler = $client->request('GET', $this->getRouter()->generate('app_admin_administrator_edit', [
+            'id' => 1,
+        ]));
+        $submitButton = $crawler->selectButton('Update');
+        $form = $submitButton->form();
+        /** @var ChoiceFormField $enabled */
+        $enabled = $form['administrator_edit[enabled]'];
+        $enabled->untick();
+        $client->submit($form);
+        $response = $client->getResponse();
+        self::assertEquals(302, $response->getStatusCode());
+        $client->followRedirect();
+        self::assertSame('app_admin_administrator_edit', $client->getRequest()->attributes->get('_route'));
+
+        // login after account disabled
+        static::ensureKernelShutdown();
+        $client = static::createClient();
+        $client->request('GET', $this->getRouter()->generate('app_admin_login'));
+        $client->submitForm('Sign in', [
+            'email' => TestUserLoginEnum::LOGIN_ADMIN,
+            'password' => TestUserLoginEnum::PASSWORD,
+        ]);
+        self::assertEquals(302, $client->getResponse()->getStatusCode());
+        $client->followRedirect();
+        self::assertSame('app_admin_login', $client->getRequest()->attributes->get('_route'));
+        self::assertStringContainsString('Account is disabled', (string) $client->getResponse()->getContent());
     }
 }

@@ -27,7 +27,7 @@ class CustomizationSettingsType extends AbstractType implements SettingTypeInter
             'empty_data' => '',
             'constraints' => [
                 new NotBlank(),
-                new Length(['min' => 1]),
+                new Length(['min' => 1, 'allowEmptyString' => false]),
             ],
         ]);
         $builder->add('pageTitleSuffix', TextType::class, [
@@ -36,7 +36,7 @@ class CustomizationSettingsType extends AbstractType implements SettingTypeInter
             'empty_data' => '',
             'constraints' => [
                 new NotBlank(),
-                new Length(['min' => 1]),
+                new Length(['min' => 1, 'allowEmptyString' => false]),
             ],
         ]);
         $builder->add('metaDescription', TextareaType::class, [
@@ -52,7 +52,7 @@ class CustomizationSettingsType extends AbstractType implements SettingTypeInter
             'empty_data' => '',
             'constraints' => [
                 new NotBlank(),
-                new Length(['min' => 5]),
+                new Length(['min' => 5, 'allowEmptyString' => false]),
             ],
         ]);
         $builder->add('rssTitle', TextType::class, [
@@ -61,7 +61,7 @@ class CustomizationSettingsType extends AbstractType implements SettingTypeInter
             'empty_data' => '',
             'constraints' => [
                 new NotBlank(),
-                new Length(['min' => 2]),
+                new Length(['min' => 2, 'allowEmptyString' => false]),
             ],
         ]);
         $builder->add('rssDescription', TextareaType::class, [
@@ -70,7 +70,7 @@ class CustomizationSettingsType extends AbstractType implements SettingTypeInter
             'empty_data' => '',
             'constraints' => [
                 new NotBlank(),
-                new Length(['min' => 2]),
+                new Length(['min' => 2, 'allowEmptyString' => false]),
             ],
         ]);
         $builder->add('footerSiteCopyright', TextType::class, [
@@ -80,7 +80,7 @@ class CustomizationSettingsType extends AbstractType implements SettingTypeInter
             'empty_data' => '',
             'constraints' => [
                 new NotBlank(),
-                new Length(['min' => 2]),
+                new Length(['min' => 2, 'allowEmptyString' => false]),
             ],
         ]);
         $builder->add('linkContact', PageSelectType::class, [
@@ -116,7 +116,7 @@ class CustomizationSettingsType extends AbstractType implements SettingTypeInter
             'label' => 'trans.Search examples',
             'required' => true,
             'constraints' => [
-                new Length(['max' => 45]),
+                new Length(['max' => 45, 'allowEmptyString' => false]),
             ],
         ]);
         $builder->add('masterSiteLinkShow', BoolRequiredType::class, [
@@ -138,7 +138,7 @@ class CustomizationSettingsType extends AbstractType implements SettingTypeInter
             'label' => 'trans.Text of link to master site',
             'required' => true,
             'constraints' => [
-                new Length(['min' => 2]),
+                new Length(['min' => 2, 'allowEmptyString' => false]),
             ],
         ]);
         $builder->add('customJavascriptBottom', TextareaType::class, [

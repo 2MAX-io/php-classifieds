@@ -36,7 +36,7 @@ class PaymentInvoiceSettingsType extends AbstractType implements SettingTypeInte
             'required' => true,
             'constraints' => [
                 new NotBlank(),
-                new Length(['max' => 4]),
+                new Length(['max' => 4, 'allowEmptyString' => false]),
             ],
         ]);
         $builder->add('paymentGateway', ChoiceType::class, [
@@ -108,7 +108,7 @@ class PaymentInvoiceSettingsType extends AbstractType implements SettingTypeInte
             'required' => true,
             'constraints' => [
                 new NotBlank(),
-                new Length(['max' => 100]),
+                new Length(['max' => 100, 'allowEmptyString' => false]),
             ],
         ]);
 

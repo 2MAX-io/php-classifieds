@@ -46,7 +46,7 @@ class AdminListingEditType extends AbstractType
             'empty_data' => '',
             'constraints' => [
                 new NotBlank(),
-                new Length(['min' => 1]),
+                new Length(['min' => 1, 'allowEmptyString' => false]),
             ],
         ]);
         $builder->add('category', CategoryType::class, [

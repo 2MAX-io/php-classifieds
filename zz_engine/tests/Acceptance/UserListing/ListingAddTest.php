@@ -63,9 +63,11 @@ class ListingAddTest extends AppIntegrationTestCase implements SmokeTestForRoute
         ]);
         $values = $form->getPhpValues();
         $values['listing']['customFieldList'][1] = '__custom_field_option_id_4'; // brand
+        $values['listing']['customFieldList'][2] = '36000'; // mileage
         $values['listing']['customFieldList'][4] = '__custom_field_option_id_24'; // fuel
         $values['listing']['customFieldList'][5] = '2016'; // year
         $values['listing']['customFieldList'][7] = '__custom_field_option_id_26'; // transmission
+        $values['listing']['customFieldList'][3][] = '__custom_field_option_id_17'; // transmission
         $values['fileuploader-list-files'] = JsonHelper::toString([
             0 => [
                 'file' => \basename($testUploadedFilePath),

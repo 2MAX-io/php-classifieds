@@ -308,11 +308,11 @@ class Listing
     private $rejectionReason;
 
     /**
-     * @var Collection|PaymentForFeaturedPackage[]
+     * @var Collection|PaymentForPackage[]
      *
-     * @ORM\OneToMany(targetEntity="PaymentForFeaturedPackage", mappedBy="listing")
+     * @ORM\OneToMany(targetEntity="App\Entity\PaymentForPackage", mappedBy="listing")
      */
-    private $paymentFeaturedPackage;
+    private $paymentForPackage;
 
     /**
      * @var Collection|ListingCustomFieldValue[]
@@ -346,7 +346,7 @@ class Listing
     {
         $this->listingCustomFieldValues = new ArrayCollection();
         $this->listingFiles = new ArrayCollection();
-        $this->paymentFeaturedPackage = new ArrayCollection();
+        $this->paymentForPackage = new ArrayCollection();
         $this->listingInternalData = new ArrayCollection();
         $this->userObservedListings = new ArrayCollection();
     }
@@ -942,30 +942,30 @@ class Listing
     }
 
     /**
-     * @return Collection|PaymentForFeaturedPackage[]
+     * @return Collection|PaymentForPackage[]
      */
-    public function getPaymentFeaturedPackage(): Collection
+    public function getPaymentForPackage(): Collection
     {
-        return $this->paymentFeaturedPackage;
+        return $this->paymentForPackage;
     }
 
-    public function addPaymentFeaturedPackage(PaymentForFeaturedPackage $paymentFeaturedPackage): self
+    public function addPaymentPackage(PaymentForPackage $paymentForPackage): self
     {
-        if (!$this->paymentFeaturedPackage->contains($paymentFeaturedPackage)) {
-            $this->paymentFeaturedPackage[] = $paymentFeaturedPackage;
-            $paymentFeaturedPackage->setListing($this);
+        if (!$this->paymentForPackage->contains($paymentForPackage)) {
+            $this->paymentForPackage[] = $paymentForPackage;
+            $paymentForPackage->setListing($this);
         }
 
         return $this;
     }
 
-    public function removePaymentFeaturedPackage(PaymentForFeaturedPackage $paymentFeaturedPackage): self
+    public function removePaymentPackage(PaymentForPackage $paymentForPackage): self
     {
         // set the owning side to null (unless already changed)
-        if ($this->paymentFeaturedPackage->removeElement($paymentFeaturedPackage)
-            && $paymentFeaturedPackage->getListing() === $this
+        if ($this->paymentForPackage->removeElement($paymentForPackage)
+            && $paymentForPackage->getListing() === $this
         ) {
-            $paymentFeaturedPackage->setListing(null);
+            $paymentForPackage->setListing(null);
         }
 
         return $this;

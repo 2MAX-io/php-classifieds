@@ -118,18 +118,18 @@ class Category
     private $customFieldForCategoryList;
 
     /**
-     * @var Collection|FeaturedPackageForCategory[]
+     * @var Collection|PackageForCategory[]
      *
-     * @ORM\OneToMany(targetEntity="App\Entity\FeaturedPackageForCategory", mappedBy="category")
+     * @ORM\OneToMany(targetEntity="App\Entity\PackageForCategory", mappedBy="category")
      */
-    private $featuredPackages;
+    private $packages;
 
     public function __construct()
     {
         $this->listings = new ArrayCollection();
         $this->customFieldForCategoryList = new ArrayCollection();
         $this->children = new ArrayCollection();
-        $this->featuredPackages = new ArrayCollection();
+        $this->packages = new ArrayCollection();
     }
 
     /**
@@ -356,30 +356,30 @@ class Category
     }
 
     /**
-     * @return Collection|FeaturedPackageForCategory[]
+     * @return Collection|PackageForCategory[]
      */
-    public function getFeaturedPackages(): Collection
+    public function getPackages(): Collection
     {
-        return $this->featuredPackages;
+        return $this->packages;
     }
 
-    public function addFeaturedPackage(FeaturedPackageForCategory $featuredPackage): self
+    public function addPackage(PackageForCategory $packageForCategory): self
     {
-        if (!$this->featuredPackages->contains($featuredPackage)) {
-            $this->featuredPackages[] = $featuredPackage;
-            $featuredPackage->setCategory($this);
+        if (!$this->packages->contains($packageForCategory)) {
+            $this->packages[] = $packageForCategory;
+            $packageForCategory->setCategory($this);
         }
 
         return $this;
     }
 
-    public function removeFeaturedPackage(FeaturedPackageForCategory $featuredPackage): self
+    public function removePackage(PackageForCategory $packageForCategory): self
     {
-        if ($this->featuredPackages->contains($featuredPackage)) {
-            $this->featuredPackages->removeElement($featuredPackage);
+        if ($this->packages->contains($packageForCategory)) {
+            $this->packages->removeElement($packageForCategory);
             // set the owning side to null (unless already changed)
-            if ($featuredPackage->getCategory() === $this) {
-                $featuredPackage->setCategory(null);
+            if ($packageForCategory->getCategory() === $this) {
+                $packageForCategory->setCategory(null);
             }
         }
 

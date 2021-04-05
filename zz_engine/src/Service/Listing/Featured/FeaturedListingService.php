@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace App\Service\Listing\Featured;
 
 use App\Entity\Category;
-use App\Entity\FeaturedPackage;
-use App\Entity\FeaturedPackageForCategory;
 use App\Entity\Listing;
+use App\Entity\Package;
+use App\Entity\PackageForCategory;
 use App\Entity\Payment;
 use App\Entity\UserBalanceChange;
 use App\Exception\UserVisibleException;
@@ -80,7 +80,7 @@ class FeaturedListingService
 
     public function makeFeaturedByBalance(
         Listing $listing,
-        FeaturedPackage $featuredPackage,
+        Package $package,
         Payment $payment = null
     ): UserBalanceChange {
         $paymentAndListingHaveSameUser = null === $payment || $listing->getUser() === $payment->getUser();
@@ -90,12 +90,12 @@ class FeaturedListingService
 
         try {
             $this->em->beginTransaction();
-            $cost = $featuredPackage->getPrice();
+            $cost = $package->getPrice();
             if (!$this->userBalanceService->hasAmount($cost, $listing->getUser())) {
                 throw new UserVisibleException('trans.error, not enough funds to pay');
             }
 
-            $this->makeFeatured($listing, $featuredPackage->getDaysFeaturedExpire() * 3600 * 24);
+            $this->makeFeatured($listing, $package->getDaysFeaturedExpire() * 3600 * 24);
             $userBalanceChange = $this->userBalanceService->removeBalance(
                 $cost,
                 $listing->getUser(),
@@ -103,7 +103,7 @@ class FeaturedListingService
             );
             $this->validUntilSetService->addValidityDaysWithoutRestrictions(
                 $listing,
-                $featuredPackage->getDaysListingExpire(),
+                $package->getDaysListingExpire(),
             );
             $this->preventListingValidDateLessThanFeatured($listing);
 
@@ -124,29 +124,29 @@ class FeaturedListingService
         }
     }
 
-    public function hasAmount(Listing $listing, FeaturedPackage $featuredPackage): bool
+    public function hasAmount(Listing $listing, Package $package): bool
     {
-        $cost = $featuredPackage->getPrice();
+        $cost = $package->getPrice();
 
         return $this->userBalanceService->hasAmount($cost, $listing->getUser());
     }
 
-    public function isPackageForListingCategory(Listing $listing, FeaturedPackage $featuredPackage): bool
+    public function isPackageForListingCategory(Listing $listing, Package $package): bool
     {
-        if ($featuredPackage->getDefaultPackage() && !$this->haveCategorySpecificPackage($listing->getCategory())) {
-            return true; // we use default featured package
+        if ($package->getDefaultPackage() && !$this->haveCategorySpecificPackage($listing->getCategory())) {
+            return true; // we use default package
         }
 
         $qb = $this->em->createQueryBuilder();
-        $qb->select('featuredPackageForCategory');
-        $qb->from(FeaturedPackageForCategory::class, 'featuredPackageForCategory');
-        $qb->select($qb->expr()->count('featuredPackageForCategory.id'));
-        $qb->join('featuredPackageForCategory.featuredPackage', 'featuredPackage');
-        $qb->andWhere($qb->expr()->eq('featuredPackageForCategory.featuredPackage', ':featuredPackage'));
-        $qb->andWhere($qb->expr()->eq('featuredPackageForCategory.category', ':category'));
-        $qb->andWhere($qb->expr()->eq('featuredPackage.defaultPackage', 0));
-        $qb->andWhere($qb->expr()->eq('featuredPackage.removed', 0));
-        $qb->setParameter(':featuredPackage', $featuredPackage->getId(), Types::INTEGER);
+        $qb->select('packageForCategory');
+        $qb->from(PackageForCategory::class, 'packageForCategory');
+        $qb->select($qb->expr()->count('packageForCategory.id'));
+        $qb->join('packageForCategory.package', 'package');
+        $qb->andWhere($qb->expr()->eq('packageForCategory.package', ':package'));
+        $qb->andWhere($qb->expr()->eq('packageForCategory.category', ':category'));
+        $qb->andWhere($qb->expr()->eq('package.defaultPackage', 0));
+        $qb->andWhere($qb->expr()->eq('package.removed', 0));
+        $qb->setParameter(':package', $package->getId(), Types::INTEGER);
         $qb->setParameter(':category', $listing->getCategory());
 
         return $qb->getQuery()->getSingleScalarResult() > 0;
@@ -155,13 +155,13 @@ class FeaturedListingService
     private function haveCategorySpecificPackage(Category $category): bool
     {
         $qb = $this->em->createQueryBuilder();
-        $qb->select('featuredPackageForCategory');
-        $qb->from(FeaturedPackageForCategory::class, 'featuredPackageForCategory');
-        $qb->select($qb->expr()->count('featuredPackageForCategory.id'));
-        $qb->join('featuredPackageForCategory.featuredPackage', 'featuredPackage');
-        $qb->andWhere($qb->expr()->eq('featuredPackageForCategory.category', ':category'));
-        $qb->andWhere($qb->expr()->eq('featuredPackage.defaultPackage', 0));
-        $qb->andWhere($qb->expr()->eq('featuredPackage.removed', 0));
+        $qb->select('packageForCategory');
+        $qb->from(PackageForCategory::class, 'packageForCategory');
+        $qb->select($qb->expr()->count('packageForCategory.id'));
+        $qb->join('packageForCategory.package', 'package');
+        $qb->andWhere($qb->expr()->eq('packageForCategory.category', ':category'));
+        $qb->andWhere($qb->expr()->eq('package.defaultPackage', 0));
+        $qb->andWhere($qb->expr()->eq('package.removed', 0));
         $qb->setParameter(':category', $category->getId(), Types::INTEGER);
 
         return $qb->getQuery()->getSingleScalarResult() > 0;

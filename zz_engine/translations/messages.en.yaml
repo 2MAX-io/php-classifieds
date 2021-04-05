@@ -28,7 +28,7 @@ trans.listing.status.STATUS_USER_REMOVED: 'Removed by user'
 trans.payment.przelewy24.live: 'live '
 trans.payment.przelewy24.sandbox: sandbox
 trans.paymentType.BALANCE_TOP_UP_TYPE: 'Balance top up'
-trans.paymentType.FOR_FEATURED_PACKAGE_TYPE: 'For featured package'
+trans.paymentType.FOR_PACKAGE_TYPE: 'For package'
 trans.payment_gateway.paypal: PayPal
 trans.payment_gateway.przelewy24: Przelewy24
 trans.paypal.live: 'live - real payments'
@@ -173,7 +173,7 @@ trans.Country: Country
 'trans.CRC key from account details': 'CRC key from account details'
 'trans.Create Listing': 'Create Listing'
 'trans.Create new': 'Create new'
-'trans.Create new featured package': 'Create new featured package'
+'trans.Create new package': 'Create new package'
 'trans.Create new page': 'Create new page'
 'trans.Creation date': 'Creation date'
 trans.Credits: Credits
@@ -216,7 +216,7 @@ trans.Delete: Delete
 'trans.Delete custom field option': 'Delete custom field option'
 'trans.Delete expired listings files': 'Delete expired listings files'
 'trans.Delete expired listings files older than days': 'Delete expired listings files older than days'
-'trans.Delete featured package': 'Delete featured package'
+'trans.Delete package': 'Delete package'
 'trans.Delivered?': 'Delivered?'
 trans.Description: Description
 'trans.Destination page not found, if you have been charged and did not receive service, please contact us': 'Destination page not found, if you have been charged and did not receive service, please contact us'
@@ -238,7 +238,7 @@ trans.edit: edit
 'trans.Edit Administrator': 'Edit Administrator'
 'trans.Edit Category': 'Edit Category'
 'trans.Edit custom field': 'Edit custom field'
-'trans.Edit featured package': 'Edit featured package'
+'trans.Edit package': 'Edit package'
 'trans.Edit listing': 'Edit listing'
 'trans.Edit listing advanced settings': 'Edit listing advanced settings'
 'trans.Edit listing as Admin': 'Edit listing as Admin'
@@ -288,15 +288,15 @@ trans.Feature: Feature
 trans.Featured: Featured
 'trans.Featured listing?': 'Featured listing?'
 'trans.Featured listings': 'Featured listings'
-'trans.Featured package': 'Featured package'
-'trans.Featured packages': 'Featured packages'
+'trans.Package': 'Package'
+'trans.Packages': 'Packages'
 'trans.Featured until': 'Featured until'
 'trans.Featured weight': 'Featured weight'
 'trans.Feature for week': 'Feature for week'
 'trans.Feature listing': 'Feature listing'
 'trans.Feature this listing': 'Feature this listing'
-'trans.Featuring of listing: %listingTitle%, using package: %featuredPackageName%': 'Featuring of listing: %listingTitle%, using package: %featuredPackageName%'
-'trans.Featuring of listing: %listingTitle%, using package: %featuredPackageName%, payment acceptance': 'Featuring of listing: %listingTitle%, using package: %featuredPackageName%, payment acceptance'
+'trans.Featuring of listing: %listingTitle%, using package: %packageName%': 'Featuring of listing: %listingTitle%, using package: %packageName%'
+'trans.Featuring of listing: %listingTitle%, using package: %packageName%, payment acceptance': 'Featuring of listing: %listingTitle%, using package: %packageName%, payment acceptance'
 trans.feet: feet
 trans.file: file
 trans.files: files
@@ -492,7 +492,7 @@ trans.Payment: Payment
 'trans.Payment / Invoice Settings': 'Payment / Invoice Settings'
 'trans.Payment confirmation failed, if you have been charged and did not receive service, please contact us': 'Payment confirmation failed, if you have been charged and did not receive service, please contact us'
 'trans.Payment for balance top up, amount: %amount%': 'Payment for balance top up, amount: %amount%'
-'trans.Payment for featured listing: %listingInfo%, featured package: %featurePackageName%, price: %price%, featured days: %featuredDays%': 'Payment for featured listing: %listingInfo%, featured package: %featurePackageName%, price: %price%, featured days: %featuredDays%'
+'trans.Payment for featured listing: %listingInfo%, package: %featurePackageName%, price: %price%, featured days: %featuredDays%': 'Payment for featured listing: %listingInfo%, package: %featurePackageName%, price: %price%, featured days: %featuredDays%'
 'trans.Payment Gateway': 'Payment Gateway'
 'trans.Payment gateway - mode': 'Payment gateway - mode'
 'trans.Payment gateway - payment description': 'Payment gateway - payment description'
@@ -642,7 +642,7 @@ trans.termsCondtionsLink: 'Terms and Conditions'
 'trans.The update option has been manually disabled in configuration. If you plan to enable it, make sure that you have not made any changes to the application code.': 'The update option has been manually disabled in configuration. If you plan to enable it, make sure that you have not made any changes to the application code.'
 'trans.This action will be executed on %percentage%% of listings (almost every listing), are you REALLY sure you want to execute it?': 'This action will be executed on %percentage%% of listings (almost every listing), are you REALLY sure you want to execute it?'
 'trans.This email is just verification that new email address is correct': 'This email is just verification that new email address is correct'
-'trans.This featured package is not intended for the current category of this listing': 'This featured package is not intended for the current category of this listing'
+'trans.This package is not intended for the current category of this listing': 'This package is not intended for the current category of this listing'
 'trans.Thousand separator in numbers': 'Thousand separator in numbers'
 trans.Thread: Thread
 'trans.Thread messages': 'Thread messages'
@@ -650,7 +650,7 @@ trans.Timezone: Timezone
 trans.Title: Title
 trans.To: To
 'trans.to custom field': 'to custom field'
-'trans.To delete category, you must first delete or move all dependencies like: listings in this category, subcategories, assigned custom fields, featured packages': 'To delete category, you must first delete or move all dependencies like: listings in this category, subcategories, assigned custom fields, featured packages'
+'trans.To delete category, you must first delete or move all dependencies like: listings in this category, subcategories, assigned custom fields, packages': 'To delete category, you must first delete or move all dependencies like: listings in this category, subcategories, assigned custom fields, packages'
 'trans.To delete custom field, you must first delete all dependencies like: custom fields assigned to categories, custom field options': 'To delete custom field, you must first delete all dependencies like: custom fields assigned to categories, custom field options'
 'trans.To disable auto upgrade check documentation:': 'To disable auto upgrade check documentation:'
 'trans.to feature listings by single click': 'to feature listings by single click'

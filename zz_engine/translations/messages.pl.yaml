@@ -28,7 +28,7 @@ trans.listing.status.STATUS_USER_REMOVED: Usunięte
 trans.payment.przelewy24.live: live
 trans.payment.przelewy24.sandbox: 'sandbox - testowy'
 trans.paymentType.BALANCE_TOP_UP_TYPE: 'Doładowanie konta'
-trans.paymentType.FOR_FEATURED_PACKAGE_TYPE: 'Za pakiet wyróżnienia'
+trans.paymentType.FOR_PACKAGE_TYPE: 'Za pakiet'
 trans.payment_gateway.paypal: PayPal
 trans.payment_gateway.przelewy24: Przelewy24
 trans.paypal.live: 'live - prawdziwe płatności'
@@ -173,7 +173,7 @@ trans.Country: 'Kraj '
 'trans.CRC key from account details': 'klucz CRC z szczegółów konta'
 'trans.Create Listing': 'Dodaj ogłoszenie'
 'trans.Create new': 'Dodaj nową'
-'trans.Create new featured package': 'Utwórz nowy pakiet wyróżnień'
+'trans.Create new package': 'Utwórz nowy pakiet wyróżnień'
 'trans.Create new page': 'Utwórz nową stronę'
 'trans.Creation date': 'Data utworzenia'
 trans.Credits: 'Użyte Technologie i Serwisy'
@@ -216,7 +216,7 @@ trans.Delete: Usuń
 'trans.Delete custom field option': 'Usuń z pola niestandardowego opcje'
 'trans.Delete expired listings files': 'Usuwaj pliki wygasłych ogłoszeń'
 'trans.Delete expired listings files older than days': 'Usuwaj pliki wygasłych ogłoszeń starsze niż dni'
-'trans.Delete featured package': 'Usunąć pakiet wyróżnień'
+'trans.Delete package': 'Usunąć pakiet'
 'trans.Delivered?': 'Dostarczone?'
 trans.Description: Opis
 'trans.Destination page not found, if you have been charged and did not receive service, please contact us': 'Strona docelowa nie została znaleziona, jeżeli zapłaciłeś i nie otrzymałeś usługi, prosimy o kontakt z nami'
@@ -238,7 +238,7 @@ trans.edit: edytuj
 'trans.Edit Administrator': 'Edytuj Administratora'
 'trans.Edit Category': 'Edytuj kategorie'
 'trans.Edit custom field': 'Edytuj pole niestandardowe'
-'trans.Edit featured package': 'Edytuj pakiet wyróżnienia'
+'trans.Edit package': 'Edytuj pakiet'
 'trans.Edit listing': 'Edytuj ogłoszenie'
 'trans.Edit listing advanced settings': 'Edytuj zaawansowane opcje ogłoszenia'
 'trans.Edit listing as Admin': 'Edytuj ogłoszenie jako Admin'
@@ -288,15 +288,15 @@ trans.Feature: Wyróżnij
 trans.Featured: Wyróżnione
 'trans.Featured listing?': 'Wyróżnione ogłoszenie?'
 'trans.Featured listings': 'Wyróżnionych ogłoszeń'
-'trans.Featured package': 'Pakiet wyróżnienia'
-'trans.Featured packages': 'Pakiety wyróżnień'
+'trans.Package': 'Pakiet'
+'trans.Packages': 'Pakiety'
 'trans.Featured until': 'Wyróżnione do'
 'trans.Featured weight': 'Waga wyróżnienia'
 'trans.Feature for week': 'Wyróżnij na tydzień'
 'trans.Feature listing': 'Wyróżnij ogłoszenie'
 'trans.Feature this listing': 'Wyróżnij to ogłoszenie'
-'trans.Featuring of listing: %listingTitle%, using package: %featuredPackageName%': 'Wyróżnienie ogłoszenia: %listingTitle%, używając pakietu: %featuredPackageName%'
-'trans.Featuring of listing: %listingTitle%, using package: %featuredPackageName%, payment acceptance': 'Wyróżnienie ogłoszenia: %listingTitle%, używając pakietu: %featuredPackageName%, przyjęcie płatności'
+'trans.Featuring of listing: %listingTitle%, using package: %packageName%': 'Wyróżnienie ogłoszenia: %listingTitle%, używając pakietu: %packageName%'
+'trans.Featuring of listing: %listingTitle%, using package: %packageName%, payment acceptance': 'Wyróżnienie ogłoszenia: %listingTitle%, używając pakietu: %packageName%, przyjęcie płatności'
 trans.feet: stóp
 trans.file: plik
 trans.files: pliki
@@ -492,7 +492,7 @@ trans.Payment: Płatność
 'trans.Payment / Invoice Settings': 'Ustawienia Płatności / Faktur'
 'trans.Payment confirmation failed, if you have been charged and did not receive service, please contact us': 'Niepowodzenie podczas potwierdzenia płatności, jeżeli zapłaciłeś i nie otrzymałeś usługi, prosimy o kontakt z nami'
 'trans.Payment for balance top up, amount: %amount%': 'Płatność za doładowanie konta, kwota: %amount%'
-'trans.Payment for featured listing: %listingInfo%, featured package: %featurePackageName%, price: %price%, featured days: %featuredDays%': 'Płatność za wyróżnienie ogłoszenia: %listingInfo%, pakiet wyróżnienia: %featurePackageName%, cena: %price%, dni wyróżnienia: %featuredDays%'
+'trans.Payment for featured listing: %listingInfo%, package: %featurePackageName%, price: %price%, featured days: %featuredDays%': 'Płatność za wyróżnienie ogłoszenia: %listingInfo%, pakiet: %featurePackageName%, cena: %price%, dni wyróżnienia: %featuredDays%'
 'trans.Payment Gateway': 'Bramka płatności'
 'trans.Payment gateway - mode': 'Bramka płatności - tryb'
 'trans.Payment gateway - payment description': 'Bramka płatności - opis płatności'
@@ -642,7 +642,7 @@ trans.termsCondtionsLink: regulaminu
 'trans.The update option has been manually disabled in configuration. If you plan to enable it, make sure that you have not made any changes to the application code.': 'Opcja aktualizacji została ręcznie wyłączona w konfiguracji. Jeżeli planujesz jej włączenie, upewnij się że nie wprowadzono żadnych własnych zmian w kodzie aplikacji.'
 'trans.This action will be executed on %percentage%% of listings (almost every listing), are you REALLY sure you want to execute it?': 'Akcja zostanie wykonana na %percentage%% ogłoszeń (prawie wszystkie ogłoszenia), jesteś NAPRAWDĘ pewny że chcesz ją wykonać?'
 'trans.This email is just verification that new email address is correct': 'Ten email to tylko potwierdzenie że nowy adres email jest poprawny'
-'trans.This featured package is not intended for the current category of this listing': 'This featured package is not intended for the current category of this listing'
+'trans.This package is not intended for the current category of this listing': 'Ten pakiet nie jest przeznaczony dla ogłoszeń w tej kategorii'
 'trans.Thousand separator in numbers': 'Separator tysięcy w liczbach'
 trans.Thread: Wątek
 'trans.Thread messages': 'Wiadomości w wątku'
@@ -650,7 +650,7 @@ trans.Timezone: 'Strefa czasowa'
 trans.Title: Tytuł
 trans.To: Do
 'trans.to custom field': 'do pola niestandardowego'
-'trans.To delete category, you must first delete or move all dependencies like: listings in this category, subcategories, assigned custom fields, featured packages': 'Aby usunąć kategorie, najpierw musisz usunąć lub przenieść jej wszystkie zależności takie jak: ogłoszenia w tej kategorii, podkategorie, przypisane pola niestandardowe, pakiety wyróżnień'
+'trans.To delete category, you must first delete or move all dependencies like: listings in this category, subcategories, assigned custom fields, packages': 'Aby usunąć kategorie, najpierw musisz usunąć lub przenieść jej wszystkie zależności takie jak: ogłoszenia w tej kategorii, podkategorie, przypisane pola niestandardowe, pakiety'
 'trans.To delete custom field, you must first delete all dependencies like: custom fields assigned to categories, custom field options': 'Aby usunąć pole niestandardowe, najpierw musisz usunąć wszystkie jego powiązania takie jak: pola niestandardowe przypisane do kategorii, opcje pola niestandardowego'
 'trans.To disable auto upgrade check documentation:': 'By wyłączyć automatyczną aktualizację sprawdź dokumentację:'
 'trans.to feature listings by single click': 'by wyróżniać ogłoszenia poprzez jedno kliknięcie'

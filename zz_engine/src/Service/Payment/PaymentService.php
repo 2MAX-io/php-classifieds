@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Service\Payment;
 
-use App\Entity\FeaturedPackage;
 use App\Entity\Listing;
+use App\Entity\Package;
 use App\Entity\Payment;
 use App\Entity\PaymentForBalanceTopUp;
-use App\Entity\PaymentForFeaturedPackage;
+use App\Entity\PaymentForPackage;
 use App\Entity\User;
 use App\Helper\DateHelper;
 use App\Helper\RandomHelper;
@@ -101,23 +101,23 @@ class PaymentService
         $this->createInvoiceService = $createInvoiceService;
     }
 
-    public function createPaymentForFeaturedPackage(Listing $listing, FeaturedPackage $featuredPackage): PaymentDto
+    public function createPaymentForPackage(Listing $listing, Package $package): PaymentDto
     {
         $paymentDto = new PaymentDto();
-        $paymentDto->setPaymentType(Payment::FOR_FEATURED_PACKAGE_TYPE);
+        $paymentDto->setPaymentType(Payment::FOR_PACKAGE_TYPE);
         $paymentDto->setPaymentDescription(
             $this->trans->trans(
-                'trans.Payment for featured listing: %listingInfo%, featured package: %featurePackageName%, price: %price%, featured days: %featuredDays%',
+                'trans.Payment for featured listing: %listingInfo%, package: %featurePackageName%, price: %price%, featured days: %featuredDays%',
                 [
-                    '%featurePackageName%' => "{$featuredPackage->getName()} ({$featuredPackage->getAdminName()}) [id:{$featuredPackage->getId()}]",
-                    '%price%' => $featuredPackage->getPriceFloat(),
+                    '%featurePackageName%' => "{$package->getName()} ({$package->getAdminName()}) [id:{$package->getId()}]",
+                    '%price%' => $package->getPriceFloat(),
                     '%listingInfo%' => "{$listing->getTitle()} [id: {$listing->getId()}]",
-                    '%featuredDays%' => $featuredPackage->getDaysFeaturedExpire(),
+                    '%featuredDays%' => $package->getDaysFeaturedExpire(),
                 ]
             )
         );
         $paymentDto->setCurrency($this->settingsDto->getCurrency());
-        $paymentDto->setAmount($featuredPackage->getPrice());
+        $paymentDto->setAmount($package->getPrice());
         $paymentDto->setUser($this->currentUserService->getUserOrNull());
         if ($this->settingsDto->getPaymentGatewayPaymentDescription()) {
             $paymentDto->setGatewayPaymentDescription($this->settingsDto->getPaymentGatewayPaymentDescription());
@@ -126,11 +126,11 @@ class PaymentService
         }
         $paymentDto = $this->createPayment($paymentDto);
 
-        $paymentForFeaturedPackage = new PaymentForFeaturedPackage();
-        $paymentForFeaturedPackage->setPayment($paymentDto->getPaymentEntity());
-        $paymentForFeaturedPackage->setFeaturedPackage($featuredPackage);
-        $paymentForFeaturedPackage->setListing($listing);
-        $this->em->persist($paymentForFeaturedPackage);
+        $paymentForPackage = new PaymentForPackage();
+        $paymentForPackage->setPayment($paymentDto->getPaymentEntity());
+        $paymentForPackage->setPackage($package);
+        $paymentForPackage->setListing($listing);
+        $this->em->persist($paymentForPackage);
 
         return $paymentDto;
     }
@@ -270,19 +270,19 @@ class PaymentService
             throw new \RuntimeException('could not find payment entity');
         }
 
-        $paymentForFeaturedPackage = $paymentEntity->getPaymentForFeaturedPackage();
-        if ($paymentForFeaturedPackage instanceof PaymentForFeaturedPackage) {
+        $paymentForPackage = $paymentEntity->getPaymentForPackage();
+        if ($paymentForPackage instanceof PaymentForPackage) {
             $userBalanceChange = $this->userBalanceService->addBalance(
                 $confirmPaymentDto->getGatewayAmount(),
-                $paymentForFeaturedPackage->getListingNotNull()->getUser(),
+                $paymentForPackage->getListingNotNull()->getUser(),
                 $paymentEntity,
             );
             $userBalanceChange->setDescription(
                 $this->trans->trans(
-                    'trans.Featuring of listing: %listingTitle%, using package: %featuredPackageName%, payment acceptance',
+                    'trans.Featuring of listing: %listingTitle%, using package: %packageName%, payment acceptance',
                     [
-                        '%listingTitle%' => $paymentForFeaturedPackage->getListingNotNull()->getTitle(),
-                        '%featuredPackageName%' => $paymentForFeaturedPackage->getFeaturedPackage()->getName(),
+                        '%listingTitle%' => $paymentForPackage->getListingNotNull()->getTitle(),
+                        '%packageName%' => $paymentForPackage->getPackage()->getName(),
                     ]
                 )
             );
@@ -290,16 +290,16 @@ class PaymentService
             $this->em->flush();
 
             $userBalanceChange = $this->featuredListingService->makeFeaturedByBalance(
-                $paymentForFeaturedPackage->getListingNotNull(),
-                $paymentForFeaturedPackage->getFeaturedPackage(),
+                $paymentForPackage->getListingNotNull(),
+                $paymentForPackage->getPackage(),
                 $paymentEntity,
             );
             $userBalanceChange->setDescription(
                 $this->trans->trans(
-                    'trans.Featuring of listing: %listingTitle%, using package: %featuredPackageName%',
+                    'trans.Featuring of listing: %listingTitle%, using package: %packageName%',
                     [
-                        '%listingTitle%' => $paymentForFeaturedPackage->getListingNotNull()->getTitle(),
-                        '%featuredPackageName%' => $paymentForFeaturedPackage->getFeaturedPackage()->getName(),
+                        '%listingTitle%' => $paymentForPackage->getListingNotNull()->getTitle(),
+                        '%packageName%' => $paymentForPackage->getPackage()->getName(),
                     ]
                 )
             );
@@ -310,7 +310,7 @@ class PaymentService
                     $this->urlGenerator->generate(
                         'app_user_feature_listing',
                         [
-                            'id' => $paymentForFeaturedPackage->getListingNotNull()->getId(),
+                            'id' => $paymentForPackage->getListingNotNull()->getId(),
                         ]
                     )
                 )

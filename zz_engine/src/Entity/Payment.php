@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Payment
 {
-    public const FOR_FEATURED_PACKAGE_TYPE = 'FOR_FEATURED_PACKAGE_TYPE';
+    public const FOR_PACKAGE_TYPE = 'FOR_PACKAGE_TYPE';
     public const BALANCE_TOP_UP_TYPE = 'BALANCE_TOP_UP_TYPE';
 
     /**
@@ -132,11 +132,11 @@ class Payment
     private $gatewayMode;
 
     /**
-     * @var PaymentForFeaturedPackage|null
+     * @var PaymentForPackage|null
      *
-     * @ORM\OneToOne(targetEntity="App\Entity\PaymentForFeaturedPackage", mappedBy="payment", fetch="EXTRA_LAZY")
+     * @ORM\OneToOne(targetEntity="App\Entity\PaymentForPackage", mappedBy="payment", fetch="EXTRA_LAZY")
      */
-    private $paymentForFeaturedPackage;
+    private $paymentForPackage;
 
     /**
      * @var PaymentForBalanceTopUp|null
@@ -218,19 +218,19 @@ class Payment
         return $this;
     }
 
-    public function getPaymentForFeaturedPackage(): ?PaymentForFeaturedPackage
+    public function getPaymentForPackage(): ?PaymentForPackage
     {
-        return $this->paymentForFeaturedPackage;
+        return $this->paymentForPackage;
     }
 
-    public function setPaymentForFeaturedPackage(?PaymentForFeaturedPackage $paymentForFeaturedPackage): self
+    public function setPaymentForPackage(?PaymentForPackage $paymentForPackage): self
     {
-        $this->paymentForFeaturedPackage = $paymentForFeaturedPackage;
+        $this->paymentForPackage = $paymentForPackage;
 
         // set (or unset) the owning side of the relation if necessary
-        $newPayment = null === $paymentForFeaturedPackage ? null : $this;
-        if ($newPayment !== $paymentForFeaturedPackage->getPayment()) {
-            $paymentForFeaturedPackage->setPayment($newPayment);
+        $newPayment = null === $paymentForPackage ? null : $this;
+        if ($newPayment !== $paymentForPackage->getPayment()) {
+            $paymentForPackage->setPayment($newPayment);
         }
 
         return $this;

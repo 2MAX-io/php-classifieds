@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Service\Admin\FeaturedPackage\CategorySelection;
+namespace App\Service\Admin\Package\CategorySelection;
 
 use App\Entity\Category;
 
-class FeaturedPackageCategoryDto
+class PackageCategoryDto
 {
     /**
      * @var Category

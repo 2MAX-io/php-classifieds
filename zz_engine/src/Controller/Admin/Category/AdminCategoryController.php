@@ -185,7 +185,7 @@ class AdminCategoryController extends AbstractAdminController
             $logger->notice('db constraint error during deletion', ExceptionHelper::flatten($e, [$e->getMessage()]));
             $flashService->addFlash(
                 FlashService::ERROR_ABOVE_FORM,
-                'trans.To delete category, you must first delete or move all dependencies like: listings in this category, subcategories, assigned custom fields, featured packages'
+                'trans.To delete category, you must first delete or move all dependencies like: listings in this category, subcategories, assigned custom fields, packages'
             );
 
             return $this->redirectToRoute('app_admin_category_edit', ['id' => $category->getId()]);

@@ -6,7 +6,6 @@ namespace App\Tests\Acceptance\Payment\Przelewy24;
 
 use App\Service\Payment\Enum\PaymentGatewayEnum;
 use App\Service\Payment\PaymentGateway\Przelewy24PaymentGatewayService;
-use App\Service\Setting\SettingsDto;
 use App\Tests\Base\AppIntegrationTestCase;
 use App\Tests\Traits\DatabaseTestTrait;
 use App\Tests\Traits\LoginTestTrait;
@@ -29,7 +28,6 @@ class TopUpTest extends AppIntegrationTestCase
     {
         $client = static::createClient();
         $this->clearDatabase();
-        $this->getTestContainer()->get(SettingsDto::class)->setPaymentGateway(PaymentGatewayEnum::PRZELEWY24);
         $pdo = $this->getTestContainer()->get(EntityManagerInterface::class)->getConnection();
         $pdo->executeQuery("UPDATE setting SET value = :paymentGatewayName WHERE name = 'paymentGateway'", [
             ':paymentGatewayName' => PaymentGatewayEnum::PRZELEWY24,
@@ -44,7 +42,6 @@ class TopUpTest extends AppIntegrationTestCase
         self::ensureKernelShutdown();
         $client = static::createClient();
         $client->getCookieJar()->updateFromSetCookie([(string) $getFormResponse->headers->get('set-cookie')]);
-        $this->getTestContainer()->get(SettingsDto::class)->setPaymentGateway(PaymentGatewayEnum::PRZELEWY24);
         $appPaymentToken = null;
         $gatewayStub = $this->createMock(Gateway::class);
         $gatewayStub->expects(self::once())->method('purchase')->willReturnCallback(function (array $data) use (&$appPaymentToken) {
@@ -78,7 +75,6 @@ class TopUpTest extends AppIntegrationTestCase
         // notify from payment gateway
         self::ensureKernelShutdown();
         $client = static::createClient();
-        $this->getTestContainer()->get(SettingsDto::class)->setPaymentGateway(PaymentGatewayEnum::PRZELEWY24);
         $gatewayStub->method('completePurchase')->willReturnCallback(function () {
             $responseStub = $this->createMock(RedirectResponseInterface::class);
             $responseStub->method('getData')->willReturn([

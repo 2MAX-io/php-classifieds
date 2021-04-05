@@ -6,7 +6,6 @@ namespace App\Tests\Acceptance\Payment\Przelewy24;
 
 use App\Service\Payment\Enum\PaymentGatewayEnum;
 use App\Service\Payment\PaymentGateway\Przelewy24PaymentGatewayService;
-use App\Service\Setting\SettingsDto;
 use App\Tests\Base\AppIntegrationTestCase;
 use App\Tests\Traits\DatabaseTestTrait;
 use App\Tests\Traits\LoginTestTrait;
@@ -30,7 +29,6 @@ class MakeFeaturedTest extends AppIntegrationTestCase
     {
         $client = static::createClient();
         $this->clearDatabase();
-        $this->getTestContainer()->get(SettingsDto::class)->setPaymentGateway(PaymentGatewayEnum::PRZELEWY24);
         $pdo = $this->getTestContainer()->get(EntityManagerInterface::class)->getConnection();
         $pdo->executeQuery("UPDATE setting SET value = :paymentGatewayName WHERE name = 'paymentGateway'", [
             ':paymentGatewayName' => PaymentGatewayEnum::PRZELEWY24,
@@ -60,20 +58,19 @@ class MakeFeaturedTest extends AppIntegrationTestCase
         $id = 1;
         $url = $this->getRouter()->generate('app_user_feature_listing_action', [
             'id' => $id,
-            'featuredPackage' => 1,
+            'package' => 1,
         ]);
         $csrfToken = $this->getTestContainer()->get(CsrfTokenManagerInterface::class)->getToken('csrf_feature'.$id);
         $client->request('PATCH', $url, [
             '_token' => $csrfToken->getValue(),
         ]);
         $response = $client->getResponse();
-        self::assertEquals(302, $response->getStatusCode());
+        self::assertEquals(302, $response->getStatusCode(), $response->getContent());
         $returnUrl = $client->getResponse()->headers->get('location');
 
         // notify from payment gateway
         self::ensureKernelShutdown();
         $client = static::createClient();
-        $this->getTestContainer()->get(SettingsDto::class)->setPaymentGateway(PaymentGatewayEnum::PRZELEWY24);
         $gatewayStub->method('completePurchase')->willReturnCallback(function () {
             $responseStub = $this->createMock(RedirectResponseInterface::class);
             $responseStub->method('getData')->willReturn([

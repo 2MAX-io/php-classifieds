@@ -93,17 +93,17 @@
                 <th>GatewayPaymentId</th>
                 <td>{{ payment.gatewayPaymentId }}</td>
             </tr>
-            {% if payment.paymentForFeaturedPackage %}
+            {% if payment.paymentForPackage %}
                 <tr>
-                    <th>{{ 'trans.Featured package' | trans }}</th>
+                    <th>{{ 'trans.Package' | trans }}</th>
                     <td>
                         <div class="text-break">
-                            <a href="{{ path('app_admin_featured_package_edit', {'id': payment.paymentForFeaturedPackage.featuredPackage.id}) }}">
-                                {{- payment.paymentForFeaturedPackage.featuredPackage.name -}}
+                            <a href="{{ path('app_admin_package_edit', {'id': payment.paymentForPackage.package.id}) }}">
+                                {{- payment.paymentForPackage.package.name -}}
                             </a>
                         </div>
                         <div class="text-muted text-break">
-                            {{- payment.paymentForFeaturedPackage.featuredPackage.adminName -}}
+                            {{- payment.paymentForPackage.package.adminName -}}
                         </div>
                     </td>
                 </tr>
@@ -119,12 +119,12 @@
             <tr>
                 <th>{{ 'trans.Listing' | trans }}</th>
                 <td>
-                    {% if payment.paymentForFeaturedPackage %}
+                    {% if payment.paymentForPackage %}
                         <a
-                                href="{{ path('app_admin_listing_edit', {'id': payment.paymentForFeaturedPackage.listing.id}) }}"
+                                href="{{ path('app_admin_listing_edit', {'id': payment.paymentForPackage.listing.id}) }}"
                                 class="text-break"
                         >
-                            {{- payment.paymentForFeaturedPackage.listing.title -}}
+                            {{- payment.paymentForPackage.listing.title -}}
                         </a>
                     {% else %}
                         {{- 'trans.none' | trans -}}

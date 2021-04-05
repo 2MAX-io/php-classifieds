@@ -5,15 +5,15 @@ declare(strict_types=1);
 namespace App\Controller\User\Listing;
 
 use App\Controller\User\Base\AbstractUserController;
-use App\Entity\FeaturedPackage;
 use App\Entity\Listing;
+use App\Entity\Package;
 use App\Exception\UserVisibleException;
 use App\Security\CurrentUserService;
 use App\Service\Listing\Featured\FeaturedListingService;
-use App\Service\Listing\Featured\FeaturedPackageService;
+use App\Service\Listing\Featured\PackageService;
 use App\Service\Money\UserBalanceService;
 use App\Service\Payment\PaymentService;
-use App\Service\Setting\SettingsService;
+use App\Service\Setting\SettingsDto;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -28,9 +28,15 @@ class FeatureListingController extends AbstractUserController
      */
     private $em;
 
-    public function __construct(EntityManagerInterface $em)
+    /**
+     * @var SettingsDto
+     */
+    private $settingsDto;
+
+    public function __construct(SettingsDto $settingsDto, EntityManagerInterface $em)
     {
         $this->em = $em;
+        $this->settingsDto = $settingsDto;
     }
 
     /**
@@ -38,7 +44,7 @@ class FeatureListingController extends AbstractUserController
      */
     public function feature(
         Listing $listing,
-        FeaturedPackageService $featuredPackageService,
+        PackageService $packageService,
         UserBalanceService $userBalanceService,
         CurrentUserService $currentUserService
     ): Response {
@@ -47,7 +53,7 @@ class FeatureListingController extends AbstractUserController
         return $this->render('user/listing/feature_listing.twig', [
             'displayUnderHeaderAdvert' => false,
             'listing' => $listing,
-            'packages' => $featuredPackageService->getPackages($listing),
+            'packages' => $packageService->getPackages($listing),
             'userBalance' => $userBalanceService->getCurrentBalance($currentUserService->getUserOrNull()),
         ]);
     }
@@ -76,7 +82,7 @@ class FeatureListingController extends AbstractUserController
 
     /**
      * @Route(
-     *     "/user/feature/make-featured/package/{featuredPackage}/listing/{id}",
+     *     "/user/feature/make-featured/package/{package}/listing/{id}",
      *     name="app_user_feature_listing_action",
      *     methods={"PATCH"},
      * )
@@ -84,36 +90,35 @@ class FeatureListingController extends AbstractUserController
     public function makeFeatured(
         Request $request,
         Listing $listing,
-        FeaturedPackage $featuredPackage,
+        Package $package,
         FeaturedListingService $featuredListingService,
         PaymentService $paymentService,
-        TranslatorInterface $trans,
-        SettingsService $settingsService
+        TranslatorInterface $trans
     ): Response {
         $this->dennyUnlessCurrentUserAllowed($listing);
 
         if (!$this->isCsrfTokenValid('csrf_feature'.$listing->getId(), $request->request->get('_token'))) {
             throw new InvalidCsrfTokenException('token not valid');
         }
-        if ($featuredPackage->getRemoved()) {
-            throw new UserVisibleException('Featured package has been removed');
+        if ($package->getRemoved()) {
+            throw new UserVisibleException('Package has been removed');
         }
-        if (!$featuredListingService->isPackageForListingCategory($listing, $featuredPackage)) {
-            throw new UserVisibleException('trans.This featured package is not intended for the current category of this listing');
+        if (!$featuredListingService->isPackageForListingCategory($listing, $package)) {
+            throw new UserVisibleException('trans.This package is not intended for the current category of this listing');
         }
 
-        if ($featuredListingService->hasAmount($listing, $featuredPackage)) {
-            $userBalanceChange = $featuredListingService->makeFeaturedByBalance($listing, $featuredPackage);
-            $userBalanceChange->setDescription($trans->trans('trans.Featuring of listing: %listingTitle%, using package: %featuredPackageName%', [
+        if ($featuredListingService->hasAmount($listing, $package)) {
+            $userBalanceChange = $featuredListingService->makeFeaturedByBalance($listing, $package);
+            $userBalanceChange->setDescription($trans->trans('trans.Featuring of listing: %listingTitle%, using package: %packageName%', [
                 '%listingTitle%' => $listing->getTitle(),
-                '%featuredPackageName%' => $featuredPackage->getName(),
+                '%packageName%' => $package->getName(),
             ]));
             $this->em->flush();
         } else {
-            if (!$settingsService->getSettingsDto()->isPaymentAllowed()) {
+            if (!$this->settingsDto->isPaymentAllowed()) {
                 throw new UserVisibleException('trans.Payments have been disabled');
             }
-            $paymentDto = $paymentService->createPaymentForFeaturedPackage($listing, $featuredPackage);
+            $paymentDto = $paymentService->createPaymentForPackage($listing, $package);
             $this->em->flush();
 
             return $this->redirect($paymentDto->getMakePaymentUrl());

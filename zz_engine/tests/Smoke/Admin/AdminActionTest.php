@@ -29,7 +29,7 @@ class AdminActionTest extends AppIntegrationTestCase implements SmokeTestForRout
             'app_admin_listing_feature_for_week',
             'app_admin_listing_file_remove',
             'app_admin_listing_redirect_next_waiting_activation',
-            'app_admin_featured_package_delete',
+            'app_admin_package_delete',
             'app_admin_listing_report_remove',
             'app_admin_custom_field_option_delete',
             'app_admin_custom_field_delete',
@@ -144,8 +144,8 @@ class AdminActionTest extends AppIntegrationTestCase implements SmokeTestForRout
         $this->loginAdmin($client);
 
         $id = 1;
-        $csrfToken = $this->getTestContainer()->get(CsrfTokenManagerInterface::class)->getToken('csrf_deleteFeaturedPackage'.$id);
-        $url = $this->getRouter()->generate('app_admin_featured_package_delete', [
+        $csrfToken = $this->getTestContainer()->get(CsrfTokenManagerInterface::class)->getToken('csrf_deletePackage'.$id);
+        $url = $this->getRouter()->generate('app_admin_package_delete', [
             'id' => $id,
         ]);
         $client->request('DELETE', $url, [
@@ -154,7 +154,7 @@ class AdminActionTest extends AppIntegrationTestCase implements SmokeTestForRout
         $response = $client->getResponse();
 
         self::assertEquals(302, $response->getStatusCode());
-        self::assertEquals('/admin/red5/featured-package', $client->getResponse()->headers->get('location'));
+        self::assertEquals('/admin/red5/package', $client->getResponse()->headers->get('location'));
     }
 
     public function testListingReportRemove(): void

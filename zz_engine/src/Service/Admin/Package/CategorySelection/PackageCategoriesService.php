@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace App\Service\Admin\FeaturedPackage\CategorySelection;
+namespace App\Service\Admin\Package\CategorySelection;
 
 use App\Entity\Category;
-use App\Entity\FeaturedPackage;
-use App\Entity\FeaturedPackageForCategory;
+use App\Entity\Package;
+use App\Entity\PackageForCategory;
 use App\Helper\ArrayHelper;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
-class FeaturedPackageCategoriesService
+class PackageCategoriesService
 {
     /**
      * @var EntityManagerInterface
@@ -27,17 +27,17 @@ class FeaturedPackageCategoriesService
     /**
      * @param int[] $selectedCategoriesIdList
      *
-     * @return FeaturedPackageCategoryDto[]
+     * @return PackageCategoryDto[]
      */
     public function getCategorySelectionList(
-        FeaturedPackage $featuredPackage,
+        Package $package,
         array $selectedCategoriesIdList = [],
         Category $preselectedCategory = null
     ): array {
         $return = [];
-        $categories = $this->getCategoriesWihJoinedFeaturedPackages();
+        $categories = $this->getCategoriesWihJoinedPackages();
         foreach ($categories as $category) {
-            $categoryDto = new FeaturedPackageCategoryDto();
+            $categoryDto = new PackageCategoryDto();
             $categoryDto->setCategory($category);
             if ($selectedCategoriesIdList) {
                 $categoryDto->setSelected(
@@ -45,7 +45,7 @@ class FeaturedPackageCategoriesService
                 );
             } else {
                 $categoryDto->setSelected(
-                    $this->isFeaturePackageSelectedInCategory($category, $featuredPackage),
+                    $this->isFeaturePackageSelectedInCategory($category, $package),
                 );
             }
 
@@ -62,12 +62,12 @@ class FeaturedPackageCategoriesService
     /**
      * @param int[] $selectedCategoriesIds
      */
-    public function saveSelectedCategories(FeaturedPackage $featuredPackage, array $selectedCategoriesIds): void
+    public function saveSelectedCategories(Package $package, array $selectedCategoriesIds): void
     {
-        $categories = $this->getCategoriesWihJoinedFeaturedPackages();
+        $categories = $this->getCategoriesWihJoinedPackages();
         foreach ($categories as $category) {
             $isCurrentlySelected = ArrayHelper::inArray($category->getId(), ArrayHelper::valuesToInt($selectedCategoriesIds));
-            $selectedPreviously = $this->isFeaturePackageSelectedInCategory($category, $featuredPackage);
+            $selectedPreviously = $this->isFeaturePackageSelectedInCategory($category, $package);
 
             $alreadySelected = $isCurrentlySelected && $selectedPreviously;
             if ($alreadySelected) {
@@ -81,12 +81,12 @@ class FeaturedPackageCategoriesService
 
             $added = $isCurrentlySelected && !$selectedPreviously;
             if ($added) {
-                $this->addCategorySelection($featuredPackage, $category);
+                $this->addCategorySelection($package, $category);
             }
 
             $removed = !$isCurrentlySelected && $selectedPreviously;
             if ($removed) {
-                $this->removeCategorySelection($featuredPackage, $category);
+                $this->removeCategorySelection($package, $category);
             }
         }
     }
@@ -99,27 +99,27 @@ class FeaturedPackageCategoriesService
         return $request->get('selectedCategories', []);
     }
 
-    private function isFeaturePackageSelectedInCategory(Category $category, FeaturedPackage $featuredPackage): bool
+    private function isFeaturePackageSelectedInCategory(Category $category, Package $package): bool
     {
-        $catFeaturedPackages = $category->getFeaturedPackages()->map(static function (FeaturedPackageForCategory $featuredPackageForCategory) {
-            return $featuredPackageForCategory->getFeaturedPackage();
+        $categoryPackages = $category->getPackages()->map(static function (PackageForCategory $packageForCategory) {
+            return $packageForCategory->getPackage();
         });
 
-        return $catFeaturedPackages->contains($featuredPackage);
+        return $categoryPackages->contains($package);
     }
 
     /**
      * @return Category[]
      */
-    private function getCategoriesWihJoinedFeaturedPackages(): array
+    private function getCategoriesWihJoinedPackages(): array
     {
         $qb = $this->em->createQueryBuilder();
         $qb->select('category');
         $qb->from(Category::class, 'category');
-        $qb->addSelect('featuredPackageJoin');
-        $qb->addSelect('featuredPackage');
-        $qb->leftJoin('category.featuredPackages', 'featuredPackageJoin');
-        $qb->leftJoin('featuredPackageJoin.featuredPackage', 'featuredPackage');
+        $qb->addSelect('packageForCategory');
+        $qb->addSelect('package');
+        $qb->leftJoin('category.packages', 'packageForCategory');
+        $qb->leftJoin('packageForCategory.package', 'package');
         $qb->andWhere($qb->expr()->gt('category.lvl', 0));
 
         $qb->addOrderBy('category.sort', Criteria::ASC);
@@ -127,19 +127,19 @@ class FeaturedPackageCategoriesService
         return $qb->getQuery()->getResult();
     }
 
-    private function addCategorySelection(FeaturedPackage $featuredPackage, Category $category): void
+    private function addCategorySelection(Package $package, Category $category): void
     {
-        $featuredPackageForCategory = new FeaturedPackageForCategory();
-        $featuredPackageForCategory->setCategory($category);
-        $featuredPackageForCategory->setFeaturedPackage($featuredPackage);
-        $this->em->persist($featuredPackageForCategory);
+        $packageForCategory = new PackageForCategory();
+        $packageForCategory->setCategory($category);
+        $packageForCategory->setPackage($package);
+        $this->em->persist($packageForCategory);
     }
 
-    private function removeCategorySelection(FeaturedPackage $featuredPackage, Category $category): void
+    private function removeCategorySelection(Package $package, Category $category): void
     {
-        foreach ($category->getFeaturedPackages() as $featuredPackageJoin) {
-            if ($featuredPackageJoin->getFeaturedPackage() === $featuredPackage) {
-                $this->em->remove($featuredPackageJoin);
+        foreach ($category->getPackages() as $packageForCategory) {
+            if ($packageForCategory->getPackage() === $package) {
+                $this->em->remove($packageForCategory);
             }
         }
     }

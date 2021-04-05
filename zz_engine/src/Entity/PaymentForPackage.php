@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity()
  */
-class PaymentForFeaturedPackage
+class PaymentForPackage
 {
     /**
      * @var int
@@ -23,23 +23,23 @@ class PaymentForFeaturedPackage
     /**
      * @var Payment
      *
-     * @ORM\OneToOne(targetEntity="App\Entity\Payment", inversedBy="paymentForFeaturedPackage")
+     * @ORM\OneToOne(targetEntity="App\Entity\Payment", inversedBy="paymentForPackage")
      * @ORM\JoinColumn(nullable=false)
      */
     private $payment;
 
     /**
-     * @var FeaturedPackage
+     * @var Package
      *
-     * @ORM\ManyToOne(targetEntity="App\Entity\FeaturedPackage", inversedBy="paymentFeaturedPackage")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Package", inversedBy="paymentForPackage")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $featuredPackage;
+    private $package;
 
     /**
      * @var Listing
      *
-     * @ORM\ManyToOne(targetEntity="App\Entity\Listing", inversedBy="paymentFeaturedPackage")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Listing", inversedBy="paymentForPackage")
      * @ORM\JoinColumn(nullable=false)
      */
     private $listing;
@@ -61,14 +61,14 @@ class PaymentForFeaturedPackage
         return $this;
     }
 
-    public function getFeaturedPackage(): FeaturedPackage
+    public function getPackage(): Package
     {
-        return $this->featuredPackage;
+        return $this->package;
     }
 
-    public function setFeaturedPackage(?FeaturedPackage $featuredPackage): self
+    public function setPackage(?Package $package): self
     {
-        $this->featuredPackage = $featuredPackage;
+        $this->package = $package;
 
         return $this;
     }

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Controller\User\Payment;
 
 use App\Entity\PaymentForBalanceTopUp;
-use App\Entity\PaymentForFeaturedPackage;
+use App\Entity\PaymentForPackage;
 use App\Enum\ParamEnum;
 use App\Exception\UserVisibleException;
 use App\Helper\DateHelper;
@@ -65,10 +65,10 @@ class PaymentAwaitConfirmationForClientController extends AbstractController
         LoggerInterface $logger
     ): Response {
         $paymentEntity = $paymentService->getPaymentEntity($paymentAppToken);
-        $paymentForFeaturedPackage = $paymentEntity->getPaymentForFeaturedPackage();
-        if ($paymentForFeaturedPackage instanceof PaymentForFeaturedPackage) {
+        $paymentForPackage = $paymentEntity->getPaymentForPackage();
+        if ($paymentForPackage instanceof PaymentForPackage) {
             return $this->redirectToRoute('app_user_feature_listing', [
-                'id' => $paymentForFeaturedPackage->getListingNotNull()->getId(),
+                'id' => $paymentForPackage->getListingNotNull()->getId(),
             ]);
         }
 

@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Service\Listing\Featured;
 
-use App\Entity\FeaturedPackage;
 use App\Entity\Listing;
+use App\Entity\Package;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\EntityManagerInterface;
 
-class FeaturedPackageService
+class PackageService
 {
     /**
      * @var EntityManagerInterface
@@ -22,7 +22,7 @@ class FeaturedPackageService
     }
 
     /**
-     * @return FeaturedPackage[]
+     * @return Package[]
      */
     public function getPackages(Listing $listing): array
     {
@@ -35,34 +35,34 @@ class FeaturedPackageService
     }
 
     /**
-     * @return FeaturedPackage[]
+     * @return Package[]
      */
     public function getNotDefaultPlans(Listing $listing): array
     {
         $qb = $this->em->createQueryBuilder();
-        $qb->select('featuredPackage');
-        $qb->from(FeaturedPackage::class, 'featuredPackage');
-        $qb->join('featuredPackage.featuredPackageForCategories', 'featuredPackageForCategory');
-        $qb->andWhere($qb->expr()->eq('featuredPackageForCategory.category', ':category'));
+        $qb->select('package');
+        $qb->from(Package::class, 'package');
+        $qb->join('package.packageForCategories', 'packageForCategory');
+        $qb->andWhere($qb->expr()->eq('packageForCategory.category', ':category'));
         $qb->setParameter(':category', $listing->getCategory());
-        $qb->andWhere($qb->expr()->eq('featuredPackage.defaultPackage', 0));
-        $qb->andWhere($qb->expr()->eq('featuredPackage.removed', 0));
-        $qb->orderBy('featuredPackage.price', Criteria::ASC);
+        $qb->andWhere($qb->expr()->eq('package.defaultPackage', 0));
+        $qb->andWhere($qb->expr()->eq('package.removed', 0));
+        $qb->orderBy('package.price', Criteria::ASC);
 
         return $qb->getQuery()->getResult();
     }
 
     /**
-     * @return FeaturedPackage[]
+     * @return Package[]
      */
     public function getDefaultPlans(): array
     {
         $qb = $this->em->createQueryBuilder();
-        $qb->select('featuredPackage');
-        $qb->from(FeaturedPackage::class, 'featuredPackage');
-        $qb->andWhere($qb->expr()->eq('featuredPackage.defaultPackage', 1));
-        $qb->andWhere($qb->expr()->eq('featuredPackage.removed', 0));
-        $qb->orderBy('featuredPackage.price', Criteria::ASC);
+        $qb->select('package');
+        $qb->from(Package::class, 'package');
+        $qb->andWhere($qb->expr()->eq('package.defaultPackage', 1));
+        $qb->andWhere($qb->expr()->eq('package.removed', 0));
+        $qb->orderBy('package.price', Criteria::ASC);
 
         return $qb->getQuery()->getResult();
     }

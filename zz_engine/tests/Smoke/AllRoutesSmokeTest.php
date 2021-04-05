@@ -145,7 +145,7 @@ class AllRoutesSmokeTest extends AppIntegrationTestCase
         $urlList[] = $this->getRouter()->generate('app_admin_user_change_balance', [
             'id' => 1,
         ]);
-        $urlList[] = $this->getRouter()->generate('app_admin_featured_package_edit', [
+        $urlList[] = $this->getRouter()->generate('app_admin_package_edit', [
             'id' => 1,
         ]);
         $urlList[] = $this->getRouter()->generate('app_admin_administrator_edit', [

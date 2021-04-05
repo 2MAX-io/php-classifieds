@@ -45,7 +45,7 @@ Encore
     .addEntry('admin_custom_field_edit', './assets/admin/page/custom_field/admin_custom_field_edit.js')
     .addEntry('admin_custom_field_list', './assets/admin/page/custom_field/admin_custom_field_list.js')
     .addEntry('admin_custom_field_option', './assets/admin/page/custom_field/admin_custom_field_option.js')
-    .addEntry('admin_featured_package_edit', './assets/admin/page/featured_package/admin_featured_package_edit.js')
+    .addEntry('admin_package_edit', './assets/admin/page/package/admin_package_edit.js')
     .addEntry('admin_listing_activate', './assets/admin/page/listing/admin_listing_activate.js')
     .addEntry('admin_listing_edit', './assets/admin/page/listing/admin_listing_edit.js')
     .addEntry('admin_listing_edit_advanced', './assets/admin/page/listing/admin_listing_edit_advanced.js')

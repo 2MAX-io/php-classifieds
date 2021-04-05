@@ -13,7 +13,7 @@ use App\Tests\Traits\RouterTestTrait;
 /**
  * @internal
  */
-class FeaturedPackageControllerTest extends AppIntegrationTestCase implements SmokeTestForRouteInterface
+class PackageControllerTest extends AppIntegrationTestCase implements SmokeTestForRouteInterface
 {
     use DatabaseTestTrait;
     use RouterTestTrait;
@@ -22,8 +22,8 @@ class FeaturedPackageControllerTest extends AppIntegrationTestCase implements Sm
     public static function getRouteNames(): array
     {
         return [
-            'app_admin_featured_package_new',
-            'app_admin_featured_package_edit',
+            'app_admin_package_new',
+            'app_admin_package_edit',
         ];
     }
 
@@ -33,18 +33,18 @@ class FeaturedPackageControllerTest extends AppIntegrationTestCase implements Sm
         $this->clearDatabase();
         $this->loginAdmin($client);
 
-        $client->request('GET', $this->getRouter()->generate('app_admin_featured_package_new'));
+        $client->request('GET', $this->getRouter()->generate('app_admin_package_new'));
         $client->submitForm('Save', [
-            'featured_package[name]' => 'test feature package name',
-            'featured_package[adminName]' => 'test feature package name for admin',
-            'featured_package[priceFloat]' => '1',
-            'featured_package[daysFeaturedExpire]' => '1',
-            'featured_package[daysListingExpire]' => '1',
+            'package[name]' => 'test feature package name',
+            'package[adminName]' => 'test feature package name for admin',
+            'package[priceFloat]' => '1',
+            'package[daysFeaturedExpire]' => '1',
+            'package[daysListingExpire]' => '1',
         ]);
         $response = $client->getResponse();
         self::assertEquals(302, $response->getStatusCode());
         $client->followRedirect();
-        self::assertSame('app_admin_featured_package_edit', $client->getRequest()->attributes->get('_route'));
+        self::assertSame('app_admin_package_edit', $client->getRequest()->attributes->get('_route'));
     }
 
     public function testEdit(): void
@@ -53,12 +53,12 @@ class FeaturedPackageControllerTest extends AppIntegrationTestCase implements Sm
         $this->clearDatabase();
         $this->loginAdmin($client);
 
-        $crawler = $client->request('GET', $this->getRouter()->generate('app_admin_featured_package_edit', [
+        $crawler = $client->request('GET', $this->getRouter()->generate('app_admin_package_edit', [
             'id' => 1,
         ]));
         $submitButton = $crawler->selectButton('Update');
         $form = $submitButton->form([
-            'featured_package[name]' => 'test feature package name',
+            'package[name]' => 'test feature package name',
         ]);
         $values = $form->getPhpValues();
         $values['selectedCategories'][] = 3;
@@ -71,6 +71,6 @@ class FeaturedPackageControllerTest extends AppIntegrationTestCase implements Sm
         $response = $client->getResponse();
         self::assertEquals(302, $response->getStatusCode());
         $client->followRedirect();
-        self::assertSame('app_admin_featured_package_edit', $client->getRequest()->attributes->get('_route'));
+        self::assertSame('app_admin_package_edit', $client->getRequest()->attributes->get('_route'));
     }
 }

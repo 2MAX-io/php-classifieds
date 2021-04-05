@@ -61,7 +61,7 @@ class FeatureListingControllerTest extends AppIntegrationTestCase implements Smo
         $id = 1;
         $url = $this->getRouter()->generate('app_user_feature_listing_action', [
             'id' => $id,
-            'featuredPackage' => 1,
+            'package' => 1,
         ]);
         $csrfToken = $this->getTestContainer()->get(CsrfTokenManagerInterface::class)->getToken('csrf_feature'.$id);
         $client->request('PATCH', $url, [

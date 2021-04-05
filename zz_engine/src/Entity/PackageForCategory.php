@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity()
  */
-class FeaturedPackageForCategory
+class PackageForCategory
 {
     /**
      * @var int
@@ -23,32 +23,32 @@ class FeaturedPackageForCategory
     /**
      * @var Category
      *
-     * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="featuredPackages")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="packages")
      * @ORM\JoinColumn(nullable=false)
      */
     private $category;
 
     /**
-     * @var FeaturedPackage
+     * @var Package
      *
-     * @ORM\ManyToOne(targetEntity="App\Entity\FeaturedPackage", inversedBy="featuredPackageForCategories")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Package", inversedBy="packageForCategories")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $featuredPackage;
+    private $package;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getFeaturedPackage(): ?FeaturedPackage
+    public function getPackage(): ?Package
     {
-        return $this->featuredPackage;
+        return $this->package;
     }
 
-    public function setFeaturedPackage(?FeaturedPackage $featuredPackage): self
+    public function setPackage(?Package $package): self
     {
-        $this->featuredPackage = $featuredPackage;
+        $this->package = $package;
 
         return $this;
     }

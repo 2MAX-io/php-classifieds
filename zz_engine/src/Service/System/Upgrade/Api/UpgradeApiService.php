@@ -150,7 +150,7 @@ class UpgradeApiService
             return 'https://classified-upgrade-dev.2max.io/latest-version.json';
         }
 
-        return 'https://classified-upgrade-dev.2max.io/latest-version.json';
+        return 'https://classified-upgrade-prod.2max.io/latest-version.json';
     }
 
     public function getUpgradeListUrl(): string
@@ -159,6 +159,6 @@ class UpgradeApiService
             return 'https://classified-upgrade-dev.2max.io/upgrade-list.json';
         }
 
-        return 'https://classified-upgrade-dev.2max.io/upgrade-list.json';
+        return 'https://classified-upgrade-prod.2max.io/upgrade-list.json';
     }
 }

@@ -9,9 +9,9 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\FeaturedPackageRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\PackageRepository")
  */
-class FeaturedPackage
+class Package
 {
     /**
      * @var int
@@ -79,30 +79,30 @@ class FeaturedPackage
     private $description;
 
     /**
-     * @var Collection|FeaturedPackageForCategory[]
+     * @var Collection|PackageForCategory[]
      *
-     * @ORM\OneToMany(targetEntity="App\Entity\FeaturedPackageForCategory", mappedBy="featuredPackage")
+     * @ORM\OneToMany(targetEntity="App\Entity\PackageForCategory", mappedBy="package")
      */
-    private $featuredPackageForCategories;
+    private $packageForCategories;
 
     /**
-     * @var Collection|PaymentForFeaturedPackage[]
+     * @var Collection|PaymentForPackage[]
      *
-     * @ORM\OneToMany(targetEntity="App\Entity\PaymentForFeaturedPackage", mappedBy="featuredPackage")
+     * @ORM\OneToMany(targetEntity="App\Entity\PaymentForPackage", mappedBy="package")
      */
-    private $paymentFeaturedPackage;
+    private $paymentForPackage;
 
     /**
      * @var float|null
      *
-     * used only for form auto validation, if saving empty featured package form successful can be removed
+     * used only for form auto validation, if saving empty package form successful can be removed
      */
     private $priceFloat;
 
     public function __construct()
     {
-        $this->featuredPackageForCategories = new ArrayCollection();
-        $this->paymentFeaturedPackage = new ArrayCollection();
+        $this->packageForCategories = new ArrayCollection();
+        $this->paymentForPackage = new ArrayCollection();
     }
 
     public function getPriceFloat(): ?float
@@ -196,30 +196,30 @@ class FeaturedPackage
     }
 
     /**
-     * @return Collection|FeaturedPackageForCategory[]
+     * @return Collection|PackageForCategory[]
      */
-    public function getFeaturedPackageForCategories(): Collection
+    public function getPackageForCategories(): Collection
     {
-        return $this->featuredPackageForCategories;
+        return $this->packageForCategories;
     }
 
-    public function addFeaturedPackageForCategory(FeaturedPackageForCategory $featuredPackageForCategory): self
+    public function addPackageForCategory(PackageForCategory $packageForCategory): self
     {
-        if (!$this->featuredPackageForCategories->contains($featuredPackageForCategory)) {
-            $this->featuredPackageForCategories[] = $featuredPackageForCategory;
-            $featuredPackageForCategory->setFeaturedPackage($this);
+        if (!$this->packageForCategories->contains($packageForCategory)) {
+            $this->packageForCategories[] = $packageForCategory;
+            $packageForCategory->setPackage($this);
         }
 
         return $this;
     }
 
-    public function removeFeaturedPackageForCategory(FeaturedPackageForCategory $featuredPackageForCategory): self
+    public function removePackageForCategory(PackageForCategory $packageForCategory): self
     {
-        if ($this->featuredPackageForCategories->contains($featuredPackageForCategory)) {
-            $this->featuredPackageForCategories->removeElement($featuredPackageForCategory);
+        if ($this->packageForCategories->contains($packageForCategory)) {
+            $this->packageForCategories->removeElement($packageForCategory);
             // set the owning side to null (unless already changed)
-            if ($featuredPackageForCategory->getFeaturedPackage() === $this) {
-                $featuredPackageForCategory->setFeaturedPackage(null);
+            if ($packageForCategory->getPackage() === $this) {
+                $packageForCategory->setPackage(null);
             }
         }
 
@@ -227,30 +227,30 @@ class FeaturedPackage
     }
 
     /**
-     * @return Collection|PaymentForFeaturedPackage[]
+     * @return Collection|PaymentForPackage[]
      */
-    public function getPaymentFeaturedPackage(): Collection
+    public function getPaymentForPackage(): Collection
     {
-        return $this->paymentFeaturedPackage;
+        return $this->paymentForPackage;
     }
 
-    public function addPaymentFeaturedPackage(PaymentForFeaturedPackage $paymentFeaturedPackage): self
+    public function addPaymentForPackage(PaymentForPackage $paymentForPackage): self
     {
-        if (!$this->paymentFeaturedPackage->contains($paymentFeaturedPackage)) {
-            $this->paymentFeaturedPackage[] = $paymentFeaturedPackage;
-            $paymentFeaturedPackage->setFeaturedPackage($this);
+        if (!$this->paymentForPackage->contains($paymentForPackage)) {
+            $this->paymentForPackage[] = $paymentForPackage;
+            $paymentForPackage->setPackage($this);
         }
 
         return $this;
     }
 
-    public function removePaymentFeaturedPackage(PaymentForFeaturedPackage $paymentFeaturedPackage): self
+    public function removePaymentPackage(PaymentForPackage $paymentForPackage): self
     {
-        if ($this->paymentFeaturedPackage->contains($paymentFeaturedPackage)) {
-            $this->paymentFeaturedPackage->removeElement($paymentFeaturedPackage);
+        if ($this->paymentForPackage->contains($paymentForPackage)) {
+            $this->paymentForPackage->removeElement($paymentForPackage);
             // set the owning side to null (unless already changed)
-            if ($paymentFeaturedPackage->getFeaturedPackage() === $this) {
-                $paymentFeaturedPackage->setFeaturedPackage(null);
+            if ($paymentForPackage->getPackage() === $this) {
+                $paymentForPackage->setPackage(null);
             }
         }
 

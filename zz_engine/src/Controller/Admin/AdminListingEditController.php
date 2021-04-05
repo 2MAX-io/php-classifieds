@@ -10,7 +10,7 @@ use App\Enum\ParamEnum;
 use App\Form\Admin\AdminListingEditType;
 use App\Service\Listing\CustomField\ListingCustomFieldsService;
 use App\Service\Listing\Save\SaveListingService;
-use App\Service\Setting\SettingsService;
+use App\Service\Setting\SettingsDto;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -36,7 +36,7 @@ class AdminListingEditController extends AbstractAdminController
         Listing $listing,
         ListingCustomFieldsService $listingCustomFieldsService,
         SaveListingService $saveListingService,
-        SettingsService $settingsService
+        SettingsDto $settingsDto
     ): Response {
         $this->denyUnlessAdmin();
 
@@ -64,9 +64,9 @@ class AdminListingEditController extends AbstractAdminController
                     ParamEnum::LATITUDE => $listing->getLocationLatitude(),
                     ParamEnum::LONGITUDE => $listing->getLocationLongitude(),
                 ],
-                ParamEnum::MAP_DEFAULT_LATITUDE => $settingsService->getSettingsDto()->getMapDefaultLatitude(),
-                ParamEnum::MAP_DEFAULT_LONGITUDE => $settingsService->getSettingsDto()->getMapDefaultLongitude(),
-                ParamEnum::MAP_DEFAULT_ZOOM => $settingsService->getSettingsDto()->getMapDefaultZoom(),
+                ParamEnum::MAP_DEFAULT_LATITUDE => $settingsDto->getMapDefaultLatitude(),
+                ParamEnum::MAP_DEFAULT_LONGITUDE => $settingsDto->getMapDefaultLongitude(),
+                ParamEnum::MAP_DEFAULT_ZOOM => $settingsDto->getMapDefaultZoom(),
             ],
         ]);
     }

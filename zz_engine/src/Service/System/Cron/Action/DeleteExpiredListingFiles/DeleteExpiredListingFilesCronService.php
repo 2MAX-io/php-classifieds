@@ -6,7 +6,7 @@ namespace App\Service\System\Cron\Action\DeleteExpiredListingFiles;
 
 use App\Enum\AppCacheEnum;
 use App\Enum\AppLockEnumInterface;
-use App\Service\Setting\SettingsService;
+use App\Service\Setting\SettingsDto;
 use App\Service\System\Cron\Action\Base\CronActionInterface;
 use App\Service\System\Cron\Action\Base\CronAtNightInterface;
 use App\Service\System\Cron\Dto\CronDto;
@@ -25,9 +25,9 @@ class DeleteExpiredListingFilesCronService implements CronActionInterface, CronA
     private $deleteExpiredListingFilesService;
 
     /**
-     * @var SettingsService
+     * @var SettingsDto
      */
-    private $settingsService;
+    private $settingsDto;
 
     /**
      * @var LockFactory
@@ -46,13 +46,13 @@ class DeleteExpiredListingFilesCronService implements CronActionInterface, CronA
 
     public function __construct(
         DeleteExpiredListingFilesService $deleteExpiredListingFilesService,
-        SettingsService $settingsService,
+        SettingsDto $settingsDto,
         RunEveryService $runEveryService,
         LockFactory $lockFactory,
         MessageBusInterface $messageBus
     ) {
         $this->deleteExpiredListingFilesService = $deleteExpiredListingFilesService;
-        $this->settingsService = $settingsService;
+        $this->settingsDto = $settingsDto;
         $this->lockFactory = $lockFactory;
         $this->messageBus = $messageBus;
         $this->runEveryService = $runEveryService;
@@ -66,7 +66,7 @@ class DeleteExpiredListingFilesCronService implements CronActionInterface, CronA
         }
 
         try {
-            $settingsDto = $this->settingsService->getSettingsDto();
+            $settingsDto = $this->settingsDto;
             if (!$settingsDto->getDeleteExpiredListingFilesEnabled()) {
                 return;
             }

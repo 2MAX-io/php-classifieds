@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Service\System\Email;
 
-use App\Service\Setting\SettingsService;
+use App\Service\Setting\SettingsDto;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Mime\Address;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -17,16 +17,16 @@ class EmailService
     private $trans;
 
     /**
-     * @var SettingsService
+     * @var SettingsDto
      */
-    private $settingsService;
+    private $settingsDto;
 
     public function __construct(
-        SettingsService $settingsService,
+        SettingsDto $settingsDto,
         TranslatorInterface $trans
     ) {
         $this->trans = $trans;
-        $this->settingsService = $settingsService;
+        $this->settingsDto = $settingsDto;
     }
 
     public function getTemplatedEmail(): TemplatedEmail
@@ -43,22 +43,22 @@ class EmailService
 
     public function getEmailFromName(): string
     {
-        $emailFromName = $this->settingsService->getSettingsDto()->getEmailFromName();
+        $emailFromName = $this->settingsDto->getEmailFromName();
 
         return $emailFromName ?? $this->trans->trans('trans.Classifieds');
     }
 
     public function getEmailFromAddress(): ?string
     {
-        return $this->settingsService->getSettingsDto()->getEmailFromAddress();
+        return $this->settingsDto->getEmailFromAddress();
     }
 
     public function getEmailReplyTo(): ?string
     {
-        if (!empty($this->settingsService->getSettingsDto()->getEmailReplyTo())) {
-            return $this->settingsService->getSettingsDto()->getEmailReplyTo();
+        if (!empty($this->settingsDto->getEmailReplyTo())) {
+            return $this->settingsDto->getEmailReplyTo();
         }
 
-        return $this->settingsService->getSettingsDto()->getEmailFromAddress();
+        return $this->settingsDto->getEmailFromAddress();
     }
 }

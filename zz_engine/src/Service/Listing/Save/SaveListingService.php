@@ -15,7 +15,7 @@ use App\Security\CurrentUserService;
 use App\Service\Listing\CustomField\Dto\CustomFieldInlineDto;
 use App\Service\Listing\Save\Dto\ListingSaveDto;
 use App\Service\Listing\ValidityExtend\ValidUntilSetService;
-use App\Service\Setting\SettingsService;
+use App\Service\Setting\SettingsDto;
 use App\Service\System\Text\TextService;
 use Doctrine\DBAL\Connection;
 use Doctrine\ORM\EntityManagerInterface;
@@ -41,9 +41,9 @@ class SaveListingService
     private $currentUserService;
 
     /**
-     * @var SettingsService
+     * @var SettingsDto
      */
-    private $settingsService;
+    private $settingsDto;
 
     /**
      * @var ListingFileUploadService
@@ -59,14 +59,14 @@ class SaveListingService
         ListingFileUploadService $listingFileUploadService,
         ValidUntilSetService $validUntilSetService,
         CurrentUserService $currentUserService,
-        SettingsService $settingsService,
+        SettingsDto $settingsDto,
         TextService $textService,
         EntityManagerInterface $em
     ) {
         $this->validUntilSetService = $validUntilSetService;
         $this->textService = $textService;
         $this->currentUserService = $currentUserService;
-        $this->settingsService = $settingsService;
+        $this->settingsDto = $settingsDto;
         $this->listingFileUploadService = $listingFileUploadService;
         $this->em = $em;
     }
@@ -133,7 +133,7 @@ class SaveListingService
         }
         $listing->setUserDeactivated(false);
         $listing->setAdminActivated(false);
-        if ($this->settingsService->getSettingsDto()->getRequireListingAdminActivation()) {
+        if ($this->settingsDto->getRequireListingAdminActivation()) {
             $listing->setAdminRejected(false);
         }
         $this->updateSlug($listing);

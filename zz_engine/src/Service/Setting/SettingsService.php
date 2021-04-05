@@ -12,8 +12,9 @@ use App\Service\System\Cache\RuntimeCacheService;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 use Symfony\Contracts\Cache\CacheInterface;
 use Symfony\Contracts\Cache\ItemInterface;
+use Symfony\Contracts\Service\ResetInterface;
 
-class SettingsService
+class SettingsService implements ResetInterface
 {
     /**
      * @var SettingRepository
@@ -83,5 +84,16 @@ class SettingsService
         $qb->indexBy('setting', 'setting.name');
 
         return $qb->getQuery()->getResult();
+    }
+
+    public function clearCache(): void
+    {
+        $this->cache->delete(AppCacheEnum::SETTINGS);
+        $this->runtimeCache->delete(RuntimeCacheEnum::SETTINGS);
+    }
+
+    public function reset(): void
+    {
+        $this->clearCache();
     }
 }

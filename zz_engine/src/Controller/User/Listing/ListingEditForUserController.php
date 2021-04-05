@@ -13,7 +13,7 @@ use App\Service\Listing\CustomField\ListingCustomFieldsService;
 use App\Service\Listing\Save\ListingFileUploadService;
 use App\Service\Listing\Save\SaveListingService;
 use App\Service\Listing\Secondary\PoliceLog\PoliceLogForListingService;
-use App\Service\Setting\SettingsService;
+use App\Service\Setting\SettingsDto;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -48,7 +48,7 @@ class ListingEditForUserController extends AbstractUserController
         ListingFileUploadService $listingFileService,
         CategoryListService $categoryListService,
         PoliceLogForListingService $policeLogForListingService,
-        SettingsService $settingsService
+        SettingsDto $settingsDto
     ): Response {
         $this->dennyUnlessUser();
 
@@ -79,9 +79,9 @@ class ListingEditForUserController extends AbstractUserController
                 ParamEnum::DATA_FOR_JS => [
                     ParamEnum::LISTING_FILES => $listingFileService->getListingFilesForFrontend($listingSaveDto),
                     ParamEnum::LISTING_ID => $listing->getId(),
-                    ParamEnum::MAP_DEFAULT_LATITUDE => $settingsService->getSettingsDto()->getMapDefaultLatitude(),
-                    ParamEnum::MAP_DEFAULT_LONGITUDE => $settingsService->getSettingsDto()->getMapDefaultLongitude(),
-                    ParamEnum::MAP_DEFAULT_ZOOM => $settingsService->getSettingsDto()->getMapDefaultZoom(),
+                    ParamEnum::MAP_DEFAULT_LATITUDE => $settingsDto->getMapDefaultLatitude(),
+                    ParamEnum::MAP_DEFAULT_LONGITUDE => $settingsDto->getMapDefaultLongitude(),
+                    ParamEnum::MAP_DEFAULT_ZOOM => $settingsDto->getMapDefaultZoom(),
                     ParamEnum::CSRF_TOKEN => $this->csrfTokenManager->getToken('csrf_listingFileRemove')->getValue(),
                 ],
                 'form' => $form->createView(),
@@ -100,7 +100,7 @@ class ListingEditForUserController extends AbstractUserController
         ListingFileUploadService $listingFileService,
         CategoryListService $categoryListService,
         PoliceLogForListingService $policeLogForListingService,
-        SettingsService $settingsService
+        SettingsDto $settingsDto
     ): Response {
         $this->dennyUnlessCurrentUserAllowed($listing);
 
@@ -134,9 +134,9 @@ class ListingEditForUserController extends AbstractUserController
                 ParamEnum::DATA_FOR_JS => [
                     ParamEnum::LISTING_FILES => $listingFileService->getListingFilesForFrontend($listingSaveDto),
                     ParamEnum::LISTING_ID => $listing->getId(),
-                    ParamEnum::MAP_DEFAULT_LATITUDE => $settingsService->getSettingsDto()->getMapDefaultLatitude(),
-                    ParamEnum::MAP_DEFAULT_LONGITUDE => $settingsService->getSettingsDto()->getMapDefaultLongitude(),
-                    ParamEnum::MAP_DEFAULT_ZOOM => $settingsService->getSettingsDto()->getMapDefaultZoom(),
+                    ParamEnum::MAP_DEFAULT_LATITUDE => $settingsDto->getMapDefaultLatitude(),
+                    ParamEnum::MAP_DEFAULT_LONGITUDE => $settingsDto->getMapDefaultLongitude(),
+                    ParamEnum::MAP_DEFAULT_ZOOM => $settingsDto->getMapDefaultZoom(),
                     ParamEnum::MAP_LOCATION_COORDINATES => [
                         ParamEnum::LATITUDE => $listing->getLocationLatitude(),
                         ParamEnum::LONGITUDE => $listing->getLocationLongitude(),

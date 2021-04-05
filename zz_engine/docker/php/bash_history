@@ -517,4 +517,3 @@ php -dxdebug.start_with_request=yes zz_engine/bin/console app:dev:translation:fi
 (cd /var/www/html/zz_engine && php vendor/bin/php-cs-fixer fix)
 php -dxdebug.mode=coverage /var/www/html/zz_engine/bin/phpunit --coverage-text=out.txt --bootstrap /var/www/html/zz_engine/tests/bootstrap.php --configuration /var/www/html/zz_engine/phpunit.xml.dist
 sudo chown -R 1000:33 /var/www/html
-(cd /var/www/html/zz_engine && php vendor/bin/php-cs-fixer fix)

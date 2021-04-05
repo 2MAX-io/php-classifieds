@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Controller\Pub\Secondary;
 
 use App\Service\Listing\Secondary\RecentListingsService;
-use App\Service\Setting\SettingsService;
+use App\Service\Setting\SettingsDto;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -17,10 +17,8 @@ class RssController extends AbstractController
      */
     public function index(
         RecentListingsService $recentListingsService,
-        SettingsService $settingsService
+        SettingsDto $settingsDto
     ): Response {
-        $settingsDto = $settingsService->getSettingsDto();
-
         return $this->render('secondary/rss.xml.twig', [
             'listingList' => $recentListingsService->getListingsForRss(),
             'settingsDto' => $settingsDto,

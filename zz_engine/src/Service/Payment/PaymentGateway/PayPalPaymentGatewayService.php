@@ -13,7 +13,7 @@ use App\Service\Payment\Dto\PaymentDto;
 use App\Service\Payment\Enum\GatewayModeEnum;
 use App\Service\Payment\Enum\PaymentGatewayEnum;
 use App\Service\Payment\PaymentHelperService;
-use App\Service\Setting\SettingsService;
+use App\Service\Setting\SettingsDto;
 use Omnipay\Common\GatewayInterface;
 use Omnipay\Common\Message\RedirectResponseInterface;
 use Omnipay\Omnipay;
@@ -27,9 +27,9 @@ class PayPalPaymentGatewayService implements PaymentGatewayInterface
     private $paymentHelperService;
 
     /**
-     * @var SettingsService
+     * @var SettingsDto
      */
-    private $settingsService;
+    private $settingsDto;
 
     /**
      * @var LoggerInterface
@@ -43,11 +43,11 @@ class PayPalPaymentGatewayService implements PaymentGatewayInterface
 
     public function __construct(
         PaymentHelperService $paymentHelperService,
-        SettingsService $settingsService,
+        SettingsDto $settingsDto,
         LoggerInterface $logger
     ) {
         $this->paymentHelperService = $paymentHelperService;
-        $this->settingsService = $settingsService;
+        $this->settingsDto = $settingsDto;
         $this->logger = $logger;
     }
 
@@ -132,7 +132,7 @@ class PayPalPaymentGatewayService implements PaymentGatewayInterface
 
     public function getGatewayMode(): string
     {
-        $paymentPayPalMode = $this->settingsService->getSettingsDto()->getPaymentPayPalMode();
+        $paymentPayPalMode = $this->settingsDto->getPaymentPayPalMode();
         if (null === $paymentPayPalMode) {
             throw new \RuntimeException('PaymentPayPalMode is null');
         }
@@ -152,8 +152,8 @@ class PayPalPaymentGatewayService implements PaymentGatewayInterface
             $gateway = Omnipay::create('PayPal_Rest');
         }
         $gateway->initialize([
-            'clientId' => $this->settingsService->getSettingsDto()->getPaymentPayPalClientId(),
-            'secret' => $this->settingsService->getSettingsDto()->getPaymentPayPalClientSecret(),
+            'clientId' => $this->settingsDto->getPaymentPayPalClientId(),
+            'secret' => $this->settingsDto->getPaymentPayPalClientSecret(),
             'testMode' => GatewayModeEnum::SANDBOX === $this->getGatewayMode(),
         ]);
 

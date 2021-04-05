@@ -8,7 +8,7 @@ use App\Exception\UserVisibleException;
 use App\Helper\ExceptionHelper;
 use App\Service\Payment\Dto\ConfirmPaymentDto;
 use App\Service\Payment\PaymentService;
-use App\Service\Setting\SettingsService;
+use App\Service\Setting\SettingsDto;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -35,10 +35,10 @@ class PaymentNotifyByPaymentProcessorController extends AbstractController
         Request $request,
         string $paymentAppToken,
         PaymentService $paymentService,
-        SettingsService $settingsService,
+        SettingsDto $settingsDto,
         LoggerInterface $logger
     ): Response {
-        if (!$settingsService->getSettingsDto()->isPaymentAllowed()) {
+        if (!$settingsDto->isPaymentAllowed()) {
             throw new UserVisibleException('trans.Payments have been disabled');
         }
 

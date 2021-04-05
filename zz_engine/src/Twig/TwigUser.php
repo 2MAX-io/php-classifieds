@@ -8,7 +8,7 @@ use App\Entity\Listing;
 use App\Entity\User;
 use App\Enum\ParamEnum;
 use App\Security\CurrentUserService;
-use App\Service\Setting\SettingsService;
+use App\Service\Setting\SettingsDto;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Extension\RuntimeExtensionInterface;
@@ -21,9 +21,9 @@ class TwigUser implements RuntimeExtensionInterface
     private $currentUserService;
 
     /**
-     * @var SettingsService
+     * @var SettingsDto
      */
-    private $settingsService;
+    private $settingsDto;
 
     /**
      * @var RequestStack
@@ -37,12 +37,12 @@ class TwigUser implements RuntimeExtensionInterface
 
     public function __construct(
         CurrentUserService $currentUserService,
-        SettingsService $settingsService,
+        SettingsDto $settingsDto,
         RequestStack $requestStack,
         TranslatorInterface $trans
     ) {
         $this->currentUserService = $currentUserService;
-        $this->settingsService = $settingsService;
+        $this->settingsDto = $settingsDto;
         $this->requestStack = $requestStack;
         $this->trans = $trans;
     }
@@ -84,7 +84,7 @@ class TwigUser implements RuntimeExtensionInterface
             || $listing->getUserDeactivated()
             || $listing->getAdminRemoved()
             || $listing->getAdminRejected()
-            || (!$listing->getAdminActivated() && $this->settingsService->getSettingsDto()->getRequireListingAdminActivation())
+            || (!$listing->getAdminActivated() && $this->settingsDto->getRequireListingAdminActivation())
             || $listing->isExpired();
     }
 

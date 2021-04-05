@@ -5,18 +5,14 @@ declare(strict_types=1);
 namespace App\Service\Setting;
 
 use App\Entity\System\Setting;
-use App\Enum\AppCacheEnum;
-use App\Enum\RuntimeCacheEnum;
 use App\Helper\DateHelper;
 use App\Helper\FilePath;
 use App\Helper\StringHelper;
-use App\Service\System\Cache\RuntimeCacheService;
 use App\Service\System\FlashBag\FlashService;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 use Symfony\Component\PropertyInfo\PropertyInfoExtractorInterface;
-use Symfony\Contracts\Cache\CacheInterface;
 
 class SettingsSaveService
 {
@@ -31,19 +27,9 @@ class SettingsSaveService
     private $flashService;
 
     /**
-     * @var RuntimeCacheService
-     */
-    private $runtimeCache;
-
-    /**
      * @var PropertyInfoExtractorInterface
      */
     private $propertyInfoExtractor;
-
-    /**
-     * @var CacheInterface
-     */
-    private $cache;
 
     /**
      * @var EntityManagerInterface
@@ -58,17 +44,13 @@ class SettingsSaveService
     public function __construct(
         SettingsService $settingsService,
         FlashService $flashService,
-        RuntimeCacheService $runtimeCache,
         PropertyInfoExtractorInterface $propertyInfoExtractor,
-        CacheInterface $cache,
         EntityManagerInterface $em,
         LoggerInterface $logger
     ) {
         $this->settingsService = $settingsService;
         $this->flashService = $flashService;
         $this->propertyInfoExtractor = $propertyInfoExtractor;
-        $this->runtimeCache = $runtimeCache;
-        $this->cache = $cache;
         $this->em = $em;
         $this->logger = $logger;
     }
@@ -99,8 +81,7 @@ class SettingsSaveService
         }
 
         $this->em->flush();
-        $this->cache->delete(AppCacheEnum::SETTINGS);
-        $this->runtimeCache->delete(RuntimeCacheEnum::SETTINGS);
+        $this->settingsService->clearCache();
 
         $this->saveConfigFile();
     }

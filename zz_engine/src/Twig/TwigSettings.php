@@ -5,24 +5,23 @@ declare(strict_types=1);
 namespace App\Twig;
 
 use App\Service\Setting\SettingsDto;
-use App\Service\Setting\SettingsService;
 use Twig\Extension\RuntimeExtensionInterface;
 
 class TwigSettings implements RuntimeExtensionInterface
 {
     /**
-     * @var SettingsService
+     * @var SettingsDto
      */
-    private $settingsService;
+    private $settingsDto;
 
-    public function __construct(SettingsService $settingsService)
+    public function __construct(SettingsDto $settingsDto)
     {
-        $this->settingsService = $settingsService;
+        $this->settingsDto = $settingsDto;
     }
 
     public function settings(): SettingsDto
     {
-        return $this->settingsService->getSettingsDto();
+        return $this->settingsDto;
     }
 
     public function thousandsSeparate(int $value): string
@@ -30,8 +29,8 @@ class TwigSettings implements RuntimeExtensionInterface
         return \number_format(
             $value,
             0,
-            $this->settingsService->getSettingsDto()->getDecimalSeparator(),
-            $this->settingsService->getSettingsDto()->getThousandSeparator(),
+            $this->settingsDto->getDecimalSeparator(),
+            $this->settingsDto->getThousandSeparator(),
         );
     }
 
@@ -44,8 +43,8 @@ class TwigSettings implements RuntimeExtensionInterface
         return \number_format(
             $money,
             $decimals,
-            $this->settingsService->getSettingsDto()->getDecimalSeparator(),
-            $this->settingsService->getSettingsDto()->getThousandSeparator(),
+            $this->settingsDto->getDecimalSeparator(),
+            $this->settingsDto->getThousandSeparator(),
         );
     }
 
@@ -58,8 +57,8 @@ class TwigSettings implements RuntimeExtensionInterface
         return \number_format(
             \round($value / 100, 2),
             2,
-            $this->settingsService->getSettingsDto()->getDecimalSeparator(),
-            $this->settingsService->getSettingsDto()->getThousandSeparator(),
+            $this->settingsDto->getDecimalSeparator(),
+            $this->settingsDto->getThousandSeparator(),
         );
     }
 }

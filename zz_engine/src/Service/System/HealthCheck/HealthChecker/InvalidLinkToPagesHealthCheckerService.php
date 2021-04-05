@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Service\System\HealthCheck\HealthChecker;
 
 use App\Entity\Page;
-use App\Service\Setting\SettingsService;
+use App\Service\Setting\SettingsDto;
 use App\Service\System\HealthCheck\Base\HealthCheckerInterface;
 use App\Service\System\HealthCheck\HealthCheckResultDto;
 use Doctrine\DBAL\Connection;
@@ -15,9 +15,9 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class InvalidLinkToPagesHealthCheckerService implements HealthCheckerInterface
 {
     /**
-     * @var SettingsService
+     * @var SettingsDto
      */
-    private $settingsService;
+    private $settingsDto;
 
     /**
      * @var TranslatorInterface
@@ -30,13 +30,13 @@ class InvalidLinkToPagesHealthCheckerService implements HealthCheckerInterface
     private $em;
 
     public function __construct(
-        SettingsService $settingsService,
+        SettingsDto $settingsDto,
         TranslatorInterface $trans,
         EntityManagerInterface $em
     ) {
         $this->em = $em;
         $this->trans = $trans;
-        $this->settingsService = $settingsService;
+        $this->settingsDto = $settingsDto;
     }
 
     public function checkHealth(): HealthCheckResultDto
@@ -72,7 +72,7 @@ class InvalidLinkToPagesHealthCheckerService implements HealthCheckerInterface
      */
     private function getSlugOfRequiredPages(): array
     {
-        $settingsDto = $this->settingsService->getSettingsDto();
+        $settingsDto = $this->settingsDto;
 
         return [
             $settingsDto->getLinkTermsConditions() ?? 'LinkTermsConditions',

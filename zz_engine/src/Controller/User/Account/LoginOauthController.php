@@ -11,7 +11,7 @@ use App\Helper\StringHelper;
 use App\Repository\UserRepository;
 use App\Security\LoginUserProgrammaticallyService;
 use App\Security\UserCheckerService;
-use App\Service\Setting\SettingsService;
+use App\Service\Setting\SettingsDto;
 use App\Service\System\FlashBag\FlashService;
 use App\Service\User\Account\CreateUserService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -55,27 +55,27 @@ class LoginOauthController extends AbstractUserController
         CreateUserService $createUserService,
         UserCheckerService $userChecker,
         UrlGeneratorInterface $urlGenerator,
-        SettingsService $settingsService,
+        SettingsDto $settingsDto,
         FlashService $flashService,
         LoggerInterface $logger
     ): Response {
         $oauthProviderName = $request->get('provider');
         $oauthProviderList = [];
-        if ($settingsService->getSettingsDto()->getGoogleSignInClientSecret()) {
+        if ($settingsDto->getGoogleSignInClientSecret()) {
             $oauthProviderList[static::GOOGLE_PROVIDER] = [
                 'enabled' => true,
                 'keys' => [
-                    'id' => $settingsService->getSettingsDto()->getGoogleSignInClientId(),
-                    'secret' => $settingsService->getSettingsDto()->getGoogleSignInClientSecret(),
+                    'id' => $settingsDto->getGoogleSignInClientId(),
+                    'secret' => $settingsDto->getGoogleSignInClientSecret(),
                 ],
             ];
         }
-        if ($settingsService->getSettingsDto()->getFacebookSignInAppSecret()) {
+        if ($settingsDto->getFacebookSignInAppSecret()) {
             $oauthProviderList[static::FACEBOOK_PROVIDER] = [
                 'enabled' => true,
                 'keys' => [
-                    'id' => $settingsService->getSettingsDto()->getFacebookSignInAppId(),
-                    'secret' => $settingsService->getSettingsDto()->getFacebookSignInAppSecret(),
+                    'id' => $settingsDto->getFacebookSignInAppId(),
+                    'secret' => $settingsDto->getFacebookSignInAppSecret(),
                 ],
             ];
         }

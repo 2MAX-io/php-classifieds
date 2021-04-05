@@ -8,7 +8,7 @@ use App\Entity\Listing;
 use App\Enum\ParamEnum;
 use App\Helper\DateHelper;
 use App\Security\CurrentUserService;
-use App\Service\Setting\SettingsService;
+use App\Service\Setting\SettingsDto;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\HttpFoundation\RequestStack;
 
@@ -20,9 +20,9 @@ class ListingPublicDisplayService
     private $currentUserService;
 
     /**
-     * @var SettingsService
+     * @var SettingsDto
      */
-    private $settingsService;
+    private $settingsDto;
 
     /**
      * @var RequestStack
@@ -31,11 +31,11 @@ class ListingPublicDisplayService
 
     public function __construct(
         CurrentUserService $currentUserService,
-        SettingsService $settingsService,
+        SettingsDto $settingsDto,
         RequestStack $requestStack
     ) {
         $this->currentUserService = $currentUserService;
-        $this->settingsService = $settingsService;
+        $this->settingsDto = $settingsDto;
         $this->requestStack = $requestStack;
     }
 
@@ -48,7 +48,7 @@ class ListingPublicDisplayService
         $qb->andWhere($qb->expr()->eq('listing.userRemoved', 0));
         $qb->andWhere($qb->expr()->eq('listing.adminRejected', 0));
 
-        if ($this->settingsService->getSettingsDto()->getRequireListingAdminActivation()) {
+        if ($this->settingsDto->getRequireListingAdminActivation()) {
             $qb->andWhere($qb->expr()->eq('listing.adminActivated', 1));
         }
 
@@ -65,7 +65,7 @@ class ListingPublicDisplayService
         $orx->add($qb->expr()->eq('listing.userRemoved', 1));
         $orx->add($qb->expr()->eq('listing.adminRejected', 1));
 
-        if ($this->settingsService->getSettingsDto()->getRequireListingAdminActivation()) {
+        if ($this->settingsDto->getRequireListingAdminActivation()) {
             $qb->andWhere($qb->expr()->eq('listing.adminActivated', 0));
         }
 
@@ -89,7 +89,7 @@ class ListingPublicDisplayService
             }
         }
 
-        return ($listing->getAdminActivated() || !$this->settingsService->getSettingsDto()->getRequireListingAdminActivation())
+        return ($listing->getAdminActivated() || !$this->settingsDto->getRequireListingAdminActivation())
             && !$listing->getAdminRemoved()
             && !$listing->getAdminRejected()
         ;

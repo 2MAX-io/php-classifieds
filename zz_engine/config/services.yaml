@@ -76,6 +76,7 @@ services:
         public: true
 
     App\Service\Setting\SettingsDto:
+        lazy: true
         factory: ['@App\Service\Setting\SettingsService', 'getSettingsDto']
 
     App\Service\System\HealthCheck\HealthCheckService:

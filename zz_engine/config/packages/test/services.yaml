@@ -9,3 +9,7 @@ services:
     App\Tests\TestController\:
         resource: '../../../tests/TestController/'
         tags: ['controller.service_arguments']
+
+    App\Service\Setting\SettingsDto:
+        lazy: true
+        factory: ['@App\Service\Setting\SettingsService', 'getSettingsDtoWithoutCache']

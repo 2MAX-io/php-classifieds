@@ -394,7 +394,7 @@ trans.Listing: Listing
 'trans.Listing awaits activation': 'Listing awaits activation'
 'trans.Listing awaits activation, you can extend listing duration, but listing would only appear to the public after acceptation': 'Listing awaits activation, you can extend listing duration, but listing would only appear to the public after acceptation'
 'trans.Listing currently valid until': 'Listing currently valid until'
-'trans.Listing has been deleted': 'Listing has been deleted'
+'trans.Listing has been removed by Administrator': 'Listing has been removed by Administrator'
 'trans.Listing has been featured for 30 minutes, to see how it looks click': 'Listing has been featured for 30 minutes, to see how it looks click'
 'trans.Listing has been rejected': 'Listing has been rejected'
 'trans.Listing has been removed': 'Listing has been removed'

@@ -394,7 +394,7 @@ trans.Listing: Ogłoszenie
 'trans.Listing awaits activation': 'Ogłoszenie oczekuje na aktywacje'
 'trans.Listing awaits activation, you can extend listing duration, but listing would only appear to the public after acceptation': "Ogłoszenie oczekuje na aktywację, możesz je przedłużyć, jednak ogłoszenie ukaże się\_dopiero po akceptacji"
 'trans.Listing currently valid until': 'Ogłoszenie jest obecnie ważne do'
-'trans.Listing has been deleted': 'Ogłoszenie zostało usunięte'
+'trans.Listing has been removed by Administrator': 'Ogłoszenie zostało usunięte przez Administratora'
 'trans.Listing has been featured for 30 minutes, to see how it looks click': 'Ogłoszenie zostało wyróżnione na 30 minut, aby zobaczyć jak wygląda kliknij'
 'trans.Listing has been rejected': 'Ogłoszenie zostało odrzucone'
 'trans.Listing has been removed': 'Ogłoszenie zostało usunięte'

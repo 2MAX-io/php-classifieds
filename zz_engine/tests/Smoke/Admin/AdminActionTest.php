@@ -76,6 +76,16 @@ class AdminActionTest extends AppIntegrationTestCase implements SmokeTestForRout
 
         self::assertEquals(302, $response->getStatusCode());
         self::assertEquals('/', $client->getResponse()->headers->get('location'));
+
+        // check listing displayed correctly
+        self::ensureKernelShutdown();
+        $client = static::createClient();
+        $client->request('GET', $this->getRouter()->generate('app_listing_show', [
+            'id' => $listingId,
+            'slug' => 'test-listing-title',
+        ]));
+        self::assertStringContainsString('Listing has been removed by Administrator', (string) $client->getResponse()->getContent());
+        self::assertStringNotContainsString('Show contact information', (string) $client->getResponse()->getContent());
     }
 
     public function testPullUp(): void

@@ -31,6 +31,16 @@ class ListingRejectControllerTest extends AppIntegrationTestCase
         self::assertSame(302, $client->getResponse()->getStatusCode());
         $client->followRedirect();
         self::assertSame('app_admin_listing_reject', $client->getRequest()->get('_route'));
+
+        // check listing displayed correctly
+        self::ensureKernelShutdown();
+        $client = static::createClient();
+        $client->request('GET', $this->getRouter()->generate('app_listing_show', [
+            'id' => 1,
+            'slug' => 'test-listing-title',
+        ]));
+        self::assertStringContainsString('Listing has been rejected', (string) $client->getResponse()->getContent());
+        self::assertStringNotContainsString('Show contact information', (string) $client->getResponse()->getContent());
     }
 
     public function testWithReason(): void

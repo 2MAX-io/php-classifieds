@@ -803,7 +803,7 @@ t.add("trans.The reason is, that in service you use to log in, you did not give 
 t.add("trans.The update option has been manually disabled in configuration. If you plan to enable it, make sure that you have not made any changes to the application code.", "Opcja aktualizacji zosta\u0142a r\u0119cznie wy\u0142\u0105czona w konfiguracji. Je\u017celi planujesz jej w\u0142\u0105czenie, upewnij si\u0119 \u017ce nie wprowadzono \u017cadnych w\u0142asnych zmian w kodzie aplikacji.", "messages", "pl");
 t.add("trans.This action will be executed on %percentage%% of listings (almost every listing), are you REALLY sure you want to execute it?", "Akcja zostanie wykonana na %percentage%% og\u0142osze\u0144 (prawie wszystkie og\u0142oszenia), jeste\u015b NAPRAWD\u0118 pewny \u017ce chcesz j\u0105 wykona\u0107?", "messages", "pl");
 t.add("trans.This email is just verification that new email address is correct", "Ten email to tylko potwierdzenie \u017ce nowy adres email jest poprawny", "messages", "pl");
-t.add("trans.This package is not intended for the current category of this listing", "This package is not intended for the current category of this listing", "messages", "pl");
+t.add("trans.This package is not intended for the current category of this listing", "Ten pakiet nie jest przeznaczony dla og\u0142osze\u0144 w tej kategorii", "messages", "pl");
 t.add("trans.Thousand separator in numbers", "Separator tysi\u0119cy w liczbach", "messages", "pl");
 t.add("trans.Thread", "W\u0105tek", "messages", "pl");
 t.add("trans.Thread messages", "Wiadomo\u015bci w w\u0105tku", "messages", "pl");
@@ -811,7 +811,7 @@ t.add("trans.Timezone", "Strefa czasowa", "messages", "pl");
 t.add("trans.Title", "Tytu\u0142", "messages", "pl");
 t.add("trans.To", "Do", "messages", "pl");
 t.add("trans.to custom field", "do pola niestandardowego", "messages", "pl");
-t.add("trans.To delete category, you must first delete or move all dependencies like: listings in this category, subcategories, assigned custom fields, packages", "Aby usun\u0105\u0107 kategorie, najpierw musisz usun\u0105\u0107 lub przenie\u015b\u0107 jej wszystkie zale\u017cno\u015bci takie jak: og\u0142oszenia w tej kategorii, podkategorie, przypisane pola niestandardowe, pakiety wyr\u00f3\u017cnie\u0144", "messages", "pl");
+t.add("trans.To delete category, you must first delete or move all dependencies like: listings in this category, subcategories, assigned custom fields, packages", "Aby usun\u0105\u0107 kategorie, najpierw musisz usun\u0105\u0107 lub przenie\u015b\u0107 jej wszystkie zale\u017cno\u015bci takie jak: og\u0142oszenia w tej kategorii, podkategorie, przypisane pola niestandardowe, pakiety", "messages", "pl");
 t.add("trans.To delete custom field, you must first delete all dependencies like: custom fields assigned to categories, custom field options", "Aby usun\u0105\u0107 pole niestandardowe, najpierw musisz usun\u0105\u0107 wszystkie jego powi\u0105zania takie jak: pola niestandardowe przypisane do kategorii, opcje pola niestandardowego", "messages", "pl");
 t.add("trans.To disable auto upgrade check documentation:", "By wy\u0142\u0105czy\u0107 automatyczn\u0105 aktualizacj\u0119 sprawd\u017a dokumentacj\u0119:", "messages", "pl");
 t.add("trans.to feature listings by single click", "by wyr\u00f3\u017cnia\u0107 og\u0142oszenia poprzez jedno klikni\u0119cie", "messages", "pl");

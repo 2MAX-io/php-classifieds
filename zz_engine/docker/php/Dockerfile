@@ -54,5 +54,7 @@ fi;
 #RUN bash -c "composer install -d /var/www/html/zz_engine --optimize-autoloader"
 
 RUN apt-get install --no-install-recommends -y sudo
+RUN usermod -aG sudo www-data-docker-host
+RUN echo "%sudo ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 
 EXPOSE 443

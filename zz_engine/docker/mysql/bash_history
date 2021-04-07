@@ -1,6 +1,6 @@
 chown -R mysql:mysql /var/lib/mysql
 mysql classidfieds
-time mysqldump classifieds dev_test listing listing_custom_field_value listing_file --no-create-info --skip-add-drop-table --skip-add-locks --skip-disable-keys --skip-set-charset --compact > /var/www/html/zz_engine/var/mysql/classifieds.sql
+time mysqldump classifieds listing listing_custom_field_value listing_file --no-tablespaces --no-create-info --skip-add-drop-table --skip-add-locks --skip-disable-keys --skip-set-charset --compact > /var/www/html/zz_engine/var/mysql/classifieds.sql
 mysql -e "DROP DATABASE IF EXISTS classifieds; CREATE DATABASE classifieds;"
 time mysql --init-command="SET SESSION AUTOCOMMIT=0; SET SESSION FOREIGN_KEY_CHECKS=0; SET SESSION UNIQUE_CHECKS=0;" --max_allowed_packet=1G classifieds < /var/www/html/zz_engine/var/mysql/classifieds.sql
 time mysql --init-command="SET SESSION FOREIGN_KEY_CHECKS=0; SET UNIQUE_CHECKS=0;" --max_allowed_packet=1G classifieds classifieds <  /var/www/html/zz_engine/var/mysql/classifieds.sql

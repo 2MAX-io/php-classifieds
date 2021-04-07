@@ -123,7 +123,7 @@ class FilesystemChecker
             FilePath::getProjectDir().'/static/resized',
             FilePath::getProjectDir().'/static/tmp/file_upload',
             FilePath::getProjectDir().'/zz_engine/var/cache',
-            FilePath::getProjectDir().'/zz_engine/var/cache/upgrade',
+            FilePath::getProjectDir().'/zz_engine/var/system/upgrade',
             FilePath::getProjectDir().'/zz_engine/var/cache/prod',
             FilePath::getProjectDir().'/zz_engine/var/log',
         ];

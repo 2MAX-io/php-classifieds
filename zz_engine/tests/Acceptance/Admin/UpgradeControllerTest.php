@@ -25,7 +25,7 @@ class UpgradeControllerTest extends AppIntegrationTestCase
         $this->clearDatabase();
         $this->loginAdmin($client);
 
-        $testUpgradedFilePath = FilePath::getProjectDir().'/zz_engine/var/cache/upgrade/test-upgrade-executed.php';
+        $testUpgradedFilePath = FilePath::getProjectDir().'/zz_engine/var/system/upgrade/test-upgrade-executed.php';
         if (\file_exists($testUpgradedFilePath)) {
             \unlink($testUpgradedFilePath);
         }

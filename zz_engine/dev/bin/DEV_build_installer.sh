@@ -18,8 +18,8 @@ rm -r ${INSTALLER_DIR}/zz_engine/docker
 cp ${PROJECT_DIR}/install/data/example/large_git_ignored/* ${INSTALLER_DIR}/install/data/example/large_git_ignored
 
 mkdir -p ${INSTALLER_DIR}/zz_engine/var/cache
-mkdir -p ${INSTALLER_DIR}/zz_engine/var/cache/upgrade
 mkdir -p ${INSTALLER_DIR}/zz_engine/var/cache/prod
+mkdir -p ${INSTALLER_DIR}/zz_engine/var/system/upgrade
 
 cd ${INSTALLER_DIR}
 

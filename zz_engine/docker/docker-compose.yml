@@ -26,7 +26,7 @@ services:
             PROMPT_COMMAND: 'history -a'
             APACHE_RUN_USER: '#1000'
             APACHE_RUN_GROUP: '#33'
-            COMPOSER_HOME: '/var/www/html/zz_engine/var/cache/zz_composer'
+            COMPOSER_HOME: '/var/www/html/zz_engine/var/system/zz_composer_cache'
             WITH_XDEBUG: 'false'
         stdin_open: true
         tty: true

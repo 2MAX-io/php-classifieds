@@ -42,7 +42,7 @@ class FilePath
 
     public static function getUpgradeDir(): string
     {
-        return self::getPath(__DIR__.'/../../../zz_engine/var/cache/upgrade');
+        return self::getPath(__DIR__.'/../../../zz_engine/var/system/upgrade');
     }
 
     public static function getProjectDir(): string

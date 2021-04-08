@@ -45,7 +45,7 @@ class RegisterAccountTest extends AppIntegrationTestCase implements SmokeTestFor
 
         // get confirmation link from email message
         /** @var TemplatedEmail $message */
-        $message = $this->getTestContainer()->get('mailer.logger_message_listener')->getEvents()->getMessages()[0];
+        $message = self::getMailerMessage();
         $emailCrawler = new Crawler((string) $message->getHtmlBody());
         $confirmUrl = $emailCrawler->selectLink('I confirm registration')->link()->getUri();
 

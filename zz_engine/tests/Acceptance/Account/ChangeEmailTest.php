@@ -45,9 +45,9 @@ class ChangeEmailTest extends AppIntegrationTestCase implements SmokeTestForRout
         self::assertSame(302, $response->getStatusCode());
 
         // get confirmation link from email message
-        /** @var TemplatedEmail $message */
-        $message = $this->getTestContainer()->get('mailer.logger_message_listener')->getEvents()->getMessages()[0];
-        $emailCrawler = new Crawler((string) $message->getHtmlBody());
+        /** @var TemplatedEmail $email */
+        $email = self::getMailerMessage();
+        $emailCrawler = new Crawler((string) $email->getHtmlBody());
         $confirmUrl = $emailCrawler->selectLink('I confirm change of email address to: '.static::NEW_EMAIL)->link()->getUri();
 
         // follow redirect after submit

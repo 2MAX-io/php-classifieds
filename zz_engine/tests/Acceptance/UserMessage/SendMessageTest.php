@@ -68,7 +68,7 @@ class SendMessageTest extends AppIntegrationTestCase implements SmokeTestForRout
 
         // message send to correct user
         /** @var TemplatedEmail $message */
-        $message = $this->getTestContainer()->get('mailer.logger_message_listener')->getEvents()->getMessages()[0];
+        $message = self::getMailerMessage();
         self::assertSame(TestUserLoginEnum::LOGIN2, $message->getTo()[0]->getAddress());
         self::assertNotSame($senderEmail, $message->getTo()[0]->getAddress());
     }
@@ -102,7 +102,7 @@ class SendMessageTest extends AppIntegrationTestCase implements SmokeTestForRout
 
         // message send to correct user
         /** @var TemplatedEmail $message */
-        $message = $this->getTestContainer()->get('mailer.logger_message_listener')->getEvents()->getMessages()[0];
+        $message = self::getMailerMessage();
         self::assertSame(TestUserLoginEnum::LOGIN, $message->getTo()[0]->getAddress());
         self::assertNotSame($senderEmail, $message->getTo()[0]->getAddress());
     }

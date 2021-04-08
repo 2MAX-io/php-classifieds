@@ -20,12 +20,12 @@ if (!empty($this->settingsDto->getLicenseValid())) {
 
 <!-- DO NOT REMOVE INFORMATION BELLOW WITHOUT HAVING VALID LICENSE -->
 <!-- information bellow can only be removed when having valid license for 2MAX.io PHP Classified Ads -->
-<!-- no commercial and for profit use including display of advertisement allowed until license has been obtained -->
+<!-- no commercial and for profit use including display of advertisement allowed until license has been bought -->
 <div class="container-fluid container-lg">
     <div class="alert alert-dark my-4">
         <h2 class="d-none d-lg-inline">Preview version of 2MAX.io PHP Classified Ads</h2>
 
-        <div class="d-none d-lg-block mb-2">no commercial and for profit use including display of advertisement allowed until license has been obtained</div>
+        <div class="d-none d-lg-block mb-2">no commercial and for profit use including display of advertisement allowed until license has been bought</div>
 
         <a href="https://php-classified-ads.2max.io/">
             Buy license for 2MAX.io PHP Classified Ads here

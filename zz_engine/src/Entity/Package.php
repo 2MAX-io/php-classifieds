@@ -30,9 +30,9 @@ class Package
     private $name;
 
     /**
-     * @var string
+     * @var string|null
      *
-     * @ORM\Column(type="string", length=70, nullable=false)
+     * @ORM\Column(type="string", length=70, nullable=true)
      */
     private $adminName;
 
@@ -41,12 +41,19 @@ class Package
      *
      * @ORM\Column(type="boolean", nullable=false)
      */
-    private $defaultPackage;
+    private $defaultPackage = true;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(type="boolean", nullable=false)
+     */
+    private $demoPackage = false;
 
     /**
      * @var int
      *
-     * @ORM\Column(type="integer", nullable=false)
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $price;
 
@@ -55,7 +62,14 @@ class Package
      *
      * @ORM\Column(type="smallint", nullable=false, options={"unsigned"=true})
      */
-    private $daysFeaturedExpire;
+    private $daysFeaturedExpire = 0;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(type="integer", nullable=false, options={"unsigned"=true})
+     */
+    private $secondsFeaturedExpire = 0;
 
     /**
      * @var int
@@ -63,6 +77,41 @@ class Package
      * @ORM\Column(type="smallint", nullable=false, options={"unsigned"=true})
      */
     private $daysListingExpire;
+
+    /**
+     * @var int|null
+     *
+     * @ORM\Column(type="smallint", nullable=true, options={"unsigned"=true})
+     */
+    private $pullUpOlderThanDays;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(type="smallint", nullable=false, options={"unsigned"=true})
+     */
+    private $listingFeaturedPriority = 0;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(type="boolean", nullable=false)
+     */
+    private $showPrice = true;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(type="boolean", nullable=false)
+     */
+    private $showExpirationDays = true;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(type="boolean", nullable=false)
+     */
+    private $showFeaturedDays = true;
 
     /**
      * @var bool
@@ -107,6 +156,10 @@ class Package
 
     public function getPriceFloat(): ?float
     {
+        if (null === $this->price) {
+            return null;
+        }
+
         return $this->price / 100;
     }
 
@@ -116,6 +169,16 @@ class Package
         $this->price = (int) ($price * 100);
 
         return $this;
+    }
+
+    public function isPaidPackage(): bool
+    {
+        return $this->getPrice() > 0;
+    }
+
+    public function calculateSecondsFeaturedExpire(): int
+    {
+        return $this->getSecondsFeaturedExpire() + ($this->getDaysFeaturedExpire() * 3600 * 24);
     }
 
     public function getId(): ?int
@@ -279,5 +342,87 @@ class Package
         $this->removed = $removed;
 
         return $this;
+    }
+
+    public function getPullUpOlderThanDays(): ?int
+    {
+        return $this->pullUpOlderThanDays;
+    }
+
+    public function setPullUpOlderThanDays(?int $pullUpOlderThanDays): void
+    {
+        $this->pullUpOlderThanDays = $pullUpOlderThanDays;
+    }
+
+    public function getListingFeaturedPriority(): int
+    {
+        return $this->listingFeaturedPriority;
+    }
+
+    public function setListingFeaturedPriority(int $listingFeaturedPriority): void
+    {
+        $this->listingFeaturedPriority = $listingFeaturedPriority;
+    }
+
+    public function getDemoPackage(): bool
+    {
+        return $this->demoPackage;
+    }
+
+    public function setDemoPackage(bool $demoPackage): void
+    {
+        $this->demoPackage = $demoPackage;
+    }
+
+    public function getSecondsFeaturedExpire(): int
+    {
+        return $this->secondsFeaturedExpire;
+    }
+
+    public function setSecondsFeaturedExpire(int $secondsFeaturedExpire): void
+    {
+        $this->secondsFeaturedExpire = $secondsFeaturedExpire;
+    }
+
+    public function getShowPrice(): bool
+    {
+        return $this->showPrice;
+    }
+
+    public function setShowPrice(bool $showPrice): void
+    {
+        $this->showPrice = $showPrice;
+    }
+
+    public function getShowFeaturedDays(): bool
+    {
+        return $this->showFeaturedDays;
+    }
+
+    public function setShowFeaturedDays(bool $showFeaturedDays): void
+    {
+        $this->showFeaturedDays = $showFeaturedDays;
+    }
+
+    public function removePaymentForPackage(PaymentForPackage $paymentForPackage): self
+    {
+        // set the owning side to null (unless already changed)
+        if ($this->paymentForPackage->removeElement($paymentForPackage)
+            && $paymentForPackage->getPackage() === $this
+        ) {
+            $paymentForPackage->setPackage(null);
+        }
+
+        return $this;
+    }
+
+    public function getShowExpirationDays(): bool
+    {
+        return $this->showExpirationDays;
+    }
+
+    public function setShowExpirationDays(bool $showExpirationDays): void
+    {
+        $this->showExpirationDays = $showExpirationDays;
     }
 }

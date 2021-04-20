@@ -7,6 +7,7 @@ namespace App\Service\Listing\Save\Dto;
 use App\Entity\CustomFieldOption;
 use App\Entity\Listing;
 use App\Entity\ListingCustomFieldValue;
+use App\Entity\Package;
 use App\Service\Listing\CustomField\Dto\CustomFieldFromRequestDto;
 
 class ListingSaveDto
@@ -15,6 +16,11 @@ class ListingSaveDto
      * @var Listing
      */
     private $listing;
+
+    /**
+     * @var Package|null
+     */
+    private $package;
 
     /**
      * @var array<string,array|int|string>
@@ -145,5 +151,24 @@ class ListingSaveDto
         }
 
         return null;
+    }
+
+    public function getPackageNotNull(): Package
+    {
+        if (null === $this->package) {
+            throw new \RuntimeException('package not found');
+        }
+
+        return $this->package;
+    }
+
+    public function getPackage(): ?Package
+    {
+        return $this->package;
+    }
+
+    public function setPackage(?Package $package): void
+    {
+        $this->package = $package;
     }
 }

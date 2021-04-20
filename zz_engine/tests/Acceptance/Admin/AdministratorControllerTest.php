@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\Acceptance\Admin;
 
 use App\Tests\Base\AppIntegrationTestCase;
-use App\Tests\Enum\TestUserLoginEnum;
+use App\Tests\Enum\TestDataEnum;
 use App\Tests\Traits\DatabaseTestTrait;
 use App\Tests\Traits\LoginTestTrait;
 use App\Tests\Traits\RouterTestTrait;
@@ -27,7 +27,7 @@ class AdministratorControllerTest extends AppIntegrationTestCase
 
         $client->request('GET', $this->getRouter()->generate('app_admin_administrator_list'));
         self::assertSame(200, $client->getResponse()->getStatusCode());
-        self::assertStringContainsString(TestUserLoginEnum::LOGIN_ADMIN, (string) $client->getResponse()->getContent());
+        self::assertStringContainsString(TestDataEnum::LOGIN_ADMIN, (string) $client->getResponse()->getContent());
 
         // should not find
         $client->request('GET', $this->getRouter()->generate('app_admin_administrator_list', [
@@ -38,9 +38,9 @@ class AdministratorControllerTest extends AppIntegrationTestCase
 
         // should find
         $client->request('GET', $this->getRouter()->generate('app_admin_administrator_list', [
-            'query' => TestUserLoginEnum::LOGIN_ADMIN,
+            'query' => TestDataEnum::LOGIN_ADMIN,
         ]));
         self::assertSame(200, $client->getResponse()->getStatusCode());
-        self::assertStringContainsString(TestUserLoginEnum::LOGIN_ADMIN, (string) $client->getResponse()->getContent());
+        self::assertStringContainsString(TestDataEnum::LOGIN_ADMIN, (string) $client->getResponse()->getContent());
     }
 }

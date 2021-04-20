@@ -6,7 +6,7 @@ namespace App\Tests\Acceptance\Account;
 
 use App\Controller\User\Account\LoginOauthController;
 use App\Tests\Base\AppIntegrationTestCase;
-use App\Tests\Enum\TestUserLoginEnum;
+use App\Tests\Enum\TestDataEnum;
 use App\Tests\Traits\DatabaseTestTrait;
 use App\Tests\Traits\LoginTestTrait;
 use App\Tests\Traits\RouterTestTrait;
@@ -34,7 +34,7 @@ class LoginOauthControllerTest extends AppIntegrationTestCase
             $authenticationStub->method('isConnected')->willReturn(true);
             $authenticationStub->method('getUserProfile')->willReturnCallback(function () {
                 $profile = new Profile();
-                $profile->emailVerified = TestUserLoginEnum::LOGIN;
+                $profile->emailVerified = TestDataEnum::LOGIN;
 
                 return $profile;
             });

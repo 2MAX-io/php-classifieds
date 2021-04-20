@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Controller\User\Payment\Invoice;
 
 use App\Controller\User\Base\AbstractUserController;
-use App\Form\UserInvoiceDetailsType;
+use App\Form\Payment\UserInvoiceDetailsType;
 use App\Security\CurrentUserService;
 use App\Service\System\FlashBag\FlashService;
 use App\Service\User\Invoice\UserInvoiceDetailsService;

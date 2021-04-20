@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\Acceptance\Account;
 
 use App\Tests\Base\AppIntegrationTestCase;
-use App\Tests\Enum\TestUserLoginEnum;
+use App\Tests\Enum\TestDataEnum;
 use App\Tests\Smoke\Base\SmokeTestForRouteInterface;
 use App\Tests\Traits\DatabaseTestTrait;
 use App\Tests\Traits\LoginTestTrait;
@@ -37,7 +37,7 @@ class ChangeEmailTest extends AppIntegrationTestCase implements SmokeTestForRout
         // change email
         $client->request('GET', $this->getRouter()->generate('app_user_change_email'));
         $client->submitForm('Change email', [
-            'change_email[currentPassword]' => TestUserLoginEnum::PASSWORD,
+            'change_email[currentPassword]' => TestDataEnum::PASSWORD,
             'change_email[newEmail][first]' => static::NEW_EMAIL,
             'change_email[newEmail][second]' => static::NEW_EMAIL,
         ]);
@@ -69,7 +69,7 @@ class ChangeEmailTest extends AppIntegrationTestCase implements SmokeTestForRout
         // login
         $client->submitForm('Sign in', [
             'email' => static::NEW_EMAIL,
-            'password' => TestUserLoginEnum::PASSWORD,
+            'password' => TestDataEnum::PASSWORD,
         ]);
         self::assertSame(302, $response->getStatusCode());
         $client->followRedirect();

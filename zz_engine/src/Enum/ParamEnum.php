@@ -23,6 +23,7 @@ class ParamEnum
     public const LISTING_LIST = 'listingList';
     public const LISTING_FILES = 'listingFiles';
     public const CUSTOM_FIELD = 'customField';
+    public const PACKAGE_LIST = 'packageList';
     public const SHOW_CONTACT_HTML = 'showContactHtml';
     public const SHOW_LISTING_PREVIEW_FOR_OWNER = 'showListingPreviewForOwner';
     public const PAYMENT_APP_TOKEN = 'paymentAppToken';

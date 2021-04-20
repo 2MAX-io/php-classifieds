@@ -8,7 +8,7 @@ use App\Entity\System\Admin;
 use App\Exception\UserVisibleException;
 use App\Repository\UserRepository;
 use App\Security\LoginUserProgrammaticallyService;
-use App\Tests\Enum\TestUserLoginEnum;
+use App\Tests\Enum\TestDataEnum;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -55,7 +55,7 @@ class TestLoginProgrammaticallyController extends AbstractController
         }
 
         $this->loginUserProgrammaticallyService->loginUser($this->userRepository->findOneBy([
-            'email' => TestUserLoginEnum::LOGIN,
+            'email' => TestDataEnum::LOGIN,
         ]), $request);
 
         return new Response('ok');
@@ -74,7 +74,7 @@ class TestLoginProgrammaticallyController extends AbstractController
         }
 
         $this->loginUserProgrammaticallyService->loginAdmin($this->em->getRepository(Admin::class)->findOneBy([
-            'email' => TestUserLoginEnum::LOGIN_ADMIN,
+            'email' => TestDataEnum::LOGIN_ADMIN,
         ]), $request);
 
         return new Response('ok');

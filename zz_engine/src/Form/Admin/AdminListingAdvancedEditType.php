@@ -29,8 +29,8 @@ class AdminListingAdvancedEditType extends AbstractType
             'required' => false,
             'label' => 'trans.Featured until',
         ]);
-        $builder->add('featuredWeight', IntegerType::class, [
-            'label' => 'trans.Featured weight',
+        $builder->add('featuredPriority', IntegerType::class, [
+            'label' => 'trans.Featured priority',
             'constraints' => [
                 new NotBlank(),
             ],
@@ -42,8 +42,8 @@ class AdminListingAdvancedEditType extends AbstractType
                 new LessThan('+2 day'),
             ],
         ]);
-        $builder->add('validUntilDate', AppDateTimeType::class, [
-            'label' => 'trans.Valid until',
+        $builder->add('expirationDate', AppDateTimeType::class, [
+            'label' => 'trans.Expiration date',
             'constraints' => [
                 new NotBlank(),
             ],

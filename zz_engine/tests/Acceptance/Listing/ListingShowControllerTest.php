@@ -33,7 +33,7 @@ class ListingShowControllerTest extends AppIntegrationTestCase
 
         // set as expired
         $this->executeSql(/** @lang MySQL */ <<<'EOT'
-            UPDATE listing SET valid_until_date = '2010-01-01 00:00:00' WHERE id = 1
+            UPDATE listing SET expiration_date = '2010-01-01 00:00:00' WHERE id = 1
 EOT);
         $client->request('GET', $this->getRouter()->generate('app_listing_show', [
             'id' => 1,

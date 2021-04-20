@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\Acceptance\Account;
 
 use App\Tests\Base\AppIntegrationTestCase;
-use App\Tests\Enum\TestUserLoginEnum;
+use App\Tests\Enum\TestDataEnum;
 use App\Tests\Smoke\Base\SmokeTestForRouteInterface;
 use App\Tests\Traits\DatabaseTestTrait;
 use App\Tests\Traits\LoginTestTrait;
@@ -35,7 +35,7 @@ class RemindPasswordTest extends AppIntegrationTestCase implements SmokeTestForR
         // remind password
         $client->request('GET', $this->getRouter()->generate('app_remind_password'));
         $client->submitForm('Remind password', [
-            'remind_password[email]' => TestUserLoginEnum::LOGIN,
+            'remind_password[email]' => TestDataEnum::LOGIN,
         ]);
         $response = $client->getResponse();
         self::assertSame(302, $response->getStatusCode());
@@ -64,7 +64,7 @@ class RemindPasswordTest extends AppIntegrationTestCase implements SmokeTestForR
 
         // login
         $client->submitForm('Sign in', [
-            'email' => TestUserLoginEnum::LOGIN,
+            'email' => TestDataEnum::LOGIN,
             'password' => $newPassword,
         ]);
         self::assertSame(302, $response->getStatusCode());

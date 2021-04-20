@@ -4,8 +4,8 @@ Hour: Godzina
 Minute: Minuta
 Month: Miesiąc
 Year: Rok
-'{1}trans.Feature for one day for %price%: %listing%?|]1,Inf[ Feature for %featuredDays% days for %price%: %listing%?': '{1}Wyróżnić na jeden dzień za %price%: %listing%?|]1,Inf[ Wyróżnić na %featuredDays% dni za %price%: %listing%?'
-'{1}trans.Feature for one day for %price%|]1,Inf[ Feature for %featuredDays% days for %price%': '{1} Wyróżnij na jeden dzień za %price%|]1,Inf[ Wyróżnij na %featuredDays% dni za %price%'
+'{1}trans.Feature for one day|]1,Inf[ Feature for %featuredDays% days': '{1} Wyróżnij na jeden dzień|]1,Inf[ Wyróżnij na %featuredDays%'
+'{1}trans.One day until expiration|]1,Inf[ %expirationDays% days until expiration': '{1}trans.Jeden dzień do wygaśnięcia|]1,Inf[ %expirationDays% dni do wygaśnięcia'
 trans.customFieldType.CHECKBOX_MULTIPLE: 'Pola do zaznaczenia'
 trans.customFieldType.INTEGER_RANGE: 'Pole z liczbą'
 trans.customFieldType.SELECT_AS_CHECKBOXES: 'Pola do zaznaczenia w filtrach, pojedyncze pole wyboru w edycji'
@@ -62,11 +62,7 @@ trans.priceFor.PRICE_FOR_YEAR: 'za rok'
 'trans.${name} is too large! Please choose a file up to ${fileMaxSize}MB': '${name} jest za duży! Wybierz plik do ${fileMaxSize}MB'
 'trans.%year% would be replaced to current year': '%year% zostanie zmieniony na obecny rok'
 'trans.(this mailbox)': '(ta skrzynka)'
-'trans.1 month': miesiąc
-'trans.1 week': tydzień
-'trans.2 weeks': '2 tygodnie'
 'trans.3 letters, ISO 4217 code': '3 znaki, kod ISO_4217'
-'trans.3 weeks': '3 tygodnie'
 trans.About: 'O stronie'
 'trans.Abuse reports for lisings': 'Zgłoszenia naruszeń dla ogłoszeń'
 'trans.account login, seller id, p24_merchant_id, digits': 'login do konta, seller id, p24_merchant_id, cyfry'
@@ -103,7 +99,6 @@ trans.Administrators: Administratorzy
 'trans.Advanced listing edit': 'Zaawansowana edycja ogłoszenia'
 trans.Advertisement: Reklama
 'trans.Advertisement zone id': 'ID strefy reklamowej'
-'trans.After topping up, you can feature listing using green buttons on feature listing page. They would use your account balance for payment, instead of redirecting you to payment page.': 'Po doładowaniu konta, będziesz mógł wyróżniać ogłoszenia używając zielonych przycisków na stronie wyróżnienia ogłoszenia. Będą one wykorzystywać saldo konta do płatności, zamiast przekierowywać do płatności.'
 'trans.ALERT! security alert, not allowed file is publicly accessible %url%': 'ALERT! alarm bezpieczeństwa, niedozwolony plik jest dostępny publicznie %url%'
 'trans.ALERT! security can not be checked, required file not found: %file%': 'ALARM! zabezpieczenia nie mogą być sprawdzone, wymagany plik nie został znaleziony: %file%'
 'trans.All categories': 'Wszystkie kategorie'
@@ -168,7 +163,6 @@ trans.Copy: Kopiuj
 'trans.Copy to clipboard': 'Skopiuj do schowka'
 'trans.Could not connect to: %url%, during security audit, if testing on local machine you can ignore this': 'Nie można było się połączyć z adresem: %url%, podczas audytu bezpieczeństwa, jeżeli testujesz na lokalnej maszynie możesz to zignorować'
 'trans.Could not process payment, if you have been charged and did not receive service, please contact us': 'Nie można było obsłużyć płatności, jeżeli zapłaciłeś i nie otrzymałeś usługi, prosimy o kontakt z nami'
-'trans.Counting from today, extend by': 'Licząc od dziś, przedłuż o'
 trans.Country: 'Kraj '
 'trans.CRC key from account details': 'klucz CRC z szczegółów konta'
 'trans.Create Listing': 'Dodaj ogłoszenie'
@@ -229,7 +223,7 @@ trans.Download: Pobierz
 'trans.Do you confirm logout?': 'Potwierdzasz wylogowanie?'
 'trans.Do you feature frequently?': 'Często wyróżniasz ogłoszenia?'
 'trans.Do you feature many listings?': 'Wyróżniasz wiele ogłoszeń?'
-'trans.Do you feature many listings or feature frequently? After account top up, you will be able to feature listing by one click, using your account balance. Without need to make payment for every single listing separately': 'Wyróżniasz wiele ogłoszeń lub wyróżniasz często? Po doładowaniu konta, będziesz mógł wyróżniać ogłoszenia poprzez jedno kliknięcie, używając salda Twojego konta. Bez potrzeby wykonywania płatności dla każdego ogłoszenia z osobna.'
+'trans.After account top up, you will be able to feature listing by one click, using your account balance. Without need to make payment for every single listing separately': 'Po doładowaniu konta, będziesz mógł wyróżniać ogłoszenia poprzez jedno kliknięcie, używając salda Twojego konta. Bez potrzeby wykonywania płatności dla każdego ogłoszenia z osobna.'
 'trans.Do you need invoice for your company?': 'Potrzebujesz faktury dla swojej firmy?'
 'trans.Drop the files here to Upload': 'Upuść pliki tutaj aby je wgrać'
 trans.Duration: Czas
@@ -283,20 +277,18 @@ trans.Facebook: Facebook
 'trans.Failed to create payment, please try again later': 'Niepowodzenie przy tworzeniu płatności, spróbuj ponownie później'
 'trans.Failed to get information about new version. Try again later.': 'Nie udało się pobrać informacji o nowej wersji. Spróbuj ponownie później.'
 trans.Feature: Wyróżnij
-'trans.Feature as a demonstration for 30 minutes': 'Wyróżnij demonstracyjnie na 30 minut'
-'trans.Feature as a demonstration for 30 minutes: %listing%?': 'Wyróżnić demonstracyjnie na 30 minut: %listing%?'
 trans.Featured: Wyróżnione
 'trans.Featured listing?': 'Wyróżnione ogłoszenie?'
 'trans.Featured listings': 'Wyróżnionych ogłoszeń'
 'trans.Package': 'Pakiet'
 'trans.Packages': 'Pakiety'
 'trans.Featured until': 'Wyróżnione do'
-'trans.Featured weight': 'Waga wyróżnienia'
+'trans.Featured priority': 'Waga wyróżnienia'
 'trans.Feature for week': 'Wyróżnij na tydzień'
 'trans.Feature listing': 'Wyróżnij ogłoszenie'
 'trans.Feature this listing': 'Wyróżnij to ogłoszenie'
-'trans.Featuring of listing: %listingTitle%, using package: %packageName%': 'Wyróżnienie ogłoszenia: %listingTitle%, używając pakietu: %packageName%'
-'trans.Featuring of listing: %listingTitle%, using package: %packageName%, payment acceptance': 'Wyróżnienie ogłoszenia: %listingTitle%, używając pakietu: %packageName%, przyjęcie płatności'
+'trans.Activate package: %packageName%, for listing: %listingTitle%': 'Aktywacja pakietu: %packageName%, dla ogłoszenia: %packageName%'
+'trans.Activate package: %packageName%, for listing: %listingTitle%, payment acceptance': 'Aktywacja pakietu: %packageName%, dla ogłoszenia: %packageName%, przyjęcie płatności'
 trans.feet: stóp
 trans.file: plik
 trans.files: pliki
@@ -311,9 +303,7 @@ trans.Filters: Filtruj
 'trans.First waiting for Activation': 'Pierwsze oczekujące'
 'trans.for category': 'dla kategorii'
 'trans.for custom field': 'dla pola niestandardowego'
-'trans.for free': 'za darmo'
 'trans.Forgot password?': 'Nie pamiętasz hasła?'
-'trans.For how long listing should be published?': 'Na jak długo opublikować ogłoszenie?'
 'trans.for individual purchases': 'dla zakupów prywatnych'
 trans.From: Od
 'trans.From custom field': 'Z pola niestandardowego'
@@ -393,9 +383,8 @@ trans.List: Lista
 trans.Listing: Ogłoszenie
 'trans.Listing awaits activation': 'Ogłoszenie oczekuje na aktywacje'
 'trans.Listing awaits activation, you can extend listing duration, but listing would only appear to the public after acceptation': "Ogłoszenie oczekuje na aktywację, możesz je przedłużyć, jednak ogłoszenie ukaże się\_dopiero po akceptacji"
-'trans.Listing currently valid until': 'Ogłoszenie jest obecnie ważne do'
 'trans.Listing has been removed by Administrator': 'Ogłoszenie zostało usunięte przez Administratora'
-'trans.Listing has been featured for 30 minutes, to see how it looks click': 'Ogłoszenie zostało wyróżnione na 30 minut, aby zobaczyć jak wygląda kliknij'
+'trans.Listing has been featured as demonstration, to see how it looks click': 'Ogłoszenie zostało wyróżnione demonstracyjnie, aby zobaczyć jak wygląda kliknij'
 'trans.Listing has been rejected': 'Ogłoszenie zostało odrzucone'
 'trans.Listing has been removed': 'Ogłoszenie zostało usunięte'
 'trans.Listing has expired': 'Ogłoszenie wygasło'
@@ -626,7 +615,7 @@ trans.space: spacja
 trans.Status: Status
 trans.Street: Ulica
 trans.Subcategories: Podkategorie
-trans.Subpages: Podstrony
+trans.Pages: Podstrony
 'trans.Success, redirecting...': 'Potwierdzona, przekierowywanie...'
 'trans.System setting': 'Ustawienia systemowe'
 'trans.Tax ID': 'NIP / VAT ID'
@@ -664,7 +653,6 @@ trans.To: Do
 'trans.To remind password, please click confirmation link that you would receive on your email address': 'Aby przypomnieć hasło, prosimy o kliknięcie w link który otrzymasz na Twój adres email'
 trans.Total: Suma
 'trans.to upload': 'do wysłania'
-'trans.Try featured': 'Wypróbuj wyróżnienie'
 'trans.turning off will disable all monetization, featuring ads, top up of account': 'wyłączenie zablokuje całą monetyzacje, wyróżnianie ogłoszeń, doładowanie konta'
 trans.Type: Typ
 'trans.Under category': 'Pod kategorią'
@@ -736,3 +724,18 @@ trans.Yes: Tak
 'trans.Write message button is displayed for your listings': 'Przycisk wyślij wiadomość jest wyświetlany w Twoich ogłoszeniach'
 'trans.Cache': 'Cache'
 'trans.Clear cache': 'Wyczyść cache'
+'trans.Pick listing publication option': 'Wybierz opcję publickacje ogłoszenia'
+'trans.Do you confirm payment of': 'Potwierdzasz płatność'
+'trans.using account balance': 'używając stanu konta'
+'trans.Select listing extend option': 'Wybierz opcję przedłużenia ogłoszenia'
+'trans.free': 'darmowe'
+'trans.Listing featured priority': 'Waga wyróżnienia ogłoszenia'
+'trans.Seconds of featured': 'Sekund wyróżnienia'
+'trans.Demonstration of featured listing, user can use only once': 'Demonstracja wyróżnienia ogłoszenia, użytkownik może użyć tylko raz'
+'trans.Show price?': 'Pokaż cenę?'
+'trans.Show the number of featured days?': 'Pokaż ilość dni wyróżnienia?'
+'trans.Pull up on listing expiration extend, when last pull up older than days': 'Podbij przy przredłużaniu ogłoszenia, gdy ostatnie podbicie starsze niż dni'
+'trans.Categories without packages': 'Kategorie bez pakietu'
+'trans.for package': 'za pakiet'
+'trans.Show the days until expiration?': 'Pokaż dni ważności?'
+'trans.Select package': 'Wybierz pakiet'

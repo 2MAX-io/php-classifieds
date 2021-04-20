@@ -6,7 +6,7 @@ namespace App\Tests\Acceptance\Security;
 
 use App\Security\Encoder\PhpassPasswordEncoderService;
 use App\Tests\Base\AppIntegrationTestCase;
-use App\Tests\Enum\TestUserLoginEnum;
+use App\Tests\Enum\TestDataEnum;
 use App\Tests\Traits\DatabaseTestTrait;
 use App\Tests\Traits\LoginTestTrait;
 use App\Tests\Traits\RouterTestTrait;
@@ -32,13 +32,13 @@ class PhpassPasswordEncoderServiceTest extends AppIntegrationTestCase
         $pdo = $this->getTestContainer()->get(EntityManagerInterface::class)->getConnection();
         $pdo->executeQuery('UPDATE user SET password = :password WHERE email = :email', [
             'password' => $phpassPasswordEncoderService->encodePassword($password, null),
-            'email' => TestUserLoginEnum::LOGIN,
+            'email' => TestDataEnum::LOGIN,
         ]);
 
         // login
         $client->request('GET', $this->getRouter()->generate('app_login'));
         $client->submitForm('Sign in', [
-            'email' => TestUserLoginEnum::LOGIN,
+            'email' => TestDataEnum::LOGIN,
             'password' => $password,
         ]);
         $response = $client->getResponse();

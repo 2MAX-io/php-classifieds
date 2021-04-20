@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\Acceptance\Admin;
 
 use App\Tests\Base\AppIntegrationTestCase;
-use App\Tests\Enum\TestUserLoginEnum;
+use App\Tests\Enum\TestDataEnum;
 use App\Tests\Smoke\Base\SmokeTestForRouteInterface;
 use App\Tests\Traits\DatabaseTestTrait;
 use App\Tests\Traits\LoginTestTrait;
@@ -54,7 +54,7 @@ class UserControllerTest extends AppIntegrationTestCase implements SmokeTestForR
         $client = static::createClient();
         $client->request('GET', $this->getRouter()->generate('app_login'));
         $client->submitForm('Sign in', [
-            'email' => TestUserLoginEnum::LOGIN,
+            'email' => TestDataEnum::LOGIN,
             'password' => static::NEW_PASSWORD,
         ]);
         self::assertSame(302, $response->getStatusCode());
@@ -70,8 +70,8 @@ class UserControllerTest extends AppIntegrationTestCase implements SmokeTestForR
         // login
         $client->request('GET', $this->getRouter()->generate('app_login'));
         $client->submitForm('Sign in', [
-            'email' => TestUserLoginEnum::LOGIN,
-            'password' => TestUserLoginEnum::PASSWORD,
+            'email' => TestDataEnum::LOGIN,
+            'password' => TestDataEnum::PASSWORD,
         ]);
         self::assertSame(302, $client->getResponse()->getStatusCode());
         $client->followRedirect();
@@ -98,8 +98,8 @@ class UserControllerTest extends AppIntegrationTestCase implements SmokeTestForR
         $client = static::createClient();
         $client->request('GET', $this->getRouter()->generate('app_login'));
         $client->submitForm('Sign in', [
-            'email' => TestUserLoginEnum::LOGIN,
-            'password' => TestUserLoginEnum::PASSWORD,
+            'email' => TestDataEnum::LOGIN,
+            'password' => TestDataEnum::PASSWORD,
         ]);
         self::assertSame(302, $client->getResponse()->getStatusCode());
         $client->followRedirect();
@@ -115,7 +115,7 @@ class UserControllerTest extends AppIntegrationTestCase implements SmokeTestForR
 
         $client->request('GET', $this->getRouter()->generate('app_admin_user_list'));
         self::assertSame(200, $client->getResponse()->getStatusCode());
-        self::assertStringContainsString(TestUserLoginEnum::LOGIN, (string) $client->getResponse()->getContent());
+        self::assertStringContainsString(TestDataEnum::LOGIN, (string) $client->getResponse()->getContent());
 
         // should not find
         $client->request('GET', $this->getRouter()->generate('app_admin_user_list', [
@@ -126,9 +126,9 @@ class UserControllerTest extends AppIntegrationTestCase implements SmokeTestForR
 
         // should find
         $client->request('GET', $this->getRouter()->generate('app_admin_user_list', [
-            'query' => TestUserLoginEnum::LOGIN,
+            'query' => TestDataEnum::LOGIN,
         ]));
         self::assertSame(200, $client->getResponse()->getStatusCode());
-        self::assertStringContainsString(TestUserLoginEnum::LOGIN, (string) $client->getResponse()->getContent());
+        self::assertStringContainsString(TestDataEnum::LOGIN, (string) $client->getResponse()->getContent());
     }
 }

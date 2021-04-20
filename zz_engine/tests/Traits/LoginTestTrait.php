@@ -6,7 +6,7 @@ namespace App\Tests\Traits;
 
 use App\Entity\System\Admin;
 use App\Entity\User;
-use App\Tests\Enum\TestUserLoginEnum;
+use App\Tests\Enum\TestDataEnum;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Component\BrowserKit\Cookie;
@@ -14,7 +14,7 @@ use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
 trait LoginTestTrait
 {
-    public function loginUser(KernelBrowser $client, string $userEmail = TestUserLoginEnum::LOGIN): void
+    public function loginUser(KernelBrowser $client, string $userEmail = TestDataEnum::LOGIN): void
     {
         $session = self::$container->get('session');
         $user = $this->getUser($userEmail);

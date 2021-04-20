@@ -15,6 +15,7 @@ ParamEnum.CATEGORY_ID = "categoryId";
 ParamEnum.LISTING_LIST = "listingList";
 ParamEnum.LISTING_FILES = "listingFiles";
 ParamEnum.CUSTOM_FIELD = "customField";
+ParamEnum.PACKAGE_LIST = "packageList";
 ParamEnum.SHOW_CONTACT_HTML = "showContactHtml";
 ParamEnum.SHOW_LISTING_PREVIEW_FOR_OWNER = "showListingPreviewForOwner";
 ParamEnum.PAYMENT_APP_TOKEN = "paymentAppToken";

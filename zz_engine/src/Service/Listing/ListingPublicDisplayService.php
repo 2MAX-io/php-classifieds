@@ -41,7 +41,7 @@ class ListingPublicDisplayService
 
     public function applyPublicDisplayConditions(QueryBuilder $qb): void
     {
-        $qb->andWhere($qb->expr()->gte('listing.validUntilDate', ':startOfToday'));
+        $qb->andWhere($qb->expr()->gte('listing.expirationDate', ':startOfToday'));
         $qb->setParameter(':startOfToday', DateHelper::date('Y-m-d 00:00:00'));
 
         $qb->andWhere($qb->expr()->eq('listing.userDeactivated', 0));
@@ -58,7 +58,7 @@ class ListingPublicDisplayService
     public function applyHiddenConditions(QueryBuilder $qb): void
     {
         $orx = $qb->expr()->orX();
-        $orx->add($qb->expr()->lt('listing.validUntilDate', ':startOfToday'));
+        $orx->add($qb->expr()->lt('listing.expirationDate', ':startOfToday'));
         $qb->setParameter(':startOfToday', DateHelper::date('Y-m-d 00:00:00'));
 
         $orx->add($qb->expr()->eq('listing.userDeactivated', 1));

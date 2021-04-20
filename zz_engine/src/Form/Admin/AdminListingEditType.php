@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Form\Admin;
 
 use App\Entity\Listing;
-use App\Form\ListingCustomFieldsType;
-use App\Form\ListingType;
+use App\Form\Listing\ListingCustomFieldsType;
+use App\Form\Listing\ListingType;
 use App\Form\Type\BoolType;
 use App\Form\Type\CategoryType;
 use App\Form\Type\PriceForType;

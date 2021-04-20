@@ -54,13 +54,13 @@ class DeleteExpiredListingFilesService
         $qb->from(Listing::class, 'listing');
         $qb->join('listing.listingFiles', 'listingFile');
 
-        $qb->andWhere($qb->expr()->lt('listing.validUntilDate', ':deleteBeforeDate'));
+        $qb->andWhere($qb->expr()->lt('listing.expirationDate', ':deleteBeforeDate'));
         $qb->setParameter(':deleteBeforeDate', $deleteBeforeDate->format(DateHelper::MYSQL_FORMAT));
 
         $qb->andWhere($qb->expr()->eq('listingFile.fileDeleted', 0));
         $qb->andWhere($qb->expr()->eq('listing.userDeactivated', 1));
 
-        $qb->addOrderBy('listing.validUntilDate', Criteria::ASC);
+        $qb->addOrderBy('listing.expirationDate', Criteria::ASC);
 
         if ($deleteExpiredListingFilesDto->getLimit()) {
             $qb->setMaxResults($deleteExpiredListingFilesDto->getLimit());
@@ -78,10 +78,10 @@ class DeleteExpiredListingFilesService
                     $fileAbsolutePath = Path::makeAbsolute($listingFile->getPath(), FilePath::getPublicDir());
 
                     if (!\file_exists($fileAbsolutePath)) {
-                        $this->logger->error('[DeleteExpiredListingFilesService] file does not exists, from listing id: {listingId}, valid until: {validUntil}, path: {path}', [
+                        $this->logger->error('[DeleteExpiredListingFilesService] file does not exists, from listing id: {listingId}, expiration date: {expirationDate}, path: {path}', [
                             'path' => $fileAbsolutePath,
                             'listingId' => $listing->getId(),
-                            'validUntil' => $listing->getValidUntilDateStringOrNull(),
+                            'expirationDate' => $listing->getExpirationDateStringOrNull(),
                         ]);
                     }
 
@@ -89,17 +89,17 @@ class DeleteExpiredListingFilesService
                         $this->logger->error('[DeleteExpiredListingFilesService] listing file path outside of expected, skipping: {path}', [
                             'path' => $fileAbsolutePath,
                             'listingId' => $listing->getId(),
-                            'validUntil' => $listing->getValidUntilDateStringOrNull(),
+                            'expirationDate' => $listing->getExpirationDateStringOrNull(),
                         ]);
 
                         continue;
                     }
 
                     if ($deleteExpiredListingFilesDto->getPerformFileDeletion()) {
-                        $this->logger->info('[DeleteExpiredListingFilesService] deleting files from listing id: {listingId}, valid until: {validUntil}, path: {path}', [
+                        $this->logger->info('[DeleteExpiredListingFilesService] deleting files from listing id: {listingId}, expiration date: {expirationDate}, path: {path}', [
                             'path' => $fileAbsolutePath,
                             'listingId' => $listing->getId(),
-                            'validUntil' => $listing->getValidUntilDateStringOrNull(),
+                            'expirationDate' => $listing->getExpirationDateStringOrNull(),
                         ]);
 
                         $this->filesystem->remove($fileAbsolutePath);
@@ -123,10 +123,10 @@ class DeleteExpiredListingFilesService
                     }
 
                     if (!$deleteExpiredListingFilesDto->getPerformFileDeletion()) {
-                        $this->logger->info('[DeleteExpiredListingFilesService] DRY RUN, would delete from: listing id: {listingId}, valid until: {validUntil}, path: {path}', [
+                        $this->logger->info('[DeleteExpiredListingFilesService] DRY RUN, would delete from: listing id: {listingId}, expiration date: {expirationDate}, path: {path}', [
                             'path' => $fileAbsolutePath,
                             'listingId' => $listing->getId(),
-                            'validUntil' => $listing->getValidUntilDateStringOrNull(),
+                            'expirationDate' => $listing->getExpirationDateStringOrNull(),
                         ]);
                     }
                 }

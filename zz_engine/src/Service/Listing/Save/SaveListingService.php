@@ -5,16 +5,16 @@ declare(strict_types=1);
 namespace App\Service\Listing\Save;
 
 use App\Entity\Listing;
-use App\Form\ListingCustomFieldsType;
-use App\Form\ListingType;
+use App\Form\Listing\ListingCustomFieldsType;
+use App\Form\Listing\ListingType;
 use App\Helper\DateHelper;
 use App\Helper\JsonHelper;
 use App\Helper\SlugHelper;
 use App\Helper\StringHelper;
 use App\Security\CurrentUserService;
 use App\Service\Listing\CustomField\Dto\CustomFieldInlineDto;
+use App\Service\Listing\Package\ApplyPackageToListingService;
 use App\Service\Listing\Save\Dto\ListingSaveDto;
-use App\Service\Listing\ValidityExtend\ValidUntilSetService;
 use App\Service\Setting\SettingsDto;
 use App\Service\System\Text\TextService;
 use Doctrine\DBAL\Connection;
@@ -26,14 +26,14 @@ use Symfony\Component\HttpFoundation\Request;
 class SaveListingService
 {
     /**
-     * @var ValidUntilSetService
-     */
-    private $validUntilSetService;
-
-    /**
      * @var TextService
      */
     private $textService;
+
+    /**
+     * @var ApplyPackageToListingService
+     */
+    private $setPackageToListingService;
 
     /**
      * @var CurrentUserService
@@ -57,17 +57,17 @@ class SaveListingService
 
     public function __construct(
         ListingFileUploadService $listingFileUploadService,
-        ValidUntilSetService $validUntilSetService,
+        ApplyPackageToListingService $setPackageToListingService,
         CurrentUserService $currentUserService,
         SettingsDto $settingsDto,
         TextService $textService,
         EntityManagerInterface $em
     ) {
-        $this->validUntilSetService = $validUntilSetService;
-        $this->textService = $textService;
+        $this->listingFileUploadService = $listingFileUploadService;
+        $this->setPackageToListingService = $setPackageToListingService;
         $this->currentUserService = $currentUserService;
         $this->settingsDto = $settingsDto;
-        $this->listingFileUploadService = $listingFileUploadService;
+        $this->textService = $textService;
         $this->em = $em;
     }
 
@@ -123,14 +123,14 @@ class SaveListingService
         return $listingFormDataArray;
     }
 
-    public function modifyListingPostFormSubmit(Listing $listing, FormInterface $form): void
+    public function modifyListingPostFormSubmit(ListingSaveDto $listingSaveDto, FormInterface $form): void
     {
-        if ($form->has('validityTimeDays')) {
-            $this->validUntilSetService->setValidityDaysFromNow(
-                $listing,
-                (int) $form->get('validityTimeDays')->getData()
-            );
-        }
+        $listing = $listingSaveDto->getListing();
+        $this->setPackageToListingService->applyPackageToListing(
+            $listingSaveDto->getListing(),
+            $listingSaveDto->getPackage(),
+        );
+
         $listing->setUserDeactivated(false);
         $listing->setAdminActivated(false);
         if ($this->settingsDto->getRequireListingAdminActivation()) {

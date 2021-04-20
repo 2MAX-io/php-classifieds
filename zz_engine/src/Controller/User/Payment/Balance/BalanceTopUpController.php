@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Controller\User\Payment\Balance;
 
 use App\Controller\User\Base\AbstractUserController;
-use App\Form\TopUpBalanceType;
+use App\Form\Payment\TopUpBalanceType;
 use App\Helper\IntegerHelper;
 use App\Security\CurrentUserService;
 use App\Service\Money\UserBalanceService;

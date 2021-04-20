@@ -8,7 +8,7 @@ use App\Entity\Category;
 use App\Entity\CustomField;
 use App\Entity\Listing;
 use App\Entity\ListingCustomFieldValue;
-use App\Form\ListingCustomFieldsType;
+use App\Form\Listing\ListingCustomFieldsType;
 use App\Helper\StringHelper;
 use App\Repository\CustomFieldOptionRepository;
 use App\Service\Listing\CustomField\Dto\CustomFieldFromRequestDto;

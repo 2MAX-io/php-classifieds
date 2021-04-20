@@ -67,10 +67,10 @@ class MoveFilesToNewLocationService
                 $oldFilePath = Path::makeAbsolute($listingFile->getPath(), FilePath::getPublicDir());
 
                 if (!\file_exists($oldFilePath)) {
-                    $this->logger->error('[MoveFilesToNewLocationService] file does not exists, from listing id: {listingId}, valid until: {validUntil}, path: {path}', [
+                    $this->logger->error('[MoveFilesToNewLocationService] file does not exists, from listing id: {listingId}, expiration date: {expirationDate}, path: {path}', [
                         'path' => $oldFilePath,
                         'listingId' => $listing->getId(),
-                        'validUntil' => $listing->getValidUntilDateStringOrNull(),
+                        'expirationDate' => $listing->getExpirationDateStringOrNull(),
                     ]);
 
                     continue;
@@ -80,26 +80,26 @@ class MoveFilesToNewLocationService
                     $this->logger->debug('[MoveFilesToNewLocationService] file not in listing file path', [
                         'path' => $oldFilePath,
                         'listingId' => $listing->getId(),
-                        'validUntil' => $listing->getValidUntilDateStringOrNull(),
+                        'expirationDate' => $listing->getExpirationDateStringOrNull(),
                     ]);
 
                     continue;
                 }
-                $this->logger->debug('[MoveFilesToNewLocationService] generating target path for listing id: {listingId}, valid until: {validUntil}, path: {path}', [
+                $this->logger->debug('[MoveFilesToNewLocationService] generating target path for listing id: {listingId}, expiration date: {expirationDate}, path: {path}', [
                     'path' => $oldFilePath,
                     'listingId' => $listing->getId(),
-                    'validUntil' => $listing->getValidUntilDateStringOrNull(),
+                    'expirationDate' => $listing->getExpirationDateStringOrNull(),
                 ]);
                 $newFilePath = ListingFileHelper::getDestinationDirectory($listing).\DIRECTORY_SEPARATOR.\basename($oldFilePath);
                 FileHelper::throwExceptionIfPathOutsideDir($newFilePath, FilePath::getListingFilePath());
                 FileHelper::throwExceptionIfUnsafeFilename($newFilePath);
 
                 if ($moveFilesToNewLocationDto->getPerformMove()) {
-                    $this->logger->info('[MoveFilesToNewLocationService] moving files from listing id: {listingId}, valid until: {validUntil}, path: {oldFilePath} to: {newFilePath}', [
+                    $this->logger->info('[MoveFilesToNewLocationService] moving files from listing id: {listingId}, expiration date: {expirationDate}, path: {oldFilePath} to: {newFilePath}', [
                         'oldFilePath' => $oldFilePath,
                         'newFilePath' => $newFilePath,
                         'listingId' => $listing->getId(),
-                        'validUntil' => $listing->getValidUntilDateStringOrNull(),
+                        'expirationDate' => $listing->getExpirationDateStringOrNull(),
                     ]);
 
                     $this->filesystem->copy($oldFilePath, $newFilePath);
@@ -109,11 +109,11 @@ class MoveFilesToNewLocationService
                     $this->em->persist($listingFile);
                     $this->em->flush();
                 } else {
-                    $this->logger->info('[MoveFilesToNewLocationService] dry run, real run would move files from listing id: {listingId}, valid until: {validUntil}, path: {oldFilePath} to: {newFilePath}', [
+                    $this->logger->info('[MoveFilesToNewLocationService] dry run, real run would move files from listing id: {listingId}, expiration date: {expirationDate}, path: {oldFilePath} to: {newFilePath}', [
                         'oldFilePath' => $oldFilePath,
                         'newFilePath' => $newFilePath,
                         'listingId' => $listing->getId(),
-                        'validUntil' => $listing->getValidUntilDateStringOrNull(),
+                        'expirationDate' => $listing->getExpirationDateStringOrNull(),
                     ]);
                 }
             }

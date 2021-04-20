@@ -55,8 +55,8 @@ class TwigListingStatus implements RuntimeExtensionInterface
 
         if ($status === $listing::STATUS_ACTIVE) {
             $activeUntilDate = $this->translator->trans('trans.none');
-            if ($listing->getValidUntilDate() instanceof \DateTimeInterface) {
-                $activeUntilDate = $listing->getValidUntilDate()->format($twigDateFormatShort);
+            if ($listing->getExpirationDate() instanceof \DateTimeInterface) {
+                $activeUntilDate = $listing->getExpirationDate()->format($twigDateFormatShort);
             }
 
             return $this->translator->trans(

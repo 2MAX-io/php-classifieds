@@ -184,7 +184,7 @@ class AllRoutesSmokeTest extends AppIntegrationTestCase
         $urlList[] = $this->getRouter()->generate('app_admin_invoice_show', [
             'id' => 1,
         ]);
-        $urlList[] = $this->getRouter()->generate('app_user_validity_extend', [
+        $urlList[] = $this->getRouter()->generate('app_user_extend_expiration', [
             'id' => 1,
         ]);
         $urlList[] = $this->getRouter()->generate('app_user_listing_edit', [

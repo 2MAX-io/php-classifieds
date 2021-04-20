@@ -86,7 +86,7 @@ if (!empty($_POST)) {
                             loadSql(__DIR__.'/data/example/large_git_ignored/listing_custom_field_value.sql');
                         }
 
-                        $stmt = $pdo->prepare(/* @lang MySQL */ 'UPDATE listing SET valid_until_date = :validUntilDate WHERE 1');
+                        $stmt = $pdo->prepare(/* @lang MySQL */ 'UPDATE listing SET expiration_date = :validUntilDate WHERE 1');
                         $stmt->bindValue('validUntilDate', \date('Y-m-d 23:59:59', \time() + 3600 * 24 * 7));
                         $stmt->execute();
                     }

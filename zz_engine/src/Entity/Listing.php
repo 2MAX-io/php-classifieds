@@ -21,12 +21,12 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ListingRepository")
  * @ORM\Table(indexes={
- *     @Index(columns={"user_deactivated", "valid_until_date", "user_removed", "admin_activated", "admin_rejected", "admin_removed", "featured", "featured_weight", "order_by_date", "id"}, name="IDX_public_listings"),
+ *     @Index(columns={"user_deactivated", "expiration_date", "user_removed", "admin_activated", "admin_rejected", "admin_removed", "featured", "featured_priority", "order_by_date", "id"}, name="IDX_public_listings"),
  *     @Index(columns={"admin_activated", "admin_removed", "user_removed", "user_deactivated", "admin_rejected"}, name="IDX_activated"),
- *     @Index(columns={"featured", "user_deactivated", "valid_until_date", "user_removed", "admin_activated", "admin_removed"}, name="IDX_featured"),
- *     @Index(columns={"category_id", "user_deactivated", "valid_until_date", "user_removed", "admin_activated", "admin_removed", "featured", "featured_weight", "order_by_date", "id"}, name="IDX_public_listings_cat"),
- *     @Index(columns={"category_id", "user_deactivated", "valid_until_date", "user_removed", "admin_activated", "admin_removed", "price", "featured", "featured_weight", "order_by_date", "id"}, name="IDX_public_filtered"),
- *     @Index(columns={"user_deactivated", "valid_until_date", "user_removed", "admin_activated", "admin_removed", "first_created_date"}, name="IDX_latest_listings"),
+ *     @Index(columns={"featured", "user_deactivated", "expiration_date", "user_removed", "admin_activated", "admin_removed"}, name="IDX_featured"),
+ *     @Index(columns={"category_id", "user_deactivated", "expiration_date", "user_removed", "admin_activated", "admin_removed", "featured", "featured_priority", "order_by_date", "id"}, name="IDX_public_listings_cat"),
+ *     @Index(columns={"category_id", "user_deactivated", "expiration_date", "user_removed", "admin_activated", "admin_removed", "price", "featured", "featured_priority", "order_by_date", "id"}, name="IDX_public_filtered"),
+ *     @Index(columns={"user_deactivated", "expiration_date", "user_removed", "admin_activated", "admin_removed", "first_created_date"}, name="IDX_latest_listings"),
  *     @Index(columns={"first_created_date"}, name="IDX_first_created_date"),
  *     @Index(columns={"user_id", "user_removed", "last_edit_date"}, name="IDX_user_listings"),
  *     @Index(columns={"search_text"}, flags={"fulltext"}, name="IDX_fulltext_search"),
@@ -102,7 +102,7 @@ class Listing
      * @Assert\NotNull(groups={"skipAutomaticValidation"})
      * @ORM\Column(type="datetime", nullable=false)
      */
-    private $validUntilDate;
+    private $expirationDate;
 
     /**
      * @var bool
@@ -158,7 +158,7 @@ class Listing
      *
      * @ORM\Column(type="smallint", nullable=false)
      */
-    private $featuredWeight = 0;
+    private $featuredPriority = 0;
 
     /**
      * used to sort listings
@@ -437,18 +437,18 @@ class Listing
         return $this->getMainImage(ResizedImagePath::LIST);
     }
 
-    public function getValidUntilDateStringOrNull(): ?string
+    public function getExpirationDateStringOrNull(): ?string
     {
-        if (!$this->getValidUntilDate()) {
+        if (!$this->getExpirationDate()) {
             return null;
         }
 
-        return $this->getValidUntilDate()->format(DateHelper::MYSQL_FORMAT);
+        return $this->getExpirationDate()->format(DateHelper::MYSQL_FORMAT);
     }
 
     public function isExpired(): bool
     {
-        return $this->getValidUntilDate() < DateHelper::create()->setTime(0, 0);
+        return $this->getExpirationDate() < DateHelper::create()->setTime(0, 0);
     }
 
     public function getHasLocationOnMap(): bool
@@ -731,26 +731,26 @@ class Listing
         return $this;
     }
 
-    public function getValidUntilDate(): ?\DateTimeInterface
+    public function getExpirationDate(): ?\DateTimeInterface
     {
-        return $this->validUntilDate;
+        return $this->expirationDate;
     }
 
-    public function setValidUntilDate(\DateTimeInterface $validUntilDate): self
+    public function setExpirationDate(\DateTimeInterface $expirationDate): self
     {
-        $this->validUntilDate = $validUntilDate;
+        $this->expirationDate = $expirationDate;
 
         return $this;
     }
 
-    public function getFeaturedWeight(): ?int
+    public function getFeaturedPriority(): ?int
     {
-        return $this->featuredWeight;
+        return $this->featuredPriority;
     }
 
-    public function setFeaturedWeight(int $featuredWeight): self
+    public function setFeaturedPriority(int $featuredPriority): self
     {
-        $this->featuredWeight = $featuredWeight;
+        $this->featuredPriority = $featuredPriority;
 
         return $this;
     }
@@ -1004,6 +1004,28 @@ class Listing
         // set the owning side to null (unless already changed)
         if ($this->userObservedListings->removeElement($userObservedListing) && $userObservedListing->getListing() === $this) {
             $userObservedListing->setListing(null);
+        }
+
+        return $this;
+    }
+
+    public function addPaymentForPackage(PaymentForPackage $paymentForPackage): self
+    {
+        if (!$this->paymentForPackage->contains($paymentForPackage)) {
+            $this->paymentForPackage[] = $paymentForPackage;
+            $paymentForPackage->setListing($this);
+        }
+
+        return $this;
+    }
+
+    public function removePaymentForPackage(PaymentForPackage $paymentForPackage): self
+    {
+        // set the owning side to null (unless already changed)
+        if ($this->paymentForPackage->removeElement($paymentForPackage)
+            && $paymentForPackage->getListing() === $this
+        ) {
+            $paymentForPackage->setListing(null);
         }
 
         return $this;

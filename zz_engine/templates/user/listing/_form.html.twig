@@ -87,8 +87,6 @@
     </div>
 {% endif %}
 
-{{ form_widget(form) }}
-
 <label>{{ 'trans.Pictures' | trans }}</label>
 <input
     name="{{ constant('\App\\Service\\Listing\\Save\\ListingFileUploadService::UPLOADED_FILES_FIELD_NAME') }}"
@@ -96,6 +94,15 @@
     type="file"
     multiple="multiple"
 >
+
+<div class="mb-2">
+    {{ form_label(form.package) }}
+    <div class="js__packageList">
+        {% include 'user/listing/form/packages_for_listing_category.html.twig' %}
+    </div>
+</div>
+
+{{ form_widget(form) }}
 
 <button class="btn btn-primary js__listingFormSaveButton">{{ button_label | default('trans.Save' | trans) }}</button>
 {{ form_end(form) }}

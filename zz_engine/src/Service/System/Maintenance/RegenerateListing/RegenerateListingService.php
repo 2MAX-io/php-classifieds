@@ -72,7 +72,7 @@ class RegenerateListingService
 
         $qb->andWhere($qb->expr()->eq('listing.adminRemoved', 0));
         $qb->andWhere($qb->expr()->eq('listing.userRemoved', 0));
-        $qb->andWhere($qb->expr()->gt('listing.validUntilDate', ':validAfterDate'));
+        $qb->andWhere($qb->expr()->gt('listing.expirationDate', ':validAfterDate'));
         $qb->setParameter(':validAfterDate', DateHelper::carbonNow()->subDays(90));
 
         $qb->orderBy('listingInternalData.lastListingRegenerationDate', Criteria::ASC);

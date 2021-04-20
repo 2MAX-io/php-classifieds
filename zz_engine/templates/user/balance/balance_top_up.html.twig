@@ -25,18 +25,14 @@
 
                 {% include 'form/_flash_above_form.html.twig' %}
 
-                <div class="alert alert-info">
-                    <p>
-                        {{ 'trans.Do you feature many listings or feature frequently? After account top up, you will be able to feature listing by one click, using your account balance. Without need to make payment for every single listing separately' | trans }}
-                    </p>
-                    <p>
-                        {{ 'trans.After topping up, you can feature listing using green buttons on feature listing page. They would use your account balance for payment, instead of redirecting you to payment page.' | trans }}
-                    </p>
-                </div>
-
                 <div class="my-4">
-                    {{ 'trans.Current balance' | trans }}:
-                    <strong class="badge badge-success">{{ userBalance | moneyPrecise }}</strong>
+                    {{- 'trans.Current balance' | trans -}}
+                    {{- ': ' -}}
+                    <strong class="badge badge-success">
+                        {{- userBalance | moneyPrecise -}}
+                        {{- ' ' -}}
+                        {{- settings.currency -}}
+                    </strong>
                     {{ 'trans.that you can use to feature listings' | trans }}
                 </div>
 
@@ -44,7 +40,12 @@
                 {{ form_widget(form) }}
 
                 <div class="alert alert-info">
-                    {{ 'trans.Funds do not expire. However, they are not subject to withdrawal. And they do not pay interest of any kind.' | trans }}
+                    <p>
+                        {{ 'trans.After account top up, you will be able to feature listing by one click, using your account balance. Without need to make payment for every single listing separately' | trans }}
+                    </p>
+                    <p>
+                        {{ 'trans.Funds do not expire. However, they are not subject to withdrawal. And they do not pay interest of any kind.' | trans }}
+                    </p>
                 </div>
 
                 <button class="btn btn-primary">{{ 'trans.Top up account' | trans }}</button>

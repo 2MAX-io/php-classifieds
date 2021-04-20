@@ -9,6 +9,7 @@ use App\Entity\Package;
 use App\Form\Admin\PackageType;
 use App\Repository\PackageRepository;
 use App\Service\Admin\Package\CategorySelection\PackageCategoriesService;
+use App\Service\System\HealthCheck\HealthChecker\CategoriesHavePackagesHealthCheckerService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -30,11 +31,14 @@ class PackageController extends AbstractAdminController
     /**
      * @Route("/admin/red5/package", name="app_admin_package_list", methods={"GET"})
      */
-    public function packageList(PackageRepository $packageRepository): Response
-    {
+    public function packageList(
+        CategoriesHavePackagesHealthCheckerService $categoriesHavePackagesService,
+        PackageRepository $packageRepository
+    ): Response {
         $this->denyUnlessAdmin();
 
         return $this->render('admin/package/index.html.twig', [
+            'categoriesHavePackages' => $categoriesHavePackagesService->checkHealth(),
             'packages' => $packageRepository->findBy(['removed' => false]),
         ]);
     }

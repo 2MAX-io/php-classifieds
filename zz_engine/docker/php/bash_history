@@ -150,3 +150,12 @@ php -dxdebug.mode=coverage /var/www/html/zz_engine/bin/phpunit --coverage-text=o
 sudo chown -R 1000:33 /var/www/html
 tac zz_engine/docker/php/bash_history | awk '!($0 in S) {print; S[$0]}' | tac > zz_engine/docker/php/bash_history_temp && mv zz_engine/docker/php/bash_history_temp zz_engine/docker/php/bash_history
 (cd /var/www/html/zz_engine/var/mysql/ ; mysql --max_allowed_packet=1G classifieds < $(ls -t | head -1))
+composer install -d zz_engine --optimize-autoloader
+php zz_engine/bin/console doctrine:schema:update --force
+php zz_engine/bin/console doctrine:schema:update --dump-sql
+(cd /var/www/html/zz_engine && php vendor/bin/php-cs-fixer fix)
+bash zz_engine/dev/bin/build_assets.sh
+mysql -e "DROP DATABASE IF EXISTS classifieds_test; CREATE DATABASE classifieds_test;" && php zz_engine/bin/console make:migration --env=test --no-interaction
+php zz_engine/bin/console app:dev:generate-test-listings 1360
+mysql --host=mysql_test -e "DROP DATABASE IF EXISTS classifieds_test; CREATE DATABASE classifieds_test;" && php zz_engine/bin/console doctrine:schema:create --env=test --dump-sql > install/data/_schema.sql
+mysql --host=mysql_test -e "DROP DATABASE IF EXISTS classifieds_test; CREATE DATABASE classifieds_test;" && php zz_engine/bin/console make:migration --env=test --no-interaction

@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity()
  * @ORM\Table(name="zzzz_executed_upgrade")
+ * @codeCoverageIgnore
  */
 class ExecutedUpgrade
 {

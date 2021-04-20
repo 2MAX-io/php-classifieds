@@ -23,7 +23,7 @@ class PackageForCategory
     /**
      * @var Category
      *
-     * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="packages")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="packageForCategoryList")
      * @ORM\JoinColumn(nullable=false)
      */
     private $category;

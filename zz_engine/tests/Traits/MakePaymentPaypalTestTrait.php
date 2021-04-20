@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\Traits;
 
 use App\Service\Payment\PaymentGateway\PayPalPaymentGatewayService;
+use App\Tests\Enum\TestDataEnum;
 use Omnipay\Common\Message\RedirectResponseInterface;
 use Omnipay\Common\Message\RequestInterface;
 use Omnipay\PayPal\RestGateway;
@@ -36,9 +37,9 @@ trait MakePaymentPaypalTestTrait
         $this->getTestContainer()->get(PayPalPaymentGatewayService::class)->setGateway($gatewayStub);
 
         $id = 1;
-        $url = $this->getRouter()->generate('app_user_feature_listing_action', [
+        $url = $this->getRouter()->generate('app_user_feature_listing_pay', [
             'id' => $id,
-            'package' => 1,
+            'package' => TestDataEnum::PAID_PACKAGE_ID,
         ]);
         $csrfToken = $this->getTestContainer()->get(CsrfTokenManagerInterface::class)->getToken('csrf_feature'.$id);
         $client->request('PATCH', $url, [

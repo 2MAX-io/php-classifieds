@@ -176,23 +176,14 @@ class AdminListingSearchService
         $qb = $this->em->createQueryBuilder();
         $qb->select('category');
         $qb->from(Category::class, 'category');
+        $qb->andWhere($qb->expr()->gt('category.lvl', 1));
         $qb->addOrderBy('category.sort');
         /** @var Category[] $categories */
         $categories = $qb->getQuery()->getResult();
 
         $return = [];
         foreach ($categories as $category) {
-            $path = \array_map(
-                static function (Category $category) {
-                    if ($category->getLvl() < 1) {
-                        return false;
-                    }
-
-                    return $category->getName();
-                },
-                $category->getPath()
-            );
-            $return[$category->getId()] = \implode(' ⇾ ', $path);
+            $return[$category->getId()] = $category->getPathString();
         }
 
         return $return;

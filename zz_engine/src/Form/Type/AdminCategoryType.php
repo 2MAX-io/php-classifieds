@@ -30,19 +30,7 @@ class AdminCategoryType extends AbstractType
             'placeholder' => 'trans.Select category',
             'label' => 'trans.Under category',
             'choice_label' => static function (Category $category) {
-                $path = $category->getPath();
-                $path = \array_map(
-                    static function (Category $category) {
-                        return $category->getName();
-                    },
-                    $path
-                );
-
-                if (empty($path)) {
-                    return $category->getName();
-                }
-
-                return \implode(' ⇾ ', $path);
+                return $category->getPathString();
             },
             'query_builder' => function () {
                 $qb = $this->em->createQueryBuilder();

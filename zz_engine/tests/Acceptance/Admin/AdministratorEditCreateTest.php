@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\Acceptance\Admin;
 
 use App\Tests\Base\AppIntegrationTestCase;
-use App\Tests\Enum\TestUserLoginEnum;
+use App\Tests\Enum\TestDataEnum;
 use App\Tests\Smoke\Base\SmokeTestForRouteInterface;
 use App\Tests\Traits\DatabaseTestTrait;
 use App\Tests\Traits\LoginTestTrait;
@@ -54,7 +54,7 @@ class AdministratorEditCreateTest extends AppIntegrationTestCase implements Smok
         // login
         $client->request('GET', $this->getRouter()->generate('app_admin_login'));
         $client->submitForm('Sign in', [
-            'email' => TestUserLoginEnum::LOGIN_ADMIN,
+            'email' => TestDataEnum::LOGIN_ADMIN,
             'password' => static::NEW_PASSWORD,
         ]);
         self::assertSame(302, $response->getStatusCode());
@@ -101,8 +101,8 @@ class AdministratorEditCreateTest extends AppIntegrationTestCase implements Smok
         // login
         $client->request('GET', $this->getRouter()->generate('app_admin_login'));
         $client->submitForm('Sign in', [
-            'email' => TestUserLoginEnum::LOGIN_ADMIN,
-            'password' => TestUserLoginEnum::PASSWORD,
+            'email' => TestDataEnum::LOGIN_ADMIN,
+            'password' => TestDataEnum::PASSWORD,
         ]);
         self::assertSame(302, $client->getResponse()->getStatusCode());
         $client->followRedirect();
@@ -128,8 +128,8 @@ class AdministratorEditCreateTest extends AppIntegrationTestCase implements Smok
         $client = static::createClient();
         $client->request('GET', $this->getRouter()->generate('app_admin_login'));
         $client->submitForm('Sign in', [
-            'email' => TestUserLoginEnum::LOGIN_ADMIN,
-            'password' => TestUserLoginEnum::PASSWORD,
+            'email' => TestDataEnum::LOGIN_ADMIN,
+            'password' => TestDataEnum::PASSWORD,
         ]);
         self::assertSame(302, $client->getResponse()->getStatusCode());
         $client->followRedirect();

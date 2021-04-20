@@ -82,7 +82,7 @@ class ListingActionForUserController extends AbstractUserController
          * listing validity extend controller
          */
         if ($listing->getStatus() === $listing::STATUS_EXPIRED) {
-            return $this->redirectToRoute('app_user_validity_extend', ['id' => $listing->getId()]);
+            return $this->redirectToRoute('app_user_extend_expiration', ['id' => $listing->getId()]);
         }
 
         return $refererService->redirectToRefererResponse();

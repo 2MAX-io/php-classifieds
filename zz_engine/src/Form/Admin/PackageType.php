@@ -27,10 +27,8 @@ class PackageType extends AbstractType
             ],
         ]);
         $builder->add('adminName', TextType::class, [
+            'required' => false,
             'label' => 'trans.Name for admin',
-            'constraints' => [
-                new NotBlank(),
-            ],
         ]);
         $builder->add('description', TextareaType::class, [
             'label' => 'trans.Description',
@@ -41,22 +39,10 @@ class PackageType extends AbstractType
         ]);
         $builder->add('priceFloat', AppMoneyType::class, [
             'label' => 'trans.Price',
+            'required' => false,
             'constraints' => [
-                new NotBlank(),
-                new Constraints\GreaterThanOrEqual([
-                    'value' => 0.01,
-                ]),
-            ],
-        ]);
-        $builder->add('daysFeaturedExpire', IntegerType::class, [
-            'label' => 'trans.Days of featured',
-            'constraints' => [
-                new NotBlank(),
                 new Constraints\GreaterThanOrEqual([
                     'value' => 0,
-                ]),
-                new Constraints\LessThanOrEqual([
-                    'value' => 3650,
                 ]),
             ],
         ]);
@@ -72,8 +58,63 @@ class PackageType extends AbstractType
                 ]),
             ],
         ]);
+        $builder->add('daysFeaturedExpire', IntegerType::class, [
+            'label' => 'trans.Days of featured',
+            'constraints' => [
+                new NotBlank(),
+                new Constraints\GreaterThanOrEqual([
+                    'value' => 0,
+                ]),
+                new Constraints\LessThanOrEqual([
+                    'value' => 3650,
+                ]),
+            ],
+        ]);
+        $builder->add('secondsFeaturedExpire', IntegerType::class, [
+            'label' => 'trans.Seconds of featured',
+            'constraints' => [
+                new NotBlank(),
+                new Constraints\GreaterThanOrEqual([
+                    'value' => 0,
+                ]),
+            ],
+        ]);
+        $builder->add('pullUpOlderThanDays', AppMoneyType::class, [
+            'label' => 'trans.Pull up on listing expiration extend, when last pull up older than days',
+            'required' => false,
+            'constraints' => [
+                new Constraints\GreaterThanOrEqual([
+                    'value' => 0,
+                ]),
+            ],
+        ]);
+        $builder->add('listingFeaturedPriority', AppMoneyType::class, [
+            'label' => 'trans.Listing featured priority',
+            'constraints' => [
+                new NotBlank(),
+                new Constraints\GreaterThanOrEqual([
+                    'value' => 0,
+                ]),
+            ],
+        ]);
         $builder->add('defaultPackage', CheckboxType::class, [
             'label' => 'trans.Use when no package set for category, as default?',
+            'required' => false,
+        ]);
+        $builder->add('demoPackage', CheckboxType::class, [
+            'label' => 'trans.Demonstration of featured listing, user can use only once',
+            'required' => false,
+        ]);
+        $builder->add('showPrice', CheckboxType::class, [
+            'label' => 'trans.Show price?',
+            'required' => false,
+        ]);
+        $builder->add('showFeaturedDays', CheckboxType::class, [
+            'label' => 'trans.Show the number of featured days?',
+            'required' => false,
+        ]);
+        $builder->add('showExpirationDays', CheckboxType::class, [
+            'label' => 'trans.Show the days until expiration?',
             'required' => false,
         ]);
     }

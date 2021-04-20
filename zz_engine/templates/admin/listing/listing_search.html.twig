@@ -206,10 +206,10 @@
                         <!-- date -->
                         <td>
                             <div>{{- listing.firstCreatedDate | date -}}</div>
-                            <div class="{{ listing.validUntilDate | isExpired | displayTextWarning }}">
+                            <div class="{{ listing.expirationDate | isExpired | displayTextWarning }}">
                                 {{- 'trans.Valid until' | trans -}}
                                 {{- ': ' -}}
-                                {{- listing.validUntilDate | date -}}
+                                {{- listing.expirationDate | date -}}
                             </div>
                         </td>
 

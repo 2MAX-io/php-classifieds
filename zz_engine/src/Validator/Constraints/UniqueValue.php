@@ -27,7 +27,7 @@ class UniqueValue extends Constraint
     /** @var string */
     public $repositoryMethod = 'findBy';
 
-    /** @var string[]|UniqueValueDto[]|null */
+    /** @var string[]|null */
     public $fields = [];
 
     /** @var string|null */

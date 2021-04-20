@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\Acceptance\UserMessage;
 
 use App\Tests\Base\AppIntegrationTestCase;
-use App\Tests\Enum\TestUserLoginEnum;
+use App\Tests\Enum\TestDataEnum;
 use App\Tests\Smoke\Base\SmokeTestForRouteInterface;
 use App\Tests\Traits\DatabaseTestTrait;
 use App\Tests\Traits\LoginTestTrait;
@@ -36,7 +36,7 @@ class SendMessageTest extends AppIntegrationTestCase implements SmokeTestForRout
     {
         $client = static::createClient();
         $this->clearDatabase();
-        $senderEmail = TestUserLoginEnum::LOGIN;
+        $senderEmail = TestDataEnum::LOGIN;
         $this->loginUser($client, $senderEmail);
 
         // submit form
@@ -69,7 +69,7 @@ class SendMessageTest extends AppIntegrationTestCase implements SmokeTestForRout
         // message send to correct user
         /** @var TemplatedEmail $message */
         $message = self::getMailerMessage();
-        self::assertSame(TestUserLoginEnum::LOGIN2, $message->getTo()[0]->getAddress());
+        self::assertSame(TestDataEnum::LOGIN2, $message->getTo()[0]->getAddress());
         self::assertNotSame($senderEmail, $message->getTo()[0]->getAddress());
     }
 
@@ -77,7 +77,7 @@ class SendMessageTest extends AppIntegrationTestCase implements SmokeTestForRout
     {
         $client = static::createClient();
         $this->clearDatabase();
-        $senderEmail = TestUserLoginEnum::LOGIN2;
+        $senderEmail = TestDataEnum::LOGIN2;
         $this->loginUser($client, $senderEmail);
 
         // submit form
@@ -103,7 +103,7 @@ class SendMessageTest extends AppIntegrationTestCase implements SmokeTestForRout
         // message send to correct user
         /** @var TemplatedEmail $message */
         $message = self::getMailerMessage();
-        self::assertSame(TestUserLoginEnum::LOGIN, $message->getTo()[0]->getAddress());
+        self::assertSame(TestDataEnum::LOGIN, $message->getTo()[0]->getAddress());
         self::assertNotSame($senderEmail, $message->getTo()[0]->getAddress());
     }
 }

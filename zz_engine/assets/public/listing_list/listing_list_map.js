@@ -44,6 +44,10 @@ if (mapElement) {
     var pruneCluster = new PruneClusterForLeaflet();
     pruneCluster.PrepareLeafletMarker = function (leafletMarker, data) {
         leafletMarker.setIcon(markerIcon);
+        /**
+         * @typedef {Object} listingOnMap
+         * @property {int} listingId
+         */
         let listingOnMap = data.listingOnMap;
         let url = Routing.generate("app_listing_show", {
             id: listingOnMap.listingId,

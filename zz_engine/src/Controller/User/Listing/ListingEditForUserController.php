@@ -7,7 +7,7 @@ namespace App\Controller\User\Listing;
 use App\Controller\User\Base\AbstractUserController;
 use App\Entity\Listing;
 use App\Enum\ParamEnum;
-use App\Form\ListingType;
+use App\Form\Listing\ListingType;
 use App\Service\Category\CategoryListService;
 use App\Service\Listing\CustomField\ListingCustomFieldsService;
 use App\Service\Listing\Save\ListingFileUploadService;
@@ -57,8 +57,9 @@ class ListingEditForUserController extends AbstractUserController
         $form = $this->createForm(ListingType::class, $listing);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $listingSaveDto->setPackage($form->get(ListingType::PACKAGE_FIELD)->getData());
             $listingCustomFieldsService->saveCustomFieldsToListing($listingSaveDto);
-            $saveListingService->modifyListingPostFormSubmit($listing, $form);
+            $saveListingService->modifyListingPostFormSubmit($listingSaveDto, $form);
             $this->em->persist($listing);
             $this->em->flush();
 
@@ -67,6 +68,14 @@ class ListingEditForUserController extends AbstractUserController
             $saveListingService->saveSearchText($listing);
             $saveListingService->saveCustomFieldsInline($listing);
             $this->em->flush();
+
+            if ($listingSaveDto->getPackage() && $listingSaveDto->getPackage()->isPaidPackage()) {
+                return $this->redirectToRoute('app_user_feature_listing_pay', [
+                    'id' => $listing->getId(),
+                    'package' => $listingSaveDto->getPackageNotNull()->getId(),
+                    '_token' => $this->csrfTokenManager->getToken('csrf_feature'.$listing->getId())->getValue(),
+                ]);
+            }
 
             return $this->redirectToRoute('app_user_listing_edit', ['id' => $listing->getId()]);
         }
@@ -114,12 +123,21 @@ class ListingEditForUserController extends AbstractUserController
         }
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $listingSaveDto->setPackage($form->get(ListingType::PACKAGE_FIELD)->getData());
             $listingCustomFieldsService->saveCustomFieldsToListing($listingSaveDto);
             $listingFileService->saveUploadedFiles($listingSaveDto);
-            $saveListingService->modifyListingPostFormSubmit($listing, $form);
+            $saveListingService->modifyListingPostFormSubmit($listingSaveDto, $form);
             $saveListingService->saveCustomFieldsInline($listing);
             $policeLogForListingService->saveLog($listing);
             $this->em->flush();
+
+            if ($listingSaveDto->getPackage() && $listingSaveDto->getPackage()->isPaidPackage()) {
+                return $this->redirectToRoute('app_user_feature_listing_pay', [
+                    'id' => $listing->getId(),
+                    'package' => $listingSaveDto->getPackageNotNull()->getId(),
+                    '_token' => $this->csrfTokenManager->getToken('csrf_feature'.$listing->getId())->getValue(),
+                ]);
+            }
 
             return $this->redirectToRoute('app_user_listing_edit', [
                 'id' => $listing->getId(),

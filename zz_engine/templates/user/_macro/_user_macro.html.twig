@@ -6,7 +6,7 @@
 
     {%- if not listing.adminRemoved -%}
         {%- if listing.status in [constant('\App\\Entity\\Listing::STATUS_EXPIRED'), constant('\App\\Entity\\Listing::STATUS_ACTIVE'), constant('\App\\Entity\\Listing::STATUS_ACTIVE_FEATURED')] -%}
-            <a href="{{ path('app_user_validity_extend', {'id': listing.id}) }}" class="btn btn-outline-success mb-1">
+            <a href="{{ path('app_user_extend_expiration', {'id': listing.id}) }}" class="btn btn-outline-success mb-1">
                 {{- 'trans.Extend' | trans -}}
             </a>
         {% endif %}

@@ -19,85 +19,55 @@
 
                 {% include 'form/_flash_above_form.html.twig' %}
 
-                {% if listing.featuredActive %}
-                    <div class="alert alert-success">
-                        {{ 'trans.Featured until' | trans }}:
-                        <strong>{{ listing.featuredUntilDate | date }}</strong>
-                    </div>
-                {% endif %}
-
-                {% if userBalance > 0 %}
-                    <div class="my-4">
-                        {{ 'trans.Current balance' | trans }}:
-                        <strong class="badge badge-success">{{ userBalance | moneyPrecise }}</strong>
-                        {{ 'trans.that you can use to feature listings' | trans }}
-                    </div>
-                {% endif %}
-
                 {% if app.request.query.get('demoStarted') %}
                     <div class="alert alert-success" role="alert">
-                        {{ 'trans.Listing has been featured for 30 minutes, to see how it looks click' | trans }}
+                        {{ 'trans.Listing has been featured as demonstration, to see how it looks click' | trans }}
                         <a href="{{ path('app_category', {'categorySlug': listing.category.slug}) }}#listing-{{ listing.id }}">
                             {{- 'trans.HERE' | trans -}}
                         </a>
                     </div>
                 {% endif %}
 
-                {% if listing.status in [constant('\App\\Entity\\Listing::STATUS_ACTIVE'), constant('\App\\Entity\\Listing::STATUS_ACTIVE_FEATURED')] %}
-                    <section class="pricing">
-                        <div class="row">
-                            {% for package in packages %}
-                                <!-- Package: {{ package.name }} -->
-                                <div class="col-lg-4">
-                                    <div class="card mb-2">
-                                        <div class="card-body">
-                                            <h5 class="card-title text-muted text-uppercase text-center">{{ package.name }}</h5>
-                                            <h6 class="card-price text-center">{{ package.price | moneyPrecise }}</h6>
-                                            <div class="text-muted small mb-2">
-                                                {%- trans count package.daysFeaturedExpire with {'%featuredDays%': package.daysFeaturedExpire, '%price%': package.price | moneyPrecise} -%}
-                                                    {1}trans.Feature for one day for %price%|]1,Inf[ Feature for %featuredDays% days for %price%
-                                                {%- endtrans -%}
-                                            </div>
-                                            <hr>
-                                            <div class="mb-2">
-                                                {{ package.description | nl2br }}
-                                            </div>
-                                        </div>
-                                        <div class="card-footer">
-                                            {{ include('user/listing/_action/_feature_form.html.twig') }}
-                                        </div>
-                                    </div>
-                                </div>
-                            {% endfor %}
-                            {% if listing.featuredUntilDate is null %}
-                                <!-- Trial -->
-                                <div class="col-lg-4">
-                                    <div class="card mb-2">
-                                        <div class="card-body">
-                                            <h5 class="card-title text-muted text-uppercase text-center">{{ 'trans.Try featured' | trans }}</h5>
-                                            <h6 class="card-price text-center">{{ 'trans.for free' | trans }}</h6>
-                                            <hr>
-                                            <div class="mb-2">
-                                                {{ 'trans.Feature as a demonstration for 30 minutes' | trans }}
-                                            </div>
-                                        </div>
-                                        <div class="card-footer">
-                                            {{ include('user/listing/_action/_feature_as_demo_form.html.twig') }}
-                                        </div>
-                                    </div>
-                                </div>
+                <div class="alert alert-secondary mb-4">
+                    <div>
+                        {{ 'trans.Featured until' | trans }}:
+                        <strong>
+                            {% if listing.featuredActive %}
+                                {{- listing.featuredUntilDate | date -}}
+                            {% else %}
+                                {{- '—' -}}
                             {% endif %}
-                        </div>
-                    </section>
-
-                    <div class="alert alert-info mt-3">
-                        <div>
-                            {{ 'trans.Do you need invoice for your company?' | trans }}
-                            <a href="{{ path('app_user_invoice_details') }}" class="btn btn-secondary">
-                                {{- 'trans.Enter invoice details' | trans -}}
-                            </a>
-                        </div>
+                        </strong>
                     </div>
+
+                    <div>
+                        {{ 'trans.Expiration date' | trans }}:
+                        <strong>{{ listing.expirationDate | date }}</strong>
+                    </div>
+                </div>
+
+                {% if listing.status in [constant('\App\\Entity\\Listing::STATUS_ACTIVE'), constant('\App\\Entity\\Listing::STATUS_ACTIVE_FEATURED')] %}
+                    {{ form_start(form) }}
+                    {{ form_label(form.package) }}
+                    <div class="mb-2">
+                        {% include 'user/listing/form/packages_for_listing_category.html.twig' %}
+                    </div>
+                    {{ form_widget(form) }}
+
+                    <button class="btn btn-primary">{{ 'trans.Feature listing' | trans }}</button>
+                    {{ form_end(form) }}
+
+                    {% if userBalance > 0 %}
+                        <div class="my-4">
+                            {{ 'trans.Current balance' | trans }}:
+                            <strong class="badge badge-success">
+                                {{- userBalance | moneyPrecise -}}
+                                {{- ' ' -}}
+                                {{- settings.currency -}}
+                            </strong>
+                            {{ 'trans.that you can use to feature listings' | trans }}
+                        </div>
+                    {% endif %}
 
                     <div class="alert alert-info mt-3">
                         <div>
@@ -109,6 +79,15 @@
                             {{- 'trans.Top up account' | trans -}}
                         </a>
                         <span>{{ 'trans.to feature listings by single click' | trans }}</span>
+                    </div>
+
+                    <div class="alert alert-info mt-3">
+                        <div>
+                            {{ 'trans.Do you need invoice for your company?' | trans }}
+                            <a href="{{ path('app_user_invoice_details') }}" class="btn btn-secondary">
+                                {{- 'trans.Enter invoice details' | trans -}}
+                            </a>
+                        </div>
                     </div>
                 {% else %}
                     <div class="alert alert-danger">

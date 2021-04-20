@@ -81,6 +81,13 @@ class User implements UserInterface, UserRoleEnum, EnablableInterface, EncoderAw
     protected $messagesEnabled = true;
 
     /**
+     * @var bool|null
+     *
+     * @ORM\Column(type="boolean", nullable=false)
+     */
+    protected $demoPackageUsed = false;
+
+    /**
      * @var string The hashed password
      *
      * @ORM\Column(type="string", nullable=false)
@@ -549,5 +556,15 @@ class User implements UserInterface, UserRoleEnum, EnablableInterface, EncoderAw
     public function setMessagesEnabled(?bool $messagesEnabled): void
     {
         $this->messagesEnabled = $messagesEnabled;
+    }
+
+    public function getDemoPackageUsed(): ?bool
+    {
+        return $this->demoPackageUsed;
+    }
+
+    public function setDemoPackageUsed(?bool $demoPackageUsed): void
+    {
+        $this->demoPackageUsed = $demoPackageUsed;
     }
 }

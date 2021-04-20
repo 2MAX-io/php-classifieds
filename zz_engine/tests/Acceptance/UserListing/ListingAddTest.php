@@ -7,6 +7,7 @@ namespace App\Tests\Acceptance\UserListing;
 use App\Helper\FilePath;
 use App\Helper\JsonHelper;
 use App\Tests\Base\AppIntegrationTestCase;
+use App\Tests\Enum\TestDataEnum;
 use App\Tests\Smoke\Base\SmokeTestForRouteInterface;
 use App\Tests\Traits\DatabaseTestTrait;
 use App\Tests\Traits\LoginTestTrait;
@@ -37,7 +38,8 @@ class ListingAddTest extends AppIntegrationTestCase implements SmokeTestForRoute
         $client->submitForm('Save', [
             'listing[title]' => 'test listing',
             'listing[description]' => 'test listing',
-            'listing[category]' => '140',
+            'listing[category]' => 140,
+            'listing[package]' => TestDataEnum::FREE_PACKAGE_ID,
         ]);
         $response = $client->getResponse();
         self::assertSame(302, $response->getStatusCode());
@@ -60,6 +62,7 @@ class ListingAddTest extends AppIntegrationTestCase implements SmokeTestForRoute
             'listing[title]' => 'test listing',
             'listing[description]' => 'test listing',
             'listing[category]' => '3', // cars
+            'listing[package]' => TestDataEnum::FREE_PACKAGE_ID,
         ]);
         $values = $form->getPhpValues();
         $values['listing']['customFieldList'][1] = '__custom_field_option_id_4'; // brand

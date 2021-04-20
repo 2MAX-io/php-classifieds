@@ -122,14 +122,14 @@ class Category
      *
      * @ORM\OneToMany(targetEntity="App\Entity\PackageForCategory", mappedBy="category")
      */
-    private $packages;
+    private $packageForCategoryList;
 
     public function __construct()
     {
         $this->listings = new ArrayCollection();
         $this->customFieldForCategoryList = new ArrayCollection();
         $this->children = new ArrayCollection();
-        $this->packages = new ArrayCollection();
+        $this->packageForCategoryList = new ArrayCollection();
     }
 
     /**
@@ -160,6 +160,27 @@ class Category
         return \array_reverse($path);
     }
 
+    public function getPathString(string $separator = ' ⇾ '): string
+    {
+        $path = $this->getPath();
+        $path = \array_map(
+            static function (Category $category) {
+                if ($category->getLvl() < 1) {
+                    return false;
+                }
+
+                return $category->getName();
+            },
+            $path
+        );
+
+        if (empty($path)) {
+            return $this->getNameNotNull();
+        }
+
+        return \implode($separator, $path);
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -167,6 +188,15 @@ class Category
 
     public function getName(): ?string
     {
+        return $this->name;
+    }
+
+    public function getNameNotNull(): string
+    {
+        if (null === $this->name) {
+            throw new \RuntimeException('name is null');
+        }
+
         return $this->name;
     }
 
@@ -358,25 +388,25 @@ class Category
     /**
      * @return Collection|PackageForCategory[]
      */
-    public function getPackages(): Collection
+    public function getPackageForCategoryList(): Collection
     {
-        return $this->packages;
+        return $this->packageForCategoryList;
     }
 
-    public function addPackage(PackageForCategory $packageForCategory): self
+    public function addPackageForCategory(PackageForCategory $packageForCategory): self
     {
-        if (!$this->packages->contains($packageForCategory)) {
-            $this->packages[] = $packageForCategory;
+        if (!$this->packageForCategoryList->contains($packageForCategory)) {
+            $this->packageForCategoryList[] = $packageForCategory;
             $packageForCategory->setCategory($this);
         }
 
         return $this;
     }
 
-    public function removePackage(PackageForCategory $packageForCategory): self
+    public function removePackageForCategory(PackageForCategory $packageForCategory): self
     {
-        if ($this->packages->contains($packageForCategory)) {
-            $this->packages->removeElement($packageForCategory);
+        if ($this->packageForCategoryList->contains($packageForCategory)) {
+            $this->packageForCategoryList->removeElement($packageForCategory);
             // set the owning side to null (unless already changed)
             if ($packageForCategory->getCategory() === $this) {
                 $packageForCategory->setCategory(null);

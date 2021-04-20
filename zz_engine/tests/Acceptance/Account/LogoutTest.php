@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\Acceptance\Account;
 
 use App\Tests\Base\AppIntegrationTestCase;
-use App\Tests\Enum\TestUserLoginEnum;
+use App\Tests\Enum\TestDataEnum;
 use App\Tests\Smoke\Base\SmokeTestForRouteInterface;
 use App\Tests\Traits\DatabaseTestTrait;
 use App\Tests\Traits\LoginTestTrait;
@@ -33,8 +33,8 @@ class LogoutTest extends AppIntegrationTestCase implements SmokeTestForRouteInte
         // login
         $client->request('GET', $this->getRouter()->generate('app_login'));
         $client->submitForm('Sign in', [
-            'email' => TestUserLoginEnum::LOGIN,
-            'password' => TestUserLoginEnum::PASSWORD,
+            'email' => TestDataEnum::LOGIN,
+            'password' => TestDataEnum::PASSWORD,
         ]);
         $response = $client->getResponse();
         self::assertSame(302, $response->getStatusCode());

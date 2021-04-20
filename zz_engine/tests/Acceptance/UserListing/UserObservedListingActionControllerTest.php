@@ -6,7 +6,7 @@ namespace App\Tests\Acceptance\UserListing;
 
 use App\Enum\ParamEnum;
 use App\Tests\Base\AppIntegrationTestCase;
-use App\Tests\Enum\TestUserLoginEnum;
+use App\Tests\Enum\TestDataEnum;
 use App\Tests\Smoke\Base\SmokeTestForRouteInterface;
 use App\Tests\Traits\DatabaseTestTrait;
 use App\Tests\Traits\LoginTestTrait;
@@ -33,7 +33,7 @@ class UserObservedListingActionControllerTest extends AppIntegrationTestCase imp
     {
         $client = static::createClient();
         $this->clearDatabase();
-        $this->loginUser($client, TestUserLoginEnum::LOGIN2);
+        $this->loginUser($client, TestDataEnum::LOGIN2);
 
         // check not on observed list
         $client->request('GET', $this->getRouter()->generate('app_user_observed_listings'));

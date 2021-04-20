@@ -101,7 +101,7 @@ class PackageCategoriesService
 
     private function isFeaturePackageSelectedInCategory(Category $category, Package $package): bool
     {
-        $categoryPackages = $category->getPackages()->map(static function (PackageForCategory $packageForCategory) {
+        $categoryPackages = $category->getPackageForCategoryList()->map(static function (PackageForCategory $packageForCategory) {
             return $packageForCategory->getPackage();
         });
 
@@ -118,7 +118,7 @@ class PackageCategoriesService
         $qb->from(Category::class, 'category');
         $qb->addSelect('packageForCategory');
         $qb->addSelect('package');
-        $qb->leftJoin('category.packages', 'packageForCategory');
+        $qb->leftJoin('category.packageForCategoryList', 'packageForCategory');
         $qb->leftJoin('packageForCategory.package', 'package');
         $qb->andWhere($qb->expr()->gt('category.lvl', 0));
 
@@ -137,7 +137,7 @@ class PackageCategoriesService
 
     private function removeCategorySelection(Package $package, Category $category): void
     {
-        foreach ($category->getPackages() as $packageForCategory) {
+        foreach ($category->getPackageForCategoryList() as $packageForCategory) {
             if ($packageForCategory->getPackage() === $package) {
                 $this->em->remove($packageForCategory);
             }

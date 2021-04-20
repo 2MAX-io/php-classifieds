@@ -232,7 +232,7 @@ class ListingListService
         }
 
         $qb->addOrderBy('listing.featured', Criteria::DESC);
-        $qb->addOrderBy('listing.featuredWeight', Criteria::DESC);
+        $qb->addOrderBy('listing.featuredPriority', Criteria::DESC);
         $qb->addOrderBy('listing.orderByDate', Criteria::DESC);
         $qb->addOrderBy('listing.id', Criteria::DESC);
 

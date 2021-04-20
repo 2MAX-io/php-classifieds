@@ -121,11 +121,11 @@ class DevGenerateTestListingsService
             ]));
             $listing->setSlug(SlugHelper::getSlug($listing->getTitle()));
             $listing->setSearchText($listing->getTitle().' '.$listing->getDescription());
-            $listing->setValidUntilDate(DateHelper::carbonNow()->addDays(7));
+            $listing->setExpirationDate(DateHelper::carbonNow()->addDays(7));
 
             if ($this->randomBool(15)) {
                 $listing->setFeatured(true);
-                $listing->setFeaturedUntilDate($listing->getValidUntilDate());
+                $listing->setFeaturedUntilDate($listing->getExpirationDate());
             }
 
             if ($this->randomBool(80)) {

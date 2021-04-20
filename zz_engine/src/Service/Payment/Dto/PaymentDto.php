@@ -25,11 +25,6 @@ class PaymentDto
     private $makePaymentUrl;
 
     /**
-     * @var string|null
-     */
-    private $returnUrl;
-
-    /**
      * @var int|null
      */
     private $amount;
@@ -77,16 +72,6 @@ class PaymentDto
     public function getMakePaymentUrl(): string
     {
         return $this->makePaymentUrl;
-    }
-
-    public function getReturnUrl(): ?string
-    {
-        return $this->returnUrl;
-    }
-
-    public function setReturnUrl(?string $returnUrl): void
-    {
-        $this->returnUrl = $returnUrl;
     }
 
     public function getAmount(): ?int

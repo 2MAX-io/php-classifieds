@@ -750,12 +750,18 @@ div.clickable-div a.clickable-div-link {
 
 .price-tag {
     position: relative;
-    padding: 0.15rem .75rem 0.10rem 1.36rem;
+    padding: .15rem .75rem .1rem 0.75rem;
     margin-bottom: .4rem;
     color: #1b1e21;
     background-color: #f2f2f2;
     border: 1px solid #d9dadb;
     border-radius: .25rem;
+}
+
+@media (min-width: 768px) {
+    .price-tag {
+        padding: 0.15rem 1.36rem 0.10rem 1.36rem;
+    }
 }
 
 .price-tag-price {
@@ -843,4 +849,21 @@ div.clickable-div a.clickable-div-link {
     object-fit: cover;
     max-width: 4rem;
     height: 4rem;
+}
+
+.package {
+    display: block;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    border-radius: 0.5rem;
+    transition: all 0.2s;
+    padding: 0.3rem 0.7rem;
+    margin-bottom: 1rem;
+}
+
+.package:hover {
+    border-color: rgba(0, 0, 0, 0.225);
+}
+
+input:checked + .package-name {
+    font-weight: bold;
 }

@@ -7,6 +7,7 @@ namespace App\Tests\Acceptance\Payment\Przelewy24;
 use App\Service\Payment\Enum\PaymentGatewayEnum;
 use App\Service\Payment\PaymentGateway\Przelewy24PaymentGatewayService;
 use App\Tests\Base\AppIntegrationTestCase;
+use App\Tests\Enum\TestDataEnum;
 use App\Tests\Traits\DatabaseTestTrait;
 use App\Tests\Traits\LoginTestTrait;
 use App\Tests\Traits\RouterTestTrait;
@@ -56,16 +57,16 @@ class MakeFeaturedTest extends AppIntegrationTestCase
         $this->getTestContainer()->get(Przelewy24PaymentGatewayService::class)->setGateway($gatewayStub);
 
         $id = 1;
-        $url = $this->getRouter()->generate('app_user_feature_listing_action', [
+        $url = $this->getRouter()->generate('app_user_feature_listing_pay', [
             'id' => $id,
-            'package' => 1,
+            'package' => TestDataEnum::PAID_PACKAGE_ID,
         ]);
         $csrfToken = $this->getTestContainer()->get(CsrfTokenManagerInterface::class)->getToken('csrf_feature'.$id);
         $client->request('PATCH', $url, [
             '_token' => $csrfToken->getValue(),
         ]);
         $response = $client->getResponse();
-        self::assertSame(302, $response->getStatusCode(), $response->getContent());
+        self::assertSame(302, $response->getStatusCode());
         $returnUrl = $client->getResponse()->headers->get('location');
 
         // notify from payment gateway

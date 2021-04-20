@@ -14,7 +14,7 @@ use App\Helper\DateHelper;
 use App\Helper\RandomHelper;
 use App\Security\CurrentUserService;
 use App\Service\Invoice\CreateInvoiceService;
-use App\Service\Listing\Featured\FeaturedListingService;
+use App\Service\Listing\Featured\FeatureListingByPackageService;
 use App\Service\Money\UserBalanceService;
 use App\Service\Payment\Dto\ConfirmPaymentDto;
 use App\Service\Payment\Dto\PaymentDto;
@@ -43,9 +43,9 @@ class PaymentService
     private $createInvoiceService;
 
     /**
-     * @var FeaturedListingService
+     * @var FeatureListingByPackageService
      */
-    private $featuredListingService;
+    private $featureListingByPackageService;
 
     /**
      * @var SettingsDto
@@ -81,7 +81,7 @@ class PaymentService
         PaymentGatewayService $paymentGatewayService,
         UserBalanceService $userBalanceService,
         CreateInvoiceService $createInvoiceService,
-        FeaturedListingService $featuredListingService,
+        FeatureListingByPackageService $featureListingByPackageService,
         SettingsDto $settingsDto,
         CurrentUserService $currentUserService,
         UrlGeneratorInterface $urlGenerator,
@@ -95,7 +95,7 @@ class PaymentService
         $this->trans = $trans;
         $this->userBalanceService = $userBalanceService;
         $this->logger = $logger;
-        $this->featuredListingService = $featuredListingService;
+        $this->featureListingByPackageService = $featureListingByPackageService;
         $this->urlGenerator = $urlGenerator;
         $this->paymentGatewayService = $paymentGatewayService;
         $this->createInvoiceService = $createInvoiceService;
@@ -103,6 +103,12 @@ class PaymentService
 
     public function createPaymentForPackage(Listing $listing, Package $package): PaymentDto
     {
+        $user = $this->currentUserService->getUser();
+        $currentBalance = $this->userBalanceService->getCurrentBalance($user);
+        if ($currentBalance > $package->getPrice()) {
+            throw new \RuntimeException('should use account balance instead of creating payment');
+        }
+
         $paymentDto = new PaymentDto();
         $paymentDto->setPaymentType(Payment::FOR_PACKAGE_TYPE);
         $paymentDto->setPaymentDescription(
@@ -117,8 +123,8 @@ class PaymentService
             )
         );
         $paymentDto->setCurrency($this->settingsDto->getCurrency());
-        $paymentDto->setAmount($package->getPrice());
-        $paymentDto->setUser($this->currentUserService->getUserOrNull());
+        $paymentDto->setAmount($package->getPrice() - $currentBalance);
+        $paymentDto->setUser($user);
         if ($this->settingsDto->getPaymentGatewayPaymentDescription()) {
             $paymentDto->setGatewayPaymentDescription($this->settingsDto->getPaymentGatewayPaymentDescription());
         } else {
@@ -200,7 +206,7 @@ class PaymentService
         $paymentEntity = $this->getPaymentEntity($confirmPaymentDto->getPaymentAppToken());
         $confirmPaymentDto->setPaymentEntity($paymentEntity);
         $confirmPaymentDto = $paymentGateway->confirmPayment($confirmPaymentDto);
-        $this->validate($confirmPaymentDto);
+        $this->validatePaymentConfirmed($confirmPaymentDto);
 
         $paymentEntity->setPaid(true);
         $paymentEntity->setGatewayPaymentId($confirmPaymentDto->getGatewayPaymentId());
@@ -210,7 +216,7 @@ class PaymentService
         return $this->completePurchase($confirmPaymentDto);
     }
 
-    public function validate(ConfirmPaymentDto $confirmPaymentDto): void
+    public function validatePaymentConfirmed(ConfirmPaymentDto $confirmPaymentDto): void
     {
         if (!$confirmPaymentDto->isConfirmed()) {
             $this->logger->error('payment is not confirmed', [$confirmPaymentDto]);
@@ -279,7 +285,7 @@ class PaymentService
             );
             $userBalanceChange->setDescription(
                 $this->trans->trans(
-                    'trans.Featuring of listing: %listingTitle%, using package: %packageName%, payment acceptance',
+                    'trans.Activate package: %packageName%, for listing: %listingTitle%, payment acceptance',
                     [
                         '%listingTitle%' => $paymentForPackage->getListingNotNull()->getTitle(),
                         '%packageName%' => $paymentForPackage->getPackage()->getName(),
@@ -289,14 +295,14 @@ class PaymentService
             $userBalanceChange->setPayment($paymentEntity);
             $this->em->flush();
 
-            $userBalanceChange = $this->featuredListingService->makeFeaturedByBalance(
+            $userBalanceChange = $this->featureListingByPackageService->makeFeaturedByBalance(
                 $paymentForPackage->getListingNotNull(),
                 $paymentForPackage->getPackage(),
                 $paymentEntity,
             );
             $userBalanceChange->setDescription(
                 $this->trans->trans(
-                    'trans.Featuring of listing: %listingTitle%, using package: %packageName%',
+                    'trans.Activate package: %packageName%, for listing: %listingTitle%',
                     [
                         '%listingTitle%' => $paymentForPackage->getListingNotNull()->getTitle(),
                         '%packageName%' => $paymentForPackage->getPackage()->getName(),

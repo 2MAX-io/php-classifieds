@@ -39,7 +39,9 @@ class RemoveFeaturedWhenExpiredService implements CronActionInterface
         $pdo = $this->em->getConnection();
         $query = $pdo->prepare('
             UPDATE listing 
-            SET featured = 0 
+            SET 
+                featured = 0,
+                featured_priority = 0
             WHERE true
                 && featured = 1 
                 && (featured_until_date <= :now OR featured_until_date IS NULL)

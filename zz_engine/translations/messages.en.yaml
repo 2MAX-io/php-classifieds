@@ -4,8 +4,8 @@ Hour: Hour
 Minute: Minute
 Month: Month
 Year: Year
-'{1}trans.Feature for one day for %price%: %listing%?|]1,Inf[ Feature for %featuredDays% days for %price%: %listing%?': '{1}Feature for one day for %price%: %listing%?|]1,Inf[ Feature for %featuredDays% days for %price%: %listing%?'
-'{1}trans.Feature for one day for %price%|]1,Inf[ Feature for %featuredDays% days for %price%': '{1} Feature for one day for %price%|]1,Inf[ Feature for %featuredDays% days for %price%'
+'{1}trans.Feature for one day|]1,Inf[ Feature for %featuredDays% days': '{1}trans.Feature for one day|]1,Inf[ Feature for %featuredDays% days'
+'{1}trans.One day until expiration|]1,Inf[ %expirationDays% days until expiration': '{1}trans.One day until expiration|]1,Inf[ %expirationDays% days until expiration'
 trans.customFieldType.CHECKBOX_MULTIPLE: 'Multiple checkboxes'
 trans.customFieldType.INTEGER_RANGE: 'Field with integer'
 trans.customFieldType.SELECT_AS_CHECKBOXES: 'Checkboxes in filters, single select when editing'
@@ -62,11 +62,7 @@ trans.priceFor.PRICE_FOR_YEAR: 'for year'
 'trans.${name} is too large! Please choose a file up to ${fileMaxSize}MB': '${name} is too large! Please choose a file up to ${fileMaxSize}MB'
 'trans.%year% would be replaced to current year': '%year% would be replaced to current year'
 'trans.(this mailbox)': '(this mailbox)'
-'trans.1 month': month
-'trans.1 week': '1 week'
-'trans.2 weeks': '2 weeks'
 'trans.3 letters, ISO 4217 code': '3 letters, ISO 4217 code'
-'trans.3 weeks': '3 weeks'
 trans.About: About
 'trans.Abuse reports for lisings': 'Abuse reports for lisings'
 'trans.account login, seller id, p24_merchant_id, digits': 'account login, seller id, p24_merchant_id, digits'
@@ -103,7 +99,6 @@ trans.Administrators: Administrators
 'trans.Advanced listing edit': 'Advanced listing edit'
 trans.Advertisement: Advertisement
 'trans.Advertisement zone id': 'Advertisement zone id'
-'trans.After topping up, you can feature listing using green buttons on feature listing page. They would use your account balance for payment, instead of redirecting you to payment page.': 'After topping up, you can feature listing using green buttons on feature listing page. They would use your account balance for payment, instead of redirecting you to payment page.'
 'trans.ALERT! security alert, not allowed file is publicly accessible %url%': 'ALERT! security alert, not allowed file is publicly accessible %url%'
 'trans.ALERT! security can not be checked, required file not found: %file%': 'ALERT! security can not be checked, required file not found: %file%'
 'trans.All categories': 'All categories'
@@ -168,7 +163,6 @@ trans.Copy: Copy
 'trans.Copy to clipboard': 'Copy to clipboard'
 'trans.Could not connect to: %url%, during security audit, if testing on local machine you can ignore this': 'Could not connect to: %url%, during security audit, if testing on local machine you can ignore this'
 'trans.Could not process payment, if you have been charged and did not receive service, please contact us': 'Could not process payment, if you have been charged and did not receive service, please contact us'
-'trans.Counting from today, extend by': 'Counting from today, extend by'
 trans.Country: Country
 'trans.CRC key from account details': 'CRC key from account details'
 'trans.Create Listing': 'Create Listing'
@@ -229,7 +223,7 @@ trans.Download: Download
 'trans.Do you confirm logout?': 'Do you confirm logout?'
 'trans.Do you feature frequently?': 'Do you feature frequently?'
 'trans.Do you feature many listings?': 'Do you feature many listings?'
-'trans.Do you feature many listings or feature frequently? After account top up, you will be able to feature listing by one click, using your account balance. Without need to make payment for every single listing separately': 'Do you feature many listings or feature frequently? After account top up, you will be able to feature listing by one click, using your account balance. Without need to make payment for every single listing separately'
+'trans.After account top up, you will be able to feature listing by one click, using your account balance. Without need to make payment for every single listing separately': 'After account top up, you will be able to feature listing by one click, using your account balance. Without need to make payment for every single listing separately'
 'trans.Do you need invoice for your company?': 'Do you need invoice for your company?'
 'trans.Drop the files here to Upload': 'Drop the files here to Upload'
 trans.Duration: Duration
@@ -283,20 +277,18 @@ trans.Facebook: Facebook
 'trans.Failed to create payment, please try again later': 'Failed to create payment, please try again later'
 'trans.Failed to get information about new version. Try again later.': 'Failed to get information about new version. Try again later.'
 trans.Feature: Feature
-'trans.Feature as a demonstration for 30 minutes': 'Feature as a demonstration for 30 minutes'
-'trans.Feature as a demonstration for 30 minutes: %listing%?': 'Feature as a demonstration for 30 minutes: %listing%?'
 trans.Featured: Featured
 'trans.Featured listing?': 'Featured listing?'
 'trans.Featured listings': 'Featured listings'
 'trans.Package': 'Package'
 'trans.Packages': 'Packages'
 'trans.Featured until': 'Featured until'
-'trans.Featured weight': 'Featured weight'
+'trans.Featured priority': 'Featured priority'
 'trans.Feature for week': 'Feature for week'
 'trans.Feature listing': 'Feature listing'
 'trans.Feature this listing': 'Feature this listing'
-'trans.Featuring of listing: %listingTitle%, using package: %packageName%': 'Featuring of listing: %listingTitle%, using package: %packageName%'
-'trans.Featuring of listing: %listingTitle%, using package: %packageName%, payment acceptance': 'Featuring of listing: %listingTitle%, using package: %packageName%, payment acceptance'
+'trans.Activate package: %packageName%, for listing: %listingTitle%': 'Activate package: %packageName%, for listing: %listingTitle%'
+'trans.Activate package: %packageName%, for listing: %listingTitle%, payment acceptance': 'trans.Activate package: %packageName%, for listing: %listingTitle%, payment acceptance'
 trans.feet: feet
 trans.file: file
 trans.files: files
@@ -311,9 +303,7 @@ trans.Filters: Filters
 'trans.First waiting for Activation': 'First waiting for Activation'
 'trans.for category': 'for category'
 'trans.for custom field': 'for custom field'
-'trans.for free': 'for free'
 'trans.Forgot password?': 'Forgot password?'
-'trans.For how long listing should be published?': 'For how long listing should be published?'
 'trans.for individual purchases': 'for individual purchases'
 trans.From: From
 'trans.From custom field': 'From custom field'
@@ -393,9 +383,8 @@ trans.List: List
 trans.Listing: Listing
 'trans.Listing awaits activation': 'Listing awaits activation'
 'trans.Listing awaits activation, you can extend listing duration, but listing would only appear to the public after acceptation': 'Listing awaits activation, you can extend listing duration, but listing would only appear to the public after acceptation'
-'trans.Listing currently valid until': 'Listing currently valid until'
 'trans.Listing has been removed by Administrator': 'Listing has been removed by Administrator'
-'trans.Listing has been featured for 30 minutes, to see how it looks click': 'Listing has been featured for 30 minutes, to see how it looks click'
+'trans.Listing has been featured as demonstration, to see how it looks click': 'Listing has been featured as demonstration, to see how it looks click'
 'trans.Listing has been rejected': 'Listing has been rejected'
 'trans.Listing has been removed': 'Listing has been removed'
 'trans.Listing has expired': 'Listing has expired'
@@ -626,7 +615,7 @@ trans.space: space
 trans.Status: Status
 trans.Street: Street
 trans.Subcategories: Subcategories
-trans.Subpages: Subpages
+trans.Pages: Pages
 'trans.Success, redirecting...': 'Success, redirecting...'
 'trans.System setting': 'System setting'
 'trans.Tax ID': 'Tax ID / VAT ID'
@@ -664,7 +653,6 @@ trans.To: To
 'trans.To remind password, please click confirmation link that you would receive on your email address': 'To remind password, please click confirmation link that you would receive on your email address'
 trans.Total: Total
 'trans.to upload': 'to upload'
-'trans.Try featured': 'Try featured'
 'trans.turning off will disable all monetization, featuring ads, top up of account': 'turning off will disable all monetization, featuring ads, top up of account'
 trans.Type: Type
 'trans.Under category': 'Under category'
@@ -736,3 +724,18 @@ trans.Yes: 'Yes'
 'trans.Write message button is displayed for your listings': 'Write message button is displayed for your listings'
 'trans.Cache': 'Cache'
 'trans.Clear cache': 'Clear cache'
+'trans.Pick listing publication option': 'Pick listing publication option'
+'trans.Do you confirm payment of': 'Do you confirm payment of'
+'trans.using account balance': 'using account balance'
+'trans.Select listing extend option': 'Select listing extend option'
+'trans.free': 'free'
+'trans.Listing featured priority': 'Listing featured priority'
+'trans.Seconds of featured': 'Seconds of featured'
+'trans.Demonstration of featured listing, user can use only once': 'Demonstration of featured listing, user can use only once'
+'trans.Show price?': 'Show price?'
+'trans.Show the number of featured days?': 'Show the number of featured days?'
+'trans.Pull up on listing expiration extend, when last pull up older than days': 'Pull up on listing expiration extend, when last pull up older than days'
+'trans.Categories without packages': 'Categories without packages'
+'trans.for package': 'for package'
+'trans.Show the days until expiration?': 'Show the days until expiration?'
+'trans.Select package': 'Select package'

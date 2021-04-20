@@ -1,0 +1,50 @@
+{#- @var settings \App\Service\Setting\SettingsDto -#}
+{%- set settings = settings() -%}
+{% do form.package.setRendered %}
+{%- for packageData in form.package.vars.choices ~%}
+    {# @var package \App\Entity\Package #}
+    {% set package = packageData.data %}
+    <label class="package">
+        <input {{- ' ' -}}
+                type="radio" {{- ' ' -}}
+                class="custom-radio" {{- ' ' -}}
+                name="{{ form.package.vars.full_name }}" {{- ' ' -}}
+                value="{{ package.id }}" {{- ' ' -}}
+                {%- if form.package.vars.required -%}required{%- endif -%}
+        >
+        <span class="package-name">{{ package.name }}</span>
+        {%- if package.showPrice ~%}
+                {%- if package.price ~%}
+                    <span class="badge badge-primary align-text-bottom">
+                        {{- 'trans.Price' | trans -}}
+                        {{- ': ' -}}
+                        {{- package.price | moneyPrecise -}}
+                        {{- ' ' -}}
+                        {{- settings.currency -}}
+                    </span>
+                {%- else ~%}
+                    <span class="badge badge-success align-text-bottom">
+                        {{- 'trans.free' | trans -}}
+                    </span>
+                {%- endif ~%}
+        {%- endif ~%}
+        {%- if package.showFeaturedDays and package.daysFeaturedExpire > 0 ~%}
+            <span class="badge badge-warning align-text-bottom">
+                {{- '★ ' -}}
+                {%- trans count package.daysFeaturedExpire with {'%featuredDays%': package.daysFeaturedExpire} -%}
+                    {1}trans.Feature for one day|]1,Inf[ Feature for %featuredDays% days
+                {%- endtrans -%}
+            </span>
+        {%- endif ~%}
+        {%- if package.showExpirationDays and package.daysListingExpire > 0 ~%}
+            <span class="badge badge-dark align-text-bottom">
+                {%- trans count package.daysListingExpire with {'%expirationDays%': package.daysListingExpire} -%}
+                    {1}trans.One day until expiration|]1,Inf[ %expirationDays% days until expiration
+                {%- endtrans -%}
+            </span>
+        {%- endif ~%}
+        {%- if package.description ~%}
+            <div class="text-muted">{{ package.description | nl2br }}</div>
+        {%- endif ~%}
+    </label>
+{%- endfor ~%}

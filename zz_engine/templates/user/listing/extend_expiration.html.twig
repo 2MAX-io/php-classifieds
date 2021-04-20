@@ -1,0 +1,100 @@
+{% extends 'base.html.twig' %}
+
+{# @var settings \App\Service\Setting\SettingsDto #}
+{% set settings = settings() %}
+
+{% block title %}{{ 'trans.Extend validity' | trans }}{% endblock %}
+
+{% block body %}
+    <div class="container mt-2 mt-md-4">
+        <div class="row">
+            <div class="col-md-4 col-lg-3 mb-4 d-none d-md-block">
+                {% include 'user/_part/user_navigation_card.html.twig' %}
+            </div>
+
+            <div class="col-md-8 col-lg-9">
+                <div class="mb-4">
+                    <h3 class="mb-1">
+                        {{ 'trans.Extend listing' | trans }}:
+                        <a
+                                href="{{ path('app_listing_show', {'id': listing.id, 'slug': listing.slug}) }}"
+                                target="_blank"
+                                class="text-break"
+                        >
+                            {{- listing.title -}}
+                        </a>
+                    </h3>
+
+                    {% if listing.userDeactivated %}
+                        <div class="alert alert-info">
+                            {{ 'trans.Listing is currently deactivated, extending will activate it and therefore show it to the public on page' | trans }}
+                        </div>
+                    {% endif %}
+
+                    {% if listing.status in [constant('\App\\Entity\\Listing::STATUS_PENDING')] %}
+                        <div class="alert alert-info">
+                            {{ 'trans.Listing awaits activation, you can extend listing duration, but listing would only appear to the public after acceptation' | trans }}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="alert alert-secondary mb-4">
+                    {% if listing.featuredActive %}
+                        <div>
+                            {{ 'trans.Featured until' | trans }}:
+                            <strong>{{ listing.featuredUntilDate | date }}</strong>
+                        </div>
+                    {% endif %}
+
+                    <div>
+                        {{ 'trans.Expiration date' | trans }}:
+                        <strong>{{ listing.expirationDate | date }}</strong>
+                    </div>
+                </div>
+
+                {{ form_start(form) }}
+                {{ form_label(form.package) }}
+                <div class="mb-2">
+                    {% include 'user/listing/form/packages_for_listing_category.html.twig' %}
+                </div>
+                {{ form_widget(form) }}
+
+                <button class="btn btn-primary">{{ 'trans.Extend validity' | trans }}</button>
+                {{ form_end(form) }}
+
+                {% if userBalance > 0 %}
+                    <div class="my-4">
+                        {{ 'trans.Current balance' | trans }}:
+                        <strong class="badge badge-success">
+                            {{- userBalance | moneyPrecise -}}
+                            {{- ' ' -}}
+                            {{- settings.currency -}}
+                        </strong>
+                        {{ 'trans.that you can use to feature listings' | trans }}
+                    </div>
+                {% endif %}
+
+                <div class="alert alert-info mt-3">
+                    <div>
+                        {{ 'trans.Do you feature many listings?' | trans }}
+                        {{ 'trans.Do you feature frequently?' | trans }}
+                    </div>
+
+                    <a href="{{ path('app_user_balance_top_up') }}" class="btn btn-primary">
+                        {{- 'trans.Top up account' | trans -}}
+                    </a>
+                    <span>{{ 'trans.to feature listings by single click' | trans }}</span>
+                </div>
+
+                <div class="alert alert-info mt-3">
+                    <div>
+                        {{ 'trans.Do you need invoice for your company?' | trans }}
+                        <a href="{{ path('app_user_invoice_details') }}" class="btn btn-secondary">
+                            {{- 'trans.Enter invoice details' | trans -}}
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

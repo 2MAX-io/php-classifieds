@@ -33,19 +33,7 @@ class CategoryType extends AbstractType
                 'class' => 'js__formCategory',
             ],
             'choice_label' => static function (Category $category) {
-                $path = $category->getPath();
-                $path = \array_map(
-                    static function (Category $category) {
-                        if ($category->getLvl() < 1) {
-                            return false;
-                        }
-
-                        return $category->getName();
-                    },
-                    $path
-                );
-
-                return \implode(' ⇾ ', $path);
+                return $category->getPathString();
             },
             'query_builder' => function () {
                 $qb = $this->em->createQueryBuilder();

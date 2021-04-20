@@ -41,7 +41,7 @@ class DeactivateExpiredService implements CronActionInterface, CronAtNightInterf
         $query = $pdo->prepare('
             UPDATE listing 
             SET user_deactivated = 1 
-            WHERE valid_until_date <= :olderThan
+            WHERE expiration_date <= :olderThan
         ');
         $query->bindValue(':olderThan', DateHelper::carbonNow()->subDays(90));
         $query->execute();

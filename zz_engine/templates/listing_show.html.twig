@@ -414,9 +414,9 @@
                                 <div {{- ' ' -}}
                                         class="col-sm-8 col-md-7" {{- ' ' -}}
                                         property="schema:priceValidUntil" {{- ' ' -}}
-                                        content="{{ listing.validUntilDate | date('Y-m-d') }}" {{- ' ' -}}
+                                        content="{{ listing.expirationDate | date('Y-m-d') }}" {{- ' ' -}}
                                 >
-                                    {{- listing.validUntilDate | date(dateFormatShort) -}}
+                                    {{- listing.expirationDate | date(dateFormatShort) -}}
                                 </div>
                             </div>
                         </div>

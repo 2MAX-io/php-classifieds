@@ -24,7 +24,14 @@ class ListingShowController extends AbstractController
     public const CSRF_SHOW_CONTACT_DATA = 'csrf_listingShowContactData';
 
     /**
-     * @Route("/l/{id}/{slug}", name="app_listing_show", options={"expose": true})
+     * @Route(
+     *     "/l/{id}/{slug}",
+     *     name="app_listing_show",
+     *     options={"expose": true},
+     *     requirements={
+     *         "id"="\d+",
+     *     },
+     * )
      */
     public function singleListingShow(
         Request $request,

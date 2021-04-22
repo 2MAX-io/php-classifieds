@@ -66,7 +66,7 @@ class DeleteNotEnabledUsersCronService implements CronActionInterface, CronAtNig
                     && user.registration_date < :deleteOlderThan
                     && listing.id IS NULL
             ', [
-                'deleteOlderThan' => DateHelper::carbonNow()->subHours(16)->format(DateHelper::MYSQL_FORMAT),
+                'deleteOlderThan' => DateHelper::carbonNow()->subDays(7)->format(DateHelper::MYSQL_FORMAT),
             ]);
         } finally {
             $lock->release();

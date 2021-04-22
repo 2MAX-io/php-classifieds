@@ -74,26 +74,28 @@
                     </div>
                 {% endif %}
 
-                <div class="alert alert-info mt-3">
-                    <div>
-                        {{ 'trans.Do you feature many listings?' | trans }}
-                        {{ 'trans.Do you feature frequently?' | trans }}
-                    </div>
+                {%- if settings.paymentAllowed ~%}
+                    <div class="alert alert-info mt-3">
+                        <div>
+                            {{ 'trans.Do you feature many listings?' | trans }}
+                            {{ 'trans.Do you feature frequently?' | trans }}
+                        </div>
 
-                    <a href="{{ path('app_user_balance_top_up') }}" class="btn btn-primary">
-                        {{- 'trans.Top up account' | trans -}}
-                    </a>
-                    <span>{{ 'trans.to feature listings by single click' | trans }}</span>
-                </div>
-
-                <div class="alert alert-info mt-3">
-                    <div>
-                        {{ 'trans.Do you need invoice for your company?' | trans }}
-                        <a href="{{ path('app_user_invoice_details') }}" class="btn btn-secondary">
-                            {{- 'trans.Enter invoice details' | trans -}}
+                        <a href="{{ path('app_user_balance_top_up') }}" class="btn btn-primary">
+                            {{- 'trans.Top up account' | trans -}}
                         </a>
+                        <span>{{ 'trans.to feature listings by single click' | trans }}</span>
                     </div>
-                </div>
+
+                    <div class="alert alert-info mt-3">
+                        <div>
+                            {{ 'trans.Do you need invoice for your company?' | trans }}
+                            <a href="{{ path('app_user_invoice_details') }}" class="btn btn-secondary">
+                                {{- 'trans.Enter invoice details' | trans -}}
+                            </a>
+                        </div>
+                    </div>
+                {%- endif ~%}
             </div>
         </div>
     </div>

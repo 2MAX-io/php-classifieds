@@ -53,6 +53,7 @@ class UserSettingsType extends AbstractType
             'constraints' => [
                 new Length(['max' => 36, 'allowEmptyString' => false]),
             ],
+            'translation_domain' => false,
         ]);
 
         if ($this->settingsDto->getMessageSystemEnabled()) {

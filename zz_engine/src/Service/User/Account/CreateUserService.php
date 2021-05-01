@@ -60,13 +60,22 @@ class CreateUserService
     public function registerUser(RegisterUserDto $registerDto): User
     {
         $user = $this->getUser($registerDto->getEmail());
-        if (!StringHelper::emptyTrim($registerDto->getPassword())) {
-            $user->setPlainPassword($registerDto->getPassword());
-            $user->setPassword(
-                $this->passwordEncoder->encodePassword($user, $user->getPlainPassword())
-            );
+        $user = $this->setPasswordAndSendConfirmation($user, $registerDto);
+
+        return $user;
+    }
+
+    public function setPasswordAndSendConfirmation(User $user, RegisterUserDto $registerDto): User
+    {
+        if ($user->getEmail() !== $registerDto->getEmail()) {
+            throw new \RuntimeException('user email and register dto email does not match');
         }
 
+        $user = $this->getUser(
+            $registerDto->getEmail(),
+            $registerDto->getPassword(),
+            $user,
+        );
         $tokenDto = $this->tokenService->createToken(
             Token::USER_REGISTER_TYPE,
             DateHelper::carbonNow()->addDays(7),
@@ -81,13 +90,19 @@ class CreateUserService
         return $user;
     }
 
-    public function getUser(string $email, string $plainPassword = null): User
+    public function getUser(string $email, string $plainPassword = null, User $user = null): User
     {
         if (!$plainPassword) {
             $plainPassword = $this->passwordGenerateService->generatePassword();
         }
 
-        $user = new User();
+        if (StringHelper::emptyTrim($plainPassword)) {
+            throw new \RuntimeException('password can not be empty');
+        }
+
+        if (null === $user) {
+            $user = new User();
+        }
         $user->setEmail($email);
         $user->setUsername($email);
         $user->setRoles([User::ROLE_USER]);

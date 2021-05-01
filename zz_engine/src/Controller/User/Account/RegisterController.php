@@ -16,11 +16,14 @@ use App\Service\System\FlashBag\FlashService;
 use App\Service\System\Token\TokenService;
 use App\Service\User\Account\CreateUserService;
 use App\Service\User\Account\RegisterConfirmService;
+use App\Validator\Constraints\UserEmailNotTaken;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Security;
+use Symfony\Component\Validator\ConstraintViolation;
 
 class RegisterController extends AbstractUserController
 {
@@ -40,6 +43,7 @@ class RegisterController extends AbstractUserController
     public function register(
         Request $request,
         CreateUserService $createUserService,
+        RegisterConfirmService $registerConfirmService,
         FlashService $flashService
     ): Response {
         $registerDto = new RegisterUserDto();
@@ -55,6 +59,16 @@ class RegisterController extends AbstractUserController
             );
 
             return $this->redirectToRoute('app_login');
+        }
+
+        /** @var FormError $error */
+        foreach ($form->get('email')->getErrors() as $error) {
+            /** @var ConstraintViolation $cause */
+            $cause = $error->getCause();
+            if ($cause->getConstraint() instanceof UserEmailNotTaken) {
+                $registerConfirmService->resendRegisterConfirm($registerDto);
+                $this->em->flush();
+            }
         }
 
         return $this->render('user/account/register.html.twig', [

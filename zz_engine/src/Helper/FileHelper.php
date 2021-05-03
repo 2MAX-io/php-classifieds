@@ -98,6 +98,7 @@ class FileHelper
                 'png',
                 'gif',
                 'swf',
+                'webp',
             ]
         )) {
             throw new UserVisibleException("file extension {$fileExtension} is not allowed");
@@ -140,5 +141,19 @@ class FileHelper
         if (\preg_match('~^php\d+~', $fileExtension)) {
             throw new UserVisibleException("file extension {$fileExtension} is not allowed");
         }
+    }
+
+    /**
+     * @return string[]
+     */
+    public static function getValidMimeTypesList(): array
+    {
+        return [
+            'image/jpg',
+            'image/jpeg',
+            'image/png',
+            'image/gif',
+            'image/webp',
+        ];
     }
 }

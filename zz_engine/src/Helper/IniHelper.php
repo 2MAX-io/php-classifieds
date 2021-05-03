@@ -34,11 +34,23 @@ class IniHelper
     {
         $value = \ini_get('memory_limit');
         if (empty($value)) {
-            throw new \RuntimeException('could not get current memory_limit from ini_get');
+            throw new \RuntimeException('could not get current `memory_limit` by ini_get');
         }
 
         if (self::returnBytes($value) < MegabyteHelper::toByes($minMemoryMb)) {
-            \ini_set('memory_limit', $minMemoryMb.'M'); // required to handle big images
+            \ini_set('memory_limit', $minMemoryMb.'M');
+        }
+    }
+
+    public static function setSizeIfLessThanMb(string $iniOptionName, int $minMb): void
+    {
+        $value = \ini_get($iniOptionName);
+        if (empty($value)) {
+            throw new \RuntimeException('could not get current `'.$iniOptionName.'` by ini_get');
+        }
+
+        if (self::returnBytes($value) < MegabyteHelper::toByes($minMb)) {
+            \ini_set($iniOptionName, $minMb.'M');
         }
     }
 }

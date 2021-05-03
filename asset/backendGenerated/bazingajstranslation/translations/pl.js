@@ -900,4 +900,5 @@ t.add("trans.Categories without packages", "Kategorie bez pakietu", "messages", 
 t.add("trans.for package", "za pakiet", "messages", "pl");
 t.add("trans.Show the days until expiration?", "Poka\u017c dni wa\u017cno\u015bci?", "messages", "pl");
 t.add("trans.Select package", "Wybierz pakiet", "messages", "pl");
+t.add("trans.Error, try to upload again", "B\u0142\u0105d, spr\u00f3buj wgra\u0107 ponownie", "messages", "pl");
 })(Translator);

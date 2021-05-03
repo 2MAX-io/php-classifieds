@@ -899,4 +899,5 @@ t.add("trans.Categories without packages", "Categories without packages", "messa
 t.add("trans.for package", "for package", "messages", "en");
 t.add("trans.Show the days until expiration?", "Show the days until expiration?", "messages", "en");
 t.add("trans.Select package", "Select package", "messages", "en");
+t.add("trans.Error, try to upload again", "Error, try to upload again", "messages", "en");
 })(Translator);

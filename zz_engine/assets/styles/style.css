@@ -765,7 +765,7 @@ div.clickable-div a.clickable-div-link {
 }
 
 .price-tag-price {
-    font-family: "Courier", monospace;
+    font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
     font-weight: 300;
     font-size: 22px;
     line-height: 38px;

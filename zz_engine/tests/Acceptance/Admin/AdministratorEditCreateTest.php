@@ -134,6 +134,6 @@ class AdministratorEditCreateTest extends AppIntegrationTestCase implements Smok
         self::assertSame(302, $client->getResponse()->getStatusCode());
         $client->followRedirect();
         self::assertSame('app_admin_login', $client->getRequest()->attributes->get('_route'));
-        self::assertStringContainsString('Account is disabled', (string) $client->getResponse()->getContent());
+        self::assertStringContainsString('Invalid credentials.', (string) $client->getResponse()->getContent());
     }
 }

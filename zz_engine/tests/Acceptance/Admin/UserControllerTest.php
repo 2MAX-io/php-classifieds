@@ -104,7 +104,7 @@ class UserControllerTest extends AppIntegrationTestCase implements SmokeTestForR
         self::assertSame(302, $client->getResponse()->getStatusCode());
         $client->followRedirect();
         self::assertSame('app_login', $client->getRequest()->attributes->get('_route'));
-        self::assertStringContainsString('Account is disabled', (string) $client->getResponse()->getContent());
+        self::assertStringContainsString('Invalid credentials.', (string) $client->getResponse()->getContent());
     }
 
     public function testListSearch(): void

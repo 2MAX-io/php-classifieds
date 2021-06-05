@@ -42,6 +42,11 @@ class PriceForType extends AbstractType
             'trans.priceFor.PRICE_FOR_CM' => Listing::PRICE_FOR_CM,
             'trans.priceFor.PRICE_FOR_GRAM' => Listing::PRICE_FOR_GRAM,
             'trans.priceFor.PRICE_FOR_KILOGRAM' => Listing::PRICE_FOR_KILOGRAM,
+            'trans.priceFor.PRICE_FOR_MILE' => Listing::PRICE_FOR_MILE,
+            'trans.priceFor.PRICE_FOR_YARD' => Listing::PRICE_FOR_YARD,
+            'trans.priceFor.PRICE_FOR_FOOT' => Listing::PRICE_FOR_FOOT,
+            'trans.priceFor.PRICE_FOR_POUND' => Listing::PRICE_FOR_POUND,
+            'trans.priceFor.PRICE_FOR_OUNCE' => Listing::PRICE_FOR_OUNCE,
         ];
     }
 

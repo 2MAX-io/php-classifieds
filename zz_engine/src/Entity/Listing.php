@@ -69,6 +69,11 @@ class Listing
     public const PRICE_FOR_WEEK = 'PRICE_FOR_WEEK';
     public const PRICE_FOR_DAY = 'PRICE_FOR_DAY';
     public const PRICE_FOR_YEAR = 'PRICE_FOR_YEAR';
+    public const PRICE_FOR_MILE = 'PRICE_FOR_MILE';
+    public const PRICE_FOR_YARD = 'PRICE_FOR_YARD';
+    public const PRICE_FOR_FOOT = 'PRICE_FOR_FOOT';
+    public const PRICE_FOR_POUND = 'PRICE_FOR_POUND';
+    public const PRICE_FOR_OUNCE = 'PRICE_FOR_OUNCE';
 
     /**
      * @var int

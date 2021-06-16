@@ -4,7 +4,7 @@ grumphp:
         succeeded: null
     tasks:
         phpcsfixer:
-            config: '.php_cs.dist'
+            config: '.php-cs-fixer.dist.php'
             using_cache: false
             allow_risky: true
         phpstan:

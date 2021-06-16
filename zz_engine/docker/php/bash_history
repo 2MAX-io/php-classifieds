@@ -159,3 +159,6 @@ mysql -e "DROP DATABASE IF EXISTS classifieds_test; CREATE DATABASE classifieds_
 php zz_engine/bin/console app:dev:generate-test-listings 1360
 mysql --host=mysql_test -e "DROP DATABASE IF EXISTS classifieds_test; CREATE DATABASE classifieds_test;" && php zz_engine/bin/console doctrine:schema:create --env=test --dump-sql > install/data/_schema.sql
 mysql --host=mysql_test -e "DROP DATABASE IF EXISTS classifieds_test; CREATE DATABASE classifieds_test;" && php zz_engine/bin/console make:migration --env=test --no-interaction
+(cd /var/www/html/zz_engine && php vendor/bin/php-cs-fixer fix -v)
+COMPOSER_MEMORY_LIMIT=-1 composer update -d zz_engine --optimize-autoloader
+sudo chown -R 1000:33 /var/www/html

@@ -68,7 +68,7 @@
     },
     "require-dev": {
         "ext-posix": "*",
-        "friendsofphp/php-cs-fixer": "^2.18",
+        "friendsofphp/php-cs-fixer": "^3.0",
         "fzaninotto/faker": "^1.9",
         "phpro/grumphp": "^1.3",
         "phpstan/phpstan-doctrine": "^0.12.32",

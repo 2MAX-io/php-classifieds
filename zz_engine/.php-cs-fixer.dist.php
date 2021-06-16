@@ -12,7 +12,8 @@ $finder = PhpCsFixer\Finder::create()
     ->notPath('src/Secondary/FileUpload/FileUploader.php')
 ;
 
-return PhpCsFixer\Config::create()
+$config = new PhpCsFixer\Config();
+return $config
     ->setLineEnding("\n") // Linux LF line ending
     ->setRiskyAllowed(true)
     ->setRules([
@@ -49,10 +50,12 @@ return PhpCsFixer\Config::create()
 
                 'phpunit', // PHPUnit
             ],
-            'sortAlgorithm' => 'none',
+            'sort_algorithm' => 'none',
         ],
         'single_line_comment_style' => false,
-        'visibility_required' => ['property', 'method', 'const'],
+        'visibility_required' => [
+            'elements' => ['property', 'method', 'const'],
+        ],
         'native_function_invocation' => true,
         'native_constant_invocation' => true,
         'phpdoc_summary' => false,

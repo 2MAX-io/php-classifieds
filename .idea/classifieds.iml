@@ -236,6 +236,7 @@
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/psr/simple-cache" />
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/psr/cache" />
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/composer" />
+      <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/symfony/polyfill-php81" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

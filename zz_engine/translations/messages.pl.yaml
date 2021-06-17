@@ -745,3 +745,5 @@ trans.Yes: Tak
 'trans.Show the days until expiration?': 'Pokaż dni ważności?'
 'trans.Select package': 'Wybierz pakiet'
 'trans.Error, try to upload again': 'Błąd, spróbuj wgrać ponownie'
+'trans.Please refresh page and try again': 'Prosimy odświeżyć stronę i spróbować ponownie'
+'trans.Refresh page': 'Odśwież stronę'

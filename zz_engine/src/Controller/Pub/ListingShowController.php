@@ -15,7 +15,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Exception\InvalidCsrfTokenException;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Twig\Environment;
 
@@ -124,15 +123,18 @@ class ListingShowController extends AbstractController
         Environment $twig
     ): Response {
         $listingId = (int) $request->request->get(ParamEnum::LISTING_ID);
+        $listingShowDto = $listingShowSingleService->getSingle($listingId);
+        if (!$listingShowDto) {
+            throw $this->createNotFoundException();
+        }
         if (!$this->isCsrfTokenValid(
             static::CSRF_SHOW_CONTACT_DATA.$listingId,
             $request->headers->get(ParamEnum::CSRF_HEADER)
         )) {
-            throw new InvalidCsrfTokenException('token not valid');
-        }
-        $listingShowDto = $listingShowSingleService->getSingle($listingId);
-        if (!$listingShowDto) {
-            throw $this->createNotFoundException();
+            return $this->json([
+                ParamEnum::SUCCESS => true,
+                ParamEnum::SHOW_CONTACT_HTML => $twig->render('secondary/listing_show_contact_refresh_page.html.twig'),
+            ]);
         }
 
         if (!$listingPublicDisplayService->canDisplay($listingShowDto->getListing())) {

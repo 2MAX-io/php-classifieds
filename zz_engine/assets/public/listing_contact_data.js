@@ -53,3 +53,8 @@ let onClick = function (event) {
 
 document.querySelector(".js__listingShowContactDetails")?.addEventListener("click", onClick);
 document.querySelector(".js__listingShowContactDetails")?.addEventListener("touchstart", onClick);
+document.addEventListener("click", (e) => {
+    if (e.target.closest(".js__reloadPage")) {
+        location.reload();
+    }
+});

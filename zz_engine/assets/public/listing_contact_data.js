@@ -1,6 +1,7 @@
 "use strict";
 
 import dataForJs from "~/function/dataForJs";
+import "element-closest-polyfill";
 
 let loadContactData = ($contactDataButton) => {
     let ParamEnum = {};

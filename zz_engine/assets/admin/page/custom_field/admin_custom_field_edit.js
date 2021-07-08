@@ -3,7 +3,7 @@
 import $ from "jquery";
 import Routing from "~/module/Routing";
 import Sortable from "sortablejs";
-import "~/function/jqueryAjaxaddCsrfHeader";
+import "~/function/jqueryAjaxAddCsrfHeader";
 import "~/module/confirm";
 
 /** @type {HTMLElement} */

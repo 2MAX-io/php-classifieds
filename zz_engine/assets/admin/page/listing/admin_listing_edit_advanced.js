@@ -2,7 +2,7 @@
 
 import $ from "jquery";
 import Cleave from "cleave.js";
-import "~/function/textarea-autosize";
+import "~/function/textareaAutosize";
 import "~/module/confirm";
 import "~/module/confirm";
 

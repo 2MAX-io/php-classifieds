@@ -3,13 +3,13 @@
 import $ from "jquery";
 import dataForJs from "~/function/dataForJs";
 import Cleave from "cleave.js";
-import "~/function/fancy-confirm";
+import "~/function/fancyConfirm";
 import { preventDoubleClick } from "~/function/preventDoubleClick";
 import Translator from "~/module/Translator";
 import ParamEnum from "~/enum/ParamEnum";
 import Routing from "~/module/Routing";
 import defaultFileUpload from "~/module/fileuploader/fileuploader";
-import "~/function/jqueryAjaxaddCsrfHeader";
+import "~/function/jqueryAjaxAddCsrfHeader";
 
 new Cleave(".js__inputMoney", {
     numeral: true,

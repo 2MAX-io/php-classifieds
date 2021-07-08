@@ -8,7 +8,7 @@
 // any CSS you import will output into a single css file (app.css in this case)
 import "~/module/logJsErrors";
 import $ from "jquery";
-import "~/function/textarea-autosize";
+import "~/function/textareaAutosize";
 import "bootstrap/js/src/collapse";
 
 import "bootstrap/dist/css/bootstrap.css";

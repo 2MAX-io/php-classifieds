@@ -6,7 +6,7 @@ import Translator from "~/module/Translator";
 import "~/module/fileuploader/jquery.fileuploader.min";
 import "~/module/fileuploader/font/font-fileuploader.css";
 import "~/module/fileuploader/jquery.fileuploader.min.css";
-import "~/function/fancy-confirm";
+import "~/function/fancyConfirm";
 
 let saveEditedImage = function (image, item) {
     // set new image

@@ -3,8 +3,8 @@
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 PROJECT_DIR=${DIR}/../../..
 GIT_HASH=$(git rev-parse HEAD)
-INSTALLER_DIR=zz_engine/var/installer/installer_$(date +%Y-%m-%d_%H%M%S)_${GIT_HASH::8}
-INSTALLER_ZIP=installer_$(date +%Y-%m-%d_%H%M%S)_${GIT_HASH::8}.zip
+INSTALLER_DIR=zz_engine/var/installer/php_classifieds_2max_io_installer_$(date +%Y-%m-%d_%H%M%S)_${GIT_HASH::8}
+INSTALLER_ZIP=php_classifieds_2max_io_installer_$(date +%Y-%m-%d_%H%M%S)_${GIT_HASH::8}.zip
 
 git checkout-index -a -f --prefix=${INSTALLER_DIR}/
 

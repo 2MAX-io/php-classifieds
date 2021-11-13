@@ -1,4 +1,4 @@
-#2MAX.io Classified Ads - Preview of code
+## PHP Classifieds Ads by 2MAX.io - Preview of code
 
 that can be bought on:
 https://php-classified-ads.2max.io/

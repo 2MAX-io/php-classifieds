@@ -60,7 +60,7 @@ class SquashListingViewsService implements CronActionInterface, CronAtNightInter
     public function squashListingViews(): void
     {
         /** @var \PDO $pdo */
-        $pdo = $this->em->getConnection();
+        $pdo = $this->em->getConnection()->getWrappedConnection()->getWrappedConnection();
 
         $stmt = $pdo->query('SELECT id FROM listing_view ORDER BY id DESC');
         if (false === $stmt) {

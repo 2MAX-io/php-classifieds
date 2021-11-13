@@ -54,7 +54,6 @@
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/sebastian/recursion-context" />
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/ralouphie/getallheaders" />
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/paragonie/sodium_compat" />
-      <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/hautelook/phpass" />
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/hackzilla/password-generator" />
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/slevomat/coding-standard" />
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/sebastian/object-reflector" />
@@ -89,7 +88,6 @@
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/doctrine/sql-formatter" />
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/doctrine/doctrine-migrations-bundle" />
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/doctrine/inflector" />
-      <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/symfony/debug-pack" />
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/symfony/validator" />
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/symfony/form" />
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/symfony/security-csrf" />
@@ -129,14 +127,11 @@
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/symfony/twig-bundle" />
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/symfony/finder" />
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/symfony/framework-bundle" />
-      <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/symfony/orm-pack" />
-      <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/symfony/profiler-pack" />
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/symfony/polyfill-uuid" />
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/symfony/polyfill-intl-idn" />
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/symfony/security-bundle" />
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/symfony/stopwatch" />
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/symfony/monolog-bundle" />
-      <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/symfony/test-pack" />
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/symfony/mime" />
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/symfony/proxy-manager-bridge" />
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/symfony/event-dispatcher" />
@@ -147,7 +142,6 @@
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/symfony/polyfill-mbstring" />
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/symfony/error-handler" />
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/symfony/debug-bundle" />
-      <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/symfony/twig-pack" />
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/symfony/polyfill-intl-normalizer" />
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/symfony/service-contracts" />
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/symfony/dom-crawler" />
@@ -237,6 +231,7 @@
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/psr/cache" />
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/composer" />
       <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/symfony/polyfill-php81" />
+      <excludeFolder url="file://$MODULE_DIR$/zz_engine/vendor/bordoni/phpass" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

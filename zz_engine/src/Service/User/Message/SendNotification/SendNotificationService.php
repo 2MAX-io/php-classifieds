@@ -161,7 +161,7 @@ class SendNotificationService
     private function getMessageForUserOlderThanAsIdsList(\DateTimeInterface $olderThanDatetime): array
     {
         /** @var \PDO $pdo */
-        $pdo = $this->em->getConnection();
+        $pdo = $this->em->getConnection()->getWrappedConnection()->getWrappedConnection();
         $stmt = $pdo->prepare('
 SELECT
     user_message_to_notify.id,

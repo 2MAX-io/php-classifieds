@@ -59,7 +59,7 @@ class UserMessageListService
     public function getThreadList(User $user): array
     {
         /** @var Connection|\PDO $pdo */
-        $pdo = $this->em->getConnection();
+        $pdo = $this->em->getConnection()->getWrappedConnection()->getWrappedConnection();
         $stmt = $pdo->prepare('
             SELECT
                 user_message_thread.id AS userMessageThreadId,
@@ -99,10 +99,9 @@ class UserMessageListService
             LIMIT 100
         ');
         $stmt->bindValue(':user_id', $user->getId());
-        $stmt->setFetchMode(\PDO::FETCH_CLASS, UserMessageThreadDto::class);
         $stmt->execute();
 
-        return $stmt->fetchAll() ?: [];
+        return $stmt->fetchAll(\PDO::FETCH_CLASS, UserMessageThreadDto::class) ?: [];
     }
 
     public function getExistingUserThreadForListing(Listing $listing, User $user): ?UserMessageThread

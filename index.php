@@ -13,8 +13,6 @@ use Symfony\Component\HttpFoundation\Request;
  * documentation:
  * https://php-classified-ads.2max.io/documentation/
  */
-\ini_set('log_errors', 'On');
-\ini_set('error_log', 'zz_engine/var/log/PHP_native_error_'.\date('Y-m-d').'.log');
 
 require __DIR__.'/zz_engine/config/bootstrap.php';
 

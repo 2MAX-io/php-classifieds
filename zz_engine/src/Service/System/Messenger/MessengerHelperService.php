@@ -21,13 +21,13 @@ class MessengerHelperService
 
     public function countMessages(string $class): int
     {
-        return $this->countMessagesContaining(\addslashes(\addslashes($class)));
+        return $this->countMessagesContaining(addslashes(addslashes($class)));
     }
 
     public function countMessagesContaining(string $bodyContains): int
     {
         /** @var \PDO $pdo */
-        $pdo = $this->em->getConnection();
+        $pdo = $this->em->getConnection()->getWrappedConnection()->getWrappedConnection();
         $stmt = $pdo->prepare(<<<'EOT'
             SELECT COUNT(1)
             FROM zzzz_messenger_messages

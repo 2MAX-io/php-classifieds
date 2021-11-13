@@ -92,10 +92,10 @@ class PoliceLogForUserMessageService
         int $firstResult,
         int $maxResults
     ): array {
-        $whereSql = \implode(' && ', $policeLogForUserMessageDto->getWhere());
+        $whereSql = implode(' && ', $policeLogForUserMessageDto->getWhere());
 
         /** @var Connection|\PDO $pdo */
-        $pdo = $this->em->getConnection();
+        $pdo = $this->em->getConnection()->getWrappedConnection()->getWrappedConnection();
         $stmt = $pdo->prepare("
             SELECT
                 log.user_message_id AS userMessageId,
@@ -130,7 +130,7 @@ class PoliceLogForUserMessageService
 
     public function getResultsCount(PoliceLogForUserMessageDto $policeLogForUserMessageDto): int
     {
-        $whereSql = \implode(' && ', $policeLogForUserMessageDto->getWhere());
+        $whereSql = implode(' && ', $policeLogForUserMessageDto->getWhere());
 
         $pdo = $this->em->getConnection();
         $result = $pdo->executeQuery("

@@ -31,10 +31,10 @@ trait MessengerTestTrait
         $stmt = $pdo->executeQuery(<<<'EOT'
 SELECT id FROM zzzz_messenger_messages WHERE queue_name=:queueName LIMIT 1
 EOT, [
-            ':queueName' => $queueName,
+            'queueName' => $queueName,
         ]);
 
-        return false !== $stmt->fetch();
+        return false !== $stmt->fetchOne();
     }
 
     private function assertNoFailedMessages(): void

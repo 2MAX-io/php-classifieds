@@ -162,3 +162,5 @@ mysql --host=mysql_test -e "DROP DATABASE IF EXISTS classifieds_test; CREATE DAT
 (cd /var/www/html/zz_engine && php vendor/bin/php-cs-fixer fix -v)
 COMPOSER_MEMORY_LIMIT=-1 composer update -d zz_engine --optimize-autoloader
 sudo chown -R 1000:33 /var/www/html
+COMPOSER_MEMORY_LIMIT=-1 composer why -d zz_engine "symfony/framework-bundle:4.4.33"
+COMPOSER_MEMORY_LIMIT=-1 composer update -d zz_engine --optimize-autoloader

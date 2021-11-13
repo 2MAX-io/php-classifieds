@@ -96,6 +96,10 @@ t.add("The number of elements in this collection should be a multiple of {{ comp
 t.add("This value should satisfy at least one of the following constraints:", "Ta warto\u015b\u0107 powinna spe\u0142nia\u0107 co najmniej jedn\u0105 z nast\u0119puj\u0105cych regu\u0142:", "validators", "pl");
 t.add("Each element of this collection should satisfy its own set of constraints.", "Ka\u017cdy element w tym zbiorze powinien spe\u0142nia\u0107 w\u0142asny zestaw regu\u0142.", "validators", "pl");
 t.add("This value is not a valid International Securities Identification Number (ISIN).", "Ta warto\u015b\u0107 nie jest prawid\u0142owym Mi\u0119dzynarodowym Numerem Identyfikacyjnym Papier\u00f3w Warto\u015bciowych (ISIN).", "validators", "pl");
+t.add("This value should be a valid expression.", "Ta warto\u015b\u0107 powinna by\u0107 prawid\u0142owym wyra\u017ceniem.", "validators", "pl");
+t.add("This value is not a valid CSS color.", "Ta warto\u015b\u0107 nie jest prawid\u0142owym kolorem CSS.", "validators", "pl");
+t.add("This value is not a valid CIDR notation.", "Ta warto\u015b\u0107 nie jest prawid\u0142ow\u0105 notacj\u0105 CIDR.", "validators", "pl");
+t.add("The value of the netmask should be between {{ min }} and {{ max }}.", "Warto\u015b\u0107 maski podsieci powinna by\u0107 pomi\u0119dzy {{ min }} i {{ max }}.", "validators", "pl");
 t.add("This form should not contain extra fields.", "Ten formularz nie powinien zawiera\u0107 dodatkowych p\u00f3l.", "validators", "pl");
 t.add("The uploaded file was too large. Please try to upload a smaller file.", "Wgrany plik by\u0142 za du\u017cy. Prosz\u0119 spr\u00f3bowa\u0107 wgra\u0107 mniejszy plik.", "validators", "pl");
 t.add("The CSRF token is invalid. Please try to resubmit the form.", "Token CSRF jest nieprawid\u0142owy. Prosz\u0119 spr\u00f3bowa\u0107 wys\u0142a\u0107 formularz ponownie.", "validators", "pl");

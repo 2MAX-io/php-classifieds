@@ -72,7 +72,6 @@
       <path value="$PROJECT_DIR$/zz_engine/vendor/sebastian/recursion-context" />
       <path value="$PROJECT_DIR$/zz_engine/vendor/ralouphie/getallheaders" />
       <path value="$PROJECT_DIR$/zz_engine/vendor/paragonie/sodium_compat" />
-      <path value="$PROJECT_DIR$/zz_engine/vendor/hautelook/phpass" />
       <path value="$PROJECT_DIR$/zz_engine/vendor/hackzilla/password-generator" />
       <path value="$PROJECT_DIR$/zz_engine/vendor/slevomat/coding-standard" />
       <path value="$PROJECT_DIR$/zz_engine/vendor/sebastian/object-reflector" />
@@ -107,7 +106,6 @@
       <path value="$PROJECT_DIR$/zz_engine/vendor/doctrine/sql-formatter" />
       <path value="$PROJECT_DIR$/zz_engine/vendor/doctrine/doctrine-migrations-bundle" />
       <path value="$PROJECT_DIR$/zz_engine/vendor/doctrine/inflector" />
-      <path value="$PROJECT_DIR$/zz_engine/vendor/symfony/debug-pack" />
       <path value="$PROJECT_DIR$/zz_engine/vendor/symfony/validator" />
       <path value="$PROJECT_DIR$/zz_engine/vendor/symfony/form" />
       <path value="$PROJECT_DIR$/zz_engine/vendor/symfony/security-csrf" />
@@ -147,14 +145,11 @@
       <path value="$PROJECT_DIR$/zz_engine/vendor/symfony/twig-bundle" />
       <path value="$PROJECT_DIR$/zz_engine/vendor/symfony/finder" />
       <path value="$PROJECT_DIR$/zz_engine/vendor/symfony/framework-bundle" />
-      <path value="$PROJECT_DIR$/zz_engine/vendor/symfony/orm-pack" />
-      <path value="$PROJECT_DIR$/zz_engine/vendor/symfony/profiler-pack" />
       <path value="$PROJECT_DIR$/zz_engine/vendor/symfony/polyfill-uuid" />
       <path value="$PROJECT_DIR$/zz_engine/vendor/symfony/polyfill-intl-idn" />
       <path value="$PROJECT_DIR$/zz_engine/vendor/symfony/security-bundle" />
       <path value="$PROJECT_DIR$/zz_engine/vendor/symfony/stopwatch" />
       <path value="$PROJECT_DIR$/zz_engine/vendor/symfony/monolog-bundle" />
-      <path value="$PROJECT_DIR$/zz_engine/vendor/symfony/test-pack" />
       <path value="$PROJECT_DIR$/zz_engine/vendor/symfony/mime" />
       <path value="$PROJECT_DIR$/zz_engine/vendor/symfony/proxy-manager-bridge" />
       <path value="$PROJECT_DIR$/zz_engine/vendor/symfony/event-dispatcher" />
@@ -165,7 +160,6 @@
       <path value="$PROJECT_DIR$/zz_engine/vendor/symfony/polyfill-mbstring" />
       <path value="$PROJECT_DIR$/zz_engine/vendor/symfony/error-handler" />
       <path value="$PROJECT_DIR$/zz_engine/vendor/symfony/debug-bundle" />
-      <path value="$PROJECT_DIR$/zz_engine/vendor/symfony/twig-pack" />
       <path value="$PROJECT_DIR$/zz_engine/vendor/symfony/polyfill-intl-normalizer" />
       <path value="$PROJECT_DIR$/zz_engine/vendor/symfony/service-contracts" />
       <path value="$PROJECT_DIR$/zz_engine/vendor/symfony/dom-crawler" />
@@ -265,6 +259,12 @@
       <path value="$PROJECT_DIR$/zz_engine/vendor/firebase/php-jwt" />
       <path value="$PROJECT_DIR$/zz_engine/vendor/paypal/rest-api-sdk-php" />
       <path value="$PROJECT_DIR$/zz_engine/vendor/symfony/polyfill-php81" />
+      <path value="$PROJECT_DIR$/zz_engine/vendor/symfony/debug-pack" />
+      <path value="$PROJECT_DIR$/zz_engine/vendor/symfony/orm-pack" />
+      <path value="$PROJECT_DIR$/zz_engine/vendor/symfony/profiler-pack" />
+      <path value="$PROJECT_DIR$/zz_engine/vendor/symfony/test-pack" />
+      <path value="$PROJECT_DIR$/zz_engine/vendor/symfony/twig-pack" />
+      <path value="$PROJECT_DIR$/zz_engine/vendor/bordoni/phpass" />
     </include_path>
   </component>
   <component name="PhpInterpreters">

@@ -96,6 +96,10 @@ t.add("The number of elements in this collection should be a multiple of {{ comp
 t.add("This value should satisfy at least one of the following constraints:", "This value should satisfy at least one of the following constraints:", "validators", "en");
 t.add("Each element of this collection should satisfy its own set of constraints.", "Each element of this collection should satisfy its own set of constraints.", "validators", "en");
 t.add("This value is not a valid International Securities Identification Number (ISIN).", "This value is not a valid International Securities Identification Number (ISIN).", "validators", "en");
+t.add("This value should be a valid expression.", "This value should be a valid expression.", "validators", "en");
+t.add("This value is not a valid CSS color.", "This value is not a valid CSS color.", "validators", "en");
+t.add("This value is not a valid CIDR notation.", "This value is not a valid CIDR notation.", "validators", "en");
+t.add("The value of the netmask should be between {{ min }} and {{ max }}.", "The value of the netmask should be between {{ min }} and {{ max }}.", "validators", "en");
 t.add("This form should not contain extra fields.", "This form should not contain extra fields.", "validators", "en");
 t.add("The uploaded file was too large. Please try to upload a smaller file.", "The uploaded file was too large. Please try to upload a smaller file.", "validators", "en");
 t.add("The CSRF token is invalid. Please try to resubmit the form.", "The CSRF token is invalid. Please try to resubmit the form.", "validators", "en");

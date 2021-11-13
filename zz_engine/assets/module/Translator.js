@@ -18,7 +18,7 @@ class Translator {
         }
 
         // noinspection JSUnresolvedFunction
-        return TranslatorBundle.trans(translationKey, translationParams);
+        return TranslatorBundle.trans(translationKey, translationParams, null, lang);
     }
 }
 

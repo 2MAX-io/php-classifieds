@@ -41,13 +41,13 @@ class MoveFilesToNewLocationCommandTest extends AppIntegrationTestCase
 
         $legacyFilePath = FilePath::getPublicDir().'/static/listing/0000_legacy/test_file_on_legacyPath.png';
         $expectedNewFilePath = FilePath::getPublicDir().'/static/listing/1/user_1/listing_1/test_file_on_legacyPath.png';
-        if (\file_exists($expectedNewFilePath)) {
-            \unlink($expectedNewFilePath);
+        if (file_exists($expectedNewFilePath)) {
+            unlink($expectedNewFilePath);
         }
-        \copy(FilePath::getProjectDir().'/static/system/1920x1080.png', $legacyFilePath);
+        copy(FilePath::getProjectDir().'/static/system/1920x1080.png', $legacyFilePath);
         $pdo = $this->getTestContainer()->get(EntityManagerInterface::class)->getConnection();
         $pdo->executeQuery('UPDATE listing_file SET path = :path WHERE id = 1', [
-            ':path' => Path::makeRelative($legacyFilePath, FilePath::getPublicDir()),
+            'path' => Path::makeRelative($legacyFilePath, FilePath::getPublicDir()),
         ]);
 
         self::assertFileDoesNotExist($expectedNewFilePath);
@@ -63,9 +63,9 @@ class MoveFilesToNewLocationCommandTest extends AppIntegrationTestCase
         self::assertStringContainsString('[OK] done', $output);
         self::assertFileExists($legacyFilePath);
         self::assertFileDoesNotExist($expectedNewFilePath);
-        \unlink($legacyFilePath);
-        if (\file_exists($expectedNewFilePath)) {
-            \unlink($expectedNewFilePath);
+        unlink($legacyFilePath);
+        if (file_exists($expectedNewFilePath)) {
+            unlink($expectedNewFilePath);
         }
     }
 
@@ -77,13 +77,13 @@ class MoveFilesToNewLocationCommandTest extends AppIntegrationTestCase
 
         $legacyFilePath = FilePath::getPublicDir().'/static/listing/0000_legacy/test_file_on_legacyPath.png';
         $expectedNewFilePath = FilePath::getPublicDir().'/static/listing/1/user_1/listing_1/test_file_on_legacyPath.png';
-        if (\file_exists($expectedNewFilePath)) {
-            \unlink($expectedNewFilePath);
+        if (file_exists($expectedNewFilePath)) {
+            unlink($expectedNewFilePath);
         }
-        \copy(FilePath::getProjectDir().'/static/system/1920x1080.png', $legacyFilePath);
+        copy(FilePath::getProjectDir().'/static/system/1920x1080.png', $legacyFilePath);
         $pdo = $this->getTestContainer()->get(EntityManagerInterface::class)->getConnection();
         $pdo->executeQuery('UPDATE listing_file SET path = :path WHERE id = 1', [
-            ':path' => Path::makeRelative($legacyFilePath, FilePath::getPublicDir()),
+            'path' => Path::makeRelative($legacyFilePath, FilePath::getPublicDir()),
         ]);
 
         self::assertFileDoesNotExist($expectedNewFilePath);
@@ -95,6 +95,6 @@ class MoveFilesToNewLocationCommandTest extends AppIntegrationTestCase
         $output = $commandTester->getDisplay();
         self::assertStringContainsString('[OK] done', $output);
         self::assertFileExists($expectedNewFilePath);
-        \unlink($expectedNewFilePath);
+        unlink($expectedNewFilePath);
     }
 }

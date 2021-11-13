@@ -32,7 +32,7 @@ class MakeFeaturedTest extends AppIntegrationTestCase
         $this->clearDatabase();
         $pdo = $this->getTestContainer()->get(EntityManagerInterface::class)->getConnection();
         $pdo->executeQuery("UPDATE setting SET value = :paymentGatewayName WHERE name = 'paymentGateway'", [
-            ':paymentGatewayName' => PaymentGatewayEnum::PRZELEWY24,
+            'paymentGatewayName' => PaymentGatewayEnum::PRZELEWY24,
         ]);
         $this->loginUser($client);
 

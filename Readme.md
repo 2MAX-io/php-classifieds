@@ -21,7 +21,7 @@ https://php-classifieds.xyz/requirements/
 
 Information about installation can be found:
 
-https://php-classifieds.xyz/installation/
+https://php-classifieds.xyz/page/installation
 
 to start installation enter `example.com/install` directory
 

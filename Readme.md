@@ -1,7 +1,7 @@
 ## PHP Classifieds Ads by 2MAX.io - Preview of code
 
 that can be bought on:
-https://php-classified-ads.2max.io/
+https://php-classifieds.xyz/
 
 __no commercial and for profit use including display of advertisement allowed until license has been bought__
 
@@ -14,14 +14,14 @@ MYSQL 5.6+, recommended MYSQL 8
 
 Full requirements:
 
-https://php-classified-ads.2max.io/requirements/
+https://php-classifieds.xyz/requirements/
 
 ---
 ## Installation
 
 Information about installation can be found:
 
-https://php-classified-ads.2max.io/installation/
+https://php-classifieds.xyz/installation/
 
 to start installation enter `example.com/install` directory
 
@@ -36,7 +36,7 @@ bash zz_engine/dev/bin/build_assets.sh
 ---
 ##Documentation:
 
-https://php-classified-ads.2max.io/documentation/
+https://php-classifieds.xyz/documentation/
 
 ## Development
 
